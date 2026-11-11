@@ -1,3 +1,4 @@
+\renewcommand{\chapterart}{ap-python}\renewcommand{\chapterartcaption}{Four thousand random points in the unit square; the fraction inside the quarter circle estimates $\pi/4$. Five lines of Python.}
 \chapter{Python for This Book}\label{ch:ap-python}
 
 \begin{chapterintro}
@@ -163,6 +164,7 @@ print(null, one)    # rms 0.263 (corr undefined for the null), then rms 0.198, c
 Three habits make computational results trustworthy, and the paper follows all three. (1) Fix random seeds: \texttt{rng = np.random.default\_rng(1)} then \texttt{rng.normal(size=10)} gives the same numbers on every run. (2) Record versions: \texttt{np.\_\_version\_\_}, \texttt{scipy.\_\_version\_\_}. (3) Keep the script that made every number, and rerun it from a clean start before trusting the number.
 
 %======================================================================
+\renewcommand{\chapterart}{ap-notation}\renewcommand{\chapterartcaption}{The symbols of this book.}
 \chapter{Notation}\label{ch:ap-notation}
 
 Symbols are listed with their meaning and the chapter where they are introduced. The notation follows the paper \cite{soniR1}.
@@ -212,6 +214,7 @@ OOS & out-of-sample (held-out) & \ref{ch:generalization}\\
 \paragraph{Overloaded symbols in the paper.} The paper uses $A$ both for the sensitivity matrix $A_{nk}$ and for the non-Hermitian operator $A$; $T$ for the training window, the tensors $T^{(n)}$ and the Chebyshev polynomials $T_k$; and $N$ both for the number of grid points and for the counting function $N(T)$. The context always decides.
 
 %======================================================================
+\renewcommand{\chapterart}{ap-numbers}\renewcommand{\chapterartcaption}{The first nontrivial zero, $\tfrac12+14.134725141734693790\ldots\,i$.}
 \chapter{Key Numbers of the Paper}\label{ch:ap-numbers}
 
 These are the anchors that the paper's Appendix~A lists for checking a reconstruction, with the chapters that explain them. All rms values are in units of the local mean spacing.
@@ -243,6 +246,7 @@ Fair $R=4$ floors, exact-verified & 0.2391 / 0.2423 & \ref{ch:paper-spurious-flo
 \end{center}
 
 %======================================================================
+\renewcommand{\chapterart}{ap-claims}\renewcommand{\chapterartcaption}{How the 32 chapters lead into one another: an edge joins each chapter to the chapters it assumes.}
 \chapter{Map from the Paper to This Book}\label{ch:ap-claims}
 
 For each part of the paper \cite{soniR1} (revision R1 numbering), the chapters that supply the tools and the chapter of Part~VI that reads it.

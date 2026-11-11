@@ -282,6 +282,11 @@ print(np.linalg.norm(r), np.sqrt(np.mean(r**2)))   # 0.5477, 0.2739
 
 %======================================================================
 \section{Bases, orthogonality and projection}\label{sec:linear-algebra-basis}
+% DYK-BEGIN
+\begin{didyouknow}{Gram, Schmidt, and Laplace}
+The Gram-Schmidt procedure turns any set of independent vectors into an orthonormal basis by subtracting projections one at a time. It is named after J{\o}rgen Gram (1883) and Erhard Schmidt (1907), but Pierre-Simon Laplace had used an equivalent method decades earlier. Schmidt applied it to functions, which is exactly the infinite-dimensional setting of quantum mechanics.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Independence, span and basis}
 
@@ -734,6 +739,11 @@ Spacings alone cannot tell you where the zeros sit; one extra fact (one zero) is
 
 %======================================================================
 \section{The determinant}\label{sec:linear-algebra-det}
+% DYK-BEGIN
+\begin{didyouknow}{Determinants Before Matrices}
+Determinants are older than matrices. Seki Takakazu described them in Japan in 1683, and Gottfried Leibniz independently used them in 1693 to solve systems of linear equations. The word \emph{determinant} in its modern sense comes from Augustin-Louis Cauchy in 1812. Matrices as objects in their own right arrived only in the 1850s, more than 150 years after the determinant.
+\end{didyouknow}
+% DYK-END
 
 \subsection{The $2\times2$ determinant as an area}
 
@@ -1054,6 +1064,11 @@ print(np.round(A, 6))               # first column 1, A[n-1, n] = +-0.5
 
 %======================================================================
 \section{Paper connection}\label{sec:linear-algebra-paper}
+% DYK-BEGIN
+\begin{didyouknow}{A Word From Sylvester}
+James Joseph Sylvester coined the word \emph{matrix} in 1850, from the Latin for womb, because he saw a rectangular array as the source from which determinants are born. His friend Arthur Cayley published the first systematic algebra of matrices in 1858, including matrix multiplication and inverses. Every numerical calculation later in this book ultimately reduces to operations on matrices.
+\end{didyouknow}
+% DYK-END
 
 Here is where the tools of this chapter appear in the paper \cite{soniR1} (revision R1; code and data in \cite{zenodo}).
 

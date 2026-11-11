@@ -1,0 +1,730 @@
+[
+ {
+  "chapter": "1",
+  "section": "1.3",
+  "section_title": "Do the zeros look like energy levels?",
+  "title": "A Fateful Teatime",
+  "text": "In 1972 the number theorist Hugh Montgomery visited the Institute for Advanced Study in Princeton. Over afternoon tea, Sarvadaman Chowla introduced him to the physicist Freeman Dyson. Montgomery described his formula for how pairs of zeta zeros are spaced, and Dyson recognized it at once. It was the pair correlation of eigenvalues of large random complex Hermitian matrices, the kind of model physicists had built for the energy levels of heavy nuclei.",
+  "source": "Montgomery, 'The pair correlation of zeros of the zeta function' (1973); accounts in Conrey, Notices AMS 50 (2003); Quanta Magazine"
+ },
+ {
+  "chapter": "1",
+  "section": "1.7",
+  "section_title": "A road map of the book",
+  "title": "Eight Pages That Changed Mathematics",
+  "text": "Riemann's famous 1859 paper, \\emph{On the Number of Primes Less Than a Given Magnitude}, was written on his election to the Berlin Academy and runs only about eight pages. It was his only paper on number theory. Yet it introduced the zeta function on the complex plane, the explicit formula linking zeros to primes, and the Riemann hypothesis itself.",
+  "source": "Riemann, Monatsberichte der Berliner Akademie, Nov 1859; Edwards, Riemann's Zeta Function (1974)"
+ },
+ {
+  "chapter": "2",
+  "section": "2.1",
+  "section_title": "Why a new kind of number?",
+  "title": "Ten Split Into Two",
+  "text": "In his 1545 book \\emph{Ars Magna}, Gerolamo Cardano asked for two numbers that add to 10 and multiply to 40. The answer, $5+\\sqrt{-15}$ and $5-\\sqrt{-15}$, struck him as subtle but useless. Yet his cubic formula sometimes passed through square roots of negative numbers even when the final roots were real. In 1572 Rafael Bombelli showed how to calculate with them consistently.",
+  "source": "Cardano, Ars Magna (1545), ch. 37; Bombelli, L'Algebra (1572); Nahin, An Imaginary Tale"
+ },
+ {
+  "chapter": "2",
+  "section": "2.6",
+  "section_title": "The exponential as rotation: phasors and oscillations",
+  "title": "Phasors Power the Grid",
+  "text": "Charles Proteus Steinmetz, an engineer later at General Electric, showed in 1893 that alternating-current circuits become simple algebra if each sinusoidal voltage and current is represented by a complex number. Derivatives turn into multiplication by $i\\omega$. His phasor method spread rapidly, and engineers still use it to analyze AC power networks, though they write $j$ instead of $i$.",
+  "source": "Steinmetz, 'Complex Quantities and Their Use in Electrical Engineering', International Electrical Congress, Chicago 1893"
+ },
+ {
+  "chapter": "2",
+  "section": "2.11",
+  "section_title": "Paper connection",
+  "title": "Who Named $i$?",
+  "text": "The symbol $i$ for $\\sqrt{-1}$ is due to Leonhard Euler, who used it in a memoir written in 1777 and published in 1794, after his death. Gauss later adopted it, which helped make it standard. Euler also introduced the letter $e$, popularized $\\pi$, and found $e^{ix}=\\cos x+i\\sin x$. Every zeta zero in this book is written $\\tfrac12+it_n$ in his notation.",
+  "source": "Cajori, A History of Mathematical Notations, vol. 2; Euler, Introductio (1748)"
+ },
+ {
+  "chapter": "3",
+  "section": "3.2",
+  "section_title": "Series, partial sums and the geometric series",
+  "title": "Archimedes Sums Forever",
+  "text": "In the third century BC, Archimedes found the area of a parabolic segment by filling it with triangles. Each new layer of triangles had one quarter the area of the layer before, so he needed the sum $1+\\tfrac14+\\tfrac1{16}+\\cdots$. He had no modern theory of limits, but a careful argument showed him that the total is exactly $\\tfrac43$. It is one of the earliest infinite geometric series ever summed.",
+  "source": "Archimedes, Quadrature of the Parabola; Heath, The Works of Archimedes"
+ },
+ {
+  "chapter": "3",
+  "section": "3.7",
+  "section_title": "Conditional convergence and alternating series",
+  "title": "Rearrange to Any Answer",
+  "text": "Bernhard Riemann proved that a conditionally convergent series can be rearranged to add up to \\emph{any} real number you choose, or even to diverge. The alternating harmonic series $1-\\tfrac12+\\tfrac13-\\cdots$ sums to $\\log 2$. Reorder the terms as two positives, then one negative, and the sum becomes $\\tfrac32\\log 2$. The result is in his 1854 habilitation thesis on trigonometric series, published only after his death.",
+  "source": "Riemann, 'Ueber die Darstellbarkeit einer Function durch eine trigonometrische Reihe' (1854, publ. 1867); standard analysis texts"
+ },
+ {
+  "chapter": "3",
+  "section": "3.10",
+  "section_title": "Truncation: when is a finite sum a good stand-in?",
+  "title": "The Slowest Infinity",
+  "text": "The harmonic series $1+\\tfrac12+\\tfrac13+\\cdots$ diverges, as Nicole Oresme showed in the fourteenth century by grouping its terms. But it diverges incredibly slowly, because its partial sums grow like $\\log N+0.5772\\ldots$. To pass 100 you need roughly $1.5\\times10^{43}$ terms. A truncated sum can look convergent long before it reveals its true nature.",
+  "source": "Oresme, Quaestiones super geometriam Euclidis (c. 1350); H_N ~ ln N + gamma; OEIS A082912"
+ },
+ {
+  "chapter": "4",
+  "section": "4.2",
+  "section_title": "Orders of growth: $\\mathcal {O}$, $o$ and $\\sim $",
+  "title": "Big O Is Older Than Computers",
+  "text": "The symbol $\\mathcal{O}$ was introduced by Paul Bachmann in an 1894 book on analytic number theory. Edmund Landau made it famous in his 1909 treatise on the distribution of primes, which is why $\\mathcal{O}$ and $o$ are called Landau symbols. Only in 1976 did Donald Knuth standardize $\\Omega$ and $\\Theta$ for computer science. Asymptotic notation was born in the study of primes.",
+  "source": "Bachmann, Die analytische Zahlentheorie (1894); Landau, Handbuch (1909); Knuth, SIGACT News 8 (1976)"
+ },
+ {
+  "chapter": "4",
+  "section": "4.6",
+  "section_title": "Root finding I: bisection",
+  "title": "A Theorem Behind Bisection",
+  "text": "Bisection works because a continuous function that changes sign must cross zero somewhere in between. That sounds obvious, but Bernard Bolzano gave one of the first rigorous proofs only in 1817. Each bisection step halves the interval, so ten steps shrink it by a factor $2^{10}=1024$, gaining about three decimal digits. The method is slow, but once a sign change is bracketed it never fails.",
+  "source": "Bolzano, Rein analytischer Beweis (1817); standard numerical analysis texts"
+ },
+ {
+  "chapter": "4",
+  "section": "4.10",
+  "section_title": "Paper connection",
+  "title": "Newton's Favorite Cubic",
+  "text": "Isaac Newton illustrated his root-finding method around 1669 on the equation $y^3-2y-5=0$, and Joseph Raphson published a streamlined version in 1690. Near a simple root the method roughly doubles the number of correct digits at each step. Much earlier, Heron of Alexandria described an iteration for square roots that is exactly Newton's method applied to $x^2-a=0$.",
+  "source": "Newton, De analysi (1669); Raphson, Analysis aequationum universalis (1690); Ypma, SIAM Review 37 (1995); Heron, Metrica"
+ },
+ {
+  "chapter": "5",
+  "section": "5.2",
+  "section_title": "Superposition and beats",
+  "title": "Tuning by Ear",
+  "text": "Play tones of 440 Hz and 442 Hz together and you hear a single pitch that swells and fades twice per second. The beat frequency is the difference of the two frequencies, here 2 Hz. Piano tuners and guitarists exploit this, adjusting a string until the beats slow down and vanish. Superposition turns a tiny frequency mismatch into something your ear detects easily.",
+  "source": "Standard acoustics; e.g., Halliday, Resnick and Walker, Fundamentals of Physics, chapter on sound"
+ },
+ {
+  "chapter": "5",
+  "section": "5.7",
+  "section_title": "Even and odd functions; the cosine basis on $[-L,L]$",
+  "title": "Fourier Faced Skeptics",
+  "text": "Joseph Fourier presented his theory of heat flow, built on expanding functions in sines and cosines, to the Paris Academy in 1807. Examiners, including Lagrange, doubted that arbitrary functions, even ones with corners or jumps, could be written as such series. Fourier won an Academy prize for the work a few years later, and his book \\emph{Th\\'eorie analytique de la chaleur} finally appeared in 1822.",
+  "source": "Grattan-Guinness, Joseph Fourier 1768-1830 (1972); Fourier, Theorie analytique de la chaleur (1822)"
+ },
+ {
+  "chapter": "5",
+  "section": "5.11",
+  "section_title": "Summary",
+  "title": "The Overshoot That Won't Quit",
+  "text": "Approximate a square wave by a finite Fourier series and you always see an overshoot near each jump, about 9\\% of the jump size, however many terms you keep. It is called the Gibbs phenomenon after J. Willard Gibbs, who discussed it in \\emph{Nature} in 1899, but Henry Wilbraham had described it in 1848. Albert Michelson's mechanical harmonic analyzer helped bring it to attention.",
+  "source": "Wilbraham, Cambridge and Dublin Math. J. 3 (1848); Gibbs, Nature 59 (1899); Hewitt and Hewitt, Arch. Hist. Exact Sci. 21 (1979)"
+ },
+ {
+  "chapter": "6",
+  "section": "6.3",
+  "section_title": "Sampling: uniform, irregular and aliasing",
+  "title": "Why CDs Use 44.1 kHz",
+  "text": "Human hearing tops out near 20 kHz. To capture a signal without aliasing you must sample faster than twice its highest frequency, so audio CDs sample 44{,}100 times per second, just above $2\\times20$ kHz. Aliasing shows up in films too. A spinning wagon wheel filmed at 24 frames per second can appear to turn slowly backward.",
+  "source": "Red Book CD-DA standard (IEC 60908); Nyquist-Shannon sampling theorem"
+ },
+ {
+  "chapter": "6",
+  "section": "6.6",
+  "section_title": "Power spectrum, autocorrelation and the Wiener--Khinchin theorem",
+  "title": "Einstein Got There First",
+  "text": "The Wiener-Khinchin theorem says that the power spectrum of a fluctuating signal is the Fourier transform of its autocorrelation. Norbert Wiener proved it in 1930 and Aleksandr Khinchin in 1934. Yet Albert Einstein had stated the essential idea in a short 1914 paper on analyzing irregularly fluctuating observations. His note went largely unnoticed for decades.",
+  "source": "Einstein, Archives des sciences physiques et naturelles 37 (1914); Yaglom, IEEE ASSP Magazine 4 (1987)"
+ },
+ {
+  "chapter": "6",
+  "section": "6.10",
+  "section_title": "Summary",
+  "title": "Gauss Did the FFT",
+  "text": "The fast Fourier transform, published by James Cooley and John Tukey in 1965, cut the cost of a discrete Fourier transform of $N$ points from about $N^2$ to about $N\\log N$ operations. Historians later found that Carl Friedrich Gauss had used essentially the same trick around 1805 to interpolate asteroid orbits. His Latin notes appeared only in his posthumous collected works.",
+  "source": "Cooley and Tukey, Math. Comp. 19 (1965); Heideman, Johnson and Burrus, IEEE ASSP Magazine 1 (1984)"
+ },
+ {
+  "chapter": "7",
+  "section": "7.4",
+  "section_title": "Bases, orthogonality and projection",
+  "title": "Gram, Schmidt, and Laplace",
+  "text": "The Gram-Schmidt procedure turns any set of independent vectors into an orthonormal basis by subtracting projections one at a time. It is named after J{\\o}rgen Gram (1883) and Erhard Schmidt (1907), but Pierre-Simon Laplace had used an equivalent method decades earlier. Schmidt applied it to functions, which is exactly the infinite-dimensional setting of quantum mechanics.",
+  "source": "Leon, Bjorck and Gander, 'Gram-Schmidt orthogonalization: 100 years and more', Numer. Linear Algebra Appl. 20 (2013)"
+ },
+ {
+  "chapter": "7",
+  "section": "7.10",
+  "section_title": "The determinant",
+  "title": "Determinants Before Matrices",
+  "text": "Determinants are older than matrices. Seki Takakazu described them in Japan in 1683, and Gottfried Leibniz independently used them in 1693 to solve systems of linear equations. The word \\emph{determinant} in its modern sense comes from Augustin-Louis Cauchy in 1812. Matrices as objects in their own right arrived only in the 1850s, more than 150 years after the determinant.",
+  "source": "MacTutor History of Mathematics, 'Matrices and determinants'; Kline, Mathematical Thought from Ancient to Modern Times"
+ },
+ {
+  "chapter": "7",
+  "section": "7.13",
+  "section_title": "Paper connection",
+  "title": "A Word From Sylvester",
+  "text": "James Joseph Sylvester coined the word \\emph{matrix} in 1850, from the Latin for womb, because he saw a rectangular array as the source from which determinants are born. His friend Arthur Cayley published the first systematic algebra of matrices in 1858, including matrix multiplication and inverses. Every numerical calculation later in this book ultimately reduces to operations on matrices.",
+  "source": "Sylvester, Phil. Mag. 37 (1850); Cayley, 'A memoir on the theory of matrices', Phil. Trans. (1858); MacTutor"
+ },
+ {
+  "chapter": "8",
+  "section": "8.3",
+  "section_title": "When eigenvalues are complex",
+  "title": "Eigen Means Own",
+  "text": "The prefix \\emph{eigen} is German for own or characteristic. David Hilbert used \\emph{Eigenwert} and \\emph{Eigenfunktion} in his 1904 work on integral equations, and the half-translated hybrid eigenvalue stuck in English. A real two-dimensional rotation matrix has no real eigenvectors unless the angle is $0$ or $\\pi$. Its eigenvalues are $e^{\\pm i\\theta}$, a first hint that complex eigenvalues signal rotation.",
+  "source": "Hilbert, Gottinger Nachrichten (1904); Miller, 'Earliest Known Uses of Some of the Words of Mathematics'"
+ },
+ {
+  "chapter": "8",
+  "section": "8.7",
+  "section_title": "The second derivative as a matrix",
+  "title": "A String Inside a Matrix",
+  "text": "The matrix with $2$ on the diagonal and $-1$ just above and below is the finite-difference version of $-d^2/dx^2$. For $N$ grid points its eigenvalues are known exactly, $4\\sin^2[k\\pi/(2N+2)]$, and its eigenvectors are sampled sine waves $\\sin(jk\\pi/(N+1))$. These are the standing waves of a guitar string, so a simple matrix already contains the physics of vibrating strings.",
+  "source": "Standard result; e.g., Strang, Computational Science and Engineering (2007), sec. 1.5"
+ },
+ {
+  "chapter": "8",
+  "section": "8.11",
+  "section_title": "Paper connection",
+  "title": "Jacobi's Rotations",
+  "text": "In 1846 Carl Jacobi published a method for diagonalizing a symmetric matrix through a sequence of plane rotations, each one zeroing an off-diagonal element. He applied it to astronomical problems computed by hand. The method was rediscovered for electronic computers in the 1950s and is still valued for its accuracy, because rotations do not amplify rounding errors.",
+  "source": "Jacobi, J. reine angew. Math. 30 (1846); Golub and van der Vorst, J. Comput. Appl. Math. 123 (2000)"
+ },
+ {
+  "chapter": "9",
+  "section": "9.2",
+  "section_title": "Linear least squares in general",
+  "title": "Finding a Lost Planet",
+  "text": "On 1 January 1801 Giuseppe Piazzi discovered Ceres. He tracked it for only about six weeks before it was lost in the Sun's glare. The 24-year-old Carl Friedrich Gauss used those few observations to predict where it would reappear, and astronomers found it close to his prediction around New Year 1802. Adrien-Marie Legendre was the first to publish least squares, in 1805.",
+  "source": "Teets and Whitehead, Mathematics Magazine 72 (1999); Stigler, The History of Statistics (1986)"
+ },
+ {
+  "chapter": "9",
+  "section": "9.6",
+  "section_title": "Condition number and noise amplification",
+  "title": "Turing Named the Problem",
+  "text": "Alan Turing introduced the term \\emph{condition number} in a 1948 paper on rounding errors in matrix computations. It measures how much a matrix can amplify small errors in the data. A famous troublemaker is the Hilbert matrix, with entries $1/(i+j-1)$. The $10\\times10$ version has a condition number around $10^{13}$, so solving with it can wipe out most of a computer's digits.",
+  "source": "Turing, Q. J. Mech. Appl. Math. 1 (1948); Higham, Accuracy and Stability of Numerical Algorithms"
+ },
+ {
+  "chapter": "9",
+  "section": "9.10",
+  "section_title": "Paper connection",
+  "title": "Taming Ill-Posed Problems",
+  "text": "Andrey Tikhonov studied unstable inverse problems from the 1940s, and in 1963 he proposed adding a penalty term to stabilize them, now called Tikhonov regularization. Statisticians Arthur Hoerl and Robert Kennard independently popularized the same idea in 1970 as ridge regression. Both trade a little bias for a large reduction in noise amplification, the trade you will meet when fitting potentials to spectra.",
+  "source": "Tikhonov, Soviet Math. Dokl. 4 (1963); Hoerl and Kennard, Technometrics 12 (1970)"
+ },
+ {
+  "chapter": "10",
+  "section": "10.1",
+  "section_title": "Waves you already know",
+  "title": "Light Makes Stripes",
+  "text": "In the early 1800s Thomas Young showed that light passing two nearby openings produces bright and dark fringes, just as water waves interfere. It was strong evidence that light is a wave, against Newton's influential particle picture. Much later, the same two-slit pattern was built up from single electrons arriving one dot at a time. It became the classic demonstration of quantum wave behavior.",
+  "source": "Young, Bakerian Lecture, Phil. Trans. (1804); Tonomura et al., Am. J. Phys. 57 (1989)"
+ },
+ {
+  "chapter": "10",
+  "section": "10.6",
+  "section_title": "What the wavefunction means: the Born rule",
+  "title": "Physics in a Footnote",
+  "text": "Max Born's 1926 paper on collisions introduced the idea that the wavefunction gives \\emph{probabilities}. The crucial point, that the probability is proportional to the \\emph{square} of the wavefunction, appeared in a footnote added in proof. Born received the Nobel Prize in Physics for this statistical interpretation in 1954, nearly three decades later.",
+  "source": "Born, Z. Phys. 37 (1926); Nobel Prize in Physics 1954 citation"
+ },
+ {
+  "chapter": "10",
+  "section": "10.9",
+  "section_title": "Units with $\\hbar =2m=1$",
+  "title": "Planck's Natural Units",
+  "text": "In 1899, a year before his famous quantum hypothesis, Max Planck proposed units of length, mass, time and temperature built only from fundamental constants such as $G$, $c$ and his own new constant. He argued they would keep their meaning for any civilization. Setting $\\hbar=2m=1$ in this book follows the same spirit on a smaller scale: choose units so the equations carry no clutter.",
+  "source": "Planck, Sitzungsberichte Preuss. Akad. Wiss. (1899); Tomilin, 'Natural systems of units' (1999)"
+ },
+ {
+  "chapter": "10",
+  "section": "10.14",
+  "section_title": "Answers to selected problems",
+  "title": "Father and Son, Particle and Wave",
+  "text": "Louis de Broglie proposed in his 1924 thesis that electrons have wavelength $h/p$. In 1927 Clinton Davisson and Lester Germer at Bell Labs, and independently George Paget Thomson, observed electron diffraction. Davisson and Thomson shared the 1937 Nobel Prize. The twist is that G. P. Thomson's father, J. J. Thomson, had won the 1906 Nobel Prize for discovering the electron as a particle.",
+  "source": "Nobel Prize records 1906 and 1937; Davisson and Germer, Phys. Rev. 30 (1927)"
+ },
+ {
+  "chapter": "11",
+  "section": "11.3",
+  "section_title": "Uniqueness, parity and nodes",
+  "title": "Counting Nodes",
+  "text": "In the 1830s Charles Sturm and Joseph Liouville proved that for a large class of one-dimensional wave equations, the $n$-th eigenfunction, counting from $n=0$, has exactly $n$ zeros inside the interval. This oscillation theorem is why the ground state of any 1D potential well has no nodes, the first excited state has one, and so on. They proved it long before quantum mechanics existed.",
+  "source": "Sturm, J. Math. Pures Appl. 1 (1836); Lutzen, Joseph Liouville 1809-1882 (1990)"
+ },
+ {
+  "chapter": "11",
+  "section": "11.7",
+  "section_title": "Level density, and why slow growth means crowding",
+  "title": "Can You Hear a Drum?",
+  "text": "Hermann Weyl proved in 1911 that the number of vibration modes of a drum below a given frequency grows in proportion to its area. In 1966 Mark Kac asked whether the full list of frequencies determines the drum's shape. In 1992 Carolyn Gordon, David Webb and Scott Wolpert answered no by constructing two differently shaped drums with identical spectra. Level counts reveal a lot, but not everything.",
+  "source": "Weyl, Math. Ann. 71 (1911); Kac, Amer. Math. Monthly 73 (1966); Gordon, Webb and Wolpert, Invent. Math. 110 (1992)"
+ },
+ {
+  "chapter": "12",
+  "section": "12.1",
+  "section_title": "Why we need an approximation",
+  "title": "WKB Has More Letters",
+  "text": "The WKB approximation is named after Gregor Wentzel, Hendrik Kramers and L\\'eon Brillouin, who applied it to the new Schr\\\"odinger equation in 1926. But Harold Jeffreys had found a general version in 1923, and Joseph Liouville and George Green had used similar ideas in 1837. Some books therefore write JWKB, and mathematicians often call it the Liouville-Green approximation.",
+  "source": "Jeffreys, Proc. London Math. Soc. (1925, read 1923); Wentzel, Kramers and Brillouin (1926); Olver, Asymptotics and Special Functions"
+ },
+ {
+  "chapter": "12",
+  "section": "12.6",
+  "section_title": "Phase-space area",
+  "title": "Quantizing an Area",
+  "text": "Before Schr\\\"odinger's equation, the Bohr-Sommerfeld rule said allowed orbits enclose a phase-space area $\\oint p\\,dq=nh$. In 1916 Arnold Sommerfeld applied it to relativistic elliptical orbits and derived a formula for the fine structure of hydrogen's spectral lines. It agrees with the later result of the exact Dirac equation, a striking success for counting quantum states by area.",
+  "source": "Sommerfeld, Ann. Phys. 51 (1916); Kragh, Niels Bohr and the Quantum Atom (2012)"
+ },
+ {
+  "chapter": "12",
+  "section": "12.11",
+  "section_title": "Paper connection",
+  "title": "Exactly Right by Luck?",
+  "text": "For the harmonic oscillator, the WKB rule with the extra $\\tfrac12$, $\\oint p\\,dx=(n+\\tfrac12)h$, gives $E_n=(n+\\tfrac12)\\hbar\\omega$, the \\emph{exact} energies for every $n$, not just large ones. The $\\tfrac12$ comes from phase shifts at the two turning points, systematized by Victor Maslov in the 1960s as the Maslov index. The older Bohr-Sommerfeld rule, lacking it, missed the zero-point energy.",
+  "source": "Griffiths, Introduction to Quantum Mechanics, WKB chapter; Maslov, Theory of Perturbations and Asymptotic Methods (1965)"
+ },
+ {
+  "chapter": "13",
+  "section": "13.4",
+  "section_title": "The sensitivity matrix and linearization",
+  "title": "An Undergraduate's Theorem",
+  "text": "The Hellmann-Feynman theorem says that if a Hamiltonian depends on a parameter $\\lambda$, then $dE/d\\lambda=\\langle\\psi|\\partial H/\\partial\\lambda|\\psi\\rangle$. Richard Feynman derived it in his 1939 undergraduate thesis at MIT on forces in molecules, and Hans Hellmann had published it in 1937. It gives exactly the sensitivity of an energy level to a change in the potential.",
+  "source": "Feynman, Phys. Rev. 56, 340 (1939); Hellmann, Einfuhrung in die Quantenchemie (1937)"
+ },
+ {
+  "chapter": "13",
+  "section": "13.7",
+  "section_title": "Fitting by iterated linearization",
+  "title": "Damping the Steps",
+  "text": "Pure Gauss-Newton fitting can overshoot when the linear approximation is poor. In 1944 Kenneth Levenberg proposed blending each step with a cautious gradient step, and in 1963 Donald Marquardt refined the idea. The Levenberg-Marquardt algorithm is still the default nonlinear least-squares solver in many scientific software libraries.",
+  "source": "Levenberg, Q. Appl. Math. 2 (1944); Marquardt, J. SIAM 11 (1963)"
+ },
+ {
+  "chapter": "14",
+  "section": "14.1",
+  "section_title": "Complex potentials and decay",
+  "title": "Escaping Through a Wall",
+  "text": "In 1928 George Gamow, and independently Ronald Gurney and Edward Condon, explained alpha decay as quantum tunneling through the nuclear barrier. Gamow described the decaying state with a complex energy whose imaginary part sets the decay rate. Tunneling explains why alpha-emitter half-lives range from under a microsecond to billions of years, since small changes in energy change the escape probability enormously.",
+  "source": "Gamow, Z. Phys. 51 (1928); Gurney and Condon, Nature 122 (1928); half-lives of Po-212 and U-238 from nuclear data tables"
+ },
+ {
+  "chapter": "14",
+  "section": "14.4",
+  "section_title": "The quadratic form and the tensors $T^{(n)}$",
+  "title": "Upside-Down but Stable",
+  "text": "In 1998 Carl Bender and Stefan Boettcher found numerically that Hamiltonians like $p^2-(ix)^N$ with $N\\ge2$ have entirely real, positive spectra even though they are not Hermitian. The case $N=4$ is the upside-down quartic $-x^4$, with suitable boundary conditions in the complex plane. Patrick Dorey, Clare Dunning and Roberto Tateo proved that the spectrum is real in 2001.",
+  "source": "Bender and Boettcher, Phys. Rev. Lett. 80, 5243 (1998); Dorey, Dunning and Tateo, J. Phys. A 34 (2001)"
+ },
+ {
+  "chapter": "14",
+  "section": "14.8",
+  "section_title": "When second order fails: exact diagonalization and matching",
+  "title": "PT Symmetry in the Lab",
+  "text": "Non-Hermitian physics is not just theory. In 2010 Christian R\\\"uter and collaborators coupled two optical waveguides, one with gain and one with loss, and observed the predicted PT symmetry breaking. As the gain and loss grew past a threshold, the light's behavior changed abruptly. Related ideas now appear in research on lasers and sensors.",
+  "source": "Ruter et al., Nature Physics 6, 192 (2010); El-Ganainy et al., Nature Physics 14 (2018)"
+ },
+ {
+  "chapter": "15",
+  "section": "15.1",
+  "section_title": "What is a prime?",
+  "title": "Euclid's Endless Primes",
+  "text": "Around 300 BC, Euclid's \\emph{Elements} (Book IX, Proposition 20) proved that the primes outnumber any given finite collection. Multiply all the primes on your list and add 1. The result has a prime factor that is not on your list. The proof remains one of the most admired in mathematics, and it is short enough to check in a minute.",
+  "source": "Euclid, Elements IX.20; Hardy, A Mathematician's Apology"
+ },
+ {
+  "chapter": "15",
+  "section": "15.7",
+  "section_title": "A proven bound: Chebyshev's argument",
+  "title": "Always a Prime Between",
+  "text": "In 1845 Joseph Bertrand conjectured that for every $n>1$ there is a prime between $n$ and $2n$, and he checked it for $n$ up to about three million. Pafnuty Chebyshev proved it around 1850 using clever bounds on binomial coefficients. In 1932 the 19-year-old Paul Erd\\H{o}s published a famously simple proof.",
+  "source": "Chebyshev, Memoire sur les nombres premiers (1850/1852); Erdos, Acta Litt. Sci. Szeged 5 (1932)"
+ },
+ {
+  "chapter": "15",
+  "section": "15.12",
+  "section_title": "Summary",
+  "title": "A 41-Million-Digit Prime",
+  "text": "In October 2024 the record for the largest known prime went to the Mersenne prime $2^{136279841}-1$, with 41{,}024{,}320 decimal digits. Luke Durant discovered it in the Great Internet Mersenne Prime Search, using graphics processors rented in the cloud. Mersenne numbers $2^p-1$ dominate the record list because the Lucas-Lehmer test checks them far faster than primality tests for general numbers.",
+  "source": "GIMPS press release, 21 Oct 2024 (mersenne.org); Caldwell, The Prime Pages"
+ },
+ {
+  "chapter": "16",
+  "section": "16.4",
+  "section_title": "Analytic continuation",
+  "title": "Euler's Strange Sums",
+  "text": "Long before analytic continuation was understood, Leonhard Euler manipulated divergent series in work presented in 1749. In effect he obtained the value $-\\tfrac1{12}$ for $1+2+3+\\cdots$, and he guessed a relation between values at $s$ and $1-s$. That relation is the functional equation Riemann proved in 1859. Today we write $\\zeta(-1)=-\\tfrac1{12}$ in the continued sense, which does not mean the series literally adds up to it.",
+  "source": "Euler, 'Remarques sur un beau rapport...' (read 1749, publ. 1768); Ayoub, Amer. Math. Monthly 81 (1974)"
+ },
+ {
+  "chapter": "16",
+  "section": "16.7",
+  "section_title": "The Riemann hypothesis",
+  "title": "A Million-Dollar Question",
+  "text": "In 1900 David Hilbert included the Riemann hypothesis in Problem 8 of his famous list of 23 problems for the new century. In 2000 the Clay Mathematics Institute made it one of seven Millennium Prize Problems, each worth one million US dollars. As of this writing, only one of the seven, the Poincar\\'e conjecture, has been solved, by Grigori Perelman, who declined the prize.",
+  "source": "Hilbert, ICM Paris 1900; Clay Mathematics Institute, claymath.org"
+ },
+ {
+  "chapter": "17",
+  "section": "17.1",
+  "section_title": "The staircase $N(T)$",
+  "title": "Fifteen Zeros by Hand",
+  "text": "In 1903 the Danish mathematician J{\\o}rgen Gram computed the first fifteen nontrivial zeros of zeta and confirmed that they lie on the critical line. The first sits at height $t\\approx14.1347$. Gram points, where a related phase passes a multiple of $\\pi$, are still used to count zeros efficiently. They usually, but not always, alternate with the zeros.",
+  "source": "Gram, Acta Math. 27 (1903); Edwards, Riemann's Zeta Function, ch. 6"
+ },
+ {
+  "chapter": "17",
+  "section": "17.5",
+  "section_title": "The fluctuating part $S(T)$",
+  "title": "The Most Slowly Growing Noise",
+  "text": "In 1946 Atle Selberg proved that the fluctuating part $S(T)$ of the zero count behaves statistically like a Gaussian random variable with variance about $\\tfrac{1}{2\\pi^2}\\log\\log T$. That growth is absurdly slow: even at $T=10^{20}$, $\\log\\log T$ is only about $3.8$. This is why $S(T)$ stays small in every computation, although it is known to be unbounded.",
+  "source": "Selberg, Arch. Math. Naturvid. 48 (1946); Titchmarsh, The Theory of the Riemann Zeta-Function, ch. 9"
+ },
+ {
+  "chapter": "17",
+  "section": "17.9",
+  "section_title": "Summary",
+  "title": "Riemann's Hidden Notes",
+  "text": "Riemann published no numerical work on the zeros, so for decades many assumed his hypothesis was a hunch. In 1932 Carl Ludwig Siegel studied Riemann's unpublished papers in the G\\\"ottingen library and found a powerful formula for computing zeta on the critical line. Now called the Riemann-Siegel formula, it showed that Riemann had computed zeros himself, and it remains at the core of large-scale zero computations.",
+  "source": "Siegel, Quellen und Studien zur Geschichte der Mathematik 2 (1932); Edwards, Riemann's Zeta Function, ch. 7"
+ },
+ {
+  "chapter": "18",
+  "section": "18.3",
+  "section_title": "The formal step to the critical line",
+  "title": "Proving Riemann's Formula",
+  "text": "Riemann's 1859 paper sketched an explicit formula expressing prime counting as a sum over zeta zeros, but did not fully prove it. Hans von Mangoldt gave a rigorous proof in 1895, in a cleaner form for the weighted count $\\psi(x)=x-\\sum_\\rho x^\\rho/\\rho-\\log 2\\pi-\\tfrac12\\log(1-x^{-2})$. Each zero contributes one oscillation, so the primes become a kind of music played by the zeros.",
+  "source": "von Mangoldt, J. reine angew. Math. 114 (1895); Davenport, Multiplicative Number Theory, ch. 17"
+ },
+ {
+  "chapter": "18",
+  "section": "18.6",
+  "section_title": "How many primes?",
+  "title": "A Teenager's Guess",
+  "text": "In an 1849 letter to Johann Encke, Carl Friedrich Gauss recalled that around 1792 or 1793, as a teenager, he noticed that primes near $x$ occur with density about $1/\\log x$. He kept checking this against prime tables for decades. The prime number theorem, $\\pi(x)\\sim x/\\log x$, was finally proved in 1896, independently, by Jacques Hadamard and Charles de la Vall\\'ee Poussin, using the zeta function.",
+  "source": "Gauss to Encke, 24 Dec 1849 (Werke vol. 2); Hadamard and de la Vallee Poussin (1896)"
+ },
+ {
+  "chapter": "18",
+  "section": "18.11",
+  "section_title": "Answers to selected problems",
+  "title": "A Sign Change Far Away",
+  "text": "For every $x$ ever checked, $\\pi(x)<\\mathrm{li}(x)$, so many believed this always holds. In 1914 J. E. Littlewood proved that the difference changes sign infinitely often. In 1933 Stanley Skewes showed, assuming the Riemann hypothesis, that a first crossing occurs below about $10^{10^{10^{34}}}$. Later work lowered the bound to about $1.4\\times10^{316}$, still far beyond any direct computation.",
+  "source": "Littlewood, C. R. Acad. Sci. 158 (1914); Skewes, J. London Math. Soc. 8 (1933); Saouter, Trudgian and Demichel, Math. Comp. 84 (2015)"
+ },
+ {
+  "chapter": "19",
+  "section": "19.3",
+  "section_title": "Two distributions you must know",
+  "title": "Death by Horse Kick",
+  "text": "In 1898 Ladislaus Bortkiewicz showed that the yearly number of Prussian cavalrymen killed by horse kicks, recorded across army corps over 20 years, closely followed a Poisson distribution. Rare, independent events spread over many opportunities produce Poisson counts, whatever their cause. His book, \\emph{The Law of Small Numbers}, made this grim dataset one of the most famous examples in statistics.",
+  "source": "Bortkiewicz, Das Gesetz der kleinen Zahlen (1898); Quine and Seneta, Int. Stat. Rev. 55 (1987)"
+ },
+ {
+  "chapter": "19",
+  "section": "19.6",
+  "section_title": "Autocorrelation of a sequence",
+  "title": "Sunspots and Memory",
+  "text": "In 1927 the statistician George Udny Yule modeled yearly sunspot numbers by letting each year's value depend on the previous two years plus random shocks. This was the first autoregressive model, and it showed how a correlated random sequence can mimic periodic behavior. Autocorrelation measures how strongly a sequence remembers its own past, and it is the tool for telling real rhythms from noise.",
+  "source": "Yule, Phil. Trans. R. Soc. A 226 (1927)"
+ },
+ {
+  "chapter": "19",
+  "section": "19.10",
+  "section_title": "Summary",
+  "title": "Random Matrices Began in Statistics",
+  "text": "Random matrices first appeared in statistics, not physics. In 1928 John Wishart derived the distribution of sample covariance matrices built from Gaussian data, now called the Wishart distribution. In the 1950s Eugene Wigner used random matrices to model nuclear energy levels, and in the 1970s they turned up in the Riemann zeros. The same mathematics serves surveys, nuclei and primes.",
+  "source": "Wishart, Biometrika 20A (1928); Wigner, Ann. Math. 62 (1955); Mehta, Random Matrices"
+ },
+ {
+  "chapter": "20",
+  "section": "20.3",
+  "section_title": "The nearest-neighbor spacing distribution",
+  "title": "Wigner's Inspired Guess",
+  "text": "In 1956 Eugene Wigner proposed that spacings $s$ between neighboring energy levels of heavy nuclei follow $p(s)=\\tfrac{\\pi s}{2}e^{-\\pi s^2/4}$, a formula derived from mere $2\\times2$ random matrices. It vanishes at $s=0$, so levels repel each other. A companion formula from $2\\times2$ complex Hermitian matrices, with $s^2$ in place of $s$, describes Riemann zero spacings remarkably well.",
+  "source": "Wigner, Gatlinburg conference proceedings, ORNL-2309 (1956); Mehta, Random Matrices; Odlyzko, Math. Comp. 48 (1987)"
+ },
+ {
+  "chapter": "20",
+  "section": "20.7",
+  "section_title": "Beyond nearest neighbors: pair correlation and Montgomery's discovery",
+  "title": "Zeros at Dizzying Heights",
+  "text": "Starting in the 1980s, Andrew Odlyzko at Bell Labs computed huge batches of zeta zeros at enormous heights, first near the $10^{12}$-th zero and later near the $10^{20}$-th and beyond. Histograms of their spacings and pair correlations match random-matrix predictions with stunning precision. His results turned Montgomery's conjecture into one of the best-tested patterns in mathematics.",
+  "source": "Odlyzko, Math. Comp. 48 (1987); Odlyzko, 'The 10^20-th zero of the Riemann zeta function...' (1989 preprint)"
+ },
+ {
+  "chapter": "21",
+  "section": "21.1",
+  "section_title": "What the conjecture says",
+  "title": "A Conjecture Without a Paper",
+  "text": "Neither Hilbert nor P\\'olya ever published the idea that the zeta zeros are eigenvalues of a self-adjoint operator. Our main evidence is a 1982 letter from George P\\'olya to Andrew Odlyzko. P\\'olya recalled that Edmund Landau had asked him in G\\\"ottingen, around 1912 to 1914, for a physical reason the hypothesis should hold. Hilbert's role rests on oral tradition.",
+  "source": "Odlyzko, correspondence with Polya (1982), posted at dtc.umn.edu/~odlyzko/polya"
+ },
+ {
+  "chapter": "21",
+  "section": "21.4",
+  "section_title": "The Berry--Keating Hamiltonian $H=xp$",
+  "title": "Hyperbolas and Primes",
+  "text": "In 1999 Michael Berry and Jonathan Keating proposed the classical Hamiltonian $H=xp$ as a candidate. Its orbits are hyperbolas, and with suitable cutoffs in phase space, counting states gives $\\frac{T}{2\\pi}\\log\\frac{T}{2\\pi}-\\frac{T}{2\\pi}$ plus a constant, the smooth part of Riemann's zero count. In the same year Alain Connes proposed a related construction. Neither approach produces the zeros themselves.",
+  "source": "Berry and Keating, SIAM Review 41, 236 (1999); Connes, Selecta Math. 5 (1999)"
+ },
+ {
+  "chapter": "21",
+  "section": "21.10",
+  "section_title": "Answers to selected problems",
+  "title": "Geodesics Play Primes",
+  "text": "In 1956 Atle Selberg found a trace formula for surfaces of constant negative curvature. In it, the lengths of closed geodesics play the role that primes play in the explicit formula, and Laplacian eigenvalues play the role of zeta zeros. For the resulting Selberg zeta functions, the analogue of the Riemann hypothesis essentially holds. This analogy is a strong reason to hope for a spectral explanation.",
+  "source": "Selberg, J. Indian Math. Soc. 20 (1956); Hejhal, The Selberg Trace Formula for PSL(2,R)"
+ },
+ {
+  "chapter": "22",
+  "section": "22.4",
+  "section_title": "Where $V_0$ comes from",
+  "title": "Abel's Sliding Bead",
+  "text": "In the 1820s Niels Henrik Abel solved a generalized tautochrone problem. Given how long a bead takes to slide down a curve from each starting height, find the shape of the curve. His integral equation and its inversion formula are exactly what turn a smooth level-counting function into the smooth Wu--Sprung potential. A 19th-century mechanics puzzle builds a quantum well for the Riemann zeros.",
+  "source": "Abel, Magazin for Naturvidenskaberne (1823) and J. reine angew. Math. 1 (1826); Landau and Lifshitz, Mechanics, sec. 12"
+ },
+ {
+  "chapter": "22",
+  "section": "22.9",
+  "section_title": "Summary",
+  "title": "A Fractal Well",
+  "text": "In 1993 Hua Wu and Donald Sprung published, in \\emph{Physical Review E}, a one-dimensional potential whose lowest levels reproduce Riemann zeros. As they fitted more zeros, the correction to the smooth potential became rough and jagged, and they reported a fractal structure with dimension close to $1.5$. The fluctuations of the zeros had become fluctuations in the shape of the well.",
+  "source": "Wu and Sprung, Phys. Rev. E 48, 2595 (1993)"
+ },
+ {
+  "chapter": "23",
+  "section": "23.3",
+  "section_title": "A test we can solve exactly: the box on a grid",
+  "title": "Weather by Hand",
+  "text": "Lewis Fry Richardson's 1922 book \\emph{Weather Prediction by Numerical Process} replaced the equations of the atmosphere with finite differences on a grid. His hand-computed six-hour forecast came out badly wrong, largely because of problems with the initial data. He imagined a forecast factory of 64{,}000 human computers. Electronic computers later made his grid approach the basis of modern forecasting. He also invented Richardson extrapolation, which you meet in this chapter.",
+  "source": "Richardson (1922); Lynch, The Emergence of Numerical Weather Prediction (2006)"
+ },
+ {
+  "chapter": "23",
+  "section": "23.6",
+  "section_title": "Normalization and integrals on a grid",
+  "title": "Kepler and the Wine Barrels",
+  "text": "In 1615 Johannes Kepler published a book on measuring the volume of wine barrels, prompted by buying wine for his 1613 wedding and doubting the merchants' measuring method. One of his formulas is equivalent to what we now call Simpson's rule, which Thomas Simpson published in 1743. Grid integration is old: weight a few sample values cleverly and you get an excellent estimate of an area.",
+  "source": "Kepler, Nova stereometria doliorum vinariorum (1615); Simpson, Mathematical Dissertations (1743)"
+ },
+ {
+  "chapter": "23",
+  "section": "23.11",
+  "section_title": "Answers to selected problems",
+  "title": "Surprise in the Simulation",
+  "text": "In 1955 Enrico Fermi, John Pasta, Stanislaw Ulam and Mary Tsingou, who programmed the computer, simulated a chain of masses joined by slightly nonlinear springs on the MANIAC at Los Alamos. They expected the energy to spread evenly among all modes. Instead it sloshed among a few modes and almost returned to its starting state. It was among the first discoveries made by numerical experiment.",
+  "source": "Fermi, Pasta and Ulam, Los Alamos report LA-1940 (1955); Dauxois, Physics Today 61 (2008)"
+ },
+ {
+  "chapter": "24",
+  "section": "24.3",
+  "section_title": "Gauss--Newton: iterate the linear fit",
+  "title": "One Spectrum Is Not Enough",
+  "text": "In 1946 G\\\"oran Borg proved that one list of energy levels does not in general determine a one-dimensional potential, but two spectra with different boundary conditions do. There is an important exception: if the potential is known to be symmetric, one spectrum suffices. Israel Gel'fand and Boris Levitan gave a constructive inversion method in 1951. Fitting a potential to levels is an old inverse problem.",
+  "source": "Borg, Acta Math. 78 (1946); Gel'fand and Levitan, Izv. Akad. Nauk SSSR 15 (1951)"
+ },
+ {
+  "chapter": "24",
+  "section": "24.7",
+  "section_title": "Three bases for $\\delta V$",
+  "title": "Runge's Wiggles",
+  "text": "In 1901 Carl Runge showed that fitting a polynomial through more and more \\emph{equally spaced} points can make things worse. For $1/(1+25x^2)$ on $[-1,1]$, the interpolating polynomials oscillate wildly near the ends, and the error grows without bound. Clustering the points toward the ends, as Chebyshev nodes do, cures the problem. The choice of basis and sampling can make or break a fit.",
+  "source": "Runge, Z. Math. Phys. 46 (1901); Trefethen, Approximation Theory and Approximation Practice"
+ },
+ {
+  "chapter": "25",
+  "section": "25.1",
+  "section_title": "What does a model learn?",
+  "title": "The Horse Who Read Faces",
+  "text": "In the early 1900s a Berlin horse called Clever Hans seemed to do arithmetic, tapping out answers with his hoof. In 1907 the psychologist Oskar Pfungst showed that Hans was reading tiny, unconscious cues in the questioner's posture and face, and that he failed when the questioner did not know the answer. A model can score perfectly while learning something other than what you intended.",
+  "source": "Pfungst, Clever Hans (1907; English translation 1911)"
+ },
+ {
+  "chapter": "25",
+  "section": "25.5",
+  "section_title": "Interpolation, extrapolation and covariate shift",
+  "title": "Two Million Wrong Answers",
+  "text": "In 1936 the \\emph{Literary Digest} polled about 2.4 million people and predicted that Alf Landon would defeat Franklin Roosevelt. Roosevelt won in a landslide. The mailing lists, drawn largely from telephone directories and car registrations, did not represent all voters. George Gallup, with a far smaller sample, called the winner. A model built on one population can fail badly on another.",
+  "source": "Squire, Public Opinion Quarterly 52 (1988); Freedman, Pisani and Purves, Statistics"
+ },
+ {
+  "chapter": "25",
+  "section": "25.8",
+  "section_title": "Regularization: the road back to the null",
+  "title": "Fitting an Elephant",
+  "text": "Freeman Dyson recalled that in 1953 Enrico Fermi dismissed a complicated model by quoting John von Neumann: \\emph{with four parameters I can fit an elephant, and with five I can make him wiggle his trunk}. In 2010 three physicists actually drew an elephant using four complex parameters. Regularization is the disciplined way to stop extra parameters from fitting elephants.",
+  "source": "Dyson, Nature 427, 297 (2004); Mayer, Khairy and Howard, Am. J. Phys. 78, 648 (2010)"
+ },
+ {
+  "chapter": "25",
+  "section": "25.13",
+  "section_title": "Answers to selected problems",
+  "title": "A Million-Dollar Holdout",
+  "text": "From 2006 to 2009 Netflix offered one million US dollars to anyone who could beat its movie-rating predictions by 10\\%. To stop teams from tuning to the scoring data, the public leaderboard used one hidden set, while the prize was judged on a different hidden set. The team BellKor's Pragmatic Chaos won in 2009, and holdout testing became a widely known idea.",
+  "source": "Bennett and Lanning, Proc. KDD Cup (2007); Netflix Prize rules and 2009 announcement"
+ },
+ {
+  "chapter": "26",
+  "section": "26.3",
+  "section_title": "When neighbors are correlated",
+  "title": "Galton Names Correlation",
+  "text": "In 1888 Francis Galton introduced a numerical measure of what he called co-relation, studying how the forearm length and height of people vary together. Karl Pearson soon gave the formula its modern form. When neighboring data points are correlated, they carry less independent information than their number suggests, so naive error bars come out too small.",
+  "source": "Galton, Proc. R. Soc. 45 (1888); Stigler, The History of Statistics (1986)"
+ },
+ {
+  "chapter": "26",
+  "section": "26.7",
+  "section_title": "Controls: structure or capacity?",
+  "title": "Twelve Sailors and Citrus",
+  "text": "In 1747 the naval surgeon James Lind took twelve sailors with scurvy aboard HMS \\emph{Salisbury} and gave pairs of them different treatments, including cider, vinegar, seawater, and oranges with lemons. The pair eating citrus recovered dramatically. By comparing treatments side by side under similar conditions, Lind ran one of the earliest controlled trials. A control tells you whether a result means anything.",
+  "source": "Lind, A Treatise of the Scurvy (1753); James Lind Library (jameslindlibrary.org)"
+ },
+ {
+  "chapter": "26",
+  "section": "26.11",
+  "section_title": "Summary",
+  "title": "Where 0.05 Came From",
+  "text": "The habit of calling a result significant when $p<0.05$ traces largely to Ronald Fisher's 1925 book \\emph{Statistical Methods for Research Workers}, where he described one in twenty as a convenient threshold. Fisher meant it as a rough guide, not a law. Today many statisticians urge reporting effect sizes and uncertainties instead of leaning on a single cutoff.",
+  "source": "Fisher (1925); Wasserstein and Lazar, ASA statement on p-values, Am. Stat. 70 (2016)"
+ },
+ {
+  "chapter": "27",
+  "section": "27.3",
+  "section_title": "A dense grid of frequencies: control C1",
+  "title": "Periodograms for Messy Data",
+  "text": "Astronomers rarely get evenly spaced data, because clouds, daylight and seasons interrupt observing. Nicholas Lomb in 1976 and Jeffrey Scargle in 1982 developed a periodogram that fits sinusoids directly to irregularly timed points. The Lomb-Scargle periodogram is now used to find periods of variable stars and exoplanet signals by scanning a dense grid of trial frequencies.",
+  "source": "Lomb, Astrophys. Space Sci. 39 (1976); Scargle, ApJ 263 (1982); VanderPlas, ApJS 236 (2018)"
+ },
+ {
+  "chapter": "27",
+  "section": "27.6",
+  "section_title": "How well can a frequency be learned? Resolution, precision and dephasing",
+  "title": "The Most Precise Measurement",
+  "text": "Frequency is the quantity physicists measure best. Modern optical atomic clocks reach fractional uncertainties around $10^{-18}$, which corresponds to drifting less than a second over the age of the universe. Yet even they obey the basic rule of this section: to resolve two frequencies separated by $\\Delta f$, you must observe for a time of order $1/\\Delta f$.",
+  "source": "Ludlow et al., Rev. Mod. Phys. 87, 637 (2015); Brewer et al., PRL 123 (2019)"
+ },
+ {
+  "chapter": "27",
+  "section": "27.11",
+  "section_title": "Summary",
+  "title": "Prony's 1795 Fit",
+  "text": "In 1795 Gaspard de Prony published a method for fitting data with a sum of exponentials by turning the problem into polynomial root finding. With complex exponents those exponentials become oscillations, so Prony's method extracts frequencies and damping rates from short data records. Variants are still used in power systems and signal processing more than two centuries later.",
+  "source": "Prony, J. Ecole Polytechnique 1 (1795); Hauer, Demeure and Scharf, IEEE Trans. Power Syst. 5 (1990)"
+ },
+ {
+  "chapter": "28",
+  "section": "28.4",
+  "section_title": "Four strands of prior work and the literature audit",
+  "title": "Stigler's Law",
+  "text": "In 1980 the statistician Stephen Stigler proposed that no scientific discovery is named after its original discoverer, and he jokingly credited this law to the sociologist Robert Merton. This book has examples: the Gaussian curve appeared in de Moivre's work, and Gauss used the FFT long before Cooley and Tukey. A good literature audit checks who really did what first.",
+  "source": "Stigler, Trans. N.Y. Acad. Sci. 39 (1980)"
+ },
+ {
+  "chapter": "28",
+  "section": "28.7",
+  "section_title": "The Hermitian fit and the out-of-sample protocol",
+  "title": "Leave Some Data Out",
+  "text": "Cross-validation judges a model on data it never saw while fitting. It was formalized in the mid-1970s by the statisticians Mervyn Stone and Seymour Geisser, building on older practice of holding out samples. The idea is simple and powerful. A fit can always be made to match its own training data, so only performance on fresh data measures real predictive skill.",
+  "source": "Stone, J. R. Stat. Soc. B 36 (1974); Geisser, JASA 70 (1975)"
+ },
+ {
+  "chapter": "28",
+  "section": "28.11",
+  "section_title": "Paper connection",
+  "title": "Trillions of Zeros Checked",
+  "text": "In 2021 David Platt and Timothy Trudgian published a rigorous verification that all zeta zeros with imaginary part up to $3\\times10^{12}$ lie on the critical line, more than $10^{13}$ zeros in all. They used interval arithmetic to control every rounding error. Verified computations like this, together with Odlyzko's high-altitude tables, provide the kind of data such studies rely on.",
+  "source": "Platt and Trudgian, Bull. London Math. Soc. 53, 792 (2021)"
+ },
+ {
+  "chapter": "29",
+  "section": "29.3",
+  "section_title": "The central negative result: twelve configurations",
+  "title": "The Most Famous Null Result",
+  "text": "In 1887 Albert Michelson and Edward Morley searched for Earth's motion through the supposed luminiferous ether and found essentially nothing. This negative result became a cornerstone of the evidence for special relativity. A carefully designed experiment that finds no effect, with clear error bars, can be one of the most informative results in science.",
+  "source": "Michelson and Morley, Am. J. Sci. 34, 333 (1887)"
+ },
+ {
+  "chapter": "29",
+  "section": "29.7",
+  "section_title": "Permutation and surrogate tests",
+  "title": "The Lady Tasting Tea",
+  "text": "In his 1935 book \\emph{The Design of Experiments}, Ronald Fisher imagined testing a lady who claimed she could tell whether milk or tea went into the cup first. With eight cups, four of each kind, there are $\\binom84=70$ ways to choose which four had milk first. Guessing all correctly by chance has probability $1/70$. Counting rearrangements this way is the heart of a permutation test.",
+  "source": "Fisher, The Design of Experiments (1935), ch. 2"
+ },
+ {
+  "chapter": "29",
+  "section": "29.10",
+  "section_title": "What Section III establishes, and what it does not",
+  "title": "Evidence Can Mislead",
+  "text": "In 1897 Franz Mertens conjectured that $|M(x)|<\\sqrt{x}$, where $M(x)$ sums the M\\\"obius function, and computations supported it for every value checked. In 1985 Andrew Odlyzko and Herman te Riele proved it false, yet no explicit counterexample is known, because the first one lies at an astronomically large $x$. Numerical agreement over a huge range does not prove what happens beyond it.",
+  "source": "Odlyzko and te Riele, J. reine angew. Math. 357 (1985); Kotnik and te Riele (2006)"
+ },
+ {
+  "chapter": "30",
+  "section": "30.2",
+  "section_title": "The oracle and how it is scored",
+  "title": "Scoring the Weather",
+  "text": "In 1950 Glenn Brier proposed scoring probability forecasts by the mean squared difference between the forecast probabilities and what actually happened. The Brier score rewards forecasters for being both accurate and honest about uncertainty. Weather services still use it. The same principle applies to any oracle: decide how predictions will be scored \\emph{before} looking at the results.",
+  "source": "Brier, Monthly Weather Review 78 (1950)"
+ },
+ {
+  "chapter": "30",
+  "section": "30.5",
+  "section_title": "Control A: the oracle with a bigger budget",
+  "title": "Paying for Parameters",
+  "text": "In the early 1970s Hirotugu Akaike proposed an information criterion, AIC, that rewards a model for fitting the data but charges a penalty proportional to its number of parameters. Gideon Schwarz's 1978 criterion, BIC, uses a stiffer penalty that grows with sample size. Both encode one lesson: when a bigger parameter budget improves a fit, ask whether it improves it more than chance would.",
+  "source": "Akaike, IEEE Trans. Autom. Control 19 (1974); Schwarz, Ann. Stat. 6 (1978)"
+ },
+ {
+  "chapter": "30",
+  "section": "30.10",
+  "section_title": "Dephasing: why C2's skill fades with distance",
+  "title": "Rounding Off the Weather",
+  "text": "Around 1961 Edward Lorenz restarted a weather simulation from numbers he had typed in rounded to three decimal places. Before long the new run diverged completely from the old one. His 1963 paper showed that deterministic systems can lose predictability exponentially fast. Forecast skill that fades with distance is a general phenomenon, from the weather to sums of many oscillations.",
+  "source": "Lorenz, J. Atmos. Sci. 20 (1963); Lorenz, The Essence of Chaos (1993)"
+ },
+ {
+  "chapter": "31",
+  "section": "31.1",
+  "section_title": "What Section V is, and what it is not",
+  "title": "Faster Than Light? No.",
+  "text": "In 2011 the OPERA experiment reported neutrinos apparently arriving about 60 nanoseconds sooner than light would. The team openly asked others to help find an error. In 2012 the anomaly was traced largely to a badly connected fiber-optic cable in the timing system. The right response to a surprising signal is careful dissection, not excitement.",
+  "source": "OPERA collaboration, arXiv:1109.4897 and JHEP 10 (2012) 093; CERN press releases 2012"
+ },
+ {
+  "chapter": "31",
+  "section": "31.4",
+  "section_title": "The unconstrained floors",
+  "title": "Rays That Weren't There",
+  "text": "In 1903 the respected French physicist Prosper-Ren\\'e Blondlot announced N-rays, and many other researchers soon reported seeing them. In 1904 the American physicist Robert Wood visited Blondlot's lab and secretly removed an essential prism, yet Blondlot still reported the effect. Effects that appear only under unconstrained, subjective measurement deserve the hardest scrutiny.",
+  "source": "Wood, Nature 70, 530 (1904); Nye, Hist. Stud. Phys. Sci. 11 (1980)"
+ },
+ {
+  "chapter": "31",
+  "section": "31.7",
+  "section_title": "Leaving the perturbative regime",
+  "title": "When Series Diverge",
+  "text": "In 1952 Freeman Dyson argued that the perturbation series of quantum electrodynamics cannot converge. If the square of the electric charge were negative, the vacuum would be unstable, so the series must have zero radius of convergence. Yet its first few terms give spectacularly accurate predictions. Perturbation theory can be excellent up to a point and then fail.",
+  "source": "Dyson, Phys. Rev. 85, 631 (1952)"
+ },
+ {
+  "chapter": "31",
+  "section": "31.13",
+  "section_title": "Answers to selected problems",
+  "title": "Don't Fool Yourself",
+  "text": "In his 1974 Caltech commencement address, later printed as \\emph{Cargo Cult Science}, Richard Feynman warned that the first principle is that you must not fool yourself, and that you are the easiest person to fool. He urged scientists to report everything that might make their results invalid. A spurious floor is exactly the kind of trap that this advice protects against.",
+  "source": "Feynman, Engineering and Science 37(7) (1974); Surely You're Joking, Mr. Feynman! (1985)"
+ },
+ {
+  "chapter": "32",
+  "section": "32.3",
+  "section_title": "The limits the paper states",
+  "title": "Replication Is Hard",
+  "text": "In 2015 the Open Science Collaboration reported repeating 100 published psychology studies. Although 97 of the original studies reported significant results, only about 36\\% of the replications did. The project helped spark a broad push for preregistration, shared data and openly stated limitations, the habits that make a paper's honest list of limits valuable.",
+  "source": "Open Science Collaboration, Science 349, aac4716 (2015)"
+ },
+ {
+  "chapter": "32",
+  "section": "32.5",
+  "section_title": "Reproducing the paper",
+  "title": "Turing Hunts Zeros",
+  "text": "In 1950 Alan Turing used the Manchester Mark 1, one of the first stored-program computers, to check zeta zeros, and he published the results in 1953. He also devised a clever method to certify that no zeros had been missed in a given range. Versions of Turing's method are still used to verify zero counts, so anyone reproducing a zero computation today follows in his footsteps.",
+  "source": "Turing, Proc. London Math. Soc. (3) 3, 99 (1953); Booker, Notices AMS 53 (2006)"
+ }
+]

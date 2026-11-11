@@ -281,6 +281,11 @@ A model's held-out rms is $0.369$ with bootstrap interval $[0.32,0.42]$, and the
 
 %======================================================================
 \section{When neighbors are correlated}\label{sec:controls-serial}
+% DYK-BEGIN
+\begin{didyouknow}{Galton Names Correlation}
+In 1888 Francis Galton introduced a numerical measure of what he called co-relation, studying how the forearm length and height of people vary together. Karl Pearson soon gave the formula its modern form. When neighboring data points are correlated, they carry less independent information than their number suggests, so naive error bars come out too small.
+\end{didyouknow}
+% DYK-END
 
 The bootstrap of Sec.~\ref{sec:controls-bootstrap} assumes independence. The fluctuations of consecutive zeros are \emph{not} independent: Chapter~\ref{ch:generalization} showed (and the paper's Sec.~III states) that they have negative autocorrelation at lags 1--3. How much does dependence change the standard error?
 
@@ -720,6 +725,11 @@ You want to test whether an analysis responds to the \emph{phases} of the zero f
 
 %======================================================================
 \section{Controls: structure or capacity?}\label{sec:controls-capacity}
+% DYK-BEGIN
+\begin{didyouknow}{Twelve Sailors and Citrus}
+In 1747 the naval surgeon James Lind took twelve sailors with scurvy aboard HMS \emph{Salisbury} and gave pairs of them different treatments, including cider, vinegar, seawater, and oranges with lemons. The pair eating citrus recovered dramatically. By comparing treatments side by side under similar conditions, Lind ran one of the earliest controlled trials. A control tells you whether a result means anything.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Positive and negative controls}
 
@@ -990,6 +1000,11 @@ Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $
 
 %======================================================================
 \section{Summary}
+% DYK-BEGIN
+\begin{didyouknow}{Where 0.05 Came From}
+The habit of calling a result significant when $p<0.05$ traces largely to Ronald Fisher's 1925 book \emph{Statistical Methods for Research Workers}, where he described one in twenty as a convenient threshold. Fisher meant it as a rough guide, not a law. Today many statisticians urge reporting effect sizes and uncertainties instead of leaning on a single cutoff.
+\end{didyouknow}
+% DYK-END
 
 \begin{itemize}
 \item Every score is a draw from a sampling distribution; for iid data the SE of a mean is $\sigma/\sqrt n$ (Eq.~\eqref{eq:controls-varmean}), estimated by $s/\sqrt n$ (Eq.~\eqref{eq:controls-se}).

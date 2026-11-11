@@ -255,6 +255,11 @@ A $2\times2$ matrix has eigenvalues $1$ and $4$. What are its trace and determin
 
 %==========================================================
 \section{When eigenvalues are complex}\label{sec:eigen-complex}
+% DYK-BEGIN
+\begin{didyouknow}{Eigen Means Own}
+The prefix \emph{eigen} is German for own or characteristic. David Hilbert used \emph{Eigenwert} and \emph{Eigenfunktion} in his 1904 work on integral equations, and the half-translated hybrid eigenvalue stuck in English. A real two-dimensional rotation matrix has no real eigenvectors unless the angle is $0$ or $\pi$. Its eigenvalues are $e^{\pm i\theta}$, a first hint that complex eigenvalues signal rotation.
+\end{didyouknow}
+% DYK-END
 
 A matrix with real entries can have complex eigenvalues. The simplest example is a rotation. The matrix
 \begin{equation}
@@ -603,6 +608,11 @@ In Eq.~\eqref{eq:eigen-DN-eig}, why is $k=N+1$ not allowed?
 
 %==========================================================
 \section{The second derivative as a matrix}\label{sec:eigen-second-derivative}
+% DYK-BEGIN
+\begin{didyouknow}{A String Inside a Matrix}
+The matrix with $2$ on the diagonal and $-1$ just above and below is the finite-difference version of $-d^2/dx^2$. For $N$ grid points its eigenvalues are known exactly, $4\sin^2[k\pi/(2N+2)]$, and its eigenvectors are sampled sine waves $\sin(jk\pi/(N+1))$. These are the standing waves of a guitar string, so a simple matrix already contains the physics of vibrating strings.
+\end{didyouknow}
+% DYK-END
 
 Recall from Chapter~\ref{ch:linear-algebra} that a function $f(x)$ on an interval can be represented by its values on a grid. Here we use the grid the paper uses. Divide $[-L,L]$ into $N+1$ equal steps of width
 \begin{equation}
@@ -991,6 +1001,11 @@ You diagonalize a non-Hermitian matrix with \texttt{np.linalg.eig} and sort the 
 
 %==========================================================
 \section{Paper connection}\label{sec:eigen-paper}
+% DYK-BEGIN
+\begin{didyouknow}{Jacobi's Rotations}
+In 1846 Carl Jacobi published a method for diagonalizing a symmetric matrix through a sequence of plane rotations, each one zeroing an off-diagonal element. He applied it to astronomical problems computed by hand. The method was rediscovered for electronic computers in the 1950s and is still valued for its accuracy, because rotations do not amplify rounding errors.
+\end{didyouknow}
+% DYK-END
 
 Here is where each idea of this chapter enters the paper \cite{soniR1}. Section, equation, table and figure numbers refer to revision R1.
 

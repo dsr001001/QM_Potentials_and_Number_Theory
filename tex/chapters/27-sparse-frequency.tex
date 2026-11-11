@@ -273,6 +273,11 @@ Your numbers will not match the paper's $0.028$ exactly, because the paper choos
 
 %======================================================================
 \section{A dense grid of frequencies: control C1}\label{sec:sparse-frequency-dense}
+% DYK-BEGIN
+\begin{didyouknow}{Periodograms for Messy Data}
+Astronomers rarely get evenly spaced data, because clouds, daylight and seasons interrupt observing. Nicholas Lomb in 1976 and Jeffrey Scargle in 1982 developed a periodogram that fits sinusoids directly to irregularly timed points. The Lomb-Scargle periodogram is now used to find periods of variable stars and exoplanet signals by scanning a dense grid of trial frequencies.
+\end{didyouknow}
+% DYK-END
 
 \subsection{The model}
 
@@ -591,6 +596,11 @@ A colleague selects $K$ by scoring on a random 25\% of the training zeros instea
 
 %======================================================================
 \section{How well can a frequency be learned? Resolution, precision and dephasing}\label{sec:sparse-frequency-precision}
+% DYK-BEGIN
+\begin{didyouknow}{The Most Precise Measurement}
+Frequency is the quantity physicists measure best. Modern optical atomic clocks reach fractional uncertainties around $10^{-18}$, which corresponds to drifting less than a second over the age of the universe. Yet even they obey the basic rule of this section: to resolve two frequencies separated by $\Delta f$, you must observe for a time of order $1/\Delta f$.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Resolution is not precision}
 
@@ -924,6 +934,11 @@ The operator rows ($0.369$/$-0.07$ at $M=400$; $0.313$/$-0.16$ and $0.279$/$-0.0
 
 %======================================================================
 \section{Summary}
+% DYK-BEGIN
+\begin{didyouknow}{Prony's 1795 Fit}
+In 1795 Gaspard de Prony published a method for fitting data with a sum of exponentials by turning the problem into polynomial root finding. With complex exponents those exponentials become oscillations, so Prony's method extracts frequencies and damping rates from short data records. Variants are still used in power systems and signal processing more than two centuries later.
+\end{didyouknow}
+% DYK-END
 
 \begin{itemize}
 \item The training target is one number per zero, $y_n=n-\tfrac12-\Nsm(t_n)\approx S(t_n)$, \eqref{eq:sparse-frequency-target}; it equals minus the fluctuation in mean spacings to high accuracy, \eqref{eq:sparse-frequency-yfluct}, and fitting residuals translate into zero errors by \eqref{eq:sparse-frequency-errorlink}.

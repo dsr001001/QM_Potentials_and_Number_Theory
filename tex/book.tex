@@ -2,45 +2,110 @@
 \input{preamble}
 \begin{document}
 \input{frontmatter}
+\cleardoublepage\pdfbookmark[0]{Contents}{contents}\hypertarget{toc}{}
 \tableofcontents
 \mainmatter
 \part{Mathematical Foundations}
+\renewcommand{\chapterart}{intro}
+\renewcommand{\chapterartcaption}{The heights of the first 60 Riemann zeros, drawn as energy levels; colour shows how far each sits from its smooth position.}
 \input{chapters/01-intro}
+\renewcommand{\chapterart}{complex}
+\renewcommand{\chapterartcaption}{Domain colouring of $(z^5-1)/(z^2+1)$: hue is the argument, the rings are levels of the modulus.}
 \input{chapters/02-complex}
+\renewcommand{\chapterart}{series}
+\renewcommand{\chapterartcaption}{Partial sums of the alternating series $\sum(-1)^{k+1}k^{-s}$ at the first zero, $s=\tfrac12+14.1347\ldots i$, spiral into $0$ (the gold dot).}
 \input{chapters/03-series}
+\renewcommand{\chapterart}{asymptotics}
+\renewcommand{\chapterartcaption}{Newton's method for $z^3=1$: each starting point is coloured by the root it reaches; the boundaries are fractal.}
 \input{chapters/04-asymptotics}
+\renewcommand{\chapterart}{fourier-series}
+\renewcommand{\chapterartcaption}{Fourier partial sums of a square wave with 1, 3, 5, ..., 39 terms; the overshoot near each jump never disappears (Gibbs).}
 \input{chapters/05-fourier-series}
+\renewcommand{\chapterart}{fourier-transform}
+\renewcommand{\chapterartcaption}{A spectrogram: a signal whose frequency glides upward, with two harmonics, seen through short sliding windows.}
 \input{chapters/06-fourier-transform}
+\renewcommand{\chapterart}{linear-algebra}
+\renewcommand{\chapterartcaption}{Flow lines of $\dot{\mathbf x}=A\mathbf x$ for a $2\times2$ matrix $A$ with complex eigenvalues: every path spirals inward.}
 \input{chapters/07-linear-algebra}
+\renewcommand{\chapterart}{eigen}
+\renewcommand{\chapterartcaption}{Chladni figures: nodal lines of eigenmodes of a vibrating square plate, the 2D cousins of the string's standing waves.}
 \input{chapters/08-eigen}
+\renewcommand{\chapterart}{least-squares}
+\renewcommand{\chapterartcaption}{Polynomials of degree 1 to 12 fitted by least squares to the same 13 noisy points: more freedom, wilder curves.}
 \input{chapters/09-least-squares}
 \part{Quantum Mechanics of a Particle on a Line}
+\renewcommand{\chapterart}{schrodinger}
+\renewcommand{\chapterartcaption}{A quantum carpet: $|\psi(x,t)|^2$ for a wave packet bouncing in a box (time runs left to right); the pattern is pure interference.}
 \input{chapters/10-schrodinger}
+\renewcommand{\chapterart}{bound-states}
+\renewcommand{\chapterartcaption}{The first eight bound states of an anharmonic well, each drawn at its energy.}
 \input{chapters/11-bound-states}
+\renewcommand{\chapterart}{wkb}
+\renewcommand{\chapterartcaption}{Quantized orbits in phase space: the curves $p^2+V(x)=E_n$ for the Wu--Sprung potential, one for each of the first 30 levels.}
 \input{chapters/12-wkb}
+\renewcommand{\chapterart}{perturbation}
+\renewcommand{\chapterartcaption}{Eigenvalues of $\cos\lambda\,A+\sin\lambda\,B$ for two random symmetric matrices, as $\lambda$ runs from $0$ to $\pi$: levels approach, then swerve apart, never crossing.}
 \input{chapters/13-perturbation}
+\renewcommand{\chapterart}{non-hermitian}
+\renewcommand{\chapterartcaption}{Real parts of the eigenvalues of a PT-symmetric chain (gain on one half, loss on the other) as the strength grows left to right: pairs of real levels meet and turn complex (brighter = larger imaginary part).}
 \input{chapters/14-non-hermitian}
 \part{Primes and the Zeta Function}
+\renewcommand{\chapterart}{primes}
+\renewcommand{\chapterartcaption}{The Sacks spiral: the integer $n$ sits at radius $\sqrt n$ and angle $2\pi\sqrt n$; primes are lit. Curves of primes appear.}
 \input{chapters/15-primes}
+\renewcommand{\chapterart}{zeta}
+\renewcommand{\chapterartcaption}{Domain colouring of $\zeta(s)$ for $-1.5\le\sigma\le2.5$, $0\le t\le 45$ (turned on its side): every point where all colours meet is a zero.}
 \input{chapters/16-zeta}
+\renewcommand{\chapterart}{counting-zeros}
+\renewcommand{\chapterartcaption}{The staircase $N(t)$ counting zeros up to height 140, and the smooth curve $N_{\mathrm{sm}}(t)$ it hugs.}
 \input{chapters/17-counting-zeros}
+\renewcommand{\chapterart}{explicit-formula}
+\renewcommand{\chapterartcaption}{One prime wave each for $p=2,3,5,\dots,29$, and below them their sum, which tracks the true fluctuation of the zero count.}
 \input{chapters/18-explicit-formula}
 \part{Spectra, Randomness and Operators}
+\renewcommand{\chapterart}{probability}
+\renewcommand{\chapterartcaption}{Two hundred random walks of 1000 steps fanning out from the same start: their spread grows like the square root of time.}
 \input{chapters/19-probability}
+\renewcommand{\chapterart}{level-statistics}
+\renewcommand{\chapterartcaption}{Three barcodes with the same mean spacing: independent random levels (top), Riemann zeros 1000 to 1100 (middle), a perfect lattice (bottom).}
 \input{chapters/20-level-statistics}
+\renewcommand{\chapterart}{hilbert-polya}
+\renewcommand{\chapterartcaption}{The flow of the Berry--Keating Hamiltonian $H=xp$ in phase space: hyperbolas $xp=E$, the classical orbits behind a conjectured zeta operator.}
 \input{chapters/21-hilbert-polya}
+\renewcommand{\chapterart}{wu-sprung}
+\renewcommand{\chapterartcaption}{The Wu--Sprung potential, built so that its levels follow the smooth zeros; the first 60 levels are drawn across the well.}
 \input{chapters/22-wu-sprung}
 \part{Computation, Fitting and Generalization}
+\renewcommand{\chapterart}{finite-differences}
+\renewcommand{\chapterartcaption}{Probability densities $|\psi_n(x)|^2$ of the first 150 levels of the discretized Wu--Sprung Hamiltonian, one row per level.}
 \input{chapters/23-finite-differences}
+\renewcommand{\chapterart}{fitting}
+\renewcommand{\chapterartcaption}{Levenberg--Marquardt descending a curved valley: the path bends between careful gradient steps and bold Gauss--Newton jumps.}
 \input{chapters/24-fitting}
+\renewcommand{\chapterart}{generalization}
+\renewcommand{\chapterartcaption}{Memorization: a degree-15 polynomial passes through every training point (shaded window) and goes wild the moment it leaves them.}
 \input{chapters/25-generalization}
+\renewcommand{\chapterart}{controls}
+\renewcommand{\chapterartcaption}{Forty phase-randomized surrogates (faint) of the real zero fluctuations (bright): same power spectrum, no arithmetic.}
 \input{chapters/26-controls}
+\renewcommand{\chapterart}{sparse-frequency}
+\renewcommand{\chapterartcaption}{The spectrum of the first 10\,000 zeros, $|\sum_n e^{i\omega t_n}|$: sharp peaks stand at $\omega=\log 2,\log 3,\log 4,\log 5,\dots$}
 \input{chapters/27-sparse-frequency}
 \part{The Paper, Section by Section}
+\renewcommand{\chapterart}{paper-setup}
+\renewcommand{\chapterartcaption}{Zeros 370 to 460: true fluctuations (dots) and the six-prime explicit formula (line), which knows nothing of the zeros it predicts.}
 \input{chapters/28-paper-setup}
+\renewcommand{\chapterart}{paper-memorization}
+\renewcommand{\chapterartcaption}{The continuation probe in miniature: a flexible fit paints one window of $\sin(t\log 2)$ perfectly, then cannot continue it.}
 \input{chapters/29-paper-memorization}
+\renewcommand{\chapterart}{paper-arithmetic}
+\renewcommand{\chapterartcaption}{Predicted fluctuations of zeros 401 to 500 from 1, 3, 6 and 25 primes (bottom to top), converging on the truth (white).}
 \input{chapters/30-paper-arithmetic}
+\renewcommand{\chapterart}{paper-spurious-floor}
+\renewcommand{\chapterartcaption}{Complex eigenvalues of $H+iA$ for a random real $A$ of growing strength: the spectrum lifts off the real axis and scatters.}
 \input{chapters/31-paper-spurious-floor}
+\renewcommand{\chapterart}{paper-critique}
+\renewcommand{\chapterartcaption}{Pair correlation of the first 10\,000 zeros (bars) against Montgomery's $1-(\sin\pi u/\pi u)^2$: a law no fitted potential was asked to learn.}
 \input{chapters/32-paper-critique}
 \appendix
 \IfFileExists{appendices.tex}{\input{appendices}}{}

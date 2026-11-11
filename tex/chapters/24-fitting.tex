@@ -255,6 +255,11 @@ For the Wu--Sprung potential with the cosine basis, what is $A_{37,0}$? What wou
 
 %==========================================================
 \section{Gauss--Newton: iterate the linear fit}\label{sec:fitting-gn}
+% DYK-BEGIN
+\begin{didyouknow}{One Spectrum Is Not Enough}
+In 1946 G\"oran Borg proved that one list of energy levels does not in general determine a one-dimensional potential, but two spectra with different boundary conditions do. There is an important exception: if the potential is known to be symmetric, one spectrum suffices. Israel Gel'fand and Boris Levitan gave a constructive inversion method in 1951. Fitting a potential to levels is an old inverse problem.
+\end{didyouknow}
+% DYK-END
 
 \subsection{The idea}
 
@@ -653,6 +658,11 @@ Why does the accept rule guarantee that the final in-sample rms is never worse t
 
 %==========================================================
 \section{Three bases for $\delta V$}\label{sec:fitting-bases}
+% DYK-BEGIN
+\begin{didyouknow}{Runge's Wiggles}
+In 1901 Carl Runge showed that fitting a polynomial through more and more \emph{equally spaced} points can make things worse. For $1/(1+25x^2)$ on $[-1,1]$, the interpolating polynomials oscillate wildly near the ends, and the error grows without bound. Clustering the points toward the ends, as Chebyshev nodes do, cures the problem. The choice of basis and sampling can make or break a fit.
+\end{didyouknow}
+% DYK-END
 
 The choice of basis functions $\phi_k$ decides which shapes $\delta V$ can take. The Wu--Sprung background is even, $V(-x)=V(x)$, and the paper keeps the correction even too, so that the fitted potential stays even and its states keep definite parity (Chapter~\ref{ch:bound-states}). All three bases below are even functions of $x$. \Cref{fig:fitting-bases} plots the first few members of each.
 

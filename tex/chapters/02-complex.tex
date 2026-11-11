@@ -19,6 +19,11 @@ Where this shows up in the paper: the notation $\rho_n=\tfrac12+it_n$ in the fir
 
 %==========================================================
 \section{Why a new kind of number?}\label{sec:complex-why}
+% DYK-BEGIN
+\begin{didyouknow}{Ten Split Into Two}
+In his 1545 book \emph{Ars Magna}, Gerolamo Cardano asked for two numbers that add to 10 and multiply to 40. The answer, $5+\sqrt{-15}$ and $5-\sqrt{-15}$, struck him as subtle but useless. Yet his cubic formula sometimes passed through square roots of negative numbers even when the final roots were real. In 1572 Rafael Bombelli showed how to calculate with them consistently.
+\end{didyouknow}
+% DYK-END
 
 Try to solve $x^2+1=0$. You need a number whose square is $-1$. No real number works: the square of a positive number is positive, the square of a negative number is positive, and $0^2=0$. So within the real numbers this equation has no solution at all.
 
@@ -533,6 +538,11 @@ What is $\abs{e^{i\theta}}$ for real $\theta$? What is $\abs{e^{2+3i}}$?
 
 %==========================================================
 \section{The exponential as rotation: phasors and oscillations}\label{sec:complex-rotation}
+% DYK-BEGIN
+\begin{didyouknow}{Phasors Power the Grid}
+Charles Proteus Steinmetz, an engineer later at General Electric, showed in 1893 that alternating-current circuits become simple algebra if each sinusoidal voltage and current is represented by a complex number. Derivatives turn into multiplication by $i\omega$. His phasor method spread rapidly, and engineers still use it to analyze AC power networks, though they write $j$ instead of $i$.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Multiplying by $e^{i\alpha}$ rotates}
 
@@ -956,6 +966,11 @@ print(np.max(np.abs(phase - re2)))  # below 0.05
 
 %==========================================================
 \section{Paper connection}\label{sec:complex-paper}
+% DYK-BEGIN
+\begin{didyouknow}{Who Named $i$?}
+The symbol $i$ for $\sqrt{-1}$ is due to Leonhard Euler, who used it in a memoir written in 1777 and published in 1794, after his death. Gauss later adopted it, which helped make it standard. Euler also introduced the letter $e$, popularized $\pi$, and found $e^{ix}=\cos x+i\sin x$. Every zeta zero in this book is written $\tfrac12+it_n$ in his notation.
+\end{didyouknow}
+% DYK-END
 
 \paragraph{The zeros are complex numbers (Sec.~I, first sentence; Sec.~II~A).} The paper opens: ``The Hilbert--P\'olya conjecture proposes that the imaginary parts $t_n$ of the nontrivial zeros $\rho_n=\tfrac12+it_n$ of the Riemann zeta function are the spectrum of a self-adjoint operator''~\cite{soniR1}. You can now parse every symbol: $\rho_n$ is a complex number with real part $\tfrac12$ and imaginary part $t_n$, a real number. Sec.~II~A reports $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; these are imaginary parts, as in our Sample Problem on $\abs{\rho_1}$. Writing every zero with real part $\tfrac12$ places them all on the vertical line $\sigma=\tfrac12$ of the complex plane (\Cref{fig:complex-critical}). That \emph{every} nontrivial zero lies on this line is the Riemann hypothesis, which is open (Chapter~\ref{ch:zeta}); the paper only uses zeros for which this has been verified numerically (a numerical observation, not a proof). From Sec.~II on, the paper works only with the real list $t_n$; the complex structure is hidden in that choice, and in the conjugate-pair symmetry that lets one keep only $t_n>0$.
 

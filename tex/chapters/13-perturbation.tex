@@ -321,6 +321,11 @@ A uniform force field adds $\delta V=Fx$ to the symmetric box (a ``tilt''). What
 
 %======================================================================
 \section{The sensitivity matrix and linearization}\label{sec:perturbation-sensitivity}
+% DYK-BEGIN
+\begin{didyouknow}{An Undergraduate's Theorem}
+The Hellmann-Feynman theorem says that if a Hamiltonian depends on a parameter $\lambda$, then $dE/d\lambda=\langle\psi|\partial H/\partial\lambda|\psi\rangle$. Richard Feynman derived it in his 1939 undergraduate thesis at MIT on forces in molecules, and Hans Hellmann had published it in 1937. It gives exactly the sensitivity of an energy level to a change in the potential.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Many basis functions at once}
 
@@ -745,6 +750,11 @@ In the box the spacing grows with $n$. In the Wu--Sprung potential the spacing \
 
 %======================================================================
 \section{Fitting by iterated linearization}\label{sec:perturbation-fitting}
+% DYK-BEGIN
+\begin{didyouknow}{Damping the Steps}
+Pure Gauss-Newton fitting can overshoot when the linear approximation is poor. In 1944 Kenneth Levenberg proposed blending each step with a cautious gradient step, and in 1963 Donald Marquardt refined the idea. The Levenberg-Marquardt algorithm is still the default nonlinear least-squares solver in many scientific software libraries.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Turning the question around}
 

@@ -255,6 +255,11 @@ The library \texttt{qmnt} provides the same thing as \texttt{qmnt.fd\_levels(Vva
 
 %==========================================================
 \section{A test we can solve exactly: the box on a grid}\label{sec:finite-differences-box}
+% DYK-BEGIN
+\begin{didyouknow}{Weather by Hand}
+Lewis Fry Richardson's 1922 book \emph{Weather Prediction by Numerical Process} replaced the equations of the atmosphere with finite differences on a grid. His hand-computed six-hour forecast came out badly wrong, largely because of problems with the initial data. He imagined a forecast factory of 64{,}000 human computers. Electronic computers later made his grid approach the basis of modern forecasting. He also invented Richardson extrapolation, which you meet in this chapter.
+\end{didyouknow}
+% DYK-END
 
 Before trusting a numerical method on a hard problem, test it on a problem whose answer you know. The infinite well with $V=0$ is perfect, because, remarkably, the \emph{discrete} problem can also be solved exactly. That will tell us precisely how the error depends on $h$ and on the level index.
 
@@ -633,6 +638,11 @@ In $E^{\rm Rich}=(4E_a-E_b)/3$, which grid is $a$: the coarse one or the fine on
 
 %==========================================================
 \section{Normalization and integrals on a grid}\label{sec:finite-differences-normalization}
+% DYK-BEGIN
+\begin{didyouknow}{Kepler and the Wine Barrels}
+In 1615 Johannes Kepler published a book on measuring the volume of wine barrels, prompted by buying wine for his 1613 wedding and doubting the merchants' measuring method. One of his formulas is equivalent to what we now call Simpson's rule, which Thomas Simpson published in 1743. Grid integration is old: weight a few sample values cleverly and you get an excellent estimate of an area.
+\end{didyouknow}
+% DYK-END
 
 \subsection{From integrals to sums}
 
@@ -943,6 +953,11 @@ The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$
 
 %==========================================================
 \section{Answers to selected problems}\label{sec:finite-differences-answers}
+% DYK-BEGIN
+\begin{didyouknow}{Surprise in the Simulation}
+In 1955 Enrico Fermi, John Pasta, Stanislaw Ulam and Mary Tsingou, who programmed the computer, simulated a chain of masses joined by slightly nonlinear springs on the MANIAC at Los Alamos. They expected the energy to spread evenly among all modes. Instead it sloshed among a few modes and almost returned to its starting state. It was among the first discoveries made by numerical experiment.
+\end{didyouknow}
+% DYK-END
 
 \textbf{1.} Scale~1: $h=89.766/6001=0.0149585$. Scale~2: $h=119.914/8001=0.0149874$. The two spacings agree to about $0.2\%$: the paper increased $N$ in proportion to $L$, so the grid resolution is essentially the same at both scales. (The scale-2 levels go higher, so their bias is still larger.)
 

@@ -73,6 +73,11 @@ A friend reports an error of $0.001$ in a computed zero and says "that is neglig
 
 %======================================================================
 \section{Orders of growth: $\order$, $o$ and $\sim$}\label{sec:asymptotics-order}
+% DYK-BEGIN
+\begin{didyouknow}{Big O Is Older Than Computers}
+The symbol $\mathcal{O}$ was introduced by Paul Bachmann in an 1894 book on analytic number theory. Edmund Landau made it famous in his 1909 treatise on the distribution of primes, which is why $\mathcal{O}$ and $o$ are called Landau symbols. Only in 1976 did Donald Knuth standardize $\Omega$ and $\Theta$ for computer science. Asymptotic notation was born in the study of primes.
+\end{didyouknow}
+% DYK-END
 
 The smooth counting function of the paper, Eq.~(1),
 \begin{equation}
@@ -592,6 +597,11 @@ The Lambert-$W$ formula gives every smooth zero in one line. Why might a program
 
 %======================================================================
 \section{Root finding I: bisection}\label{sec:asymptotics-bisection}
+% DYK-BEGIN
+\begin{didyouknow}{A Theorem Behind Bisection}
+Bisection works because a continuous function that changes sign must cross zero somewhere in between. That sounds obvious, but Bernard Bolzano gave one of the first rigorous proofs only in 1817. Each bisection step halves the interval, so ten steps shrink it by a factor $2^{10}=1024$, gaining about three decimal digits. The method is slow, but once a sign change is bracketed it never fails.
+\end{didyouknow}
+% DYK-END
 
 A \emph{root} of a function $f$ is a number $r$ with $f(r)=0$. To compute $s_n$ we find the root of $f(s)=\Nsm(s)-(n-\tfrac12)$. The simplest reliable method is to trap the root in an interval and keep halving it.
 
@@ -1033,6 +1043,11 @@ In float32, is $1+10^{-8}$ different from $1$? In double?
 
 %======================================================================
 \section{Paper connection}\label{sec:asymptotics-paper}
+% DYK-BEGIN
+\begin{didyouknow}{Newton's Favorite Cubic}
+Isaac Newton illustrated his root-finding method around 1669 on the equation $y^3-2y-5=0$, and Joseph Raphson published a streamlined version in 1690. Near a simple root the method roughly doubles the number of correct digits at each step. Much earlier, Heron of Alexandria described an iteration for square roots that is exactly Newton's method applied to $x^2-a=0$.
+\end{didyouknow}
+% DYK-END
 
 Here is where each tool of this chapter appears in the paper \cite{soniR1}.
 

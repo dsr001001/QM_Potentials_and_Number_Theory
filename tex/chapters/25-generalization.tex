@@ -19,6 +19,11 @@ Where this shows up in the paper: the paper's central negative result is precise
 
 %======================================================================
 \section{What does a model learn?}\label{sec:generalization-learn}
+% DYK-BEGIN
+\begin{didyouknow}{The Horse Who Read Faces}
+In the early 1900s a Berlin horse called Clever Hans seemed to do arithmetic, tapping out answers with his hoof. In 1907 the psychologist Oskar Pfungst showed that Hans was reading tiny, unconscious cues in the questioner's posture and face, and that he failed when the questioner did not know the answer. A model can score perfectly while learning something other than what you intended.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Data, models and parameters}
 
@@ -387,6 +392,11 @@ A cosine model with $M=400$ coefficients is fitted to 200 training levels. Is it
 
 %======================================================================
 \section{Interpolation, extrapolation and covariate shift}\label{sec:generalization-shift}
+% DYK-BEGIN
+\begin{didyouknow}{Two Million Wrong Answers}
+In 1936 the \emph{Literary Digest} polled about 2.4 million people and predicted that Alf Landon would defeat Franklin Roosevelt. Roosevelt won in a landslide. The mailing lists, drawn largely from telephone directories and car registrations, did not represent all voters. George Gallup, with a far smaller sample, called the winner. A model built on one population can fail badly on another.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Where the test points lie}
 
@@ -762,6 +772,11 @@ For a sequence whose joint distribution is Gaussian (a ``Gaussian process''), th
 
 %======================================================================
 \section{Regularization: the road back to the null}\label{sec:generalization-ridge}
+% DYK-BEGIN
+\begin{didyouknow}{Fitting an Elephant}
+Freeman Dyson recalled that in 1953 Enrico Fermi dismissed a complicated model by quoting John von Neumann: \emph{with four parameters I can fit an elephant, and with five I can make him wiggle his trunk}. In 2010 three physicists actually drew an elephant using four complex parameters. Regularization is the disciplined way to stop extra parameters from fitting elephants.
+\end{didyouknow}
+% DYK-END
 
 \subsection{Ridge in one parameter}
 
@@ -1029,6 +1044,11 @@ Finally, the first item of the paper's proposed falsifiability standard is this 
 
 %======================================================================
 \section{Answers to selected problems}\label{sec:generalization-answers}
+% DYK-BEGIN
+\begin{didyouknow}{A Million-Dollar Holdout}
+From 2006 to 2009 Netflix offered one million US dollars to anyone who could beat its movie-rating predictions by 10\%. To stop teams from tuning to the scoring data, the public leaderboard used one hidden set, while the prize was judged on a different hidden set. The team BellKor's Pragmatic Chaos won in 2009, and holdout testing became a widely known idea.
+\end{didyouknow}
+% DYK-END
 
 \textbf{1.} In-sample error: rms error of the fitted model on the data used to fit it. Out-of-sample error: rms error on data not used in any fitting decision. Null model: the best prediction that uses none of the information the model claims to capture (for the zeros, ``no fluctuation''). A saturated model can always drive the \emph{in-sample} error to zero; its out-of-sample error is not controlled by the data (Sec.~\ref{sec:generalization-overfit}).
 

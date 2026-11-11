@@ -70,6 +70,11 @@ The letters $A$ and $T$ are badly overloaded in the paper, and Sec.~IV adds to t
 
 %======================================================================
 \section{The oracle and how it is scored}\label{sec:paper-arithmetic-oracle}
+% DYK-BEGIN
+\begin{didyouknow}{Scoring the Weather}
+In 1950 Glenn Brier proposed scoring probability forecasts by the mean squared difference between the forecast probabilities and what actually happened. The Brier score rewards forecasters for being both accurate and honest about uncertainty. Weather services still use it. The same principle applies to any oracle: decide how predictions will be scored \emph{before} looking at the results.
+\end{didyouknow}
+% DYK-END
 
 \subsection{The formula}
 
@@ -426,6 +431,11 @@ For each model of Table~IV, count fitted real parameters and compare with the nu
 
 %======================================================================
 \section{Control A: the oracle with a bigger budget}\label{sec:paper-arithmetic-A}
+% DYK-BEGIN
+\begin{didyouknow}{Paying for Parameters}
+In the early 1970s Hirotugu Akaike proposed an information criterion, AIC, that rewards a model for fitting the data but charges a penalty proportional to its number of parameters. Gideon Schwarz's 1978 criterion, BIC, uses a stiffer penalty that grows with sample size. Both encode one lesson: when a bigger parameter budget improves a fit, ask whether it improves it more than chance would.
+\end{didyouknow}
+% DYK-END
 
 \textbf{(a) Plain words.} Table~V stops at 25 primes. Control A asks what happens at the same \emph{nominal} budget as the largest operator fit, 900 terms, with still nothing fitted. Answer (Sec.~IV): ``the oracle improves monotonically, to $0.018$ on zeros 401--500.'' Table~IV adds $0.020/+1.00$ on 801--1000 and the bootstrap interval $[0.015, 0.020]$ on 401--500.
 
@@ -702,6 +712,11 @@ Suppose, on the ``displaced prime frequency'' surrogates, C2 had returned freque
 
 %======================================================================
 \section{Dephasing: why C2's skill fades with distance}\label{sec:paper-arithmetic-dephase}
+% DYK-BEGIN
+\begin{didyouknow}{Rounding Off the Weather}
+Around 1961 Edward Lorenz restarted a weather simulation from numbers he had typed in rounded to three decimal places. Before long the new run diverged completely from the old one. His 1963 paper showed that deterministic systems can lose predictability exponentially fast. Forecast skill that fades with distance is a general phenomenon, from the weather to sums of many oscillations.
+\end{didyouknow}
+% DYK-END
 
 \textbf{(a) Plain words.} The paper: ``Its skill also decays with distance from the training window as the estimated frequencies dephase ($0.078$/$+0.96$ on zeros 1001--2000 for the 400-zero fit), which the exact frequencies of the oracle do not.'' Compare Table~V on the same holdout: six primes $0.091$, twenty-five primes $0.054$. On 401--500 C2 beat the 25-prime oracle ($0.034$ against $0.043$); on 1001--2000 it has fallen behind it ($0.078$ against $0.054$).
 

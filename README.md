@@ -6,7 +6,7 @@ A textbook that takes a reader with first-year university physics to a full, lin
 
 The paper serves as a running case study: every chapter teaches its subject in general and then connects it to the paper. Part VI reads the paper section by section.
 
-**Status:** complete first edition draft (12 November 2026): 32 chapters in six parts plus four appendices, about 1,040 pages, 335 worked Sample Problems, 886 end-of-chapter problems with answers to selected ones, 204 figures. A compiled copy is in [`book-draft.pdf`](book-draft.pdf).
+**Status:** complete first edition draft (12 November 2026): 32 chapters in six parts plus four appendices, about 1,040 pages, 335 worked Sample Problems, 886 end-of-chapter problems with answers to selected ones, 204 figures. A compiled copy is in [`book-draft.pdf`](book-draft.pdf). It has a computed cover, a picture computed from each chapter's own mathematics on every chapter's opening page, 91 "Did you know?" boxes (about one every ten pages; sources in `bible/did_you_know.json`), and a fully hyperlinked Contents and bookmarks panel.
 
 Not yet done: a line-by-line read by a human expert. Treat the text as a careful draft, not a refereed textbook.
 
@@ -38,5 +38,7 @@ Directed by Dharmaj Soni. Chapters are drafted by Claude Opus 5.5 and reviewed b
 pip install numpy scipy matplotlib mpmath
 python scripts/make_main.py
 python scripts/run_figs.py
+(cd tex/figs/art && python make_art.py)   # cover and chapter-opener art
+python scripts/insert_dyk.py               # re-insert the Did-you-know boxes
 cd tex && latexmk -pdf book.tex
 ```

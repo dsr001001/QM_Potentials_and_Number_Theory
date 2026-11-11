@@ -13,7 +13,9 @@
 \usepackage{listings}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usepackage[colorlinks=true,linkcolor=keyc,citecolor=samc,urlcolor=keyc,bookmarksopen=true,bookmarksopenlevel=0,bookmarksnumbered=true,
+  pdftitle={Potentials, Primes and Prediction},pdfauthor={Directed by Dharmaj Soni; written with Claude (Anthropic)}]{hyperref}
 \usepackage[capitalise,noabbrev]{cleveref}
 
 \graphicspath{{figs/}}
@@ -95,3 +97,34 @@
 \DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
 \DeclareUnicodeCharacter{221A}{\ensuremath{\surd}}
 \DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+
+
+% ---------- Did you know? boxes
+\definecolor{dykc}{RGB}{200,110,0}
+\newtcolorbox{didyouknow}[1]{enhanced,breakable,colback=dykc!6!white,colframe=dykc,boxrule=0.7pt,arc=3pt,
+  left=8pt,right=8pt,top=4pt,bottom=4pt,fonttitle=\bfseries,
+  title={\raisebox{-0.5pt}{$\bigstar$}\ Did you know?\quad\textit{#1}}}
+
+% ---------- chapter openers: artwork, caption, link back to the contents
+\newcommand{\chapterart}{}
+\newcommand{\chapterartcaption}{}
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{-36pt}%
+  \ifx\chapterart\@empty\else
+    \IfFileExists{figs/art/\chapterart.png}{%
+      \noindent\origincludegraphics[width=\linewidth]{art/\chapterart.png}\par\vspace{2pt}%
+      {\noindent\footnotesize\itshape\color{black!65}\chapterartcaption\par}\vspace{16pt}}{}%
+  \fi
+  {\parindent\z@\raggedright\normalfont
+   \ifnum\c@secnumdepth>\m@ne\if@mainmatter
+     {\large\bfseries\color{keyc}\@chapapp\space\thechapter}\par\nobreak\vskip 4pt\fi\fi
+   \interlinepenalty\@M{\LARGE\bfseries #1\par}\nobreak
+   \vskip 2pt{\small\hfill\hyperlink{toc}{$\uparrow$\,Contents}}\par\nobreak
+   \vskip 18pt}}
+\makeatother
+
+% ---------- wider number column for sections in the contents (e.g. 16.11)
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3.0em}}
+\makeatother

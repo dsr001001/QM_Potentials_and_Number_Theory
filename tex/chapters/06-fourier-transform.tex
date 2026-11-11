@@ -342,6 +342,11 @@ You double the length $T$ of the window through which you observe $e^{i\omega_0t
 
 %======================================================================
 \section{Sampling: uniform, irregular and aliasing}\label{sec:fourier-transform-sampling}
+% DYK-BEGIN
+\begin{didyouknow}{Why CDs Use 44.1 kHz}
+Human hearing tops out near 20 kHz. To capture a signal without aliasing you must sample faster than twice its highest frequency, so audio CDs sample 44{,}100 times per second, just above $2\times20$ kHz. Aliasing shows up in films too. A spinning wagon wheel filmed at 24 frames per second can appear to turn slowly backward.
+\end{didyouknow}
+% DYK-END
 
 A computer never holds a function $f(t)$ for all $t$; it holds a list of values $y_j=f(t_j)$ at sample points $t_j$. For an oscilloscope the $t_j$ are equally spaced. For the Riemann zeros the ``samples'' are the zeros themselves, and they are not equally spaced. Both cases matter to us.
 
@@ -708,6 +713,11 @@ The line heights $NA^2/4$ in \eqref{eq:fourier-transform-lineheight} grow with $
 
 %======================================================================
 \section{Power spectrum, autocorrelation and the Wiener--Khinchin theorem}\label{sec:fourier-transform-wk}
+% DYK-BEGIN
+\begin{didyouknow}{Einstein Got There First}
+The Wiener-Khinchin theorem says that the power spectrum of a fluctuating signal is the Fourier transform of its autocorrelation. Norbert Wiener proved it in 1930 and Aleksandr Khinchin in 1934. Yet Albert Einstein had stated the essential idea in a short 1914 paper on analyzing irregularly fluctuating observations. His note went largely unnoticed for decades.
+\end{didyouknow}
+% DYK-END
 
 The periodogram keeps the \emph{size} $\abs{X_k}$ of each Fourier coefficient and throws away its \emph{phase}. What, exactly, does it still know about the sequence? The answer is: its autocorrelation, and nothing else.
 
@@ -1014,6 +1024,11 @@ The ``Arithmetic-continuation probe'' of Sec.~III trains the operator on the pri
 
 %======================================================================
 \section{Summary}
+% DYK-BEGIN
+\begin{didyouknow}{Gauss Did the FFT}
+The fast Fourier transform, published by James Cooley and John Tukey in 1965, cut the cost of a discrete Fourier transform of $N$ points from about $N^2$ to about $N\log N$ operations. Historians later found that Carl Friedrich Gauss had used essentially the same trick around 1805 to interpolate asteroid orbits. His Latin notes appeared only in his posthumous collected works.
+\end{didyouknow}
+% DYK-END
 
 \begin{itemize}
 \item Fourier transform $\hat f(\omega)=\int f e^{-i\omega t}\dd t$, Eq.~\eqref{eq:fourier-transform-def}, inverse Eq.~\eqref{eq:fourier-transform-inv} (proof beyond); properties P1--P5: linearity, $\hat f(-\omega)=\overline{\hat f(\omega)}$ for real $f$ \eqref{eq:fourier-transform-hermitian}, shift \eqref{eq:fourier-transform-shift}, modulation \eqref{eq:fourier-transform-modulation}, scaling.
