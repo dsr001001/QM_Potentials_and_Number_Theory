@@ -5,13 +5,14 @@ A guitar string clamped at both ends can vibrate only in a discrete set of patte
 
 In this chapter we solve the two exactly solvable wells that every physicist knows, the infinite square well (the ``box'') and the harmonic oscillator. We prove general facts that hold for every one-dimensional well: the energies are never degenerate, an even well has states that are alternately even and odd, and the $n$-th state has $n-1$ nodes. Then we ask the question that matters most for this book: how does the \emph{shape} of a well control the \emph{spacing} of its levels? We find a simple and physical answer: the level density equals the classical period divided by $2\pi$, so a well that widens quickly with energy, that is a potential that grows slowly, makes its levels crowd together.
 
-Where this shows up in the paper: the paper's Hamiltonian $H=-d^2/dx^2+V(x)$ lives in a box $[-L,L]$ with Dirichlet walls (Sec.~II~B of \cite{soniR1}); its potential, the Wu--Sprung potential of Eq.~(2), is even; its levels are labeled from $n=1$ and the first 500 are scored at scale 1; and the slowly rising level density of the Riemann zeros is exactly what forces that potential to grow a little more slowly than a harmonic well. The parity facts of this chapter also explain why the paper's ``PT-odd'' perturbations have vanishing diagonal matrix elements (Sec.~II~E).
+Where this shows up in the paper: the paper's Hamiltonian $H=-d^2/dx^2+V(x)$ lives in a box $[-L,L]$ with Dirichlet walls (Sec.~II~B of \cite{soniR1}); its potential, the Wu--Sprung potential of Eq.~(2), is even; its levels are labeled from $n=1$ and the first 500 are scored at scale 1; and the slowly rising level density of the Riemann zeros suggests, at the heuristic semiclassical level of \cref{sec:bound-states-density}, that such a potential must grow a little more slowly than a harmonic well. The parity facts of this chapter also explain why the paper's ``PT-odd'' perturbations have vanishing diagonal matrix elements (Sec.~II~E).
 \end{chapterintro}
 
 \begin{prerequisites}
 \item Chapter~\ref{ch:schrodinger}: the time-independent Schr\"odinger equation $H\psi=E\psi$; the Born rule ($|\psi|^2$ is a probability density); normalization; Hermitian operators have real eigenvalues; the units $\hbar=2m=1$, in which $H=-d^2/dx^2+V(x)$.
 \item Chapter~\ref{ch:eigen}: eigenvalues and eigenvectors; eigenvectors of a symmetric (Hermitian) matrix belonging to different eigenvalues are orthogonal; the string with fixed ends $-y''=\lambda y$; the second-derivative operator as a tridiagonal matrix; \texttt{scipy.linalg.eigh\_tridiagonal} as a black-box eigensolver.
 \item Chapter~\ref{ch:fourier-series}: orthogonality of sines and cosines; even and odd functions.
+\item Chapter~\ref{ch:series}: power series, term-by-term differentiation, the series of $e^x$, and ratios of successive coefficients.
 \item Chapter~\ref{ch:complex}: complex conjugate.
 \item First-year physics: potential-energy curves, turning points, simple harmonic motion (its period does not depend on amplitude), standing waves on a string.
 \end{prerequisites}
@@ -114,9 +115,9 @@ The first integral is the expectation value of the kinetic energy; the second is
 This is the quantum version of ``the marble cannot sit still at the bottom'': confinement always costs kinetic energy. The lowest energy $E_1$ minus $V_{\min}$ is called the \emph{zero-point energy}.
 
 \begin{checkpoint}
-The paper's Wu--Sprung potential has its minimum $V_0=3.10073\pi\approx 9.741$ at $x=0$ (Sec.~II~B of \cite{soniR1}). Is it consistent that its lowest level should approximate the first zeta zero $t_1=14.134725$?
+The paper's Wu--Sprung potential has its minimum $V_0=3.10073\pi\approx 9.741$ at $x=0$ (Sec.~II~B of \cite{soniR1}). The paper wants the levels of this potential (after fitted corrections) to track the zeta zeros. Is there any inconsistency between the minimum $V_0$ and the first zero $t_1=14.134725$?
 \end{checkpoint}
-\checkanswer{Yes. Every bound-state energy must exceed $V_{\min}=9.741$, and $14.13>9.741$. A lowest level below $9.741$ would be impossible for any potential with this minimum.}
+\checkanswer{No inconsistency arises. Every bound-state energy must exceed $V_{\min}=9.741$, and $t_1=14.13>9.741$; a target below $9.741$ could never have been reached by a potential with this minimum. (This says nothing about how accurately the lowest level matches; \cref{sec:bound-states-spacing} shows that semiclassical constructions are weakest at low $n$.)}
 
 \begin{keyideas}
 \item A bound state is a normalizable solution of $-\psi''+V\psi=E\psi$; for real $V$ it can be chosen real.
@@ -463,6 +464,10 @@ H_0=1,\quad H_1=2x,\quad H_2=4x^2-2,\quad H_3=8x^3-12x .
 \]
 For example, $E=5$ ($J=2$): with $a_1=0$, \cref{eq:bound-states-recur} gives $a_2=\frac{1-5}{2}a_0=-2a_0$ and $a_4=0$, so $h=a_0(1-2x^2)$, proportional to $H_2$.
 
+\begin{beyond}
+\textbf{Taken on trust: these are all the oscillator states.} The argument above shows, at the heuristic level of the tail comparison, that a nonterminating series gives a non-normalizable $\psi$. That no other energies give bound states, and that the functions $H_{n-1}(x)e^{-x^2/2}$ form a complete orthogonal set, is a theorem whose careful proof can be found in \cite{griffiths} and \cite{rhb}; we take it on trust.
+\end{beyond}
+
 \begin{pitfall}
 Most quantum texts label oscillator levels from zero, $E_\nu=\hbar\omega(\nu+\tfrac12)$, $\nu=0,1,2,\dots$ In this book, as in the paper, level indices start at $n=1$, so the ground state is $n=1$ and $E_n=2n-1$ in our units. With $\hbar=1$ and $\omega=2$, $\hbar\omega(\nu+\tfrac12)=2\nu+1=2n-1$ for $\nu=n-1$: the same numbers, a different label.
 \end{pitfall}
@@ -548,6 +553,8 @@ diag = 2/h**2 + V               # diagonal: second difference plus V
 off = -np.ones(N - 1)/h**2      # off-diagonal of the second difference
 E = eigh_tridiagonal(diag, off, eigvals_only=True,
                      select='i', select_range=(0, 9))
+# select='i' picks eigenvalues by index; indices start at 0,
+# so (0, 9) means the lowest ten levels
 exact = 2*np.arange(1, 11) - 1  # 1, 3, 5, ..., 19
 print(E)
 print(E - exact)                # small, and growing with n
@@ -613,7 +620,7 @@ E_b-1=\frac{-2\phi'(L)\psi(L)}{\int_{-L}^{L}\phi\psi\,\dd x}.
 \label{eq:bound-states-green}
 \end{equation}
 
-\textbf{Step 5 (approximate, heuristic):} The two states differ only near the walls, where both are tiny, so $\int\phi\psi\,\dd x\approx1$. Near $x=L$, $\phi$ is $\psi$ minus just enough of the growing solution to make it vanish at the wall. In the forbidden region, the decaying solution has $\psi'/\psi=-x$ exactly, and the growing one behaves like $e^{+x^2/2}$, with logarithmic slope close to $+x$. So $\phi'(L)\approx\psi'(L)-L\psi(L)=-L\psi(L)-L\psi(L)=-2L\psi(L)$. This approximation requires $L^2\gg E$, so that the potential dominates near the wall.
+\textbf{Step 5 (approximate, heuristic):} The two states differ only near the walls, where both are tiny, so $\int\phi\psi\,\dd x\approx1$. Near $x=L$, $\phi$ is $\psi$ minus just enough of the growing solution to make it vanish at the wall. In the forbidden region, the decaying solution has $\psi'/\psi=-x$ exactly. For the growing one, try $g=e^{+x^2/2}$: $g'=xg$ and $g''=(x^2+1)g$, so $-g''+x^2g=-g$. Thus $g$ solves the oscillator equation exactly, but with energy $-1$ instead of $E_b\approx1$. Where $x^2\gg E_b$ (deep in the forbidden region), replacing $x^2-E_b$ by $x^2+1$ is a small relative change, so the true growing solution behaves like $g$, with logarithmic slope $g'/g=+x$ up to corrections of relative size $\order(1/x^2)$. This is the heuristic part of the estimate. So $\phi'(L)\approx\psi'(L)-L\psi(L)=-L\psi(L)-L\psi(L)=-2L\psi(L)$. This approximation requires $L^2\gg E$, so that the potential dominates near the wall.
 
 \textbf{Step 6 (result):} $E_b-1\approx4L\psi(L)^2=\dfrac{4L}{\sqrt\pi}e^{-L^2}$.
 
@@ -723,7 +730,7 @@ E_n\approx\Bigl[\tfrac{3\pi}{4}\bigl(n-\tfrac12\bigr)\Bigr]^{2/3}.
 \[
 \boxed{\begin{array}{c|cccc} n&1&2&9&10\\\hline\text{counting}&1.115&2.320&7.375&7.942\\ \text{exact}&1.019&2.338&7.372&7.944\end{array}}
 \]
-The rule is off by about 10\% for the ground state and by less than $0.003$ at $n=9,10$. This is typical of semiclassical counting: weak for the lowest levels, excellent for high ones. The paper meets the same pattern: the Wu--Sprung construction is worst ``at low $n$, the known semiclassical weakness of the construction'' (Sec.~II~B of \cite{soniR1}).
+The rule is off by about 10\% for the ground state and by at most about $0.003$ at $n=9,10$. This is typical of semiclassical counting: weak for the lowest levels, excellent for high ones. The paper meets the same pattern: the Wu--Sprung construction is worst ``at low $n$, the known semiclassical weakness of the construction'' (Sec.~II~B of \cite{soniR1}).
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -769,7 +776,7 @@ Differentiate $\bar N$. The limits $x_{1,2}(E)$ depend on $E$, so we need Leibni
 \rho(E)=\frac1\pi\int_{x_1}^{x_2}\frac{\dd x}{2\sqrt{E-V(x)}}=\frac{1}{2\pi}\int_{x_1}^{x_2}\frac{\dd x}{\sqrt{E-V(x)}} .
 \label{eq:bound-states-rho-int}
 \end{equation}
-(The integrand blows up at the turning points, but like $1/\sqrt{\text{distance}}$, which integrates to a finite value.) Now the classical meaning. With $m=\tfrac12$, kinetic energy is $\tfrac12mv^2=v^2/4=E-V$, so the classical speed is $v=2\sqrt{E-V}$. The time to cross from $x_1$ to $x_2$ is $\int\dd x/v$, and a full round trip takes twice that:
+(The integrand blows up at the turning points, but like $1/\sqrt{\text{distance}}$, which integrates to a finite value.) Strictly, Leibniz's rule is stated for a differentiated integrand that stays finite; here $1/(2\sqrt{E-V})$ is infinite at the moving limits, so the step needs a check. For $V=|x|^\alpha$ we can make it. The substitution $x=au$, $a=E^{1/\alpha}$, of \cref{sec:bound-states-spacing} turns \cref{eq:bound-states-rho-int} into $\rho=\frac1\pi E^{\frac1\alpha-\frac12}J_\alpha$ with $J_\alpha=\int_0^1\dd u/\sqrt{1-u^\alpha}$, while differentiating $\bar N=\frac{2I_\alpha}{\pi}E^{\frac12+\frac1\alpha}+\gamma$ directly gives $\frac{2I_\alpha}{\pi}\bigl(\frac12+\frac1\alpha\bigr)E^{\frac1\alpha-\frac12}$. They agree if $J_\alpha=(1+\frac2\alpha)I_\alpha$. For $\alpha=2$: $J_2=\pi/2$ and $2I_2=2\cdot\pi/4=\pi/2$. For $\alpha=4$, numerical integration gives $J_4=1.3110$ and $\frac32I_4=1.3110$. A general justification, for potentials smooth near their turning points, is taken on trust from texts such as \cite{rhb}. Now the classical meaning. With $m=\tfrac12$, kinetic energy is $\tfrac12mv^2=v^2/4=E-V$, so the classical speed is $v=2\sqrt{E-V}$. The time to cross from $x_1$ to $x_2$ is $\int\dd x/v$, and a full round trip takes twice that:
 \[
 T_{\rm cl}(E)=2\int_{x_1}^{x_2}\frac{\dd x}{2\sqrt{E-V}}=\int_{x_1}^{x_2}\frac{\dd x}{\sqrt{E-V}} .
 \]
@@ -850,7 +857,7 @@ The paper scores errors in units of the ``local mean spacing'' $\gap_n$ (Sec.~II
 
 Section~II~B of \cite{soniR1} states the setting: ``In units $\hbar=2m=1$, $H=-d^2/dx^2+V(x)$ with $V$ even.'' The Wu--Sprung potential of Eq.~(2) is defined for $V\ge V_0=3.10073\pi\approx9.741$; it equals $V_0$ at $x=0$ (both terms of Eq.~(2) vanish when $V=V_0$, because $\sqrt{V-V_0}=0$ and the logarithm becomes $\log1$) and rises on both sides. The problem is posed on ``the domain $[-L,L]$ with $L=x(V{=}1000)=44.883$'' at scale 1 and $L=x(V{=}1500)=59.957$ at scale 2, with ``Dirichlet walls'' in the finite-difference solver. So the paper's operator is exactly the situation of this chapter: a smooth even well, closed off by the walls of \cref{sec:bound-states-box}. The empty box of RE3 (Sample Problem ``The empty box of the paper'') is what you get by deleting the potential.
 
-Why are the walls harmless? The walls are placed where the potential has climbed to 1000 (scale 1). The scored levels are ``the first 500'' (Sec.~II~B), and the 500th zero is $t_{500}=811.1843588465$ (App.~A, key anchors). So every scored level lies well below the potential at the wall. By the reasoning of \cref{sec:bound-states-shape}, each scored state decays through a stretch of forbidden region before reaching the wall: for level 500 the turning point is at $x(811.18)\approx38.5$, about 6.4 units inside the wall at $44.883$, where $V-E$ climbs from 0 to about 190. The wall's influence on such a state is exponentially small, as \cref{fig:bound-states-wall} shows for the oscillator. Levels with energies close to 1000 would feel the wall strongly; the paper's solver computes more levels than it scores (App.~A step~4: eigenvalue range $[0,900]$ for the Hermitian work at scale 1).
+Why are the walls harmless? The walls are placed where the potential has climbed to 1000 (scale 1). The scored levels are ``the first 500'' (Sec.~II~B), and the 500th zero is $t_{500}=811.1843588465$ (App.~A, key anchors). So every scored level lies well below the potential at the wall. By the reasoning of \cref{sec:bound-states-shape} (a heuristic transfer of the oscillator estimate, not a computation for this potential), each scored state decays through a stretch of forbidden region before reaching the wall: for level 500 the turning point, which we computed from Eq.~(2) with \texttt{qmnt.wu\_sprung\_x}, is at $x(811.18)\approx38.5$, about 6.4 units inside the wall at $44.883$, where $V-E$ climbs from 0 to about 190. We therefore expect the wall's influence on such a state to be exponentially small, as \cref{fig:bound-states-wall} shows for the oscillator. Levels with energies close to 1000 would feel the wall strongly; the paper's solver computes more levels than it scores (App.~A step~4: eigenvalue range $[0,900]$ for the Hermitian work at scale 1).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/bound-states_wusprung.pdf}
@@ -860,7 +867,7 @@ Why are the walls harmless? The walls are placed where the potential has climbed
 
 \subsection{Counting levels in the filled box}
 
-The empty box holds 903 levels at or below $E=1000$ (Sample Problem above). The paper reports 652 states with $E\le1000$ (Sec.~II~E and App.~A step~4: ``$[0,1000]$ (tensors; 652 states)''). The Wu--Sprung potential occupies the box and pushes the levels up, so far fewer fit below 1000. How many should fit? The potential was built so that its levels follow the smooth zeros, so the count should be close to $\Nsm(1000)+\tfrac12$, and $\Nsm(1000)=648.6$. The agreement is close but not exact; we do not analyze the small difference here (Problem 19 suggests one likely contributor).
+The empty box holds 903 levels at or below $E=1000$ (Sample Problem above). The paper reports 652 states with $E\le1000$ (Sec.~II~E and App.~A step~4: ``$[0,1000]$ (tensors; 652 states)''); these are the eigenstates of the smooth (unperturbed) Wu--Sprung potential on the finite-difference grid, used as the basis for the second-order state sums of Sec.~II~E. The Wu--Sprung potential occupies the box and pushes the levels up, so far fewer fit below 1000. How many should fit? The potential was built so that its levels follow the smooth zeros, so the count should be close to $\Nsm(1000)+\tfrac12$, and $\Nsm(1000)=648.6$. The agreement is close but not exact; we do not analyze the small difference here. (The answer to Problem 19 names one possible contributor; it is an untested conjecture, not a result.)
 
 \subsection{Level index and turning points}
 
@@ -974,9 +981,9 @@ The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth p
 
 \textbf{17.} $I_4=0.8740$. The rule gives $\frac{2I_4}{\pi}E^{3/4}=n-\frac12$, so $E_{10}\approx\bigl[\pi(9.5)/(2I_4)\bigr]^{4/3}=17.07^{4/3}=43.96$. The tridiagonal method (for example $L=6$, $N=4000$) gives $E_{10}=43.98$: agreement to about $0.05\%$.
 
-\textbf{19.} Empty box: $n\le2L\sqrt{1000}/\pi=903.6$, so 903 levels. $\Nsm(1000)=\frac{1000}{2\pi}\log\frac{1000}{2\pi}-\frac{1000}{2\pi}+\frac78=648.6$. The paper's filled box has 652. The Wu--Sprung potential raises the levels so that about 250 fewer fit below 1000, and its count is close to the smooth count of zeros, as intended. The few extra states are not analyzed in this chapter; one likely contributor is that finite-difference eigenvalues of high levels lie slightly below the true ones (the paper's Sec.~II~C notes that the dispersion reaches about two mean spacings at levels 401--500 on its working grid), which lets a few more levels fall under the cutoff. Chapter~\ref{ch:finite-differences} studies this bias.
+\textbf{19.} Empty box: $n\le2L\sqrt{1000}/\pi=903.6$, so 903 levels. $\Nsm(1000)=\frac{1000}{2\pi}\log\frac{1000}{2\pi}-\frac{1000}{2\pi}+\frac78=648.6$. The paper's filled box has 652. The Wu--Sprung potential raises the levels so that about 250 fewer fit below 1000, and its count is close to the smooth count of zeros, as intended. The few extra states are not analyzed in this chapter. One possible contributor, offered as an untested conjecture (we have not checked it by computation), is that finite-difference eigenvalues of high levels lie slightly below the true ones (the paper's Sec.~II~C notes that the dispersion reaches about two mean spacings at levels 401--500 on its working grid), which lets a few more levels fall under the cutoff. Chapter~\ref{ch:finite-differences} studies this bias.
 
-\textbf{21.} $\rho=\log(811.18/2\pi)/2\pi=4.8606/6.2832=0.774$ per unit energy, mean spacing $1.293$. Empty box: $\rho=L/(\pi\sqrt E)=44.883/(\pi\times28.481)=0.502$, spacing $1.99$. The zeros (and hence the Wu--Sprung levels) are about 1.5 times denser there, even though the filled box has fewer levels below that energy in total: the zeros' density is still rising while the box's is falling.
+\textbf{21.} $\rho=\log(811.18/2\pi)/2\pi=4.8606/6.2832=0.774$ per unit energy, mean spacing $1.293$. Empty box: $\rho=L/(\pi\sqrt E)=44.883/(\pi\times28.481)=0.502$, spacing $1.99$. At this one energy the zeros (and hence the Wu--Sprung levels, which follow them on average) are about 1.5 times denser than the empty box: $0.774/0.502=1.54$. This compares densities (levels per unit energy) at a single energy, not cumulative counts of levels below it.
 
 \textbf{23.} For $V\gg V_0$: $\sqrt{V-V_0}\approx\sqrt V$; the denominator of the logarithm is $\sqrt V-\sqrt{V-V_0}=\frac{V_0}{\sqrt V+\sqrt{V-V_0}}\approx\frac{V_0}{2\sqrt V}$ (multiply and divide by $\sqrt V+\sqrt{V-V_0}$); the numerator is $\approx2\sqrt V$; so the ratio is $\approx4V/V_0$. Then $x\approx\frac{\sqrt V}{\pi}\bigl[\log\frac{V_0}{2\pi e^2}+\log\frac{4V}{V_0}\bigr]=\frac{\sqrt V}{\pi}\log\frac{4V}{2\pi e^2}=\frac{\sqrt V}{\pi}\log\frac{2V}{\pi e^2}$; the constant $V_0$ cancels. At $V=1000$: $\frac{31.623}{\pi}(6.4562-2)=44.86$ versus $44.883$. At $V=1500$: $\frac{38.730}{\pi}(6.8616-2)=59.93$ versus $59.957$. The neglected terms cost about $0.03$.
 

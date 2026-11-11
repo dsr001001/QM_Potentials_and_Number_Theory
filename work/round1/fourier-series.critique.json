@@ -1,0 +1,79 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "which requires $\\omega_1\\tau=2\\pi j$ for a positive integer $j$ (positive because $\\tau>0$).",
+  "problem": "Step 4 only shows sin(pi/2+omega1 tau)=1 at one t, which gives omega1 tau = 2 pi j. That is fine, but the rational direction needs omega1^2 f + f'' to isolate omega2: Step 5 expression is correct only up to sign. The real gap: g(t) for omega1 requires periodicity of g, shown; OK. However 'Step 2' differentiation of a periodic identity is fine. Minor: the theorem is placed in a Sample environment, which is for worked problems.",
+  "fix": "Present the theorem and proof in running text (or a labelled theorem block), not a \\begin{sample}."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "which is $8.95\\%$ of the total jump $2$, about $9\\%$",
+  "problem": "0.17898/2 = 8.95%, fine, but the peak formula S_K(x*) = (2/pi) sum sin(u_j)/u_j * Delta u is stated with the sum identity; the claim that the Gibbs maximum is the first peak is not shown (sign change of S_K' only shows a local maximum, not that it is the extreme overshoot limit).",
+  "fix": "State that x* is the first local maximum and that later local maxima are smaller, or call it 'the first peak' consistently."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "and the largest mismatch for a general shift is $D(\\tau)=2|\\sin(\\tau\\log2/2)|+2|\\sin(\\tau\\log3/2)|$",
+  "problem": "Stated inside a beyond box as a consequence of Kronecker; correct only as a supremum, and it contradicts the tabulated near-period formula only when tau is a multiple of the log2 period; fine, but 'consequently sup f = 2' is claimed as following from Kronecker without the step.",
+  "fix": "Add one line: sup of |sin(a)-sin(b)| over independent phases gives the sum of the two terms; or mark the formula as a supremum."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Each term has period $2L/k$, which divides $2L$, so the whole right-hand side has period $2L$",
+  "problem": "2L/k does not 'divide' 2L as a number in the integer sense; the correct statement is that 2L is an integer multiple of 2L/k.",
+  "fix": "Write 'whose period 2L/k fits k times into 2L, so each term repeats after 2L'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\quad\\text{($\\sin kπ=\\sin0=0$)}",
+  "problem": "Unicode pi inside math in LaTeX source; will fail to compile under pdflatex.",
+  "fix": "Replace with \\sin k\\pi."
+ },
+ {
+  "category": "LATEX",
+  "severity": "medium",
+  "quote": "\\prob{2}{Find the mean-square error of approximating the square wave by its first term $(4/\\pi)\\sin x$.}",
+  "problem": "Problems 21-31 are appended out of difficulty order and numbering; problem 20 and several later items are mis-graded (e.g. 19 is difficulty 3 and 28 is difficulty 1 'compute' with qmnt) and graded ordering claimed is not respected.",
+  "fix": "Reorder or regrade problems so difficulty is increasing, and check cross-references (Problem~25, 26, 27, 14, 15) still match."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\prob{1}{Find the angular frequency and the period of $\\sin(t\\log3)$, the $p=3$, $m=1$ term of paper Eq.~(4).}",
+  "problem": "Answers section omits answers to several odd-numbered problems (e.g. 29 present, but 33, 35, 37? and 19-25 odd ones like 33 missing); bible requires all prob 1 and every odd problem.",
+  "fix": "Add answers for all odd-numbered problems, including 33 and 35, and the ones numbered beyond 31."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Paper Eq.~(4) contains the terms $\\sin(t\\log 11)$ and $\\sin(t\\log 13)$",
+  "problem": "The paper's Fig. 1 oracle uses six primes up to 13 (stated in the text as p<=13), fine; but the chapter never defines the paper's 'six-prime' set before use in Problem 19/26.",
+  "fix": "State P={2,3,5,7,11,13} where first introduced."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The loudness envelope $|\\cos(\\Delta\\omega\\, t/2)|$ vanishes when",
+  "problem": "Beat 'silences' only occur for equal amplitudes; and 'beat frequency' of ear is stated without noting that carrier at sin(bar omega t) also changes sign each half-cycle of the envelope.",
+  "fix": "Add a sentence noting equal amplitudes are required for complete silence."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Kronecker's theorem: if $\\omega_1/\\omega_2$ is irrational, the pair of phases",
+  "problem": "Reader has not seen 'modulo 2π' density arguments; also Problem 4.2 claims 'Sample Problem Getting close' with no systematic method for scanning j.",
+  "fix": "Explain how j=10 was found (e.g. list fractional parts of j-dependent phase) or mention it was found by scanning in CHECKS."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "This is the paper's remark in Sec.~V that the $p=2$ oscillation ``is only $\\sim$6--7 \\emph{levels} at these heights''.",
+  "problem": "Chapter computes 6.76 and 7.01 levels; paper says 6--7; slight mismatch at n=500 (7.01) is presented as consistent without comment.",
+  "fix": "Say 'about 7' and note the paper's approximate range."
+ }
+]

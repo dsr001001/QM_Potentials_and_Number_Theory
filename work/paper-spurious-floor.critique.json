@@ -1,0 +1,135 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "\\item The surrogate-validity paragraph: the surrogate's first neglected term is fourth order and its relative error scales as amplitude squared.",
+  "problem": "Placeholder: not a real quote. See the next entries for located issues.",
+  "fix": "Ignore."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The factor follows from $0.232/0.108=2.1$ and $0.232/0.033=7.0$.",
+  "problem": "The ratios as written are fine, but the CHECKS script asserts 0.232/0.019=12.2 and 0.232/0.108=2.15 with tolerance 0.01; the check fails (0.232/0.108=2.148, 0.232/0.049=4.735, 0.232/0.033=7.03, 0.232/0.035=6.63, 0.232/0.019=12.21). Answer 19 quotes values that fail the 0.01 tolerance.",
+  "fix": "Loosen tolerance to 0.05 in CHECKS or round the quoted ratios to the values actually computed (2.15, 4.73, 7.03, 6.63, 12.2 with exact arithmetic) and re-run."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Its block-coherent rms stays below 0.15 for every window, far below the floor.",
+  "problem": "The check only asserts <0.15; the stated claim 'far below the floor 0.232' is weak for 0.15 and not computed. The chapter quotes no actual qmnt values.",
+  "fix": "Compute and quote the actual qmnt block rms for w=3,5,7,9,13 and assert them in CHECKS."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "In the Wu--Sprung potential the spacings shrink slowly with height instead, so there the high levels are the more fragile",
+  "problem": "Unsupported claim; also in the paper's problem the weights depend on matrix elements, not only spacings. Stated as fact without derivation or check.",
+  "fix": "Hedge ('plausibly') or remove; or justify using the mean gap 2π/log(s/2π)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Why does the PT-odd surrogate's validity break down first at the \\emph{lowest} levels in a potential like the box?",
+  "problem": "The box analysis in the chapter used cosine (even) modes with coupling 1/2 independent of level; for the odd class the claim that low levels fail first is not demonstrated, and the answer contradicts itself about Wu--Sprung.",
+  "fix": "Rephrase the checkpoint around the explicit one-mode box result (coupling 1/2 vs spacing 4κj(n±j)) or drop it."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Exact in-sample scores 0.2523 and 0.2477 are worse than the null; uncorrelated shifts of rms 0.065 and 0.044 spacings would do this.",
+  "problem": "Presented as explanation; the paper reports corr +0.14/+0.18 with surrogate, not that exact shifts are uncorrelated with the target. The chapter's sample is an idealization, but the key idea reads as a finding.",
+  "fix": "Add 'under the idealized assumption of zero correlation with the target' in the key idea."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "So the tensors were computed correctly, and the disagreement at full amplitude is due to amplitude alone.",
+  "problem": "Quarter-amplitude agreement supports but does not prove correctness of tensors or exclude other causes.",
+  "fix": "Soften to 'strong evidence that the tensors are correct and that amplitude is the main cause'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Follow the eigenvalue $E_n(a)$ that starts at the real, nondegenerate $E_n$ when $a=0$. Its conjugate $E_n(a)^*$ also starts at $E_n$ and is an eigenvalue of $H(-a)$, so it is the branch $E_n(-a)$",
+  "problem": "Identification of the conjugate branch with E_n(-a) assumes continuity and uniqueness of the branch; stated without justification (only partly covered in the beyond box).",
+  "fix": "Add a sentence: by continuity and non-degeneracy at a=0, the only eigenvalue of H(-a) near E_n for small a is E_n(-a)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Similar matrices have the same eigenvalues, and parity maps the branch labelled $n$ to itself, so $E_n(-a)=E_n(a)$.",
+  "problem": "Parity P is a similarity transform, but 'maps branch to itself' is asserted; also 'similar matrices' term not defined for the reader.",
+  "fix": "State that PH(-a)P^{-1}=H(a) so spectra coincide, and that near a=0 the branch starting at E_n is unique, hence equal."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The two special levels are $n=j$ (only partner $3j$; also a first-order imaginary diagonal) and $n=2j$ (only partner $4j$, because $|2j-2j|=0$ is not a level).",
+  "problem": "For n=j the diagonal element is (-1)^j/2 times (−δ_{2j,2j}) = nonzero, giving first-order imaginary shift; and for n=j partner j-2j<0 and 2j-j=j is itself. Not shown; the values δE_j=c²/(32κj²), δE_2j=c²/(48κj²) are given without derivation.",
+  "fix": "Show the two terms: E_j-E_{3j}=-8κj², so δE_j=c²/4/(8κj²); E_{2j}-E_{4j}=-12κj²."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The sum rule holds exactly.",
+  "problem": "The sample's sum involves different denominators; fine, but the text elsewhere claims truncated sum 'top two biased low' while level 4's truncated value -c²/48 vs -c²/120 is 2.5x; level 5 3x; ok. However 'the top level by a factor larger than fifteen' for 30 states is not derived in text.",
+  "fix": "State the full-basis value -1/(8·899) and the truncated one -1/(4·(900-784)) to justify the factor."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:level-statistics} and the paper's Sec.~III that the zero fluctuations have negative autocorrelation at lags 1--3",
+  "problem": "ch:level-statistics is not listed in the prerequisites, but is cited.",
+  "fix": "Add Chapter level-statistics to prerequisites."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/paper-spurious-floor_truncation.pdf}",
+  "problem": "Figure filename uses hyphens in the slug (paper-spurious-floor_...) consistent with slug, but no FIGURES part was supplied; six figure scripts are required (truncation, floors, float32, harvest, blocks, twolevel, boxexact).",
+  "fix": "Provide all figure scripts in the FIGURES section."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\section{Problems}",
+  "problem": "Computational problems must be at least 3 (present: 8, 11, 12, 15) and answers must exist for all \\prob{1} and every odd-numbered problem; answers for 3 problems (e.g. 4? 6, 8, 10, 12, 14...) are missing for odd numbers 17? and 21 (the last problems). Problems 21 and 23 style odd numbers (e.g. 21) have no answer.",
+  "fix": "Add answers for every odd-numbered problem (21 and others) and all \\prob{1} ones (2, 3, 13 present)."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "As percentages of the null 0.2438 (Problem~13)",
+  "problem": "Hard-coded problem number reference instead of a label; fragile.",
+  "fix": "Use a \\label on the problem or say 'see the Problems section'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\begin{pycode}\nimport numpy as np\n# Box with L = pi/2, so E_k = k^2; one cosine mode j with coefficient c",
+  "problem": "The listing uses eig-based matching with argmax over rows of v (v[idx] over rows, not columns); eigenvector columns are eigenvectors so argmax(abs(v),axis=1) picks the eigenvalue index of dominant state per component, which is the intended map but not explained.",
+  "fix": "Add a comment explaining that row n of v gives weights of unperturbed state n across eigenvectors."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The paper does not list $M$ for these fits in the main text, and the computation was not rerun in revision.",
+  "problem": "Unclear what M the reader should assume when computing; surrogate classes depend on M.",
+  "fix": "Note that M is not given in the main text and the reader should not assume a value."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "which is Eq.~(5) of the paper (there written $|A_{nm}|^2$; for real $A_{nm}$ the two coincide)",
+  "problem": "Fine but the sentence before claims 'Levels attract' without noting this is for the imaginary coupling only.",
+  "fix": "Add 'for an imaginary coupling'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A careful reader notices that the $w=13$ value 0.019 lies below the quoted range 0.03--0.11",
+  "problem": "Also the paper's range 0.03--0.11 excludes w=5 (0.049) ok but the chapter's key idea says '0.03--0.11 for $w=3$--9, 0.019 at $w=13$' inconsistent with paper's quote '3--13 levels'.",
+  "fix": "Quote the paper's text as is and flag the inconsistency in the paper explicitly once."
+ }
+]

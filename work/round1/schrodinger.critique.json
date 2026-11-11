@@ -1,0 +1,93 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Recall from Chapter~\\ref{ch:eigen} that the second derivative becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below.",
+  "problem": "This is the matrix for +d^2/dx^2. The Hamiltonian uses -d^2/dx^2, which has +2/h^2 on the diagonal and -1/h^2 off it. The text then states these entries without saying the sign was flipped.",
+  "fix": "Write: 'the second derivative becomes the matrix with -2/h^2 on the diagonal and 1/h^2 beside it; so -d^2/dx^2 has +2/h^2 and -1/h^2.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Generalize the beat argument of Sec.~\\ref{sec:schrodinger-tdse} to a matter wave in units $\\hbar=2m=1$",
+  "problem": "The beat discussion is in the subsection on phase and group velocity, in Sec. 3 (tdse). The cross-reference is vague but acceptable. The real defect is that the answer to this problem (28) is missing even though the problem is even-numbered (fine). However, the claim 'with no approximation' is correct only for the two-wave envelope.",
+  "fix": "Add 'for the two-wave superposition' to the problem statement."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The potential raises the energy everywhere inside the box, so fewer half-wavelengths fit below a given $E$",
+  "problem": "Wording is loose: the potential is bounded below by V_0>0 and rises, so it lowers the local wavenumber; 'raises the energy' is ambiguous.",
+  "fix": "Say 'the potential is positive inside the box, so the local wavenumber sqrt(E-V) is smaller than sqrt(E)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The same calculation with $u$ running from $0$ to $k\\pi$ shows that \\emph{every} box state $\\psi_k$ has normalization constant $1/\\sqrt L$ (the integral of $\\sin^2$ over $k$ half-periods is $k\\pi/2$, times $2L/\\pi$, divided by $k$... more simply:",
+  "problem": "Garbled mid-sentence self-correction with an ellipsis; confusing for a student.",
+  "fix": "Delete the false start and state: with u=k pi (x+L)/2L, dx=(2L/k pi)du and the integral of sin^2 over 0..k pi is k pi/2, giving A^2 L."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The second, with $u=g'$... more conveniently with $u=f^{*\\prime}$ and $\\dd v=g'\\dd x$:",
+  "problem": "Another visible false start in a derivation, violating the no-jump style.",
+  "fix": "Delete 'with u=g'... more conveniently' and just state u=f*' and dv=g' dx."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Equation~\\eqref{eq:schrodinger-favg} is the single most important formula for reading the paper's Sec.~II~C; hold on to it.",
+  "problem": "Fine, but the chapter uses the 'Born rule for energy' and expansion in eigenfunctions before completeness is justified; the proof of orthogonality is forward-referenced, which is acceptable. The 'Hermitian' term is used in the intro and Sec. 4 before definition.",
+  "fix": "Add a brief forward note in Sec. 4 that 'Hermitian' is defined in Sec. on Hermitian operators."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Chapter~\\ref{ch:bound-states} proves that these are \\emph{all} the eigenfunctions.",
+  "problem": "Promises a proof in another chapter whose contract may not include it; also the box with V=0 uniqueness is not shown here.",
+  "fix": "Say 'Chapter~\\ref{ch:bound-states} solves the box problem fully'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "This is why the paper never needs the time-dependent equation: everything about the system is encoded in the stationary states and their energies.",
+  "problem": "Requires completeness, which was only taken on trust; stated as definite.",
+  "fix": "Add 'given completeness (see the beyond box later in this chapter)'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\Cref{fig:schrodinger-staircase} shows both staircases.",
+  "problem": "Figures schrodinger_standing, planewave, born, beats, staircase and wusprung are included but the response shown contains no FIGURES section scripts.",
+  "fix": "Supply a '### FIG schrodinger_<name>' script for each of the six figures."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{Answer.}\n\\[\n\\boxed{\\lambda_e=0.1226~\\text{nm},\\qquad \\lambda_{\\rm ball}=1.14\\times10^{-34}~\\text{m}}\n\\]\n\\end{sample}",
+  "problem": "Sample/answer structure fine, but answers section omits odd-numbered problems 29-ish and several odd problems (e.g. 15 given, 25 given; 3 given) while problems 17,19 are present; problems 5 and 7 present. Checks: odd Problem 19/Problem 15 fine. Missing: no answer for problem counted odd 'Problem 29' does not exist; but Problem 24 plot has no answer needed. Fine. However the pycode in the answers section duplicates a listing >... acceptable.",
+  "fix": "Verify every odd-numbered problem has an answer; renumber carefully."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "In units $\\hbar=2m=1$, a stationary state has energy equal to the height of the first zeta zero, $E=t_1=14.134725$ (RE1).",
+  "problem": "Problems are fewer than 'at least 3 computational' flagged only by '(Computational)' labels; ok. But Wu-Sprung problem relies on a code snippet calling qmnt.smooth_zeros per n; fine. Minor: the phrase 'RE1' is used without definition in this chapter.",
+  "fix": "Write 'the first of the running-example zeros (the first ten zeros listed in Chapter 1)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The right panel of \\cref{fig:schrodinger-planewave} contrasts the two.",
+  "problem": "The figure is referenced before it appears and before the units section in which its caption refers.",
+  "fix": "Move the reference after the figure or note the units forward reference."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "which is $1.239$ at $t=1000$ and \\emph{shrinks} slowly as $t$ grows",
+  "problem": "Value is correct, but the preceding sentence claims N_sm derivative gives mean spacing; fine. No error. However the statement 'there are exactly 29 zeros below 100' is correct.",
+  "fix": "No change needed."
+ }
+]

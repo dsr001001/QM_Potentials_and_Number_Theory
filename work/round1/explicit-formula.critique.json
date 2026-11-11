@@ -1,0 +1,121 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The sum converges (conditionally) for each $x$. A proof is given in \\cite{davenport}",
+  "problem": "The sum over zeros in the Riemann--von Mangoldt formula is stated with the first-order term but the chapter's psi formula uses the symmetric ordering. This is fine. However the claim that the chapter's Landau sample reflects the Fourier transform with a 'cosine transform' summing over only positive t_n: the left side of the sample depends on the O(log T) error with T-dependent growth in x^{1/2}; the weights should include the factor e^{omega/2} consistently.",
+  "fix": "State in the Landau formula that the sum is over positive zeros and that the error term is O(log T) for fixed x, and clarify the e^{omega/2} factor."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "$\\sum_p 2p^{-\\sigma}\\le 2\\sum_{k\\ge2}k^{-\\sigma}$, which converges for $\\sigma>1$",
+  "problem": "The bound 2p^{-sigma} uses p^{-sigma}<=1/2, which fails for p=2, sigma close to 1 (2^{-sigma} slightly below 1/2 is fine) but the text earlier says 2^{-sigma}<1/2 for all sigma>1, which is true; however the step p^{-s}/(1-p^{-s}) <= 2p^{-sigma} requires 1-p^{-sigma}>=1/2, ok. Minor: 'p^{-sigma}\\le 2^{-sigma}<1/2' is fine. No error here.",
+  "fix": "No change needed."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "it grows roughly like $\\sqrt{x}$. The amplitudes of the waves",
+  "problem": "The sum of p^{-1/2} over primes up to x grows like 2 sqrt(x)/log x, not roughly sqrt(x); the statement is loose.",
+  "fix": "Say 'grows like $2\\sqrt{x}/\\log x$'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Dividing the amplitude by $\\pi$ gives the amplitude in $S(t)$",
+  "problem": "Table caption fine, but Table says the wave is of Im log zeta; sign aside OK. However 'Each pair ... periodic with period' is correct. The table amplitude for k=8 (2,3) is 1/(3*sqrt8)=0.1179, correct.",
+  "fix": "No change."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Summing over primes and then enlarging to all integers $k\\ge2$,",
+  "problem": "The bound sum_{m>=2} p^{-m sigma}/m <= sum p^{-m} uses sigma>1 so fine, but then log zeta(sigma) >= ... Step 4 uses log zeta(sigma)-1; fine. Step 3 inequality zeta(sigma) >= 1/(sigma-1) is correct.",
+  "fix": "No change."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Obstacle 3: jumps.",
+  "problem": "The argument that truncations cannot converge uniformly is correct, but the section header 'Why a truncated sum still works' then relies on a Fourier-midpoint analogy not applicable since the sawtooth has non-periodic jumps; labeled heuristic, but the sentence 'every zero satisfies exactly' is only up to O(1/t).",
+  "fix": "Keep the 'up to O(1/t)' qualifier wherever the exact level equation is quoted, including in the sample and summary."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Newton's method from $s=t_1$ (slope $0.129$, then a second iteration) gives $s_1=14.5214$",
+  "problem": "Newton iterations are not shown; student cannot reproduce.",
+  "fix": "Give the iterates (e.g. s=14.1347, Nsm=0.4493, step (0.5-0.4493)/0.129 ...)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Evaluating, $f(13.8202)=-0.0635$ and $f(14.1347)=+0.0110$",
+  "problem": "Function values are asserted without intermediate lines.",
+  "fix": "Show Nsm and Nfl values at both endpoints."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Here $f$ is a power series in the real variable $r$ with complex coefficients $w^m/m$, and its radius of convergence is $1/\\abs{w}>1$.",
+  "problem": "If w=0 the radius is infinite; also the reader has not seen term-by-term differentiation of complex-coefficient series.",
+  "fix": "Add 'radius at least 1/|w| (infinite if w=0)' and apply differentiation to real and imaginary parts."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Two continuous arguments of the same nonvanishing function along a path differ by $2\\pi\\times$(an integer), and that integer, being a continuous integer-valued function, is constant.",
+  "problem": "Also needs zeta nonvanishing for sigma>1, which is only deduced in a problem (Problem 18 uses it); the text asserts it.",
+  "fix": "Note that zeta(s)=exp(...) is nonzero for Re s>1 by the proved theorem."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "for $P=\\{2,3\\}$ it is about $617$",
+  "problem": "Fine numerically, but the paper's Table claim 'One prime beats every fitted operator by factor >=1.3' is used in Problem 13 with the 'best operator OOS rms 0.265' from Table I; the 0.265 row has corr -0.14 and is ridge; fine. However answer says 'at least 1.34' while the 0.271 row etc. also exist; consistent.",
+  "fix": "No change."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Notice that the line at $\\log3$ is deeper than the line at $\\log2$: the weight $\\log p/\\sqrt p$ is largest near $p=7$",
+  "problem": "The weight 'largest near p=7' is stated for log x/sqrt x maximum at e^2; fine, but the answer to Problem 21 claims the five deepest dips are at log7, log5, log11, log3, log13 'in roughly the order'; the weights give 7,11,5,13,3 order, and log 17 (0.687) exceeds log 3 (0.634). The claim is wrong.",
+  "fix": "Revise answer 21: the deepest by weight are 7, 11, 5, 13, 17; say the observed order may differ because of finite-T errors, and have the reader compute it."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "the check script asserts this",
+  "problem": "Answer 21 claims the check script confirms agreement within 30%, but the sum at log 2 was only asserted loosely; and Problem 15 claims script asserts; acceptable. The cosine sum also includes the cos(omega t) with omega=log2 near a zero-weight leakage from nearby peaks.",
+  "fix": "Quote the actual computed value rather than a tolerance."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Sampling at roughly 15 periods' worth of nearly evenly spaced points reproduces the time average.",
+  "problem": "Zeros 401--500 span about 100 zeros times spacing ~ 4.5 in t, i.e. ~50 periods of 9.06? Actually spacing at t~600 is ~ 2pi/log(100)=1.4, so 100 zeros cover ~140 in t, about 15 periods; OK but the points are spaced 1.4, not 'nearly evenly' relative to 3.02 harmonic period, aliasing possible.",
+  "fix": "State that spacing 1.4 is smaller than the shortest period 3.02 so the sampling resolves all three harmonics."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/explicit-formula_prime2.pdf}",
+  "problem": "Filenames must be figs/<slug>_<name>.pdf with slug explicit-formula; used hyphen-separated 'explicit-formula_prime2', consistent, but FIGURES section scripts were not provided for the six figures.",
+  "fix": "Provide ### FIG scripts for prime2, partial, staircase, levelfn, holdout, psi, landau."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Chapters~\\ref{ch:paper-memorization} and \\ref{ch:generalization}",
+  "problem": "Allowed chapter labels, fine; but \\ref{ch:sparse-frequency} etc. fine. Problem labels placed inside \\prob text may break if \\prob is not a paragraph context.",
+  "fix": "Ensure \\label inside \\prob is supported by the macro."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper also uses $T$ for the length of a training window (Sec.~II~D, App.~A step 20)",
+  "problem": "Overloaded-symbol note fine; but chapter uses T both as a height and in Landau as window length without distinguishing.",
+  "fix": "Add a note in the Landau section that T is the upper height."
+ }
+]

@@ -1,6 +1,6 @@
 import numpy as np
 from math import comb, ceil, sqrt, log, exp, pi
-from itertools import product
+from itertools import product, combinations
 from scipy import integrate, stats
 import qmnt
 
@@ -10,16 +10,20 @@ s = x.std(ddof=1)
 assert abs(x.mean() - 5) < 1e-12 and abs(s - 2.9155) < 1e-3
 assert abs(s/np.sqrt(5) - 1.3038) < 1e-3 and abs(x.var() - 6.8) < 1e-12
 assert abs(np.sqrt(6.8/5) - 1.166) < 1e-3          # ideal bootstrap SE
-# Monte Carlo bootstrap reproduces within ~1%
 rng = np.random.default_rng(0)
 m = x[rng.integers(0, 5, (20000, 5))].mean(1)
 assert abs(m.std() - 1.166) < 0.02
+# Monte Carlo accuracy of SE: 0.5*sqrt(2/(B-1)) ~ 1/sqrt(2B) = 0.5%
+B = 20000
+assert abs(0.5*np.sqrt(2/(B - 1)) - 0.005) < 1e-5 and abs(1/np.sqrt(2*B) - 0.005) < 1e-6
 
 # Sample 2: enumeration of (1,2,6)
 y = np.array([1., 2, 6])
-means = np.array([y[list(i)].mean() for i in product(range(3), repeat=3)])
+sums = np.array([y[list(i)].sum() for i in product(range(3), repeat=3)])
+means = sums/3
+assert abs(sums.sum() - 243) < 1e-9 and abs(sums.sum()/(27*3) - 3) < 1e-12
+assert abs((sums**2).sum() - 2565) < 1e-9 and abs((sums**2).sum()/9 - 285) < 1e-9
 assert abs(means.mean() - 3) < 1e-12
-assert abs((means**2).sum() - 285/3*3/3*3/3) < 1e9  # placeholder guard
 assert abs((means**2).mean() - 285/27) < 1e-12
 assert abs(means.var() - 14/9) < 1e-12 and abs(np.sqrt(14/9) - 1.247) < 1e-3
 assert len(set(np.round(means, 10))) == 10 == comb(5, 3)
@@ -48,11 +52,19 @@ lo, hi = np.percentile(rr, [2.5, 97.5])
 assert abs(lo - 0.95) < 0.01 and abs(hi - 0.97) < 0.01
 
 # Sample 5: AR(1)
-def fn(phi, N): k = np.arange(1, N); return 1 + 2*np.sum((1 - k/N)*phi**k)
+def fn(phi, N):
+    k = np.arange(1, N)
+    return 1 + 2*np.sum((1 - k/N)*phi**k)
 assert abs(fn(0.5, 200) - 2.98) < 0.005 and abs(200/fn(0.5, 200) - 67.1) < 0.2
 assert abs(np.sqrt(fn(0.5, 200)) - 1.726) < 0.002
 assert abs(fn(-0.5, 200) - 0.3356) < 0.001 and abs(200/fn(-0.5, 200) - 596) < 1.5
 assert abs(np.sqrt(fn(-0.5, 200)) - 0.579) < 0.002
+# tail bound for Eq. fn: |exact - approx| <= 2*|phi|^(n+1)/(n(1-|phi|)^2)
+for phi in (0.5, -0.5):
+    N = 10
+    approx = 1 + 2*(phi/(1 - phi) - phi/(1 - phi)**2/N)
+    bound = abs(phi)**(N + 1)/(N*(1 - abs(phi))**2)
+    assert abs(fn(phi, N) - approx) <= 2*bound*(1 + 1e-9) + 1e-14
 # block factors
 f400 = fn(0.5, 400); fb20 = fn(0.5, 20)
 assert abs(f400 - 2.99) < 0.005 and abs(fb20 - 2.8) < 0.005
@@ -65,7 +77,6 @@ assert abs(20/96 - 0.208) < 1e-3 and abs(100/96 - 1.042) < 1e-3
 
 # Sample 7: permutation test
 pool = [1, 2, 3, 4, 6, 8]
-from itertools import combinations
 D = [(2*sum(c) - 24)/3 for c in combinations(pool, 3)]
 assert sum(d >= 10/3 - 1e-12 for d in D)/20 == 0.1
 assert sum(abs(d) >= 10/3 - 1e-12 for d in D)/20 == 0.2
@@ -90,9 +101,10 @@ for m_, sd, z in [(0.134, 0.010, 0.3), (0.141, 0.006, -0.67), (0.138, 0.005, -0.
 for v, f in [(0.137, 0.439), (0.134, 0.451), (0.141, 0.422), (0.138, 0.434)]:
     assert abs(1 - v/0.244 - f) < 1e-3
 
-# Sample 11: multiple looks; Problem 14
+# Sample 11: multiple looks; Bonferroni; Problem 14
 assert abs(1 - 0.95**5 - 0.2262) < 1e-4 and abs(1 - 0.95**20 - 0.6415) < 1e-4
 assert abs(1 - 0.9975**20 - 0.0488) < 1e-4 and abs(1 - 0.95**10 - 0.4013) < 1e-4
+assert (1 - 0.05/20)**20 >= 0.95                  # Bernoulli instance
 
 # Sample 12: chance matches; Problem 29
 z = qmnt.zeros(400); T = z[399] - z[0]
@@ -111,6 +123,7 @@ for R, v in [(2, 1.128), (4, 2.059), (10, 3.078)]:
     assert abs(dR(R) - v) < 1e-3
 assert abs(0.014/2.059 - 0.0068) < 1e-4 and abs(0.10/3.92 - 0.0255) < 1e-4
 assert abs(0.0255/0.0068 - 3.75) < 0.01
+assert abs((0.43 - 0.33) - 0.10) < 1e-12 and abs((0.42 - 0.32) - 0.10) < 1e-12
 
 # Problem answers 1, 2, 5, 13, 19, 26, 31
 v = np.array([2., 5, 8]); assert abs(v.std(ddof=1)/sqrt(3) - 1.732) < 1e-3
@@ -124,5 +137,25 @@ assert abs(fn(0.5, 5) - 2.225) < 1e-9 and abs(np.sqrt(g0*2.225/400) - 0.0861) < 
 assert abs(np.sqrt(g0*fb20/400) - 0.0966) < 2e-4
 assert abs(0.010/sqrt(10) - 0.0032) < 1e-4
 assert ceil(0.025*20000) == 500 and ceil(0.975*20000) == 19500
-assert abs(1/np.sqrt(2*20000) - 0.005) < 1e-6
-print("all checks passed")
+
+# AR(1) block-bootstrap simulation behind Fig. ar1 (qualitative claims)
+rng = np.random.default_rng(5)
+def ar1(phi, N):
+    e = rng.normal(size=N + 200); xx = np.empty(N + 200); xx[0] = e[0]
+    for j in range(1, N + 200):
+        xx[j] = phi*xx[j-1] + e[j]
+    return xx[200:]
+true_se = np.sqrt(g0*f400/400)
+def cbb_ratio(ell, nser=100, nres=300, N=400):
+    out = []
+    nb = -(-N // ell)
+    for _ in range(nser):
+        xs = ar1(0.5, N)
+        st = rng.integers(0, N, size=(nres, nb))
+        ii = ((st[:, :, None] + np.arange(ell)[None, None, :]) % N).reshape(nres, -1)[:, :N]
+        out.append(xs[ii].mean(axis=1).std())
+    return np.mean(out)/true_se
+r1 = cbb_ratio(1); r20 = cbb_ratio(20)
+assert abs(r1 - 0.578) < 0.05
+assert 0.85 < r20 < 1.02 and r20 > r1
+print('all checks passed')

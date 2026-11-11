@@ -109,7 +109,7 @@ Dividing by $k$, the average of $k$ consecutive spacings is
 \frac{1}{k}\sum_{j=n}^{n+k-1}\Delta u_j = 1+\frac{\delta_{n+k}-\delta_n}{k}.
 \label{eq:level-statistics-meanone}
 \end{equation}
-If the fluctuations stay bounded, say $|\delta_n|\le C$ for all $n$ in the range of interest, then the correction term is at most $2C/k$ in size, and it goes to zero as $k$ grows. So \emph{the mean unfolded spacing is one}, whatever the original density was. This is the whole point of unfolding. For the zeros, $|\delta_n|$ is typically below one (Chapter~\ref{ch:counting-zeros}), so over ten thousand zeros the mean spacing differs from one by roughly $10^{-4}$.
+If the fluctuations stay bounded, say $|\delta_n|\le C$ for all $n$ in the range of interest, then the correction term is at most $2C/k$ in size, and it goes to zero as $k$ grows. So \emph{the mean unfolded spacing is one}, whatever the original density was. This is the whole point of unfolding. For the zeros, $|\delta_n|$ is typically below one (Chapter~\ref{ch:counting-zeros}). This is an observed typical size, not a proved bound. Taking $C\approx1$ as a rough size, over ten thousand zeros the mean spacing differs from one by at most about $2C/k=2\times10^{-4}$, that is, by something of order $10^{-4}$.
 
 \subsection{The local-gap version, and the link to the paper's fluctuations}
 
@@ -118,7 +118,22 @@ Often one uses a simpler recipe: divide each raw spacing by the local mean spaci
 \Delta u_n\approx\frac{E_{n+1}-E_n}{\gap(\bar E)},\qquad \bar E=\tfrac12(E_n+E_{n+1}).
 \label{eq:level-statistics-localgap}
 \end{equation}
-This is the first-order Taylor approximation of Eq.~\eqref{eq:level-statistics-unfold}: $\bar N(E_{n+1})-\bar N(E_n)\approx \bar N'(\bar E)\,(E_{n+1}-E_n)$, and $\bar N'=1/\gap$ by Eq.~\eqref{eq:level-statistics-gap}. The neglected term involves the curvature $\bar N''$; for the zeros $\Nsm''(t)=1/(2\pi t)$, which is small once $t$ is large.
+This is the first-order Taylor approximation of Eq.~\eqref{eq:level-statistics-unfold}: $\bar N(E_{n+1})-\bar N(E_n)\approx \bar N'(\bar E)\,(E_{n+1}-E_n)$, and $\bar N'=1/\gap$ by Eq.~\eqref{eq:level-statistics-gap}.
+
+How large is the neglected part? Write $\Delta=E_{n+1}-E_n$, so that $E_{n+1}=\bar E+\Delta/2$ and $E_n=\bar E-\Delta/2$. Taylor expansion about $\bar E$ gives
+\begin{equation}
+\bar N\left(\bar E\pm\tfrac{\Delta}{2}\right)=\bar N(\bar E)\pm\bar N'\frac{\Delta}{2}+\bar N''\frac{\Delta^2}{8}\pm\bar N'''\frac{\Delta^3}{48}+\cdots,
+\end{equation}
+with all derivatives evaluated at $\bar E$. Subtracting the lower sign from the upper sign, the even-order terms cancel:
+\begin{equation}
+\bar N(E_{n+1})-\bar N(E_n)=\bar N'\Delta+\bar N'''\frac{\Delta^3}{24}+\cdots .
+\end{equation}
+Because we expand about the midpoint, the curvature term $\bar N''$ drops out, and the relative error of the shortcut is approximately $\bar N'''\Delta^2/(24\,\bar N')$. For the zeros, $\Nsm'(t)=\log(t/2\pi)/(2\pi)$ (Eq.~\eqref{eq:level-statistics-density}), $\Nsm''(t)=1/(2\pi t)$ and $\Nsm'''(t)=-1/(2\pi t^2)$, so
+\begin{equation}
+\text{relative error}\approx-\frac{\Delta^2}{24\,\bar t^{\,2}\log(\bar t/2\pi)} .
+\label{eq:level-statistics-shortcuterr}
+\end{equation}
+The shortcut is therefore accurate whenever the spacing $\Delta$ is small compared with the height $\bar t$, which is true for every zero and becomes better and better higher up.
 
 The same Taylor step links Eq.~\eqref{eq:level-statistics-delta} to the fluctuation used throughout the paper, $(t_n-s_n)/\gap_n$ (Chapter~\ref{ch:counting-zeros}). Since $\Nsm(s_n)=n-\tfrac12$,
 \begin{align}
@@ -196,7 +211,7 @@ print(np.round(u - (n - 0.5), 3))   # fluctuations delta_n
 print(np.round(np.diff(u), 3))      # unfolded spacings
 \end{pycode}
 
-How good is the local-gap shortcut of Eq.~\eqref{eq:level-statistics-localgap} here? The raw spacing is $t_2-t_1=6.887$; at the midpoint $\bar t=17.578$ the mean gap is $6.107$, so the shortcut gives $1.128$ instead of the exact $1.121$. The difference comes from the curvature of $\Nsm$, which matters most at low $t$.
+How good is the local-gap shortcut of Eq.~\eqref{eq:level-statistics-localgap} here? The raw spacing is $t_2-t_1=6.887$; at the midpoint $\bar t=17.578$ the mean gap is $6.107$, so the shortcut gives $1.128$ instead of the exact $1.121$. The relative difference, $(1.121-1.128)/1.128=-0.0062$, is what Eq.~\eqref{eq:level-statistics-shortcuterr} predicts: with $\Delta^2=47.43$, $\bar t^{\,2}=309.0$ and $\log(\bar t/2\pi)=1.0288$, it gives $-47.43/(24\times309.0\times1.0288)=-0.0062$. Higher up the error shrinks rapidly, because $\Delta$ shrinks and $\bar t$ grows.
 
 \begin{pitfall}
 Unfolding with the wrong smooth function does not merely shift numbers: it changes the shape of every statistic. If $\bar N$ grows too fast in some region, spacings there are inflated and the histogram acquires a spurious tail. Always check that your unfolded spacings have mean one over each part of the spectrum you study, not just overall.
@@ -228,7 +243,7 @@ Because it is a probability density on $s\ge0$ and because unfolding forces the 
 \int_0^\infty p(s)\,\dd s=1,\qquad \int_0^\infty s\,p(s)\,\dd s=1 .
 \label{eq:level-statistics-twoconditions}
 \end{equation}
-The first is normalization (Chapter~\ref{ch:probability}); the second is the unit mean. These two conditions will fix all the constants in the Wigner surmises.
+The first is normalization (Chapter~\ref{ch:probability}); the second is the unit mean. These two conditions will fix all the constants in the Wigner surmises. Keep in mind which laws are exact. The Poisson law will be derived exactly for independent levels, and the Wigner surmises exactly for $2\times2$ random matrices. For large random matrices, and for the zeros, the surmises are only close approximations to the true spacing distributions (see the box on large matrices in Sec.~\ref{sec:level-statistics-wigner}).
 
 \textbf{Estimating $p(s)$ from data.} Given $K$ unfolded spacings, divide the $s$ axis into bins of width $b$. If $c_j$ spacings fall in bin $j$, the histogram estimate of $p$ at the center of that bin is
 \begin{equation}
@@ -257,7 +272,7 @@ What would the spacings look like if levels knew nothing about each other? Model
 
 \subsection{Derivation from the finite model}
 
-Pick one of the points; call its position $y$, and suppose $y$ is not within distance $s$ of the right end (as $N\to\infty$ the fraction of points near the end goes to zero, so this costs nothing). The nearest neighbor to the right is farther than $s$ exactly when none of the other $N-1$ points lands in the interval $(y,y+s]$.
+Pick one of the points; call its position $y$, and suppose $y$ is not within distance $s$ of the right end. This costs nothing in the limit. A reference point chosen at random lies within $s$ of the right end with probability $s/N$ (the length of that strip divided by the total length), and for fixed $s$ this tends to zero as $N\to\infty$. Because all $N$ points were thrown independently, knowing where the reference point landed tells us nothing about the other $N-1$: each of them is still uniform on the whole interval. The nearest neighbor to the right is farther than $s$ exactly when none of the other $N-1$ points lands in the interval $(y,y+s]$.
 
 \textbf{One other point.} Because it is uniform on a length $N$, it lands in an interval of length $s$ with probability $s/N$, and misses it with probability $1-s/N$.
 
@@ -309,7 +324,17 @@ $\int_0^{0.1}s^2(1-Bs^2)\,\dd s=\frac{(0.1)^3}{3}-B\frac{(0.1)^5}{5}=3.3333\time
 
 \textbf{Step 3: ratio.} $0.0952/0.00107\approx89$: small gaps are about 89 times rarer under GUE.
 
-\textbf{Step 4: large gaps.} Poisson: $\Pr(s>2)=e^{-2}=0.135$. GUE: integrate the surmise numerically (for example \texttt{scipy.integrate.quad}) from 2 to $\infty$, giving $0.017$, about 8 times rarer.
+\textbf{Step 4: large gaps, Poisson.} $\Pr(s>2)=Q(2)=e^{-2}=0.135$.
+
+\textbf{Step 5: large gaps, GUE.} Write $A=32/\pi^2$ and $B=4/\pi$, and note that $A=2B^2$ (because $2\cdot16/\pi^2=32/\pi^2$). Then $\Pr(s>2)=A\int_2^\infty s\cdot se^{-Bs^2}\,\dd s$. Integrate by parts with $f=s$ and $\dd g=se^{-Bs^2}\dd s$, so $g=-e^{-Bs^2}/(2B)$:
+\[
+\int_2^\infty s^2e^{-Bs^2}\dd s=\left[-\frac{se^{-Bs^2}}{2B}\right]_2^\infty+\frac{1}{2B}\int_2^\infty e^{-Bs^2}\dd s=\frac{e^{-4B}}{B}+\frac{1}{2B}\int_2^\infty e^{-Bs^2}\dd s .
+\]
+In the last integral substitute $w=\sqrt B\,s$: it becomes $\frac{1}{\sqrt B}\int_{2\sqrt B}^\infty e^{-w^2}\dd w=\frac{\sqrt\pi}{2\sqrt B}\,\mathrm{erfc}(2\sqrt B)$, where $\mathrm{erfc}(z)=\frac{2}{\sqrt\pi}\int_z^\infty e^{-w^2}\dd w$ is the complementary error function, a tabulated function (\texttt{scipy.special.erfc}). Multiplying by $A=2B^2$:
+\[
+\Pr(s>2)=2Be^{-4B}+\frac{\sqrt{\pi B}}{2}\,\mathrm{erfc}(2\sqrt B)=\frac{8}{\pi}e^{-16/\pi}+\mathrm{erfc}\!\left(\frac{4}{\sqrt\pi}\right),
+\]
+using $\sqrt{\pi B}=2$. Numerically this is $0.0156+0.0014=0.017$, about 8 times rarer than Poisson.
 
 \textbf{Answer:}
 \[\boxed{\Pr(s<0.1):\ 0.0952\ \text{(Poisson)}\ \text{vs}\ 1.07\times10^{-3}\ \text{(GUE)};\quad \Pr(s>2):\ 0.135\ \text{vs}\ 0.017}\]
@@ -529,15 +554,19 @@ You may object that we \emph{chose} $x$ and $y$ (or $x,y,z$) to have equal varia
 \begin{equation}
 e^{-a^2/2\sigma_0^2}\,e^{-d^2/2\sigma_0^2}\,e^{-b^2/\sigma_0^2}=e^{-(a^2+d^2+2b^2)/2\sigma_0^2}=e^{-\mathrm{tr}(H^2)/2\sigma_0^2},
 \end{equation}
-because the \textbf{trace} (sum of diagonal entries) of $H^2$ is $a^2+b^2+b^2+d^2$. The trace has the property $\mathrm{tr}(XY)=\sum_i\sum_jX_{ij}Y_{ji}=\sum_j\sum_iY_{ji}X_{ij}=\mathrm{tr}(YX)$, so for any rotation $O$ (with $O^\top O=I$), $\mathrm{tr}\big((OHO^\top)^2\big)=\mathrm{tr}(OH^2O^\top)=\mathrm{tr}(H^2O^\top O)=\mathrm{tr}(H^2)$. The ensemble therefore has no preferred basis: rotating every matrix leaves the probabilities unchanged. It is called the \textbf{Gaussian Orthogonal Ensemble (GOE)}.
+because the \textbf{trace} (sum of diagonal entries) of $H^2$ is $a^2+b^2+b^2+d^2$. (Recall the matrix product from Chapter~\ref{ch:linear-algebra}: $(XY)_{ik}=\sum_jX_{ij}Y_{jk}$; for $H^2$ the diagonal entries are $a^2+b^2$ and $b^2+d^2$. A rotation of the plane is a real matrix $O$ with $O^\top O=I$, and $OHO^\top$ is the same linear map written in the rotated basis, Chapter~\ref{ch:linear-algebra}.) The trace has the property $\mathrm{tr}(XY)=\sum_i\sum_jX_{ij}Y_{ji}=\sum_j\sum_iY_{ji}X_{ij}=\mathrm{tr}(YX)$, so for any rotation $O$ (with $O^\top O=I$), $\mathrm{tr}\big((OHO^\top)^2\big)=\mathrm{tr}(OH^2O^\top)=\mathrm{tr}(H^2O^\top O)=\mathrm{tr}(H^2)$. The ensemble therefore has no preferred basis: rotating every matrix leaves the probabilities unchanged. It is called the \textbf{Gaussian Orthogonal Ensemble (GOE)}.
 
 Now convert to the variables of Eq.~\eqref{eq:level-statistics-param}. Since $a=c+x/2$ and $d=c-x/2$,
 \begin{equation}
 a^2+d^2=\left(c+\tfrac x2\right)^2+\left(c-\tfrac x2\right)^2=2c^2+\tfrac{x^2}{2},
 \end{equation}
-so the density in $(c,x)$ is proportional to $e^{-c^2/\sigma_0^2}\,e^{-x^2/4\sigma_0^2}$. (The change from $(a,d)$ to $(c,x)$ is linear; the determinant of $\partial(a,d)/\partial(c,x)=\begin{pmatrix}1&\tfrac12\\1&-\tfrac12\end{pmatrix}$ is $-1$, so small areas are preserved and the density only needs re-expressing, Chapter~\ref{ch:linear-algebra}.) The density factorizes, so $x$ is a Gaussian of variance $2\sigma_0^2$, independent of $c$. And $y=2b$ has variance $4\cdot\sigma_0^2/2=2\sigma_0^2$ (scaling rule $\mathrm{Var}(kX)=k^2\mathrm{Var}(X)$, Chapter~\ref{ch:probability}). So $x$ and $y$ are independent with equal variance $\sigma^2=2\sigma_0^2$, exactly our assumption. The same computation with a complex $b$ whose real and imaginary parts each have variance $\sigma_0^2/2$ gives the \textbf{Gaussian Unitary Ensemble (GUE)}, with density $\propto e^{-\mathrm{tr}(H^2)/2\sigma_0^2}$ invariant under unitary changes of basis (Problem~\ref{prob:level-statistics-gue-check}).
+so the density in $(c,x)$ is proportional to $e^{-c^2/\sigma_0^2}\,e^{-x^2/4\sigma_0^2}$. (The change from $(a,d)$ to $(c,x)$ is linear; the determinant of $\partial(a,d)/\partial(c,x)=\begin{pmatrix}1&\tfrac12\\1&-\tfrac12\end{pmatrix}$ is $-1$, so small areas are preserved and the density only needs re-expressing, Chapter~\ref{ch:linear-algebra}.) The density factorizes, so $x$ is a Gaussian of variance $2\sigma_0^2$, independent of $c$. And $y=2b$ has variance $4\cdot\sigma_0^2/2=2\sigma_0^2$ (scaling rule $\mathrm{Var}(kX)=k^2\mathrm{Var}(X)$, Chapter~\ref{ch:probability}). So $x$ and $y$ are independent with equal variance $\sigma^2=2\sigma_0^2$, exactly our assumption. Now let the off-diagonal entry be complex, $b=b_r+\ii b_i$, with $b_r,b_i$ independent Gaussians each of variance $\sigma_0^2/2$. Comparing with Eq.~\eqref{eq:level-statistics-paramC}, $y=2b_r$ and $z=2b_i$, so each has variance $4\cdot\sigma_0^2/2=2\sigma_0^2$. The variable $x=a-d$ has variance $2\sigma_0^2$ and is independent of $c$, exactly as above. Finally $x$, $y$, $z$ are independent of each other because they are built separately from the independent numbers $(a,d)$, $b_r$ and $b_i$. So again all three components have the common variance $\sigma^2=2\sigma_0^2$. The joint density is proportional to
+\[
+e^{-(a^2+d^2)/2\sigma_0^2}\,e^{-(b_r^2+b_i^2)/\sigma_0^2}=e^{-(a^2+d^2+2|b|^2)/2\sigma_0^2}=e^{-\mathrm{tr}(H^2)/2\sigma_0^2},
+\]
+because the diagonal entries of $H^2$ are now $a^2+|b|^2$ and $|b|^2+d^2$. This is the \textbf{Gaussian Unitary Ensemble (GUE)}. Its density is unchanged under unitary changes of basis $H\to UHU^\dagger$ with $U^\dagger U=I$, by the same trace argument with $O^\top$ replaced by $U^\dagger$; Problem~\ref{prob:level-statistics-gue-check} asks you to write this out.
 
-Physically, real symmetric Hamiltonians arise for systems that are invariant under time reversal (no magnetic field, for instance), and complex Hermitian ones for systems where time-reversal symmetry is broken \cite{mehta}. The exponent of $s$ near zero is called the \textbf{Dyson index} $\beta$: $\beta=1$ for GOE, $\beta=2$ for GUE, and $\beta=4$ for a third (``symplectic'') ensemble treated in Problem~\ref{prob:level-statistics-beta}. Poisson corresponds to $\beta=0$. The rule behind all of them is the counting of Sec.~\ref{sec:level-statistics-repulsion}: if a degeneracy needs $D$ independent conditions, then $p(s)\propto s^{D-1}$ near zero, with $D=2$ (GOE), $3$ (GUE), $5$ (symplectic).
+Physically, real symmetric Hamiltonians arise for systems that are invariant under time reversal (no magnetic field, for instance), and complex Hermitian ones for systems where time-reversal symmetry is broken \cite{mehta}. The exponent of $s$ near zero is called the \textbf{Dyson index} $\beta$: $\beta=1$ for GOE, $\beta=2$ for GUE, and $\beta=4$ for a third (``symplectic'') ensemble treated in Problem~\ref{prob:level-statistics-beta}. Poisson corresponds to $\beta=0$. The rule behind all of them is the counting of Sec.~\ref{sec:level-statistics-repulsion}: if a degeneracy needs $D$ independent conditions, then $p(s)\propto s^{D-1}$ near zero, with $D=2$ (GOE), $3$ (GUE), $5$ (symplectic). The first two follow from the counting above: one condition from the diagonal ($a=d$) plus one (real $b$) or two (complex $b$) from the off-diagonal entry. The symplectic value we quote rather than derive: in that ensemble the off-diagonal element of the $2\times2$ (quaternion) matrix has four real components, so a degeneracy needs $1+4=5$ conditions \cite{mehta}.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/level-statistics_surmises.pdf}
@@ -650,7 +679,7 @@ You must be careful about what was proved.
 \textbf{Montgomery's theorem and the pair correlation conjecture.} Assuming the Riemann hypothesis (still open, Chapter~\ref{ch:zeta}), Montgomery proved that the pair correlation of the normalized zeros agrees with $1-(\sin\pi v/\pi v)^2$ when it is tested against a restricted class of smooth weighting functions (those whose Fourier transform, Chapter~\ref{ch:fourier-transform}, vanishes outside a finite interval). The statement that the agreement holds without this restriction is the \textbf{pair correlation conjecture}, which is open. See \cite{montgomery}, and the review \cite{schumayer}.
 \end{beyond}
 
-Odlyzko then tested these ideas numerically at great heights. His 1987 paper \cite{odlyzko87} used the first $10^5$ zeros and, separately, $10^5$ zeros starting just above zero number $10^{12}$. The spacing distribution and pair correlation of the high zeros matched the GUE predictions with striking accuracy. This match is a \textbf{numerical observation}, not a theorem.
+Odlyzko then tested these ideas numerically at great heights. His 1987 paper \cite{odlyzko87} computed large samples of zeros, including samples very high up the critical line. The spacing distribution and pair correlation of the high zeros matched the GUE predictions with striking accuracy. This match is a \textbf{numerical observation}, not a theorem.
 
 \begin{sample}{Reading the pair correlation}
 Evaluate $R_2(v)$ of Eq.~\eqref{eq:level-statistics-montgomery} at $v=0.1$, $0.5$, $1$; compare $v=0.1$ with the small-$v$ approximation; and find the expected number of other levels within distance $0.5$ on one side of a given level, comparing with Poisson.
@@ -728,7 +757,7 @@ The last point is precisely the gap between statistics and positions that the pa
 
 \subsection{Negative correlations of consecutive fluctuations}
 
-Look again at the column $\delta_n$ of Table~\ref{tab:level-statistics-re1}: $-0.051,+0.070,-0.107,+0.171,-0.183,\dots$ The signs mostly alternate. A zero pushed above its smooth position tends to be followed by one pushed below. This is the fluctuation side of level repulsion: if zero $n$ moves up, it crowds zero $n+1$, and the stiffness of the spectrum (spacings vary little, by Sec.~\ref{sec:level-statistics-wigner}) makes the pattern relax back.
+Look again at the column $\delta_n$ of Table~\ref{tab:level-statistics-re1}: $-0.051,+0.070,-0.107,+0.171,-0.183,\dots$ In this short sample of ten values the signs mostly alternate: a zero pushed above its smooth position tends to be followed by one pushed below. Ten values are only suggestive; Fig.~\ref{fig:level-statistics-acf} below measures the effect over 400 zeros. A heuristic picture (not a derivation) is that this is the fluctuation side of level repulsion: if zero $n$ moves up, it crowds zero $n+1$, and since spacings vary little (Sec.~\ref{sec:level-statistics-wigner}) the pattern tends to relax back. We have not derived a negative lag-1 correlation from the Wigner surmise; what can be shown exactly is only the identity below, which ties the spacing variance to the fluctuation statistics.
 
 We can quantify it. Recall from Chapter~\ref{ch:probability} that the autocovariance at lag $k$ of a stationary sequence with mean zero is $C_k=\langle\delta_n\delta_{n+k}\rangle$, and the autocorrelation is $r_k=C_k/C_0$. The unfolded spacing is $\Delta u_n=1+\delta_{n+1}-\delta_n$ (from Eq.~\eqref{eq:level-statistics-delta}), so
 \begin{align}
@@ -737,7 +766,7 @@ We can quantify it. Recall from Chapter~\ref{ch:probability} that the autocovari
 &=2\left(C_0-C_1\right).
 \label{eq:level-statistics-varlink}
 \end{align}
-A small spacing variance with a given fluctuation size $C_0$ requires $C_1$ close to $C_0$ (not the case here) \emph{or} a spacing variance that is itself fixed by repulsion; conversely, with $C_1<0$ the spacings are more variable than the fluctuations alone suggest. Either way, the two statistics are tied together.
+This is an identity, valid for any stationary sequence. It says that a spacing variance small compared with $2C_0$ requires $C_1$ close to $C_0$ (strong positive lag-1 correlation), while a negative $C_1$ makes the spacing variance larger than $2C_0$. For the zeros the second case holds: their lag-1 correlation is negative (Fig.~\ref{fig:level-statistics-acf}), so the spacings vary more than $2C_0$ alone would give. The identity fixes the relation between the two statistics but does not by itself decide the sign of $C_1$.
 
 \textbf{A simple model that shows the consequence.} Let $\varepsilon_n$ be independent random numbers with mean zero and variance $\sigma^2$, and let
 \begin{equation}
@@ -801,7 +830,7 @@ If consecutive fluctuations were \emph{positively} correlated ($r_1>0$, $r_2=0$)
 
 \textbf{Sec.~III, ``Within-height splits''.} The negative autocorrelation at lags 1--3 and the neighbor-mean correlation of $-0.26$ to $-0.41$ are explained by Sec.~\ref{sec:level-statistics-zeros}: repulsion makes neighbors disagree, so interpolation that assumes similarity points the wrong way. The paper uses this to call the negative correlations of Table~III at $M\le200$ ``mechanical''.
 
-\textbf{Sec.~V, ``The proposed mechanism fails quantitatively''.} The dominant $p=2$ oscillation has period $2\pi/\log2\approx9$ in $t$, ``only $\sim$6--7 levels at these heights''. Dividing a period in $t$ by the mean spacing (Eq.~\eqref{eq:level-statistics-gap}) is again unfolding (Problem~17).
+\textbf{Sec.~V, ``The proposed mechanism fails quantitatively''.} The dominant $p=2$ oscillation has period $2\pi/\log2\approx9$ in $t$, ``only $\sim$6--7 levels at these heights''. Dividing a period in $t$ by the mean spacing (Eq.~\eqref{eq:level-statistics-gap}) is again unfolding (Problem~\ref{prob:level-statistics-period}).
 
 \textbf{What this chapter does \emph{not} support.} Nothing in Fig.~2 bears on whether a fitted potential predicts. Statistics are shared by all GUE-like spectra; the paper's test (held-out positions, Figs.~1, 3, Tables I--V) is of a different and stronger kind.
 
@@ -836,7 +865,7 @@ If consecutive fluctuations were \emph{positively} correlated ($r_1>0$, $r_2=0$)
 \prob{3}{Using numpy, build a $400\times400$ GUE matrix ($H=(G+G^\dagger)/2$ with $G$ complex Gaussian), take the central 100 eigenvalues, unfold by dividing spacings by their mean, and compare the variance with $0.178$.}
 \prob{1}{The paper's null rms on zeros 401--500 is $0.263$ (Sec.~II C). In the language of this chapter, what quantity's rms is this?}
 \prob{2}{Paper Fig.~2 compares with GUE, not GOE. Which feature of the histogram near $s=0$ would distinguish the two?}
-\prob{2}{Using qmnt, find the mean gap at $t_{400}$ and the number of levels in one period $2\pi/\log2$ of the $p=2$ wave (RE2). Compare with the paper's ``6--7 levels'' (Sec.~V).}
+\prob{2}{\label{prob:level-statistics-period}Using qmnt, find the mean gap at $t_{400}$ and the number of levels in one period $2\pi/\log2$ of the $p=2$ wave (RE2). Compare with the paper's ``6--7 levels'' (Sec.~V).}
 \prob{3}{Using qmnt, compute $\corr(\delta_n,\tfrac12(\delta_{n-1}+\delta_{n+1}))$ for $n=2,\dots,399$ and compare with the paper's range $-0.26$ to $-0.41$ (Sec.~III).}
 \prob{2}{A spectrum is obtained by reflecting the unfolded zeros ($u\to-u$). Does its spacing histogram change? Can it predict the zeros? What does this say about Fig.~2?}
 \prob{1}{Estimate $\Pr(s<0.05)$ for GUE using the small-$\varepsilon$ law.}
@@ -864,7 +893,7 @@ If consecutive fluctuations were \emph{positively} correlated ($r_1>0$, $r_2=0$)
 
 \textbf{15.} The rms over zeros 401--500 of the fluctuation $\delta_n=(t_n-s_n)/\gap_n$, i.e.\ of unfolded deviations from the smooth positions.
 
-\textbf{17.} $t_{400}=676.1$ (from qmnt), $\gap\approx1.343$, and $9.065/1.343\approx6.7$ levels, inside ``6--7''.
+\textbf{17.} \texttt{qmnt.zeros(400)[-1]} gives $t_{400}\approx680$. Eq.~\eqref{eq:level-statistics-gap} then gives $\gap\approx1.341$ (it changes by only about $0.0004$ per unit of $t$ here), and one period of RE2 spans $9.065/1.341\approx6.8$ levels, inside ``6--7''.
 
 \textbf{19.} Reflection reverses the order of spacings but keeps the multiset of spacings, so the histogram is unchanged; the reflected positions are useless for predicting the zeros. Fig.~2 tests the statistics, not positions.
 

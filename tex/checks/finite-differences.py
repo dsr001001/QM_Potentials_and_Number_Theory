@@ -21,9 +21,9 @@ ex = [(np.pi/2)**2, np.pi**2, (1.5*np.pi)**2]
 rel = [(a-b)/a for a, b in zip(ex, ev)]
 assert np.allclose(rel, [0.0504, 0.189, 0.385], atol=6e-4)
 
-# Table ppw
-for n, v in [(4,.19),(6,.088),(8,.050),(12,.023),(24,.0057),(50,.0013)]:
-    assert abs(1-(np.sin(np.pi/n)/(np.pi/n))**2 - v) < 0.006*v + 2e-4
+# Table ppw: displayed value, half a unit in the last displayed digit
+for n, v, tol in [(4,.189,5e-4),(6,.0881,5e-5),(8,.0504,5e-5),(12,.0226,5e-5),(24,.00570,5e-6),(50,.0013,5e-5)]:
+    assert abs(1-(np.sin(np.pi/n)/(np.pi/n))**2 - v) < tol
 
 # Sample RE3
 L, N = 44.883, 6000
@@ -32,9 +32,11 @@ assert abs(h-0.0149585) < 1e-7
 E = (500*np.pi/(2*L))**2; Eh = box(N, L, 500)
 assert abs(E-306.21) < 0.01 and abs(Eh-304.46) < 0.01
 assert abs(E-Eh-1.744) < 0.002 and abs(h**2*E**2/12-1.748) < 0.002
+assert abs((E-Eh)/E-0.00570) < 1e-5
 spc = 1001*(np.pi/(2*L))**2
 assert abs(spc-1.226) < 1e-3 and abs((E-Eh)/spc-1.42) < 0.01
 assert abs(2*(N+1)/500-24.0) < 0.01
+assert abs(np.sqrt(h)-0.12) < 0.005   # rescaling factor sqrt(h)
 
 # Harmonic oscillator sample
 Nh = 199; hh = 20/200; x = -10+hh*np.arange(1, Nh+1)
@@ -47,6 +49,7 @@ V0 = 3.10073*np.pi
 assert abs(np.sqrt(811.18-V0)-28.31) < 0.01
 assert abs(2*np.pi/(np.sqrt(811.18-V0)*h)-14.8) < 0.1
 assert abs(2*np.pi/np.log(811.18/(2*np.pi))-1.293) < 0.002
+assert abs(2/0.263-7.6) < 0.05   # 'about eight times'
 assert abs((np.pi/np.log(V0/(2*np.pi)))**2-51.3) < 0.2
 def x_of_V(V):
     s, r = np.sqrt(V-V0), np.sqrt(V)
@@ -66,6 +69,7 @@ assert abs(h**4*E**3/1440-1.0e-3) < 1e-4
 
 # leakage sample, problem 19
 assert abs((811.1843588-2.5-808.5)-(811.1843588-(808.5+2.5))) < 1e-12
+assert abs((811.1843588-2.5-808.5)-0.1843588) < 1e-9
 assert abs((50-0.3-49.65)-0.05) < 1e-12
 
 # Problems
@@ -75,11 +79,11 @@ assert abs((np.exp(0.01)-1)/0.01-1.0050167) < 1e-7              # P3
 assert abs((4*2.343146-2)/3-2.457528) < 1e-6                     # P7
 assert abs(E1-2.457528-0.00987) < 1e-4
 r = 24001/12001; assert abs((4/r**2-1)/3-2.78e-5) < 2e-7          # P11
-from scipy.linalg import eigh_tridiagonal as et
-lv = et(2/h**2*np.ones(N), -np.ones(N-1)/h**2, eigvals_only=True,
+lv = eigh_tridiagonal(2/h**2*np.ones(N), -np.ones(N-1)/h**2, eigvals_only=True,
         select='i', select_range=(499, 499))[0]
 assert abs(lv-Eh) < 1e-8                                           # P15
 assert abs(4/h**2*np.cos(np.pi/(2*(N+1)))**2-17876.5) < 0.1       # P17
+assert abs((np.pi/2)**2-2.5) < 0.05                               # P17 'about 2.5 times'
 d = (np.sin(1.1)-np.sin(0.9))/0.2                                 # P21
 assert abs(d-0.5394022) < 1e-7 and abs(d-np.cos(1)+9.0005e-4) < 1e-8
 b = h**2*811.18**2/12; assert abs(b-12.3) < 0.05                  # P23

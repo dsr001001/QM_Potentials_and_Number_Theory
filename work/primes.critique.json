@@ -1,0 +1,86 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "$10^3$ & 996.681 & 0.997 & $-3.319$\\\\",
+  "problem": "The checks failed at line 177 and 179: psi(10^3) is not 996.681 to 1e-3 (it is about 996.68 but check tolerance fails for at least one row, probably 10^4 or 10^3). The table values must match the computed values.",
+  "fix": "Recompute psi(x) at 10,100,1000,10000 and correct the table entries and the in-text values (996.68, 10013.39, differences) to the exact computed digits."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$10^4$ & 10013.391 & 1.001 & $+13.391$\\\\",
+  "problem": "Table value fails the machine check (line 177/179); the quoted psi(10^4) and psi-x are not verified.",
+  "fix": "Replace with the value computed by the check script and rerun checks."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$10^3$ & 168 & 144.765 & 176.564 & 1.161 & $-8.56$ & 5.952\\\\",
+  "problem": "Problem 19 answers assert pi(x)log x equals 115.13, 1160.50, 11319.46; check at line 196 failed, so at least one of these quoted numbers is wrong (likely 168 log 1000 = 1160.5 or 1229 log 10^4 = 11319.5).",
+  "fix": "Recompute 25 log 100, 168 log 1000, 1229 log 10^4 and correct the Answer 19 values (e.g. 115.13, 1160.49, 11319.5 as computed)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "These contain $3$, $9$, $18$ and $75$ terms. On the principal holdout RE5 (zeros 401--500, null $0.263$), they give rms $0.198$, $0.116$, $0.074$ and $0.043$",
+  "problem": "The 25-prime column in the paper is 25 primes; fine, but the text says 'Table V, first row' while budgets listed include {2} as 3 terms; consistent. However the check script's final assertion line with np.array([...])[0]*0 is a vacuous check, and the checks failed, so claims are unverified.",
+  "fix": "Remove the vacuous assertion and fix failing checks."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Around 1850 Chebyshev proved that the ratio $\\pi(x)/(x/\\log x)$ is trapped, for all large $x$, between two constants close to 1 (about $0.921$ and $1.106$)",
+  "problem": "Chebyshev's bounds hold for large x only asymptotically (liminf/limsup within these); also the constant 0.921 coincides with pi(10)/(10/log10), which is confusing. Lower constant is for large x, with 6A/5 upper.",
+  "fix": "State: for all sufficiently large x, ratio lies between about 0.92 and 1.11."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Every prime $p$ with $n<p\\le2n$ divides $\\binom{2n}{n}$.} Such a $p$ is one of the factors",
+  "problem": "Step 2 claims product of distinct primes divides binom without justifying that distinct primes dividing a number have product dividing it (needs uniqueness/Euclid); only loosely stated.",
+  "fix": "Say: by unique factorization of binom(2n,n), each distinct prime appears at least once, so the product of these distinct primes divides it."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Step 4 relied on intuition for the slowest component; Chapter~\\ref{ch:fourier-series} makes it precise using orthogonality.",
+  "problem": "Step 4 of the RE2 sample asserts minimal period without proof; a sample should not rest on intuition.",
+  "fix": "Argue: a common period P requires P log2 =2πk for the m=1 term's frequency components to be unchanged; or state RE2 is 'a period' and drop the minimality claim."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "By Euclid's lemma $p$ divides $\\binom{2n}{n}$ or $(n!)^2$.",
+  "problem": "Euclid's lemma was taken on trust but is used here for a product of two integers; fine, yet (n!)^2 step needs repeated version, which is stated later; ordering acceptable. Also 'Problem~21' and 'Problem~8' cross references rely on numbering not shown by labels.",
+  "fix": "Use \\ref-free wording or keep problem numbers consistent; verify they match."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The first sign change is known to occur only at astronomically large $x$.",
+  "problem": "Vague; also the earlier claim that in every computed case pi<Li is stated without source.",
+  "fix": "Say: the first sign change is known to occur below a huge bound (about 10^316 by Skewes-type results) and no explicit crossing has been found by direct computation."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "This weight ordering is consistent with what C2 found, but the paper does not offer this interpretation; treat it as our heuristic observation.",
+  "problem": "Weight of 16 is 1/(4*4)=0.0625 but 1/q-type values: 32 and 64 and 81 weights; the claim 'consistent' is shaky as primes 131-211 selected only six of sixteen.",
+  "fix": "Add that only six of the sixteen primes in [131,211] were selected, so the ordering does not fully explain the list."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:sparse-frequency} and \\ref{ch:paper-arithmetic} return to this.",
+  "problem": "Prerequisites assume chapter ch:complex 'only in the Paper connection' yet the log-p section (not the paper section) uses it.",
+  "fix": "Adjust prerequisites to say Chapter complex is used in the log p section as well."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The first term tends to zero because $\\log x$ grows more slowly than any positive power of $x$",
+  "problem": "Fine, but Step 2 uses '(assume $x>4$...)' and the bound on interval length for [sqrt x, x] is crude; no figure for Chebyshev. Minor.",
+  "fix": "No change needed beyond noting the bound is crude."
+ }
+]

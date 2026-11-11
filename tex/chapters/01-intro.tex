@@ -42,7 +42,7 @@ $n$ & $t_n$ & $t_{n+1}-t_n$ \\
 \end{tabular}
 \end{table}
 
-What do you notice? The numbers increase. They are not equally spaced: the gaps jump around between about $1.8$ and $6.9$. There is no obvious formula like "add 4 each time". And yet they are not completely haphazard either: the gaps never get extremely small, and on average the numbers come a little closer together as you go up. The paper you will learn to read uses the first $10^4$ of them; its zero number 1000 is $t_{1000} = 1419.42248\ldots$ (paper Sec.~II~A).
+What do you notice? The numbers increase. They are not equally spaced: the gaps jump around between about $1.8$ and $6.9$. There is no obvious formula like "add 4 each time". And yet they are not completely haphazard either: among these ten no gap is extremely small (small gaps turn out to be rare at every height, \cref{sec:intro-hp}), and on average the numbers come a little closer together as you go up. The paper you will learn to read uses the first $10^4$ of them in its explicit-formula experiments and at most the first 1000 in its fitted potentials; its zero number 1000 is $t_{1000} = 1419.42248\ldots$ (paper Sec.~II~A).
 
 These numbers are called the \emph{heights of the nontrivial zeros of the Riemann zeta function}. We will explain each word of that phrase in \cref{sec:intro-primes}. For now, treat them as measured data: a long, precise list that someone has handed you.
 
@@ -87,7 +87,7 @@ which is Eq.~(1) of the paper. The subscript "sm" stands for "smooth". The stair
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/intro_staircase.pdf}
-\caption{The counting staircase $N(T)$ of \cref{eq:intro-NT}, which steps up by 1 at each zero height $t_n$, and the smooth curve $\Nsm(T)$ of \cref{eq:intro-Nsm} (paper Eq.~(1)) for $8 \le T \le 100$. The staircase oscillates around the smooth curve; the size of the oscillation stays below about one step.}
+\caption{The counting staircase $N(T)$ of \cref{eq:intro-NT}, which steps up by 1 at each zero height $t_n$, and the smooth curve $\Nsm(T)$ of \cref{eq:intro-Nsm} (paper Eq.~(1)) for $8 \le T \le 100$. The staircase oscillates around the smooth curve; in this range the departure stays below one step (checked numerically in this chapter's code).}
 \label{fig:intro-staircase}
 \end{figure}
 
@@ -148,6 +148,28 @@ The paper reports $t_{500} = 811.1843588465$ (paper Appendix~A, key anchors). (a
 The same error in $t$ is a much bigger mistake near zero 500 than near zero 5, because the zeros are packed about three times more tightly. That is why the paper quotes every error in mean spacings.
 \end{sample}
 
+\begin{sample}{Fluctuations of the first two zeros}
+Find the smooth zeros $s_1$ and $s_2$, the local mean spacings there from \cref{eq:intro-gap}, and the fluctuations $(t_n - s_n)/\gap_n$ of the first two zeros.
+
+\textbf{Step 1: rewrite the condition.} With $u = t/2\pi$, \cref{eq:intro-Nsm} reads $\Nsm = u\log u - u + \tfrac78$. The condition $\Nsm(s_1) = 1 - \tfrac12 = \tfrac12$ becomes $u\log u - u = \tfrac12 - \tfrac78 = -0.375$. Call the left side $f(u)$.
+
+\textbf{Step 2: bracket by trial.} $f(2.30) = 2.30\times 0.832909 - 2.30 = -0.3843$, below $-0.375$; $f(2.32) = 2.32\times 0.841567 - 2.32 = -0.3676$, above it. The function $f$ increases for $u > 1$, because its derivative is $\log u + 1 - 1 = \log u > 0$. So the solution lies between $2.30$ and $2.32$.
+
+\textbf{Step 3: refine.} $f(2.311) = 2.311\times 0.837680 - 2.311 = -0.3751$, short of $-0.375$ by $0.00012$. Near $u = 2.311$ the slope of $f$ is $\log u = 0.838$, so $u$ must grow by a further $0.00012/0.838 = 0.00015$, giving $u = 2.31115$. (Chapter~\ref{ch:asymptotics} turns this step into Newton's method.)
+
+\textbf{Step 4: $s_1$ and its spacing.} $s_1 = 2\pi u = 6.2831853\times 2.31115 = 14.5214$. The mean spacing is $2\pi/\log 2.31115 = 6.2831853/0.83775 = 7.500$.
+
+\textbf{Step 5: fluctuation of zero 1.} $(14.134725 - 14.5214)/7.500 = -0.3867/7.500 = -0.0516$.
+
+\textbf{Step 6: zero 2.} Now $f(u) = \tfrac32 - \tfrac78 = 0.625$. Trials: $f(3.28) = 3.28\times1.187843 - 3.28 = 0.6161$ (below), $f(3.29) = 3.29\times 1.190887 - 3.29 = 0.6280$ (above), $f(3.2875) = 0.6250$ to four decimals; the same refining step gives $u = 3.28746$. Then $s_2 = 6.2831853\times 3.28746 = 20.6557$, the spacing is $6.2831853/\log 3.28746 = 6.2831853/1.19012 = 5.2795$, and the fluctuation is $(21.022040 - 20.6557)/5.2795 = 0.3663/5.2795 = 0.0694$.
+
+\textbf{Answer:}
+\[
+\boxed{s_1 = 14.5214,\ \text{fluct}_1 = -0.052;\qquad s_2 = 20.6557,\ \text{fluct}_2 = +0.069}
+\]
+The first zero sits a little below its smooth position, the second a little above; both displacements are a small fraction of one spacing. The library call \texttt{qmnt.fluct(qmnt.zeros(2), np.array([1, 2]))} returns the same two numbers.
+\end{sample}
+
 \begin{pitfall}
 Do not compare raw errors in $t$ across different heights. An error of $0.5$ is about one eighth of a spacing near $t=30$ but nearly two fifths of a spacing near $t = 811$. The paper's rms values (Tables~I--V) are all in units of the local mean spacing, so that a number like $0.263$ means the same thing at every height.
 \end{pitfall}
@@ -200,11 +222,11 @@ A \emph{zero} of a function is an input where the function's output equals zero.
 \end{equation}
 where $\rho$ is the Greek letter rho and $t_n$ is the height of the zero above the horizontal axis. Our list of mysterious numbers is the list of these heights. (Zeros also occur in mirror-image pairs below the axis; we only need the ones above.)
 
-The statement that \emph{all} nontrivial zeros lie on that line is the \textbf{Riemann hypothesis}. It is one of the most famous unsolved problems in mathematics. It is a \emph{conjecture}: it has been checked numerically for an enormous number of zeros (Chapter~\ref{ch:zeta} gives the reported extent of these checks) but it has not been proved. Every zero used in the paper has been verified to lie on the line, so for our purposes \cref{eq:intro-rho} is a fact about the data, not an assumption.
+The statement that \emph{all} nontrivial zeros lie on that line is the \textbf{Riemann hypothesis}. It is one of the most famous unsolved problems in mathematics. It is a \emph{conjecture}: it has been checked numerically for an enormous number of zeros (Chapter~\ref{ch:zeta} gives the reported extent of these checks) but it has not been proved. Every zero used in the paper has been verified numerically to lie on the line (to the precision of the computation), so for our purposes \cref{eq:intro-rho} is a fact about the data, not an assumption. This finite check has no bearing on whether the Riemann hypothesis itself is true.
 
 \subsection{Primes as musical notes}
 
-Now the key connection, which Chapter~\ref{ch:explicit-formula} develops carefully. The wobble of the staircase around the smooth curve can be written, approximately, as a sum of waves, one family of waves for each prime $p$. The wave for the prime $p$ oscillates as you move up in $t$ with an angular frequency equal to $\log p$, and its amplitude shrinks like $1/\sqrt p$. Small primes give the loudest notes. Higher "overtones" with frequencies $2\log p$, $3\log p$, and so on are quieter still.
+Now the key connection, which Chapter~\ref{ch:explicit-formula} develops carefully. The wobble of the staircase around the smooth curve can be written, approximately, as a sum of waves, one family of waves for each prime $p$. Approximately, and in a sense that Chapter~\ref{ch:explicit-formula} shows to be heuristic rather than exact, the wave for the prime $p$ oscillates as you move up in $t$ with an angular frequency equal to $\log p$, and its amplitude shrinks like $1/\sqrt p$. Small primes give the loudest notes. Higher "overtones" with frequencies $2\log p$, $3\log p$, and so on are quieter still.
 
 The loudest note comes from $p=2$. The second running example of the book (RE2) is the prime-2 wave,
 \begin{equation}
@@ -260,7 +282,7 @@ A friend says: "The Riemann hypothesis was proved when computers found that bill
 
 You already know a physical system with a discrete list of allowed values: a string fixed at both ends. It can vibrate only at frequencies $f_1, 2f_1, 3f_1, \ldots$, the harmonics \cite{hrw}. A plucked guitar string has a "spectrum" of equally spaced frequencies.
 
-Quantum mechanics generalizes this. A particle trapped in a valley of potential energy $V(x)$ can only have certain energies $E_1 < E_2 < E_3 < \cdots$, called its \emph{energy levels} or its \emph{spectrum}. The reason is the same as for the string: the particle is described by a wave, and only waves that "fit" in the valley are allowed. You will learn this from scratch in Chapters~\ref{ch:schrodinger} and \ref{ch:bound-states}. The shape of the valley decides the levels. A box with vertical walls gives levels whose spacing grows with energy. A parabolic valley (a spring) gives equally spaced levels. A valley whose walls open out slowly gives levels that crowd together as energy grows, just like the zeros.
+Quantum mechanics generalizes this. A particle trapped in a valley of potential energy $V(x)$ can only have certain energies $E_1 < E_2 < E_3 < \cdots$, called its \emph{energy levels} or its \emph{spectrum}. The reason is the same as for the string: the particle is described by a wave, and only waves that "fit" in the valley are allowed. You will learn this from scratch in Chapters~\ref{ch:schrodinger} and \ref{ch:bound-states}. The shape of the valley decides the levels. A box with vertical walls gives levels whose spacing grows with energy. A parabolic valley (a spring) gives equally spaced levels. A valley whose walls rise more slowly than a parabola gives levels whose spacing shrinks as energy grows, just like the zeros (Chapter~\ref{ch:bound-states} shows this).
 
 \subsection{Level repulsion}
 
@@ -272,11 +294,11 @@ There is more to the resemblance than crowding. Look at \cref{fig:intro-barcode}
 \label{fig:intro-barcode}
 \end{figure}
 
-This is not just an impression. A theorem of Montgomery \cite{montgomery}, proved under the assumption of the Riemann hypothesis and covering only part of the picture, and the extensive computations of Odlyzko \cite{odlyzko87} show that the statistics of the gaps match those of the eigenvalues of large random matrices of a particular type, the Gaussian unitary ensemble (GUE). Fig.~2 of the paper shows this match for the first $10^4$ zeros. Chapter~\ref{ch:level-statistics} explains what these words mean and derives the curve plotted there.
+This is not just an impression. Odlyzko's extensive computations \cite{odlyzko87} show numerically that the statistics of the gaps match those of the eigenvalues of large random matrices of a particular type, the Gaussian unitary ensemble (GUE). On the theoretical side, a theorem of Montgomery \cite{montgomery}, proved assuming the Riemann hypothesis, shows that the pair correlation of the zeros (how often two zeros lie a given distance apart) agrees with the GUE prediction, but only when tested with a restricted class of test functions. The full agreement, and in particular the agreement of the nearest-neighbor gap distribution, is a numerical observation, not a theorem. Fig.~2 of the paper shows this match for the first $10^4$ zeros. Chapter~\ref{ch:level-statistics} explains what these words mean and derives the curve plotted there.
 
 \subsection{The Hilbert--P\'olya hope}
 
-Put these hints together and you arrive at an idea attributed to Hilbert and P\'olya: perhaps the $t_n$ are exactly the energy levels of some quantum system. In mathematical language, perhaps they are the spectrum of a \emph{self-adjoint operator}. You will meet operators in Chapter~\ref{ch:schrodinger}; the important property of "self-adjoint" is that it forces every energy level to be an ordinary real number. If someone found such a system, the realness of its energies would force every $t_n$ to be real, and that would put every zero on the line: the Riemann hypothesis would follow. A second hint is that the wobble formula looks like the semiclassical formulas physicists use for chaotic quantum systems, with primes playing the role of closed classical orbits \cite{berrykeating99,schumayer}. Chapter~\ref{ch:hilbert-polya} tells this story.
+Put these hints together and you arrive at an idea attributed to Hilbert and P\'olya: perhaps the $t_n$ are exactly the energy levels of some quantum system. In mathematical language, perhaps they are the spectrum of a \emph{self-adjoint operator}. You will meet operators in Chapter~\ref{ch:schrodinger}; the important property of "self-adjoint" is that it forces every energy level to be an ordinary real number. If someone found a self-adjoint operator whose spectrum is exactly the set of heights $t_n$ (each nontrivial zero being written as $\tfrac12 + i t_n$), the realness of its energies would force every $t_n$ to be real, and that would put every zero on the line: the Riemann hypothesis would follow. No such operator is known; the idea is a conjecture. A second hint is that the wobble formula looks like the semiclassical formulas physicists use for chaotic quantum systems, with primes playing the role of closed classical orbits \cite{berrykeating99,schumayer}. Chapter~\ref{ch:hilbert-polya} tells this story.
 
 \begin{pitfall}
 The Hilbert--P\'olya idea is a \emph{conjecture}, a hope. No such operator is known. The GUE statistics are numerical observations and partial theorems; they show the zeros \emph{behave statistically} like energy levels of a certain class of systems, not that a specific system exists. Never read "the zeros look like energy levels" as "the zeros are energy levels".
@@ -317,7 +339,7 @@ The differences between the data and the model at the data points are the \emph{
 \rms = \sqrt{\frac{e_1^2 + e_2^2 + \cdots + e_K^2}{K}} .
 \label{eq:intro-rms}
 \end{equation}
-Read the name backwards to compute it: square each error, take the mean, take the square root. Squaring makes positive and negative errors count alike. The rms has the same units as the errors. Chapter~\ref{ch:probability} discusses it properly.
+Read the name backwards to compute it: square each error, take the mean, take the square root. Squaring makes positive and negative errors count alike. The rms has the same units as the errors. (It is not the same as the standard deviation, which measures spread about the mean of a list; Chapter~\ref{ch:probability} explains the difference.) Chapter~\ref{ch:probability} discusses it properly.
 
 \begin{sample}{Fitting with a ruler}
 A student records five points $(x, y)$: $(0, 1.0)$, $(1, 2.9)$, $(2, 5.2)$, $(3, 6.9)$, $(4, 9.1)$. She draws the straight line through the first and last points. (a) Find its slope and intercept. (b) Find the residuals and their rms. (c) Predict $y$ at $x = 5$. Later she measures $y = 11.0$ at $x = 5$; what is the prediction error?
@@ -346,7 +368,7 @@ The prediction error is about the same size as the in-sample residuals. That is 
 Now suppose instead of a ruler you use a flexible curve with as many knobs as there are data points. With five points you can always find a polynomial of degree 4, $y = a_0 + a_1x + a_2x^2 + a_3x^3 + a_4x^4$, which has five parameters, that passes \emph{exactly} through all five. Its in-sample rms is zero. Is it a better model?
 
 \begin{sample}{The memorizing polynomial}
-For the five points of Sample Problem 5, the degree-4 polynomial through all of them is unique. Predict its value at $x = 5$ without finding its coefficients, using the fact that the fourth differences of a degree-4 polynomial at equally spaced points are constant.
+For the five points of Sample Problem 6, the degree-4 polynomial through all of them is unique. Predict its value at $x = 5$ without finding its coefficients, using the fact that the fourth differences of a degree-4 polynomial at equally spaced points are constant.
 
 \textbf{Step 1: first differences} (each value minus the previous one): $2.9-1.0 = 1.9$, $5.2 - 2.9 = 2.3$, $6.9 - 5.2 = 1.7$, $9.1 - 6.9 = 2.2$.
 
@@ -426,7 +448,7 @@ What is the null model here? It is "no fluctuation": predict that each zero sits
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/intro_trainhold.pdf}
-\caption{True fluctuations (dots, in mean spacings) of zeros 370--460, and the prediction of the six-prime explicit formula of paper Eq.~(4) (line), which has no fitted parameters. The shaded region is held out: in the paper's experiment, models are fitted only to zeros 1--400. The paper reports held-out rms $0.074$ and correlation $+0.96$ for this formula on zeros 401--500 (paper Table~V). This figure omits the fitted operator shown in paper Fig.~1.}
+\caption{True fluctuations (dots, in mean spacings) of zeros 370--460, and the prediction of the six-prime explicit formula of paper Eq.~(4) (line), which has no fitted parameters. The shaded region is held out: in the paper's experiment, models are fitted only to zeros 1--400. The paper reports held-out rms $0.074$ and correlation $+0.96$ for this formula on zeros 401--500 (paper Table~V). The plotted window 370--460 matches paper Fig.~1; the quoted scores refer to the whole holdout 401--500. This figure omits the fitted operator shown in paper Fig.~1.}
 \label{fig:intro-trainhold}
 \end{figure}
 
@@ -437,7 +459,7 @@ The paper reports two numbers for each prediction. The first is the rms error \c
 \begin{sample}{Why both rms and correlation are reported}
 The true fluctuations of five zeros are $0.2, -0.3, 0.1, 0.4, -0.4$ (in mean spacings). Compare three predictions: (a) the null, predicting $0$ for every zero; (b) a prediction equal to half the truth, $0.1, -0.15, 0.05, 0.2, -0.2$; (c) a prediction equal to minus half the truth. Give each one's rms error and say what its correlation with the truth is.
 
-\textbf{Step 1: the null.} Its errors are the truth itself. Squares: $0.04, 0.09, 0.01, 0.16, 0.16$; sum $0.46$; mean $0.092$; rms $\sqrt{0.092} = 0.3033$. Its correlation is undefined, since a constant prediction has no shape; we say it carries no information about the shape.
+\textbf{Step 1: the null.} Its errors are the truth itself. Squares: $0.04, 0.09, 0.01, 0.16, 0.16$; sum $0.46$; mean $0.092$; rms $\sqrt{0.092} = 0.3033$. Its correlation is undefined: correlation is defined only for predictions that vary from zero to zero, and a constant prediction has no shape. So no correlation is reported for the null; it carries no information about the shape.
 
 \textbf{Step 2: half the truth.} Each error is truth minus prediction $= 0.5\times$ truth. Squaring multiplies every square by $0.25$, so the mean square is $0.25 \times 0.092 = 0.023$ and the rms is $0.5 \times 0.3033 = 0.1517$. The prediction has exactly the shape of the truth, so the correlation is $+1$.
 
@@ -575,7 +597,7 @@ This chapter prepares you to read the opening of the paper \cite{soniR1}. Here i
 
 \textbf{Title and abstract.} The abstract contains the whole argument in compressed form. You can now decode most of its phrases: "empirical Hilbert--P\'olya constructions" (\cref{sec:intro-hp}); "fit quantum Hamiltonians to the nontrivial Riemann zeros" (\cref{sec:intro-fitting}); "out-of-sample prediction" (\cref{sec:intro-memorize}); "up to 900 fitted coefficients, in cosine, Chebyshev, and local piecewise-linear bases" (the three families of wiggles); "relative to the unfitted potential" (the null); "shuffled and phase-randomized surrogate targets" (Finding 3 of \cref{sec:intro-result}); "a pure prime-2 explicit-formula oscillation" (RE2, \cref{eq:intro-re2}); "zero fitted parameters ... correlation up to $+0.99$ through zero $10^4$" (Finding 5). Chapter~\ref{ch:paper-setup} unpacks the abstract sentence by sentence.
 
-\textbf{Sec.~I, first paragraph.} The definition $\rho_n = \tfrac12 + i t_n$ is our \cref{eq:intro-rho}. "Spectrum of a self-adjoint operator" is the Hilbert--P\'olya idea (\cref{sec:intro-hp}). The three strands of circumstantial evidence (GUE statistics \cite{montgomery,odlyzko87}, the trace-formula analogy \cite{berrykeating99,schumayer}, and operator proposals) are the subjects of Chapters~\ref{ch:level-statistics} and \ref{ch:hilbert-polya}.
+\textbf{Sec.~I, first paragraph.} The definition $\rho_n = \tfrac12 + i t_n$ is our \cref{eq:intro-rho}. "Spectrum of a self-adjoint operator" is the Hilbert--P\'olya idea (\cref{sec:intro-hp}). The two strands of circumstantial evidence (GUE statistics \cite{montgomery,odlyzko87} and the trace-formula analogy \cite{berrykeating99,schumayer}), together with the continuing stream of explicit operator proposals, are the subjects of Chapters~\ref{ch:level-statistics} and \ref{ch:hilbert-polya}.
 
 \textbf{Sec.~I, second paragraph.} The empirical program of Wu and Sprung \cite{wusprung} and successors, and its "implicit logic", are summarized in \cref{sec:intro-hp}. The scope statement (only fluctuation potentials on the Wu--Sprung background, three bases; no claim against analytic constructions; "capture" means predictive transfer measured by rms and correlation relative to the smooth baseline) is the honest boundary of every result. Notice also the sentence "The novelty claimed is ... not the explicit formula": the paper claims novelty only for the controlled out-of-sample comparison.
 
@@ -583,7 +605,7 @@ This chapter prepares you to read the opening of the paper \cite{soniR1}. Here i
 
 \textbf{Sec.~I~A, Relation to prior work.} Its four strands are: (a) inverse-spectral fits \cite{wusprung,vanzyl,slater,jaksch}, which the paper says have been evaluated mainly by agreement with their own training zeros, a statement it supports by a citation-graph audit recorded in Appendix~A; (b) explicit formulas for the $n$-th zero \cite{francaleclair,leclair}, including Connes's prime-only construction \cite{connes26}, all on the arithmetic side of the comparison; (c) machine learning on zeros and arithmetic data; (d) operator proposals, which are not the target. Chapters~\ref{ch:hilbert-polya}, \ref{ch:wu-sprung} and \ref{ch:paper-setup} return to these. The Lambert-$W$ function mentioned in strand (b) is introduced in Chapter~\ref{ch:asymptotics}.
 
-\textbf{Numbers you have already met.} Paper Eq.~(1) is our \cref{eq:intro-Nsm}; "all errors below are quoted in units of the local mean spacing $\gap_n = ds_n/dn$" (paper Sec.~II~A) is the convention of Sample Problem 3. The null $0.263$ on zeros 401--500 comes from paper Sec.~II~C and Tables~I and V. The headline rows used in Sample Problem 8 are from paper Table~I (operator, $0.369/-0.07$) and Table~V (six primes, $0.074/+0.96$). The prime-2 period of about 9 in $t$ and "6--7 levels" appear in paper Sec.~V. Fig.~2 of the paper is the level-repulsion evidence of \cref{fig:intro-barcode}, made quantitative in Chapter~\ref{ch:level-statistics}.
+\textbf{Numbers you have already met.} Paper Eq.~(1) is our \cref{eq:intro-Nsm}; "all errors below are quoted in units of the local mean spacing $\gap_n = ds_n/dn$" (paper Sec.~II~A) is the convention of Sample Problem 3. The null $0.263$ on zeros 401--500 comes from paper Sec.~II~C and Tables~I and V. The headline rows used in Sample Problem 10 are from paper Table~I (operator, $0.369/-0.07$) and Table~V (six primes, $0.074/+0.96$). The prime-2 period of about 9 in $t$ and "6--7 levels" appear in paper Sec.~V. Our \cref{fig:intro-barcode} illustrates qualitatively, with 29 zeros, the level repulsion that paper Fig.~2 shows quantitatively as a spacing histogram of the first $10^4$ zeros; Chapter~\ref{ch:level-statistics} explains that histogram.
 
 \textbf{Sec.~II~F, Use of artificial intelligence.} The paper discloses that its computations, analysis and drafting were carried out with substantial assistance from a large language model, and that every reported number is regenerated by an archived scripted pipeline \cite{zenodo}. We note this neutrally here; Chapters~\ref{ch:paper-setup} and \ref{ch:paper-critique} discuss why such disclosures and reproducibility records matter.
 
@@ -649,7 +671,7 @@ This chapter prepares you to read the opening of the paper \cite{soniR1}. Here i
 
 \prob{2}{A weather forecaster claims skill because her forecast of tomorrow's temperature has an rms error of 3 degrees. What null model would you compare it with? Why is the claim meaningless without it? Relate your answer to the null $0.263$ of the paper.}
 
-\prob{3}{Using numpy, fit a degree-4 polynomial through the five points of Sample Problem 5 with \texttt{np.polyfit} and evaluate it at $x = 5$ and $x = 6$. Compare with the straight line of Sample Problem 5 at $x = 6$. Also confirm the value at $x=6$ by extending the difference table of Sample Problem 6 one more column.}
+\prob{3}{Using numpy, fit a degree-4 polynomial through the five points of Sample Problem 6 with \texttt{np.polyfit} and evaluate it at $x = 5$ and $x = 6$. Compare with the straight line of Sample Problem 6 at $x = 6$. Also confirm the value at $x=6$ by extending the difference table of Sample Problem 7 one more column.}
 
 \prob{2}{A prediction misses a zero by $0.5$ in $t$. Express this error in mean spacings if the zero is near $t = 50$ (spacing $3.029288$) and if it is near zero 500 (spacing $1.292672$). Which is the bigger mistake, and why do the paper's tables use mean spacings?}
 
@@ -665,7 +687,7 @@ This chapter prepares you to read the opening of the paper \cite{soniR1}. Here i
 
 \textbf{3.} $0.6/3.029288 = 0.198$ mean spacings.
 
-\textbf{4.} (a) Incorrect: it is open. (b) Correct (paper notation section and Sec.~II~A data). (c) Incorrect: no such operator is known. (d) Correct: this is a numerical observation (paper Fig.~2), supported by a partial theorem of Montgomery proved under the Riemann hypothesis.
+\textbf{4.} (a) Incorrect: it is open. (b) Correct (paper notation section and Sec.~II~A data). (c) Incorrect: no such operator is known. (d) Correct, as a numerical observation (paper Fig.~2; Odlyzko's computations). Montgomery's theorem, proved assuming the Riemann hypothesis, concerns pair correlation for a restricted class of test functions; it does not establish the gap distribution.
 
 \textbf{5.} Slope $(6.4 - 2.0)/3 = 1.4667$; line $y = 2.0 + 1.4667x$. At $x=1$ the line gives $3.4667$, residual $3.4 - 3.4667 = -0.0667$. At $x=2$ it gives $4.9333$, residual $5.1 - 4.9333 = +0.1667$. Prediction at $x = 4$: $2.0 + 4\times1.4667 = 7.867$.
 
@@ -687,7 +709,16 @@ This chapter prepares you to read the opening of the paper \cite{soniR1}. Here i
 
 \textbf{14.} $N(50) = 10$, $\Nsm(50) = 9.423$, wobble $+0.577$. $N(100) = 29$, $\Nsm(100) = 29.002$, wobble $-0.002$.
 
-\textbf{15.} (a) About $0.263$, matching the null of paper Table~V ($0.2631$ in paper Appendix~A anchors). (b) About $0.074$ and $+0.96$, matching paper Table~V. Code: \texttt{n = np.arange(401, 501)}; \texttt{t = qmnt.zeros(500)}; \texttt{qmnt.rms(qmnt.fluct(t[n-1], n))}; \texttt{pred = qmnt.oracle\_zeros(n, qmnt.first\_primes(6))}; \texttt{qmnt.score(pred, n)}.
+\textbf{15.} (a) About $0.263$, matching the null of paper Table~V ($0.2631$ in paper Appendix~A anchors). (b) About $0.074$ and $+0.96$, matching paper Table~V. Code:
+\begin{pycode}
+import numpy as np
+import qmnt
+n = np.arange(401, 501)                  # holdout indices
+t = qmnt.zeros(500)
+print(qmnt.rms(qmnt.fluct(t[n-1], n)))   # null rms
+pred = qmnt.oracle_zeros(n, qmnt.first_primes(6))
+print(qmnt.score(pred, n))               # (rms, corr)
+\end{pycode}
 
 \textbf{16.} Training zeros shown: 370--400, that is $400 - 370 + 1 = 31$. Held-out zeros shown: 401--460, that is $60$. The statement guarantees that the predictions in the held-out region are genuine predictions: if any held-out zero had been used, a good score could be partly copying.
 

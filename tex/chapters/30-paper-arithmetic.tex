@@ -46,7 +46,7 @@ IV.1 & The truncated explicit formula predicts unseen zeros essentially as well 
 IV.2 & One prime beats every fitted operator's holdout performance by a factor $\gtrsim 1.3$, with zero fitted parameters. & Sec.~IV \\
 IV.3 & Twenty-five primes reach rms $0.04$--$0.07$ with correlation $+0.98$ to $+0.99$. & Sec.~IV, Table~V \\
 IV.4 & The oracle is not a fair machine-learning competitor; it shows only that transferable structure exists and is arithmetic. & Secs.~II~D, IV \\
-IV.5 & Control A: with 900 terms and still zero fitted parameters, the oracle improves monotonically, to $0.018$. & Sec.~IV, Table~IV \\
+IV.5 & Control A (the oracle at a larger prime budget): going from 25 primes ($0.043$) to 300 primes, i.e.\ 900 terms, still with zero fitted parameters, the oracle improves monotonically, to $0.018$. & Sec.~IV, Table~IV \\
 IV.6 & Control B: with frequencies given and amplitudes fitted, 150 coefficients give $0.028$; at 900 coefficients on 400 zeros the problem is underdetermined and the score degrades to $0.180$/$+0.78$ (root-ambiguous). & Sec.~IV, Table~IV \\
 IV.7 & Control C1: a dense 900-coefficient Fourier model stays within $0.005$ of the null. & Sec.~IV, Table~IV \\
 IV.8 & Control C2: a sparse search with no arithmetic input selects frequencies at $\log p^m$ and predicts at $0.034$/$+0.99$; an exploratory surrogate check supports the alignment. & Sec.~IV, App.~A step 23 \\
@@ -205,7 +205,7 @@ Compute $B_P$ for $P=\{2\}$ and for the six primes $P=\{2,3,5,7,11,13\}$, and fi
 \[
 \boxed{B_{\{2\}}=0.344\ \Rightarrow\ \text{unique root for } t>54.7;\qquad B_6=2.09\ \Rightarrow\ \text{guaranteed only for } t\gtrsim3.2\times10^6}
 \]
-The worst-case bound is far from typical. Because the frequencies are incommensurate, the cosines in Eq.~\eqref{eq:paper-arithmetic-dnfl} do not line up, and the rms of $\Nfl'$ over $t$ is $\frac1\pi\bigl[\sum_p(\log p)^2\sum_m \frac{1}{2p^m}\bigr]^{1/2}=0.415$ for six primes (Problem~\ref{prob:paper-arithmetic-dephase-small} uses the same averaging idea). That is well below $\Nsm'\approx0.75$ at the heights of the paper. So failure of monotonicity is possible but rare for the oracle; the paper reports root ambiguity only for one fitted row of Table~IV, which we meet in \cref{sec:paper-arithmetic-B}.
+The worst-case bound is far from typical. Because the frequencies are incommensurate, the cosines in Eq.~\eqref{eq:paper-arithmetic-dnfl} do not line up, and the rms of $\Nfl'$ over $t$ is $\frac1\pi\bigl[\sum_p(\log p)^2\sum_m \frac{1}{2p^m}\bigr]^{1/2}=0.415$ for six primes (Problem~\ref{prob:paper-arithmetic-rmsslope} asks you to derive this formula). That is well below $\Nsm'\approx0.75$ at the heights of the paper. So failure of monotonicity is possible but rare for the oracle; the paper reports root ambiguity only for one fitted row of Table~IV, which we meet in \cref{sec:paper-arithmetic-B}.
 \end{sample}
 
 \subsection{Rerunning Table V at small scale}
@@ -225,7 +225,7 @@ for k in (1, 3, 6, 25):                 # prime budgets of Table V
     print(k, "primes:", round(r, 3), round(c, 2))
 \end{pycode}
 
-Running it reproduces the paper's row to the printed precision: null $0.263$; one prime $0.198/+0.66$; three primes $0.116/+0.90$; six primes $0.074/+0.96$; twenty-five primes $0.043/+0.99$ (all verified in CHECKS). Replacing \texttt{range(401,501)} by \texttt{range(1001,2001)} reproduces the third row, for instance $0.091/+0.95$ for six primes. \cref{fig:paper-arithmetic-oraclefit} shows the six-prime prediction against the truth around the train/test boundary used in paper Fig.~1.
+Running it reproduces the paper's row to the printed precision: null $0.263$; one prime $0.198/+0.66$; three primes $0.116/+0.90$; six primes $0.074/+0.96$; twenty-five primes $0.043/+0.99$ (all verified in CHECKS). Setting \texttt{n = np.arange(1001, 2001)} and \texttt{t\_true = qmnt.zeros(2000)[1000:2000]} reproduces the third row, for instance $0.091/+0.95$ for six primes. \cref{fig:paper-arithmetic-oraclefit} shows the six-prime prediction against the truth around the train/test boundary used in paper Fig.~1.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-arithmetic_oraclefit.pdf}
@@ -290,7 +290,7 @@ Two honest readings are possible. By correlation, skill is nearly constant: $+0.
 \end{figure}
 
 \begin{beyond}
-\textbf{Why the null grows, and why more primes matter higher up.} A theorem of Selberg (his central limit theorem for $S(t)$; see the discussion in \cite{titchmarsh}) states that, as $t\to\infty$, $S(t)$ divided by $\sqrt{\tfrac{1}{2\pi^2}\log\log t}$ becomes distributed like a standard Gaussian. We take this on trust; its proof is beyond this book. Heuristically, the variance $\tfrac{1}{2\pi^2}\log\log t$ matches the variance $\sum_{p\le x}\tfrac{1}{2\pi^2 p}\approx\tfrac{1}{2\pi^2}\log\log x$ of the $m=1$ prime terms (each sinusoid of amplitude $1/(\pi\sqrt p)$ has mean square $1/(2\pi^2p)$), with an effective prime cutoff $x$ that grows with $t$. This is a heuristic, not a derivation, but it explains both trends in Table~V: the null grows very slowly, like $\sqrt{\log\log t}$, and a fixed prime budget covers a shrinking part of the variance. Problem~\ref{prob:paper-arithmetic-selberg} compares the predicted growth with the table.
+\textbf{Why the null grows, and why more primes matter higher up.} A theorem of Selberg (his central limit theorem for $S(t)$; see the discussion in \cite{titchmarsh}) states that, as $t\to\infty$, $S(t)$ divided by $\sqrt{\tfrac{1}{2\pi^2}\log\log t}$ becomes distributed like a standard Gaussian. We take this on trust; its proof is beyond this book. A note on units: $S(t)$ is measured in counts, while the paper's fluctuations are measured in mean spacings. To leading order these are the same: by Eqs.~\eqref{eq:paper-arithmetic-predfluct} and \eqref{eq:paper-arithmetic-yn}, a count offset $y_n$ at a zero corresponds to a height offset of about $y_n\gap_n$, which is $y_n$ mean spacings, because the local density of zeros is $1/\gap_n$. So the variance of $S$ applies directly to the fluctuations in mean spacings, up to the small curvature and slope corrections neglected in those equations. Heuristically, the variance $\tfrac{1}{2\pi^2}\log\log t$ matches the variance $\sum_{p\le x}\tfrac{1}{2\pi^2 p}\approx\tfrac{1}{2\pi^2}\log\log x$ of the $m=1$ prime terms (each sinusoid of amplitude $1/(\pi\sqrt p)$ has mean square $1/(2\pi^2p)$), with an effective prime cutoff $x$ that grows with $t$. This is a heuristic, not a derivation, but it explains both trends in Table~V: the null grows very slowly, like $\sqrt{\log\log t}$, and a fixed prime budget covers a shrinking part of the variance. Problem~\ref{prob:paper-arithmetic-selberg} compares the predicted growth with the table.
 \end{beyond}
 
 \subsection{"One prime beats every fitted operator"}
@@ -431,7 +431,7 @@ For each model of Table~IV, count fitted real parameters and compare with the nu
 
 \textbf{(c) Computation.} The same loop as in \cref{sec:paper-arithmetic-oracle} with \texttt{qmnt.first\_primes(300)}. The cost is 900 sines per evaluation of $\Nfl$, still trivial.
 
-\textbf{(d) Strength and limits.} Control A defeats one specific objection: that the operators lose only because they have fewer "terms". The oracle with 900 terms is better than with 75, so a large term count is not, in itself, harmful when the terms have the right form. Notice too that A involves no fitting, so it cannot overfit: more terms of the right form can only add correct information (or, on the critical line where the full series does not converge, add terms that the evidence of Table~V shows to be helpful at these heights). The word "monotonically" refers to intermediate budgets that the paper does not tabulate; we take it as reported.
+\textbf{(d) Strength and limits.} Control A addresses one specific objection: that the operators lose only because they have fewer "terms". At these heights the oracle with 900 terms is better than with 75 terms (25 primes), so a large term count is not, in itself, harmful when the terms have the right form. Notice too that A involves no fitting, so it cannot overfit in the statistical sense: no parameter is tuned to the training zeros. That does not make more terms automatically better. On the critical line the full series does not converge (Chapter~\ref{ch:explicit-formula}), so whether adding terms helps is an empirical question, answered affirmatively at these heights by Tables~IV and V; it is not a theorem. The word "monotonically" refers to intermediate budgets that the paper does not tabulate; we take it as reported.
 
 \begin{pitfall}
 Do not read control A's $0.018$ as "900 parameters generalize". Control A has 900 \emph{terms} and $0$ fitted parameters. The informative comparison for parameter count is between the fitted models (B, C1, C2, and the operators).
@@ -463,7 +463,7 @@ lams = 10.0**np.arange(-8, 3.01, 0.5)                # 23 half decades
 val = [np.sqrt(np.mean((X(t[300:400]) @ ridge(X(t[:300]), y[:300], L)
        - y[300:400])**2)) for L in lams]             # forward split 300/100
 theta = ridge(X(t[:400]), y[:400], lams[np.argmin(val)])   # refit on 1-400
-F = lambda tt: float(X(np.atleast_1d(tt)) @ theta)
+F = lambda tt: float(np.ravel(X(np.atleast_1d(tt)) @ theta)[0])
 nh = np.arange(401, 501)
 s_all, g_all = qmnt.smooth_zeros(nh), qmnt.mean_gap(nh)
 def predict(k, s, g):
@@ -484,7 +484,7 @@ Your result will not match $0.028$ to three decimals unless you reproduce the pa
 
 \textbf{(a) Plain words.} With 150 primes, the fit has 900 coefficients but only 400 equations. The paper: "the least-squares problem is underdetermined and the model degrades to $0.180$ with correlation $+0.78$, still below the null and positively correlated, unlike any operator row; with 800 training zeros the same model gives $0.100$/$+0.94$." The bootstrap interval on 401--500 is $[0.158, 0.201]$.
 
-Why does it degrade? An underdetermined system has infinitely many exact fits (Sample Problem in \cref{sec:paper-arithmetic-levels}, Step 3). Ridge picks the one with smallest filtered norm, which spreads amplitude across all 900 columns instead of concentrating it on the correct values; many columns have frequencies that a window of length $T$ cannot separate cleanly from their neighbors (\cref{sec:paper-arithmetic-C1}). The fit therefore learns a mixture that agrees with the data in the window but continues imperfectly. Why does it still beat the null by a wide margin? Because every column has a correct frequency. Whatever mixture the fit chooses, it is built entirely of the right sinusoids, and these continue correctly; only their weights are partly wrong. With 800 zeros the problem is less underdetermined and the score improves to $0.100$.
+Why does it degrade? An underdetermined system has infinitely many exact fits (Sample Problem in \cref{sec:paper-arithmetic-levels}, Step 3). Ridge picks the one with smallest filtered norm, which spreads amplitude across all 900 columns instead of concentrating it on the correct values; many columns have frequencies that a window of length $T$ cannot separate cleanly from their neighbors (\cref{sec:paper-arithmetic-C1}). The fit therefore learns a mixture that agrees with the data in the window but continues imperfectly. Why does it still beat the null by a wide margin? The paper does not say. Our heuristic reading: every column has a correct arithmetic frequency, so whatever mixture the fit chooses is built from sinusoids that would continue correctly if their weights were right. The weights are partly wrong, and wrong weights spread over many columns can still continue poorly, which is presumably part of why the score is $0.180$ rather than $0.028$; but no column introduces a frequency foreign to the target. This is a plausible explanation, not a demonstrated one. With 800 zeros the problem is less underdetermined and the score improves to $0.100$.
 
 \textbf{The root-ambiguity footnote.} The dagger on this row in Table~IV reads: "Root-ambiguous (see text); not a clean predictive score." The text explains: "the level equation has several roots for about a third of the held-out levels; the score varies by at most $0.012$ with the choice of root." Here is what is going on. The level function $G(t)=\Nsm(t)+F(t)-(n-\tfrac12)$ is increasing wherever $F'(t)>-\Nsm'(t)$. A fitted $F$ with large amplitudes $a_j,b_j$ at many frequencies can have $|F'|$ larger than $\Nsm'\approx0.75$, just as the worst-case oracle bound \eqref{eq:paper-arithmetic-bound} warned. Then $G$ wiggles, and the bracket $s_n\pm3\gap_n$ can contain several roots. Brent returns one of them, but the "prediction of zero $n$" is no longer well defined. \cref{fig:paper-arithmetic-rootambig} shows a synthetic example.
 
@@ -565,7 +565,7 @@ Sec.~II~D describes C2 as "a sparse model whose $K$ frequencies are found one at
 \begin{enumerate}
 \item \emph{Start.} Residual $r_n=y_n$ at the training zeros, Eq.~\eqref{eq:paper-arithmetic-yn}; no frequencies selected.
 \item \emph{Periodogram.} Recall from Chapter~\ref{ch:fourier-transform} the periodogram for irregular samples, $\mathcal P(\omega)=\bigl|\sum_n r_n e^{-i\omega t_n}\bigr|^2$. It is large at $\omega$ when $r_n$ contains a sinusoid of that frequency, because the phases $e^{-i\omega t_n}$ then cancel the oscillation of $r_n$ and the terms add coherently.
-\item \emph{Coarse search.} Evaluate $\mathcal P$ on a grid over $0.05<\omega<8$ with step $\tfrac14\cdot2\pi/T=\pi/(2T)$. For $T\approx666$ the step is $0.00236$, so the grid has about $3370$ points. A quarter-resolution step guarantees that no peak (width about $2\pi/T$) falls between grid points.
+\item \emph{Coarse search.} Evaluate $\mathcal P$ on a grid over $0.05<\omega<8$ with step $\tfrac14\cdot2\pi/T=\pi/(2T)$. For $T\approx666$ the step is $0.00236$, so the grid has about $3370$ points. With four grid points per resolution width, every peak (width about $2\pi/T$) is sampled several times, so the coarse maximum is unlikely to miss a peak; the refinement step then locates it precisely. (This makes a miss unlikely; it does not strictly guarantee against one, for example when two peaks of nearly equal height compete.)
 \item \emph{Refinement.} Around the coarse maximum, search $201$ finer points and take the maximum there. (The exact refinement interval is in the reconstruction record \cite{zenodo}.)
 \item \emph{Joint refit.} Add the refined frequency to the list and refit \emph{all} amplitudes $a_j,b_j$ of all selected frequencies together by least squares. Update $r_n$ to the new residual. The joint refit matters: two nearby sinusoids leak into each other's periodogram peaks, and refitting them together removes the leakage that a one-at-a-time subtraction would leave.
 \item \emph{Repeat} up to $K_{\max}=\min(300,n_{\rm fit}/3)$: $133$ for 400 training zeros, $266$ for 800. The cap $n_{\rm fit}/3$ ensures $3K\le n_{\rm fit}$, so the final fit is never underdetermined.
@@ -888,7 +888,7 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 
 \prob{2}{Starting from the level equation \eqref{eq:paper-arithmetic-level}, derive the Newton iteration for the predicted zero, starting from $s_n$. Show that the first iterate is $s_n-\Nfl(s_n)/[\Nsm'(s_n)+\Nfl'(s_n)]$, and state when it reduces to $s_n-\gap_n\Nfl(s_n)$.}
 
-\prob{2}{Compute the bound $B_P$ of Eq.~\eqref{eq:paper-arithmetic-bound} for $P=\{2,3\}$ and the height above which the two-prime oracle's root is guaranteed unique.}\label{prob:paper-arithmetic-two}
+\prob{2}{Compute the bound $B_P$ of Eq.~\eqref{eq:paper-arithmetic-bound} for $P=\{2,3\}$ and the height above which the two-prime oracle's root is guaranteed unique.}
 
 \prob{2}{Control B with 900 coefficients has correlation $+0.78$ on zeros 401--500. Using Eq.~\eqref{eq:paper-arithmetic-rmsbound} with $\sigma_Y\approx0.263$, find the best rms consistent with that correlation and compare with the reported $0.180$.}
 
@@ -896,7 +896,7 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 
 \prob{2}{Use the heuristic of the Sample Problem in \cref{sec:paper-arithmetic-surrogate} to estimate the expected number of prime-power logarithms within $\pi/T$ of $\omega=\log211$, for the 800-zero window ($2\pi/T\approx0.0054$).}
 
-\prob{2}{Repeat the dephasing Sample Problem with $\delta\omega=5\times10^{-5}$ at distance $|t-t_c|=1000$.}\label{prob:paper-arithmetic-dephase-small}
+\prob{2}{Repeat the dephasing Sample Problem with $\delta\omega=5\times10^{-5}$ at distance $|t-t_c|=1000$.}
 
 \prob{2}{Using \texttt{qmnt}, reproduce the 401--500 row of Table~V (null and all four prime budgets). Then compute the six-prime oracle on zeros 1--400. Does a zero-parameter predictor have an "in-sample" score? What does your number mean?}
 
@@ -916,7 +916,7 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 
 \prob{1}{The 900-coefficient B row scores $0.180$ and "the score varies by at most $0.012$ with the choice of root." Give the range of possible scores and compare with the null.}
 
-\prob{2}{Using Selberg's variance $\frac{1}{2\pi^2}\log\log t$ from the \texttt{beyond} box in \cref{sec:paper-arithmetic-tablev}, predict the ratio of the null rms at $t=8000$ to that at $t=700$. Compare with the ratio $0.296/0.263$ of Table~V's first and last nulls, and say what the asymptotic formula neglects.}\label{prob:paper-arithmetic-selberg}
+\prob{2}{\label{prob:paper-arithmetic-selberg}Using Selberg's variance $\frac{1}{2\pi^2}\log\log t$ from the \texttt{beyond} box in \cref{sec:paper-arithmetic-tablev}, predict the ratio of the null rms at $t=8000$ to that at $t=700$. Compare with the ratio $0.296/0.263$ of Table~V's first and last nulls, and say what the asymptotic formula neglects.}
 
 \prob{3}{For $F(t)=A\sin(\omega t)$ near $t=680$ with $\omega=5$, find the smallest $A$ for which the level function can be non-monotone. For $A=0.3$, how many times can $G$ change direction within one period $2\pi/\omega$? Relate your answer to \cref{fig:paper-arithmetic-rootambig}.}
 
@@ -931,6 +931,8 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 \prob{3}{(Research flavor.) Suppose C2's search range were restricted to $0.05<\omega<2$. Which prime powers could it find? Predict, without running, roughly where its held-out rms on 401--500 would fall relative to Table~V, and explain. Then, if you like, test your prediction with your code from Problem 14.}
 
 \prob{2}{Suppose a revised paper reported that C1, unchanged, scored $0.05$ on zeros 401--500. Which sentence of Sec.~IV or Sec.~VI would this contradict, and would Claim IV.10 survive?}
+
+\prob{2}{\label{prob:paper-arithmetic-rmsslope}Starting from Eq.~\eqref{eq:paper-arithmetic-dnfl}, show that the mean square of $\Nfl'(t)$ over a long range of $t$ is $\frac{1}{\pi^2}\sum_{p\in P}(\log p)^2\sum_{m=1}^3\frac{1}{2p^m}$. (Hint: the frequencies $m\log p$ are all distinct, so the cross terms average to zero, and each $\cos^2$ averages to $\tfrac12$.) Evaluate the rms for $P=\{2\}$ and for the six primes $p\le13$, and compare both with $\Nsm'(680)$.}
 \end{problemlist}
 
 %======================================================================
@@ -946,7 +948,7 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 
 \textbf{Problem 5.} Let $G(t)=\Nsm(t)+\Nfl(t)-(n-\tfrac12)$. Newton's method is $t_{k+1}=t_k-G(t_k)/G'(t_k)$. At $t_0=s_n$, $G(s_n)=\Nfl(s_n)$ because $\Nsm(s_n)=n-\tfrac12$, and $G'(s_n)=\Nsm'(s_n)+\Nfl'(s_n)$. Hence $t_1=s_n-\Nfl(s_n)/[\Nsm'(s_n)+\Nfl'(s_n)]$. It reduces to $s_n-\gap_n\Nfl(s_n)$ when $|\Nfl'(s_n)|\ll\Nsm'(s_n)=1/\gap_n$. Sample Problem "One oracle step by hand" shows that this condition fails badly for one prime at $t=680$ ($0.34$ vs.\ $0.75$).
 
-\textbf{Problem 7.} $0.263\sqrt{1-0.78^2}=0.263\times0.626=0.165$. The reported $0.180$ is above this bound, as it must be; the excess reflects an amplitude that is not optimally scaled and a nonzero mean error.
+\textbf{Problem 7.} $0.263\sqrt{1-0.78^2}=0.263\times0.626=0.165$. The reported $0.180$ is above this bound, as it must be (to the extent that the null approximates $\sigma_Y$). The excess is consistent with an amplitude that is not optimally scaled, a nonzero mean error, or both; the paper does not say which, and the bound alone cannot tell them apart.
 
 \textbf{Problem 9.} $\lambda\approx0.0054\times211/\log211=0.0054\times39.4\approx0.21$. So even the highest frequency in the 800-zero list had only about a one-in-five chance of a match by accident under this heuristic; many such matches together are hard to obtain by chance, which is the intuition the surrogate check tests properly.
 
@@ -960,12 +962,12 @@ This chapter is itself a reading of the paper; here we collect the exact corresp
 
 \textbf{Problem 19.} The score lies in $[0.168,0.192]$, entirely below the null $0.263$. The qualitative conclusion (positive skill despite underdetermination) does not depend on the root choice.
 
-\textbf{Problem 21.} $G'(t)=\Nsm'(t)+A\omega\cos(\omega t)$ can become negative only if $A\omega>\Nsm'(680)=0.7455$, so $A>0.149$. For $A=0.3$, $G'$ is negative on part of every period and positive on the rest, so $G$ changes direction twice per period (one local maximum and one local minimum). Each such down-and-up excursion can add two extra roots if the target level lies within it, which is what the $A=0.3$ curve of \cref{fig:paper-arithmetic-rootambig} shows.
+\textbf{Problem 21.} $G'(t)=\Nsm'(t)+A\omega\cos(\omega t)$ can become negative only if $A\omega>\Nsm'(680)=0.7455$, so $A>0.149$. For $A=0.3$, $A\omega=1.5>0.7455$, so $G'(t)=0.7455+1.5\cos(5t)$ is negative exactly when $\cos(5t)<-0.7455/1.5=-0.497$, which happens on one interval of each period, and positive on the rest. Hence $G'$ changes sign exactly twice per period: $G$ has one local maximum $G_{\max}$ (where $G'$ goes from positive to negative) and one local minimum $G_{\min}<G_{\max}$ (where it goes back). So $G$ changes direction twice per period. Extra roots: around one such excursion, $G=0$ has three roots (one on the rising stretch before the maximum, one on the falling stretch, one on the rising stretch after the minimum) if and only if $G_{\min}<0<G_{\max}$; otherwise it has at most one. Each excursion whose range straddles zero therefore adds exactly two extra roots, which is what the $A=0.3$ curve of \cref{fig:paper-arithmetic-rootambig} shows.
 
 \textbf{Problem 23.} The ridge solution is $\theta=\sum_i \frac{\sigma_i}{\sigma_i^2+\lambda\sigma_1^2}(u_i^\top y)\,v_i$. As $\lambda\to\infty$ every factor tends to $0$, so $\theta\to0$ and $F\equiv0$: the prediction is the smooth zero, the null. As $\lambda\to0$ each factor tends to $1/\sigma_i$ for $\sigma_i>0$, and the sum runs only over nonzero singular values, which is the pseudo-inverse solution: the exact fit of minimum norm (Chapter~\ref{ch:least-squares}). For C1 the minimum-norm exact fit extrapolates poorly; the forward split detects this in the validation block and selects a large $\lambda$, which pushes the held-out predictions toward the $\lambda\to\infty$ limit, the null.
 
 \textbf{Problem 25.} The rms interval contains the null $0.263$: C1's rms cannot be distinguished from predicting no fluctuation. The correlation interval excludes zero: its predictions are weakly but genuinely aligned with the truth. Together: a little information, almost no error reduction, as Eq.~\eqref{eq:paper-arithmetic-rmsbound} predicts for $\rho\approx0.28$.
 
-\textbf{Problem 27.} The prime powers with $\log q<2$, i.e.\ $q<e^2\approx7.39$, are $2,3,4,5,7$. A C2 restricted to this range can capture the terms $\log2$, $\log4=2\log2$, $\log3$, $\log5$, $\log7$, i.e.\ a subset of the four-prime oracle, with fitted amplitudes. We would expect a held-out rms roughly between the 3-prime ($0.116$) and 6-prime ($0.074$) oracle entries of Table~V, since it captures more than three primes' main terms but misses $p=11,13$ and all higher terms. This is a heuristic expectation, not a result; the fitted amplitudes could do a little better.
+\textbf{Problem 26.} The prime powers with $\log q<2$, i.e.\ $q<e^2\approx7.39$, are $2,3,4,5,7$. A C2 restricted to this range can capture the terms $\log2$, $\log4=2\log2$, $\log3$, $\log5$, $\log7$, i.e.\ a subset of the four-prime oracle, with fitted amplitudes. We would expect a held-out rms roughly between the 3-prime ($0.116$) and 6-prime ($0.074$) oracle entries of Table~V, since it captures more than three primes' main terms but misses $p=11,13$ and all higher terms. This is a heuristic expectation, not a result; the fitted amplitudes could do a little better.
 
-\textbf{Problem 28 (not odd, brief).} It would contradict "A dense 900-coefficient Fourier model also stays near the null" (abstract) and "a dense 900-coefficient Fourier model gains almost nothing over the null" (Sec.~VI). Claim IV.10 would weaken: count without an arithmetic or sparsity prior would then have generalized, and the operators' failure could no longer be blamed on a generic parametrization in general, only on the potential specifically.
+\textbf{Problem 27.} It would contradict "A dense 900-coefficient Fourier model also stays near the null" (abstract) and "a dense 900-coefficient Fourier model gains almost nothing over the null" (Sec.~VI). Claim IV.10 would weaken: count without an arithmetic or sparsity prior would then have generalized, and the operators' failure could no longer be blamed on a generic parametrization in general, only on the potential specifically.

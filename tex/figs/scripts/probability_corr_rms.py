@@ -1,23 +1,18 @@
-import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 import qmnt
-
 n = np.arange(401, 501)
-s = qmnt.smooth_zeros(n)
-y = qmnt.Nfl(s, [2], mmax=3)          # RE2 sampled at smooth zeros
-p1 = 0.5 * y
-rng = np.random.default_rng(2)
-p2 = rng.normal(0.0, y.std(), size=y.size)
-
+y = qmnt.Nfl(qmnt.smooth_zeros(n), [2], mmax=3)
+pA = 0.5*y
+pB = np.random.default_rng(2).normal(0, y.std(), len(y))
+null = np.sqrt(np.mean(y**2))
 fig, axs = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)
-axs[0].plot(n, y, "k-", lw=1.5, label="truth")
-axs[0].plot(n, p1, "b--", lw=1.5, label="half amplitude")
-axs[0].set_title("corr +1, rms = null/2")
-axs[1].plot(n, y, "k-", lw=1.5, label="truth")
-axs[1].plot(n, p2, "r.-", lw=0.8, label="independent noise")
-axs[1].set_title("corr near 0, rms > null")
-for ax in axs:
-    ax.set_xlabel("level index $n$")
-    ax.legend(fontsize=8, loc="lower left")
-axs[0].set_ylabel("fluctuation (mean spacings)")
-plt.tight_layout()
-plt.savefig("probability_corr_rms.pdf", bbox_inches="tight")
+for ax, p, ttl in [(axs[0], pA, 'right shape, half amplitude'), (axs[1], pB, 'uncorrelated noise')]:
+    r = np.corrcoef(p, y)[0, 1]
+    e = np.sqrt(np.mean((p - y)**2))
+    ax.plot(n, y, 'k', lw=1.5, label='truth')
+    ax.plot(n, p, 'tab:red', lw=1, label='prediction')
+    ax.set_title(ttl + '\ncorr %.2f, rms/null %.2f' % (r, e/null), fontsize=9)
+    ax.set_xlabel('zero index $n$')
+axs[0].set_ylabel('fluctuation (mean spacings)')
+axs[0].legend(fontsize=8)
+plt.savefig('probability_corr_rms.pdf', bbox_inches='tight')

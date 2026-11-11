@@ -61,7 +61,7 @@ g = D @ t[:4]
 assert np.allclose(g, [6.887315, 3.988818, 5.414018], atol=1e-9)
 close(np.diff(t).sum(), 35.639107, 1e-9)
 
-# Checkpoint shapes (trivial) and sample rotate/stretch
+# Sample rotate/stretch
 R = np.array([[0, -1], [1, 0]]); S = np.array([[2, 0], [0, 1]])
 assert np.array_equal(R @ S, [[0, -1], [2, 0]]); assert np.array_equal(S @ R, [[0, -2], [1, 0]])
 assert np.array_equal(R @ S @ [1, 0], [0, 2]); assert np.array_equal(S @ R @ [1, 0], [0, 1])
@@ -87,6 +87,15 @@ assert cost(3) == 8 and sum(j * (j + 1) for j in range(1, 3)) == 8
 assert sum(j * (j + 1) for j in range(1, 50)) == cost(50)
 close(cost(6000), 7.2e10, 1e7)                     # Problem 27 / text
 
+# det = r1.(r2 x r3) instance
+Ar = np.array([[1., 4, -2], [3, 0.5, 2], [-1, 2, 5]])
+close(np.linalg.det(Ar), Ar[0] @ np.cross(Ar[1], Ar[2]), 1e-10)
+
+# Null-space special solutions instance (Problem 12 matrix)
+A12 = np.array([[1., 2, 3], [2, 4, 6], [1, 0, 1]])
+assert np.linalg.matrix_rank(A12) == 2
+assert np.allclose(A12 @ [-1, -1, 1], 0)
+
 # Sample: recovering zeros from spacings
 gs = np.array([6.887315, 3.988818, 5.414018])
 close(gs.sum(), 16.290151, 1e-9)
@@ -95,7 +104,7 @@ tt = np.array([s - gs.sum(), s - gs[1] - gs[2], s - gs[2], s])
 assert np.allclose(D @ tt, gs); close(tt[0], 14.134725, 1e-9)
 assert np.allclose(D @ np.ones(4), 0)
 
-# Determinant area figure and (D4) instance
+# Determinant area figure
 close(np.linalg.det(np.array([[2., 1], [1, 2]])), 3, 1e-12)
 
 # Sample: grid sum exact for cos(pi x/2)
@@ -104,10 +113,17 @@ for N in [3, 7, 50, 999]:
     close(h * np.sum(np.cos(np.pi * x / 2)**2), 1.0, 1e-12)
 close(quad(lambda x: np.cos(np.pi * x / 2)**2, -1, 1)[0], 1.0, 1e-12)
 
-# Pitfall: interior sum of x^2
-for N, claimed in [(9, 0.48), (99, 0.6468)]:
+# Pitfall: interior sum of x^2, and trapezoid values
+for N, claimed, trap in [(9, 0.48, 0.6800), (99, 0.6468, 0.6668)]:
     h = 2 / (N + 1); x = -1 + h * np.arange(1, N + 1)
-    close(h * np.sum(x**2), claimed, 1e-4)
+    s_int = h * np.sum(x**2)
+    close(s_int, claimed, 1e-4)
+    s_tr = s_int + h / 2 * (1 + 1)
+    close(s_tr, trap, 1e-4)
+close(0.68 - 2 / 3, 0.0133, 1e-4)
+close(abs(0.66680 - 2 / 3), 0.0001, 1e-4)
+close(2 / 3 - 0.48, 0.19, 5e-3)
+close(2 / 3 - 0.6468, 0.02, 1e-3)
 
 # Cosine orthogonality (eq cosorth), numerically with L = 2.5
 Lt = 2.5
@@ -139,6 +155,8 @@ for nn in range(1, nlev + 1):
     if nn < M:
         Aan[nn - 1, nn] = (-1)**(nn + 1) / 2
 assert np.abs(Agrid - Aan).max() < 1e-9
+# row n = 6 >= M = 6 has only the 1 in column 0
+assert np.allclose(Agrid[5], [1, 0, 0, 0, 0, 0], atol=1e-9)
 # independence of L
 L2 = 3.0; h2 = 2 * L2 / (N + 1); x2 = -L2 + h2 * np.arange(1, N + 1)
 psi2 = np.sin(np.outer(x2 + L2, n) * np.pi / (2 * L2)) / np.sqrt(L2)
@@ -156,7 +174,6 @@ Ab2 = np.array([[1, 0.5], [1, 0], [1, 0]])
 assert np.linalg.matrix_rank(Ab4) == 3 and np.linalg.matrix_rank(Ab2) == 2   # Problem 24
 aug = np.column_stack([Ab2, rr]); assert np.linalg.matrix_rank(aug) == 3     # inconsistent
 close((rr[2] - rr[1]), 0.4, 1e-12)
-# Checkpoint: rank of box with nlev levels and M = nlev+1
 nl = 7
 Ab = np.zeros((nl, nl + 1)); Ab[:, 0] = 1
 for nn in range(1, nl + 1):
@@ -189,10 +206,10 @@ A7 = np.array([[1, 2], [3, 4]]); B7 = np.array([[0, 1], [1, 0]])
 assert np.array_equal(A7 @ B7, [[2, 1], [4, 3]]); assert np.array_equal(B7 @ A7, [[3, 4], [1, 2]])
 # Problem 9
 A9 = np.array([[3., 1], [5, 2]]); assert np.allclose(np.linalg.inv(A9), [[2, -1], [-5, 3]])
-# Problem 10 (even, but check solution exists)
+# Problem 10
 x10 = np.linalg.solve(np.array([[2., 1, -1], [1, 3, 2], [3, -1, 1]]), [1, 13, 4])
 assert np.allclose(np.array([[2., 1, -1], [1, 3, 2], [3, -1, 1]]) @ x10, [1, 13, 4])
-# Problem 11 instance: a=4,b=6 consistent rank 1
+# Problem 11
 assert np.linalg.matrix_rank(np.array([[1, 2, 3], [2, 4, 6]])) == 1
 assert np.linalg.matrix_rank(np.array([[1, 2, 3], [2, 4, 7]])) == 2
 # Problem 13
@@ -211,11 +228,10 @@ G = np.array([[1, 0.5], [0.5, 1 / 3]]); bb = np.array([1 / 3, 0.25])
 assert np.allclose(np.linalg.solve(G, bb), [-1 / 6, 1])
 # Problem 19 shapes: null dims
 assert (400 - 300, 900 - 800, 400 - 200) == (100, 100, 200)
-# Problem 25: null rms on 401-500
+# Problem 25: smooth-zero null rms on 401-500
 nn = np.arange(401, 501)
 dfl = qmnt.fluct(qmnt.zeros(500)[400:], nn)
 close(qmnt.rms(dfl), 0.2631, 2e-3)
-# Problem 27 done above
 # Problem 29
 th = 0.7; Rt = np.array([[np.cos(th), -np.sin(th)], [np.sin(th), np.cos(th)]])
 xv = np.array([1.3, -0.4]); close(np.linalg.norm(Rt @ xv), np.linalg.norm(xv), 1e-12)

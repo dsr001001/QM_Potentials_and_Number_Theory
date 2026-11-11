@@ -1,0 +1,79 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{problemlist}\n\\prob{1}{For $\\bm u=(2,-1,3,0)$",
+  "problem": "The chapter's figures (vectors, lines, map, grid, cosine, Amatrix) are included but the response supplied no FIGURES part, and the bible requires a script for each figure.",
+  "fix": "Add a FIGURES section with a script for each of the six figures (linear-algebra_vectors, _lines, _map, _grid, _cosine, _Amatrix)."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Problem~21 asks you to prove it",
+  "problem": "Hard-coded problem numbers are fragile; also the answer section skips odd-numbered problems (e.g. 33 absent, 19 present but 3, 5 etc. mixed) and omits answers to several odd problems (e.g. 33, 35 do not exist but 21, 23 only). Problems 1-35: odd ones such as 33/35 do not exist, yet answers for 20? Check: odd problems 13,15,17,19,21,23,25,27,29,31 are answered, but problem 33 (if any) is not; answers to all \\prob{1} are required.",
+  "fix": "Verify all \\prob{1} problems and every odd-numbered problem have answers (e.g. Problem 12, 14, 18 fine; ensure problem numbers cited match actual order). Use \\ref labels instead of hard-coded numbers."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Problem 2.} $\\norm{\\bm w}=\\sqrt{1+4+4}=3$",
+  "problem": "Answer labels misaligned with problem list numbering: the problem list's 5th item (prove orthogonality/Pythagoras) is labelled 'Problem 5' correctly, but \\prob{1} on A\\bm x is 6th, while problem 8 (prove (AB)^\\dagger) and 10, 12 have no answers although odd/\\prob{1} requirements apply to 12? (Problem 12 is difficulty 2, fine). Problem 9 answered ok. Problem 10 (\\prob{2}, even) fine.",
+  "fix": "Re-check numbering of answers against problem order, especially after the 14th item; ensure Problem 16 etc. are not required."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The null predicts $t_n=s_n$, so its error vector in mean spacings is exactly $-\\bm d$",
+  "problem": "Problem 25 answer says raw fluct rms matches 0.2631 but the paper's null is for the bias-corrected targets/smooth-potential levels; the equality with the smooth-zero null is stated in the paper only as numerical coincidence. Also the check used tolerance 2e-3 on a quoted '0.263'.",
+  "fix": "Say 'about 0.263, matching the paper's oracle null (the paper notes the potential null coincides numerically)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Remarkably, the answer does not depend on $L$.",
+  "problem": "Box sensitivity answer requires n<M for the diagonal entry; for n>=M columns lack the entry. The boxed formula does not state this; Problem 24 shape also affected.",
+  "fix": "State 'A_{nk} = (-1)^{n+1}/2 for k=n (only if n \\le M-1)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Chapter~\\ref{ch:eigen} shows that this single property forces their eigenvalues to be real",
+  "problem": "Eigenvalues are not yet defined in this chapter; used as forward reference with no explanation, as are 'self-adjoint' and 'Hilbert--Pólya'.",
+  "fix": "Add a one-sentence gloss of eigenvalue or defer the remark to a forward-pointer with clear label."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Recall from first-year physics that the cross product of the second and third rows",
+  "problem": "The identity det = r1·(r2×r3) is claimed 'term by term' without displaying the dot product lines; the 3D volume claim is not proved.",
+  "fix": "Write out r1·(r2×r3) explicitly and note volume = |a·(b×c)| from HRW."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "By the discussion above (with $\\bm b=\\bm 0$, which is always consistent), its members are described by $n-r$ free parameters, so it is a subspace of dimension $n-r$.",
+  "problem": "Dimension of a null space is asserted from free-parameter count without showing independence of the n-r special solutions.",
+  "fix": "Note each free variable set to 1 (others 0) gives an independent solution and every solution is a combination."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "When both vectors already have mean close to zero, as fluctuations do, the correlation and the $\\cos\\theta$ of \\cref{eq:linear-algebra-angle} are close",
+  "problem": "Claim about fluctuations having mean near zero is unsupported here.",
+  "fix": "Mark as an empirical remark or cite Chapter on counting zeros."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper starts this index at $0$, not $1$; we return to this in a pitfall below.",
+  "problem": "Paper-level statements (e.g. 'App. A step 9', 'step 3') are cited as supporting normalization; step numbers: normalization is in step 9 per paper, fine, but 'Table~III ... saturated' quoting uses M=400 odd/even in-sample <10^{-3} which is correct. Minor: pitfall on trapezoid says 'removes most of it' without numbers.",
+  "fix": "Add the trapezoid value for N=9 (0.6667 exactly for x^2? check) or drop the claim."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "are what a nearly full-rank, nearly saturated linear model would lead you to expect.",
+  "problem": "Links nonlinear operator fit's surrogate results to linear saturation argument as if explanatory; paper's explanation is heuristic.",
+  "fix": "Add 'heuristically' and repeat the paper's hedge."
+ }
+]

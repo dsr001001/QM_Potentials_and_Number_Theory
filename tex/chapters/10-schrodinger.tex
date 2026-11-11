@@ -3,7 +3,7 @@
 \begin{chapterintro}
 Pluck a guitar string and you hear a definite note, together with a few overtones at two, three, four times its frequency. You do not hear a smear of every possible pitch, because the string is pinned at both ends and only waves that fit between the pins survive. Heat a gas of hydrogen and it glows in a few sharp colors, not in a continuous rainbow. Early in the twentieth century physicists realized that these two facts are cousins: an electron bound in an atom behaves like a wave confined to a region, and only certain wave patterns, with certain energies, fit. The set of allowed energies is called the \emph{spectrum} of the system.
 
-This chapter builds the mathematics of that idea from what you already know about waves on strings. We meet the de Broglie relation that assigns a wavelength to a particle, construct (by motivated guessing, which is honestly all anyone can do) the Schr\"odinger equation, separate it into a time part and a space part, and arrive at the eigenvalue equation $H\psi=E\psi$. We learn what the wavefunction $\psi$ means (the Born rule), how to compute averages of measured quantities, why the operators of quantum mechanics must be \emph{Hermitian} (self-adjoint), and why that guarantees real energies. Finally we adopt the units $\hbar=2m=1$ that the paper uses throughout.
+This chapter builds the mathematics of that idea from what you already know about waves on strings. We meet the de Broglie relation that assigns a wavelength to a particle, construct (by motivated guessing, which is honestly all anyone can do) the Schr\"odinger equation, separate it into a time part and a space part, and arrive at the eigenvalue equation $H\psi=E\psi$. We learn what the wavefunction $\psi$ means (the Born rule), how to compute averages of measured quantities, why the operators of quantum mechanics must be \emph{Hermitian} (self-adjoint; a property defined precisely in Sec.~\ref{sec:schrodinger-hermitian}), and why that guarantees real energies. Finally we adopt the units $\hbar=2m=1$ that the paper uses throughout.
 
 Where this shows up in the paper: the very first sentence of the paper speaks of ``the spectrum of a self-adjoint operator''; Sec.~II~B of the paper writes ``In units $\hbar=2m=1$, $H=-d^2/dx^2+V(x)$''; Sec.~II~C works with eigenpairs $(E_n,\psi_n)$ and weights $|\psi_n|^2$; and Secs.~II~E and~V deliberately break Hermiticity with $H\to H+iA$. After this chapter each of those phrases will be a precise statement you can check.
 \end{chapterintro}
@@ -170,7 +170,7 @@ For a free particle (no forces) the energy is all kinetic, $E=p^2/2m$. Substitut
 \omega=\frac{\hbar k^2}{2m}.
 \label{eq:schrodinger-free-dispersion}
 \end{equation}
-Compare with the string's $\omega=vk$ in Eq.~\eqref{eq:schrodinger-dispersion-string}: here $\omega$ grows as the \emph{square} of $k$. Matter waves are \emph{dispersive}: their phase velocity $\omega/k=\hbar k/2m$ depends on the wavelength. The right panel of \cref{fig:schrodinger-planewave} contrasts the two.
+Compare with the string's $\omega=vk$ in Eq.~\eqref{eq:schrodinger-dispersion-string}: here $\omega$ grows as the \emph{square} of $k$. Matter waves are \emph{dispersive}: their phase velocity $\omega/k=\hbar k/2m$ depends on the wavelength. The right panel of \cref{fig:schrodinger-planewave}, which appears in Sec.~\ref{sec:schrodinger-tdse} and uses the units of Sec.~\ref{sec:schrodinger-units}, contrasts the two.
 
 \begin{keyideas}
 \item De Broglie: a particle of momentum $p$ carries a wave with $\lambda=h/p$; equivalently $p=\hbar k$ and $E=\hbar\omega$, with $\hbar=h/2\pi$.
@@ -411,7 +411,7 @@ Suppose we have found many solutions $(\psi_n,E_n)$, $n=1,2,\dots$, of Eq.~\eqre
 \Psi(x,t)=\sum_n c_n\,\psi_n(x)\,e^{-iE_nt/\hbar},
 \label{eq:schrodinger-general}
 \end{equation}
-with constants $c_n$. At $t=0$ this is $\sum_nc_n\psi_n(x)$. If the $\psi_n$ can build any initial wave function (the expansion question of Sec.~\ref{sec:schrodinger-expectation}, similar to a Fourier series in Chapter~\ref{ch:fourier-series}), then Eq.~\eqref{eq:schrodinger-general} solves the whole time-dependent problem: find the stationary states once, then attach the clock factors. This is why the paper never needs the time-dependent equation: everything about the system is encoded in the stationary states and their energies.
+with constants $c_n$. At $t=0$ this is $\sum_nc_n\psi_n(x)$. If the $\psi_n$ can build any initial wave function (the expansion question of Sec.~\ref{sec:schrodinger-expectation}, similar to a Fourier series in Chapter~\ref{ch:fourier-series}), then Eq.~\eqref{eq:schrodinger-general} solves the whole time-dependent problem: find the stationary states once, then attach the clock factors. This is why the paper never needs the time-dependent equation: given completeness of the stationary states (taken on trust in the \texttt{beyond} box of Sec.~\ref{sec:schrodinger-hermitian}), everything about the system is encoded in the stationary states and their energies.
 
 \begin{checkpoint}
 Is a superposition $\Psi=\psi_1e^{-iE_1t/\hbar}+\psi_2e^{-iE_2t/\hbar}$ with $E_1\neq E_2$ a stationary state?
@@ -484,7 +484,7 @@ is an eigenfunction of $H$, and find its eigenvalue.
 \[
 \boxed{E_k=\frac{\hbar^2}{2m}\left(\frac{k\pi}{2L}\right)^2,\qquad k=1,2,3,\dots}
 \]
-This is the fixed-end string problem of Chapter~\ref{ch:eigen} again, with eigenvalue $(k\pi/2L)^2$ multiplied by $\hbar^2/2m$. Chapter~\ref{ch:bound-states} proves that these are \emph{all} the eigenfunctions. Note $k=0$ gives $\psi=0$, which is not allowed (an eigenfunction must be nonzero), and negative $k$ gives $-\psi_{\abs{k}}$, the same state up to sign.
+This is the fixed-end string problem of Chapter~\ref{ch:eigen} again, with eigenvalue $(k\pi/2L)^2$ multiplied by $\hbar^2/2m$. Chapter~\ref{ch:bound-states} solves the box problem fully, including the question of whether there are any other eigenfunctions. Note $k=0$ gives $\psi=0$, which is not allowed (an eigenfunction must be nonzero), and negative $k$ gives $-\psi_{\abs{k}}$, the same state up to sign.
 \end{sample}
 
 The integer $k$ that labels the empty-box states should not be confused with the wavenumber $k$ of a plane wave; for the box state $\psi_k$ the wavenumber is $q=k\pi/2L$. We keep the box label $k$ because the paper's cosine basis uses the same label (Sec.~\ref{sec:schrodinger-paper}).
@@ -607,7 +607,11 @@ With $\sin(3\pi/2)=-1$ and $\sin(\pi/2)=1$, the bracket is $\frac{3\pi}8+\frac14
 A classical particle bouncing at constant speed would spend exactly half its time in the middle half. The quantum ground state piles probability toward the center, where $\sin^2$ peaks (\cref{fig:schrodinger-standing}, right).
 \end{sample}
 
-The same calculation with $u$ running from $0$ to $k\pi$ shows that \emph{every} box state $\psi_k$ has normalization constant $1/\sqrt L$ (the integral of $\sin^2$ over $k$ half-periods is $k\pi/2$, times $2L/\pi$, divided by $k$... more simply: $\int_0^{k\pi}\sin^2u\,\dd u=k\pi/2$, and $\dd x=(2L/k\pi)\dd u$ for $\psi_k$, giving $A^2\cdot(2L/k\pi)(k\pi/2)=A^2L$). So the normalized empty-box states are
+The same calculation works for every box state. For $\psi_k=A\sin(k\pi(x+L)/2L)$ substitute $u=k\pi(x+L)/2L$, so that $\dd x=(2L/k\pi)\dd u$ and $u$ runs from $0$ to $k\pi$. Since
+\[
+\int_0^{k\pi}\sin^2u\,\dd u=\left[\frac u2-\frac{\sin2u}4\right]_0^{k\pi}=\frac{k\pi}2\quad\text{(because $\sin2k\pi=0$)},
+\]
+the normalization integral is $A^2\cdot\frac{2L}{k\pi}\cdot\frac{k\pi}{2}=A^2L$, and again $A=1/\sqrt L$. So the normalized empty-box states are
 \begin{equation}
 \psi_k(x)=\frac1{\sqrt L}\sin\!\left(\frac{k\pi(x+L)}{2L}\right),\qquad k=1,2,\dots
 \label{eq:schrodinger-box-states}
@@ -843,7 +847,7 @@ Take $H=-\frac{\hbar^2}{2m}\frac{\dd^2}{\dd x^2}+V(x)$ on $[-L,L]$ with $f(\pm L
 \[
 \int_{-L}^Lf^*g''\,\dd x=\Big[f^*g'\Big]_{-L}^L-\int_{-L}^Lf^{*\prime}g'\,\dd x=-\int_{-L}^Lf^{*\prime}g'\,\dd x,
 \]
-because $f^*(\pm L)=0$. The second, with $u=g'$... more conveniently with $u=f^{*\prime}$ and $\dd v=g'\dd x$:
+because $f^*(\pm L)=0$. The second integration by parts, with $u=f^{*\prime}$ and $\dd v=g'\dd x$ (so $v=g$):
 \[
 -\int_{-L}^Lf^{*\prime}g'\,\dd x=-\Big[f^{*\prime}g\Big]_{-L}^L+\int_{-L}^Lf^{*\prime\prime}g\,\dd x=\int_{-L}^Lf^{*\prime\prime}g\,\dd x,
 \]
@@ -913,7 +917,7 @@ Is $H=-\frac{\hbar^2}{2m}\frac{\dd^2}{\dd x^2}+V(x)-\frac{i\Gamma}{2}$, with rea
 
 \subsection{Hermiticity on a computer}
 
-Sample a function on $N$ equally spaced interior points $x_j=-L+jh$, $j=1,\dots,N$, with spacing $h=2L/(N+1)$, so the walls sit at $x_0=-L$ and $x_{N+1}=L$ where $\psi=0$. Recall from Chapter~\ref{ch:eigen} that the second derivative becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below. The Hamiltonian (with $\hbar^2/2m=1$) becomes the matrix
+Sample a function on $N$ equally spaced interior points $x_j=-L+jh$, $j=1,\dots,N$, with spacing $h=2L/(N+1)$, so the walls sit at $x_0=-L$ and $x_{N+1}=L$ where $\psi=0$. Recall from Chapter~\ref{ch:eigen} that the second derivative $\dd^2/\dd x^2$ becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below. The Hamiltonian contains $-\dd^2/\dd x^2$, so we multiply every entry by $-1$: the operator $-\dd^2/\dd x^2$ becomes the matrix with $+2/h^2$ on the diagonal and $-1/h^2$ just above and below. The potential multiplies each sample $\psi(x_j)$ by $V(x_j)$, which adds $V(x_j)$ to the $j$-th diagonal entry. So the Hamiltonian (with $\hbar^2/2m=1$) becomes the matrix
 \begin{equation}
 H_{jj}=\frac{2}{h^2}+V(x_j),\qquad H_{j,j\pm1}=-\frac1{h^2},\qquad\text{all other entries }0.
 \label{eq:schrodinger-fd}
@@ -1000,7 +1004,7 @@ This agrees with the familiar SI formula $h^2/(8m_ea^2)$ for a box of width $a$,
 \end{sample}
 
 \begin{sample}{The phase of a zeta-height level}
-\textbf{Problem.} In units $\hbar=2m=1$, a stationary state has energy equal to the height of the first zeta zero, $E=t_1=14.134725$ (RE1). How much time $\tau$ (in the natural time unit) does its phase factor take to rotate by $\pi$, that is, to change sign?
+\textbf{Problem.} In units $\hbar=2m=1$, a stationary state has energy equal to the height of the first zeta zero, $E=t_1=14.134725$ (the first of the ten zeros listed in Chapter~\ref{ch:intro}). How much time $\tau$ (in the natural time unit) does its phase factor take to rotate by $\pi$, that is, to change sign?
 
 \textbf{Step 1:} With $\hbar=1$ the phase factor is $e^{-iE\tau}$. It equals $-1$ when $E\tau=\pi$.
 
@@ -1145,7 +1149,7 @@ The paper's domain is $[-L,L]$ with $L=44.883$ at scale 1 and $L=59.957$ at scal
 \label{fig:schrodinger-wusprung}
 \end{figure}
 
-The paper scores ``the first 500 levels'' at scale 1 and 1000 at scale 2 (Sec.~II~B). In App.~A step~4 it records that the scale-1 potential has $652$ states with $E\le1000$; compare $903$ for the empty box (our Sample Problem in Sec.~\ref{sec:schrodinger-spectrum}) and $\Nsm(1000)=648.6$ for the zeros. The potential raises the energy everywhere inside the box, so fewer half-wavelengths fit below a given $E$ (Problem~\ref{prob:schrodinger-count}).
+The paper scores ``the first 500 levels'' at scale 1 and 1000 at scale 2 (Sec.~II~B). In App.~A step~4 it records that the scale-1 potential has $652$ states with $E\le1000$; compare $903$ for the empty box (our Sample Problem in Sec.~\ref{sec:schrodinger-spectrum}) and $\Nsm(1000)=648.6$ for the zeros. The potential is positive inside the box (it never drops below $V_0$), so at energy $E$ the local wavenumber $\sqrt{E-V(x)}$ (Sec.~\ref{sec:schrodinger-units}) is smaller than the empty-box value $\sqrt E$, and fewer half-wavelengths fit below a given $E$ (Problem~\ref{prob:schrodinger-count}).
 
 \subsection{Eigenpairs and Born-rule averages (Sec.~II~C)}
 
@@ -1266,7 +1270,7 @@ Constants: $h=6.62607015\times10^{-34}$~J\,s, $\hbar=h/2\pi$, $m_e=9.1093837\tim
 
 \prob{2}{A box state is $\Psi=\frac1{\sqrt5}(\psi_1+2i\psi_3)$. Check that it is normalized, give the probabilities of measuring $E_1$ and $E_3$, and compute $\langle H\rangle$ as a multiple of $E_1$.}
 
-\prob{3}{Generalize the beat argument of Sec.~\ref{sec:schrodinger-tdse} to a matter wave in units $\hbar=2m=1$: superpose $e^{i(k_1x-k_1^2t)}$ and $e^{i(k_2x-k_2^2t)}$, find the exact speed of the envelope of the real part, and show that it equals the classical speed $2k$ with $k=(k_1+k_2)/2$, with no approximation. Compare with the phase speed.}
+\prob{3}{Generalize the beat argument of Sec.~\ref{sec:schrodinger-tdse} to a matter wave in units $\hbar=2m=1$: superpose $e^{i(k_1x-k_1^2t)}$ and $e^{i(k_2x-k_2^2t)}$, find the exact speed of the envelope of the real part of this two-wave superposition, and show that it equals the classical speed $2k$ with $k=(k_1+k_2)/2$, with no approximation. Compare with the phase speed.}
 
 \end{problemlist}
 

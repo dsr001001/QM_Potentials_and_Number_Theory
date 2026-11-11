@@ -5,9 +5,10 @@ L=44.883; E10=(10*np.pi/(2*L))**2
 assert abs(E10-0.1225)<5e-4
 assert abs(np.exp(-1)-0.3679)<1e-4
 assert abs(np.log(2)/0.02-34.66)<0.01
-# Sample: complex symmetric 2x2
-l=np.sort_complex(np.linalg.eigvals(np.array([[1,2j],[2j,3]])))
+# Sample: complex symmetric 2x2 (sort by imaginary part; real parts are equal)
+l=sorted(np.linalg.eigvals(np.array([[1,2j],[2j,3]])),key=lambda z:z.imag)
 assert np.allclose(l,[2-np.sqrt(3)*1j,2+np.sqrt(3)*1j])
+assert abs(np.sqrt(3)-1.7321)<1e-4
 # Sample: two levels
 def shift(a,D=1.0):
     d=np.sqrt(complex(D**2-4*a**2)); return (0.5*D-0.5*d).real  # lambda_- - E1 with E1=0
@@ -21,6 +22,7 @@ from scipy.sparse import diags; from scipy.sparse.linalg import eigs
 Hm=diags([np.full(N-1,-1/h**2),2/h**2+x**2+1j*eps*x,np.full(N-1,-1/h**2)],[-1,0,1]).tocsc()
 ev=eigs(Hm,k=1,sigma=1.0,return_eigenvectors=False)[0]
 assert abs(ev.real-1.09)<2e-3 and abs(ev.imag)<1e-6
+assert abs(1-0.6**2/4-0.91)<1e-12
 # box sine elements and four-state sample
 def s1(a,b):
     if (a+b)%2==0: return 0.0
@@ -40,14 +42,17 @@ assert abs(np.trapezoid(ps(1)*ps(2)*np.sin(np.pi*xx/Lp),xx)-s1(1,2))<1e-6
 assert abs(s1(4,5)+0.4410)<1e-4 and abs(s1(2,5)-0.2264)<1e-4
 T5=Tn(5); assert abs(T5[3]-0.0102)<3e-4 and abs(T5.sum())<1e-14
 # width sample: cos element check
-def c1(a,b): return -0.5*((abs(a-b)==2)-(a+b==2))
+def c1(a,b): return -0.5*(int(abs(a-b)==2)-int(a+b==2))
 g=0.01; A11=-g*(1+c1(1,1)); assert abs(-2*A11-0.03)<1e-12 and abs(-2*(-g*(1+c1(5,5)))-0.02)<1e-12
+assert abs(1/0.03-33.3)<0.05 and abs(1/0.02-50)<1e-12
 assert abs(np.trapezoid(ps(1)**2*np.cos(np.pi*xx/Lp),xx)-0.5)<1e-6
 # null mode toy
 assert abs(np.sqrt(0.01/1e-14)-1e6)<1e-3
-# locality 89%
+# locality 89% (partners m<=400)
 n=20; w=np.array([s1(n,m)**2/abs(n*n-m*m) for m in range(1,401) if m!=n])
 frac=(s1(20,19)**2/39+s1(20,21)**2/41)/w.sum(); assert abs(frac-0.89)<0.01
+# two-level estimate of PT breaking threshold
+assert abs(1.5/0.6791-2.2)<0.05
 # complex plane claims
 K=60; nn=np.arange(1,K+1); E=nn**2.0
 S=np.array([[s1(a,b) for b in nn] for a in nn])

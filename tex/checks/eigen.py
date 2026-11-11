@@ -158,11 +158,13 @@ D4 = 2*np.eye(4) - np.eye(4, k=1) - np.eye(4, k=-1)
 x4 = np.array([1., 2., -1., 3.])
 assert np.allclose(D4 @ x4, [0, 4, -7, 7]) and abs(x4 @ D4 @ x4 - 36) < 1e-12
 assert abs(x4[0]**2 + x4[-1]**2 + np.sum(np.diff(x4)**2) - 36) < 1e-12
-# Problem 27
-for ep, ov in [(-2, 0.9945), (0, 0.5), (0.5, 0.2425), (2, 0.0055)]:
+# Problem 27 (corrected value at eps=0.5: 0.0714)
+for ep, ov in [(-2, 0.9945), (0, 0.5), (0.5, 0.07125), (2, 0.0055)]:
     wq, Uq = np.linalg.eigh(np.array([[ep, .3], [.3, -ep]]))
-    assert abs(abs(Uq[0, 0])**2 - ov) < 1e-4
+    assert abs(abs(Uq[0, 0])**2 - ov) < 1e-4, (ep, abs(Uq[0, 0])**2)
     assert abs(0.5*(1 - ep/np.sqrt(ep**2+0.09)) - ov) < 1e-4
+    assert abs((wq[1]-wq[0]) - 2*np.sqrt(ep**2+0.09)) < 1e-12
+assert abs(2*0.3 - 0.6) < 1e-12
 # Problem 29: numerical instance
 rng = np.random.default_rng(0)
 M = rng.normal(size=(4, 4)); S = rng.normal(size=(4, 4))
@@ -176,13 +178,19 @@ assert np.allclose(l31, [1.175379, 2, 2.824621], atol=1e-6)
 O31 = np.abs(W31)**2/np.sum(np.abs(W31)**2, axis=0)
 assert abs(O31[0, 0]-0.832) < 1e-3 and abs(O31[1, 1]-0.758) < 1e-3 and abs(O31[2, 2]-0.832) < 1e-3
 assert abs(1/np.sqrt(2) - 0.707) < 1e-3
-# Problem 32
+# Problem 32: ratio of top discrete eigenvalue to exact tends to 4/pi^2
+prev = None
 for Nb in [10, 1000, 100000]:
-    pass
+    hb = 2*L/(Nb+1)
+    rb = (4/hb**2*np.sin(Nb*np.pi*hb/(4*L))**2)/(Nb*q)**2
+    if prev is not None:
+        assert abs(rb - 4/np.pi**2) < abs(prev - 4/np.pi**2)
+    prev = rb
+assert abs(prev - 4/np.pi**2) < 1e-4
 assert abs(4/np.pi**2 - 0.405) < 1e-3
 # Problem 33
 for Nn in [5, 20]:
     for k in range(1, Nn+1):
         assert abs(np.sum(np.sin(np.arange(1, Nn+1)*k*np.pi/(Nn+1))**2) - (Nn+1)/2) < 1e-10
 
-print("all checks passed")
+print('all checks passed')

@@ -3,16 +3,18 @@
 \begin{chapterintro}
 Every number that the paper reports about prediction comes in a pair. Table~I of the paper, for instance, says that one fitted potential predicts the held-out zeros 401--500 with an ``rms'' of 0.369 and a ``corr'' of $-0.07$, and that the do-nothing prediction (the ``null'') has an rms of 0.263. To read such a pair you need to know what a root mean square error is, what a correlation coefficient is, why the two can disagree, and how much either number would wobble if the experiment were repeated on different data. Those are questions of probability and statistics, and this chapter answers them from scratch.
 
-We start with random variables and their distributions, define the mean, the variance and the root mean square, and meet the two distributions that appear in the paper's Fig.~2: the Gaussian and the exponential. Then we turn to pairs of quantities: covariance, the Pearson correlation coefficient (and a proof that it lies between $-1$ and $+1$), and a single identity that ties correlation to rms error. That identity explains at a glance why a prediction that is uncorrelated with the truth must do worse than the null, and why the paper's zero-parameter prime formula sits almost exactly where the identity says the best possible predictor with its correlation must sit. We finish with autocorrelation of a sequence, estimators, standard errors, the law of large numbers, and the random-number seeds that make computations repeatable.
+We start with random variables and their distributions, define the mean, the variance and the root mean square, and meet the two distributions that appear in the paper's Fig.~2: the Gaussian and the exponential. Then we turn to pairs of quantities: covariance, the Pearson correlation coefficient (and a proof that it lies between $-1$ and $+1$), and a single identity that ties correlation to rms error. That identity explains at a glance why a prediction that is uncorrelated with the truth must do worse than the null, and why the paper's zero-parameter prime formula sits almost exactly where the identity says the best possible predictor with its correlation must sit (an observation we make from the paper's rounded numbers, not a claim the paper makes). We finish with autocorrelation of a sequence, estimators, standard errors, the law of large numbers, and the random-number seeds that make computations repeatable.
 
 Where this shows up in the paper: every ``rms / corr'' pair in Tables~I--V, the bootstrap intervals of Sec.~III, the ranges over seeds in Table~III, the negative autocorrelation invoked in Sec.~III (``Within-height splits''), the exponential law $e^{-s}$ in Fig.~2, and the arithmetic-continuation probe, whose ``probe-null'' 0.1708 we will predict by hand.
 \end{chapterintro}
 
 \begin{prerequisites}
+
 \item Chapter~\ref{ch:series}: limits of sequences, partial sums, the geometric series, the Taylor series of $\log(1-x)$.
 \item Chapter~\ref{ch:asymptotics}: big-O notation and the idea of a leading-order approximation.
 \item First-year physics: integrals, substitution, integration by parts, exponentials and logarithms, trigonometric identities (in particular $\sin A\sin B=\tfrac12[\cos(A-B)-\cos(A+B)]$), the dot product of vectors.
 \item Nothing about the zeta function is needed for the teaching sections. The paper connection uses the fluctuations of the zeros; we define them there in a few lines.
+
 \end{prerequisites}
 
 %====================================================================
@@ -345,7 +347,7 @@ The last entry is why ``$\pm1.96\,\sigma$'' appears in 95\% intervals (\cref{sec
 Why does the Gaussian appear so often? The reason is a theorem about sums of many independent random contributions, which we state in \cref{sec:probability-sampling} (the central limit theorem). Measurement errors that are the sum of many small independent disturbances tend to be Gaussian; that is a tendency, not a law, and \cref{fig:probability-hist_fluct} should be read as a comparison, not as a claim that the zeros' fluctuations are exactly Gaussian.
 
 \begin{pitfall}
-The rule ``95\% within $1.96\,\sigma$'' is a property of the Gaussian. For other distributions the fraction can be very different. The only guarantee valid for \emph{every} distribution with finite variance is the much weaker Chebyshev bound of \cref{sec:probability-sampling}: at least 75\% within $2\sigma$.
+The rule ``95\% within $1.96\,\sigma$'' is a property of the Gaussian. For other distributions the fraction can be very different. The only guarantee valid for \emph{every} distribution with finite variance is the much weaker Chebyshev bound, proved later in this chapter (\cref{sec:probability-sampling}): at least 75\% within $2\sigma$.
 \end{pitfall}
 
 \subsection{The exponential distribution and the Poisson process}
@@ -456,6 +458,7 @@ This holds for \emph{any} two random variables, related or not.
 E[XY]=\sum_{j,k}x_jy_k\,p_X(x_j)p_Y(y_k) = \Bigl(\sum_j x_jp_X(x_j)\Bigr)\Bigl(\sum_ky_kp_Y(y_k)\Bigr)=E[X]\,E[Y].
 \label{eq:probability-indep-product}
 \end{equation}
+For continuous variables every definition and proof in this section carries over with a \emph{joint density} $f(x,y)$, for which $P(a<X<b\text{ and }c<Y<d)=\int_a^b\int_c^d f(x,y)\,\dd y\,\dd x$: sums over $j$ and $k$ become integrals over $x$ and $y$, the single-variable density is $f_X(x)=\int f(x,y)\,\dd y$, and independence means $f(x,y)=f_X(x)f_Y(y)$.
 
 \subsection{Covariance}
 
@@ -464,7 +467,7 @@ The \emph{covariance} measures whether two variables tend to be above their mean
 \mathrm{Cov}(X,Y)=E\bigl[(X-\mu_X)(Y-\mu_Y)\bigr] = E[XY]-\mu_X\mu_Y .
 \label{eq:probability-cov}
 \end{equation}
-The second form follows by expanding the product and using linearity, exactly as in \cref{eq:probability-var-shortcut}. Note $\mathrm{Cov}(X,X)=\mathrm{Var}(X)$. By \cref{eq:probability-indep-product}, independent variables have zero covariance. (The converse is false: zero covariance does not imply independence; Problem~\ref{prob:probability-uncorrelated-dependent}.)
+The second form follows by expanding the product and using linearity, exactly as in \cref{eq:probability-var-shortcut}. Note $\mathrm{Cov}(X,X)=\mathrm{Var}(X)$. By \cref{eq:probability-indep-product}, independent variables have zero covariance. (The converse is false: zero covariance does not imply independence; Problem~28.)
 
 The variance of a sum follows. Write $X'=X-\mu_X$, $Y'=Y-\mu_Y$; the sum $X+Y$ has mean $\mu_X+\mu_Y$, so
 \begin{align}
@@ -499,7 +502,7 @@ with equality if and only if one list is a constant multiple of the other.
 0 \le g(\lambda) &= \sum_{i=1}^n (u_i-\lambda v_i)^2\\
 &= \sum u_i^2 - 2\lambda\sum u_iv_i + \lambda^2\sum v_i^2 \quad\text{(expand the square)}.
 \end{align*}
-Choose $\lambda^*=\sum u_iv_i\big/\sum v_i^2$ (the value that minimizes $g$; you can confirm this by setting $g'(\lambda)=0$). Substituting,
+The inequality $g(\lambda)\ge0$ holds for every $\lambda$, so we may pick the most useful one, the $\lambda$ at which $g$ is smallest. Setting the derivative to zero, $g'(\lambda)=-2\sum u_iv_i+2\lambda\sum v_i^2=0$, gives $\lambda^*=\sum u_iv_i\big/\sum v_i^2$. (The proof uses only $g(\lambda^*)\ge0$; that $\lambda^*$ minimizes $g$ merely explains why it is the best choice.) Substituting,
 \begin{align*}
 0\le g(\lambda^*) &= \sum u_i^2 - 2\frac{(\sum u_iv_i)^2}{\sum v_i^2}+\frac{(\sum u_iv_i)^2}{(\sum v_i^2)^2}\sum v_i^2\\
 &= \sum u_i^2 - \frac{(\sum u_iv_i)^2}{\sum v_i^2}.
@@ -653,7 +656,7 @@ So far the order of a list did not matter: shuffling $x_1,\dots,x_n$ leaves $\ba
 r_k = \frac{\sum_{i=1}^{n-k}(x_i-\bar x)(x_{i+k}-\bar x)}{\sum_{i=1}^{n}(x_i-\bar x)^2},\qquad k=0,1,2,\dots
 \label{eq:probability-acf}
 \end{equation}
-It is the Pearson correlation of the sequence with itself shifted by $k$ places, with the convention that the overall mean and the full sum of squares are used for normalization. Then $r_0=1$, and $\abs{r_k}\le1$ follows from Cauchy--Schwarz (Problem~\ref{prob:probability-acf-bound}). A positive $r_1$ says ``if this entry is above average, the next tends to be above average too''; a negative $r_1$ says ``highs tend to be followed by lows''.
+It is the Pearson correlation of the sequence with itself shifted by $k$ places, with the convention that the overall mean and the full sum of squares are used for normalization. Then $r_0=1$, and $\abs{r_k}\le1$ follows from Cauchy--Schwarz (Problem~29). A positive $r_1$ says ``if this entry is above average, the next tends to be above average too''; a negative $r_1$ says ``highs tend to be followed by lows''.
 
 Autocorrelation is most useful when the sequence is (at least roughly) \emph{stationary}: its statistical behavior does not depend on where in the sequence you look, so the relation between $x_i$ and $x_{i+k}$ depends on $k$ but not on $i$. For the zeros' fluctuations this is an approximation (their amplitude grows slowly with height, Sec.~II C of the paper); over a window of a few hundred zeros it is reasonable.
 
@@ -673,7 +676,7 @@ The magnitudes are below 1 only because fewer pairs ($n-k$) enter the numerator 
 
 \subsection{The autocorrelation of a sinusoid}
 
-Take $y(t)=a\sin(\omega t+\phi)$, sampled finely and for a long time. Replace the sums in \cref{eq:probability-acf} by averages over one full period $P=2\pi/\omega$ (a long average over many periods gives the same result, up to an end correction that shrinks as the window grows). First, the mean is zero, because $\int_0^P\sin(\omega t+\phi)\,\dd t=0$. Next, by the identity $\sin A\sin B=\tfrac12[\cos(A-B)-\cos(A+B)]$ with $A=\omega t+\phi$ and $B=\omega t+\omega\tau+\phi$,
+Take $y(t)=a\sin(\omega t+\phi)$. To see what \cref{eq:probability-acf} measures for such a signal, consider first the idealized case of samples at many closely and evenly spaced times $t_i$ over a window of many periods. Then each sum in \cref{eq:probability-acf}, divided by its number of terms, is a Riemann sum for a time average, and a lag of $k$ samples is a fixed time shift $\tau$. This is an approximation: it neglects the discreteness of the sampling and the incomplete period at the ends of the window, both of which become negligible as the sampling gets finer and the window longer. Because an average over many whole periods equals the average over one period $P=2\pi/\omega$, we compute averages over one period. First, the mean is zero, because $\int_0^P\sin(\omega t+\phi)\,\dd t=0$. Next, by the identity $\sin A\sin B=\tfrac12[\cos(A-B)-\cos(A+B)]$ with $A=\omega t+\phi$ and $B=\omega t+\omega\tau+\phi$,
 \[
 y(t)\,y(t+\tau) = \frac{a^2}{2}\bigl[\cos(\omega\tau) - \cos(2\omega t+\omega\tau+2\phi)\bigr].
 \]
@@ -682,14 +685,14 @@ The second cosine completes two full cycles in one period, so it averages to zer
 \langle y(t)\,y(t+\tau)\rangle = \frac{a^2}{2}\cos(\omega\tau),
 \label{eq:probability-sin-acf}
 \end{equation}
-where $\langle\cdot\rangle$ denotes the average over a period. Setting $\tau=0$ gives the mean square $a^2/2$, so $\rms(y)=a/\sqrt2$: this is the $\sqrt2$ of AC circuits. Dividing \cref{eq:probability-sin-acf} by its value at $\tau=0$, the autocorrelation of a sinusoid at lag $\tau$ is $\cos(\omega\tau)$: it oscillates with the same period as the signal and never dies out.
+where $\langle\cdot\rangle$ denotes the average over a period. Setting $\tau=0$ gives the mean square $a^2/2$, so $\rms(y)=a/\sqrt2$: this is the $\sqrt2$ of AC circuits. Dividing \cref{eq:probability-sin-acf} by its value at $\tau=0$, the autocorrelation of a sinusoid at lag $\tau$ is $\cos(\omega\tau)$: it oscillates with the same period as the signal and never dies out. When the signal is sampled instead at the smooth zeros $s_n$, as in \cref{fig:probability-autocorr}, a lag of $k$ levels corresponds to a time shift $\tau\approx k$ times the local mean spacing (defined in \cref{sec:probability-paper}), which changes slowly with height. Over a window where that spacing is nearly constant, the lag-in-levels autocorrelation still oscillates like $\cos(\omega\tau)$, but only approximately.
 
 The same tools give the mean square of a sum of sinusoids whose frequencies are $\omega,2\omega,3\omega,\dots$. For positive integers $m\neq m'$, the identity above turns $\sin(m\omega t)\sin(m'\omega t)$ into $\tfrac12[\cos((m-m')\omega t)-\cos((m+m')\omega t)]$; both cosines complete a whole number of cycles in the period $P$ and average to zero. Cross terms vanish, and
 \begin{equation}
 \Bigl\langle \Bigl(\sum_m a_m\sin(m\omega t)\Bigr)^2\Bigr\rangle = \sum_m\frac{a_m^2}{2}.
 \label{eq:probability-sum-ms}
 \end{equation}
-(The same conclusion holds for incommensurate frequencies averaged over a long time, Chapter~\ref{ch:fourier-series}.)
+(When the frequencies are not integer multiples of one common $\omega$ there is no common period, but the cross terms still average to zero over a long window; this is the long-window orthogonality of sinusoids with different frequencies treated in Chapter~\ref{ch:fourier-series}. We do not need it here, because the frequencies of RE2 below are harmonics.)
 
 \begin{sample}{The rms of the prime-2 wave (RE2)}
 Running Example RE2 is $y(t)=-\frac1\pi\sum_{m=1}^{3}\frac{\sin(mt\log2)}{m\,2^{m/2}}$. Find its long-run rms.
@@ -705,7 +708,7 @@ $a_1=1/(\pi\sqrt2)=0.225079$, $a_2=1/(4\pi)=0.079577$, $a_3=1/(6\sqrt2\,\pi)=0.0
 \[
 \boxed{\rms(\text{RE2})\approx0.1709}
 \]
-The paper's arithmetic-continuation probe uses exactly this wave as a synthetic target, sampled at the smooth zeros $401$--$500$, and records the rms of predicting no fluctuation as the ``probe-null'' $0.1708$ (App.~A, ``Key anchors''). The window covers about 15 periods of the wave, enough for the long-run average to be a good approximation, and the two values agree to the digits shown.
+The paper's arithmetic-continuation probe uses exactly this wave as a synthetic target, sampled at the smooth zeros $401$--$500$, and records the rms of predicting no fluctuation as the ``probe-null'' $0.1708$ (App.~A, ``Key anchors''). The window covers about 15 periods of the wave, and the long-run value $0.1709$ agrees closely with the paper's $0.1708$. A small difference is to be expected, because on the holdout the wave is sampled at 100 discrete, unevenly spaced points rather than averaged continuously.
 \end{sample}
 
 \subsection{Predicting a value from its neighbors}
@@ -725,11 +728,11 @@ Autocorrelation decides whether you can predict a missing entry from its neighbo
 \end{equation}
 The sign is the sign of $\rho_1$. If neighbors are negatively correlated, a smooth interpolation between them is anticorrelated with the truth. For example, $\rho_1=-0.3$ and $\rho_2=-0.1$ give $\corr=-0.3/\sqrt{0.45}=-0.447$. This little calculation is the mechanism the paper invokes in Sec.~III for negative held-out correlations; Chapter~\ref{ch:generalization} develops the general best linear predictor.
 
-\Cref{fig:probability-autocorr} shows autocorrelations of two sequences: the RE2 wave sampled at the smooth zeros, which by \cref{eq:probability-sin-acf} oscillates, and independent noise, which is near zero at every nonzero lag.
+\Cref{fig:probability-autocorr} shows autocorrelations of two sequences: the RE2 wave sampled at the smooth zeros, which oscillates because its $m=1$ term dominates (it carries 87\% of the mean square in Step~2 of the sample problem above; the $m=2,3$ harmonics distort the shape slightly away from a pure cosine), and independent noise, which is near zero at every nonzero lag.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/probability_autocorr.pdf}
-\caption{Sample autocorrelation \cref{eq:probability-acf} against lag in levels. Circles: the prime-2 wave RE2 sampled at the smooth zeros $s_n$, $n=401$--$500$; it oscillates with a period of roughly 6--7 levels, the level-count of one period $2\pi/\log 2\approx9.07$ in $t$ at these heights (compare paper Sec.~V). Squares: 100 independent Gaussian numbers (seed 1), whose autocorrelations scatter near zero.}
+\caption{Sample autocorrelation \cref{eq:probability-acf} against lag in levels. Circles: the prime-2 wave RE2 sampled at the smooth zeros $s_n$, $n=401$--$500$; it oscillates, dominated by its $m=1$ term (the $m=2,3$ harmonics modify the shape), with a period of roughly 6--7 levels, the level-count of one period $2\pi/\log 2\approx9.07$ in $t$ at these heights (compare paper Sec.~V). Squares: 100 independent Gaussian numbers (seed 1), whose autocorrelations scatter near zero.}
 \label{fig:probability-autocorr}
 \end{figure}
 
@@ -749,7 +752,7 @@ print(autocorr([1, -1, 1, -1, 1, -1], 2))  # 1, -5/6, 4/6
 \begin{keyideas}
 \item The lag-$k$ autocorrelation \cref{eq:probability-acf} correlates a sequence with its own shifted copy; it captures the order information that $\bar x$ and $\sigma_x$ ignore.
 \item A sinusoid has autocorrelation $\cos(\omega\tau)$ and rms $a/\sqrt2$; harmonically related sinusoids add in mean square, \cref{eq:probability-sum-ms}.
-\item The rms of RE2 is 0.1709, matching the paper's probe-null.
+\item The long-run rms of RE2 is 0.1709, close to the paper's probe-null 0.1708.
 \item Averaging neighbors predicts with correlation $\rho_1/\sqrt{(1+\rho_2)/2}$, \cref{eq:probability-neighbor}: negative if neighbors are negatively correlated.
 \end{keyideas}
 
@@ -786,7 +789,7 @@ Now take expectations. By \cref{eq:probability-var-shortcut} applied to each $x_
 \[
 E[Q]=n(\sigma^2+\mu^2)-n\Bigl(\frac{\sigma^2}{n}+\mu^2\Bigr)=(n-1)\sigma^2 .
 \]
-So $E[Q/(n-1)]=\sigma^2$: the $n-1$ version $\hat\sigma^2$ is unbiased, while $\sigma_x^2=Q/n$ is too small on average by the factor $(n-1)/n$. The reason is that $\bar x$ is computed from the same data and sits closer to them than the true $\mu$ does. (This is \emph{Bessel's correction}.) For example, for $n=2$ throws of a fair die, averaging over all 36 equally likely pairs, $Q/1$ averages to exactly $35/12$, the true variance found earlier, while $Q/2$ averages to $35/24\approx1.458$ (Problem~\ref{prob:probability-bessel-die}).
+So $E[Q/(n-1)]=\sigma^2$: the $n-1$ version $\hat\sigma^2$ is unbiased, while $\sigma_x^2=Q/n$ is too small on average by the factor $(n-1)/n$. The reason is that $\bar x$ is computed from the same data and sits closer to them than the true $\mu$ does. (This is \emph{Bessel's correction}.) For example, for $n=2$ throws of a fair die, averaging over all 36 equally likely pairs, $Q/1$ averages to exactly $35/12$, the true variance found earlier, while $Q/2$ averages to $35/24\approx1.458$ (Problem~30).
 
 \begin{pitfall}
 Formula \cref{eq:probability-se} assumes \emph{independent} draws. If neighboring values are correlated, as the zeros' fluctuations are (\cref{sec:probability-autocorr}), the covariance terms in \cref{eq:probability-var-sum} no longer vanish and $\sigma/\sqrt n$ can be badly wrong. Chapter~\ref{ch:controls} treats this with the block bootstrap; the paper does the same in Sec.~III (``Other bases'').
@@ -861,7 +864,7 @@ The standard value $9.81~\mathrm{m/s^2}$ lies inside. Notice the distinction: th
 \end{sample}
 
 \begin{beyond}
-\textbf{Taken on trust: the scatter of a sample correlation.} For $n$ independent pairs from a joint Gaussian distribution with true correlation $\rho$, the sample correlation $r$ has, for large $n$, a standard deviation of approximately $(1-\rho^2)/\sqrt n$. The derivation and refinements (normal-theory formulas, and bootstrap estimates for comparison) are in \cite{efron}. Two lessons: correlations near zero are uncertain by about $\pm1/\sqrt n$, and correlations near $\pm1$ are pinned down much more tightly.
+\textbf{Taken on trust: the scatter of a sample correlation.} For $n$ independent pairs from a joint Gaussian distribution with true correlation $\rho$, the sample correlation $r$ has, for large $n$, a standard deviation of approximately $(1-\rho^2)/\sqrt n$. This is a standard normal-theory result, usually derived through Fisher's $z$-transformation; its derivation is beyond this book. A comparison of this normal-theory standard error with bootstrap estimates on a real data set is given in \cite{efron}. Two lessons: correlations near zero are uncertain by about $\pm1/\sqrt n$, and correlations near $\pm1$ are pinned down much more tightly.
 \end{beyond}
 
 \begin{keyideas}
@@ -931,15 +934,15 @@ e_n=\frac{\hat t_n-t_n}{\gap_n}=\hat\delta_n-\delta_n .
 \]
 The paper's ``rms'' is $\rms(e)$ of \cref{eq:probability-rms} over the scored zeros, and its ``corr'' is the Pearson coefficient \cref{eq:probability-pearson} between $\hat\delta$ and $\delta$ (Sec.~II C: ``reporting rms error in local spacings and the correlation between predicted and true fluctuations''). The \emph{null} predicts $\hat t_n=s_n$, so $\hat\delta_n=0$ and its error is $\rms(\delta)$: the null rms is simply the rms of the true fluctuations. On the principal holdout, zeros 401--500 (Running Example RE5), it is $0.2631$ (Sec.~II C and App.~A, ``Key anchors''), and it grows slowly with height, from $0.263$ to $0.296$ over the holdouts of Table~V. For the fitted potentials the fluctuations are measured relative to the unperturbed potential's levels instead of $s_n$; the paper notes that this null coincides numerically with the smooth-zero null on 401--500, which is what allows one baseline for both comparisons (Sec.~II C). As the pitfall in \cref{sec:probability-corr-rms} explains, the null has no correlation, and indeed none appears in the tables.
 
-\paragraph{Why ``rms worse than the null, corr near zero'' is one fact, not two.} Table~I reports, for the fitted potentials, held-out rms values from $0.265$ to $0.439$ against nulls of $0.261$--$0.274$, with correlations between $-0.17$ and $+0.12$. Sec.~III states that ``the fitted models emit fluctuations of $0.16$--$0.62\times$ the true amplitude that are uncorrelated with truth''. \Cref{eq:probability-uncorr} says that a zero-mean prediction uncorrelated with zero-mean truth has rms $\sqrt{\sigma_y^2+\sigma_p^2}$, always above the null. With $\sigma_y=0.263$ and $\sigma_p$ between $0.16$ and $0.62$ times that, the identity gives $0.266$--$0.309$ (Problem~\ref{prob:probability-uncorr-paper}): above the null, as every unregularized row of Table~I is. This is a toy reading; actual predictions also have mean offsets, nonzero sample correlations and amplitudes that vary along the holdout, so the table entries are not computed from this formula. It does explain the pattern: a prediction with no correlation cannot beat the null, and the more it fluctuates the worse it does. It also explains the paper's remark that ridge regularization ``moves them smoothly from `memorize more' to `do nothing' and never creates skill'' (Sec.~III): shrinking an uncorrelated prediction lowers $\sigma_p$ toward zero and the rms toward the null, never below it.
+\paragraph{Why ``rms worse than the null, corr near zero'' is one fact, not two.} Table~I reports, for the fitted potentials, held-out rms values from $0.265$ to $0.439$ against nulls of $0.261$--$0.274$, with correlations between $-0.17$ and $+0.12$. Sec.~III states that ``the fitted models emit fluctuations of $0.16$--$0.62\times$ the true amplitude that are uncorrelated with truth''. \Cref{eq:probability-uncorr} says that a zero-mean prediction uncorrelated with zero-mean truth has rms $\sqrt{\sigma_y^2+\sigma_p^2}$, always above the null. With $\sigma_y=0.263$ and $\sigma_p$ between $0.16$ and $0.62$ times that, the identity gives $0.266$--$0.309$ (Problem~19): above the null, as every unregularized row of Table~I is. This is a toy reading; actual predictions also have mean offsets, nonzero sample correlations and amplitudes that vary along the holdout, so the table entries are not computed from this formula. It does explain the pattern: a prediction with no correlation cannot beat the null, and the more it fluctuates the worse it does. It also explains the paper's remark that ridge regularization ``moves them smoothly from `memorize more' to `do nothing' and never creates skill'' (Sec.~III): shrinking an uncorrelated prediction lowers $\sigma_p$ toward zero and the rms toward the null, never below it.
 
 \paragraph{The prime formula sits on the optimal-amplitude bound.} The sample problem in \cref{sec:probability-corr-rms} showed that for the zero-parameter formula of paper Eq.~(4), the rms entries of Table~V on 401--500 (0.198, 0.116, 0.074 for 1, 3, 6 primes) match the best rms \cref{eq:probability-bestrms} possible at their correlations (0.198, 0.115, 0.074), under the stated assumption that the true fluctuations have small mean. This is our observation from the paper's numbers, not a claim the paper makes, and the rounding caveat applies near $r=1$.
 
-\paragraph{The arithmetic-continuation probe.} In Sec.~III the paper fits a potential to a synthetic target, the prime-2 wave RE2 sampled on levels 1--400, and asks it to continue on 401--500. In-sample: rms $0.056$, correlation $+0.95$. Held out: correlation $+0.07$, ``rms worse than predicting zero fluctuation''; App.~A gives the held-out rms $0.1958$ against the probe-null $0.1708$. That probe-null is the rms of RE2 on the holdout, which we derived by hand as $0.1709$ in \cref{sec:probability-autocorr}. With the identity \cref{eq:probability-msedecomp} you can even estimate the amplitude the fitted potential emitted on the holdout (Problem~\ref{prob:probability-probe}).
+\paragraph{The arithmetic-continuation probe.} In Sec.~III the paper fits a potential to a synthetic target, the prime-2 wave RE2 sampled on levels 1--400, and asks it to continue on 401--500. In-sample: rms $0.056$, correlation $+0.95$. Held out: correlation $+0.07$, ``rms worse than predicting zero fluctuation''; App.~A gives the held-out rms $0.1958$ against the probe-null $0.1708$. That probe-null is the rms of RE2 sampled on the holdout, whose long-run value we derived by hand as $0.1709$ in \cref{sec:probability-autocorr}. With the identity \cref{eq:probability-msedecomp} you can even estimate the amplitude the fitted potential emitted on the holdout (Problem~20).
 
 \paragraph{Seeds and ranges.} The paper uses recorded seeds throughout: random restarts of the non-Hermitian fit (App.~A step 10, seed 0), permutations (step 12, seeds 1, 2), random 80/20 splits (step 17, seeds 1--10 and 1, 2), surrogates (step 18, seeds 1--10), all drawn with \texttt{numpy.random.default\_rng(seed)}. Sec.~II F stresses that every number is regenerated ``deterministically, or from recorded random seeds''. The caption of Table~III states the lesson of \cref{sec:probability-rng} exactly: ``The seeds reuse the same zeros, so the ranges indicate robustness and are not standard errors.'' The caption of Table~I reports optimizer variability the same way: four random-initialization repeats of one configuration gave held-out rms $0.365$--$0.379$.
 
-\paragraph{Intervals.} Sec.~III gives bootstrap 95\% intervals, for example $[0.33,0.43]$ for the held-out rms of the scale-1, $M=400$ random-restart replicate against the null $0.263$, with correlation interval $[-0.21,+0.08]$, and $[+0.95,+0.97]$ for the six-prime formula's correlation on the same holdout. These are confidence intervals in the sense of \cref{sec:probability-sampling}, built by the bootstrap of Chapter~\ref{ch:controls}. Their widths agree in order of magnitude with the Gaussian rule of thumb $(1-\rho^2)/\sqrt n$ of the second \texttt{beyond} box: about $\pm0.2$ near $r=0$ and about $\pm0.015$ near $r=0.96$ for $n=100$ (Problem~\ref{prob:probability-se-corr}). The caption of Table~II warns that its intervals ``resample held-out levels independently although the fluctuations are serially correlated'', the pitfall of \cref{sec:probability-sampling}; the paper's block-bootstrap recomputation widens them slightly without changing any conclusion (Sec.~III, ``Other bases'').
+\paragraph{Intervals.} Sec.~III gives bootstrap 95\% intervals, for example $[0.33,0.43]$ for the held-out rms of the scale-1, $M=400$ random-restart replicate against the null $0.263$, with correlation interval $[-0.21,+0.08]$, and $[+0.95,+0.97]$ for the six-prime formula's correlation on the same holdout. These are confidence intervals in the sense of \cref{sec:probability-sampling}, built by the bootstrap of Chapter~\ref{ch:controls}. Their widths agree in order of magnitude with the Gaussian rule of thumb $(1-\rho^2)/\sqrt n$ of the second \texttt{beyond} box: about $\pm0.2$ ($\pm1.96$ standard deviations) near $r=0$, against a half-width of about $0.15$ for the paper's interval $[-0.21,+0.08]$, and about $\pm0.015$ near $r=0.96$ for $n=100$ (Problem~23). The caption of Table~II warns that its intervals ``resample held-out levels independently although the fluctuations are serially correlated'', the pitfall of \cref{sec:probability-sampling}; the paper's block-bootstrap recomputation widens them slightly without changing any conclusion (Sec.~III, ``Other bases'').
 
 \paragraph{Autocorrelation and the within-height splits.} Sec.~III (``Within-height splits'') explains the negative held-out correlations of Table~III for $M\le200$: ``the fluctuation sequence has negative autocorrelation at lags 1--3, so any smooth interpolation between neighbouring training levels is anticorrelated with the truth (the mean of the two nearest training fluctuations gives $-0.26$ to $-0.41$).'' \Cref{eq:probability-neighbor} is the simplest version of that mechanism: the neighbor average has the sign of $\rho_1$. Chapter~\ref{ch:generalization} returns to this with the best linear predictor (``kriging''), which the paper reports reaching $0.117$ with correlation $+0.87$ within one height range.
 
@@ -997,19 +1000,19 @@ The paper's ``rms'' is $\rms(e)$ of \cref{eq:probability-rms} over the scored ze
 
 \prob{2}{Verify by integration by parts that the exponential density \cref{eq:probability-exponential} has $E[s]=1$ and $E[s^2]=2$.}
 
-\prob{3}{Prove the equality case of Cauchy--Schwarz in detail: if $(\sum u_iv_i)^2=\sum u_i^2\sum v_i^2$ and $\sum v_i^2>0$, then $u_i=\lambda v_i$ for one constant $\lambda$ and all $i$.}\label{prob:probability-cs-eq}
+\prob{3}{Prove the equality case of Cauchy--Schwarz in detail: if $(\sum u_iv_i)^2=\sum u_i^2\sum v_i^2$ and $\sum v_i^2>0$, then $u_i=\lambda v_i$ for one constant $\lambda$ and all $i$.}
 
 \prob{2}{(Paper.) The caption of Table~III says that the ranges over seeds ``indicate robustness and are not standard errors.'' Explain in your own words why, and say what kind of data would be needed to estimate a genuine standard error of the held-out rms.}
 
-\prob{2}{(Paper.) Sec.~III states that the fitted potentials ``emit fluctuations of $0.16$--$0.62\times$ the true amplitude that are uncorrelated with truth.'' Model truth and prediction as zero-mean with $\sigma_y=0.263$ and $r=0$. Use \cref{eq:probability-uncorr} to find the held-out rms at the two ends of this range, and compare with the null.}\label{prob:probability-uncorr-paper}
+\prob{2}{(Paper.) Sec.~III states that the fitted potentials ``emit fluctuations of $0.16$--$0.62\times$ the true amplitude that are uncorrelated with truth.'' Model truth and prediction as zero-mean with $\sigma_y=0.263$ and $r=0$. Use \cref{eq:probability-uncorr} to find the held-out rms at the two ends of this range, and compare with the null.}
 
-\prob{3}{(Paper.) In the arithmetic-continuation probe (Sec.~III and App.~A), the held-out rms is $0.1958$, the probe-null $0.1708$ and the held-out correlation $+0.07$. Assuming both truth and prediction have zero mean on the holdout, solve \cref{eq:probability-msedecomp} for the spread $\sigma_p$ of the fitted operator's held-out fluctuations, and express it as a fraction of the target's spread.}\label{prob:probability-probe}
+\prob{3}{(Paper.) In the arithmetic-continuation probe (Sec.~III and App.~A), the held-out rms is $0.1958$, the probe-null $0.1708$ and the held-out correlation $+0.07$. Assuming both truth and prediction have zero mean on the holdout, solve \cref{eq:probability-msedecomp} for the spread $\sigma_p$ of the fitted operator's held-out fluctuations, and express it as a fraction of the target's spread.}
 
 \prob{2}{(Paper.) Using \cref{eq:probability-bestrms} with $\sigma_y=0.263$, find the smallest rms possible at correlations $+0.66$, $+0.90$, $+0.96$, and compare with the rms values of the corresponding columns of Table~V on 401--500. State the assumption you need.}
 
 \prob{3}{(Paper.) (a) Using \cref{eq:probability-neighbor}, find the correlation of the neighbor-average predictor when $\rho_1=\rho_2=-0.2$. (b) With $\rho_2=0$, what $\rho_1$ would give $-0.41$, the most negative value quoted in Sec.~III (``Within-height splits'')? (c) Why should the formula be applied to the paper's numbers only as an illustration?}
 
-\prob{2}{(Paper.) Use the rule of thumb $(1-\rho^2)/\sqrt n$ of the second \texttt{beyond} box in \cref{sec:probability-sampling} to estimate the standard deviation of the sample correlation of the six-prime formula ($\rho=0.96$) on the $n=100$ held-out zeros 401--500. Form a $\pm1.96$ interval and compare with the paper's bootstrap interval $[+0.95,+0.97]$ (Sec.~III).}\label{prob:probability-se-corr}
+\prob{2}{(Paper.) Use the rule of thumb $(1-\rho^2)/\sqrt n$ of the second \texttt{beyond} box in \cref{sec:probability-sampling} to estimate the standard deviation of the sample correlation of the six-prime formula ($\rho=0.96$) on the $n=100$ held-out zeros 401--500. Form a $\pm1.96$ interval and compare with the paper's bootstrap interval $[+0.95,+0.97]$ (Sec.~III).}
 
 \prob{2}{Using numpy, draw $10^4$ exponential numbers of mean 1 with \texttt{default\_rng(0)}. Compute their mean and variance and compare with the exact values 1 and 1, in units of the standard error of the mean.}
 
@@ -1019,11 +1022,11 @@ The paper's ``rms'' is $\rms(e)$ of \cref{eq:probability-rms} over the scored ze
 
 \prob{3}{Using numpy, evaluate RE2 on a fine grid of $t$ covering 1000 periods $2\pi/\log2$ and compute its rms. Compare with the value derived from \cref{eq:probability-sum-ms}.}
 
-\prob{2}{Let $\theta$ be uniform on $[0,2\pi)$, $X=\cos\theta$ and $Y=\sin\theta$. Show that $\mathrm{Cov}(X,Y)=0$ although $X$ and $Y$ are not independent (hint: $X^2+Y^2=1$).}\label{prob:probability-uncorrelated-dependent}
+\prob{2}{Let $\theta$ be uniform on $[0,2\pi)$, $X=\cos\theta$ and $Y=\sin\theta$. Show that $\mathrm{Cov}(X,Y)=0$ although $X$ and $Y$ are not independent (hint: $X^2+Y^2=1$).}
 
-\prob{3}{Apply Cauchy--Schwarz to the lists $u_i=x_i-\bar x$ for $i=1,\dots,n-k$ and $v_i=x_{i+k}-\bar x$ to prove that $\abs{r_k}\le1$ for the autocorrelation \cref{eq:probability-acf}.}\label{prob:probability-acf-bound}
+\prob{3}{Apply Cauchy--Schwarz to the lists $u_i=x_i-\bar x$ for $i=1,\dots,n-k$ and $v_i=x_{i+k}-\bar x$ to prove that $\abs{r_k}\le1$ for the autocorrelation \cref{eq:probability-acf}.}
 
-\prob{2}{For $n=2$ independent throws of a fair die, list or reason over all 36 equally likely pairs to show that $Q=\sum_i(x_i-\bar x)^2$ averages to $35/12$, confirming Bessel's correction.}\label{prob:probability-bessel-die}
+\prob{2}{For $n=2$ independent throws of a fair die, list or reason over all 36 equally likely pairs to show that $Q=\sum_i(x_i-\bar x)^2$ averages to $35/12$, confirming Bessel's correction.}
 \end{problemlist}
 
 %====================================================================
@@ -1058,3 +1061,9 @@ The paper's ``rms'' is $\rms(e)$ of \cref{eq:probability-rms} over the scored ze
 \textbf{25.} About $0.263$ on 401--500 and $0.270$ on 501--1000, matching the null column of Table~V. Code: \texttt{n = np.arange(401, 501); d = qmnt.fluct(qmnt.zeros(1000)[n-1], n); print(qmnt.rms(d))}, and similarly for 501--1000.
 
 \textbf{27.} The rms is $0.1709$, in agreement with $\sqrt{(a_1^2+a_2^2+a_3^2)/2}=0.17088$ from \cref{eq:probability-sum-ms}. Over 1000 whole periods the end corrections are negligible.
+
+\textbf{29.} Let $D=\sum_{i=1}^n(x_i-\bar x)^2>0$. Cauchy--Schwarz \cref{eq:probability-cs} applied to $u_i=x_i-\bar x$ and $v_i=x_{i+k}-\bar x$, $i=1,\dots,n-k$, gives
+\[
+\Bigl|\sum_{i=1}^{n-k}u_iv_i\Bigr|\le\sqrt{\sum_{i=1}^{n-k}(x_i-\bar x)^2}\,\sqrt{\sum_{i=1}^{n-k}(x_{i+k}-\bar x)^2}.
+\]
+Each sum under a root contains only some of the nonnegative terms of $D$, so each is at most $D$. Hence the right side is at most $\sqrt D\sqrt D=D$, and dividing by $D$ gives $\abs{r_k}\le1$.

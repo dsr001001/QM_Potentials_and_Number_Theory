@@ -46,6 +46,12 @@ assert abs(np.pi**2/6-1.6449) < 1e-4 and abs(np.pi**2/12-0.8225) < 1e-4
 assert abs(l3/l2 - 1.5849625) < 1e-7
 t0 = 20.5*np.pi/l2; assert abs(t0-92.913) < 1e-3
 assert abs(np.sin(t0*l2)+np.sin(t0*l3) - 1.99967) < 2e-5
+# Sample 'Getting close': scan over j
+rho = l3/l2
+mis = [abs(((np.pi/2+2*np.pi*j)*rho - np.pi/2 + np.pi) % (2*np.pi) - np.pi) for j in range(22)]
+assert abs(np.arccos(0.999)-0.0447) < 1e-4
+assert min(j for j in range(22) if mis[j] < 0.0447) == 10
+assert abs(mis[3]-0.62) < 0.01 and abs(mis[5]-0.45) < 0.01 and abs(mis[10]-0.0259) < 1e-4
 for a, tau, r, eps, d in [(1, 9.065, 1.58496, .41504, 1.929), (2, 18.129, 3.16993, .16993, 1.018),
                           (5, 45.324, 7.92481, .07519, .468), (12, 108.777, 19.01955, .01955, .1228),
                           (41, 371.654, 64.98346, .01654, .1039), (53, 480.430, 84.00301, .00301, .0189)]:
@@ -88,7 +94,7 @@ assert abs(2*np.pi/l3/gp(s400)-4.264) < 1e-3                          # P18
 tot = sum(1/(mm**2*p**mm) for p in (2, 3, 5, 7, 11, 13) for mm in (1, 2, 3))
 assert abs(tot-1.472299) < 1e-6 and abs(tot/(2*np.pi**2)-0.074588) < 1e-6 and abs(np.sqrt(tot/(2*np.pi**2))-0.2731) < 1e-4  # P19
 assert abs(1-8/np.pi**2-0.1894) < 1e-4                                # P21
-assert abs(3*np.log(13)-7.695) < 1e-3 and 3**3*0+13**3 == 2197        # P26
+assert abs(3*np.log(13)-7.695) < 1e-3 and 13**3 == 2197               # P26
 assert abs(6/(2*L/399)-26.7) < 0.05                                   # P27
 assert abs(2/np.pi-0.6366) < 1e-4 and abs(1-8/np.pi**2-0.189) < 1e-3  # P29
 # P17: numerical complex coefficients of RE2 over one period

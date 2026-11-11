@@ -61,24 +61,25 @@ close(mpmath.zeta(1.01), 100.578, 1e-3)
 close(1 - 2**-0.01, 0.0069075, 1e-7)
 close(0.01 * np.log(2), 0.0069315, 1e-7)
 
-# Sample: zeta(1/2) via eta
+# Sample: zeta(1/2) via eta (Dirichlet eta = mpmath.altzeta)
 def eta_avg(s, N):
     k = np.arange(1, N + 2)
     terms = (-1.0)**(k + 1) * np.exp(-s * np.log(k))
     S = np.cumsum(terms)
     return 0.5 * (S[N - 1] + S[N])
 e = eta_avg(0.5, 1000)
-close(mpmath.eta(0.5), 0.604899, 1e-6)
-assert abs(e - float(mpmath.eta(0.5))) < 1e-5
+close(mpmath.altzeta(0.5), 0.604899, 1e-6)
+close((1 - mpmath.sqrt(2)) * mpmath.zeta(0.5), 0.604899, 1e-6)
+assert abs(e - float(mpmath.altzeta(0.5))) < 1e-5
 close(mpmath.zeta(0.5), -1.460355, 1e-6)
 close(1 - np.sqrt(2), -0.414214, 1e-6)
 close(1001**-0.5, 0.0316, 1e-4)
 
-# Figure/ Problem 20: eta at rho1 small
+# Figure / Problem 20: eta at rho1 small
 t1 = float(mpmath.zetazero(1).imag)
 assert abs(eta_avg(0.5 + 1j * t1, 1000)) < 1e-3
 
-# Functional equation numeric check
+# Functional equation numeric check at s=0.3+7i
 sp = mpmath.mpc(0.3, 7.0)
 lhs = mpmath.zeta(sp)
 rhs = 2**sp * mpmath.pi**(sp - 1) * mpmath.sin(mpmath.pi * sp / 2) * mpmath.gamma(1 - sp) * mpmath.zeta(1 - sp)
@@ -110,6 +111,7 @@ for n in range(1, 11):
 # Bisection sample
 a, b = 14.0, 15.0
 Za = mpmath.siegelz(a); assert Za < 0
+assert mpmath.siegelz(15) > 0
 mids = [14.5, 14.25, 14.125, 14.1875, 14.15625, 14.140625, 14.1328125, 14.13671875]
 signs = "++-+++-+"
 for step in range(8):
@@ -119,12 +121,16 @@ for step in range(8):
     assert (Zm > 0) == (signs[step] == "+")
     if Zm * Za < 0: b = m
     else: a, Za = m, Zm
+assert (a, b) == (14.1328125, 14.13671875)
 est = 0.5 * (a + b)
 close(est, 14.134765625, 1e-12)
 close(abs(est - t1), 4.0e-5, 1e-6)
+close(1 / 2**8, 0.00390625, 1e-12)
 close(1 / 2**9, 0.001953, 1e-6)
+close(2**-20, 9.5e-7, 1e-8)
 close(mpmath.siegelz(0), -1.460355, 1e-6)
-assert mpmath.siegelz(30) < 0 and mpmath.siegelz(31) > 0
+# Checkpoint: Z(30)>0, Z(31)<0
+assert mpmath.siegelz(30) > 0 and mpmath.siegelz(31) < 0
 # Z real
 assert abs(mpmath.im(mpmath.exp(1j * mpmath.siegeltheta(20)) * mpmath.zeta(0.5 + 20j))) < 1e-15
 
@@ -160,7 +166,7 @@ close(sum(1 / k for k in range(1, 21)), 3.597740, 1e-6)
 close(mpmath.zeta(1.1), 10.584, 1e-3)
 # Problem 11
 close(np.pi**2 / 12, 0.822467, 1e-6)
-close(mpmath.eta(2), np.pi**2 / 12, 1e-12)
+close(mpmath.altzeta(2), np.pi**2 / 12, 1e-12)
 # Problem 23
 close(2**-0.5, 0.707107, 1e-6); close(np.log(2), 0.693147, 1e-6)
 # Problem 27

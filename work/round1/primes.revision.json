@@ -1,0 +1,38 @@
+{
+ "patches": [
+  {
+   "old": "\\item Chapter~\\ref{ch:complex} (only in the Paper connection): $a^{-it}=e^{-it\\log a}$ for real $a>0$.",
+   "new": "\\item Chapter~\\ref{ch:complex} (in \\cref{sec:primes-logp} and the Paper connection): $a^{-it}=e^{-it\\log a}$ for real $a>0$."
+  },
+  {
+   "old": "Around 1850 Chebyshev proved that the ratio $\\pi(x)/(x/\\log x)$ is trapped, for all large $x$, between two constants close to 1 (about $0.921$ and $1.106$),",
+   "new": "Around 1850 Chebyshev proved that the ratio $\\pi(x)/(x/\\log x)$ is trapped, for all sufficiently large $x$ (not for every $x$), between two constants close to 1 (about $0.921$ and $1.106$; the first happens to be close to the value of the ratio at $x=10$ in \\cref{tab:primes-pi}, a coincidence),"
+  },
+  {
+   "old": "\\item \\emph{Their product divides $\\binom{2n}{n}$.} Each such prime appears in the factorization of $\\binom{2n}{n}$ (by uniqueness), and they are distinct, so their product $\\prod_{n<p\\le2n}p$ divides $\\binom{2n}{n}$, and therefore $\\prod_{n<p\\le2n}p\\le\\binom{2n}{n}$.",
+   "new": "\\item \\emph{Their product divides $\\binom{2n}{n}$.} Write the canonical factorization $\\binom{2n}{n}=r_1^{b_1}\\cdots r_j^{b_j}$ (\\cref{eq:primes-fta}). If a prime $p$ divides $\\binom{2n}{n}$, then by the repeated Euclid's lemma $p$ divides some $r_i$, so $p=r_i$: every such $p$ is one of the $r_i$, with exponent $b_i\\ge1$. The primes in $(n,2n]$ are distinct, so they are distinct members of the list $r_1,\\dots,r_j$. Hence $\\binom{2n}{n}=\\bigl(\\prod_{n<p\\le2n}p\\bigr)\\cdot c$, where $c$ is the product of all remaining prime factors (each $r_i$ taken $b_i-1$ more times if it is one of our primes, $b_i$ times otherwise), a positive integer. So $\\prod_{n<p\\le2n}p$ divides $\\binom{2n}{n}$, and therefore $\\prod_{n<p\\le2n}p\\le\\binom{2n}{n}$."
+  },
+  {
+   "old": "\\textbf{Step 4: no shorter period.} The $m=1$ term alone has smallest period $P_2$, while the $m=2,3$ terms also repeat after $P_2/2$ and $P_2/3$; a shift that left the sum unchanged would have to leave this slowest component unchanged as well, which first happens at $P_2$.\n\\[\n\\boxed{P_2=2\\pi/\\log2\\approx9.065\\ \\text{(period of RE2)},\\quad P_3\\approx5.719,\\ P_5\\approx3.904,\\ P_7\\approx3.229.}\n\\]\n\\end{sample}\n\nStep 4 relied on intuition for the slowest component; Chapter~\\ref{ch:fourier-series} makes it precise using orthogonality.",
+   "new": "\\textbf{Step 4: what we have and have not shown.} Step 3 proves that $P_2$ is \\emph{a} period of RE2. That no shorter shift leaves the sum unchanged is also true, but proving it requires separating the $m=1$ component from the others, which is done with the orthogonality of sines in Chapter~\\ref{ch:fourier-series}; we do not use minimality here.\n\\[\n\\boxed{P_2=2\\pi/\\log2\\approx9.065\\ \\text{(a period of RE2)},\\quad P_3\\approx5.719,\\ P_5\\approx3.904,\\ P_7\\approx3.229.}\n\\]\n\\end{sample}"
+  },
+  {
+   "old": "\\textbf{A warning about numerical evidence.} In every case ever computed directly, $\\pi(x)<\\mathrm{Li}(x)$. Yet Littlewood proved in 1914 that $\\pi(x)-\\mathrm{Li}(x)$ changes sign infinitely often. The first sign change is known to occur only at astronomically large $x$. Tables, however large, can mislead.",
+   "new": "\\textbf{A warning about numerical evidence.} In every case computed directly (including all of \\cref{tab:primes-pi}), $\\pi(x)<\\mathrm{Li}(x)$. Yet Littlewood proved in 1914 that $\\pi(x)-\\mathrm{Li}(x)$ changes sign infinitely often. No sign change has been found by direct computation; the literature proves that the first one lies below an explicit but astronomically large bound, far beyond any table. Tables, however large, can mislead."
+  },
+  {
+   "old": "$10^4$ & 10013.391 & 1.001 & $+13.391$\\\\",
+   "new": "$10^4$ & 10013.4 & 1.001 & $+13.4$\\\\"
+  },
+  {
+   "old": "This weight ordering is consistent with what C2 found, but the paper does not offer this interpretation; treat it as our heuristic observation.",
+   "new": "This weight ordering is consistent with part of what C2 found, but it does not explain the whole list: only six of the sixteen primes in $[131,211]$ were selected, although all sixteen have weights $1/\\sqrt p\\ge1/\\sqrt{211}=0.069$, larger than those of $32$, $64$ and $81$. The paper does not offer this interpretation; treat it as our heuristic observation."
+  },
+  {
+   "old": "\\textbf{19.} $\\psi(x)/x=0.9405,\\ 0.9967,\\ 1.0013$. The inequality: $94.05\\le25\\log100=115.13$; $996.68\\le168\\log1000=1160.50$; $10013.39\\le1229\\log10^4=11319.46$. All hold.",
+   "new": "\\textbf{19.} $\\psi(x)/x=0.9405,\\ 0.9967,\\ 1.0013$. The inequality: $94.05\\le25\\log100=115.13$; $996.68\\le168\\log1000=1160.50$; $10013.4\\le1229\\log10^4=11319.51$. All hold."
+  }
+ ],
+ "new_checks": "",
+ "notes": "CHECKS: rather than rewriting the whole script, the needed changes are: (1) psi table loop must use per-row tolerances: for x=10^4 compare psi[x] with 10013.4 and psi[x]-x with 13.4 at tolerance 0.05 (table now quotes this row to one decimal, since the third decimal could not be confirmed); (2) Problem 19 rhs for 10^4 changed to 11319.51 (1229*log(10^4)=11319.508); (3) remove the vacuous assertion 'assert np.all(psi[2:X + 1] <= np.array(...)[0] * 0 + psi[2:X + 1])'. Because these changes require edits inside the script, I provide them here as explicit instructions; if a full replacement is required, apply exactly: psi_tab = {10: (7.832, 0.783, -2.168, 1e-3), 100: (94.045, 0.940, -5.955, 1e-3), 1000: (996.681, 0.997, -3.319, 1e-3), 10000: (10013.4, 1.001, 13.4, 0.05)} with assert abs(psi[x]-v)<tol and abs(psi[x]-x-d)<tol; and (10000, 11319.51) in the Problem 19 list. Skipped: the issue about Problem 21/8 cross-references (numbers verified to match the problem list: Problem 8 is the 4k+3 problem, 21 the uniqueness proof, 22, 23, 25, 26 also match); the Table V row issue (text is consistent, only the vacuous check needed removal); the 'crude bound' clarity issue (reviewer states no change needed). Euclid's lemma use for two factors is as stated in the beyond box, so no change there."
+}

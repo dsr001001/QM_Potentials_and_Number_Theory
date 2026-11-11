@@ -34,7 +34,7 @@ yj=np.sin(tj)+eps
 assert np.allclose(yj,[0.15,0.5242,1.0855,0.7132,0.4550,-0.4508,-0.7316,-1.1125,-0.5213,-0.1232],atol=6e-5)
 u=lambda x: x/3.15-1
 k_t=np.linalg.cond(np.vander(tj,10)); k_u=np.linalg.cond(np.vander(u(tj),10))
-assert k_t/k_u>100 and k_t>1e6
+assert k_t/k_u>100 and k_t>1e6  # text: ratio exceeds 100
 tt=np.linspace(0,6.3,2000); tr=[];te=[]
 for d in range(10):
     cc=np.linalg.lstsq(np.vander(u(tj),d+1),yj,rcond=None)[0]
@@ -50,7 +50,7 @@ l1,l0=np.polyfit(P,Y,1); assert abs(l1)<1e-12 and abs(l0-1/3)<1e-12
 par=lambda x:4/np.pi**2*x*(np.pi-x)
 assert abs(par(np.pi/4)-0.75)<1e-12 and abs(par(1.5*np.pi)+3)<1e-12
 assert abs(1/3-np.sin(np.pi/4)+0.374)<1e-3 and abs(0.75-np.sin(np.pi/4)-0.043)<1e-3
-# Sample: prime-2 wave at RE1 heights
+# Sample: prime-2 wave at RE1 heights (rank 6 listing)
 RE1=np.array([14.134725,21.022040,25.010858,30.424876,32.935062,37.586178,40.918719,43.327073,48.005151,49.773832])
 L2=np.log(2); F=lambda x:-sum(np.sin(m*x*L2)/(m*2**(m/2)) for m in (1,2,3))/np.pi
 des=lambda x,w: np.hstack([np.sin(np.outer(x,w)),np.cos(np.outer(x,w))])
@@ -85,6 +85,7 @@ assert abs(1/(2*np.sqrt(1e-4*100))-5)<1e-12
 n=np.arange(1,11); s1,s0=np.polyfit(n,RE1,1)
 assert abs(s1-3.863)<1e-3 and abs(s0-13.07)<1e-2
 g=2*np.pi/np.log(RE1.mean()/(2*np.pi)); assert abs(g-3.70)<5e-3
+assert abs(s1/g-1.044)<1e-3  # Prob 13 ratio
 # Prob 16 count
 assert len(np.arange(-8,3.01,0.5))==23
 # Prob 21
@@ -93,4 +94,4 @@ assert abs(np.linalg.cond(Vd.T@Vd)/np.linalg.cond(Vd)**2-1)<1e-6
 # Prob 24 example: alpha*=1e-4, minimum MSE
 sig,ep,x=0.01,0.01,1; a=ep**2/x**2; mse=(a**2*x**2+sig**2*ep**2)/(sig**2+a)**2
 assert abs(a-1e-4)<1e-15 and abs(mse-0.5)<1e-12
-print("all checks passed")
+print('all checks passed')

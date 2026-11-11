@@ -172,7 +172,7 @@ assert abs(psi[10] - log(2520)) < 1e-12 and abs(psi[10] - 7.832) < 1e-3
 lcm10 = reduce(math.lcm, range(1, 11))
 assert lcm10 == 2520
 psi_tab = {10: (7.832, 0.783, -2.168), 100: (94.045, 0.940, -5.955),
-           1000: (996.681, 0.997, -3.319), 10000: (10013.391, 1.001, 13.391)}
+           1000: (996.681, 0.997, -3.319), 10000: (10013.397, 1.001, 13.397)}
 for x, (v, r, d) in psi_tab.items():
     assert abs(psi[x] - v) < 1e-3
     assert abs(psi[x] / x - r) < 1e-3
@@ -192,7 +192,7 @@ for v, s in zip([2.7726, 3.2958, 3.2189, 1.9459, 2.3979, 2.5649, 2.8332, 2.9444,
 # checkpoint psi(16)-psi(15), psi(18)-psi(17)
 assert abs(psi[16] - psi[15] - log(2)) < 1e-12 and abs(psi[18] - psi[17]) < 1e-12
 # psi <= pi log x (Problem 19)
-for x, rhs in [(100, 115.13), (1000, 1160.50), (10000, 11319.46)]:
+for x, rhs in [(100, 115.13), (1000, 1160.50), (10000, 11319.51)]:
     assert abs(pi_of(x) * log(x) - rhs) < 0.01 and psi[x] <= pi_of(x) * log(x)
 assert np.all(psi[2:X + 1] <= np.array([pi_of(x) for x in [2]] + [0])[0] * 0 + psi[2:X + 1])  # trivial
 cnt = np.cumsum(np.isin(np.arange(X + 1), P))

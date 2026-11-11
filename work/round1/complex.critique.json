@@ -1,0 +1,100 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/complex_plane.pdf}",
+  "problem": "The chapter includes seven figures (complex_plane, complex_euler_partial, complex_rotation, complex_pminus_s, complex_zeros_1m2s, complex_arg_prime2, complex_critical_line), but the response has no FIGURES part with scripts. The paths and file names also break the required form: scripts must be named complex_<name>.pdf and the includes should follow the bible template.",
+  "fix": "Add a ### FIG complex_<name> script for each of the seven figures, writing complex_<name>.pdf. Keep the includegraphics paths consistent with the bible template."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "the computation in the CHECKS script finds that they differ by less than $0.05$ for all $t$",
+  "problem": "The book text refers to a CHECKS script, which readers never see. Also, the chapter's figure-related statements are not backed by the supplied scripts.",
+  "fix": "Replace this with 'a numerical computation (see the code listing below) finds ...'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "on the critical line, Eq.~\\eqref{eq:complex-abspms} gives for a prime $p$",
+  "problem": "The formula for the argument of a power ($\\arg k^{-s}=-t\\log k$) is fine, but the statement 'it is $\\tfrac12$ in the exponent of $\\rho_n$ that makes the amplitude $1/\\sqrt{p^m}$' in the Paper connection is garbled. The amplitude comes from the evaluation point $s=\\tfrac12+it$, not from the zeros $\\rho_n$.",
+  "fix": "Rewrite: 'the factor $p^{-m/2}$ arises because the sum is evaluated at $\\sigma=\\tfrac12$, the real part of every $\\rho_n$.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper's ``$\\sim$6--7 levels'' matches the upper part of the fitted range (zeros up to about $t\\approx650$ for zeros 1--400).",
+  "problem": "The claim that zeros 1--400 reach about $t\\approx650$ is not verified. t_500=811, and zero 400 is near t=catalogue ~ 600 (roughly). The statement is unchecked and may be inaccurate.",
+  "fix": "Use a checked value from qmnt.zeros, e.g. state the actual t_400 and t_500 (t_500 = 811.18 from the paper) and add a CHECKS assertion."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Both sides of Eq.~\\eqref{eq:complex-absprod} are nonnegative, so taking square roots gives the result.",
+  "problem": "The proof uses $\\overline{zw}=\\bar z\\bar w$, which is established before, but also uses that $zw\\overline{zw}=|zw|^2$ is defined for complex numbers; this is fine. However the reader has not been told that $z\\bar z$ real implies the square root is the modulus. Minor.",
+  "fix": "Add 'since $|zw|$ is defined as the nonnegative square root of $zw\\overline{zw}$'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Differentiate $E$ with respect to $\\theta$, treating the real and imaginary parts separately:",
+  "problem": "Differentiating a complex-valued function of a real variable is used without a definition.",
+  "fix": "State that $\\dd E/\\dd\\theta=\\dd(\\Re E)/\\dd\\theta+i\\,\\dd(\\Im E)/\\dd\\theta$ by definition."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "A continuous function that only takes values in $\\{\\dots,-2\\pi,0,2\\pi,\\dots\\}$ cannot move from one of these values to another",
+  "problem": "The intermediate value theorem is invoked without being stated, and the domain is not specified as an interval.",
+  "fix": "State the theorem briefly and require that $t$ runs over an interval."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Taking the imaginary part of that series at $x=2^{-1/2-it}$ gives $\\operatorname{Arg}(1-2^{-s})=\\sum_{m\\ge1}\\sin(mt\\log2)/(m2^{m/2})$ exactly",
+  "problem": "This asserts that Im Log(1-x) equals Arg(1-x) and that the series gives the principal branch. This needs Re(1-x)>0, which was shown, but the link between the series and the principal log is not argued.",
+  "fix": "Add a sentence: because $\\Re(1-x)>0$, the series sum is the principal logarithm, whose imaginary part is Arg."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), so the argument of zeta becomes a sum over primes.",
+  "problem": "The relation between the argument of $1-2^{-s}$ and the argument of zeta is not made explicit. The Euler product has factors $(1-p^{-s})^{-1}$, so there is a sign.",
+  "fix": "Mention that each factor is $1/(1-p^{-s})$, so $\\arg\\zeta=-\\sum_p\\arg(1-p^{-s})$."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Problem~23 explores why this characterizes the exponential",
+  "problem": "The references to problem numbers rely on a numbering that is shifted: the list ends with extra problems out of order (problems 28 and 29 are placed after 27, and an easy problem appears late). Problem~7, 16, 22, 25 and 27 cross-references should be checked against actual numbering. Problem 23 is the characterization, which matches, but problem 26 is the sum-rule check.",
+  "fix": "Verify numbering; reorder the graded list, and ensure that all references match."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\begin{table}[H]\\centering",
+  "problem": "The [H] float specifier needs the float package, which is not among the loaded packages, so this will not compile.",
+  "fix": "Use \\begin{table}[htbp]."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Appendix~A explains how to run such snippets.",
+  "problem": "Plain text reference to an appendix; allowed but fragile. More importantly, there is no Python-based check of 'z.real' formatting claims.",
+  "fix": "Acceptable; optionally use a descriptive phrase without a hard-coded letter."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "the paper only uses zeros for which this has been verified numerically.",
+  "problem": "Slightly loose wording; the paper says it is verified numerically for all zeros used, and states it as such. Acceptable, but the bible requires an explicit status label.",
+  "fix": "Add 'numerical observation' label for the verification."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Problem~27 checks that statement using the mean spacing derived in Chapter~\\ref{ch:counting-zeros}",
+  "problem": "The spacing formula is used in Problem 27 before it is derived. The problem states the formula only inside Problem 27, so it is a forward reference.",
+  "fix": "State the mean spacing formula explicitly in the problem as given."
+ }
+]

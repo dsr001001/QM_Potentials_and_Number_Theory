@@ -91,7 +91,11 @@ Step 3: Scale 2. $\sqrt{1184}=34.41$, so $2\sqrt E=68.81$. Multiply by $L=59.957
 
 $\boxed{M_{\rm scale\,1}\gtrsim 814,\qquad M_{\rm scale\,2}\gtrsim 1313}$
 
-Interpretation: at scale 1 the paper's statement that all 500 zeros are reproduced to rms $<10^{-4}$ ``by $M=900$'' sits just above the threshold, as the law predicts. At scale 2 the largest basis used, $M=900$, is below the threshold for the top training levels, which fits the observation that the in-sample rms there is still $0.103$ (Table~I). The coverage law is itself heuristic (Chapter~\ref{ch:fitting}), so these thresholds are estimates, not sharp lines.
+Interpretation: at scale 1 the paper's statement that all 500 zeros are reproduced to rms $<10^{-4}$ ``by $M=900$'' sits just above the threshold, as the law predicts. At scale 2 the largest basis used, $M=900$, is below the threshold for the top training levels. Turning the law around, $M=900$ at scale 2 covers energies only up to
+\[
+E=\Bigl(\frac{M\pi}{2L}\Bigr)^2=\Bigl(\frac{900\pi}{119.914}\Bigr)^2=(23.58)^2\approx556,
+\]
+which is roughly the height of level 310 (because $\Nsm(556)+\tfrac12\approx310$). Levels above about 310 are not covered. This fits the observation that the in-sample rms there is still $0.103$ (Table~I). The coverage law is itself heuristic (Chapter~\ref{ch:fitting}), so these thresholds are estimates, not sharp lines.
 \end{sample}
 
 Link 3 involves a second fact worth making quantitative: a prediction that is uncorrelated with the truth cannot beat the null, however you rescale it.
@@ -186,24 +190,24 @@ A claim is \emph{falsifiable} when some possible outcome of an experiment would 
 
 \emph{Why ``its own null''.} Any model built on a smooth background already predicts the mean positions of the zeros. Only the fluctuations are informative. A model must be compared with the version of itself that predicts no fluctuation.
 
-\emph{Why a within-height split.} A forward split (train low, test high) mixes two effects: failure to capture structure, and \emph{covariate shift} (Chapter~\ref{ch:generalization}), because the fluctuation amplitude grows with height (the null rises from $0.263$ on 401--500 to $0.296$ on 5001--10000, Table~V). Random 80/20 and odd/even splits inside one height range (Table~III) remove the shift. The paper's finding that the failure is even worse within height (held-out errors $1.5$--$3.0$ times the null at scale 1) is what rules out covariate shift as the explanation.
+\emph{Why a within-height split.} A forward split (train low, test high) mixes two effects: failure to capture structure, and \emph{covariate shift} (Chapter~\ref{ch:generalization}), because the fluctuation amplitude grows with height (the null rises from $0.263$ on 401--500 to $0.296$ on 5001--10000, Table~V). Random 80/20 and odd/even splits inside one height range (Table~III) remove the shift. The paper's finding that the failure is even worse within height (for the random 80/20 splits, held-out errors $1.5$--$3.0$ times the null at scale 1 and $1.8$--$1.9$ times at scale 2) is what rules out covariate shift as the explanation.
 
 \subsection{Item (ii): score the actual operator spectrum}
 
 \emph{What it says.} If the fit used an approximation of the spectrum (a surrogate such as second-order perturbation theory), the final score must use the exact eigenvalues of the fitted operator.
 
 \begin{sample}{Why item (ii) matters: the spurious floor in numbers}
-In Sec.~V the second-order surrogate of the PT-odd fit reaches in-sample rms $0.2321$, and the absorptive-even fit (null mode repaired) reaches $0.2358$, against a null of $0.2438$. Exact diagonalization of the same fitted operators gives in-sample rms $0.2523$ and $0.2477$. Express each as a percentage change relative to the null.
+In Sec.~V the second-order surrogate of the PT-odd fit reaches in-sample rms $0.2321$, and the absorptive-even fit (null mode repaired) reaches $0.2358$, against a null of $0.2438$. Exact diagonalization of the same fitted operators gives in-sample rms $0.2523$ and $0.2477$. Express each as a percentage improvement over the null, defined as $(\text{null}-\text{rms})/\text{null}$, so that a positive value means better than the null and a negative value means worse.
 
 Step 1: PT-odd, surrogate: $(0.2438-0.2321)/0.2438=0.0117/0.2438=0.0480$, an apparent improvement of $4.80\%$.
 
-Step 2: PT-odd, exact: $(0.2523-0.2438)/0.2438=0.0085/0.2438=0.0349$, i.e. $3.49\%$ \emph{worse} than the null.
+Step 2: PT-odd, exact: $(0.2438-0.2523)/0.2438=-0.0085/0.2438=-0.0349$, an improvement of $-3.49\%$, i.e. $3.49\%$ \emph{worse} than the null.
 
 Step 3: Absorptive-even, surrogate: $(0.2438-0.2358)/0.2438=0.0080/0.2438=0.0328$, an apparent improvement of $3.28\%$.
 
-Step 4: Absorptive-even, exact: $(0.2477-0.2438)/0.2438=0.0039/0.2438=0.0160$, i.e. $1.60\%$ worse.
+Step 4: Absorptive-even, exact: $(0.2438-0.2477)/0.2438=-0.0039/0.2438=-0.0160$, an improvement of $-1.60\%$, i.e. $1.60\%$ worse.
 
-$\boxed{\text{surrogate: }-4.80\%,\,-3.28\%\ \text{(better)};\qquad \text{exact: }+3.49\%,\,+1.60\%\ \text{(worse)}}$
+$\boxed{\text{improvement over null: surrogate }+4.80\%,\,+3.28\%;\qquad \text{exact }-3.49\%,\,-1.60\%}$
 
 The sign flips. A paper that stopped at the surrogate would have reported an improvement that no operator possesses (Chapter~\ref{ch:paper-spurious-floor}).
 \end{sample}
@@ -294,7 +298,7 @@ So roughly one time in five a table of eight null rows would contain one row thi
 Why does height matter for the fitted controls? Because estimated frequencies dephase. The paper reports that C2's skill falls from $0.034$/$+0.99$ on 401--500 to $0.078$/$+0.96$ on zeros 1001--2000 (Sec.~IV). Chapter~\ref{ch:sparse-frequency} explained the mechanism; here is the worst-case size.
 
 \begin{sample}{Worst-case dephasing beyond the training window}
-A model learns the $p=2$ frequency $\omega=\log 2$ from a window of length $T$ in $t$, with error $\delta\omega$ no larger than half a Fourier resolution cell, $\abs{\delta\omega}\le\pi/T$ (the paper's matching tolerance, App.~A step 23). Suppose the training window is zeros 1--500, so $T=t_{500}-t_1$, with $t_1=14.1347251417$ and $t_{500}=811.1843588465$ (App.~A key anchors). Assume the learned and true waves agree in phase at the end of the window, $t_*=t_{500}$. Find the worst-case phase error at $t_{1000}=1419.42248094599$ (Sec.~II~A), for the fundamental $m=1$ and for the harmonic $m=3$.
+A model learns the $p=2$ frequency $\omega=\log 2$ from a window of length $T$ in $t$, with error $\delta\omega$ no larger than half a Fourier resolution cell, $\abs{\delta\omega}\le\pi/T$. This bound is our worst-case assumption, not a measured error; we take it equal to the tolerance the paper uses when matching selected frequencies to prime powers (App.~A step 23), and we use it only to size a worst case. Suppose the training window is zeros 1--500, so $T=t_{500}-t_1$, with $t_1=14.1347251417$ and $t_{500}=811.1843588465$ (App.~A key anchors). Assume the learned and true waves agree in phase at the end of the window, $t_*=t_{500}$. Find the worst-case phase error at $t_{1000}=1419.42248094599$ (Sec.~II~A), for the fundamental $m=1$ and for the harmonic $m=3$.
 
 Step 1: The true phase of the $m$-th harmonic is $m\omega t+\varphi$, the learned phase is $m(\omega+\delta\omega)t+\hat\varphi$. Agreement at $t_*$ fixes $\hat\varphi=\varphi-m\,\delta\omega\,t_*$.
 
@@ -327,7 +331,7 @@ This is a worst case: well-sampled frequencies are usually estimated much better
 
 \subsection{Limit 4: Sec.~V was not rerun}
 
-``The non-Hermitian analysis of Sec.~V is inherited from the original computation and was not rerun for this revision.'' Sec.~V's numbers (the floors, the null-mode artifact with $c_0\approx2.2\times10^6$, the exact-versus-surrogate comparison) therefore rest on the original computation, whose code is in the original Zenodo version. The paper also states that the Hermitian conclusions of Secs.~III and IV ``do not depend on'' Sec.~V. We give a cheap partial check in \cref{sec:paper-critique-weak} (W4).
+``The non-Hermitian analysis of Sec.~V is inherited from the original computation and was not rerun for this revision.'' Sec.~V's numbers (the floors, the null-mode artifact with $c_0\approx2.2\times10^6$, the exact-versus-surrogate comparison) therefore rest on the original computation. The paper also states that the Hermitian conclusions of Secs.~III and IV ``do not depend on'' Sec.~V. We give a cheap partial check in \cref{sec:paper-critique-weak} (W4).
 
 \subsection{Limit 5: bootstrap independence}
 
@@ -364,7 +368,7 @@ A referee could press three points. (a) Coverage: a database does not index ever
 \begin{sample}{What ``none out of $n$'' can support}
 Treat each citing work, heuristically, as an independent draw that reports a held-out test with unknown probability $f$. If none of $n$ works does, find the value $f_{95}$ above which observing ``none'' would have probability below 5\%. Evaluate for $n=29$ (if the two citing sets overlap completely, the distinct works number at least 29) and $n=57=28+29$ (no overlap).
 
-Step 1: For one work, the probability of no held-out test is $1-f$. For $n$ independent works, $P(\text{none})=(1-f)^n$, the same reasoning as \eqref{eq:paper-critique-none}.
+Step 1: For one work, the probability of no held-out test is $1-f$. For $n$ independent works, $P(\text{none})=(1-f)^n$, the same reasoning as \eqref{eq:paper-critique-none}. The independence assumption is rough: the 28 and 29 citing works overlap, may cite one another, and are not random draws from the literature, so what follows is an order-of-magnitude guide, not a precise bound.
 
 Step 2: Set $(1-f_{95})^n=0.05$ and take the $n$-th root: $1-f_{95}=0.05^{1/n}$, so
 \begin{equation}
@@ -380,7 +384,7 @@ Step 5: $n=57$: $(\log0.05)/57=-0.05256$, $e^{-0.05256}=0.94880$, so $f_{95}=0.0
 
 $\boxed{f_{95}\approx0.098\ (n=29),\qquad f_{95}\approx0.051\ (n=57)}$
 
-Interpretation: the audit supports ``held-out tests are rare in this citation neighborhood (probably well under one work in ten)'' more firmly than ``there are none anywhere''. Keyword misses (point b) would make $f_{95}$ larger still (Problem~\ref{prob:paper-critique-audit}). The paper's own wording, ``to our knowledge'', is the appropriate strength.
+Interpretation: the audit supports ``held-out tests are rare in this citation neighborhood (probably well under one work in ten)'' more firmly than ``there are none anywhere''. Keyword misses (point b) would make $f_{95}$ larger still (Problem 23). The paper's own wording, ``to our knowledge'', is the appropriate strength.
 \end{sample}
 
 \subsection{W2: one background potential}
@@ -394,19 +398,21 @@ The paper states that ``levels 201--300 turn at $x=22.5$--$28.5$'' (Sec.~III, in
 
 Step 1: For an even, monotone potential, a level of energy $E$ turns where $V(x)=E$, so the turning point is $x(E)$, the Wu--Sprung function evaluated at $V=E$.
 
-Step 2: Compute $s_{201}$ by solving $\Nsm(s)=200.5$ and $s_{300}$ by solving $\Nsm(s)=299.5$:
-\begin{verbatim}
-s = qmnt.smooth_zeros(np.array([201, 300]))
-x = qmnt.wu_sprung_x(s)
-\end{verbatim}
-This gives $s_{201}\approx398$ and $s_{300}\approx543$.
+Step 2: Compute $s_{201}$ by solving $\Nsm(s)=200.5$ and $s_{300}$ by solving $\Nsm(s)=299.5$, with \texttt{qmnt.smooth\_zeros} (the listing after this sample). This gives $s_{201}\approx398$ and $s_{300}\approx543$.
 
-Step 3: Evaluate Eq.~(2) at these energies (the computation is done in the CHECKS script): $x(s_{201})\approx22.5$ and $x(s_{300})\approx28.5$.
+Step 3: Evaluate Eq.~(2) at these energies (with \texttt{qmnt.wu\_sprung\_x}, in the same listing): $x(s_{201})\approx22.5$ and $x(s_{300})\approx28.5$.
 
 $\boxed{x\approx22.5\ \text{to}\ 28.5}$
 
 This agrees with the paper. With a different background $V$, the same levels would turn at different places, and the region where an unregularized fit can ``do damage at no in-sample cost'' (paper Fig.~4) would move.
 \end{sample}
+
+\begin{pycode}
+import numpy as np, qmnt
+s = qmnt.smooth_zeros(np.array([201, 300]))   # energies of levels 201 and 300
+x = qmnt.wu_sprung_x(s)                       # turning points, paper Eq. (2)
+print(s, x)                                   # about [398, 543] and [22.5, 28.5]
+\end{pycode}
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-critique_turning.pdf}
@@ -423,7 +429,7 @@ Operator fits stop at zero 1000. Two questions a referee could ask: would larger
 The paper states this limit itself. A reader can do one cheap structural check of Sec.~V~A without rerunning anything: the sum rule $\sum_n\delta E_n=0$ is the second-order piece of an exact identity.
 
 \begin{beyond}
-\textbf{Taken on trust: trace equals the sum of eigenvalues.} For any $n\times n$ complex matrix, the sum of its eigenvalues, counted with multiplicity, equals its trace (the sum of its diagonal entries). The proof compares the coefficient of $\lambda^{n-1}$ in the characteristic polynomial $\det(\lambda I-B)$ written two ways: as $\prod_k(\lambda-\lambda_k)$ and by expanding the determinant. You checked the $2\times2$ case in Chapter~\ref{ch:eigen}; for the general case see \cite{strang}.
+\textbf{Taken on trust: trace equals the sum of eigenvalues.} For any $n\times n$ complex matrix, the sum of its eigenvalues, counted with multiplicity, equals its trace (the sum of its diagonal entries). The proof compares the coefficient of $\lambda^{n-1}$ in the characteristic polynomial $\det(\lambda I-B)$ written two ways: as $\prod_k(\lambda-\lambda_k)$ and by expanding the determinant. Recall the $2\times2$ case from Chapter~\ref{ch:eigen}, where the characteristic polynomial is $\lambda^2-(\text{trace})\lambda+\det$, so the two eigenvalues add up to the trace. For the general case see the chapter on eigenvalues and eigenvectors in \cite{strang}.
 \end{beyond}
 
 Apply it to the truncated matrix of $H+iA$ in the unperturbed eigenbasis: its diagonal entries are $E_n+iA_{nn}$, with $A_{nm}=\langle n|A|m\rangle$ real for a real multiplication operator $A$. The sum of exact eigenvalues $\lambda_n$ is therefore
@@ -433,7 +439,7 @@ Apply it to the truncated matrix of $H+iA$ in the unperturbed eigenbasis: its di
 \sum_n\bigl(\Re\lambda_n-E_n\bigr)=0 .
 \label{eq:paper-critique-trace}
 \end{equation}
-The real shifts sum to zero \emph{exactly}, at every order, over the full truncated basis. The second-order sum rule verified in Sec.~V~A (to $3.6\times10^{-15}$ and $1.4\times10^{-14}$) is a check that the code is consistent, not evidence about the zeros; the paper itself concludes the floor is ``not a physically meaningful constant''.
+This is a statement about a finite matrix: the $\lambda_n$ here are the eigenvalues of the truncated matrix of $H+iA$ in the chosen basis of unperturbed states, not of the full operator on the whole (infinite-dimensional) space. For that finite matrix the real shifts sum to zero \emph{exactly}, at every order. Our reading, which is this chapter's interpretation and not a statement in the paper, is therefore that the second-order sum rule verified in Sec.~V~A (to $3.6\times10^{-15}$ and $1.4\times10^{-14}$) checks that the code is internally consistent rather than telling us anything about the zeros. The paper itself concludes, on other grounds, that the floor is ``not a physically meaningful constant''.
 
 A three-level example makes this concrete. Take $E=(1,2,4)$ and real symmetric $A$ with zero diagonal, $A_{12}=0.05$, $A_{13}=0.1$, $A_{23}=0.15$. Paper Eq.~(5) gives
 \begin{align*}
@@ -441,7 +447,7 @@ A three-level example makes this concrete. Take $E=(1,2,4)$ and real symmetric $
 \delta E_2&=-\Bigl[\frac{0.0025}{2-1}+\frac{0.0225}{2-4}\Bigr]=-[0.0025-0.01125]=0.00875,\\
 \delta E_3&=-\Bigl[\frac{0.01}{4-1}+\frac{0.0225}{4-2}\Bigr]=-[0.003333+0.01125]=-0.014583,
 \end{align*}
-and the sum is $0.005833+0.00875-0.014583=0$. An exact diagonalization of the $3\times3$ matrix $\mathrm{diag}(1,2,4)+iA$ (done in the CHECKS script) gives real parts that agree with $E_n+\delta E_n$ to better than $10^{-3}$, and whose sum is exactly the trace, 7.
+and the sum is $0.005833+0.00875-0.014583=0$. An exact diagonalization of the $3\times3$ matrix $\mathrm{diag}(1,2,4)+iA$ (for example with \texttt{numpy.linalg.eigvals}) gives real parts that agree with $E_n+\delta E_n$ to better than $10^{-3}$, and whose sum is exactly the trace, 7.
 
 \subsection{W5: the frequency-alignment statistic was defined after seeing the data}
 
@@ -463,7 +469,7 @@ Step 3: The matching window has width $2\pi/T$ in $\omega$. If it is narrow comp
 \end{equation}
 Prime powers $p^m$ with $m\ge2$ add only a few more, so we neglect them.
 
-Step 4: Treat the $\log q$ near $\omega$ as a Poisson process (Chapter~\ref{ch:level-statistics}): the probability of no point in a window with expected count $\bar m$ is $e^{-\bar m}$, so $P(\ge1)=1-e^{-\bar m}$.
+Step 4: Make a heuristic assumption: treat the $\log q$ near $\omega$ as if they were scattered at random and independently of one another, that is, as a Poisson process with the density of Step 3 (Chapter~\ref{ch:level-statistics}). This is a model, not a theorem. Real primes have correlations (for example, every prime above 2 is odd, so two primes above 2 are never adjacent integers), and these correlations are neglected. Under the assumption, the probability of no point in a window with expected count $\bar m$ is $e^{-\bar m}$, so $P(\ge1)=1-e^{-\bar m}$.
 
 Step 5: $2\pi/666=0.009434$. At $\omega=2$: $e^2/2=3.695$, $\bar m=0.0349$, $P=0.034$. At $\omega=5$: $e^5/5=29.68$, $\bar m=0.280$, $P=0.244$. At $\omega=8$: $e^8/8=372.6$, $\bar m=3.52$, $P=1-e^{-3.52}=0.970$.
 
@@ -504,7 +510,7 @@ The paper says the explanation is heuristic and that the evidence is ``about the
 \begin{itemize}
 \item \emph{Seed ranges are not standard errors.} Table~III's caption says so: the seeds reuse the same zeros.
 \item \emph{One relaxed row.} The scale-2 $M=300$ row of Table~I used a relaxed acceptance threshold; under the strict protocol ``the optimizer accepts no step at all''. The paper labels it a sensitivity result.
-\item \emph{The factor $\gtrsim1.3$.} Sec.~IV says one prime beats every fitted operator's holdout performance by a factor $\gtrsim1.3$. The best operator OOS rms in Table~I on 401--500 is $0.265$ (ridge $\mu=0.3$), and the one-prime oracle there is $0.198$ (Table~V): $0.265/0.198=1.34$. Some Table~I rows use other holdouts, so the comparison is row by row against the matching holdout, as Problem~\ref{prob:paper-critique-factor} asks you to check.
+\item \emph{The factor $\gtrsim1.3$.} Sec.~IV says one prime beats every fitted operator's holdout performance by a factor $\gtrsim1.3$. From the tables we can check this only for operator rows scored on the same holdout as the tabulated one-prime oracle, zeros 401--500, where the oracle scores $0.198$ (Table~V). Among those rows the lowest Table~I OOS rms is $0.265$ (ridge $\mu=0.3$), giving $0.265/0.198=1.34$; the lowest Table~II row, Chebyshev with ridge $\mu=0.3$ at $0.264$, gives $0.264/0.198=1.33$. Both clear 1.3, but only just. Table~I rows fitted on 1--300, 1--350 or 1--450, and the scale-2 rows, are scored on other holdouts, for which Table~V gives no matching one-prime entry, so this check does not cover them. Problem 25 asks you to redo the computation.
 \item \emph{Two nulls.} The operator null and the smooth-zero null are conceptually distinct; the paper notes that their numerical coincidence on 401--500 (both $0.2631$) is what permits a single baseline (Sec.~II~C).
 \item \emph{The oracle is not a fair competitor.} The paper says so itself; its role is to show that transferable information exists, while the fitted controls B, C1, C2 provide the fair comparisons.
 \end{itemize}
@@ -611,7 +617,7 @@ Step 1: \texttt{qmnt.oracle\_zeros} solves $\Nsm(t)+\Nfl(t)=n-\tfrac12$ for each
 
 Step 2: \texttt{qmnt.score} converts predictions and truths to fluctuations in mean spacings and returns the rms error and Pearson correlation.
 
-Step 3: The result (verified in the CHECKS script) is rms $0.074$ and corr $+0.96$, the Table~V entry.
+Step 3: Running the listing gives rms $0.074$ and corr $+0.96$, the Table~V entry.
 
 $\boxed{0.074\ /\ +0.96}$
 \end{sample}
@@ -791,11 +797,8 @@ Three points deserve emphasis. First, the paper's own hedges are its strongest f
 
 \prob{2}{The scale-2 $M=300$ row of Table~I required a relaxed step-acceptance threshold. Explain why the paper calls it a ``sensitivity result'', and why including it does not change the qualitative conclusion.}
 
-\prob{1}{Check the paper's claim (Sec.~IV) that one prime beats every fitted operator's holdout performance by a factor $\gtrsim1.3$ for the best Table~I row scored on 401--500 (ridge $\mu=0.3$, OOS $0.265$) against the one-prime oracle ($0.198$, Table~V).}
+\prob{1}{Check the paper's claim (Sec.~IV) that one prime beats every fitted operator's holdout performance by a factor $\gtrsim1.3$ for the two lowest-rms operator rows scored on 401--500, Table~I ridge $\mu=0.3$ (OOS $0.265$) and Table~II Chebyshev ridge $\mu=0.3$ (OOS $0.264$), against the one-prime oracle ($0.198$, Table~V). Why does this check not cover every operator row in Table~I?}
 \end{problemlist}
-
-\label{prob:paper-critique-audit}% Problem 23
-\label{prob:paper-critique-factor}% Problem 25
 
 %======================================================================
 \section{Answers to selected problems}\label{sec:paper-critique-answers}
@@ -818,7 +821,7 @@ Three points deserve emphasis. First, the paper's own hedges are its strongest f
 
 \textbf{Problem 13.} $2\pi/666=0.009434$. At $\omega=3$: $e^3/3=6.695$, $\bar m=0.0632$, $P=1-e^{-0.0632}=0.061$. At $\omega=6$: $e^6/6=67.24$, $\bar m=0.634$, $P=1-e^{-0.634}=0.470$.
 
-\textbf{Problem 15.} In a forward split the held-out zeros are higher, where the fluctuation amplitude is larger (null $0.263$ on 401--500 rising to $0.296$ on 5001--10000, Table~V). A model could fail because the test data differ in distribution (covariate shift) rather than because it captured no structure. A split within one height range removes the shift. Table~III shows the fits fail even then (held-out errors $1.5$--$3.0$ times the null at scale 1), so covariate shift is not the explanation, while kriging and the oracle succeed on the same held-out sets, showing that predictable structure is present.
+\textbf{Problem 15.} In a forward split the held-out zeros are higher, where the fluctuation amplitude is larger (null $0.263$ on 401--500 rising to $0.296$ on 5001--10000, Table~V). A model could fail because the test data differ in distribution (covariate shift) rather than because it captured no structure. A split within one height range removes the shift. Table~III shows the fits fail even then (for the random 80/20 splits, held-out errors $1.5$--$3.0$ times the null at scale 1), so covariate shift is not the explanation, while kriging and the oracle succeed on the same held-out sets, showing that predictable structure is present.
 
 \textbf{Problem 17.} Permuted: $(0.137-0.134)/0.010=0.3$. Phase-randomized: $(0.141-0.137)/0.006=0.67$. Amplitude-adjusted: $(0.138-0.137)/0.005=0.2$. All differences are well under one spread: the fit does no better on the real zeros than on targets with no arithmetic content, so in-sample accuracy measures capacity.
 
@@ -828,4 +831,4 @@ Three points deserve emphasis. First, the paper's own hedges are its strongest f
 
 \textbf{Problem 23.} A relevant work is detected with probability $fd$. Then $(1-fd)^{n}=0.05$ gives $fd=1-0.05^{1/29}=0.0981$, so $f=0.0981/0.8=0.123$. Keyword misses loosen the bound from about 10\% to about 12\% per work.
 
-\textbf{Problem 25.} $0.265/0.198=1.34$, consistent with ``$\gtrsim1.3$''.
+\textbf{Problem 25.} $0.265/0.198=1.34$ and $0.264/0.198=1.33$; both are consistent with ``$\gtrsim1.3$'', narrowly. The other Table~I rows are scored on different holdouts (and the scale-2 rows with a different null); checking them would need the one-prime oracle on exactly those holdouts, which Table~V does not list. So the check covers only the rows scored on 401--500. You could compute the missing one-prime values yourself with \texttt{qmnt.oracle\_zeros}.

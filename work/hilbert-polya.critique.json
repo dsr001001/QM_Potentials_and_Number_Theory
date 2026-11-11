@@ -1,0 +1,163 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "H_{12}&=cs\\,t_1+(-s)c\\,t_2=cs(t_1-t_2)=0.4330127\\times(-6.887315)=-2.982236 .",
+  "problem": "The product 0.4330127 x 6.887315 is about 2.98225, not 2.982236 (the check script failed on this value). The quoted H_12 and the boxed matrix are off in the last digits.",
+  "fix": "Recompute: H_12 = -2.98225 (to the digits the check supports), and update the sample, the boxed matrix, the Problem 21 answer and the check tolerance."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The exact hyperbolic factor with $\\Lambda=e^{\\lambda T}=e^{\\log2}=2$ is $\\Lambda^{1/2}-\\Lambda^{-1/2}=1.414214-0.707107=0.707107$.",
+  "problem": "With Lambda=e^{lambda T}=p, the factor is p^{1/2}-p^{-1/2}. This is consistent, but the claimed correspondence with p^{m/2} is only asymptotic. The chapter then says 'Every prime orbit would have the same Lyapunov exponent, 1', which holds only if T=log p. Fine; however the sample's 'stability ratio 2' is correct. The real issue is that Gutzwiller's formula as written is for a 2-dimensional system (M is 2x2 for the Poincare map), while the chapter applies it to 1-parameter orbit families with a 1D-looking analogy without saying so.",
+  "fix": "State explicitly that the Gutzwiller formula is for systems with two degrees of freedom (Poincare map 2x2) and that the dictionary treats each prime as an orbit of such a hypothetical system."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$\\det\\left(M_\\gamma^r-I\\right)&=(\\Lambda^r-1)(\\Lambda^{-r}-1)\\notag\\\\\n&=1-\\Lambda^r-\\Lambda^{-r}+1",
+  "problem": "The characteristic-polynomial sentence is misstated: det(B-mu I)=(mu1-mu)(mu2-mu) is fine, but expanding (Lambda^r-1)(Lambda^{-r}-1) gives 2-Lambda^r-Lambda^{-r}; the written intermediate '1-...+1' is awkward and unsplit.",
+  "fix": "Write (Λ^r-1)(Λ^{-r}-1)=Λ^rΛ^{-r}-Λ^r-Λ^{-r}+1=2-Λ^r-Λ^{-r}."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The oscillator orbit at energy $E$ (with $\\omega=1$) is an ellipse of area $A=2\\pi E/\\omega=2\\pi E$ (Problem~19 derives this).",
+  "problem": "Problem 19 uses H=p^2+omega^2x^2/4 (2m=1), whereas here the spectrum k-1/2 with hbar omega=1 corresponds to that Hamiltonian only with this convention; not stated. Also phase of terms: turning points give pi/2 each, but the formula's (-1)^r was derived from the floor shift, not from Maslov argument.",
+  "fix": "State the Hamiltonian p^2+x^2/4 (omega=1, 2m=1) before quoting A=2πE, and say the (-1)^r interpretation is a consistency remark, not a derivation."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The sum is $-\\left(1-\\tfrac13+\\tfrac15-\\tfrac17+\\cdots\\right)$. The bracket is the Leibniz series, which converges",
+  "problem": "Claims the sum equals pi/4 'you can confirm numerically' with no derivation; arctan series not in the reader's background (Ch. 3 lists log(1-x) only). Also a JUMP.",
+  "fix": "Derive arctan x = x - x^3/3+... by integrating 1/(1+x^2) geometric series, or state it in a beyond box, noting convergence at x=1 (Abel/alternating series)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "For comparison, when the Wu--Sprung potential is placed in this same box, it pushes the levels up and only about $650$ remain below $1000$: the paper's grid has 652 states with $E\\le1000$ (Sec.~II~E).",
+  "problem": "Paper's 652 states is stated in Sec. II E for the tensor sums; also forward-references Nsm(1000)=648.62 to a later section. Minor, but the 652 vs 649 discrepancy is not explained.",
+  "fix": "Note that 652 includes the fitted/box-discretization effects (and N(1000)=649 for zeros), or soften to 'about 650'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The number $q=v^\\dagger Hv$ is a $1\\times1$ matrix, so it equals its own transpose, and its complex conjugate is therefore its conjugate transpose:",
+  "problem": "Clumsy and slightly confusing reasoning; for a 1x1 matrix conjugate transpose equals complex conjugate, 'equals its own transpose' is only the reason.",
+  "fix": "Say: for a 1x1 matrix (a number) q, q^† is just the complex conjugate of q, because transposing does nothing."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The number of states with momentum magnitude at most $P$ is the number of positive integers $k$ with $\\pi\\hbar k/\\ell\\le P$",
+  "problem": "The general semiclassical rule is generalized from a box with no argument for why the area rule holds beyond the box; also 'p=2πħ/λ' with ħ presented before being tied to h.",
+  "fix": "Add a sentence that the box check is a motivation (heuristic), and relate p=h/λ=2πħ/λ."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The formula is usually written for the level density $\\dd N/\\dd E$; the form above follows by integrating each term, using $\\dd S_\\gamma/\\dd E=T_\\gamma$ and neglecting the slow energy dependence of the amplitude.",
+  "problem": "The sign/phase after integration and the 1/(2 pi) factors are not shown; the stated form is asserted.",
+  "fix": "Show: density term (1/pi) T cos(rS-...) /|det|^{1/2}, integrate to get sin(...)/(r T...) and note the T factors cancel with the 1/r prefactor."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "a fact we take from \\cite{gutzwiller}",
+  "problem": "Area preservation (det M=1) used without explanation; acceptable but should be in a beyond box per bible.",
+  "fix": "Put in a \\begin{beyond} box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Hence, at every non-integer $y$,\n\\begin{equation}\n\\{y\\}-\\tfrac12=-\\frac1\\pi\\sum_{r=1}^\\infty\\frac{\\sin(2\\pi ry)}{r}.",
+  "problem": "Pointwise convergence of the Fourier series of a discontinuous function (Dirichlet theorem) is assumed; not stated. Also the Fourier coefficient formulas for period 1 are used without reference.",
+  "fix": "Add a remark that the series converges to the function at points of continuity (Chapter 5, Gibbs), taken on trust."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Berry and Keating chose $a=2\\pi\\hbar=2\\pi$, one Planck cell (Problem~7 shows that any other choice adds a term growing like $E$ and spoils the agreement below).",
+  "problem": "The choice is presented without motivation (why one Planck cell); and 'Problem 7' answer is given only later.",
+  "fix": "Add one sentence of motivation: the uncertainty principle forbids resolving phase space below one cell."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "A crude classical count with one Planck-cell cutoff reproduces the leading asymptotics of the zero count, the $E\\log E$ growth that no box or oscillator produces. This is the main evidence that $xp$ is ``on the right track.''",
+  "problem": "The bible asks that the 1/8 difference be put in context, but the 'main evidence' framing and 'on the right track' are subjective; the E-linear term is also fixed by hand via a=2π.",
+  "fix": "State that the match of the linear and log terms is by construction of the cutoff choice, so it is a consistency check rather than independent evidence."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Whatever one's view of the exchange, RH remains open.",
+  "problem": "Fine, but the preceding description of BBM ('boundary condition at x=0 selects eigenvalues that correspond to the zeros') is stated with more detail than the chapter can support from the paper; risk of mis-describing.",
+  "fix": "Hedge: 'as the authors describe' and refer to the cited paper."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Note that the paper includes Bellissard's comment in the same citation list without taking sides, and so do we.",
+  "problem": "Earlier text says Bellissard 'arguing that the steps ... are not established', which is a characterization beyond the paper.",
+  "fix": "Phrase neutrally: 'Bellissard published a comment disputing aspects of the argument' and avoid specific content unless from cited source."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Connes interprets the zeros as an \\emph{absorption} spectrum (lines missing from a continuum) rather than as emitted eigenvalues \\cite{connes}, and Berry and Keating discuss the sign in \\cite{berrykeating99}.",
+  "problem": "Specific attribution to Berry-Keating of a sign discussion is not supported by the supplied material.",
+  "fix": "Remove the Berry-Keating attribution or soften to 'see also'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\Cref{fig:hilbert-polya-map} shows the map.",
+  "problem": "Figure includegraphics path uses 'figs/hilbert-polya_map.pdf' whereas bible says figs/<slug>_<name>.pdf with slug hilbert-polya; ok, but the FIGURES part and the figures zetastair, orbits, xp, bk, programs, oscillator are not shown in this review; cannot confirm scripts exist. Also the Bible's figure width/pattern fine.",
+  "fix": "Ensure a ### FIG script exists for each of map, oscillator, zetastair, orbits, xp, bk, programs."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\prob{3}{(Computational.) Using numpy, compute the partial sums of Eq.~\\eqref{eq:hilbert-polya-osctrace} at $E=\\tfrac94$ for $R=1,\\dots,200$ repetitions.",
+  "problem": "The problems list is not in nondecreasing grading order and answers section omits several odd-numbered problems (e.g., 13 present, but 1,3,5,7,9,11,13,15,17,19,21,23,25 ok; problem 27 (odd) has no answer; problem 12 etc. ok).",
+  "fix": "Add answers for all odd-numbered problems, including 27 (count of problems is 27)."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\begin{pycode}\nimport numpy as np, qmnt\nt = qmnt.zeros(700)",
+  "problem": "Chapter anatomy requires problems to use computational tasks; fine. But the pycode listing prints no quoted outputs and the 'sample' references 'listing below' for N(1000)=649 while listing is after the sample.",
+  "fix": "Say 'listing following this sample' and show printed output lines."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "In this section only, $t$ is time rather than a zero height; we return to the height meaning in Section~\\ref{sec:hilbert-polya-trace}.",
+  "problem": "Symbol t reused for time while t is the height throughout; also T_gamma and T clash noted but this adds confusion; later sections use x=x0 e^t with t time too.",
+  "fix": "Use τ for time in Hamilton's equations and the xp orbits."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Fact 2: the mean level density is $T_\\gamma/2\\pi$.",
+  "problem": "Level density at the fixed-energy orbit period; for xp the 'period' is the time inside the cutoff region, not a periodic orbit, which blurs the term; fine but not flagged.",
+  "fix": "Remark that for xp 'T' is a transit time between cutoffs, not a period."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Here $\\bar N$ is the smooth phase-space count; $\\gamma$ runs over \\emph{primitive} periodic orbits",
+  "problem": "Symbol Λ used both for the von Mangoldt function (notation table) and for the stability multiplier Λ=e^{λT} here.",
+  "fix": "Rename the multiplier (e.g. \\Lambda_\\gamma -> \\kappa) or point out the clash."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The paper's units $\\hbar=2m=1$ also have $\\hbar=1$, so nothing changes.",
+  "problem": "With 2m=1 the energy-momentum relation is E=p^2 (not p^2/2m with m=1), which changes the phase-space region shape; the area/2πħ rule is unaffected but the statement 'nothing changes' is loose.",
+  "fix": "Say the area rule only needs ħ=1; the relation E=p^2 is a separate convention."
+ }
+]

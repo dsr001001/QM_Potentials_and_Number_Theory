@@ -26,6 +26,10 @@ assert abs(B(P6) - 2.09) < 0.01
 assert abs(2*np.pi*np.exp(2*np.pi*B(P6))/3.2e6 - 1) < 0.1
 r6 = np.sqrt(sum(np.log(p)**2*sum(1/(2*p**m) for m in (1, 2, 3)) for p in P6))/np.pi
 assert abs(r6 - 0.415) < 0.01
+# numerical check of rms formula (new problem on rms of Nfl')
+tg = np.linspace(1000, 200000, 400001)
+d6 = -sum(np.log(p)*np.cos(m*tg*np.log(p))/p**(m/2) for p in P6 for m in (1, 2, 3))/np.pi
+assert abs(np.sqrt(np.mean(d6**2)) - r6) < 0.01
 # Problem 6
 assert B([2, 3]) > 0
 
@@ -75,15 +79,19 @@ for q, j0, dr in ((2, 39, 0.12), (3, 62, 2.4), (5, 91, 5.6)):
     assert abs(abs(8*j/450 - np.log(q))*666 - dr) < 0.06*max(1, dr)
 assert abs(8/450 - 0.0178) < 1e-4
 assert abs(np.pi/(2*T) - 0.00236) < 2e-5
+assert abs((8 - 0.05)/(np.pi/(2*T)) - 3370) < 20
 assert 133 == 400//3 and 266 == 800//3
 
 # 43 prime powers and weights
 ps = list(qmnt.primes_upto(113)); assert len(ps) == 30
+hp = [q for q in range(2, 114) if any(q == p**m for p in ps for m in range(2, 8))]
+assert len(hp) == 10 and 30 + 10 - 3 + 6 == 43
 assert abs(1/(5*2**2.5) - 0.0354) < 1e-4 and abs(1/48 - 0.0208) < 1e-4
 assert abs(1/36 - 0.0278) < 1e-4 and abs(1/np.sqrt(211) - 0.0688) < 1e-4
-assert abs(1/np.sqrt(113) - 0.0941) < 1e-4
+assert abs(1/np.sqrt(113) - 0.0941) < 1e-4 and abs(1/16 - 0.0625) < 1e-9
 assert len([p for p in qmnt.primes_upto(211) if p >= 127]) == 17
 assert abs(np.log(139/137) - 0.0145) < 1e-4 and abs(np.log(128/127) - 0.0078) < 1e-4
+assert abs(0.0145/0.0054 - 2.7) < 0.05 and abs(0.0078/0.0054 - 1.5) < 0.06
 
 # chance match sample, problem 9
 for w, lam, pp in ((2, 0.035, 0.034), (np.log(113), 0.23, 0.20), (8, 3.5, 0.97)):
@@ -100,8 +108,13 @@ assert abs(0.0047*1600 - 7.6) < 0.1
 assert abs(2e-3*(2000 - 347) - 3.3) < 0.05
 assert abs(np.asarray(qmnt.zeros(2000))[1999] - 2515) < 3
 
-# root ambiguity
+# root ambiguity, problem 21
 assert abs(0.7455/5 - 0.149) < 1e-3
+assert abs(-0.7455/1.5 + 0.497) < 1e-3
+
+# problem 26: prime powers below e^2
+pp2 = [q for q in range(2, 8) if any(q == p**m for p in (2, 3, 5, 7) for m in range(1, 4))]
+assert pp2 == [2, 3, 4, 5, 7] and abs(np.exp(2) - 7.39) < 0.01
 
 # C2 first five frequencies match prime powers
 t4 = z[:400]; y = np.arange(1, 401) - 0.5 - qmnt.Nsm(t4)
@@ -128,14 +141,14 @@ def ridge(Xm, yv, lam):
 lams = 10.0**np.arange(-8, 3.01, 0.5); assert len(lams) == 23
 val = [np.sqrt(np.mean((Xf(t5[300:400]) @ ridge(Xf(t5[:300]), y5[:300], L) - y5[300:400])**2)) for L in lams]
 th = ridge(Xf(t5[:400]), y5[:400], lams[int(np.argmin(val))])
-Ff = lambda tt: float(Xf(np.atleast_1d(tt)) @ th)
-sa, ga = qmnt.smooth_zeros(n), qmnt.mean_gap(n)
+Ff = lambda tt: float(np.ravel(Xf(np.atleast_1d(tt)) @ th)[0])
+sa, ga = np.ravel(qmnt.smooth_zeros(n)), np.ravel(qmnt.mean_gap(n))
 def pred(k, s0, g0):
-    Gk = lambda tt: qmnt.Nsm(tt) + Ff(tt) - (k - 0.5)
+    Gk = lambda tt: float(np.ravel(qmnt.Nsm(tt))[0]) + Ff(tt) - (k - 0.5)
     a, b = s0 - 3*g0, s0 + 3*g0
     while Gk(a)*Gk(b) > 0: a, b = a - g0, b + g0
     return brentq(Gk, a, b)
-tp = np.array([pred(k, s0, g0) for k, s0, g0 in zip(n, sa, ga)])
+tp = np.array([pred(int(k), float(s0), float(g0)) for k, s0, g0 in zip(n, sa, ga)])
 rB, cB = qmnt.score(tp, n)
 assert rB < 0.074 and cB > 0.95
 assert abs(th[0] + 0.225) < 0.05 and abs(th[75]) < 0.05

@@ -1,0 +1,128 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "$\\mathcal A=2\\Phi=\\frac83\\cdot8^{3/2}=60.34$; $\\Phi/\\pi=4.80$.",
+  "problem": "The check script fails. Φ(8)=(4/3)·8^{3/2}=30.17, so A=2Φ=(8/3)·8^{3/2}=60.34 (this part is fine), but Φ/π=9.60, not 4.80. Moreover 'Level 5 has Φ/π=4.5' is also wrong for this potential.",
+  "fix": "Φ/π=(4/(3π))·8^{3/2}=9.60. Level 10 has Φ/π=9.5, so E=8 lies between levels 10 and 11. Fix the answer, the check, and the problem's intended results."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The relative error falls from $9.5\\%$ at $n=1$ to below $0.1\\%$ by $n=6$.",
+  "problem": "For n=1 the relative error is 0.0967/1.0188=9.5% (relative to exact) or 8.7% (relative to WKB). The check divides by Ew, giving 8.7%. For n=6, 0.0034/5.52=0.06%, fine, but the n=1 figure is inconsistent with the check.",
+  "fix": "State which denominator is used (exact) and make the check use the exact level, or quote 8.7%."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Level $n$ is therefore most sensitive to $\\delta V$ near its own turning points. It is completely insensitive to $\\delta V$ beyond them, apart from the exponentially small tails.",
+  "problem": "The WKB density is only locally enhanced near turning points (the 1/k divergence is integrable). Level n is sensitive to δV across the entire allowed region. 'Most sensitive' is overstated, and the paper's mapping is heuristic.",
+  "fix": "Say the density is weighted toward the turning points, but the level responds to δV everywhere inside [a,b]. Label the claim heuristic."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Dividing by $k^2$, the condition becomes\n\\begin{equation}\n\\frac34\\Bigl(\\frac{k'}{k^2}\\Bigr)^2\\ll1",
+  "problem": "Dividing (A''/A) by k^2 gives (3/4)(k'/k^2)^2 - (1/2) k''/k^3. The first term is (3/4)k'^2/k^4, which equals (3/4)(k'/k^2)^2, so this is fine. However, 'the condition on k'' is of the same type and we will not track it' is a jump.",
+  "fix": "Show k''/k^3 in terms of V'' and V' or state explicitly it is dropped as a smoothness assumption."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Finally, $\\sin(\\theta+\\pi/4)=\\cos(\\theta-\\pi/4)$, because $\\cos(\\theta-\\pi/4)=\\cos(\\pi/4-\\theta)=\\sin(\\pi/2-(\\pi/4-\\theta))$.",
+  "problem": "The identity is correct but the justification is convoluted. Also the sign: the argument is θ=(2/3)w^{3/2}, and the earlier chain should be stated cleanly.",
+  "fix": "Use cos(a)=sin(π/2−a) directly: sin(θ+π/4)=cos(π/2−θ−π/4)=cos(π/4−θ)=cos(θ−π/4)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Comparing the two prefactors, the oscillating side carries twice the amplitude of the decaying side.",
+  "problem": "The prefactors are F^{1/6}/√π and F^{1/6}/(2√π), but the connection formula is then written with 'D' as a free constant. The phrase 'letting D be any constant' is fine, but the formula was derived with equality only in the sense of asymptotic matching.",
+  "fix": "State that the equality is an asymptotic matching of the same exact Airy function and then rescale."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Exact function is $\\mathrm{Ai}(x-E)$ with $E$ the fifth zero of $\\mathrm{Ai}$ (sign reversed).",
+  "problem": "Level n=10 is the fifth odd state, i.e. the fifth zero of Ai, so this is correct only if levels alternate starting with even. Ok, but the figure caption claims n=10 is 'odd', consistent. No numeric check or figure script is supplied for the wkb figures.",
+  "fix": "Provide FIGURES scripts for all six figures (wkb_turning, wkb_compare, wkb_phasespace, wkb_staircase, wkb_turnmap, wkb_abel)."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/wkb_turning.pdf}",
+  "problem": "The response has no FIGURES part, so none of the six referenced figures has a script.",
+  "fix": "Add '### FIG wkb_<name>' scripts for each figure."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Recall from Chapter~\\ref{ch:perturbation} that a small change $\\delta V$ shifts the $n$-th level",
+  "problem": "Chapter 13 (perturbation) comes after Chapter 12 and is not in this chapter's assumed list, so the dependence is backwards.",
+  "fix": "Derive δE_n=∫|ψ_n|²δV dx in one line (first-order perturbation) or mark it as a forward reference and explain."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The paper always computes the levels by exact diagonalization (Chapter~\\ref{ch:finite-differences}), never by WKB.",
+  "problem": "Chapter 23 is a later chapter; fine as forward reference, but the claim 'never' is unsupported (smooth potential built from WKB). Also the chapter lacks checks for several quoted numbers (P14 only printed, 903 levels, 1.74804 ok).",
+  "fix": "Soften to 'the paper computes levels by finite differences'; add an assert for Problem 14 and the 0.065/0.005 values."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\item[1.] $k(0)=4$, $\\lambda=1.571$; $k(2)=\\sqrt{12}=3.464$, $\\lambda=1.814$.",
+  "problem": "Answers are provided for odd problems and all prob 1, but several are missing (e.g. 17 present, 19, 21 present; problem 1-level ones 20, 26 present; problem 5 present). Answer 8 (a prob-2 even) absent, fine; but answers to 3 and 4 are for prob 1, ok. Problem 25 answer is only a statement.",
+  "fix": "Check coverage; add short solutions for problems 25 and 27 beyond one-liners."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Evaluate the coverage threshold $2L\\sqrt E/\\pi$ at scale~2 for $E=t_{1000}=1419.42$ and $L=59.957$.",
+  "problem": "The answer is never given (problem 14 is even), and the check only prints 1438.06. Fine, but problem 14's value is not asserted.",
+  "fix": "Assert 1438.06 in checks and optionally give the answer."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The sign alternates between even and odd states. This happens because the exact even states feel the kink at $x=0$ differently from the odd states, which vanish there.",
+  "problem": "The explanation is asserted without justification; the WKB hard-wall/odd-state argument (odd states are exactly the half-well with a wall, phase 3/4) is the real reason, as Answer 7 hints.",
+  "fix": "Explain: odd states use the (n−1/4)π rule for the half-well; even states use the Neumann condition, which WKB treats with a different phase."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Over a full back-and-forth orbit the integral doubles: $\\oint p\\,\\dd x=2\\pi\\hbar\\,(n-\\tfrac12)$.",
+  "problem": "This ignores that in ordinary units Φ=∫p dx/ħ and the quantization (n−1/2)π gives ∮p dx=2π ħ(n−1/2), which is correct; but the justification of the doubling of the integral (upper and lower halves) was not shown here.",
+  "fix": "Add one line: the return path has p→−p and dx→−dx, so contributions add."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The result still holds there, but the proof needs a more careful limit argument that we do not give.",
+  "problem": "Leibniz rule is applied to Φ(E) where F=√(E−V) has a derivative singular at the endpoint; the endpoint-term argument 'integrand vanishes' is not justified in the chapter.",
+  "fix": "Verify with the linear well: Φ'=2√E from both sides, to build confidence."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "For a general smooth well, measuring the error in units of the spacing is the natural choice.",
+  "problem": "The sentence follows 'Two exceptions' but is not an exception or explained; confusing flow.",
+  "fix": "Start a new paragraph on why errors are measured in spacings."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The Wu--Sprung potential, as we will see, grows a little more slowly than $x^2$. Its levels therefore crowd together slowly",
+  "problem": "Per the bible, V grows roughly like (x/log x)^2, so it is slower than x^2, but the claim that levels crowd 'just as the Riemann zeros do' is stated loosely; the chapter does not derive it.",
+  "fix": "Say this is shown in Chapter 22 and that the spacing matches 2π/log(t/2π) by construction."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Sec.~V notes that the $p=2$ oscillation, of period $2\\pi/\\log2\\approx9$ in $t$ (RE2), spans ``only $\\sim$6--7 levels at these heights''.",
+  "problem": "Dividing by the mean gap at n=200 gives 6.0 only if gap≈1.5; the claim relies on a check not shown in text, and the paper statement is about 'at these heights'.",
+  "fix": "Show the gap values (≈1.5 and 1.33) explicitly."
+ }
+]

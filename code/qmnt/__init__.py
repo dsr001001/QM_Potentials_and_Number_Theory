@@ -117,10 +117,10 @@ def oracle_zeros(n, primes, mmax: int = 3):
     for i, (nn, ss, gg) in enumerate(zip(n, s, g)):
         f = lambda t: float(Nsm(t) + Nfl(t, primes, mmax)) - (nn - 0.5)
         w = 3.0
-        a, b = ss - w * gg, ss + w * gg
+        a, b = max(ss - w * gg, 0.5), ss + w * gg
         while f(a) * f(b) > 0:          # bracket expanded on sign failure
             w *= 1.5
-            a, b = ss - w * gg, ss + w * gg
+            a, b = max(ss - w * gg, 0.5), ss + w * gg
         out[i] = brentq(f, a, b, xtol=1e-12)
     return out
 

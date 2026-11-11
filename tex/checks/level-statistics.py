@@ -1,5 +1,6 @@
 import numpy as np, qmnt
 from scipy.integrate import quad
+from scipy.special import erfc
 pi = np.pi
 gap = lambda t: 2*pi/np.log(t/(2*pi))
 # Sec unfolding: gaps
@@ -20,14 +21,30 @@ assert abs(np.mean(np.diff(u)) - 0.989) < 2e-3
 # local-gap shortcut
 assert abs(t[1]-t[0] - 6.887) < 1e-3
 tb = 0.5*(t[0]+t[1]); assert abs(tb-17.578) < 1e-3 and abs(gap(tb)-6.107) < 2e-3
-assert abs((t[1]-t[0])/gap(tb) - 1.128) < 2e-3
+sc = (t[1]-t[0])/gap(tb)
+assert abs(sc - 1.128) < 2e-3
+# shortcut error estimate
+Dt = t[1]-t[0]
+assert abs(Dt**2-47.43) < 0.01 and abs(tb**2-309.0) < 0.1 and abs(np.log(tb/(2*pi))-1.0288) < 2e-4
+pred = -Dt**2/(24*tb**2*np.log(tb/(2*pi)))
+assert abs(pred+0.0062) < 1e-4
+assert abs((1.121-1.128)/1.128+0.0062) < 1e-4
+ex = u[1]-u[0]
+assert abs((ex-sc)/sc - pred) < 5e-4
+assert abs((ex-sc)/sc + 0.0062) < 3e-4
 # Sample: rare gaps
 pg = lambda s: 32/pi**2*s**2*np.exp(-4*s**2/pi)
 assert abs(1-np.exp(-0.1) - 0.0952) < 1e-4
 Pg01 = quad(pg, 0, 0.1)[0]; assert abs(Pg01 - 1.073e-3) < 2e-6
 assert abs((1-np.exp(-0.1))/Pg01 - 89) < 1
 assert abs(np.exp(-2)-0.135) < 1e-3
-assert abs(quad(pg, 2, np.inf)[0] - 0.017) < 1e-3
+Pg2 = quad(pg, 2, np.inf)[0]
+assert abs(Pg2 - 0.017) < 1e-3
+term1 = 8/pi*np.exp(-16/pi); term2 = erfc(4/np.sqrt(pi))
+assert abs(term1-0.0156) < 1e-4 and abs(term2-0.0014) < 1e-4
+assert abs(term1+term2-Pg2) < 1e-10
+assert abs(np.exp(-2)/Pg2 - 8) < 0.5
+assert abs(2*(4/pi)**2 - 32/pi**2) < 1e-12 and abs(np.sqrt(pi*4/pi)-2) < 1e-12
 assert abs(32/pi**2 - 3.2423) < 1e-4
 # Sample 2x2
 ev = np.linalg.eigvalsh([[1,0.3],[0.3,1.2]])
@@ -58,6 +75,7 @@ assert abs(pi**2/3-3.290)<1e-3
 # Fig 2 reproduction claims
 ds = np.diff(qmnt.Nsm(qmnt.zeros(10000)))
 assert abs(ds.mean()-1)<1e-3
+assert abs(ds.mean()-1)<2e-4   # 'of order 1e-4' statement
 assert 0.13 < ds.var() < 0.23
 assert np.mean(ds<0.1) < 0.02
 # MA(1) sample and problem 9
@@ -74,16 +92,20 @@ B = 64/(9*pi); assert abs(B-2.264)<1e-3 and abs(B**3-11.60)<0.01   # P11
 assert abs(2**18/(3**6*pi**3)-B**3)<1e-9
 p4 = lambda s: B**3*s**4*np.exp(-B*s**2)
 assert abs(quad(p4,0,np.inf)[0]-1)<1e-8 and abs(quad(lambda s:s*p4(s),0,np.inf)[0]-1)<1e-8
-tz = qmnt.zeros(400)[-1]; assert abs(tz-676.1)<0.1        # P17
-g400 = gap(tz); assert abs(g400-1.343)<2e-3 and 6 < 2*pi/np.log(2)/g400 < 7
+tz = qmnt.zeros(400)[-1]; assert abs(tz-680)<1.5        # P17
+g400 = gap(tz); assert abs(g400-1.341)<1.5e-3
+assert abs(gap(tz-3)-gap(tz+3)) < 6*5e-4
+assert abs(2*pi/np.log(2)/g400 - 6.8) < 0.05 and 6 < 2*pi/np.log(2)/g400 < 7
 assert abs(2*pi/np.log(2)-9.065)<1e-3
 assert abs(32/(3*pi**2)*0.05**3-1.351e-4)<1e-7            # P20
 # P13 binomial se
 assert abs(np.sqrt(0.095*0.905/2e4)-0.002)<2e-4
-# P21
+# P21 and the varlink discussion
 uu = qmnt.Nsm(qmnt.zeros(1000)); dl = uu-(np.arange(1,1001)-0.5); dl = dl-dl.mean()
-lhs = np.var(np.diff(uu)); rhs = 2*(np.mean(dl*dl)-np.mean(dl[1:]*dl[:-1]))
+C0 = np.mean(dl*dl); C1 = np.mean(dl[1:]*dl[:-1])
+lhs = np.var(np.diff(uu)); rhs = 2*(C0-C1)
 assert abs(lhs-rhs)<0.01
+assert C1 < 0 and lhs > 2*C0
 # P22
 assert abs(quad(lambda s:s**2*np.exp(-4/pi*s**2),0,np.inf)[0]-np.sqrt(pi)/(4*(4/pi)**1.5))<1e-10
 # P15: paper null

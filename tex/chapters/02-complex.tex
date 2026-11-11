@@ -214,7 +214,7 @@ Proof: by Eq.~\eqref{eq:complex-zzbar2} and Eq.~\eqref{eq:complex-conjrules},
 \[
 \abs{zw}^2=(zw)\overline{(zw)}=z\,w\,\bar z\,\bar w=(z\bar z)(w\bar w)=\abs z^2\abs w^2 .
 \]
-Both sides of Eq.~\eqref{eq:complex-absprod} are nonnegative, so taking square roots gives the result. Dividing, $\abs{w/z}=\abs w/\abs z$ for $z\ne0$.
+In the first equality we used Eq.~\eqref{eq:complex-zzbar2} for the complex number $zw$: by definition $\abs{zw}$ is the nonnegative square root of $(zw)\overline{(zw)}$. Both sides of Eq.~\eqref{eq:complex-absprod} are nonnegative, so taking square roots gives the result. Dividing, $\abs{w/z}=\abs w/\abs z$ for $z\ne0$.
 
 \textbf{Triangle inequality.} For any complex $z,w$,
 \begin{equation}
@@ -365,7 +365,7 @@ Equation~\eqref{eq:complex-prodpolar} with $r_1=r_2=1$ says
 \begin{equation}
 E(\theta_1)\,E(\theta_2)=E(\theta_1+\theta_2),\qquad E(0)=1.\label{eq:complex-Elaw}
 \end{equation}
-That is exactly the law obeyed by exponentials: $e^{a}e^{b}=e^{a+b}$ and $e^0=1$. Differentiate $E$ with respect to $\theta$, treating the real and imaginary parts separately:
+That is exactly the law obeyed by exponentials: $e^{a}e^{b}=e^{a+b}$ and $e^0=1$. The derivative of a complex-valued function of a real variable is defined part by part: if $F(\theta)=u(\theta)+iv(\theta)$ with $u,v$ real functions, then by definition $\dd F/\dd\theta=\dd u/\dd\theta+i\,\dd v/\dd\theta$. The sum rule follows at once. The product rule $(FG)'=F'G+FG'$ also carries over: write both factors in parts, multiply them out with Eq.~\eqref{eq:complex-mult}, and apply the real product rule to each of the four real products. Now differentiate $E$ with respect to $\theta$ in this sense:
 \[
 \frac{\dd E}{\dd\theta}=-\sin\theta+i\cos\theta=i(\cos\theta+i\sin\theta)=iE(\theta),
 \]
@@ -893,7 +893,7 @@ Equation~\eqref{eq:complex-argprod} extends to any number of factors by applying
 \begin{equation}
 \arg F=\arg f_1+\arg f_2+\cdots+\arg f_K\quad(\text{mod }2\pi),\label{eq:complex-argmany}
 \end{equation}
-and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angle that is a \emph{sum} of many angles. This simple fact is how the primes get into the counting of the zeta zeros: Chapter~\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), so the argument of zeta becomes a sum over primes.
+and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angle that is a \emph{sum} of many angles. This simple fact is how the primes get into the counting of the zeta zeros: Chapter~\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), each factor being $1/(1-p^{-s})$. Since $\arg(1/f)=-\arg f$, the argument of zeta becomes minus a sum over primes, $\arg\zeta(s)=-\sum_p\arg(1-p^{-s})$ (mod $2\pi$; for an infinite product this also needs a convergence argument, which Chapter~\ref{ch:explicit-formula} supplies).
 
 \begin{sample}{Argument of a product, and of a prime factor}
 (a) Find $\operatorname{Arg}\bigl[(1+i)(\sqrt3+i)\bigr]$ two ways. (b) Find $\operatorname{Arg}(1-2^{-s})$ on the critical line at the height $t^*$ where $t^*\log2=\pi/2$.
@@ -913,9 +913,9 @@ and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angl
 
 \subsection{Following the argument continuously}
 
-Suppose $f(t)$ is a complex number that depends continuously on a real parameter $t$ (for instance, a function evaluated along the critical line, $f(\tfrac12+it)$) and is never zero along the way. A \textbf{continuous argument} of $f$ is a continuous real function $\alpha(t)$ with $f(t)=\abs{f(t)}e^{i\alpha(t)}$ for all $t$. Two facts:
+Suppose $f(t)$ is a complex number that depends continuously on a real parameter $t$ running over an interval (for instance, a function evaluated along the critical line, $f(\tfrac12+it)$) and is never zero along the way. A \textbf{continuous argument} of $f$ is a continuous real function $\alpha(t)$ with $f(t)=\abs{f(t)}e^{i\alpha(t)}$ for all $t$. Two facts:
 
-\emph{It is unique up to a constant multiple of $2\pi$.} If $\alpha_1$ and $\alpha_2$ are both continuous arguments, their difference is continuous and, at every $t$, an integer multiple of $2\pi$ (by the lemma of Section~\ref{sec:complex-log}). A continuous function that only takes values in $\{\dots,-2\pi,0,2\pi,\dots\}$ cannot move from one of these values to another without passing through the values in between (intermediate value theorem), so it is constant. Fixing $\alpha$ at one starting point fixes it everywhere.
+\emph{It is unique up to a constant multiple of $2\pi$.} If $\alpha_1$ and $\alpha_2$ are both continuous arguments, their difference is continuous and, at every $t$, an integer multiple of $2\pi$ (by the lemma of Section~\ref{sec:complex-log}). Recall the intermediate value theorem of calculus: if $g$ is continuous on an interval $[t_a,t_b]$, then $g$ takes every value between $g(t_a)$ and $g(t_b)$. Let $g=\alpha_1-\alpha_2$, defined on the interval over which $t$ runs. If $g$ took two different values $2\pi j<2\pi j'$ at two points, it would also take every value between them, including $2\pi j+\pi$, which is not a multiple of $2\pi$. That is impossible, so $g$ is constant. Fixing $\alpha$ at one starting point fixes it everywhere.
 
 \emph{For products it adds exactly.} If $\alpha$ and $\beta$ are continuous arguments of $f$ and $g$, then $fg=\abs f\abs g\,e^{i(\alpha+\beta)}$ and $\alpha+\beta$ is continuous, so $\alpha+\beta$ is a continuous argument of $fg$. With continuous arguments there is no ``mod $2\pi$'' left in Eq.~\eqref{eq:complex-argmany}.
 
@@ -925,7 +925,7 @@ The principal argument $\operatorname{Arg}$ is continuous as long as $f(t)$ avoi
 
 \subsection{A preview: the phase of a prime factor is the prime-2 wave}
 
-Here is a numerical observation that previews the central mechanism of Chapter~\ref{ch:explicit-formula}. Plot $-\frac1\pi\operatorname{Arg}(1-2^{-1/2-it})$ against $t$, and on the same axes plot RE2, the three-term prime-2 wave of Eq.~\eqref{eq:complex-re2}. \Cref{fig:complex-arg-prime2} shows that the two curves are nearly the same; the computation in the CHECKS script finds that they differ by less than $0.05$ for all $t$ (they are both periodic with period $2\pi/\log 2$, so checking one period suffices). At $t^*$ of the last Sample Problem, for instance, the argument gives $-0.615480/\pi\approx-0.195913$ while RE2 gives $-\frac1\pi\bigl(\tfrac{1}{\sqrt2}-\tfrac{1}{3\cdot2^{3/2}}\bigr)\approx-0.187566$ (the $m=2$ term vanishes because $\sin\pi=0$).
+Here is a numerical observation that previews the central mechanism of Chapter~\ref{ch:explicit-formula}. Plot $-\frac1\pi\operatorname{Arg}(1-2^{-1/2-it})$ against $t$, and on the same axes plot RE2, the three-term prime-2 wave of Eq.~\eqref{eq:complex-re2}. \Cref{fig:complex-arg-prime2} shows that the two curves are nearly the same; a numerical computation (the code listing at the end of this subsection) finds that they differ by less than $0.05$ for all $t$ (they are both periodic with period $2\pi/\log 2$, so checking one period suffices). At $t^*$ of the last Sample Problem, for instance, the argument gives $-0.615480/\pi\approx-0.195913$ while RE2 gives $-\frac1\pi\bigl(\tfrac{1}{\sqrt2}-\tfrac{1}{3\cdot2^{3/2}}\bigr)\approx-0.187566$ (the $m=2$ term vanishes because $\sin\pi=0$).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/complex_arg_prime2.pdf}
@@ -933,7 +933,7 @@ Here is a numerical observation that previews the central mechanism of Chapter~\
 \label{fig:complex-arg-prime2}
 \end{figure}
 
-The status of this observation: in this chapter it is a numerical observation. It becomes a theorem once you know the series $-\log(1-x)=x+x^2/2+x^3/3+\cdots$ for $\abs x<1$, which Chapter~\ref{ch:series} proves. Taking the imaginary part of that series at $x=2^{-1/2-it}$ gives $\operatorname{Arg}(1-2^{-s})=\sum_{m\ge1}\sin(mt\log2)/(m2^{m/2})$ exactly, and RE2 keeps the first three terms. Chapter~\ref{ch:explicit-formula} then does the same for every prime factor of zeta, which is where the paper's Eq.~(4) comes from (with an honest discussion of what is rigorous and what is not).
+The status of this observation: in this chapter it is a numerical observation. It becomes a theorem once you know the series $-\log(1-x)=x+x^2/2+x^3/3+\cdots$ for $\abs x<1$, which Chapter~\ref{ch:series} proves. Write $\mathcal S(x)=-(x+x^2/2+x^3/3+\cdots)$ for the sum of that series. Chapter~\ref{ch:series} also shows that $e^{\mathcal S(x)}=1-x$, so $\mathcal S(x)$ is one of the logarithms of $1-x$ in Eq.~\eqref{eq:complex-log}, and $\Im\mathcal S(x)$ is one of the arguments of $1-x$. Which one? By the triangle inequality applied to the series (Chapter~\ref{ch:series}), $\abs{\Im\mathcal S}\le\abs{\mathcal S}\le\sum_{m\ge1}\abs x^m/m=-\log(1-\abs x)$, and for $\abs x=1/\sqrt2$ this is $-\log(1-1/\sqrt2)\approx1.228<\pi$. Arguments of the same number differ by multiples of $2\pi$, so only one of them lies in $(-\pi,\pi)$, and that one is the principal argument. Hence $\Im\mathcal S(x)=\operatorname{Arg}(1-x)$. With $x=2^{-1/2-it}$, Eq.~\eqref{eq:complex-oracleterm} gives $\Im x^m=-2^{-m/2}\sin(mt\log2)$, so $\operatorname{Arg}(1-2^{-s})=\sum_{m\ge1}\sin(mt\log2)/(m2^{m/2})$ exactly, and RE2 keeps the first three terms. Chapter~\ref{ch:explicit-formula} then does the same for every prime factor of zeta, which is where the paper's Eq.~(4) comes from (with an honest discussion of what is rigorous and what is not).
 
 \begin{pycode}
 import numpy as np, qmnt
@@ -957,7 +957,7 @@ print(np.max(np.abs(phase - re2)))  # below 0.05
 %==========================================================
 \section{Paper connection}\label{sec:complex-paper}
 
-\paragraph{The zeros are complex numbers (Sec.~I, first sentence; Sec.~II~A).} The paper opens: ``The Hilbert--P\'olya conjecture proposes that the imaginary parts $t_n$ of the nontrivial zeros $\rho_n=\tfrac12+it_n$ of the Riemann zeta function are the spectrum of a self-adjoint operator''~\cite{soniR1}. You can now parse every symbol: $\rho_n$ is a complex number with real part $\tfrac12$ and imaginary part $t_n$, a real number. Sec.~II~A reports $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; these are imaginary parts, as in our Sample Problem on $\abs{\rho_1}$. Writing every zero with real part $\tfrac12$ places them all on the vertical line $\sigma=\tfrac12$ of the complex plane (\Cref{fig:complex-critical}). That \emph{every} nontrivial zero lies on this line is the Riemann hypothesis, which is open (Chapter~\ref{ch:zeta}); the paper only uses zeros for which this has been verified numerically. From Sec.~II on, the paper works only with the real list $t_n$; the complex structure is hidden in that choice, and in the conjugate-pair symmetry that lets one keep only $t_n>0$.
+\paragraph{The zeros are complex numbers (Sec.~I, first sentence; Sec.~II~A).} The paper opens: ``The Hilbert--P\'olya conjecture proposes that the imaginary parts $t_n$ of the nontrivial zeros $\rho_n=\tfrac12+it_n$ of the Riemann zeta function are the spectrum of a self-adjoint operator''~\cite{soniR1}. You can now parse every symbol: $\rho_n$ is a complex number with real part $\tfrac12$ and imaginary part $t_n$, a real number. Sec.~II~A reports $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; these are imaginary parts, as in our Sample Problem on $\abs{\rho_1}$. Writing every zero with real part $\tfrac12$ places them all on the vertical line $\sigma=\tfrac12$ of the complex plane (\Cref{fig:complex-critical}). That \emph{every} nontrivial zero lies on this line is the Riemann hypothesis, which is open (Chapter~\ref{ch:zeta}); the paper only uses zeros for which this has been verified numerically (a numerical observation, not a proof). From Sec.~II on, the paper works only with the real list $t_n$; the complex structure is hidden in that choice, and in the conjugate-pair symmetry that lets one keep only $t_n>0$.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/complex_critical_line.pdf}
@@ -969,7 +969,7 @@ print(np.max(np.abs(phase - re2)))  # below 0.05
 \[
 N_{\rm fl}(t)=-\frac1\pi\sum_{p\in P}\sum_{m=1}^{3}\frac{\sin(mt\log p)}{m\,p^{m/2}}.
 \]
-By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated at $s=\tfrac12+it$. The factor $p^{-m/2}$ is the length of the arrow $p^{-ms}$ on the critical line, Eq.~\eqref{eq:complex-critmod}: it is $\tfrac12$ in the exponent of $\rho_n$ that makes the amplitude $1/\sqrt{p^m}$. The argument $mt\log p$ is the arrow's angle (up to sign), so $m\log p$ is an angular frequency in the variable $t$. So Eq.~(4) is a sum of rotating arrows, one family per prime, projected onto the imaginary axis. Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula} derive why this sum approximates the fluctuating part of the zero count.
+By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated at $s=\tfrac12+it$. The factor $p^{-m/2}$ is the length of the arrow $p^{-ms}$ on the critical line, Eq.~\eqref{eq:complex-critmod}: it arises because the sum is evaluated at $s=\tfrac12+it$, that is at $\sigma=\tfrac12$, the real part shared by every zero $\rho_n$, and there $\abs{p^{-ms}}=p^{-m\sigma}=1/\sqrt{p^m}$. The argument $mt\log p$ is the arrow's angle (up to sign), so $m\log p$ is an angular frequency in the variable $t$. So Eq.~(4) is a sum of rotating arrows, one family per prime, projected onto the imaginary axis. Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula} derive why this sum approximates the fluctuating part of the zero count.
 
 \paragraph{Frequencies $\log p^m$ (Secs.~II~D and IV; Table~IV; App.~A steps 20, 23).} Sec.~IV reports that the sparse control C2 ``recovers frequencies at $\log p^m$''. In our language $\log p^m=m\log p$ is the angular frequency of $p^{-ms}$ (Eq.~\eqref{eq:complex-pmms}). The smallest is $\log2\approx0.693$, period $9.0647$ in $t$; the controls search the range $0.05<\omega<8$ (Sec.~II~D). Note that $\omega=8$ corresponds to the prime power $q=e^8\approx2981$, which is consistent with the cutoff $q\le3000$ used in the alignment check of App.~A step 23. In the 800-zero C2 fit, the matched prime powers include $4=2^2$ and $8=2^3$, the $m=2,3$ harmonics of the prime 2 (Sec.~IV lists ``those up to 113 except 32, 64, and 81'').
 
@@ -1053,7 +1053,7 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \prob{2}{(Paper, computational.) Show that for any zero on the critical line, $1-\rho_n=\bar\rho_n$, and hence $\rho_n(1-\rho_n)=\tfrac14+t_n^2$ is real and positive. Using \texttt{qmnt.zeros(10)}, verify numerically that $\rho_n(1-\rho_n)-(\tfrac14+t_n^2)$ vanishes to rounding error for $n=1,\dots,10$, and report the value of $\rho_1(1-\rho_1)$. (The symmetry $s\leftrightarrow1-s$ appears in the functional equation of Chapter~\ref{ch:zeta}.)}
 
-\prob{3}{(Paper.) Chapter~\ref{ch:counting-zeros} derives the local mean spacing of the zeros at height $t$, $2\pi/\log(t/2\pi)$. How many mean spacings does one period $2\pi/\log2$ of the prime-2 wave span at $t=300$ and at $t=650$? Compare with the paper's statement in Sec.~V that the $p=2$ oscillation is ``only $\sim$6--7 levels at these heights'', and explain in words why the number of levels per period grows with height.}
+\prob{3}{(Paper.) Take as given (it is derived in Chapter~\ref{ch:counting-zeros}) that the local mean spacing of the zeros at height $t$ is $2\pi/\log(t/2\pi)$. How many mean spacings does one period $2\pi/\log2$ of the prime-2 wave span at $t=300$ and at $t=650$? Compare with the paper's statement in Sec.~V that the $p=2$ oscillation is ``only $\sim$6--7 levels at these heights'', and explain in words why the number of levels per period grows with height.}
 
 \prob{1}{Evaluate $e^{i\pi}$, $e^{i\pi/2}$, $e^{2\pi i}$ and $e^{-i\pi/4}$ in the form $a+bi$.}
 
@@ -1095,7 +1095,7 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \textbf{25.} (a) $\abs{f(t)-1}=\abs{-re^{-it}}=r$, so $f$ is on the circle of radius $r$ about 1; the angle of $-re^{-it}=re^{i(\pi-t)}$ is $\pi-t$, decreasing, so the motion is clockwise. (b) For $r<1$ the circle lies in the half-plane $\Re f\ge1-r>0$; the principal argument is continuous there and is a continuous argument, so it returns to $\operatorname{Arg}f(0)$ at $t=2\pi$. (c) For $r>1$ the circle encloses the origin; going once clockwise around a closed curve that encloses the origin turns the arrow from 0 to $f$ once clockwise, so the continuous argument changes by $-2\pi$. (d) \texttt{np.unwrap(np.angle(f))} ends where it started for $r=1/\sqrt2$, and $2\pi$ lower for $r=2$. With $r=1/\sqrt2$ and $t\log2$ in place of $t$, this is $1-2^{-1/2-it}$, which is why its argument needs no unwrapping.
 
-\textbf{27.} At $t=300$: $\log(300/2\pi)\approx3.8659$, mean spacing $\approx1.6253$, and $9.0647/1.6253\approx5.58$ spacings per period. At $t=650$: $\log(650/2\pi)\approx4.6391$, spacing $\approx1.3544$, giving $\approx6.69$. The paper's ``$\sim$6--7 levels'' matches the upper part of the fitted range (zeros up to about $t\approx650$ for zeros 1--400). The period in $t$ is fixed, while the zeros crowd together as $t$ grows (the spacing shrinks like $1/\log t$), so more levels fit into one period.
+\textbf{27.} At $t=300$: $\log(300/2\pi)\approx3.8659$, mean spacing $\approx1.6253$, and $9.0647/1.6253\approx5.58$ spacings per period. At $t=650$: $\log(650/2\pi)\approx4.6391$, spacing $\approx1.3544$, giving $\approx6.69$. The paper's ``$\sim$6--7 levels'' matches the upper part of the fitted range: the 400th zero sits at $t_{400}\approx680$ (from \texttt{qmnt.zeros(400)}), where one period spans $(2\pi/\log2)/(2\pi/\log(t_{400}/2\pi))=\log(t_{400}/2\pi)/\log2\approx6.8$ spacings. The period in $t$ is fixed, while the zeros crowd together as $t$ grows (the spacing shrinks like $1/\log t$), so more levels fit into one period.
 
 \textbf{28.} $e^{i\pi}=-1$; $e^{i\pi/2}=i$; $e^{2\pi i}=1$; $e^{-i\pi/4}=\tfrac{\sqrt2}2-i\tfrac{\sqrt2}2\approx0.70711-0.70711\,i$.
 

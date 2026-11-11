@@ -11,6 +11,10 @@ assert abs(np.sqrt(np.mean((yy-X@[a,b])**2))-0.1)<1e-9
 t=qmnt.zeros(2000)
 assert abs(t[399]-680)<3; assert abs(t[399]-t[0]-666)<3
 assert abs(t[1999]-2515)<5; assert abs(t[449]-745)<5
+# holdout heights 401-500 (Answer 21: t approx 680--811)
+assert abs(t[400]-680)<5 and abs(t[499]-811.18)<0.01
+# distance from window centre to zero 2000 (Sec. dephasing: about 2170)
+assert abs(t[1999]-347-2170)<10
 g400=qmnt.mean_gap(np.array([400]))[0]; assert abs(g400-1.34)<0.02
 assert abs(g400**2/(4*np.pi*680)-2e-4)<0.5e-4
 # primes
@@ -22,6 +26,7 @@ assert abs(2*np.pi/666-0.0094)<1e-4
 assert abs(39*dw-0.693333)<1e-6 and abs(39*dw-np.log(2)-1.86e-4)<1e-6
 assert abs(450/8*np.log(2)-38.99)<0.005
 assert abs(np.pi/(450.5*dw)-0.39)<0.005 and abs(450.5*dw-8.009)<1e-3
+j=np.arange(1,451); assert abs(np.cos(0*j*dw).sum()-450)<1e-9
 # periodogram peak
 assert abs(400*0.225**2/4-5.06)<0.01; assert abs(1/(np.pi*np.sqrt(2))-0.2251)<1e-4
 s=np.sin(np.pi/8)/(np.pi/8); assert abs(s-0.9745)<1e-4 and abs(s**2-0.9496)<1e-4
@@ -35,6 +40,7 @@ assert len(np.arange(-8,3.01,0.5))==23 and 400//3==133 and 800//3==266
 assert abs(7.95*4*666/(2*np.pi)-3400)<50 and abs(7.95*4*1170/(2*np.pi)-5900)<50
 # precision
 sd=np.sqrt(24)*0.18/(0.225*20*666); assert abs(sd-2.94e-4)<1e-6
+assert abs(np.sqrt(24)-4.899)<1e-3 and abs(np.sqrt(24)*0.18-0.8818)<1e-4 and abs(0.225*20*666-2997)<1
 assert abs(sd/(2*np.pi/666)-0.031)<0.001 and abs((np.pi/666)/sd-16)<0.5
 assert abs(np.sqrt(2)*1170/666-2.5)<0.02
 # dephasing
@@ -52,22 +58,34 @@ assert abs(1/(np.pi*np.sqrt(211))-0.0219)<1e-4 and abs(1/(np.pi*np.sqrt(131))-0.
 # chance density
 w=brentq(lambda w:0.0094*np.exp(w)/w-1,3,10); assert abs(w-6.5)<0.15
 # RE2 roots
+assert abs(np.log(2)/np.pi-0.2206)<1e-4 and abs(2**-.5+.5+2**-1.5-1.5607)<1e-4
 mx=np.log(2)/np.pi*(2**-.5+.5+2**-1.5); assert abs(mx-0.3443)<1e-4
+assert abs(np.log(2*np.pi*0.3443*1)/1-np.log(2*np.pi*0.3443))<1e-12
+assert abs(2*np.pi*mx-2.1636)<1e-3 and abs(np.exp(2*np.pi*mx)-8.70)<0.01
 ts=2*np.pi*np.exp(2*np.pi*mx); assert abs(ts-54.7)<0.2
 d=lambda x:np.log(x/(2*np.pi))/(2*np.pi)
 assert abs(d(14.134725)-0.129)<1e-3 and abs(d(680)-0.745)<1e-3 and abs(d(t[449])-0.77)<0.02
+assert abs(14.134725/(2*np.pi)-2.2496)<1e-3 and abs(680/(2*np.pi)-108.2)<0.05
+assert d(t[400])>0.745-1e-3
 bound=sum(np.log(p)/np.pi*sum(p**(-m/2) for m in (1,2,3)) for p in P[:25]); assert bound>4
+# roots figure: slope of 0.6 sin 3t
+assert abs(0.6*3-1.8)<1e-12
 # answers
 assert abs(np.arctan2(-0.4,0.3)+0.927)<1e-3
 assert abs(np.pi/1170-0.002685)<1e-6 and abs(1.0996-np.log(3))<np.pi/1170
+assert abs(2*np.pi/1170-0.00537)<1e-5 and abs(abs(1.0996-np.log(3))-0.000988)<1e-6
 assert abs((np.pi/3)/0.002-523.6)<0.1 and len(np.arange(-6,2.01,0.5))==17
 assert abs(400*0.184**2/4-3.39)<0.01 and abs(0.225**2/0.184**2-1.50)<0.01
 assert abs(400/72-5.56)<0.01 and abs(800/129-6.20)<0.01
+assert abs(400/900-0.444)<1e-3 and abs(800/900-0.889)<1e-3
 phi1=2*np.arcsin(0.034/0.263/2); phi2=2*np.arcsin(0.078/0.279/2)
 assert abs(phi1-0.129)<0.002 and abs(phi2-0.280)<0.002
 sd5=np.sqrt(24)*0.2/(0.142*np.sqrt(800)*1170); assert abs(sd5-2.09e-4)<2e-6 and abs(sd5/(np.pi/1170)-0.078)<0.002
+assert abs(np.sqrt(24)*0.2-0.980)<1e-3 and abs(0.142*np.sqrt(800)*1170-4699)<1
 sd16=np.sqrt(24)*0.2/(0.0199*np.sqrt(800)*1170); assert abs(sd16-1.5e-3)<1e-4 and abs(sd16/(np.pi/1170)-0.55)<0.03
-c=np.pi/666; assert abs(1.3870-np.log(4))<c and abs(2.3979-np.log(11))<c
+c=np.pi/666; assert abs(c-0.004717)<1e-6
+assert abs(1.3870-np.log(4))<c and abs(2.3979-np.log(11))<c
+assert abs(abs(1.3870-np.log(4))-0.00071)<1e-5 and abs(2.3979-np.log(11))<1e-5
 assert abs(1.7-np.log(5))>c and abs(1.7-np.log(7))>c
 assert abs(np.log(127/125)/(2*np.pi/666)-1.68)<0.01
 # Problem 17 / greedy first pick: largest peak near log 2

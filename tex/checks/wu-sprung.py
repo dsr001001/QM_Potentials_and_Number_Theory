@@ -12,7 +12,7 @@ def xws(V, V0=V0):
 def sn(n):
     return brentq(lambda t: Nsm(t)-(n-0.5), 7.0, 5000.0)
 
-# Sample: lopsided oscillator - phase integral equals pi E/2
+# Sample: lopsided oscillator
 beta = 0.4
 for E in [1.0, 3.0, 7.0]:
     ph = quad(lambda x: np.sqrt(max(E-x**2/(1+beta)**2, 0)), 0, (1+beta)*np.sqrt(E))[0] \
@@ -30,16 +30,16 @@ assert abs(Nsm(1000)-648.6) < 0.05
 assert abs(quad(lambda v: np.sqrt(1-v**2), 0, 1)[0]-np.pi/4) < 1e-8
 assert abs(quad(lambda v: np.sqrt(1-v), 0, 1)[0]-2/3) < 1e-8
 
-# Kernel K = pi (V=2, W=5)
+# Kernel K = pi (V=2, W=5), pycode listing
 K = quad(lambda E: 1/np.sqrt((5-E)*(E-2)), 2, 5)[0]
 assert abs(K-np.pi) < 1e-9
 
-# Sample: harmonic inversion x(V)=sqrt(V)
+# Sample: harmonic inversion
 V = 7.0
 xv = quad(lambda E: 0.5/np.sqrt(V-E), 0, V)[0]
 assert abs(xv-np.sqrt(V)) < 1e-6
 
-# Closed form Eq.(2) vs integral Eq. xint
+# Closed form Eq.(2) vs integral
 for V in [50.0, 500.0]:
     num = quad(lambda uu: np.log((V-uu**2)/(2*np.pi)), 0, np.sqrt(V-V0))[0]/np.pi
     assert abs(num - xws(V)) < 1e-8
@@ -58,7 +58,6 @@ yl = brentq(f, 0.05, 1.0); assert yl < 1
 lg = np.log(V0/(2*np.pi))
 assert abs(lg-0.43849) < 1e-5 and abs(np.pi/lg-7.1645) < 1e-3
 assert abs((np.pi/lg)**2-51.33) < 0.02
-# bottom expansion check
 Vt = V0+1e-4
 assert abs(xws(Vt) - np.sqrt(1e-4)/np.pi*lg) < 1e-6
 
@@ -71,19 +70,24 @@ assert abs(asym-44.86) < 0.01
 try:
     import qmnt
     assert abs(qmnt.L_of(1000)-44.883) < 1e-3
-except Exception:
+except ImportError:
     pass
 
-# Sample: turning points 201, 300 (and Problem 9)
+# Sample: turning points 201, 300 (and Problem 9, Paper connection)
 s201, s300 = sn(201), sn(300)
-assert abs(s201-400.4) < 0.1 and abs(s300-542.6) < 0.1
+print('s201, s300 =', s201, s300)
+assert abs(s201-398.3) < 0.05
+assert abs(s300-542.5) < 0.1
 assert abs(Nsm(400.0)-201.6) < 0.1
-assert abs(xws(s201)-22.6) < 0.06
+assert abs(np.log(400/(2*np.pi))/(2*np.pi)-0.661) < 1e-3
+assert abs((Nsm(400.0)-200.5)/0.661-1.7) < 0.05
+assert abs(xws(s201)-22.5) < 0.05
 assert abs(xws(s300)-28.5) < 0.06
+assert abs(s201-398) < 0.5 and abs(s300-543) < 0.6
 # Checkpoint: x_500 about 38.5
 assert abs(xws(sn(500))-38.5) < 0.1
 
-# Check 1 / Problem 13: Bohr-Sommerfeld offset constant
+# Check 1 / Problem 13
 for n in [1, 2, 10, 100, 250, 500]:
     E = sn(n)
     Phi = 2*quad(lambda uu: xws(E-uu**2) if E-uu**2 > V0 else 0.0, 0, np.sqrt(E-V0), limit=200)[0]
@@ -103,21 +107,25 @@ ns = np.arange(1, 501)
 s = np.array([sn(k) for k in ns])
 g = 2*np.pi/np.log(s/(2*np.pi))
 dev = (ER-s)/g
+print('mean dev, max |dev| =', np.mean(dev), np.max(np.abs(dev)))
 assert abs(np.mean(dev)) < 0.02 and np.max(np.abs(dev)) < 0.1
 
 # Problem 2
-assert abs(2*np.pi/np.log(100/(2*np.pi))-2.270) < 1e-3
-assert abs(100/(2*np.pi)-15.915) < 1e-3 and abs(np.log(100/(2*np.pi))-2.7674) < 1e-4
-# Problem 7: min of f-7/8 is -1 at y=1
+assert abs(100/(2*np.pi)-15.9155) < 1e-4
+assert abs(np.log(100/(2*np.pi))-2.7673) < 1e-4
+assert abs(2*np.pi/np.log(100/(2*np.pi))-2.2705) < 1e-4
+# Problem 7
 assert abs((1*np.log(1)-1)+1) < 1e-12
-# Problem 14: period in levels near t=500
+# Problem 14
 per = 2*np.pi/np.log(2); gp = 2*np.pi/np.log(500/(2*np.pi))
 assert abs(per-9.065) < 1e-3 and 6 <= per/gp <= 7
-# Problem 17: integral pi V/2
+# Problem 17
 Vq = 3.0
 assert abs((2/np.pi)*quad(lambda E: np.sqrt(E)/np.sqrt(Vq-E), 0, Vq)[0]-Vq) < 1e-6
 # Problem 19
 t1 = 14.134725
-assert abs(t1/(2*np.pi)-2.24963) < 1e-5 and abs(np.log(t1/(2*np.pi))-0.81077) < 1e-5
+assert abs(t1/(2*np.pi)-2.24961) < 1e-5 and abs(np.log(t1/(2*np.pi))-0.81076) < 1e-5
 assert abs(Nsm(t1)-0.449) < 1e-3
-print("all checks passed")
+assert abs((0.5-Nsm(t1))-0.05) < 0.005
+s1 = sn(1); assert t1 < s1
+print('all checks passed')

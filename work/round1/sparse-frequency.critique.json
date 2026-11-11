@@ -1,0 +1,156 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/sparse-frequency_kernel.pdf}",
+  "problem": "Figure filenames use the slug 'sparse-frequency' but the bible requires figs/<slug>_<name>.pdf. The response also contains no FIGURES part, so the five figures (kernel, periodogram, pursuit, greedy, dephasing, roots) have no scripts.",
+  "fix": "Provide a '### FIG sparse-frequency_<name>' script for every figure (kernel, periodogram, pursuit, greedy, dephasing, roots), and ensure the filenames match the scripts."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\prob{2}{Using qmnt and numpy, compute $y_n$ for $n\\le400$ and its periodogram",
+  "problem": "Answer numbering is wrong. Problems are numbered from 1 and the answers refer to 17, 19, 21, 23, 25, 27, but problems 3, 5, 7 and 9 (odd) are fine while many others are mismatched: the problem listed as 17 in the answers is the periodogram problem only if the count is exact, and Problem 18 is referenced in the text as the validation extension while the listing places it elsewhere. Odd problems 11, 13, 15, 21, 23, 25, 27 must each be answered, and the cross-references to Problem 6, 18 and 20 must be checked against the actual order.",
+  "fix": "Count the problems, fix cross-references (Problem~6, 18, 20) and give answers to every odd-numbered problem and every \\prob{1}."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{19.} You should reproduce Table~V's six-prime entry on 401–500",
+  "problem": "Contains an en dash in a numeric range written as a Unicode character rather than '--'. Other places do the same ('Table~V...401–500', 'Secs.' ranges).",
+  "fix": "Use '--' in LaTeX for all ranges."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{prerequisites}\n\\item Chapter~\\ref{ch:fourier-transform}",
+  "problem": "The bible specifies that prerequisites is a bullet-list environment with itemize inside; here \\item is used directly without an itemize.",
+  "fix": "Wrap the items in \\begin{itemize}...\\end{itemize} inside prerequisites."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Where this shows up in the paper: these are the \"fitted sinusoidal controls\"",
+  "problem": "No CHECKS cover several quoted numbers: 0.2206 factor, 0.745, Table amplitude values are covered, but 1.5607, the bound 'exceeds 4' is covered while 'Problem 21 holdout t≈680--811' and 2170 distance are not, and answer 25 and Table~IV figures are only quoted.",
+  "fix": "Add asserts for the 2170 distance, 0.2206*1.5607, and holdout heights t_401 and t_500."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "the first is $t_1=14.134725$ (running example RE1). The counting function $N(t)$ is the number of zeros with $0<t_n\\le t$.",
+  "problem": "Not an error itself, but the later claim '$\\Nsm''(t)=1/(2\\pi t)$' is fine; however the sign convention is wrong elsewhere: the text says '$y_n$ is minus the fluctuation in mean spacings' while the paper's fluctuation is $(t-s_n)/\\gap_n$; this is consistent. The real error: the Taylor remainder term is called neglected with $\\Nsm''=1/(2\\pi t)$ and the check gives $1.34^2/(4\\pi\\cdot680)\\approx2\\times10^{-4}$, but the displacement is in t units (one spacing = 1.34), fine. OK.",
+  "fix": "No change needed; verify wording only."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The central peak is narrow: the numerator first vanishes at $\\tau=\\pi/\\bigl((J+\\frac12)\\Delta\\omega\\bigr)=\\pi/8.009\\approx0.39$, where $K=-\\frac12$",
+  "problem": "At the first zero of the numerator sine, K=(0-1)/2=-1/2 is correct, but the half-width 0.39 is described as the 'half-width' of the peak; also (J+1/2)Δω=8.009 is right. Minor, but the claim K(0)=J=450 is right. The statement 'half-width about 0.39' is the first-zero location, not half-width.",
+  "fix": "Say 'first zero at 0.39' rather than 'half-width about 0.39' in text and figure caption."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "for a displacement of one full spacing at zero 400 ($t\\approx680$, $\\gap\\approx1.34$)",
+  "problem": "Chapter later uses the 400-zero window centre as (14+680)/2 and the correct t_400 is ~677.8; fine, but 'zero 2000 sits near t≈2515' and 'zero 450 near 745' are quoted without a stated source in the chapter beyond checks tolerance of 5.",
+  "fix": "State these as approximate values computed with qmnt.zeros."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$\\mathcal P(\\omega_0)\\approx n_{\\rm fit}A^2/4\\approx5.06,\\qquad \\text{first zero at }\\delta=2\\pi/T$",
+  "problem": "The sample uses A=0.225 as amplitude of a term in S(t), but the sum approximated by an integral assumes uniform sampling; zeros are denser at height, and the claim that the amplitude in y is 0.225 ignores that sample points are not uniform. Also in 'Step 2' the neglected second term is 'of order 1' without justification.",
+  "fix": "State the uniform-sampling assumption explicitly in the sample and justify the order-1 bound (geometric-sum bound 1/|sin|)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The mean of $\\cos^2$ over all angles is $\\tfrac12$, so the mean square error is $4A^2\\sin^2(\\phi/2)\\cdot\\tfrac12$",
+  "problem": "Correct, but the 'worse than the null once 2|sin(φ/2)|>1, that is φ>π/3' is right; the claim 'at φ=π ... twice as bad as the null' is right. No error; however the correlation formula with 'each factor alone has mean square 1/2' is fine. Retained as OK.",
+  "fix": "No change."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Replacing the sum by $(n_{\\rm fit}/T)$ times the integral over the window, as in \\eqref{eq:sparse-frequency-orth}, its magnitude is",
+  "problem": "The integral of e^{-iδt} gives a complex phase factor and sin(δT/2)/(δT/2); the chapter only derived the cosine version, and the step from cosine integral to complex-exponential magnitude is not shown.",
+  "fix": "Show that |(1/T)∫e^{-iδt}dt| = |sin(δT/2)/(δT/2)| in one line."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Multiply on the left by $(X^\\top X+\\mu I)^{-1}$ and on the right by $(XX^\\top+\\mu I)^{-1}$ (both exist for $\\mu>0$, since $X^\\top X$ and $XX^\\top$ have no negative eigenvalues)",
+  "problem": "Invertibility justification is thin for a first-year reader: positive semidefiniteness is not defined or proved in the assumed chapters.",
+  "fix": "Add a line: for any v, v^T(X^TX+μI)v = |Xv|^2+μ|v|^2>0, so no zero eigenvalue."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "\\emph{Step 5: why the phase does not interfere.} If $\\varphi$ is fitted too",
+  "problem": "The Fisher-matrix decoupling argument is asserted without writing the 2x2 normal matrix; the Var formula is then used as if the phase were known. Also 'independent errors' claim and Var of weighted sum cited to Chapter probability only.",
+  "fix": "Write the 2x2 matrix [[Σg²,Σg h],[Σg h,Σh²]] with h=A cos(...), and show the off-diagonal is ~0."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "which first vanishes when $\\delta T/2=\\pi$.",
+  "problem": "Introduces 'Dirichlet kernel' and 'matching pursuit' terminology without definition of 'dictionary' atoms normalization; also uses 'atom' in the sample before defining it.",
+  "fix": "Define 'atom' as a dictionary element when first used."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Because every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies. Whatever it does in the window, it keeps doing at the right frequencies outside the window.",
+  "problem": "Presented as an explanation for B's positive skill, but it is the author's heuristic; large cancelling amplitudes can produce arbitrary extrapolation and the paper does not explain it this way.",
+  "fix": "Label as heuristic reading and note the paper does not give this explanation."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The near-integer 38.99 is a coincidence of the paper's choice of grid: it means the $p=2$ wave very nearly repeats after one C1 period.",
+  "problem": "Phase shift is 2π(38.99) ≡ −0.06 rad per period; fine, but it is labeled a coincidence of design yet presented as possibly relevant; also the statement that C1 'predicts by local interpolation and periodic copying' is asserted as fact for the ridge fit with selected λ.",
+  "fix": "Mark the 'local interpolation plus periodic copying' description as an interpretation, valid for the kernel form, and qualify that λ shrinks it."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "In the language of Chapter~\\ref{ch:generalization}, C2 has a strong \\textbf{inductive bias}, and here it is the \\emph{right} one",
+  "problem": "Fine, but the statement 'because the explicit formula says ... exactly this kind of function' treats a heuristic (non-convergent on critical line) formula as exact.",
+  "fix": "Add 'heuristically' and recall the explicit formula status from Chapter 18."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The two samples below show, in tiny dimensions, why the joint refit matters.",
+  "problem": "The first of the two samples shows agreement of plain and orthogonal pursuit (no need for joint refit); the sentence misdescribes it.",
+  "fix": "Say 'The first sample shows the orthonormal case where the variants agree; the second shows why joint refit matters.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Why half? The resolution $2\\pi/T$ is the width of the region in which the window cannot distinguish frequencies",
+  "problem": "The justification for the π/T tolerance is circular and unclear.",
+  "fix": "Say the tolerance is half a resolution cell, i.e. log q is within the cell centred on ω; note this is the paper's convention, not derived."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "By the prime number theorem (Chapter~\\ref{ch:primes}), the number of primes near $x$ per unit $x$ is about $1/\\log x$",
+  "problem": "Density e^ω/ω derivation: with x=e^ω, dx=e^ω dω and 1/log x=1/ω, correct, but the threshold ω≈6.5 uses width 0.0094 for T=666 only; the Pitfall states it generally.",
+  "fix": "State that 6.5 applies for T≈666 in the keyideas too."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\Cref{sec:sparse-frequency-paper}",
+  "problem": "Uses \\Cref (capitalized) at sentence starts; bible lists \\cref only (cleveref provides \\Cref, so compiles) but minor.",
+  "fix": "Acceptable; optionally use \\cref."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\textbf{Step 1: count.} Each prime contributes $m=1,2,3$: three frequencies.",
+  "problem": "Sample Problem steps are bold 'Step n:' as required, but the sample 'Height and width of a periodogram peak' uses a nested equation environment inside sample without annotation; fine. Also the chapter has no problem requiring Python for '\\prob{2}{For RE2...}' etc.; the count of computational problems is ok (≥3).",
+  "fix": "No change needed."
+ }
+]

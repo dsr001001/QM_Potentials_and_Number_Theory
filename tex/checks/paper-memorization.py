@@ -79,7 +79,6 @@ assert abs(0.265/0.198 - 1.34) < 0.005
 # --- Sample: uncorrelated prediction ---
 assert abs(0.263*np.sqrt(1 + 0.16**2) - 0.2663) < 1e-4
 assert abs(0.263*np.sqrt(1 + 0.62**2) - 0.3094) < 1e-4
-# numerical instance of Eq. decomp
 rng = np.random.default_rng(0)
 pp = rng.normal(0.1, 0.3, 1000); dd = 0.4*pp + rng.normal(-0.05, 0.25, 1000)
 lhs = np.mean((pp - dd)**2)
@@ -95,9 +94,8 @@ assert abs(s2 - 3*PI/8) < 1e-9 and abs(s2 - 1.1781) < 1e-4
 rho1 = 1 - (s2 - 1)/(2*0.263**2)
 assert abs(rho1 - (-0.287)) < 1e-3
 assert abs(-0.29/np.sqrt(0.45) - (-0.432)) < 1e-3
-# numerical instance of Eq. nbrcorr with an AR-like correlated series
 z = rng.normal(size=200000)
-seq = z - 0.4*np.roll(z, 1)                      # MA(1): negative lag-1 corr
+seq = z - 0.4*np.roll(z, 1)
 def ac(a, lag):
     a = a - a.mean(); return np.sum(a[:-lag]*a[lag:])/np.sum(a*a)
 r1, r2 = ac(seq, 1), ac(seq, 2)
@@ -140,7 +138,6 @@ assert abs(abs(0.137 - 0.141)/0.006 - 0.667) < 1e-3
 assert abs(abs(0.137 - 0.138)/0.005 - 0.20) < 1e-9
 assert abs((0.244 - 0.137)/0.244 - 0.439) < 1e-3
 assert abs((0.244 - 0.134)/0.244 - 0.451) < 1e-3
-# phase randomization preserves rms (listing)
 r = np.random.default_rng(1)
 D = np.fft.rfft(d_in); ph = r.uniform(0, 2*PI, len(D)); ph[0] = 0.0; ph[-1] = 0.0
 dsur = np.fft.irfft(D*np.exp(1j*ph), n=len(d_in))
@@ -167,9 +164,10 @@ per = 2*PI/np.log(2)
 assert abs(per - 9.0647) < 1e-4
 assert abs(np.log(680/(2*PI))/np.log(2) - 6.758) < 1e-3
 assert abs(np.log(811.18/(2*PI))/np.log(2) - 7.012) < 1e-3
-assert abs((680 - 14.13)/per - 73.4) < 0.05
+assert abs((680 - 14.13) - 665.87) < 1e-9
+assert abs((680 - 14.13)/per - 73.5) < 0.05
 assert abs((811.18 - 680)/per - 14.5) < 0.05
-assert abs((t[399] - t[0])/per - 73.4) < 0.3
+assert abs((t[399] - t[0])/per - 73.5) < 0.3
 assert abs((t[499] - t[399])/per - 14.5) < 0.2
 
 # --- Problems ---
@@ -201,4 +199,4 @@ assert abs(dphi_true - 0.62) < 0.02
 assert abs(0.010/np.sqrt(10) - 0.0032) < 1e-4      # P23
 assert abs(0.003/(0.010/np.sqrt(10)) - 0.95) < 0.005
 
-print("all checks passed")
+print('all checks passed')

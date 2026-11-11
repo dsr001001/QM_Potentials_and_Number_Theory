@@ -66,7 +66,7 @@ The quantity we minimize is the \emph{objective}
 The factor $\tfrac12$ is a convenience that removes a factor 2 from derivatives. Because $\mathrm{rms}=\sqrt{2\Phi/n_{\rm fit}}$ and the square root is an increasing function, any $c$ that lowers $\Phi$ lowers the rms, and the two have the same minimizers.
 
 \begin{pitfall}
-The paper's Appendix~A writes its update step in terms of "$r$", the residual vector, without saying whether each row has been divided by $\gap_n$. Dividing (\emph{weighting}) makes the least-squares step minimize exactly the quantity that is reported, the rms in mean spacings, so that is what we do in this chapter. Do not assume the two choices give identical fits: $\gap_n$ falls from about $7.5$ at $n=1$ to about $1.3$ at $n=500$, so weighting changes how much the low levels count. The Zenodo scripts \cite{zenodo} settle what the paper's code does; our conclusions about the algorithm do not depend on it.
+The paper's Appendix~A writes its update step in terms of "$r$", the residual vector, without saying whether each row has been divided by $\gap_n$. Dividing (\emph{weighting}) makes the least-squares step minimize exactly the quantity that is reported, the rms in mean spacings, so that is what we do in this chapter. The two choices need not give identical fits: $\gap_n$ falls from about $7.5$ at $n=1$ to about $1.3$ at $n=500$, so weighting changes how much the low levels count. The Zenodo scripts \cite{zenodo} settle what the paper's code does; our conclusions about the algorithm do not depend on it.
 \end{pitfall}
 
 \begin{sample}{Residuals and rms for three levels}
@@ -103,7 +103,7 @@ You double every coefficient $c_k$ of a correction that already shifts level 7 b
 
 To compare $E_n$ with $\tilde t_n$ we match by index: the lowest level with the first target, and so on. This is unambiguous only if no two levels coincide, so that sorting by size is well defined and each level moves continuously as $c$ changes. For the matrices we use this is a theorem with a short proof.
 
-The finite-difference Hamiltonian is a real symmetric tridiagonal $N\times N$ matrix with diagonal entries $d_j=2/h^2+V_j$ and off-diagonal entries $e=-1/h^2\neq 0$, where $h$ is the grid spacing. Suppose $v=(v_1,\dots,v_N)$ is an eigenvector with eigenvalue $E$. Row 1 of the eigen-equation reads $d_1v_1+e\,v_2=Ev_1$, so $v_2=(E-d_1)v_1/e$: $v_2$ is fixed by $v_1$. Row $j$ reads $e\,v_{j-1}+d_jv_j+e\,v_{j+1}=Ev_j$, so $v_{j+1}=[(E-d_j)v_j-e\,v_{j-1}]/e$: each component is fixed by the two before it. Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, and the eigenspace is one-dimensional. A real symmetric matrix has a full set of orthogonal eigenvectors (Chapter~\ref{ch:eigen}), so an eigenvalue of multiplicity two would need a two-dimensional eigenspace. Therefore all $N$ eigenvalues are distinct. (The same argument, with the Wronskian in place of the recursion, shows that bound states of the continuum problem in one dimension are nondegenerate.)
+The finite-difference Hamiltonian is a real symmetric tridiagonal $N\times N$ matrix with diagonal entries $d_j=2/h^2+V_j$ and off-diagonal entries $e=-1/h^2\neq 0$, where $h$ is the grid spacing. Suppose $v=(v_1,\dots,v_N)$ is an eigenvector with eigenvalue $E$. Row 1 of the eigen-equation reads $d_1v_1+e\,v_2=Ev_1$, so $v_2=(E-d_1)v_1/e$: $v_2$ is fixed by $v_1$. Row $j$ reads $e\,v_{j-1}+d_jv_j+e\,v_{j+1}=Ev_j$, so $v_{j+1}=[(E-d_j)v_j-e\,v_{j-1}]/e$: each component is fixed by the two before it. Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, namely the vector that the recursion generates when it is started from $v_1=1$. The value $v_1=0$ is not available to a genuine eigenvector: if $v_1=0$, row 1 gives $v_2=0$, then row 2 gives $v_3=0$, and so on, so $v=0$, which is not an eigenvector. A nonzero eigenvector therefore has $v_1\neq0$ and is a nonzero multiple of that one fixed vector. (The last row, $e\,v_{N-1}+d_Nv_N=Ev_N$, has no $v_{N+1}$ to solve for; it is a condition that only certain values of $E$ satisfy, and it adds no freedom.) So the eigenspace is one-dimensional. A real symmetric matrix has a full set of orthogonal eigenvectors (Chapter~\ref{ch:eigen}), so an eigenvalue of multiplicity two would need a two-dimensional eigenspace. Therefore all $N$ eigenvalues are distinct. (The same argument, with the Wronskian in place of the recursion, shows that bound states of the continuum problem in one dimension are nondegenerate.)
 
 \begin{keyideas}
 \item The inverse problem: choose coefficients $c$ of $\delta V=\sum_kc_k\phi_k$ so that the levels $E_n(c)$ match targets $\tilde t_n$.
@@ -137,7 +137,7 @@ Here $\norm{\delta c}$ is the length of the vector $\delta c$ and $\order(\norm{
 \[
 \frac{\partial E_n}{\partial c_k} \;=\; A_{nk}(c).
 \]
-In words: the rate at which level $n$ moves when you turn knob $k$ is the overlap of the knob's shape $\phi_k$ with the probability density $|\psi_n|^2$ of the current state. This is often called the Hellmann--Feynman relation. Note that $A$ depends on $c$, because the eigenfunctions $\psi_n$ do.
+In words: the rate at which level $n$ moves when you turn knob $k$ is the overlap of the knob's shape $\phi_k$ with the probability density $|\psi_n|^2$ of the current state. This is often called the Hellmann--Feynman relation. In general form: if a Hamiltonian depends on a parameter $\alpha$, a nondegenerate level obeys $\dd E_n/\dd\alpha=\langle\psi_n|\partial H/\partial\alpha|\psi_n\rangle$. This is nothing but first-order perturbation theory (Chapter~\ref{ch:perturbation}) applied to the small change $(\partial H/\partial\alpha)\,\delta\alpha$ of the Hamiltonian, divided by $\delta\alpha$. Here $\alpha=c_k$, and by Eqs.~\eqref{eq:fitting-H} and \eqref{eq:fitting-deltaV}, $\partial H/\partial c_k=\phi_k(x)$. Note that $A$ depends on $c$, because the eigenfunctions $\psi_n$ do.
 
 The $n_{\rm fit}\times M$ matrix $A$ is the \emph{Jacobian} of the forward map (the matrix of all first partial derivatives). From Eq.~\eqref{eq:fitting-residual}, residuals move the opposite way to levels:
 \begin{equation}
@@ -191,7 +191,7 @@ Since $\cos(\theta+n\pi)=(-1)^n\cos\theta$, the bracket is $1-(-1)^n\cos(n\pi x/
 \[
 \boxed{A_{n0}=1,\qquad A_{nk}=\frac{(-1)^{n+1}}{2}\,\delta_{nk}\quad(k\ge1)}
 \]
-To first order, cosine $k$ moves only level $n=k$ (up by $c_k/2$ for odd $n$, down for even $n$), and $c_0$ moves all levels together. The CHECKS script confirms that the finite-difference box reproduces these values to about $10^{-6}$ or better; in fact for this discrete problem they hold exactly (Problem~8).
+To first order, cosine $k$ moves only level $n=k$ (up by $c_k/2$ for odd $n$, down for even $n$), and $c_0$ moves all levels together. For the finite-difference box with $N$ interior grid points the same values hold exactly, provided $n+k<N+1$ (Problem~8); on fine grids this covers every $n$ and $k$ of interest.
 \end{sample}
 
 The physical reason for the result is worth remembering. The density $|\psi_n|^2$ is a constant plus a ripple $\cos(n\pi x/L)$, a standing wave with $n$ humps per half-box. A cosine perturbation can push on level $n$ only if it has the same ripple, like pushing a child on a swing in time with the swing. In the box, the wavenumber of the ripple of level $n$ is $n\pi/L=2\sqrt{E_n}$. Keep that factor of 2 in mind: it returns in Section~\ref{sec:fitting-coverage}.
@@ -216,7 +216,7 @@ Three equations, four unknowns: the system is underdetermined (Chapter~\ref{ch:l
 \[
 \boxed{c\approx(0.00615,\;0.00769,\;0.05231,\;0.04769)}
 \]
-This is exactly what the pseudo-inverse of Chapter~\ref{ch:least-squares} returns (checked in CHECKS).
+This is exactly what the pseudo-inverse of Chapter~\ref{ch:least-squares} returns (you can confirm it with \texttt{numpy.linalg.pinv}).
 \end{sample}
 
 \begin{pitfall}
@@ -229,7 +229,7 @@ The second-order term this coupling contributes to level 1 is of size $(c_2/2)^2
 
 \subsection{The sensitivity matrix of the Wu--Sprung well}
 
-\Cref{fig:fitting-sensitivity} compares $|A_{nk}|$ for the box (left) and for the Wu--Sprung potential in the same box (right). In the box the only nonzero entries with $k\ge1$ lie on the diagonal $k=n$. In the Wu--Sprung well each level responds to a whole range of cosines: even the lowest level responds to cosines up to $k$ of about 60, and the range widens as $n$ grows. The dashed curves mark $k=2L\sqrt{E_n-V_{\min}}/\pi$, with $V_{\min}$ the bottom of the well ($0$ for the box, $V_0=3.10073\pi\approx9.7412$ for Wu--Sprung). Above the curve the entries fall off sharply. Section~\ref{sec:fitting-coverage} explains why.
+\Cref{fig:fitting-sensitivity} compares $|A_{nk}|$ for the box (left) and for the Wu--Sprung potential in the same box (right). In the box the only nonzero entries with $k\ge1$ lie on the diagonal $k=n$. In the Wu--Sprung well each level responds to a whole range of cosines, and the range widens as $n$ grows. Even for the lowest level the range is not small: the cutoff introduced below sits at $k=2L\sqrt{E_1-V_0}/\pi\approx60$ if we take $E_1\approx t_1=14.13$, because the lowest level lies about $4.4$ above the bottom of the well. The dashed curves mark $k=2L\sqrt{E_n-V_{\min}}/\pi$, with $V_{\min}$ the bottom of the well ($0$ for the box, $V_0=3.10073\pi\approx9.7412$ for Wu--Sprung). Above the curve the entries fall off sharply. Section~\ref{sec:fitting-coverage} explains why.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/fitting_sensitivity.pdf}
@@ -305,7 +305,11 @@ Starting from $c^{(0)}=0.5$, take three Gauss--Newton steps toward $E_-(c)=0.5$.
 \[
 \boxed{c^{(1)}=1.3541,\quad c^{(2)}=1.1262,\quad c^{(3)}=1.11805\ \ (c_*=1.118034)}
 \]
-The errors $c^{(i)}-c_*$ are $-0.618$, $0.236$, $0.0082$, $0.000013$: once close, each error is roughly proportional to the square of the previous one, the fast convergence typical of Newton-type methods. But the first step overshot by a lot.
+The errors $c^{(i)}-c_*$ are $-0.618$, $0.236$, $0.0082$, $0.000013$: once close, each error is roughly a constant times the square of the previous one. The error analysis of Newton's method (Chapter~\ref{ch:asymptotics}) predicts the constant: $e_{i+1}\approx\abs{E_-''(c_*)/2E_-'(c_*)}\,e_i^2$. Here $E_-'(c)=-c(1+c^2)^{-1/2}$, and differentiating once more,
+\[
+E_-''(c)=-(1+c^2)^{-1/2}+c^2(1+c^2)^{-3/2}=-(1+c^2)^{-3/2}.
+\]
+At $c_*$, $1+c_*^2=2.25$, so $E_-'(c_*)=-1.118034/1.5=-0.7454$ and $E_-''(c_*)=-1/1.5^3=-0.2963$, giving the constant $0.2963/(2\times0.7454)=0.199$. Indeed $0.199\times0.0082^2=1.3\times10^{-5}$, the last error. The first two errors are too large for this asymptotic rule to apply. Quadratic convergence of this kind is typical of Newton-type methods when the fit can be made exact. But the first step overshot by a lot.
 \end{sample}
 
 \Cref{fig:fitting-landscape} shows the landscape. The objective $|r(c)|$ has two equally good minima at $c=\pm1.118$ and a local \emph{maximum} at $c=0$.
@@ -520,7 +524,7 @@ The paper also runs fits with a "ridge variant" that "adds $\mu\Sigma_1^2$ to th
 c\;\mathrel{+}=\;\bm V\,\mathrm{diag}\!\left(\frac{\sigma_i}{\sigma_i^2+(\lambda+\mu)\sigma_1^2}\right)\bm U^\top r ,
 \label{eq:fitting-ridgestep}
 \end{equation}
-which is an LM step whose damping can never fall below $\mu$. Compare the Tikhonov (ridge) regularization of Chapter~\ref{ch:least-squares}, which adds a penalty $\tfrac12\mu\sigma_1^2\norm{c}^2$ on the coefficients themselves and so changes \emph{where} the minimum is. The two are not the same. With Eq.~\eqref{eq:fitting-ridgestep}, the step vanishes exactly where the unregularized gradient vanishes, so the stationary points are unchanged; the variant acts by shortening steps, which, combined with the accept rule and iteration cap of Section~\ref{sec:fitting-schedule}, stops the iteration closer to its starting point $c=0$. This is our reading of the one-line description in the record; Problem~23 works out the difference, and the scripts in \cite{zenodo} are the authority on the exact implementation.
+which is an LM step whose damping can never fall below $\mu$. Compare the Tikhonov (ridge) regularization of Chapter~\ref{ch:least-squares}, which adds a penalty $\tfrac12\mu\sigma_1^2\norm{c}^2$ on the coefficients themselves and so changes \emph{where} the minimum is. The two are not the same. Under this literal reading of the record, the step of Eq.~\eqref{eq:fitting-ridgestep} vanishes exactly where the unregularized gradient vanishes, so the stationary points are unchanged; the variant acts by shortening steps, which, combined with the accept rule and iteration cap of Section~\ref{sec:fitting-schedule}, stops the iteration closer to its starting point $c=0$. This is our reading of the one-line description in the record; Problem~23 works out the difference, and the scripts in \cite{zenodo} are the authority on the exact implementation.
 
 \begin{keyideas}
 \item The LM step in SVD form: $\delta c=\bm V\,\mathrm{diag}(\sigma_i/(\sigma_i^2+\lambda'))\bm U^\top\hat r$, proved by substitution.
@@ -574,9 +578,7 @@ The threshold $0.999$ also provides the stopping mechanism. Near a minimum, any 
 import numpy as np
 
 def lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):
-    """Paper-style damped fit (Appendix A, step 6).
-    resid(c): scaled residual vector r_n / gap_n
-    jac(c):   scaled sensitivity matrix A_nk / gap_n"""
+    # resid(c): r_n/gap_n;  jac(c): A_nk/gap_n  (paper App. A, step 6)
     r = resid(c)
     cur = np.sqrt(np.mean(r**2))                 # current rms
     for it in range(maxiter):
@@ -586,8 +588,7 @@ def lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):
         for lam_try in (0.2*lam, lam, 5*lam, 25*lam):
             f = s / (s**2 + lam_try * s[0]**2)    # filter factors
             c_try = c + Vt.T @ (f * Utr)          # Vt.T is the matrix V
-            r_try = resid(c_try)
-            rms_try = np.sqrt(np.mean(r_try**2))
+            r_try = resid(c_try); rms_try = np.sqrt(np.mean(r_try**2))
             if rms_try < accept * cur:            # accept only improvements
                 c, r, cur = c_try, r_try, rms_try
                 lam = max(0.5 * lam_try, 1e-7)
@@ -598,7 +599,15 @@ def lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):
             if lam > 1e4:
                 break                              # stop rule
     return c, cur
+
+# example: two-level model, target 0.5, start c = 0.5
+Em = lambda c: 2 - np.sqrt(1 + c[0]**2)
+res = lambda c: np.array([0.5 - Em(c)])
+jac = lambda c: np.array([[-c[0] / np.sqrt(1 + c[0]**2)]])
+print(lm_fit(np.array([0.5]), res, jac))  # c close to 1.118034, rms near 0
 \end{pycode}
+
+The example call fits the two-level model of Section~\ref{sec:fitting-gn}. It returns a coefficient within $10^{-6}$ of the exact answer $c_*=1.118034$ and an rms that is zero to within rounding; with \texttt{maxiter=1} it returns $c=1.21175$, the single iteration worked out by hand in Sample~7.
 
 \begin{sample}{One pass of the schedule on the two-level model}
 Run the first iteration of the schedule (code above) on the two-level model of Section~\ref{sec:fitting-gn}, starting from $c=0.5$ with $\lambda=1$. There is one parameter, so the "SVD" of the $1\times1$ matrix $J$ has $\sigma_1=|J|$.
@@ -700,7 +709,11 @@ The density is a slowly varying part plus a ripple whose phase $2\theta$ advance
 \frac{k\pi}{L}\;\lesssim\;2\sqrt{E_n-V_0},
 \label{eq:fitting-reach}
 \end{equation}
-which is the dashed curve of \Cref{fig:fitting-sensitivity}. Above the cutoff the overlap is exponentially small rather than exactly zero, because the stationary point has moved into the complex plane; that is why the figure shows a sharp fall, not a hard edge.
+which is the dashed curve of \Cref{fig:fitting-sensitivity}. Above the cutoff the condition $2k(x)=q$ has no real solution anywhere in the well, so the positive and negative lobes of the integrand cancel along the whole range of integration and the overlap is small, though not exactly zero. That is why the figure shows a sharp fall, not a hard edge.
+
+\begin{beyond}
+How small is the overlap above the cutoff? A refinement of the stationary-phase method, the method of steepest descents, treats the condition $2k(x)=q$ as an equation for a \emph{complex} $x$ and shows that above the cutoff the overlap decreases exponentially as $q$ grows. We take this on trust; the method is developed in the chapter on asymptotic expansions of \cite{rhb}. In this chapter we use only the qualitative statement that the overlap is small above the cutoff, which is what \Cref{fig:fitting-sensitivity} shows.
+\end{beyond}
 
 \emph{Check against the box.} With $V_0=0$ and $E_n=(n\pi/2L)^2$, Eq.~\eqref{eq:fitting-reach} reads $k\pi/L\lesssim n\pi/L$, i.e.\ $k\lesssim n$. Sample~2 found the exact answer: in the box only $k=n$ (and $k=0$) respond. The box is special because its ripple has a single wavenumber everywhere, so only the matching cosine survives; in the Wu--Sprung well $2k(x)$ ranges from 0 at the turning points up to $2\sqrt{E-V_0}$, and every cosine in that range finds a matching point.
 
@@ -711,7 +724,7 @@ To move each of the levels up to $E_{\max}$ independently of its neighbors, the 
 \frac{M\pi}{L}\;>\;2\sqrt{E_{\max}} ,
 \label{eq:fitting-coverage}
 \end{equation}
-which is the paper's coverage law (Sec.~III, first paragraph). We have used $\sqrt{E}$ rather than $\sqrt{E-V_0}$, as the paper does; since $V_0\approx9.74$ is small compared with energies of hundreds, the difference is a few percent. Two further conditions are implicit: you also need at least as many coefficients as levels, $M\ge n_{\rm fit}$, to shift $n_{\rm fit}$ levels independently, and the optimizer must actually find the fit. Equation~\eqref{eq:fitting-coverage} is a heuristic rule of thumb, derived from WKB and stationary phase, not a proven statement about the minimum of $\Phi$.
+which is the paper's coverage law (Sec.~III, first paragraph). We have used $\sqrt{E}$ rather than $\sqrt{E-V_0}$, as the paper does; for small $u$ the first-order Taylor expansion $\sqrt{1-u}\approx1-u/2$ gives $\sqrt{E-V_0}=\sqrt E\,\sqrt{1-V_0/E}\approx\sqrt E\,(1-V_0/2E)$, so the relative difference is about $V_0/(2E)$. At the top scored level, $E\approx811$, that is $0.6\%$, so the paper's form is harmless where the law matters. At the bottom of the spectrum the difference is large (at $E=t_1=14.13$, $\sqrt{E-V_0}\approx0.56\sqrt E$), but the coverage law is set by the highest level, not the lowest. Two further conditions are implicit: you also need at least as many coefficients as levels, $M\ge n_{\rm fit}$, to shift $n_{\rm fit}$ levels independently, and the optimizer must actually find the fit. Equation~\eqref{eq:fitting-coverage} is a heuristic rule of thumb, derived from WKB and stationary phase, not a proven statement about the minimum of $\Phi$.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/fitting_coverage.pdf}
@@ -746,7 +759,7 @@ The paper reports that "in-sample error falls steadily with basis size $M$" (Fig
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/fitting_toyfit.pdf}
-\caption{Toy version of the paper's fit: a box of half-width $L=10$ with $V=0$ on $N=300$ grid points (units $\hbar=2m=1$), cosine basis, and targets equal to the lowest 30 levels displaced by random amounts of rms $0.2$ local spacings (seed 0). The paper-style damped schedule of Section~\ref{sec:fitting-schedule} is run for each basis size $M$. In-sample rms (in local spacings, log scale) falls with $M$ and collapses once $M$ exceeds the number of fitted levels plus one.}
+\caption{Toy version of the paper's fit: a box of half-width $L=10$ with $V=0$ on $N=300$ grid points (units $\hbar=2m=1$), cosine basis, and targets equal to the lowest 30 levels displaced by random amounts of rms $0.2$ local spacings (seed 0). The paper-style damped schedule of Section~\ref{sec:fitting-schedule} is run for each basis size $M$. In-sample rms (in local spacings, log scale) falls with $M$ and collapses to essentially zero once $M$ reaches the number of fitted levels, $M=30$, where the first-order equations first become exactly solvable (Problem~24).}
 \label{fig:fitting-toyfit}
 \end{figure}
 
@@ -812,7 +825,7 @@ The paper reports that "in-sample error falls steadily with basis size $M$" (Fig
 
 \prob{2}{Table~I gives in-sample rms $0.226$, $0.137$, $0.064$ for $M=200$, $400$, $600$ (scale 1, zeros 1--400). Explain why the \emph{best possible} in-sample rms cannot increase with $M$ for the cosine basis, and why the reported optimizer values still might, in principle.}
 
-\prob{2}{Apply the coverage law at scale 2 ($L=59.957$, top scored level $t_{1000}=1419.42248094599$, paper Sec.~II~A). How many cosines does it require? Compare with the in-sample rms $0.103$ at $M=900$ (Table~I).}
+\prob{2}{Apply the coverage law at scale 2 ($L=59.957$) to the fits of Table~I, which are trained on zeros 1--800. Take the top training level to be near the smooth zero $s_{800}$, the solution of $\Nsm(s_{800})=799.5$. Find $s_{800}$ numerically, then the number of cosines the law requires, and the energy and approximate level index that $M=900$ reaches. Compare with the in-sample rms $0.103$ at $M=900$ (Table~I).}
 
 \prob{2}{Evaluate $T_4(y)$ from the recurrence and check $T_4(\tfrac12)=\cos(4\pi/3)$.}
 
@@ -838,7 +851,7 @@ The paper reports that "in-sample error falls steadily with basis size $M$" (Fig
 
 \prob{3}{Compare the ridge variant Eq.~\eqref{eq:fitting-ridgestep} with a Tikhonov penalty, i.e.\ minimizing $\Phi(c)+\tfrac12\mu\sigma_1^2\norm c^2$. Show that the stationary points of the variant are those of $\Phi$, while Tikhonov's satisfy $\hat A^\top\hat r=\mu\sigma_1^2c$.}
 
-\prob{3}{Using numpy and scipy, build the box of \Cref{fig:fitting-toyfit} and show numerically that with $M$ cosines ($k=0,\dots,M-1$) the first-order model can produce any shifts of levels $1,\dots,M-1$ exactly, but not of level $M$.}
+\prob{3}{Using numpy and scipy, build the box of \Cref{fig:fitting-toyfit} and show numerically that with $M$ cosines ($k=0,\dots,M-1$) the first-order model can produce any shifts of levels $1,\dots,M$ exactly, but not arbitrary shifts of levels $1,\dots,M+1$ (hint: compute the rank of the sensitivity matrix). Explain why levels $M$ and $M+1$ are reached only through $c_0$ at first order, and connect the result with \Cref{fig:fitting-toyfit}.}
 \end{problemlist}
 
 %==========================================================
@@ -856,7 +869,7 @@ The paper reports that "in-sample error falls steadily with basis size $M$" (Fig
 
 \textbf{9.} $E_-=2-\sqrt{1+c^2}\le1$, with equality only at $c=0$, so $1.5$ is out of reach and the best fit is $c=0$ with $|r|=0.5$. From $c=0.5$ every trial moving toward 0 lowers $|r|$, so the schedule walks toward $c=0$; there $J=0$ and the gradient vanishes, no trial passes the $0.1\%$ test, $\lambda$ grows by 30 per iteration until it exceeds $10^4$, and the fit stops near $c=0$.
 
-\textbf{11.} $M>2\sqrt{1419.42}\times59.957/\pi=75.35\times19.085\approx1438$. $M=900$ does not satisfy the law at scale 2, consistent with its in-sample rms remaining at $0.103$ rather than near zero (also $900<1000$ levels).
+\textbf{11.} Solving $\Nsm(t)=799.5$ by bisection or Brent's method (Chapter~\ref{ch:asymptotics}) gives $s_{800}\approx1184$. Then $M>2\sqrt{1184}\times59.957/\pi=68.8\times19.085\approx1313$. The reach of $M=900$ is $E=(900\pi/2L)^2=(23.58)^2\approx556$, and $\Nsm(556)\approx309$, so only about the lowest 309 of the 800 training levels are covered. Although $900>800$ coefficients, the coverage condition fails, which is consistent with the in-sample rms remaining at $0.103$ rather than near zero.
 
 \textbf{13.} $M-1=2$: $\phi_0=1-2(0.3)=0.4$, $\phi_1=1-2(0.2)=0.6$, $\phi_2=0$; sum $1$.
 

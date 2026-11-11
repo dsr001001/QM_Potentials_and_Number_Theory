@@ -171,12 +171,12 @@ With $\alpha=\omega_2t$, $\beta=\omega_1t$, and writing $\bar\omega=(\omega_1+\o
 \sin\omega_1t+\sin\omega_2t=\underbrace{2\cos\!\left(\frac{\Delta\omega}{2}t\right)}_{\text{slow envelope}}\;\underbrace{\sin(\bar\omega t)}_{\text{fast carrier}} .
 \label{eq:fourier-series-beats}
 \end{equation}
-When $\Delta\omega\ll\bar\omega$, the result looks like a fast oscillation at the average frequency $\bar\omega$ whose amplitude $2|\cos(\Delta\omega\, t/2)|$ swells and fades slowly. The loudness envelope $|\cos(\Delta\omega\, t/2)|$ vanishes when $\Delta\omega\, t/2=\pi/2+j\pi$ for integer $j$, so successive silences are separated by
+When $\Delta\omega\ll\bar\omega$, the result looks like a fast oscillation at the average frequency $\bar\omega$ whose amplitude $2|\cos(\Delta\omega\, t/2)|$ swells and fades slowly. For these equal amplitudes the loudness envelope $|\cos(\Delta\omega\, t/2)|$ vanishes when $\Delta\omega\, t/2=\pi/2+j\pi$ for integer $j$, so successive silences are separated by
 \begin{equation}
 \tau_{\rm beat}=\frac{2\pi}{\Delta\omega}.
 \label{eq:fourier-series-beatperiod}
 \end{equation}
-In terms of ordinary frequency this is the familiar first-year result: the beat frequency is the difference $f_2-f_1$. Two tuning forks at 440~Hz and 442~Hz beat twice per second.
+Complete silences need equal amplitudes. With amplitudes $A_1\neq A_2$, add the two complex amplitudes as in the previous subsection: their relative angle $\Delta\omega\,t$ turns steadily, so the length of their sum swings between $|A_1-A_2|$ and $A_1+A_2$ and never reaches zero. The beat period is still $2\pi/\Delta\omega$. In terms of ordinary frequency this is the familiar first-year result: the beat frequency is the difference $f_2-f_1$. Two tuning forks at 440~Hz and 442~Hz beat twice per second.
 
 \begin{pitfall}
 The envelope function $\cos(\Delta\omega\, t/2)$ itself has period $4\pi/\Delta\omega$, twice $\tau_{\rm beat}$. The beat period is half that because the ear (and any amplitude measurement) responds to $|\cos|$, which repeats twice as often as $\cos$.
@@ -321,7 +321,7 @@ Let $f$ be periodic with period $2L$, so $f(x+2L)=f(x)$. Its \textbf{Fourier ser
 f(x)=\frac{a_0}{2}+\sum_{k=1}^{\infty}\left[a_k\cos\frac{k\pi x}{L}+b_k\sin\frac{k\pi x}{L}\right].
 \label{eq:fourier-series-FS}
 \end{equation}
-Each term has period $2L/k$, which divides $2L$, so the whole right-hand side has period $2L$, consistent with the left. A function defined only on $[-L,L]$ can always be treated as one period of its \textbf{periodic extension}, obtained by copying the graph on $[-L,L]$ into $[L,3L]$, $[3L,5L]$, and so on.
+Each term has period $2L/k$, which fits exactly $k$ times into $2L$. So each term repeats after $2L$, and the whole right-hand side has period $2L$, consistent with the left. A function defined only on $[-L,L]$ can always be treated as one period of its \textbf{periodic extension}, obtained by copying the graph on $[-L,L]$ into $[L,3L]$, $[3L,5L]$, and so on.
 
 \subsection{Deriving the coefficients}
 
@@ -411,7 +411,7 @@ whose real part is $\sin(2Kx)/(2\sin x)$. Hence, for $0<x<\pi$,
 \begin{equation}
 S_K'(x)=\frac{2}{\pi}\,\frac{\sin 2Kx}{\sin x}.
 \end{equation}
-This is positive for $0<x<\pi/(2K)$ and changes sign at $x^*=\pi/(2K)$, so $S_K$ rises from $0$ at $x=0$ to a maximum at $x^*$, the peak nearest the jump.
+This is positive for $0<x<\pi/(2K)$ (there $\sin 2Kx>0$ and $\sin x>0$) and changes sign at $x^*=\pi/(2K)$. So $S_K$ rises from $0$ at $x=0$ to a local maximum at $x^*$. This is the \emph{first} peak to the right of the jump, and it is the one whose height we compute. \Cref{fig:fourier-series-gibbs} shows that it is also the tallest, the later peaks (at the other sign changes of $\sin 2Kx$) being lower. We do not prove that last statement, and nothing below depends on it.
 
 \textbf{Height of the peak.} At $x^*$, the $j$-th term has argument $u_j=(2j-1)\pi/(2K)$. Since $1/(2j-1)=(\pi/2K)/u_j$,
 \begin{equation}
@@ -431,7 +431,7 @@ where $\mathrm{Si}(z)=\int_0^z(\sin u/u)\,\dd u$ is the \emph{sine integral}, a 
 \end{figure}
 
 \begin{pitfall}
-Adding more terms does \emph{not} remove the Gibbs overshoot. It squeezes it into a narrower region (width $\propto1/K$), so the series still converges at each fixed $x\neq0$, but the maximum error near a jump stays at about $9\%$ of the jump. Jumps are expensive for Fourier series; we will see that the paper's cosine basis avoids jumps at the walls for even functions.
+Adding more terms does \emph{not} remove the Gibbs overshoot. It squeezes it into a narrower region (width $\propto1/K$), so the series still converges at each fixed $x\neq0$, but the overshoot at the first peak next to the jump stays at about $9\%$ of the jump. Jumps are expensive for Fourier series; we will see that the paper's cosine basis avoids jumps at the walls for even functions.
 \end{pitfall}
 
 \begin{keyideas}
@@ -635,7 +635,7 @@ Conventions for the constant term differ. In \cref{eq:fourier-series-FS} the con
 \paragraph{How fast do the coefficients fall?} Integrate by parts twice. With $q=k\pi/L$ and $k\ge1$,
 \begin{align}
 c_k&=\frac2L\int_0^Lf\cos qx\,\dd x=\frac2L\left[\frac{f\sin qx}{q}\right]_0^L-\frac{2}{Lq}\int_0^Lf'\sin qx\,\dd x\\
-&=-\frac2{Lq}\left(\left[-\frac{f'\cos qx}{q}\right]_0^L+\frac1q\int_0^Lf''\cos qx\,\dd x\right)\quad\text{($\sin kπ=\sin0=0$)}\\
+&=-\frac2{Lq}\left(\left[-\frac{f'\cos qx}{q}\right]_0^L+\frac1q\int_0^Lf''\cos qx\,\dd x\right)\quad\text{($\sin k\pi=\sin0=0$)}\\
 &=\frac{2L}{k^2\pi^2}\Big[(-1)^kf'(L)-f'(0^+)\Big]-\frac{2L}{k^2\pi^2}\int_0^Lf''\cos qx\,\dd x,
 \label{eq:fourier-series-decay}
 \end{align}
@@ -726,8 +726,9 @@ Everything so far concerned functions that repeat. Now add two sinusoids whose p
 
 Two angular frequencies $\omega_1,\omega_2>0$ are called \textbf{commensurate} if their ratio is rational, $\omega_2/\omega_1=l/j$ with positive integers $j,l$, and \textbf{incommensurate} otherwise.
 
-\begin{sample}{Theorem: a two-frequency sum is periodic exactly when the frequencies are commensurate}
-Let $f(t)=\sin(\omega_1t)+\sin(\omega_2t)$ with $0<\omega_1<\omega_2$. Prove that $f$ is periodic if and only if $\omega_2/\omega_1$ is rational.
+\paragraph{Theorem (proved).} \emph{A two-frequency sum is periodic exactly when the frequencies are commensurate.} Let $f(t)=\sin(\omega_1t)+\sin(\omega_2t)$ with $0<\omega_1<\omega_2$. Then $f$ is periodic if and only if $\omega_2/\omega_1$ is rational.
+
+\textbf{Proof.}
 
 \textbf{Step 1 (rational $\Rightarrow$ periodic).} If $\omega_2/\omega_1=l/j$, set $\tau=2\pi j/\omega_1$. Then $\omega_1\tau=2\pi j$ and $\omega_2\tau=2\pi j\,\omega_2/\omega_1=2\pi l$, whole numbers of turns, so both terms, and hence $f$, satisfy $f(t+\tau)=f(t)$.
 
@@ -747,8 +748,7 @@ Since $f$ and $f''$ both have period $\tau$, so does $g$. Because $\omega_2^2-\o
 \[
 \boxed{\sin\omega_1t+\sin\omega_2t\ \text{is periodic}\iff\omega_2/\omega_1\in\mathbb{Q}}
 \]
-The same proof works with arbitrary phase constants and amplitudes.
-\end{sample}
+This completes the proof. The same steps work with arbitrary nonzero amplitudes and arbitrary phase constants. $\square$
 
 \subsection{The logarithms of primes are incommensurate}
 
@@ -771,7 +771,7 @@ Find a $t$ in $[0,200]$ where $f(t)=\sin(t\log2)+\sin(t\log3)$ exceeds $1.999$.
 
 \textbf{Step 2: phase of the second sine.} Its phase is $t\log3=(\pi/2+2\pi j)\rho$ with $\rho=\log3/\log2=1.58496$. We want this to be close to $\pi/2$ modulo $2\pi$.
 
-\textbf{Step 3: scan $j$.} For $j=10$: $t=20.5\pi/\log 2=92.913$, and $t\log3=102.0759$. Subtracting $16\times2\pi=100.5310$ leaves $1.5449$, which is $0.0259$ below $\pi/2=1.5708$.
+\textbf{Step 3: scan $j$.} We need the second phase within $\arccos(0.999)=0.0447$ rad of $\pi/2$ (modulo $2\pi$), so that the second sine exceeds $0.999$. Computing this mismatch for $j=0,1,2,\dots$ in turn (a short loop, rerun in CHECKS) gives, for example, $0.62$ rad at $j=3$ and $0.45$ rad at $j=5$; the first $j$ with mismatch below $0.0447$ is $j=10$. For $j=10$: $t=20.5\pi/\log 2=92.913$, and $t\log3=102.0759$. Subtracting $16\times2\pi=100.5310$ leaves $1.5449$, which is $0.0259$ below $\pi/2=1.5708$.
 
 \textbf{Step 4: value.} $\sin(1.5449)=\cos(0.0259)=0.99967$, so
 \[
@@ -816,7 +816,7 @@ The row $a=12$ is a near-coincidence musicians know: $12\log3\approx19\log2$ mea
 \end{figure}
 
 \begin{beyond}
-\textbf{Kronecker's theorem and almost periodic functions.} Two facts used informally here are proved elsewhere. (1) Kronecker's theorem: if $\omega_1/\omega_2$ is irrational, the pair of phases $(\omega_1t,\omega_2t)$ modulo $2\pi$ comes arbitrarily close to every pair of angles as $t$ ranges over the reals. Consequently $\sup_tf=2$ (approached, never reached) and the largest mismatch for a general shift is $D(\tau)=2|\sin(\tau\log2/2)|+2|\sin(\tau\log3/2)|$, the formula plotted in \cref{fig:fourier-series-quasiperiodic}. A proof is in Hardy and Wright~\cite{hardywright}, chapter XXIII. (2) H.~Bohr's theory of \emph{almost periodic functions}: a finite sum of sinusoids with any real frequencies has, for every $\epsilon>0$, ``$\epsilon$-almost-periods'' $\tau$ with $|f(t+\tau)-f(t)|<\epsilon$ for all $t$, and such $\tau$ occur with bounded gaps along the whole real line. Functions of this kind are called almost periodic or quasi-periodic. We take both results on trust; we use only the conclusions stated.
+\textbf{Kronecker's theorem and almost periodic functions.} Two facts used informally here are proved elsewhere. (1) Kronecker's theorem: if $\omega_1/\omega_2$ is irrational, the pair of phases $(\omega_1t,\omega_2t)$ modulo $2\pi$ comes arbitrarily close to every pair of angles as $t$ ranges over the reals. Consequently $\sup_tf=2$ (approached, never reached), because both phases can be brought, at the same $t$, as close as we like to $\pi/2$. Likewise, for a general shift $\tau$ write $f(t+\tau)-f(t)=[\sin(\alpha+\delta_2)-\sin\alpha]+[\sin(\beta+\delta_3)-\sin\beta]$ with $\alpha=t\log2$, $\beta=t\log3$, $\delta_2=\tau\log2$, $\delta_3=\tau\log3$. By the difference identity used for \cref{eq:fourier-series-nearperiod}, the two brackets have largest absolute values $2|\sin(\delta_2/2)|$ and $2|\sin(\delta_3/2)|$, and Kronecker's theorem lets $\alpha$ and $\beta$ approach, at the same $t$, angles where both brackets are near their maxima with the same sign. So the supremum of the mismatch (approached, in general not attained) is $D(\tau)=2|\sin(\tau\log2/2)|+2|\sin(\tau\log3/2)|$, the formula plotted in \cref{fig:fourier-series-quasiperiodic}. A proof is in Hardy and Wright~\cite{hardywright}, chapter XXIII. (2) H.~Bohr's theory of \emph{almost periodic functions}: a finite sum of sinusoids with any real frequencies has, for every $\epsilon>0$, ``$\epsilon$-almost-periods'' $\tau$ with $|f(t+\tau)-f(t)|<\epsilon$ for all $t$, and such $\tau$ occur with bounded gaps along the whole real line. Functions of this kind are called almost periodic or quasi-periodic. We take both results on trust; we use only the conclusions stated.
 \end{beyond}
 
 \subsection{Long-time averages and Parseval for quasi-periodic sums}
@@ -938,13 +938,13 @@ The arithmetic oracle, paper Eq.~(4),
 \begin{equation}
 \Nfl(t)=-\frac1\pi\sum_{p\in P}\sum_{m=1}^{3}\frac{\sin(mt\log p)}{m\,p^{m/2}},
 \end{equation}
-is a finite sum of sinusoids in $t$ with amplitudes $1/(\pi mp^{m/2})$ and angular frequencies $m\log p=\log p^m$. (Here $P$ is the paper's set of primes, not a period.) Within one prime the three frequencies are harmonics of $\log p$, so a one-prime oracle is periodic with period $2\pi/\log p$. Across different primes the frequencies are incommensurate (\cref{sec:fourier-series-quasi}), so with two or more primes $\Nfl$ is quasi-periodic: it never repeats. The six-prime oracle of Fig.~1 has $6\times3=18$ distinct frequencies (Problem~26). Chapter~\ref{ch:explicit-formula} explains where Eq.~(4) comes from; this chapter explains what kind of function it is. Because it is a sum of sinusoids with \emph{known} frequencies, it is defined for every $t$, and it continues automatically past any training window; nothing in it needs to be learned from the zeros. That is the property the fitted potentials lack.
+is a finite sum of sinusoids in $t$ with amplitudes $1/(\pi mp^{m/2})$ and angular frequencies $m\log p=\log p^m$. (Here $P$ is the paper's set of primes, not a period.) Within one prime the three frequencies are harmonics of $\log p$, so a one-prime oracle is periodic with period $2\pi/\log p$. Across different primes the frequencies are incommensurate (\cref{sec:fourier-series-quasi}), so with two or more primes $\Nfl$ is quasi-periodic: it never repeats. The six-prime oracle of Fig.~1 uses the six smallest primes, $P=\{2,3,5,7,11,13\}$, and has $6\times3=18$ distinct frequencies (Problem~26). Chapter~\ref{ch:explicit-formula} explains where Eq.~(4) comes from; this chapter explains what kind of function it is. Because it is a sum of sinusoids with \emph{known} frequencies, it is defined for every $t$, and it continues automatically past any training window; nothing in it needs to be learned from the zeros. That is the property the fitted potentials lack.
 
 The paper's Discussion (Sec.~VI) puts its heuristic explanation of the failure in exactly these terms: ``the quantity being fitted is, by the explicit formula, an almost-periodic function of $t$ that is sparse in frequency, whereas a potential addresses the levels through their turning points, locally in energy.'' The paper labels this reading heuristic, and so do we.
 
 \subsection{The prime-2 wave in level index}
 
-RE2 is the $p=2$ part of Eq.~(4). Its period in $t$ is $2\pi/\log2=9.065$. The paper scores levels by their index $n$, and consecutive levels near zero $n$ are about one local mean spacing $\gap_n=2\pi/\log(s_n/2\pi)$ apart (Chapter~\ref{ch:counting-zeros}), where $s_n$ is the smooth zero. So one period of RE2 spans $9.065/\gap_n$ levels. Solving $\Nsm(s_n)=n-\tfrac12$ numerically gives $s_{400}=679.9$, $\gap_{400}=1.341$ and $9.065/1.341=6.76$ levels per period; at $n=500$, $\gap_{500}=1.293$ and $7.01$ levels per period. This is the paper's remark in Sec.~V that the $p=2$ oscillation ``is only $\sim$6--7 \emph{levels} at these heights''. \Cref{fig:fourier-series-re2-levels} shows RE2 sampled at the smooth zeros: perfectly periodic in $t$, it looks only roughly regular in $n$, because the mean spacing shrinks slowly with height.
+RE2 is the $p=2$ part of Eq.~(4). Its period in $t$ is $2\pi/\log2=9.065$. The paper scores levels by their index $n$, and consecutive levels near zero $n$ are about one local mean spacing $\gap_n=2\pi/\log(s_n/2\pi)$ apart (Chapter~\ref{ch:counting-zeros}), where $s_n$ is the smooth zero. So one period of RE2 spans $9.065/\gap_n$ levels. Solving $\Nsm(s_n)=n-\tfrac12$ numerically gives $s_{400}=679.9$, $\gap_{400}=1.341$ and $9.065/1.341=6.76$ levels per period; at $n=500$, $\gap_{500}=1.293$ and $7.01$ levels per period. So one period is about 7 levels, in line with the paper's approximate remark in Sec.~V that the $p=2$ oscillation ``is only $\sim$6--7 \emph{levels} at these heights''; our value $7.01$ at $n=500$ sits at the upper edge of that rounded range. \Cref{fig:fourier-series-re2-levels} shows RE2 sampled at the smooth zeros: perfectly periodic in $t$, it looks only roughly regular in $n$, because the mean spacing shrinks slowly with height.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/fourier-series_re2_levels.pdf}

@@ -40,7 +40,6 @@ for v, c in zip(terms, [0.2876821, 0.1177830, 0.0408220, 0.0206193]):
 close(sum(terms), 0.4669064, 1e-6, "SP1 sum")
 close(sum(terms)/lz2, 0.938, 0.0005, "SP1 fraction")
 close(lz2 - sum(terms), 0.0307943, 1e-6, "SP1 remainder")
-# full prime sum agrees with log zeta(2)
 pp = np.asarray(qmnt.primes_upto(10**6), float)
 close(np.sum(-np.log(1 - pp**-2.0)), lz2, 1e-5, "Euler log series")
 
@@ -67,15 +66,23 @@ ms = sum(1/(m*m*2**m) for m in (1, 2, 3)); close(ms, 0.5763889, 1e-7, "RE2 sum")
 re2rms = np.sqrt(ms/2)/np.pi; close(re2rms, 0.1709, 1e-4, "RE2 rms")
 tt = np.linspace(0, 2*np.pi/np.log(2), 200001)
 close(np.sqrt(np.mean(Nfl(tt, [2])**2)), re2rms, 1e-4, "RE2 rms numeric")
-# probe null: rms of N_fl^{p=2}(s_n), n=401..500 vs paper 0.1708
 sn = np.array([smooth_zero(n) for n in range(401, 501)])
 close(np.sqrt(np.mean(Nfl(sn, [2])**2)), 0.1708, 0.003, "probe null")
+# sampling argument (revision)
+gaps = 2*np.pi/np.log(sn/(2*np.pi))
+assert 1.25 < gaps.min() and gaps.max() < 1.45, ("gaps", gaps.min(), gaps.max())
+assert gaps.max() < 3.0216/2, "Nyquist"
+nper = (sn[-1] - sn[0])/(2*np.pi/np.log(2))
+assert 13.8 < nper < 15.0, ("periods spanned", nper)
 
 # Sum of 1/sqrt(p) for p<=100
 p100 = np.asarray(qmnt.primes_upto(100), float)
 assert len(p100) == 25
 close(np.sum(p100**-0.5), 5.5365, 2e-4, "sum p^-1/2")
 close(np.sum(p100**-0.5)/np.pi, 1.76, 0.005, "max m=1 amplitude")
+# 2 sqrt(x)/log x growth (revision, figure caption)
+ratio = np.sum(pp**-0.5)/(2*np.sqrt(1e6)/np.log(1e6))
+assert 0.9 < ratio < 1.4, ("2sqrt x/log x", ratio)
 
 # Sample: N_fl at t1, N_sm(t1), S(t1)
 close(float(Nfl(t1, [2])), 0.0617, 3e-4, "SP Nfl(t1)")
@@ -88,14 +95,34 @@ close(t1/(2*np.pi), 2.2496113, 1e-6, "t1/2pi")
 s1 = smooth_zero(1); close(s1, 14.5214, 2e-4, "s1")
 g1 = 2*np.pi/np.log(s1/(2*np.pi)); close(g1, 7.500, 2e-3, "gap1")
 close(np.log(s1/(2*np.pi)), 0.837746, 2e-5, "log s1/2pi")
+# Newton iterates (revision)
+close(np.log(t1/(2*np.pi)), 0.8107574, 1e-6, "log t1/2pi")
+close(dNsm(t1), 0.12904, 2e-5, "slope t1")
+step1 = (0.5 - float(Nsm(t1)))/dNsm(t1); close(step1, 0.3931, 2e-4, "Newton step 1")
+it1 = t1 + step1; close(it1, 14.5278, 3e-4, "Newton iterate 1")
+close(float(Nsm(it1)) - 0.5, 8.5e-4, 1e-4, "Nsm(it1)-1/2")
+close(dNsm(it1), 0.1334, 2e-4, "slope it1")
+step2 = -(float(Nsm(it1)) - 0.5)/dNsm(it1); close(step2, -0.0064, 5e-4, "Newton step 2")
+close(it1 + step2, 14.5214, 2e-4, "Newton iterate 2")
+assert abs(it1 + step2 - s1) < 1e-5, "Newton converged"
 nf = float(Nfl(s1, [2])); close(nf, 0.09350, 2e-4, "Nfl(s1)")
 dnf = dNfl(s1, [2]); close(dnf, 0.0667, 3e-4, "Nfl'(s1)")
 close(s1 - g1*nf, 13.820, 3e-3, "crude first order")
-close(s1 - g1*nf*1.0 + 0.0, 13.820, 3e-3, "crude first order 2")
 close(s1 - nf/(1/g1 + dnf), 14.054, 3e-3, "better first order")
 f = lambda t: float(Nsm(t) + Nfl(t, [2])) - 0.5
 assert f(13.8202) < 0 < f(14.1347)
 close(f(13.8202), -0.0635, 3e-4, "f(13.82)"); close(f(14.1347), 0.0110, 3e-4, "f(14.135)")
+# endpoint ingredients (revision)
+close(13.8202/(2*np.pi), 2.199553, 2e-6, "13.8202/2pi")
+close(float(Nsm(13.8202)), 0.4093, 1e-4, "Nsm(13.8202)")
+L2 = np.log(2)
+for m, red, sv in [(1, 0.15465, -0.1540), (2, 0.30931, 0.3044), (3, 0.46396, -0.4475)]:
+    close(m*13.8202*L2 - 3*m*np.pi, red, 1e-5, ("phase residue", m))
+    close(np.sin(m*13.8202*L2), sv, 1e-4, ("sine", m))
+close(float(Nfl(13.8202, [2])), 0.0272, 1e-4, "Nfl(13.8202)")
+close(float(Nsm(14.1347)), 0.4493, 1e-4, "Nsm(14.1347)")
+close(float(Nfl(14.1347, [2])), 0.0617, 2e-4, "Nfl(14.1347)")
+close(0.4493 + 0.0617 - 0.5, 0.0110, 1e-9, "f sum a"); close(0.4093 + 0.0272 - 0.5, -0.0635, 1e-9, "f sum b")
 close(f(14.0883), 0.00036, 2e-4, "f(14.088)")
 root = brentq(f, 13.8, 14.2); close(root, 14.087, 2e-3, "root t1")
 close((t1 - s1)/g1, -0.0516, 5e-4, "true fluct 1")
@@ -109,7 +136,6 @@ close(B2, 0.34434, 1e-5, "bound slope p=2")
 close(2*np.pi*B2, 2.16353, 1e-5, "log threshold")
 close(np.exp(2*np.pi*B2), 8.7018, 1e-3, "t/2pi threshold")
 close(2*np.pi*np.exp(2*np.pi*B2), 54.7, 0.05, "threshold 54.7")
-# Problem 9: P={2,3}
 B23 = (np.log(2)*(1/np.sqrt(2)+0.5+1/(2*np.sqrt(2))) + np.log(3)*(1/np.sqrt(3)+1/3+1/(3*np.sqrt(3))))/np.pi
 close(B23, 0.73010, 1e-5, "P9 bound"); close(2*np.pi*B23, 4.58736, 1e-5, "P9 log")
 close(np.exp(2*np.pi*B23), 98.235, 0.01, "P9 t/2pi")
@@ -124,7 +150,7 @@ close(lambertw(-3/(8*np.e), 0).real, -0.16226, 1e-5, "W(-3/8e)")
 close(-3/(8*np.e), -0.13795, 1e-5, "A/e n=1")
 close((2*np.pi*(-0.375)/lambertw(-3/(8*np.e), 0)).real, 14.521, 1e-3, "s1 via W")
 
-# Table V reproduction (rows 401-500 and 501-1000)
+# Table V reproduction
 z = qmnt.zeros(1000)
 n1 = np.arange(401, 501); n2 = np.arange(501, 1001)
 close(qmnt.rms(qmnt.fluct(z[n1-1], n1)), 0.2631, 0.001, "null 401-500")
@@ -151,9 +177,8 @@ close(np.log(2)/2, 0.346574, 1e-6, "w4")
 Ssum = np.sum(np.cos(np.log(2)*z))
 assert abs(Ssum + 110.7) < 0.3*110.7, ("Landau numeric", Ssum)
 close(np.log(T), 7.26, 0.01, "log T ~ 7")
-# Problem 11: weights and argmax among k<=20
 def vm(k):
-    for p in [2, 3, 5, 7, 11, 13, 17, 19]:
+    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:
         q = p
         while q <= k:
             if q == k: return np.log(p)
@@ -165,13 +190,23 @@ for k, c in [(2, 0.490), (3, 0.634), (4, 0.347), (5, 0.720), (7, 0.735), (8, 0.2
              (11, 0.723), (13, 0.711), (16, 0.173), (17, 0.687), (19, 0.676)]:
     close(wts[k], c, 6e-4, ("P11 weight", k))
 close(np.exp(2), 7.4, 0.05, "peak of log x/sqrt x")
+# Answer 21 (revision): ranking of predicted lines for k <= e^3.5
+close(np.exp(3.5), 33.1, 0.05, "e^3.5")
+w33 = {k: vm(k)/np.sqrt(k) for k in range(2, 34) if vm(k) > 0}
+top5 = sorted(w33, key=w33.get, reverse=True)[:5]
+assert top5 == [7, 11, 5, 13, 17], top5
+close(w33[23], 0.654, 6e-4, "weight 23")
+for k in [29, 31, 25, 27, 32]:
+    assert w33[k] < w33[23]
+assert w33[17] > w33[3] and w33[19] > w33[3] and w33[23] > w33[3]
+d4 = [T/(2*np.pi)*w33[k] for k in [7, 11, 5, 13]]
+assert max(d4) - min(d4) < 6, d4
 
 # Duality amplitude sample / problem 24
 rho1 = abs(0.5 + 1j*t1); close(rho1, 14.143566, 1e-6, "|rho1|")
 close(t1**2, 199.790451, 1e-5, "t1^2")
 close(2*np.sqrt(10)/rho1, 0.4472, 1e-4, "amp x=10")
 close(2*100**0.5/rho1, 1.4141, 1e-4, "amp x=100")
-# psi explicit formula sanity at x=30.5 with 100 zero pairs (rough)
 x = 30.5; zz = qmnt.zeros(100); r = 0.5 + 1j*zz
 approx = x - 2*np.sum(np.real(np.exp(r*np.log(x))/r)) - np.log(2*np.pi) - 0.5*np.log(1 - x**-2)
 psi_exact = sum(np.log(p)*int(np.floor(np.log(x)/np.log(p))) for p in qmnt.primes_upto(30))

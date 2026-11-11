@@ -301,7 +301,7 @@ Figure~\ref{fig:generalization-errorcurve} shows the error curves for a larger v
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/generalization_errorcurve.pdf}
-\caption{Error versus polynomial degree for RE4 with 15 noisy training points on $0\le t\le2\pi$ (noise standard deviation 0.15). In-sample rms (circles) never increases with degree because the models are nested, and reaches essentially zero at degree 14, where the fit interpolates. Out-of-sample rms is shown for fresh noisy points inside the training range (squares, interpolation) and for points with $2\pi<t\le2.4\pi$ (triangles, extrapolation). Dotted line: the noise level. Vertical axis logarithmic; all quantities dimensionless.}
+\caption{Error versus polynomial degree for RE4 with 15 noisy training points on $0\le t\le2\pi$ (noise standard deviation 0.15). In-sample rms (circles) never increases with degree because the models are nested, and falls to a negligible value (below $10^{-6}$) at degree 14, where the fit interpolates. Out-of-sample rms is shown for fresh noisy points inside the training range (squares, interpolation) and for points with $2\pi<t\le2.4\pi$ (triangles, extrapolation). Dotted line: the noise level. Vertical axis logarithmic; all quantities dimensionless.}
 \label{fig:generalization-errorcurve}
 \end{figure}
 
@@ -553,7 +553,7 @@ and solving for $\rho_1$,
 \rho_1=1-\frac{\mathrm{Var}(u)}{2\sigma^2}.
 \label{eq:generalization-rho1}
 \end{equation}
-For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\rho_1=0$ and $\mathrm{Var}(u)=2\sigma^2$, consistent with Eq.~\eqref{eq:generalization-rho1}. The zeros are different: their positions are \emph{rigid} (each zero stays close to its smooth position, so $\sigma$ is small) while their spacings still vary appreciably (level repulsion, Chapter~\ref{ch:level-statistics}). Small $\sigma$ together with sizable $\mathrm{Var}(u)$ forces $\rho_1$ below zero. Physically: if a zero sits high, the spacing above it tends to be short and the next zero is not pushed further up; the rigid spectrum ``pulls back.''
+For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\rho_1=0$ and $\mathrm{Var}(u)=2\sigma^2$, consistent with Eq.~\eqref{eq:generalization-rho1}. Eq.~\eqref{eq:generalization-rho1} says exactly when $\rho_1$ is negative: $\rho_1<0$ if and only if $\mathrm{Var}(u)>2\sigma^2$. The sign is therefore decided by comparing two numbers, the variance of the unfolded spacings and twice the variance of the fluctuations. For the zeros the next Sample Problem gives $\mathrm{Var}(u)\approx0.178$ (from the Wigner surmise, Chapter~\ref{ch:level-statistics}) against $2\sigma^2\approx0.138$ (from the measured null rms $0.263$), so the inequality holds and $\rho_1<0$. In words: the positions stay close to their smooth values (small $\sigma$, often called \emph{rigidity}), while consecutive spacings vary by more than independent jitter of that size would produce. The two facts are compatible only if the displacement of one zero is partly undone by the displacement of its neighbor, which is what a negative $\rho_1$ means.
 
 \begin{sample}{Estimating $\rho_1$ for the zeros from the Wigner surmise}
 Estimate $\rho_1$ for the zero fluctuations using Eq.~\eqref{eq:generalization-rho1}, taking $\mathrm{Var}(u)$ from the GUE Wigner surmise $p(s)=\frac{32}{\pi^2}s^2e^{-4s^2/\pi}$ (paper Fig.~2; Chapter~\ref{ch:level-statistics}) and $\sigma=0.263$, the null rms on zeros 401--500.
@@ -605,7 +605,7 @@ If a sequence had $\rho_1=+0.8$, would the neighbor-mean predictor be correlated
 \begin{keyideas}
 \item For a stationary sequence, the neighbor mean has correlation $\rho_1\sqrt{2/(1+\rho_2)}$ with the truth: its sign is the sign of $\rho_1$.
 \item The identity $\rho_1=1-\mathrm{Var}(u)/(2\sigma^2)$ links lag-1 correlation to spacing variance and position rigidity; for the zeros it predicts $\rho_1<0$ (estimate $\approx-0.29$).
-\item Hence any smooth interpolation between neighboring zeros tends to be anticorrelated with the truth.
+\item Hence any interpolator that averages nearby neighboring zeros with positive weights tends to be anticorrelated with the truth; a correlation-aware predictor (Sec.~\ref{sec:generalization-kriging}) need not be.
 \end{keyideas}
 
 %======================================================================
@@ -650,7 +650,11 @@ w=\frac{\rho_1}{1+\rho_2},\qquad \hat d_n=w\,(d_{n-1}+d_{n+1}).
 \end{equation}
 From Eq.~\eqref{eq:generalization-krigmin}, $\mathcal E_{\min}=\sigma^2-2w\sigma^2\rho_1=\sigma^2\Bigl(1-\dfrac{2\rho_1^2}{1+\rho_2}\Bigr)$, which is never larger than the null $\sigma^2$.
 
-Now compare with the neighbor mean. The kriging predictor is $\hat d_n=2w\times\tfrac12(d_{n-1}+d_{n+1})$, a constant multiple of the neighbor mean. Recall from Chapter~\ref{ch:probability} that multiplying a variable by a constant $\alpha$ multiplies its correlation with anything by the sign of $\alpha$. When $\rho_1<0$ we have $w<0$, so
+Now compare with the neighbor mean. The kriging predictor is $\hat d_n=2w\times\tfrac12(d_{n-1}+d_{n+1})$, a constant multiple of the neighbor mean. Multiplying a variable by a constant $\alpha\ne0$ multiplies its correlation with anything by the sign of $\alpha$. To see this, recall from Chapter~\ref{ch:probability} that $\mathrm{Cov}(\alpha X,Y)=\alpha\,\mathrm{Cov}(X,Y)$ and that the standard deviation of $\alpha X$ is $\abs{\alpha}$ times that of $X$. Then
+\[
+\mathrm{corr}(\alpha X,Y)=\frac{\alpha\,\mathrm{Cov}(X,Y)}{\abs{\alpha}\,\mathrm{sd}(X)\,\mathrm{sd}(Y)}=\frac{\alpha}{\abs{\alpha}}\,\mathrm{corr}(X,Y)=\mathrm{sign}(\alpha)\,\mathrm{corr}(X,Y).
+\]
+The magnitude of the correlation is unchanged; only its sign can change. Here $\alpha=2w$. When $\rho_1<0$ we have $w<0$, so
 
 \medskip\noindent\textbf{Result (proved).} When $w<0$, the two-neighbor kriging prediction and the neighbor mean have correlations with the truth that are equal in magnitude and opposite in sign. With $\rho_1<0$ the neighbor mean is anticorrelated and kriging is positively correlated, $\mathrm{corr}=\abs{\rho_1}\sqrt{2/(1+\rho_2)}$.
 
@@ -674,7 +678,7 @@ Note that $\mathrm{corr}^2=0.2=1-\mathcal E_{\min}/\sigma^2$, which agrees with 
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/generalization_kriging.pdf}
-\caption{Neighbor mean versus two-neighbor kriging for a stationary sequence with lag-2 correlation $\rho_2=0$, as functions of the lag-1 correlation $\rho_1$ (dimensionless). Left: correlation with the truth, Eq.~\eqref{eq:generalization-nbrcorr} and its kriging counterpart. Right: rms error relative to the null (dotted line at 1). The vertical dotted line marks the estimate $\rho_1\approx-0.29$ for the zeros from the Sample Problem on the Wigner surmise. For $\rho_1<0$ the neighbor mean is anticorrelated and worse than the null; kriging is positively correlated and better than the null. The range $\abs{\rho_1}<1/\sqrt2$ is where these correlations are mutually consistent.}
+\caption{Neighbor mean versus two-neighbor kriging for a stationary sequence with lag-2 correlation $\rho_2=0$, as functions of the lag-1 correlation $\rho_1$ (dimensionless). Left: correlation with the truth, Eq.~\eqref{eq:generalization-nbrcorr} and its kriging counterpart. Right: rms error relative to the null (dotted line at 1). The vertical dotted line marks the estimate $\rho_1\approx-0.29$ for the zeros from the Sample Problem on the Wigner surmise. For $\rho_1<0$ the neighbor mean is anticorrelated and worse than the null; kriging is positively correlated and better than the null. The plotted range is $\abs{\rho_1}\le1/\sqrt2$: with $\rho_2=0$ the neighbor-mean correlation is $\sqrt2\,\rho_1$, which must lie in $[-1,1]$; equivalently, the correlation matrix of $(d_{n-1},d_n,d_{n+1})$, whose determinant is $1-2\rho_1^2$, is a valid covariance only if $1-2\rho_1^2\ge0$.}
 \label{fig:generalization-kriging}
 \end{figure}
 
@@ -885,7 +889,7 @@ Table~I lists twelve Hermitian configurations: two scales, five train/test split
 \item \emph{Ridge rows.} $\mu=0.03$ gives OOS $0.271$, $\mu=0.3$ gives $0.265$, approaching the null $0.263$ while the in-sample error rises from $0.137$ to $0.142$ and $0.206$. This is Sec.~\ref{sec:generalization-ridge} in action: ``regularization moves them smoothly from `memorize more' to `do nothing' and never creates skill'' (Sec.~III).
 \end{itemize}
 
-The paper describes the fitted models' output as fluctuations of $0.16$--$0.62\times$ the true amplitude, uncorrelated with truth. Eq.~\eqref{eq:generalization-ratio} explains why such output cannot beat the null: with $\rho\approx0$ the ratio is $\sqrt{1+a^2}>1$. The same formula also shows that the strong performance of the explicit formula is near-optimal for its correlation: with $\rho=0.96$, the best achievable ratio is $\sqrt{1-0.96^2}=0.280$, and Table~V reports $0.074/0.263=0.281$ for six primes (Problem~5).
+The paper describes the fitted models' output as fluctuations of $0.16$--$0.62\times$ the true amplitude, uncorrelated with truth. Eq.~\eqref{eq:generalization-ratio} explains why such output cannot beat the null: with $\rho\approx0$ the ratio is $\sqrt{1+a^2}>1$. The same formula gives a consistency check on the explicit formula: under the idealized zero-mean model of Eq.~\eqref{eq:generalization-ratio}, the best achievable ratio at $\rho=0.96$ is $\sqrt{1-0.96^2}=0.280$, and Table~V reports $0.074/0.263=0.281$ for six primes, which is consistent with a near-optimal amplitude under that idealized model (Problem~5). This is not evidence of optimality, and the paper makes no such claim.
 
 At scale 1 the coverage estimate $M\gtrsim814$ (Sec.~\ref{sec:generalization-bias}) says the family is effectively complete for all 500 levels by $M=900$, and the paper reports in-sample rms $<10^{-4}$ there. The family has the capacity to memorize; Table~I shows it does not transfer.
 
@@ -992,7 +996,7 @@ Finally, the first item of the paper's proposed falsifiability standard is this 
 
 \prob{2}{For each of the four split types of Table~\ref{tab:generalization-splits}, say whether it involves interpolation or extrapolation and whether it involves covariate shift in height. Which would you choose to test a claim that a model ``learns the local structure'' of the zeros?}
 
-\prob{2}{The paper's Table~II reports Chebyshev $M=400$: OOS rms $0.291$ with interval $[0.25,0.33]$ and correlation $+0.18$ with interval $[-0.02,+0.37]$, against null $0.263$. Compute the rms ratio and explain why the paper calls this row ``marginal'' rather than evidence of prediction.}
+\prob{2}{The paper's Table~II reports Chebyshev $M=400$: OOS rms $0.291$ with interval $[0.25,0.33]$ and correlation $+0.18$ with interval $[-0.02,+0.37]$, against null $0.263$. Compute the rms ratio and explain why the paper calls this row ``marginal'' rather than evidence of prediction. (Note that these bootstrap intervals resample held-out levels independently, although the fluctuations are serially correlated; the paper reports that a moving-block bootstrap widens them slightly and changes no conclusion.)}
 
 \prob{3}{Design a test, using only the ideas of this chapter and surrogates (Chapter~\ref{ch:controls}), that distinguishes a model whose in-sample accuracy reflects captured structure from one whose accuracy reflects capacity. State the null hypothesis, the surrogates, and the outcome that would favor each interpretation.}
 

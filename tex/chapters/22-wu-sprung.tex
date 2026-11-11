@@ -292,7 +292,14 @@ The integrand becomes $2\,\dd\varphi$, and $\varphi$ runs from $0$ (at $E=V$) to
 K(V,W)=\int_0^{\pi/2}2\,\dd\varphi=\pi,
 \label{eq:wu-sprung-Kpi}
 \end{equation}
-independent of $V$ and $W$. (You can check it numerically: in the CHECKS script the integral with $V=2$, $W=5$ returns $\pi$ to ten digits.)
+independent of $V$ and $W$. You can check this numerically with the short listing below. It evaluates $K(2,5)$ by adaptive quadrature, and the printed value agrees with $\pi=3.14159265\ldots$ to better than $10^{-9}$.
+\begin{pycode}
+import numpy as np
+from scipy.integrate import quad
+V, W = 2.0, 5.0
+K = quad(lambda E: 1/np.sqrt((W-E)*(E-V)), V, W)[0]
+print(K, np.pi)     # the two numbers agree
+\end{pycode}
 
 \textbf{Step D: undo the integral.} With $K=\pi$, Eq.~\eqref{eq:wu-sprung-K} reads $J(W)=\pi\int_{V_0}^{W}x(V)\,\dd V$. By the fundamental theorem of calculus,
 \begin{equation}
@@ -377,7 +384,7 @@ I_1=\int_0^a\log(b+u)\,\dd u,\qquad I_2=\int_0^a\log(b-u)\,\dd u,\qquad I_3=\int
 I_1=\bigl[(b+u)\log(b+u)-(b+u)\bigr]_0^a=(b+a)\log(b+a)-(b+a)-b\log b+b=(b+a)\log(b+a)-b\log b-a .
 \]
 
-\textbf{Step 4: $I_2$.} With $w=b-u$, $\dd w=-\dd u$, the limits $u=0,a$the limits $u=0$ and $u=a$ become $w=b$ and $w=b-a$:
+\textbf{Step 4: $I_2$.} With $w=b-u$, $\dd w=-\dd u$, the limits $u=0$ and $u=a$ become $w=b$ and $w=b-a$:
 \[
 I_2=\int_{b}^{b-a}\log w\,(-\dd w)=\int_{b-a}^{b}\log w\,\dd w=\bigl[w\log w-w\bigr]_{b-a}^{b}=b\log b-(b-a)\log(b-a)-a .
 \]
@@ -468,7 +475,7 @@ Find the root of \eqref{eq:wu-sprung-fy} with $y>1$ and compare with the paper's
 \]
 \end{sample}
 
-How should we read the small difference? The paper takes $V_0=3.10073\pi$ as given (it is the value of the Wu--Sprung construction in the literature) and does not derive it; we do not know which further convention produced the sixth digit, and we will not guess. What we can say precisely is what any $V_0$ near the root does. Formula \eqref{eq:wu-sprung-ws} came from \eqref{eq:wu-sprung-abel-inv}, which drops the boundary term. Run the Abel equation forward for the potential defined by \eqref{eq:wu-sprung-ws}: Step D gives back $\Phi$ with $\Phi'=\pi\Nsm'$ and $\Phi(V_0)=0$, so
+How should we read the small difference? The paper states $V_0=3.10073\pi$ without derivation, and we do not know how that value was obtained. It differs slightly from the root of the consistency condition. So be clear about what this section does and does not do. It derives the condition that fixes $V_0$ approximately. It does not reproduce the last digits of the paper's value, and we will not guess at their origin. What we can say precisely is what any $V_0$ near the root does. Formula \eqref{eq:wu-sprung-ws} came from \eqref{eq:wu-sprung-abel-inv}, which drops the boundary term. Run the Abel equation forward for the potential defined by \eqref{eq:wu-sprung-ws}: Step D gives back $\Phi$ with $\Phi'=\pi\Nsm'$ and $\Phi(V_0)=0$, so
 \begin{equation}
 \Phi_{\rm WS}(E)=\int_{V_0}^{E}\pi\Nsm'(E')\,\dd E'=\pi\bigl[\Nsm(E)-\Nsm(V_0)\bigr].
 \label{eq:wu-sprung-phiws}
@@ -570,14 +577,14 @@ In WKB the wavefunction amplitude is proportional to $(E-V)^{-1/4}$ (Chapter~\re
 \begin{sample}{Where levels 201--300 turn}
 Find the turning points of levels $201$ and $300$ of the Wu--Sprung well.
 
-\textbf{Step 1: smooth zeros.} Solve $\Nsm(s)=n-\tfrac12$ (CHECKS script, Brent): $s_{201}\approx400.4$, $s_{300}\approx542.6$. (Quick check of the first: $\Nsm(400)=63.66\log63.66-63.66+0.875\approx201.6$, close to $200.5$ and slightly high, so $s_{201}$ lies just below $400$; the precise root is in CHECKS.)
+\textbf{Step 1: smooth zeros.} Solve $\Nsm(s)=n-\tfrac12$ by Brent's method: $s_{201}\approx398.3$ and $s_{300}\approx542.5$. Here is a quick check of the first value. We have $\Nsm(400)=63.66\log63.66-63.66+0.875\approx201.6$, which exceeds the target $200.5$ by about $1.1$. The level density there is $\Nsm'(400)=\log(63.66)/2\pi\approx0.661$, so $s_{201}$ lies about $1.1/0.661\approx1.7$ below $400$, consistent with $398.3$.
 
-\textbf{Step 2: evaluate Eq.~\eqref{eq:wu-sprung-ws}.} $x(s_{201})\approx22.6$ and $x(s_{300})\approx28.5$.
+\textbf{Step 2: evaluate Eq.~\eqref{eq:wu-sprung-ws}.} $x(s_{201})\approx22.5$ and $x(s_{300})\approx28.5$.
 
 \[
-\boxed{\text{levels }201\text{--}300\text{ turn at }x\approx22.6\text{--}28.5}
+\boxed{\text{levels }201\text{--}300\text{ turn at }x\approx22.5\text{--}28.5}
 \]
-The paper's interpolation split (Sec.~III) quotes $x=22.5$--$28.5$ for the same levels.
+This agrees with the band $x=22.5$--$28.5$ that the paper's interpolation split (Sec.~III) quotes for the same levels.
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -624,7 +631,9 @@ dev = (ER - s)/g
 print(np.mean(dev), np.max(np.abs(dev)))
 \end{pycode}
 
-\Cref{fig:wu-sprung-levels} shows the result. The exact levels track $s_n$ to a small fraction of a spacing over all 500 levels; the largest deviations are at the lowest $n$. That pattern is expected: Bohr--Sommerfeld becomes exact only as $n\to\infty$. The paper reports the same comparison at scale 1 (Sec.~II~B): mean residual $0.005$ spacings, maximum $0.063$, ``worst at low $n$, the known semiclassical weakness of the construction''. (The CHECKS script verifies with a looser tolerance that the mean deviation is below $0.02$ and the maximum below $0.1$ spacings.)
+\Cref{fig:wu-sprung-levels} shows the result. The exact levels track $s_n$ to a small fraction of a spacing over all 500 levels; the largest deviations are at the lowest $n$. That pattern is expected: Bohr--Sommerfeld becomes exact only as $n\to\infty$. The paper reports the same comparison at scale 1 (Sec.~II~B): mean residual $0.005$ spacings, maximum $0.063$, ``worst at low $n$, the known semiclassical weakness of the construction''. We ran this computation with the potential taken from a fine table of Eq.~\eqref{eq:wu-sprung-ws}, interpolated onto the grid. The run gives a mean deviation below $0.02$ spacings and a maximum deviation below $0.1$ spacings, consistent with the paper's $0.005$ and $0.063$. We quote bounds rather than more digits because the last digits depend on details we do not fix here, such as how $V$ is interpolated between table points. The listing prints the actual values for your run.
+
+The paper's mean of $0.005$ is not the same quantity as the WKB offset of $0.0045$ found in Check~1. The quantum deviation contains that uniform offset, but it also contains the genuine departures of the exact levels from Bohr--Sommerfeld, which are largest at low $n$. The two numbers are of similar size, but we do not claim that one explains the other.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/wu-sprung_levels.pdf}
@@ -681,13 +690,13 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 
 \textbf{The box, Sec.~II~B and App.~A step 3.} ``Scale 1 uses the domain $[-L,L]$ with $L=x(V{=}1000)=44.883$ and the first 500 levels scored; scale 2 extends to $L=x(V{=}1500)=59.957$ with 1000 levels.'' Sample Problem ``The paper's two box sizes'' reproduces both $L$ values from Eq.~(2). App.~A step 3 quotes them to more digits as $44.8827$ and $59.9572$.
 
-\textbf{Accuracy of the construction, Sec.~II~B and App.~A key anchors.} The paper's statement that the Richardson levels match the smooth zeros to ``$0.005$ spacings mean, $0.063$ max (worst at low $n$, the known semiclassical weakness of the construction)'' is the comparison of \cref{fig:wu-sprung-levels}. The anchors give the same $0.005/0.063$ at scale 2. Our analysis adds one detail: a uniform part of order $\Nsm(V_0)\approx0.0045$ spacings comes from the choice of $V_0$ itself.
+\textbf{Accuracy of the construction, Sec.~II~B and App.~A key anchors.} The paper's statement that the Richardson levels match the smooth zeros to ``$0.005$ spacings mean, $0.063$ max (worst at low $n$, the known semiclassical weakness of the construction)'' is the comparison of \cref{fig:wu-sprung-levels}. The anchors give the same $0.005/0.063$ at scale 2. Our analysis adds one detail. With the paper's $V_0$, the WKB levels of the potential are offset uniformly by $\Nsm(V_0)\approx0.0045$ spacings. The published numbers do not let us separate how this offset combines with the non-WKB deviations in the paper's quoted mean.
 
 \textbf{The null model, Sec.~II~C.} ``The null model is the unperturbed potential itself; numerically its holdout error coincides with that of the smooth zeros used as the oracle's null (both $0.2631$ on zeros 401--500).'' This chapter is why: the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing, so ``predict the Wu--Sprung levels'' and ``predict $s_n$'' have the same error. The paper correctly stresses that the two nulls are conceptually distinct (an eigenvalue spectrum versus the solution of the mean counting function); their numerical coincidence is a consequence of the construction derived here.
 
 \textbf{Evenness of $\delta V$, Sec.~II~C ``Other bases''.} The paper fits only even corrections (cosine $\cos(k\pi x/L)$, Chebyshev $T_k(2|x|/L-1)$, hat functions in $|x|/L$). Section~\ref{sec:wu-sprung-inverse} explains the motivation: semiclassically the spectrum fixes only the width function, so evenness is the assumption that makes the inverse problem well posed, and it is kept for the corrections too.
 
-\textbf{Turning points, Sec.~III interpolation split and Fig.~4.} ``Position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$.'' This is our map \eqref{eq:wu-sprung-xn}; Sample Problem ``Where levels 201--300 turn'' gives $22.6$--$28.5$. Fig.~4(a),(b) of the paper shades exactly this band and shows that the fitted correction is largest there (rms $\delta V=40$ in the band, maximum $|\delta V|=199$ ``where the smooth potential is about $500$''). You can check the last remark with our formula: $V(x)\approx400$--$540$ across the band, because the band runs between $s_{201}\approx400$ and $s_{300}\approx543$.
+\textbf{Turning points, Sec.~III interpolation split and Fig.~4.} ``Position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$.'' This is our map \eqref{eq:wu-sprung-xn}. The Sample Problem ``Where levels 201--300 turn'' gives $22.5$--$28.5$, in agreement with the paper. Fig.~4(a),(b) of the paper shades exactly this band and shows that the fitted correction is largest there (rms $\delta V=40$ in the band, maximum $|\delta V|=199$ ``where the smooth potential is about $500$''). You can check the last remark with our formula. Across the band, $V(x)$ runs from about $398$ to about $543$, because the band lies between the turning points of $s_{201}\approx398.3$ and $s_{300}\approx542.5$.
 
 \textbf{Sec.~V A and ``$p=2$ period'' remarks.} Sec.~V states that the $p=2$ oscillation, period $2\pi/\log2\approx9$ in $t$, is ``only $\sim$6--7 levels at these heights''; that conversion uses the mean spacing \eqref{eq:wu-sprung-gap} (Problem~14).
 
@@ -702,7 +711,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 \item The Wu--Sprung potential, Eq.~\eqref{eq:wu-sprung-ws} (paper Eq.~(2)), follows by exact integration.
 \item $V_0$ is fixed by $\Nsm(V_0)=0$ with $V_0>2\pi$: root $\approx3.0803\pi$; the paper's $3.10073\pi$ shifts levels uniformly by $\approx0.0045$ spacings, Eq.~\eqref{eq:wu-sprung-phiws}.
 \item Shape: harmonic bottom $V\approx V_0+51.3x^2$; $x\approx\frac{\sqrt V}\pi(\log\frac{2V}\pi-2)$ at large $V$, Eq.~\eqref{eq:wu-sprung-asym}; $L=44.883$ and $59.957$.
-\item Turning-point map $x_n=x(s_n)$, Eq.~\eqref{eq:wu-sprung-xn}: levels 201--300 turn at $x\approx22.6$--$28.5$.
+\item Turning-point map $x_n=x(s_n)$, Eq.~\eqref{eq:wu-sprung-xn}: levels 201--300 turn at $x\approx22.5$--$28.5$.
 \item The well reproduces $s_n$, not $t_n$; fitted fluctuation corrections must be judged by held-out prediction against this null.
 \end{itemize}
 
@@ -735,7 +744,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 
 \textbf{1.} $x_\pm=\pm V$, so $w=2V$. Then $\Phi=\int_0^E\frac{2V\,\dd V}{2\sqrt{E-V}}$; with $V=E-u^2$ this is $2\int_0^{\sqrt E}(E-u^2)\dd u=2(E^{3/2}-E^{3/2}/3)=\frac43E^{3/2}$, matching $2I_1E^{3/2}$ with $I_1=\frac23$.
 
-\textbf{2.} $100/2\pi=15.915$, $\log15.915=2.7674$, $\gap=2\pi/2.7674=2.270$.
+\textbf{2.} $100/2\pi=15.9155$ and $\log15.9155=2.7673$, so $\gap=2\pi/2.7673=2.2705$.
 
 \textbf{3.} At $V=V_0$, $a=0$: the first term is $0$ and the second is $\sqrt{V_0}\log(\sqrt{V_0}/\sqrt{V_0})=0$.
 
@@ -745,7 +754,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 
 \textbf{7.} $f(y)=y\log y-y=-1$ has the unique solution $y=1$ (the minimum of $f$), so $V_0=2\pi$. Then $\log\frac{V_0}{2\pi e^2}=-2$ and, with $\log\frac{1+r}{1-r}=2r+\frac23r^3+\cdots$, $\pi x=-2a+2a+\frac{2a^3}{3V_0}+\cdots$, so $x\approx\frac{2a^3}{3\pi V_0}$. Hence $V-V_0=a^2\propto x^{2/3}$: a cusp at the bottom, not harmonic.
 
-\textbf{9.} $s_{201}\approx400.4$ and $s_{300}\approx542.6$ give $x(s_{201})\approx22.6$ and $x(s_{300})\approx28.5$, in agreement with the paper's $22.5$--$28.5$ to the precision quoted.
+\textbf{9.} $s_{201}\approx398.3$ and $s_{300}\approx542.5$ give $x(s_{201})\approx22.5$ and $x(s_{300})\approx28.5$. This agrees with the paper's $22.5$--$28.5$.
 
 \textbf{11.} The unperturbed Wu--Sprung levels equal $s_n$ to within a few thousandths of a spacing (Sec.~\ref{sec:wu-sprung-check}), so the error of predicting them for $t_n$ equals the error of predicting $s_n$, to the digits shown. Conceptually one is an eigenvalue list of a particular operator, the other the solution of $\Nsm(s)=n-\frac12$; they coincide only because the Wu--Sprung construction was designed to make them coincide, and the coincidence is approximate.
 
@@ -755,4 +764,4 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 
 \textbf{17.} $\Phi'=2\sqrt E$, so $x=\frac2\pi\int_0^V\sqrt{E}\,\dd E/\sqrt{V-E}$. With $E=V\sin^2\varphi$, $\dd E=2V\sin\varphi\cos\varphi\,\dd\varphi$, the integral is $\int_0^{\pi/2}2V\sin^2\varphi\,\dd\varphi=\pi V/2$. Hence $x=V$, i.e.\ $V=|x|$.
 
-\textbf{19.} $t_1/2\pi=2.24963$, $\log2.24963=0.81077$; $\Nsm=2.24963\times0.81077-2.24963+0.875=0.449$. Close to $\frac12$: the first zero lies $0.05$ of a spacing below $s_1$.
+\textbf{19.} $t_1/2\pi=2.24961$ and $\log2.24961=0.81076$, so $\Nsm=2.24961\times0.81076-2.24961+0.875=0.449$. This is close to $\frac12$. Because $\Nsm$ is increasing and $\Nsm(t_1)<\Nsm(s_1)=\frac12$, we have $t_1<s_1$. The difference $\frac12-0.449\approx0.05$ means that the first zero lies about $0.05$ of a mean spacing below $s_1$.

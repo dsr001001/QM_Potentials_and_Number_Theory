@@ -32,6 +32,15 @@ assert abs(float(np.asarray(qmnt.smooth_zeros(np.array([1])))[0]) - s1) < 1e-6
 g1 = float(gap(s1)); assert abs(g1 - 7.500) < 1e-3
 f1 = (t1 - s1)/g1; assert abs(f1 - (-0.0515)) < 5e-4
 assert abs(Nsm(14.0) - 0.432) < 1e-3 and abs(Nsm(15.0) - 0.565) < 1e-3   # bracket
+# Newton iterates (Step 3)
+assert abs(dNsm(14.0) - 0.1275) < 5e-5
+assert abs(Nsm(14.0) - 0.4320) < 5e-5
+x1 = 14.0 + (0.5 - Nsm(14.0))/dNsm(14.0)
+assert abs(x1 - 14.533) < 5e-4
+assert abs(Nsm(x1) - 0.5016) < 1e-4 and abs(dNsm(x1) - 0.1335) < 1e-4
+step = (Nsm(x1) - 0.5)/dNsm(x1); assert abs(step - 0.0120) < 2e-4
+x2 = x1 - step; assert abs(x2 - 14.521) < 5e-4
+x3 = x2 + (0.5 - Nsm(x2))/dNsm(x2); assert abs(x3 - x2) < 1e-5
 
 # Sample Problem: Lambert W
 z1 = (1 - 11/8)/np.e
@@ -62,13 +71,14 @@ assert abs((y_all[499] + f_all[499]) - (-6.8e-6)) < 3e-7
 assert abs((y_all[0] + f_all[0]) - (-8.3e-4)) < 1e-4
 assert np.all(y_all + f_all <= 1e-12)
 
-# np.gradient endpoint pitfall
+# np.gradient endpoint pitfall (window 1--400)
 s2 = float(smooth_zero(2)); assert abs((s2 - s1) - 6.13) < 0.01
 s400 = s_all[:400]; ggrad = np.gradient(s400)
 assert abs(rms((tz[:400]-s400)/ggrad) - rms(f_all[:400])) < 1e-4
 
-# GUE check: mean unfolded spacing
+# GUE check: mean unfolded spacing and telescoping identity
 sp = np.diff(Nsm(tz)); assert abs(sp.mean() - 1) < 1e-3
+assert abs(sp.mean() - (1 + (y_all[0] - y_all[-1])/9999)) < 1e-9
 
 # Sample Problem: L from Eq. (2)
 V0 = 3.10073*np.pi
@@ -104,7 +114,7 @@ Ed = 4/h**2*np.sin(th)**2; assert abs(Ed - 690.94) < 0.01
 assert abs((Ec - Ed) - 9.09) < 0.01
 assert abs(gap(700.0) - 1.333) < 5e-4
 assert abs((Ec - Ed)/gap(700.0) - 6.8) < 0.05
-assert abs(2*L1*np.sqrt(700)/np.pi - 755.97) < 0.01
+assert abs(2*L1*np.sqrt(700)/np.pi - 755.98) < 0.01
 
 # Sample Problem: Richardson subscript
 E, a, hh = 100.0, -50.0, 0.02
@@ -134,10 +144,13 @@ def oracle_score(nn, P):
 r, c = oracle_score(nq, [2]); assert abs(r - 0.198) < 0.003 and abs(c - 0.66) < 0.01
 r, c = oracle_score(nq, list(qmnt.first_primes(6))); assert abs(r - 0.074) < 0.003 and abs(c - 0.96) < 0.01
 
-# Why 500 levels: N_sm(1000), count
+# Why 500 levels: N_sm(1000), count, turning-point margins
 assert abs(Nsm(1000.0) - 648.6) < 0.05
 assert int(np.sum(s_all <= 1000)) == 649
 assert tz[499] < 1000 and tz[999] < 1500
+xt1 = x_of_V(811.18); xt2 = x_of_V(1419.42)
+assert abs(xt1 - 38.53) < 0.02 and abs(xt2 - 57.66) < 0.02
+assert abs((L1 - xt1) - 6.35) < 0.02 and abs((59.957 - xt2) - 2.29) < 0.02
 
 # Problem 2, 3
 assert abs(Nsm(100.0) - 29.00) < 0.01
@@ -162,7 +175,7 @@ Ek = (100*np.pi/(2*L1))**2; assert abs(Ek - 12.2483) < 1e-4
 e1 = Edisc(100, 1000) - Ek; assert abs(e1 - (-0.100)) < 1e-3
 eR = (4*Edisc(100, 2001) - Edisc(100, 1000))/3 - Ek
 assert -9e-5 < eR < -7.5e-5
-assert abs(Edisc(100, 1000) - 12.1479) < 1e-4
+assert abs(Edisc(100, 1000) - 12.1481) < 1e-4
 Efd = np.sort(np.asarray(qmnt.fd_levels(np.zeros(1000), L1, k=100), float))
 assert abs(Efd[99] - Edisc(100, 1000)) < 1e-6
 
@@ -216,9 +229,9 @@ assert abs(rms((tp - tz[nq-1])/g_all[nq-1]) - 0.116) < 0.003
 assert abs(corr((tp - s_all[nq-1])/g_all[nq-1], f_all[nq-1]) - 0.90) < 0.01
 
 # Problem 25
-t10k = tz[-1]; assert abs(t10k - 9879) < 1
+t10k = tz[-1]; assert abs(t10k - 9877.78) < 0.01
 assert abs(gap(t10k) - 0.854) < 2e-3
 assert abs(5e-12/gap(t10k) - 6e-12) < 1e-12
 assert abs(0.018/(6e-12) - 3e9) < 1e8
 
-print("all checks passed")
+print('all checks passed')

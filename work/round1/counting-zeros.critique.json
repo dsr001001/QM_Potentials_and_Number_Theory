@@ -1,0 +1,72 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Starting from $g=17.8$, $f(17.8)=-0.02411$ and $f'=0.52070$, so the first step gives $17.8463$",
+  "problem": "The check on this value failed. The quoted f(17.8) does not match the computed value of the asymptotic theta at 17.8, so the answer to Problem 19 is not verified. (Also, g_0 is not a root of f: theta(g_0)=0 has solution near 17.8456 only if the numbers are right; the quoted intermediate numbers are wrong.)",
+  "fix": "Recompute f(17.8) and f' with code, correct the quoted numbers, and make the assertion pass."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The first three factors together contribute $\\pi+\\theta(T)$, and $\\zeta$ contributes $\\pi S(T)$.",
+  "problem": "Gamma and pi^{-s/2} give theta; the constant 1/2 gives 0 and s(s-1) gives pi. That is three factors (1/2, s(s-1), pi^{-s/2}) plus Gamma, so four factors contribute pi+theta; 'first three' is miscounted.",
+  "fix": "Say 'the factors 1/2, s(s-1), pi^{-s/2} and Gamma(s/2) together contribute pi+theta(T)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Write the circle as $z=a+re^{i\\phi}+b$... more simply, first suppose the circle is centered at $a$",
+  "problem": "Stray garbled text with an unfinished expression left in the exposition.",
+  "fix": "Delete it: 'First suppose the circle is centered at a: z=a+re^{i\\phi}.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Differentiating Eq.~\\eqref{eq:counting-zeros-thetaasym} term by term",
+  "problem": "Differentiating an asymptotic expansion term by term, including the O(t^-3) remainder, is not justified.",
+  "fix": "Use the exact derivative theta'(t)=Im(1/2)psi(1/4+it/2)-(1/2)log pi, or flag the step as heuristic."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The ``null'' error $0.263$ against which every model in the paper is judged",
+  "problem": "Not every model is judged against 0.263; other holdouts have different nulls (0.274 etc.).",
+  "fix": "Say 'the principal null'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The product of positive numbers is positive.",
+  "problem": "The claim xi(sigma)>0 on 1<sigma<=2 omits the 1/2 factor in the list of positive factors (minor), but more seriously the proof for -1<=sigma<0 relies on xi(1-sigma) with 1-sigma in (1,2], fine; however sigma=1 case lists 'positive' via a limit not shown for 0<sigma<1 continuity.",
+  "fix": "Mention the factor 1/2 and that 2^{-sigma}<1 and the alternating-series bound uses decreasing terms."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Note that the local mean spacing $3.02$ at $n=10$ is smaller than the average $3.96$ over the first ten zeros",
+  "problem": "Comparison is confusing; also average spacing of the first ten zeros is dominated by the lower spacings, not a contradiction needing remark.",
+  "fix": "Clarify that the average spacing over n=1..10 is an average of gap values from 7.5 to 3.0."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Its status in this book: a theorem, proved above with the argument principle and the properties of $\\xi$ taken on trust.",
+  "problem": "Also depends on the Stirling-branch continuity and Gamma facts; fine, but the zero-free claim (e) on Re s=1 is deep.",
+  "fix": "State that the proof is complete modulo the cited theorems."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "you can confirm this coefficient numerically in Problem~23.",
+  "problem": "Hard-coded problem number reference instead of a label; also Problem 25/14 references in answers.",
+  "fix": "Use labeled references or ensure numbering is stable."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The three values printed are $0.263$, $0.270$ and $0.279$, the first three entries of the ``null'' column",
+  "problem": "Answers section lacks answers to all odd-numbered problems (e.g., 3 given, but 25,27 given; 29? many odd problems like 31 absent as problem count is 28 yet some odd problems e.g. 5,7 given, 19 given; problem 9 ok). Only ~14 problems shown answered; odd ones such as 25 and 27 are present but problem list lacks 29+.",
+  "fix": "Verify every odd-numbered problem has an answer."
+ }
+]

@@ -1,0 +1,100 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/paper-critique_scoreboard.pdf}",
+  "problem": "The chapter includes figures (scoreboard, checklist, dephase, block, turning, height) but the supplied response contains no FIGURES part, so no figure scripts exist. File names with a hyphen in the slug also may not match the required pattern.",
+  "fix": "Add a FIGURES section with a '### FIG paper-critique_<name>' script for each of the six figures, and make sure the filenames match the includegraphics paths."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\label{prob:paper-critique-audit}% Problem 23\n\\label{prob:paper-critique-factor}% Problem 25",
+  "problem": "Labels are placed after the problemlist, outside any numbered item, so \\ref{prob:...} will not give the problem numbers. Also the 'prob:' prefix is not among the allowed label prefixes (sec/eq/fig/tab). The problems are referred to as 'Problem~\\ref{...}'.",
+  "fix": "Remove these labels and refer to the problems by number in words (e.g. 'Problem 23'), or use a label with an allowed prefix attached to the item."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Sec.~IV says one prime beats every fitted operator's holdout performance by a factor $\\gtrsim1.3$.",
+  "problem": "The paper's claim concerns the held-out performance of fitted operators in general. The chapter checks it only against one Table I row (0.265, ridge mu=0.3). The last problem and the answer 'consistent' are weak, since the other rows, including 0.265 versus 0.198, give 1.34, which only just clears 1.3, and a row scored on a different holdout would need its own null.",
+  "fix": "State that the comparison is restricted to rows scored on 401--500 and note that Table II rows (Chebyshev mu=0.3, 0.264) give 1.33. Do not claim the comparison covers all operators."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper also states that the Hermitian conclusions of Secs.~III and IV ``do not depend on'' Sec.~V.",
+  "problem": "The paper says 'the Hermitian conclusions of Secs. III and IV do not depend on it' about Sec. V (in Sec. V's intro); this is fine, but 'Sec.~V's numbers ... rest on the original computation, whose code is in the original Zenodo version' is the chapter's own inference, not in the paper (the paper says the record includes the revision scripts and the original reconstruction).",
+  "fix": "Remove the claim about which Zenodo version holds the code, or mark it as an inference."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The best operator OOS rms in Table~I on 401--500 is $0.265$ (ridge $\\mu=0.3$)",
+  "problem": "Table I scale-1 1--350 row has OOS 0.273 and 1--300 rows are scored on 301--400 etc.; the 1--400 ridge mu=0.3 row is 0.265, but 1--400 M=200 is 0.274 and others are above. Fine, but the Chebyshev mu=0.3 row (0.264, Table II) is lower, so 'best operator' is not the best on this holdout.",
+  "fix": "Say 'best Table I row' and mention Table II's Chebyshev mu=0.3 row at 0.264."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the null rises from $0.263$ on 401--500 to $0.296$ on 5001--10000, Table~V",
+  "problem": "Fine numerically, but the text says item (i) 'within-height ... held-out errors $1.5$--$3.0$ times the null at scale 1'; the paper says this for the random splits only, and the chapter applies it generally.",
+  "fix": "Say 'for the random 80/20 splits'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The exact sum rule ... The real shifts sum to zero \\emph{exactly}, at every order, over the full truncated basis.",
+  "problem": "The trace argument requires the matrix to be exactly the truncated matrix of H+iA in the basis, i.e. the truncated problem, not the exact spectrum of the full operator. Also the claim that the Sec. V A check 'is a check that the code is consistent, not evidence about the zeros' is the chapter's interpretation.",
+  "fix": "State that the identity holds for the finite matrix in the truncated basis, and label the interpretation as the chapter's own."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "has its own zeros and its own explicit formula, in which each prime term is weighted by $\\chi_4(p)^m$.",
+  "problem": "The statement is acceptable, but the claim that mpmath.dirichlet evaluates L-functions is given without a hint that the smooth counting function for L(s,chi_4) differs (log(t/pi) type); the text says 'look up'. Minor. Bigger issue: 'bound' on identity of W1 sample treats the citing sets as independent draws though they overlap, which is heuristic.",
+  "fix": "Flag the independence assumption in the W1 sample as rough."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Treat the $\\log q$ near $\\omega$ as a Poisson process (Chapter~\\ref{ch:level-statistics}): the probability of no point in a window with expected count $\\bar m$ is $e^{-\\bar m}$",
+  "problem": "Primes are not Poisson in the log scale at this window width in a rigorous sense; the window width 2pi/T is also used as full width while the matching tolerance is half-width on each side, fine. But a student has not been shown why the Poisson law applies.",
+  "fix": "State that this is a heuristic assumption (primes treated as random), and name the neglected correlations."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper's matching tolerance, App.~A step 23",
+  "problem": "The paper's tolerance is pi/T for matching, but pi/T as the frequency error bound for the dephasing sample is the chapter's worst-case assumption; calling it 'the paper's matching tolerance' as justification for the actual error bound is mixed. Also the window in step 23 is T of the training zeros, fine.",
+  "fix": "Say 'taken as the matching tolerance' and note that it is an upper bound used only for a worst case."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The coverage law is itself heuristic (Chapter~\\ref{ch:fitting}), so these thresholds are estimates, not sharp lines.",
+  "problem": "The sample applies the coverage law at scale 2 using s_800 rather than a scored level; the paper's in-sample 0.103 at M=900 is cited as 'fits the observation' without showing coverage at that M.",
+  "fix": "Also give the maximum energy covered by M=900 at scale 2, E = (M pi/(2L))^2 = about 556."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\begin{verbatim}\ns = qmnt.smooth_zeros(np.array([201, 300]))\nx = qmnt.wu_sprung_x(s)\n\\end{verbatim}",
+  "problem": "Uses verbatim inside a sample rather than the pycode environment. The sample also says 'done in the CHECKS script', a reference to a machine part the reader never sees.",
+  "fix": "Use pycode and state the computed values in the text."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the bibliography entry \\cite{strang}",
+  "problem": "Citing strang for the trace identity in a beyond box with no location; also the beyond box says 'You checked the 2x2 case in Chapter eigen', which is an unverifiable assumption.",
+  "fix": "Say 'recall the 2x2 case' and cite the relevant chapter of strang."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper does not define such a number; it reports rms and null side by side.",
+  "problem": "Introduced relative skill is also used in the Summary and answers as if standard; the sign convention in the ESS sample 'Step 1' of item (ii) text ('-4.80%' better) is confusing.",
+  "fix": "Keep the sign convention uniform: report improvements as positive percentages."
+ }
+]

@@ -221,7 +221,7 @@ For an \emph{increasing} positive function the inequalities reverse. On $[k,k+1]
 \int_1^{n}f(x)\,\dd x\;\le\;\sum_{k=2}^{n}f(k)\;\le\;\int_1^{n}f(x)\,\dd x+f(n)-f(1)\quad(f\text{ increasing}).
 \label{eq:asymptotics-squeeze-inc}
 \end{equation}
-(Left: sum $f(k)\le\int_{k}^{k+1}f$ over $k=1,\dots,n-1$ gives $\sum_{k=1}^{n-1}f(k)\le\int_1^nf$, then add $f(n)-f(1)$ to both sides for the right half. Right half rearranged: $\sum_{k=2}^{n}f(k)=\sum_{k=1}^{n-1}f(k)+f(n)-f(1)$. Left: sum $\int_k^{k+1}f\le f(k+1)$ over $k=1,\dots,n-1$.)
+In detail: integrating $f(k)\le f(x)\le f(k+1)$ over the unit interval $[k,k+1]$ gives $f(k)\le\int_k^{k+1}f\,\dd x\le f(k+1)$. Summing the right inequality over $k=1,\dots,n-1$ gives $\int_1^nf\,\dd x\le\sum_{k=2}^{n}f(k)$, the left half of \cref{eq:asymptotics-squeeze-inc}. Summing the left inequality over $k=1,\dots,n-1$ gives $\sum_{k=1}^{n-1}f(k)\le\int_1^nf\,\dd x$; adding $f(n)-f(1)$ to both sides and using $\sum_{k=1}^{n-1}f(k)+f(n)-f(1)=\sum_{k=2}^{n}f(k)$ gives the right half.
 
 \subsection{The harmonic numbers and Euler's constant}
 
@@ -397,7 +397,7 @@ Factorials are defined only for whole numbers. Chapter~\ref{ch:counting-zeros} n
 \Gamma(x)=\int_0^\infty u^{x-1}e^{-u}\,\dd u .
 \label{eq:asymptotics-gamma}
 \end{equation}
-The integral converges: near $u=0$ the integrand behaves like $u^{x-1}$, whose integral $\int_0^1u^{x-1}\dd u=1/x$ is finite for $x>0$; for large $u$, the extension of \cref{eq:asymptotics-logpower} to "exponentials beat powers" shows $u^{x+1}e^{-u}\to0$, so the integrand is eventually below $u^{-2}$, whose integral to infinity is finite.
+The integral converges: near $u=0$ the integrand behaves like $u^{x-1}$, whose integral $\int_0^1u^{x-1}\dd u=1/x$ is finite for $x>0$; for large $u$, pick an integer $k\ge x+2$. For $u>0$ every term of the Taylor series of $e^u$ is positive, so $e^u>u^k/k!$. Hence $u^{x+1}e^{-u}<k!\,u^{x+1-k}\le k!/u$ for $u\ge1$, which tends to $0$. The integrand $u^{x-1}e^{-u}=u^{-2}\cdot u^{x+1}e^{-u}$ is therefore below $u^{-2}$ once $u$ is large enough, and $\int_1^\infty u^{-2}\,\dd u=1$ is finite. (This is the precise meaning of "exponentials beat powers" used below.)
 
 \paragraph{The factorial property.} First, $\Gamma(1)=\int_0^\infty e^{-u}\dd u=1$. Next, integrate by parts with "$f=u^{x}$, $\dd g=e^{-u}\dd u$":
 \[
@@ -639,7 +639,7 @@ $k$ & midpoint $m$ & $f(m)$ & new bracket\\
 \end{tabular}
 \end{center}
 
-\textbf{Step 3:} After five steps the width is $10/2^5=0.3125$; the midpoint $14.53125$ has guaranteed error at most $0.15625$ by \cref{eq:asymptotics-bisect-bound}. The actual error, using $s_1=14.5214$, is about $0.0099$.
+\textbf{Step 3:} After five steps the width is $10/2^5=0.3125$; the midpoint $14.53125$ has guaranteed error at most $0.15625$ by \cref{eq:asymptotics-bisect-bound}. The actual error, using the converged root $s_1=14.5213$ (found with Brent's method, \cref{sec:asymptotics-newton}), is about $0.0099$.
 
 \textbf{Step 4:} For $\delta=10^{-10}$, \cref{eq:asymptotics-bisect-steps} requires $k\ge\log_2(10^{11})-1=36.54-1=35.54$, so $k=36$.
 
@@ -740,10 +740,10 @@ $k$ & $x_k$ & $e_k$\\
 
 \textbf{Step 4:} For (b), $f(s)=\Nsm(s)-\tfrac12$ and $f'(s)=\frac{1}{2\pi}\log\frac{s}{2\pi}$ by \cref{eq:asymptotics-nsm-derivs}. At $x_0=14$: $f(14)=-0.0680$ and $f'(14)=0.1275$, so $x_1=14+0.0680/0.1275=14.5333$.
 
-\textbf{Step 5:} The next iterate $x_2$ agrees with $s_1=14.52136$ to better than $2\times10^{-5}$, and $x_3$ to better than $10^{-10}$.
+\textbf{Step 5:} The next iterate $x_2$ agrees with the converged root $s_1=14.5213$ to better than $2\times10^{-5}$, and $x_3$ to better than $10^{-10}$.
 
 \[
-\boxed{\sqrt2:\ 12\text{ correct digits in 4 steps};\qquad s_1=14.5214\text{ in 2 to 3 steps}}
+\boxed{\sqrt2:\ 12\text{ correct digits in 4 steps};\qquad s_1=14.5213\text{ in 2 to 3 steps}}
 \]
 Compare: bisection needed 36 steps for $10^{-10}$.
 \end{sample}
@@ -764,7 +764,7 @@ For our problem, though, convexity rescues Newton completely.
 
 \emph{Proof.} Convexity at $x_k$, evaluated at $r$: $f(r)\ge f(x_k)+f'(x_k)(r-x_k)$. With $f(r)=0$ this is $0\ge f(x_k)-f'(x_k)(x_k-r)$, so $f(x_k)/f'(x_k)\le x_k-r$, i.e. $x_{k+1}=x_k-f(x_k)/f'(x_k)\ge r$. If $x_k>r$, then $f(x_k)>0$ (increasing $f$), so $x_{k+1}<x_k$. A decreasing sequence bounded below by $r$ converges to some $\ell\ge r$; passing to the limit in \cref{eq:asymptotics-newton} gives $\ell=\ell-f(\ell)/f'(\ell)$, so $f(\ell)=0$, and because $f$ is increasing, $\ell=r$. \hfill$\square$
 
-By \cref{eq:asymptotics-nsm-derivs}, $\Nsm$ is increasing and convex on $(2\pi,\infty)$. So Newton's method for any smooth zero, started anywhere above $2\pi$, lands at or to the right of $s_n$ after one step and then marches down to it. (Problem~23 shows that the first step from near $2\pi$ can overshoot enormously, but it overshoots to the right, which is safe.)
+By \cref{eq:asymptotics-nsm-derivs}, $\Nsm$ is increasing and convex on $(2\pi,\infty)$. Take $I=(2\pi,\infty)$ and $r=s_n$. If $x_0\in I$, the theorem gives $x_1\ge s_n>2\pi$, so $x_1$ again lies in $I$; repeating the argument, every iterate stays in $I$, and the theorem applies at every step. So Newton's method for any smooth zero, started anywhere above $2\pi$, lands at or to the right of $s_n$ after one step and then marches down to it. (Problem~23 shows that the first step from near $2\pi$ can overshoot enormously, but it overshoots to the right, which is safe.)
 
 \subsection{The secant method}
 
@@ -789,7 +789,7 @@ The fast methods can wander off; bisection is slow but cannot fail. \emph{Brent'
 \item It accepts the fast step only if the new point lies well inside the bracket (between $(3c+b)/4$ and $b$) and the step is shrinking quickly enough (less than half the step before last). Otherwise it takes a bisection step instead.
 \item It evaluates $f$ at the new point and updates the three points so that the bracket property is preserved.
 \end{enumerate}
-The result never does much worse than bisection (Brent proved a worst case of about $(\log_2\tfrac{b-a}{\delta})^2$ evaluations) and on smooth functions converges superlinearly like the secant method \cite{brent,nr}. We use it as a reliable black box: \texttt{scipy.optimize.brentq(f, a, b)}. Its default tolerances are an absolute $2\times10^{-12}$ and a relative $8.88\times10^{-16}$ (four times the double-precision machine epsilon of \cref{sec:asymptotics-float}). \Cref{fig:asymptotics-convergence} compares all four methods on the first smooth zero.
+The result never does much worse than bisection (Brent \cite{brent} shows, and we quote without proof, that the number of evaluations never exceeds roughly $(\log_2\tfrac{b-a}{\delta})^2$) and on smooth functions converges superlinearly like the secant method \cite{brent,nr}. We use it as a reliable black box: \texttt{scipy.optimize.brentq(f, a, b)}. Its default tolerances are an absolute $2\times10^{-12}$ and a relative $8.88\times10^{-16}$ (four times the double-precision machine epsilon of \cref{sec:asymptotics-float}). \Cref{fig:asymptotics-convergence} compares all four methods on the first smooth zero.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/asymptotics_convergence.pdf}
@@ -1046,11 +1046,11 @@ Here is where each tool of this chapter appears in the paper \cite{soniR1}.
 
 \paragraph{The oracle's level equation (Sec.~II~D, Appendix~A step 8).} Predicted zeros solve $\Nsm(t)+\Nfl(t)=n-\tfrac12$ by "Brent bracketed $\pm3$ around the smooth zero (bracket expanded on sign failure)". This is the bracket-expansion strategy of \cref{sec:asymptotics-brackets}. In Sec.~IV the paper reports that the fitted-amplitude control B with 900 coefficients is "root-ambiguous (the level equation has several roots for about a third of the held-out levels)" and that "the score varies by at most $0.012$ with the choice of root"; this is the non-monotonic situation of \cref{sec:asymptotics-brackets}, flagged with a dagger in Table~IV.
 
-\paragraph{Richardson extrapolation as an asymptotic expansion (Sec.~II~B, Appendix~A step 5).} The finite-difference levels behave like $E(h)=E^\ast+ah^2+\order(h^4)$ as the grid spacing $h\to0$ (Chapter~\ref{ch:finite-differences} derives this). Halving $h$ gives $E(h/2)=E^\ast+ah^2/4+\order(h^4)$, and $4E(h/2)-E(h)=3E^\ast+\order(h^4)$, so $(4E(h/2)-E(h))/3$ cancels the $h^2$ term. This is the paper's $E^{\rm Rich}$, built from the "Richardson pair $12000/24000$" grids. (The paper writes it $(4E_{2h}-E_h)/3$; with the pair of grids named in Appendix~A step 3 this is read with $E_{2h}$ denoting the twice-refined grid. Chapter~\ref{ch:finite-differences} returns to this.) Problem~28 practices the idea on a simpler function.
+\paragraph{Richardson extrapolation as an asymptotic expansion (Sec.~II~B, Appendix~A step 5).} The finite-difference levels behave like $E(h)=E^\ast+ah^2+\order(h^4)$ as the grid spacing $h\to0$ (Chapter~\ref{ch:finite-differences} derives this). Halving $h$ gives $E(h/2)=E^\ast+ah^2/4+\order(h^4)$, and $4E(h/2)-E(h)=3E^\ast+\order(h^4)$, so $(4E(h/2)-E(h))/3$ cancels the $h^2$ term. This is the paper's $E^{\rm Rich}$, built from the "Richardson pair $12000/24000$" grids. (The paper writes this combination as $(4E_{2h}-E_h)/3$. The cancellation above works only if the factor $4$ multiplies the levels on the \emph{finer} grid of the pair, so in the paper's formula $E_{2h}$ must be read as the finer-grid levels, our $E(h/2)$. Chapter~\ref{ch:finite-differences} returns to this notation.) Problem~28 practices the idea on a simpler function.
 
 \paragraph{The float32 artifact (Sec.~II~E safeguard (i), Sec.~V, Appendix~A step 9).} The constant mode $\phi_0=1$ of the absorptive-even class has, analytically, zero second-order real shift. Its tensor rows were at first "left as float32 noise", and the optimizer "had driven the exactly-null constant mode to $c_0\approx2.2\times10^{6}$, harvesting in-sample improvement from float32 noise in analytically-zero tensor entries" (Sec.~V). Before repair the floor was $0.2322$, spuriously close to the PT-odd value $0.2321$; after the rows were "zeroed analytically" (Appendix~A step 9) it rose to $0.2358$. The sample "A parameter that should do nothing" in \cref{sec:asymptotics-float} is this mechanism in its simplest form; Problem~20 estimates the size of $c_0$ in a quadratic version. Chapter~\ref{ch:paper-spurious-floor} gives the full account.
 
-\paragraph{Asymptotic thinking in the claims.} The paper's statement that the oracle predicts "essentially as well at $n=10^4$ as at $n=400$" (Sec.~IV), and its use of heights where the mean spacing is still near 1, both rest on the slow, logarithmic growth of \cref{sec:asymptotics-order,sec:asymptotics-inverse}: between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.7, so a model that works at one height is being tested over a narrow range of $\log t$.
+\paragraph{Asymptotic thinking in the claims.} The paper's statement that the oracle predicts "essentially as well at $n=10^4$ as at $n=400$" (Sec.~IV), and its use of heights where the mean spacing is still near 1, both rest on the slow, logarithmic growth of \cref{sec:asymptotics-order,sec:asymptotics-inverse}: between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.85. (The following is our own remark, not a claim made in the paper: over that range $\log(s_n/2\pi)=2\pi/\gap_n$ grows only from about 4.7 to about 7.4, so "nearly height-independent" refers to a modest stretch of the logarithmic scale.)
 
 \begin{keyideas}
 \item The paper's smooth zeros, potential inversion and oracle predictions are all bracketed root finding.
@@ -1133,7 +1133,7 @@ Here is where each tool of this chapter appears in the paper \cite{soniR1}.
 
 \prob{2}{The symmetric difference quotient $D(h)=(e^h-e^{-h})/(2h)$ approximates $\frac{\dd}{\dd x}e^x\big|_{x=0}=1$ with $D(h)=1+h^2/6+h^4/120+\order(h^6)$. (a) Derive this expansion from the Taylor series of $e^h$. (b) Compute $D(0.1)$, $D(0.05)$ and the Richardson combination $(4D(0.05)-D(0.1))/3$. (c) Predict the error of the combination from the expansion and check it.}
 
-\prob{2}{Keep only the $p=2$, $m=1$ term of the paper's Eq.~(4): $\Nfl(t)=-\frac{1}{\pi\sqrt2}\sin(t\log2)$. Apply one Newton step to $g(t)=\Nsm(t)+\Nfl(t)-\tfrac12$ starting at $s_1=14.5214$, and then find the converged root. Compare with $s_1$ and with $t_1=14.1347$.}
+\prob{2}{Keep only the $p=2$, $m=1$ term of the paper's Eq.~(4): $\Nfl(t)=-\frac{1}{\pi\sqrt2}\sin(t\log2)$. Apply one Newton step to $g(t)=\Nsm(t)+\Nfl(t)-\tfrac12$ starting at $t_0=14.5214\approx s_1$, and then find the converged root. Compare with $s_1$ and with $t_1=14.1347$.}
 
 \prob{3}{\emph{(Paper.)} The level equation $\Nsm(t)+\Nfl(t)=n-\tfrac12$ with the six-prime $\Nfl$ of Eq.~(4) ($m\le3$) is certainly monotone where $\abs{\Nfl'(t)}<\Nsm'(t)$. (a) Show that $\abs{\Nfl'(t)}\le\frac1\pi\sum_{p}\sum_{m=1}^3\frac{\log p}{p^{m/2}}$ and evaluate the bound. (b) Compare it with $\Nsm'(800)$. (c) Does your result prove that the oracle's level equation is root-ambiguous? Relate to the root-ambiguous row of Table~IV.}
 
@@ -1169,29 +1169,18 @@ Here is where each tool of this chapter appears in the paper \cite{soniR1}.
 
 \textbf{Problem 19.} In double precision the computed dot product is below $10^{-14}$. In float32 it is many orders of magnitude larger, at the level set by $\varepsilon_{32}$. For the second part, minimizing $(r-c\eta)^2$ gives $c=r/\eta=0.01/(-3\times10^{-8})=-3.33\times10^{5}$. The sign and size of $c$ are set entirely by the noise.
 
-\textbf{Problem 21.} Since $s_n\sim2\pi n/\log n$, we have $\log(s_n/2\pi)=\log n-\log\log n+o(1)$. Dividing by $\log n$ and using $\log\log n=o(\log n)$ (\cref{eq:asymptotics-logpower}) gives $\log(s_n/2\pi)\sim\log n$, so $\gap_n\sim2\pi/\log n$. At $n=1000$, $2\pi/\log1000=0.9096$, while the exact value is $\gap_{1000}=1.159$, a ratio of $1.27$. For comparison, at $n=10^4$ the exact spacing is $\gap_{10^4}=0.854$. This corrects the rough "0.7" quoted in \cref{sec:asymptotics-paper}: between zeros 401 and $10^4$ the spacing falls from about $1.3$ to about $0.85$.
+\textbf{Problem 21.} Since $s_n\sim2\pi n/\log n$, we have $\log(s_n/2\pi)=\log n-\log\log n+o(1)$. Dividing by $\log n$ and using $\log\log n=o(\log n)$ (\cref{eq:asymptotics-logpower}) gives $\log(s_n/2\pi)\sim\log n$, so $\gap_n\sim2\pi/\log n$. At $n=1000$, $2\pi/\log1000=0.9096$, while the exact value is $\gap_{1000}=1.159$, a ratio of $1.27$. For comparison, at $n=10^4$ the exact spacing is $\gap_{10^4}=0.854$, against the leading-order value $2\pi/\log10^4=0.682$.
 
 \textbf{Problem 22.} The value has 15 significant digits: four before the decimal point and eleven after it. Rounding error is at most half a unit in the last place, $5\times10^{-12}$, which is $4.3\times10^{-12}$ spacings. The paper's smallest quoted errors are of order $10^{-2}$ spacings, so its statement that the precisions "exceed every use below by many orders" (Sec.~II~A) is confirmed.
 
-\textbf{Problem 23.} At $x_0=7$: $f(7)=-0.618728$ and $f'(7)=\frac1{2\pi}\log(7/2\pi)=0.017194$. The step is $0.618728/0.017194=35.99$, so $x_1\approx43.0$. The tangent at $x_0$ is nearly flat, so the step is huge. However, it overshoots to the right of $s_1$. By the convexity theorem, every later iterate stays at or above $s_1$ and decreases monotonically to $s_1=14.5214$.
+\textbf{Problem 23.} At $x_0=7$: $f(7)=-0.61873$ and $f'(7)=\frac1{2\pi}\log(7/2\pi)=0.017194$. The step is $0.61873/0.017194=35.985$, so $x_1\approx43.0$. The tangent at $x_0$ is nearly flat, so the step is huge. However, it overshoots to the right of $s_1$. By the convexity theorem, every later iterate stays at or above $s_1$ and decreases monotonically to $s_1=14.5213$.
 
 \textbf{Problem 25.} \texttt{mpmath.siegeltheta(100)} returns $87.97216$, and the three-term formula gives $87.97196$. The difference is $2.083\times10^{-4}$, compared with $1/(48\times100)=2.083\times10^{-4}$. They agree to within $10^{-8}$; the next term of \cref{eq:asymptotics-theta} is of order $10^{-9}$.
 
 \textbf{Problem 27.} (a) $v_1=1000/5.907755=169.27$, $v_2=242.04$, $v_3=222.76$, $v_4=226.96$. The iterates oscillate about the solution $v^\ast\approx226.2$. (b) Write $g(v)=n/(\log v-1)$. Then $g'(v)=-n/\bigl(v(\log v-1)^2\bigr)$. At the fixed point, $n/(\log v^\ast-1)=v^\ast$, so $g'(v^\ast)=-1/(\log v^\ast-1)\approx-0.226$. Each step therefore multiplies the error by about $-0.23$, which explains both the oscillation and the steady but linear convergence.
 
-\textbf{Problem 29.} At $s_1=14.5214$: $\Nfl=+0.1346$, $\Nfl'=+0.1251$ and $\Nsm'=0.1333$. Hence $g=0.1346$ and $g'=0.2584$, and one Newton step gives $14.5214-0.5207=14.0007$. Iterating further converges to about $14.021$. Starting from $s_1$, which is $0.387$ above $t_1=14.1347$, the single prime-2 term moves the prediction to within about $0.11$ of $t_1$.
+\textbf{Problem 29.} At $t_0=14.5214$: $\Nfl=+0.1346$, $\Nfl'=+0.1251$ and $\Nsm'=0.1333$. Hence $g=0.1346$ and $g'=0.2584$, and one Newton step gives $14.5214-0.5207=14.0007$. Iterating further converges to about $14.021$. Starting from $t_0$, which is $0.387$ above $t_1=14.1347$, the single prime-2 term moves the prediction to within about $0.11$ of $t_1$.
 
-\begin{sample}{(Answer to Problem 30, odd-numbered companion: Problem 29 continued)}
-For completeness, the companion bound of Problem 30 is evaluated here as well.
+\textbf{Problem 30.} (a) By the chain rule, the derivative of the term $-\frac1\pi\frac{\sin(mt\log p)}{mp^{m/2}}$ is $-\frac1\pi\frac{m\log p\,\cos(mt\log p)}{mp^{m/2}}=-\frac1\pi\frac{\log p\,\cos(mt\log p)}{p^{m/2}}$ (the factor $m$ cancels). The magnitude of a sum is at most the sum of the magnitudes, and $\abs{\cos}\le1$, so $\abs{\Nfl'(t)}\le\frac1\pi\sum_p\sum_{m=1}^3\frac{\log p}{p^{m/2}}$. For $p\in\{2,3,5,7,11,13\}$ the double sum is $6.568$, so the bound is $2.091$. (b) $\Nsm'(800)=\frac1{2\pi}\log\frac{800}{2\pi}=0.771$. (c) The bound exceeds the slope, so this argument does \emph{not} guarantee monotonicity. But the bound assumes all eighteen cosines take their worst values simultaneously, so it does not prove that the equation is root-ambiguous either. The root-ambiguous row of Table~IV is control B with 150 primes and fitted amplitudes; with many more oscillating terms, steep wiggles that break monotonicity are correspondingly more likely, so the reported ambiguity is unsurprising.
 
-\textbf{Step 1:} Differentiating Eq.~(4) term by term gives $\abs{\Nfl'}\le\frac1\pi\sum_p\sum_{m=1}^3\frac{\log p}{p^{m/2}}$, using $\abs{\cos}\le1$.
-
-\textbf{Step 2:} For $p\in\{2,3,5,7,11,13\}$ the sum is $6.568$, so the bound is $2.091$.
-
-\textbf{Step 3:} The slope of the smooth part is $\Nsm'(800)=\frac1{2\pi}\log\frac{800}{2\pi}=0.771$.
-
-\[
-\boxed{\abs{\Nfl'}\le2.09\quad\text{vs}\quad\Nsm'(800)=0.771}
-\]
-The bound exceeds the slope, so monotonicity is \emph{not guaranteed}. However, the bound assumes that all cosines are $\pm1$ simultaneously, which is a worst case, so it does not prove that the equation is root-ambiguous. With 150 primes (the root-ambiguous row of Table~IV) the worst-case bound is far larger still, which makes the observed ambiguity unsurprising.
-\end{sample}
+\textbf{Problem 31.} \texttt{qmnt.wu\_sprung\_x} gives $x(1000)=44.883$ and $x(1500)=59.957$, the paper's $L$ values for scales 1 and 2 (Sec.~II~B). Feeding these back into \texttt{qmnt.wu\_sprung\_V} returns $1000$ and $1500$ to within $10^{-4}$, so the bracketed root finder undoes the forward map. At the bottom, $x(V_0)=0$, because both $\sqrt{V-V_0}$ and $\log\frac{\sqrt V+\sqrt{V-V_0}}{\sqrt V-\sqrt{V-V_0}}=\log1$ vanish there. On 2000 equally spaced values of $V$ from just above $V_0$ to $1500$, every successive difference of $x(V)$ is positive. This is a numerical check of monotonicity on a grid, not a proof; Chapter~\ref{ch:wu-sprung} discusses the shape of $x(V)$.

@@ -1,26 +1,19 @@
-import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 import qmnt
-
 rng = np.random.default_rng(1)
-pts = np.sort(rng.uniform(0.0, 10000.0, 10000))
-gaps = np.diff(pts)
-
-t = qmnt.zeros(10000)
-u = qmnt.Nsm(t)
-sp = np.diff(u)
-
+pts = np.sort(rng.uniform(0, 1e4, 10**4))
+g_pois = np.diff(pts)
+z = qmnt.zeros(10000)
+u = qmnt.Nsm(z)
+g_zeta = np.diff(u)
+g_zeta = g_zeta/g_zeta.mean()
 s = np.linspace(0, 4, 400)
-bins = np.linspace(0, 4, 41)
 fig, axs = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)
-axs[0].hist(gaps, bins=bins, density=True, color="0.75", edgecolor="k")
-axs[0].plot(s, np.exp(-s), "r-", lw=2, label=r"$e^{-s}$")
-axs[0].set_title("independent points (Poisson)")
-axs[1].hist(sp, bins=bins, density=True, color="0.75", edgecolor="k")
-axs[1].plot(s, np.exp(-s), "r-", lw=2, label=r"$e^{-s}$")
-axs[1].set_title(r"zeta zeros, first $10^4$")
-for ax in axs:
-    ax.set_xlabel("spacing $s$ (mean spacings)")
+for ax, g, ttl in [(axs[0], g_pois, 'independent points'), (axs[1], g_zeta, 'zeta zeros 1-10000')]:
+    ax.hist(g, bins=np.linspace(0, 4, 41), density=True, color='0.75', edgecolor='k')
+    ax.plot(s, np.exp(-s), 'r', lw=2, label=r'$e^{-s}$')
+    ax.set_title(ttl)
+    ax.set_xlabel('gap $s$ (mean gaps)')
     ax.legend()
-axs[0].set_ylabel("density (per mean spacing)")
-plt.tight_layout()
-plt.savefig("probability_exponential.pdf", bbox_inches="tight")
+axs[0].set_ylabel('density (per mean gap)')
+plt.savefig('probability_exponential.pdf', bbox_inches='tight')

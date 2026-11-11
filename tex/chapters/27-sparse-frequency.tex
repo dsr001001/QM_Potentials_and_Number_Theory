@@ -9,12 +9,14 @@ Where this shows up in the paper: these are the "fitted sinusoidal controls" of 
 \end{chapterintro}
 
 \begin{prerequisites}
+
 \item Chapter~\ref{ch:fourier-transform}: the Fourier transform of a finite-length sinusoid (a sinc), the resolution $\Delta\omega\approx2\pi/T$ of a window of length $T$, the periodogram, leakage, phase randomization.
 \item Chapter~\ref{ch:least-squares}: linear least squares, normal equations, the singular value decomposition (SVD), the condition number, ridge regularization with filter factors $\sigma/(\sigma^2+\lambda\sigma_1^2)$, underdetermined systems and the minimum-norm solution.
 \item Chapter~\ref{ch:explicit-formula}: the truncated explicit formula $\Nfl(t)$ (paper Eq.~(4)), predicting zeros by solving $\Nsm(t)+\Nfl(t)=n-\tfrac12$, and Landau's formula that puts peaks at $\log p^m$.
 \item Chapter~\ref{ch:generalization}: training and held-out data, the null model, saturated models, interpolation versus extrapolation, inductive bias.
 \item Chapter~\ref{ch:controls}: bootstrap intervals, surrogate data, exploratory versus confirmatory analysis.
 \item First-year physics: sinusoids, superposition, beats.
+
 \end{prerequisites}
 
 %======================================================================
@@ -220,7 +222,7 @@ The paper's Table~IV lists control B with 25 primes (150 fitted parameters) and 
 $$\boxed{150\ \text{and}\ 900\ \text{coefficients};\ p_{25}=97,\ p_{150}=863,\ p_{300}=1987;\ \omega_{\max}=13.72;\ \text{underdetermined (ratio }2.25)}$$
 \end{sample}
 
-The paper reports (Sec.~IV and Table~IV) that B with 25 primes gives held-out rms $0.028$ and correlation $+0.99$ on zeros 401--500 from 400 training zeros, \emph{better} than the unfitted 25-prime oracle ($0.043$/$+0.99$). Fitting the amplitudes helps because the truncated formula leaves out everything beyond $p\le97$ and $m\le3$; fitted amplitudes can partly absorb leftover structure at nearby frequencies. With 900 coefficients on 400 zeros, B degrades to $0.180$/$+0.78$, yet it stays below the null $0.263$ and positively correlated. Why does an underdetermined fit still predict something? Because every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies. Whatever it does in the window, it keeps doing at the right frequencies outside the window. With 800 training zeros the same 900-coefficient model improves to $0.100$/$+0.94$, as more data pin the amplitudes.
+The paper reports (Sec.~IV and Table~IV) that B with 25 primes gives held-out rms $0.028$ and correlation $+0.99$ on zeros 401--500 from 400 training zeros, \emph{better} than the unfitted 25-prime oracle ($0.043$/$+0.99$). Fitting the amplitudes helps because the truncated formula leaves out everything beyond $p\le97$ and $m\le3$; fitted amplitudes can partly absorb leftover structure at nearby frequencies. With 900 coefficients on 400 zeros, B degrades to $0.180$/$+0.78$, yet it stays below the null $0.263$ and positively correlated. Why does an underdetermined fit still predict something? The paper reports the numbers but does not offer an explanation; what follows is our heuristic reading. Every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies, so whatever pattern it fits in the window is continued at the right frequencies outside it. This is not a guarantee: large, partly cancelling amplitudes that cancel only inside the window can extrapolate badly, and the degradation of this row from $0.028$ to $0.180$ shows that some such damage does occur. With 800 training zeros the same 900-coefficient model improves to $0.100$/$+0.94$, as more data pin the amplitudes.
 
 \begin{pycode}
 import numpy as np, qmnt
@@ -302,7 +304,7 @@ Start from the identity
 \begin{equation}
 (X^\top X+\mu I)X^\top = X^\top XX^\top+\mu X^\top = X^\top(XX^\top+\mu I).
 \end{equation}
-Multiply on the left by $(X^\top X+\mu I)^{-1}$ and on the right by $(XX^\top+\mu I)^{-1}$ (both exist for $\mu>0$, since $X^\top X$ and $XX^\top$ have no negative eigenvalues):
+Multiply on the left by $(X^\top X+\mu I)^{-1}$ and on the right by $(XX^\top+\mu I)^{-1}$ (both exist for $\mu>0$. To see this for the first, take any nonzero vector $\bm v$; then $\bm v^\top(X^\top X+\mu I)\bm v=\norm{X\bm v}^2+\mu\norm{\bm v}^2>0$, so $(X^\top X+\mu I)\bm v\ne\bm 0$. No nonzero vector is sent to zero, so zero is not an eigenvalue and the square matrix is invertible (Chapter~\ref{ch:eigen}). The same argument with $X^\top$ in place of $X$ covers $XX^\top+\mu I$):
 \begin{equation}
 X^\top(XX^\top+\mu I)^{-1}=(X^\top X+\mu I)^{-1}X^\top .
 \end{equation}
@@ -347,11 +349,11 @@ This is the Dirichlet kernel. Its properties tell the whole story of C1:
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/sparse-frequency_kernel.pdf}
-\caption{The kernel $K(\tau)=\sum_{j=1}^{450}\cos(j\Delta\omega\,\tau)$ of the dense uniform-grid model C1, $\Delta\omega=8/450$. (a)~Near $\tau=0$: a narrow central peak of height 450 and half-width about $0.39$ in $t$. (b)~Over a long range: the peak recurs at $\tau=P\approx353.4$, because every grid frequency is a multiple of $\Delta\omega$. By \eqref{eq:sparse-frequency-kernel}, the fitted C1 model at height $t$ is built from training values near $t$ and near its periodic images $t\pm P,\ t\pm2P,\dots$}
+\caption{The kernel $K(\tau)=\sum_{j=1}^{450}\cos(j\Delta\omega\,\tau)$ of the dense uniform-grid model C1, $\Delta\omega=8/450$. (a)~Near $\tau=0$: a narrow central peak of height 450 whose first zero lies at $\tau\approx0.39$ in $t$. (b)~Over a long range: the peak recurs at $\tau=P\approx353.4$, because every grid frequency is a multiple of $\Delta\omega$. By \eqref{eq:sparse-frequency-kernel}, the fitted C1 model at height $t$ is built from training values near $t$ and near its periodic images $t\pm P,\ t\pm2P,\dots$}
 \label{fig:sparse-frequency-kernel}
 \end{figure}
 
-Put the two facts together. By \eqref{eq:sparse-frequency-kernel}, the C1 prediction at a held-out height $t$ is dominated by the training values $y_n$ at heights $t_n$ within a fraction of a unit of $t$, or of one of its images $t-P$, $t-2P$, and so on. Just beyond the training window there are no training zeros within a fraction of a unit; the nearest information is at the images, roughly $353$ or $707$ units earlier. C1 is, in effect, a \emph{local interpolator plus a periodic copying rule}. It encodes no notion that a frequency found in the window should persist. That is the sense in which it "behaves like a generic basis": like the fitted potentials of Chapter~\ref{ch:generalization}, with 900 coefficients on 400 zeros it can fit anything in-sample, and outside it falls back on whatever its structure dictates, which here is local smoothing and repetition. Ridge regularization (chosen by forward validation) shrinks the $\alpha_n$, pulling $F$ toward zero, that is, toward the null.
+Put the two facts together. By \eqref{eq:sparse-frequency-kernel}, the C1 prediction at a held-out height $t$ is dominated by the training values $y_n$ at heights $t_n$ within a fraction of a unit of $t$, or of one of its images $t-P$, $t-2P$, and so on. Just beyond the training window there are no training zeros within a fraction of a unit; the nearest information is at the images, roughly $353$ or $707$ units earlier. Our interpretation of the kernel form (it is not an analysis given in the paper) is that C1 acts, in effect, as a \emph{local interpolator plus a periodic copying rule}; how strongly each part acts depends on the weights $\alpha_n$, which the ridge strength shrinks. It encodes no notion that a frequency found in the window should persist. That is the sense in which it "behaves like a generic basis": like the fitted potentials of Chapter~\ref{ch:generalization}, with 900 coefficients on 400 zeros it can fit anything in-sample, and outside it falls back on whatever its structure dictates, which here is local smoothing and repetition. Ridge regularization (chosen by forward validation) shrinks the $\alpha_n$, pulling $F$ toward zero, that is, toward the null.
 
 \begin{sample}{The C1 grid compared with the window}
 For the 400-zero training window, take its length as $T=t_{400}-t_1\approx666$. (a)~Compare the C1 grid spacing with the resolution $2\pi/T$. (b)~Which grid frequency lies nearest $\log2$, and by how much does it miss? (c)~How many periods of the $p=2$ wave fit into one period $P$ of the C1 model?
@@ -401,12 +403,16 @@ Let $r_n=A\cos(\omega_0t_n+\varphi)$ with $n_{\rm fit}=400$ samples spread over 
 \textbf{Step 1: expand the sum at $\omega=\omega_0$.} Using $\cos\theta=\tfrac12(e^{\ii\theta}+e^{-\ii\theta})$,
 $$r_ne^{-\ii\omega_0t_n}=\tfrac A2\bigl[e^{\ii\varphi}+e^{-\ii\varphi}e^{-2\ii\omega_0t_n}\bigr].$$
 
-\textbf{Step 2: sum over $n$.} The first term adds to $\tfrac A2n_{\rm fit}e^{\ii\varphi}$. The second is a sum of unit-size phasors rotating at frequency $2\omega_0$; over many periods they largely cancel, leaving something of order 1, not of order $n_{\rm fit}$. Neglecting it,
+\textbf{Step 2: sum over $n$.} The first term adds to $\tfrac A2n_{\rm fit}e^{\ii\varphi}$. The second is a sum of unit-size phasors rotating at frequency $2\omega_0$. To see that it stays small, assume, as an idealization (the zeros are in fact denser at greater height), that the samples are equally spaced, $t_n=t_1+(n-1)\Delta$. Then, apart from the constant factor $e^{-2\ii\omega_0t_1}$ of modulus 1, the second sum is a geometric series with ratio $z=e^{-2\ii\omega_0\Delta}$, and
+$$\Bigl|\sum_{n=1}^{n_{\rm fit}}z^{n-1}\Bigr|=\frac{\abs{1-z^{n_{\rm fit}}}}{\abs{1-z}}\le\frac{2}{2\abs{\sin(\omega_0\Delta)}}=\frac{1}{\abs{\sin(\omega_0\Delta)}},$$
+using $\abs{1-z^{n_{\rm fit}}}\le2$ and $\abs{1-e^{\ii\theta}}=2\abs{\sin(\theta/2)}$ with $\theta=-2\omega_0\Delta$. The bound does not grow with $n_{\rm fit}$ (unless $\omega_0\Delta$ is close to a multiple of $\pi$), while the first term grows like $n_{\rm fit}$. For the irregular zeros we carry the same conclusion over as a heuristic. Neglecting the second term,
 $\sum_nr_ne^{-\ii\omega_0t_n}\approx\tfrac A2n_{\rm fit}e^{\ii\varphi}$.
 
 \textbf{Step 3: square.} $\mathcal P(\omega_0)\approx\frac{1}{n_{\rm fit}}\bigl(\tfrac A2n_{\rm fit}\bigr)^2=\frac{n_{\rm fit}A^2}{4}=\frac{400(0.225)^2}{4}=5.06.$
 
-\textbf{Step 4: off the peak.} At $\omega=\omega_0+\delta$ the surviving term is $\tfrac A2e^{\ii\varphi}\sum_ne^{-\ii\delta t_n}$. Replacing the sum by $(n_{\rm fit}/T)$ times the integral over the window, as in \eqref{eq:sparse-frequency-orth}, its magnitude is $\tfrac A2n_{\rm fit}\abs{\sin(\delta T/2)/(\delta T/2)}$, so
+\textbf{Step 4: off the peak.} At $\omega=\omega_0+\delta$ the surviving term is $\tfrac A2e^{\ii\varphi}\sum_ne^{-\ii\delta t_n}$. Replace the sum by $(n_{\rm fit}/T)$ times the integral over the window, as in \eqref{eq:sparse-frequency-orth}. With $u=t-t_c$,
+$$\frac1T\int_{t_c-T/2}^{t_c+T/2}e^{-\ii\delta t}\,\dd t=\frac{e^{-\ii\delta t_c}}{T}\int_{-T/2}^{T/2}e^{-\ii\delta u}\,\dd u=\frac{e^{-\ii\delta t_c}}{T}\,\frac{e^{-\ii\delta T/2}-e^{\ii\delta T/2}}{-\ii\delta}=e^{-\ii\delta t_c}\,\frac{\sin(\delta T/2)}{\delta T/2},$$
+where the last step uses $e^{-\ii a}-e^{\ii a}=-2\ii\sin a$ with $a=\delta T/2$. Since $\abs{e^{-\ii\delta t_c}}=1$, the magnitude of the surviving term is $\tfrac A2n_{\rm fit}\abs{\sin(\delta T/2)/(\delta T/2)}$, so
 \begin{equation}
 \mathcal P(\omega_0+\delta)\approx\frac{n_{\rm fit}A^2}{4}\left[\frac{\sin(\delta T/2)}{\delta T/2}\right]^2 ,
 \label{eq:sparse-frequency-peak}
@@ -485,7 +491,7 @@ The greedy search is an instance of a general method called \textbf{matching pur
 \item \emph{Plain matching pursuit}: pick the element most aligned with the residual, add its projection, keep all earlier coefficients frozen.
 \item \emph{Orthogonal matching pursuit}: pick the element the same way, then refit \emph{all} chosen coefficients jointly by least squares. This is what C2 does.
 \end{itemize}
-The two samples below show, in tiny dimensions, why the joint refit matters.
+Each element of the dictionary is called an \textbf{atom}. The two samples below work in tiny dimensions: the first shows the orthonormal case, where plain and orthogonal pursuit agree; the second shows, with overlapping atoms, why the joint refit matters.
 
 \begin{sample}{Matching pursuit with an orthonormal dictionary}
 In four dimensions take the orthonormal dictionary $\bm d_1=\tfrac12(1,1,1,1)$, $\bm d_2=\tfrac12(1,-1,1,-1)$, $\bm d_3=\tfrac1{\sqrt2}(1,0,-1,0)$, $\bm d_4=\tfrac1{\sqrt2}(0,1,0,-1)$, and data $\bm y=(3,1,-1,1)$. Run matching pursuit.
@@ -620,7 +626,11 @@ A\sin\bigl((\omega_0+\delta\omega)u_n+\varphi\bigr)\approx A\sin(\omega_0u_n+\va
 \end{equation}
 The second sum oscillates and is small compared with the first when the window holds many periods. For samples spread uniformly over $[-T/2,T/2]$, the average of $u^2$ is $\frac1T\int_{-T/2}^{T/2}u^2\,\dd u=\frac{T^2}{12}$, so $\sum_nu_n^2\approx n\,T^2/12$ with $n$ the number of samples. Hence $\sum_ng_n^2\approx A^2nT^2/24$.
 
-\emph{Step 5: why the phase does not interfere.} If $\varphi$ is fitted too, its sensitivity is $A\cos(\omega_0u_n+\varphi)$, and its overlap with $g_n$ is $A^2\sum_nu_n\cos^2(\cdot)\approx\tfrac{A^2}{2}\sum_nu_n\approx0$ because $u$ is measured from the window centre. The two parameters decouple, which is why we centred the time variable.
+\emph{Step 5: why the phase does not interfere.} If $\varphi$ is fitted too, linearize in both parameters: the model changes by $g_n\,\delta\omega+h_n\,\delta\varphi$ with $h_n=A\cos(\omega_0u_n+\varphi)$. Least squares for $(\delta\omega,\delta\varphi)$ then gives the $2\times2$ normal equations
+\begin{equation}
+\begin{pmatrix}\sum_ng_n^2&\sum_ng_nh_n\\ \sum_ng_nh_n&\sum_nh_n^2\end{pmatrix}\begin{pmatrix}\delta\omega\\ \delta\varphi\end{pmatrix}=\begin{pmatrix}\sum_ng_nd_n\\ \sum_nh_nd_n\end{pmatrix}.
+\end{equation}
+The off-diagonal entry is $\sum_ng_nh_n=A^2\sum_nu_n\cos^2(\omega_0u_n+\varphi)=\tfrac{A^2}{2}\sum_nu_n+\tfrac{A^2}{2}\sum_nu_n\cos\bigl(2(\omega_0u_n+\varphi)\bigr)$. The first sum is close to zero because $u$ is measured from the window centre, so positive and negative $u_n$ cancel; the second oscillates and is small compared with the diagonal entries. Neglecting the off-diagonal entry, the matrix is diagonal, and its first row reads $\bigl(\sum_ng_n^2\bigr)\delta\omega=\sum_ng_nd_n$, exactly the one-parameter equation of Step 2. The variance of Step 3 is therefore unchanged. The two parameters decouple, which is why we centred the time variable.
 
 \emph{Result.}
 \begin{equation}
@@ -699,7 +709,7 @@ A component is learned with frequency error $\delta\omega=3\times10^{-4}$, about
 $$\boxed{\phi=0.6,\ \text{rms ratio}\approx0.59,\ \corr\approx0.83;\quad \text{worse than null beyond }\Delta t\approx3490}$$
 \end{sample}
 
-For the 400-zero window the centre is near $t_c\approx(14+680)/2=347$, and zero 2000 sits near $t\approx2515$, about $2170$ units away. So by \eqref{eq:sparse-frequency-dephase}, frequency errors of a few times $10^{-4}$ already cost a noticeable fraction of the skill on zeros 1001--2000. This is consistent with what the paper reports for C2 (Sec.~IV): from the 400-zero fit, $0.034$/$+0.99$ on zeros 401--500 but $0.078$/$+0.96$ on zeros 1001--2000, "as the estimated frequencies dephase, which the exact frequencies of the oracle do not". The oracle's exact frequencies have $\delta\omega=0$, so its relative skill stays nearly constant through zero $10^4$ (Table~V). Our single-sinusoid model is a picture of the mechanism, not a fit to the paper's numbers.
+For the 400-zero window the centre is near $t_c\approx(14+680)/2=347$, and zero 2000 sits near $t\approx2515$ (values computed with \texttt{qmnt.zeros}), about $2170$ units away. So by \eqref{eq:sparse-frequency-dephase}, frequency errors of a few times $10^{-4}$ already cost a noticeable fraction of the skill on zeros 1001--2000. This is consistent with what the paper reports for C2 (Sec.~IV): from the 400-zero fit, $0.034$/$+0.99$ on zeros 401--500 but $0.078$/$+0.96$ on zeros 1001--2000, "as the estimated frequencies dephase, which the exact frequencies of the oracle do not". The oracle's exact frequencies have $\delta\omega=0$, so its relative skill stays nearly constant through zero $10^4$ (Table~V). Our single-sinusoid model is a picture of the mechanism, not a fit to the paper's numbers.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{figs/sparse-frequency_dephasing.pdf}
@@ -753,7 +763,7 @@ Given a frequency $\omega$ found by the search, when do we say it "is" $\log q$?
 \abs{\omega-\log q}<\frac{\pi}{T}
 \label{eq:sparse-frequency-match}
 \end{equation}
-for some prime power $q$ (with $q\le3000$ in the surrogate check): within \emph{half} the Fourier resolution of the training window. Why half? The resolution $2\pi/T$ is the width of the region in which the window cannot distinguish frequencies; a learned frequency is only meaningful to within that cell, and requiring it to fall within half a cell of $\log q$ means that $\log q$ lies inside the cell centred on $\omega$.
+for some prime power $q$ (with $q\le3000$ in the surrogate check): within \emph{half} the Fourier resolution of the training window. This tolerance is a convention of the paper, not something derived from first principles. Its meaning is as follows. Frequencies closer than about one resolution cell, $2\pi/T$, cannot be separated by the window (\cref{sec:sparse-frequency-known}), so a learned frequency is only meaningful to within such a cell. Draw a cell of width $2\pi/T$ centred on $\omega$: it extends $\pi/T$ on each side, so \eqref{eq:sparse-frequency-match} says precisely that $\log q$ lies inside the cell centred on $\omega$. A wider tolerance would admit more chance matches (see below); a narrower one would reject frequencies that are correct to within what the window can resolve.
 
 \begin{sample}{The 43 prime powers found from 800 zeros}
 The paper reports (Sec.~IV) that the sparse search on 800 zeros selected $43$ frequencies, matching "43 distinct prime powers: those up to 113 except 32, 64, and 81, and six primes between 131 and 211". (a)~Verify the count. (b)~Compute the amplitudes of the three excluded prime powers and of the weakest included one. (c)~What does the list contain that the truncated oracle \eqref{eq:sparse-frequency-nfl} does not?
@@ -794,7 +804,7 @@ That the zeros, viewed as a set of frequencies, have a Fourier transform concent
 \begin{keyideas}
 \item The zeros contain all prime powers $q=p^m$, with amplitude $1/(\pi m\sqrt q)$, \eqref{eq:sparse-frequency-amp}; the truncated oracle keeps only $m\le3$.
 \item A learned frequency is matched to $\log q$ if it lies within $\pi/T$, \eqref{eq:sparse-frequency-match}.
-\item The $\log q$ crowd together at high $\omega$ (density about $e^\omega/\omega$), so chance matching must be controlled; the paper's surrogate check is cutoff-free but exploratory.
+\item The $\log q$ crowd together at high $\omega$ (density about $e^\omega/\omega$; for $T\approx666$ a cell of width $2\pi/T$ expects at least one $\log p$ above $\omega\approx6.5$), so chance matching must be controlled; the paper's surrogate check is cutoff-free but exploratory.
 \end{keyideas}
 
 %======================================================================
@@ -806,7 +816,7 @@ Compare the three fitted families once more, now as statements about the world.
 \item C2 says: "the fluctuation is a sum of a few sinusoids, each of which persists for all $t$". That excludes almost every sequence. With $K=24$ frequencies, the model has 72 parameters for 400 data values, more than five data values per parameter. If the statement is true, the data pin down the parameters, and the persistence of each sinusoid carries the information beyond the window.
 \item B says even more: "and the frequencies are these".
 \end{itemize}
-In the language of Chapter~\ref{ch:generalization}, C2 has a strong \textbf{inductive bias}, and here it is the \emph{right} one, because the explicit formula says the fluctuation is (approximately) exactly this kind of function. The paper's own words are worth keeping: "sparse in $t$-frequency" is "itself a strong and well-chosen prior". It is well chosen \emph{because we know the answer}; on data that were not almost periodic it could fail badly. Its success is evidence that the prior matches the data, not evidence that sparse priors are generally superior.
+In the language of Chapter~\ref{ch:generalization}, C2 has a strong \textbf{inductive bias}, and here it is the \emph{right} one, because the explicit formula says, heuristically, that the fluctuation is approximately this kind of function (recall from Chapter~\ref{ch:explicit-formula} that the prime sum does not converge on the critical line, and that its truncations are approximations whose accuracy is established numerically, as in Table~V). The paper's own words are worth keeping: "sparse in $t$-frequency" is "itself a strong and well-chosen prior". It is well chosen \emph{because we know the answer}; on data that were not almost periodic it could fail badly. Its success is evidence that the prior matches the data, not evidence that sparse priors are generally superior.
 
 What about a fitted potential $V(x)$? Recall from Chapters~\ref{ch:fitting} and~\ref{ch:generalization} that a change $\delta V$ in the potential shifts the level $E_n$ by $\int\abs{\psi_n}^2\delta V\,\dd x$ to first order, and that a level is most sensitive to the potential near its classical turning points. So a potential addresses levels \emph{locally}: a bump at position $x$ moves the levels whose turning points lie near $x$. Nothing in that parametrization says "the pattern found in levels 1--400 continues, with the same frequency in $t$, in levels 401--500". The paper's continuation probe (Sec.~III) tests exactly this: trained on a pure $p=2$ oscillation (running example RE2), the fitted potential represents it in-sample (rms $0.056$, correlation $+0.95$) and does not continue it (held-out correlation $+0.07$). This local-versus-global reading is the paper's heuristic explanation; it states that whether the memorization result "can be derived rather than measured is an open problem".
 
@@ -1011,7 +1021,7 @@ The operator rows ($0.369$/$-0.07$ at $M=400$; $0.313$/$-0.16$ and $0.279$/$-0.0
 
 \textbf{17.} The largest peak lies within $\pi/T$ of $\log2=0.6931$ (you should find it within a few thousandths), so it matches the prime power $q=2$. This is the dominant term of RE2, as the amplitude ordering of \cref{tab:sparse-frequency-amps} predicts.
 
-\textbf{19.} You should reproduce Table~V's six-prime entry on 401–500: rms $0.074$ and correlation $+0.96$, the paper's values (Table~V; also Fig.~1). Small differences in the third decimal can come from your bracket or tolerance choices; anything larger points to an error in the prime list or the $m\le3$ truncation.
+\textbf{19.} You should reproduce Table~V's six-prime entry on 401--500: rms $0.074$ and correlation $+0.96$, the paper's values (Table~V; also Fig.~1). Small differences in the third decimal can come from your bracket or tolerance choices; anything larger points to an error in the prime list or the $m\le3$ truncation.
 
 \textbf{21.} From the RE2 sample, $\max\abs{F'}=\frac{\log2}{\pi}(2^{-1/2}+2^{-1}+2^{-3/2})=0.3443$ and $t^*=2\pi e^{2\pi\times0.3443}\approx54.7$. The holdout 401--500 lies at $t\approx680$--$811$, where $\Nsm'\ge0.745>0.3443$, so by \eqref{eq:sparse-frequency-monotone} every level equation there has exactly one root: no ambiguity.
 

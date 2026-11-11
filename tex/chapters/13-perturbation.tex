@@ -194,7 +194,7 @@ These two expressions are equal for every small $\varepsilon$. A power series in
 \label{eq:perturbation-order2}
 \end{equation}
 
-Now the key trick: multiply \cref{eq:perturbation-order1} by $\psi_k^{(0)*}$ (for some fixed $k$) and integrate over the box. The left side becomes, using the Hermiticity \cref{eq:perturbation-hermitian} with $f=\psi_k^{(0)}$ and $g=\psi_n^{(1)}$ (both vanish at the walls),
+Now the key trick: multiply \cref{eq:perturbation-order1} by $\psi_k^{(0)*}$ (for some fixed $k$) and integrate over the box. The left side becomes, using the Hermiticity \cref{eq:perturbation-hermitian} with $f=\psi_k^{(0)}$ and $g=\psi_n^{(1)}$ (both vanish at the walls: $\psi_n(\pm L)=0$ for every $\varepsilon$, so by the coefficient argument just given every coefficient of its power series, including $\psi_n^{(1)}(\pm L)$, is zero),
 \begin{align*}
 \int\psi_k^{(0)*}\bigl(H_0-E_n^{(0)}\bigr)\psi_n^{(1)}\,\dd x
 &=\int\bigl(H_0\psi_k^{(0)}\bigr)^*\psi_n^{(1)}\,\dd x-E_n^{(0)}\int\psi_k^{(0)*}\psi_n^{(1)}\,\dd x\\
@@ -226,7 +226,7 @@ This is the first-order energy shift. Notice that the derivation never used that
 
 \subsection{What it means}
 
-Because $|\psi_n^{(0)}|^2\ge 0$ and integrates to 1, \cref{eq:perturbation-first} says: to first order, \emph{a level moves by the average value of $\delta V$, weighted by the probability density of the unperturbed state}. A bump placed where the particle is likely to be moves the level; a bump where the particle never goes does not. Classically, a particle oscillating in a potential well moves slowest near its turning points (first-year physics: kinetic energy is smallest there), so it spends most of its time there; in a quantum state of high $n$ the averaged density $|\psi_n^{(0)}|^2$ also piles up near the classical turning points. We will meet this ``a level probes the potential near its turning points'' idea again when we discuss the paper.
+Because $|\psi_n^{(0)}|^2\ge 0$ and integrates to 1, \cref{eq:perturbation-first} says: to first order, \emph{a level moves by the average value of $\delta V$, weighted by the probability density of the unperturbed state}. A bump placed where the particle is likely to be moves the level; a bump where the particle never goes does not. Classically, a particle oscillating in a potential well moves slowest near its turning points (first-year physics: kinetic energy is smallest there), so it spends most of its time there. For a smoothly varying potential, the semiclassical (WKB) picture of Chapter~\ref{ch:wkb} says that in a state of high $n$ the density $|\psi_n^{(0)}|^2$, averaged over its rapid oscillations, likewise piles up near the classical turning points. This is a heuristic statement about smooth potentials, not a theorem. It does not apply to the box, whose walls are vertical and whose averaged density $1/(2L)$ is uniform. We will meet this ``a level probes the potential near its turning points'' idea again when we discuss the paper.
 
 \begin{checkpoint}
 Suppose $\delta V(x)\ge0$ everywhere in the box. Can any level move down at first order?
@@ -271,7 +271,7 @@ Therefore
 =\frac{(-1)^q}{2L}\left[\int_0^{2L}\cos\Bigl(\frac{q\pi u}{L}\Bigr)\dd u-\int_0^{2L}\cos\Bigl(\frac{n\pi u}{L}\Bigr)\cos\Bigl(\frac{q\pi u}{L}\Bigr)\dd u\right].
 \label{eq:perturbation-cosint}
 \end{equation}
-The first integral is $[\tfrac{L}{q\pi}\sin(q\pi u/L)]_0^{2L}=0$, since $\sin(2q\pi)=0$. For the second, use $\cos a\cos b=\tfrac12[\cos(a-b)+\cos(a+b)]$: each cosine with a nonzero integer multiple of $\pi u/L$ integrates to zero over $[0,2L]$ for the same reason, so only the term with $n-q=0$ survives, and it gives $\tfrac12\cdot 2L=L$. The second integral is thus $L\,\delta_{nq}$ (this is the orthogonality of cosines from Chapter~\ref{ch:fourier-series}). Putting it together,
+The first integral is $[\tfrac{L}{q\pi}\sin(q\pi u/L)]_0^{2L}=0$, since $\sin(2q\pi)=0$. For the second, use $\cos a\cos b=\tfrac12[\cos(a-b)+\cos(a+b)]$: the product becomes $\tfrac12[\cos((n-q)\pi u/L)+\cos((n+q)\pi u/L)]$. Each cosine with a nonzero integer multiple of $\pi u/L$ integrates to zero over $[0,2L]$ for the same reason. Since $n\ge1$ and $q\ge1$, the multiple $n+q\ge2$ is never zero, so the $(n+q)$ term always vanishes, and only the $(n-q)$ term with $n-q=0$ survives, and it gives $\tfrac12\cdot 2L=L$. The second integral is thus $L\,\delta_{nq}$ (this is the orthogonality of cosines from Chapter~\ref{ch:fourier-series}). Putting it together,
 \begin{equation}
 \int_{-L}^{L}|\psi_n^{(0)}|^2\cos\Bigl(\frac{q\pi x}{L}\Bigr)\dd x=\frac{(-1)^q}{2L}\bigl(0-L\,\delta_{nq}\bigr)=\frac{(-1)^{q+1}}{2}\,\delta_{nq}.
 \label{eq:perturbation-boxcos}
@@ -424,7 +424,7 @@ print(A[0, 0], A[2, 3], A[2, 2])          # about 1, 0.5 and 0
 \texttt{eigh\_tridiagonal} returns eigenvectors normalized so that $\sum_j\psi_j^2=1$, the normalization of a vector. A wavefunction needs $\sum_j\psi_j^2h=1$, the discrete version of $\int|\psi|^2\dd x=1$. Forgetting the division by $\sqrt h$ multiplies every $A_{nk}$ by $h$, so the constant column is $h$ instead of 1 and every predicted shift is wrong by a factor $1/h$. The paper states this normalization explicitly (App.~A, step 9: ``$\psi$ normalized $\sum\psi^2dx=1$'').
 \end{pitfall}
 
-\Cref{fig:perturbation-sensitivity} compares the sensitivity matrix of the box with that of the Wu--Sprung potential. That potential (defined by the paper's Eq.~(2) and derived in Chapter~\ref{ch:wu-sprung}) is even, has its minimum $V_0=3.10073\pi$ at $x=0$, and rises to $V=1000$ at $x=\pm44.883$. All you need here is that its low levels are confined to a central region much narrower than the box: level 20, near $E\approx77$, turns at $|x|\approx5.4$, less than an eighth of $L$. Over that region $\cos(k\pi x/L)\approx1$ for the first few $k$, so those columns behave almost like the constant column for low levels: for example $A_{20,1}>0.9$. The clean diagonal of the box is gone; level 20 has sizeable sensitivity (above 0.1) to at least five different cosines with $k\ge1$, and each cosine moves many levels.
+\Cref{fig:perturbation-sensitivity} compares the sensitivity matrix of the box with that of the Wu--Sprung potential. That potential (defined by the paper's Eq.~(2) and derived in Chapter~\ref{ch:wu-sprung}) is even, has its minimum $V_0=3.10073\pi$ at $x=0$, and rises to $V=1000$ at $x=\pm44.883$. All you need here is that its low levels are confined to a central region much narrower than the box: level 20, near $E\approx77$, turns at $|x|\approx5.4$, less than an eighth of $L$. Over that region $\cos(k\pi x/L)\approx1$ for the first few $k$, so those columns behave almost like the constant column for low levels: for example $A_{20,1}>0.9$. The clean diagonal of the box is gone; level 20 has sizeable sensitivity (above 0.1) to at least three different cosines with $k\ge1$, and each cosine moves many levels.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/perturbation_sensitivity.pdf}
@@ -510,7 +510,7 @@ By the quadratic formula,
 =\frac{E_1+E_2}{2}\pm\sqrt{\Delta^2+|v|^2},
 \label{eq:perturbation-twolevel}
 \end{align}
-where $\Delta=(E_2-E_1)/2>0$ and we used $\tfrac14(E_1+E_2)^2-E_1E_2=\tfrac14(E_2-E_1)^2$. When $|v|\ll\Delta$, write $\sqrt{\Delta^2+|v|^2}=\Delta\sqrt{1+y}$ with $y=|v|^2/\Delta^2\ll1$ and use $\sqrt{1+y}\approx1+y/2$ (Chapter~\ref{ch:asymptotics}; the neglected term is of order $y^2$):
+where $\Delta=(E_2-E_1)/2>0$ and we used $\tfrac14(E_1+E_2)^2-E_1E_2=\tfrac14(E_2-E_1)^2$. (This $\Delta$ is only a local name for the half-gap; it has nothing to do with the grid bias $\Delta_n$ of the paper, Chapter~\ref{ch:finite-differences}.) When $|v|\ll\Delta$, write $\sqrt{\Delta^2+|v|^2}=\Delta\sqrt{1+y}$ with $y=|v|^2/\Delta^2\ll1$ and use $\sqrt{1+y}\approx1+y/2$ (Chapter~\ref{ch:asymptotics}; the neglected term is of order $y^2$):
 \[
 \sqrt{\Delta^2+|v|^2}\approx\Delta+\frac{|v|^2}{2\Delta}=\frac{E_2-E_1}{2}+\frac{|v|^2}{E_2-E_1}.
 \]
@@ -582,7 +582,7 @@ E_1^{(2)}=F^2\sum_{m\ \text{even}}\frac{x_{1m}^2}{E_1^{(0)}-E_m^{(0)}}
 =-F^2\sum_{m\ \text{even}}\frac{256m^2}{\pi^4(m^2-1)^4}\cdot\frac{4}{\pi^2(m^2-1)}
 =-F^2\frac{1024}{\pi^6}\,S,
 \]
-with $S=\sum_{m=2,4,6,\dots}m^2/(m^2-1)^5$. The terms fall off fast: $m=2$ gives $4/243=0.016461$, $m=4$ gives $2.1\times10^{-5}$, and the full sum is $S=0.016483$. (It equals $(15-\pi^2)\pi^2/3072$, a closed form we check numerically but do not derive.) Since $1024/\pi^6=1.06513$, $E_1^{(2)}=-0.017556\,F^2$.
+with $S=\sum_{m=2,4,6,\dots}m^2/(m^2-1)^5$. The terms fall off fast: $m=2$ gives $4/243=0.016461$, $m=4$ gives $2.1\times10^{-5}$, and the full sum is $S=0.016483$. (A closed form for $S$ exists; see the box after this Sample Problem. We use only the numerical value.) Since $1024/\pi^6=1.06513$, $E_1^{(2)}=-0.017556\,F^2$.
 
 \textbf{Step 4: Compare.} First order predicts no change. Second order predicts $E_1\approx2.467401-0.017556=2.449845$. Exact diagonalization (the method of \cref{sec:perturbation-validity}) gives $2.44987$: the two differ by only about $2\times10^{-5}$.
 
@@ -592,9 +592,24 @@ with $S=\sum_{m=2,4,6,\dots}m^2/(m^2-1)^5$. The terms fall off fast: $m=2$ gives
 The ground state moves down, as every ground state must at second order, and quadratically in $F$ (the shift does not care which way the box is tilted). In atomic physics the analogous effect is the quadratic Stark effect.
 \end{sample}
 
+\begin{beyond}
+\textbf{A closed form for $S$.} The sum $S=\sum_{m=2,4,6,\dots}m^2/(m^2-1)^5$ equals $(15-\pi^2)\pi^2/3072$. Deriving this requires partial fractions together with known values of sums of inverse powers of integers, techniques this book does not develop (see \cite{rhb}). We take the closed form on trust; Problem~22 checks it numerically, and nothing in this chapter depends on it.
+\end{beyond}
+
 \subsection{The box with a cosine, at second order}
 
-For $\delta V=c\cos(q\pi x/L)$ we also need off-diagonal elements. With $\theta=\pi u/2L$ (which runs from 0 to $\pi$ as $u$ runs over the box), $\psi_n^{(0)}\psi_m^{(0)}=\tfrac1L\sin n\theta\sin m\theta=\tfrac{1}{2L}[\cos(n-m)\theta-\cos(n+m)\theta]$ and $\cos(q\pi x/L)=(-1)^q\cos2q\theta$. Using $\dd u=(2L/\pi)\dd\theta$ and $\int_0^\pi\cos j\theta\cos l\theta\,\dd\theta=\tfrac\pi2\delta_{jl}$ for positive integers $j,l$ (and $0$ if one of them is $0$ and the other is not; both facts follow from the product-to-sum formula as in \cref{eq:perturbation-cosint}),
+For $\delta V=c\cos(q\pi x/L)$ we also need off-diagonal elements. With $\theta=\pi u/2L$ (which runs from 0 to $\pi$ as $u$ runs over the box), $\psi_n^{(0)}\psi_m^{(0)}=\tfrac1L\sin n\theta\sin m\theta=\tfrac{1}{2L}[\cos(n-m)\theta-\cos(n+m)\theta]$ and $\cos(q\pi x/L)=(-1)^q\cos2q\theta$. We need one integral over $[0,\pi]$, for integers $j\ge0$ and $l\ge1$:
+\[
+\int_0^\pi\cos j\theta\cos l\theta\,\dd\theta=\frac\pi2\,\delta_{jl}.
+\]
+To see it, product-to-sum turns the integrand into $\tfrac12[\cos(j-l)\theta+\cos(j+l)\theta]$. A cosine $\cos k\theta$ with a nonzero integer $k$ integrates over $[0,\pi]$ to $\sin(k\pi)/k=0$. Since $j+l\ge1$, the second term always gives zero; the first gives zero unless $j=l$, in which case it gives $\tfrac12\pi$. If $j=0$ the result is $0$, because $l\ge1$ means $j\ne l$. Now compute, with $\dd u=(2L/\pi)\dd\theta$ and $\cos(n-m)\theta=\cos(|n-m|\theta)$:
+\begin{align*}
+\bra{n}\cos\tfrac{q\pi x}{L}\ket{m}
+&=\int_0^{2L}\frac{1}{2L}\bigl[\cos(|n-m|\theta)-\cos((n+m)\theta)\bigr](-1)^q\cos(2q\theta)\,\dd u\\
+&=\frac{(-1)^q}{2L}\cdot\frac{2L}{\pi}\left[\int_0^\pi\cos(|n-m|\theta)\cos(2q\theta)\,\dd\theta-\int_0^\pi\cos((n+m)\theta)\cos(2q\theta)\,\dd\theta\right]\\
+&=\frac{(-1)^q}{\pi}\left[\frac\pi2\,\delta_{|n-m|,2q}-\frac\pi2\,\delta_{n+m,2q}\right].
+\end{align*}
+In the last line we used the integral above with $l=2q\ge2$, and $j=|n-m|$ in the first term (this includes the diagonal case $n=m$, $j=0$, which gives $0$) and $j=n+m$ in the second. Hence
 \begin{equation}
 \bra{n}\cos\tfrac{q\pi x}{L}\ket{m}=\frac{(-1)^q}{2}\Bigl[\delta_{|n-m|,2q}-\delta_{n+m,2q}\Bigr]\qquad(q\ge1).
 \label{eq:perturbation-cosmat}
@@ -718,7 +733,7 @@ In the box the spacing grows with $n$. In the Wu--Sprung potential the spacing \
 \end{figure}
 
 \begin{pitfall}
-\textbf{Truncated state sums.} In a computer, the second-order sum $\sum_{m\ne n}$ runs over a finite set of states. Terms from distant states are small, but terms from \emph{nearby} states are the largest of all. If level $n$ sits near the top of the states you kept, its nearest neighbours above are missing, and the truncated sum is badly biased. A drastic example is Problem~14: keeping only two states changes the second-order shift of box level 2 under a tilt from $+0.0052F^2$ to $+0.0175F^2$. The paper meets exactly this issue, \cref{sec:perturbation-paper}.
+\textbf{Truncated state sums.} In a computer, the second-order sum $\sum_{m\ne n}$ runs over a finite set of states. Terms from distant states are small, but terms from \emph{nearby} states are the largest of all. If level $n$ sits near the top of the states you kept, its nearest neighbours above are missing, and the truncated sum is badly biased. A drastic example is Problem~14: for box level 2 under a tilt ($L=1$), the full second-order sum is $+0.0052F^2$ (Problem~8; the terms $m=1,3,5,7$ already give this to four decimals), but keeping only states 1 and 2 drops the downward push of level 3 and gives $+0.0175F^2$, more than three times too large. The paper meets exactly this issue, \cref{sec:perturbation-paper}.
 \end{pitfall}
 
 \begin{keyideas}
@@ -759,7 +774,7 @@ Box with $L=1$, $\delta V=c\cos(\pi x/L)$. Find $c$ such that the ground state h
 \[
 \boxed{c\approx1.0965\ \text{after two Newton steps; }E_1=3.0000.}
 \]
-\Cref{fig:perturbation-newton} shows the two tangent lines. The first step overshoots in $c$ by about 3\%, the second step is already within $10^{-4}$ in energy: the quadratic convergence of Newton's method from Chapter~\ref{ch:asymptotics}.
+\Cref{fig:perturbation-newton} shows the two tangent lines. The first step undershoots in $c$ by about 3\%, the second step is already within $10^{-4}$ in energy: the quadratic convergence of Newton's method from Chapter~\ref{ch:asymptotics}.
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -825,13 +840,13 @@ The opposite strategy is to write the levels \emph{as} the perturbative formula,
 The paper's Hermitian fit perturbs the Wu--Sprung potential, $V\to V+\delta V$ with $\delta V(x)=\sum_{k=0}^{M-1}c_k\cos(k\pi x/L)$, and fits the coefficients ``by iterated linearization: solve for $(E_n,\psi_n)$; form residuals $r_n=\tilde t_n-E_n$ and the first-order sensitivity $A_{nk}=\int|\psi_n|^2\cos(k\pi x/L)\,dx$; update $c$ by SVD-damped least squares with a Levenberg--Marquardt schedule, accepting only steps that improve the rms'' (Sec.~II~C). Every ingredient is in this chapter: $A_{nk}$ is \cref{eq:perturbation-Ank}; evaluated with the current eigenfunctions it is the exact Jacobian, \cref{eq:perturbation-HF}; and the loop is the one of \cref{sec:perturbation-fitting}, with step 4 solved by damped least squares (App.~A, step 6, explained line by line in Chapter~\ref{ch:fitting}). The targets $\tilde t_n$ are the Riemann zeros corrected for the grid bias of the finite-difference solver, a correction explained in Chapter~\ref{ch:finite-differences}. App.~A, step 4, records that the eigenpairs come from \texttt{eigh\_tridiagonal}, so the normalization pitfall of \cref{sec:perturbation-sensitivity} applies.
 
 \paragraph{Exact spectrum at every step.}
-Because each iteration begins with an exact eigensolve and accepts only improving steps, the Hermitian fit uses perturbation theory as a step proposer only. This matters, because the fitted corrections are not small. In the interpolation split of Sec.~III, the fitted correction has ``rms $\delta V=40$'' in the band of turning points of the held-out levels and ``a maximum $|\delta V|=199$ where the smooth potential is about $500$'' (Sec.~III, Fig.~4). For comparison, near levels 201--300 the mean spacing of the zeros is about 1.46 (it is the quantity $\mathrm{gap}_n=2\pi/\log(s_n/2\pi)$ of Sec.~II~A, studied in Chapter~\ref{ch:counting-zeros}). A single linearization from $\bm c=0$ would be useless at that size (our estimate from \cref{eq:perturbation-validity}, not a statement of the paper); the paper's in-sample and out-of-sample numbers are nonetheless the true eigenvalues of the fitted operators, scored by ``a single plain eigensolve of the fitted potential'' (Sec.~II~C).
+Because each iteration begins with an exact eigensolve and accepts only improving steps, the Hermitian fit uses perturbation theory as a step proposer only. This matters, because the fitted corrections are not small. In the interpolation split of Sec.~III, the fitted correction has ``rms $\delta V=40$'' in the band of turning points of the held-out levels and ``a maximum $|\delta V|=199$ where the smooth potential is about $500$'' (Sec.~III, Fig.~4). For comparison, near levels 201--300 the mean spacing of the zeros is about 1.46 (it is the quantity $\mathrm{gap}_n=2\pi/\log(s_n/2\pi)$ of Sec.~II~A, studied in Chapter~\ref{ch:counting-zeros}). A single linearization from $\bm c=0$ is plausibly inadequate at that size (our rough estimate from \cref{eq:perturbation-validity}, not a statement of the paper; strictly, the condition concerns the matrix elements $\delta V_{nm}$, which can be smaller than the rms of $\delta V$, so the comparison is only indicative); the paper's in-sample and out-of-sample numbers are nonetheless the true eigenvalues of the fitted operators, scored by ``a single plain eigensolve of the fitted potential'' (Sec.~II~C).
 
 \paragraph{A level probes the potential near its turning points.}
 The first-order formula says a level responds to $\delta V$ where $|\psi_n|^2$ is large, and \cref{sec:perturbation-first} noted that for high levels the density is largest near the classical turning points. The paper uses this in Sec.~III: ``Position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$,'' which is exactly where the unregularized fit placed its largest structure. Chapter~\ref{ch:wkb} makes the turning-point picture quantitative.
 
 \paragraph{The coverage law.}
-Sec.~III reports that the fit reaches rms $0.186$ on all 500 zeros at $M=300$ and below $10^{-4}$ spacings by $M=900$, ``consistent with a basis-coverage law (the cosine family becomes effectively complete for joint level shifts once $M\pi/L>2\sqrt E$)''. The box gives an exact miniature of this law. In the box $2\sqrt{E_n}=n\pi/L$, so $M\pi/L>2\sqrt{E_n}$ means $M>n$: by \cref{eq:perturbation-Abox}, level $n$ can be moved independently only if the cosine with $k=n$ is in the basis. Reading the condition as $E<(M\pi/2L)^2$ with $L=44.883$ gives $E<110$ for $M=300$, $E<196$ for $M=400$, and $E<992$ for $M=900$; the 500th zero is at $t_{500}=811.18$ (App.~A, key anchors), inside the last range only. This is consistent with the paper's numbers, but remember the paper calls it a law with which the results are ``consistent'', and Chapter~\ref{ch:fitting} derives it only heuristically. \Cref{fig:perturbation-sensitivity} also shows why the Wu--Sprung problem is less tidy than the box: low cosines act almost like the constant mode for low levels, so several columns of $A$ are nearly alike, the kind of near-redundancy that makes a linear system ill-conditioned (Chapter~\ref{ch:least-squares}).
+Sec.~III reports that the fit reaches rms $0.186$ on all 500 zeros at $M=300$ and below $10^{-4}$ spacings by $M=900$, ``consistent with a basis-coverage law (the cosine family becomes effectively complete for joint level shifts once $M\pi/L>2\sqrt E$)''. The box gives an exact miniature of this law. In the box $2\sqrt{E_n}=n\pi/L$, so $M\pi/L>2\sqrt{E_n}$ means $M>n$: by \cref{eq:perturbation-Abox}, level $n$ can be moved independently only if the cosine with $k=n$ is in the basis. Reading the condition as $E<(M\pi/2L)^2$ with the scale-1 half-width $L=44.883$ (the paper's coverage numbers refer to scale 1) gives $E<110$ for $M=300$, $E<196$ for $M=400$, $E<441$ for $M=600$, and $E<992$ for $M=900$; the 500th zero is at $t_{500}=811.18$ (App.~A, key anchors), inside the last range only. This is consistent with the paper's numbers, but remember the paper calls it a law with which the results are ``consistent'', and Chapter~\ref{ch:fitting} derives it only heuristically. \Cref{fig:perturbation-sensitivity} also shows why the Wu--Sprung problem is less tidy than the box: low cosines act almost like the constant mode for low levels, so several columns of $A$ are nearly alike, the kind of near-redundancy that makes a linear system ill-conditioned (Chapter~\ref{ch:least-squares}).
 
 \paragraph{The second-order formula of Eq.~(5).}
 Sec.~II~E perturbs $H\to H+iA$, where $A=\sum_kc_k\phi_k$ is a real function and $i$ is the imaginary unit. Our general results \cref{eq:perturbation-first,eq:perturbation-second-general} needed only $H_0$ to be Hermitian, so they apply with $W=iA$. First order gives $iA_{nn}$, purely imaginary, so the leading \emph{real} shift is second order:
@@ -942,7 +957,7 @@ Sample Problem ``Tuning three box levels'' fitted three targets exactly while pr
 
 \textbf{11.} Rows are levels, columns are basis functions. Scale 1, fit 1--400: $400\times200$ (more equations than unknowns), $400\times400$ (square), $400\times600$ (more unknowns than equations). Scale 2, fit 1--800, $M=900$: $800\times900$ (more unknowns than equations). For the last two the linearized step has infinitely many solutions unless something (damping, regularization, the minimum-norm choice of Chapter~\ref{ch:least-squares}) selects one.
 
-\textbf{13.} If the series converges, the error of stopping after second order is dominated by the third-order term, which contains three factors of the perturbation and so scales as $c^3$, while the second-order term scales as $c^2$. The relative erroris roughly the ratio of the two, $c^3/c^2=c$, so it falls in proportion to the amplitude. Reducing every coefficient by a factor 4 multiplies the second-order shift by $1/16$ and the leading neglected term by $1/64$, so the neglected part shrinks four times faster than the part kept. In terms of \cref{eq:perturbation-validity}, the ratios $|\delta V_{nm}|/|E_n-E_m|$ all fall by 4, moving the fit back toward the perturbative regime. That is why the paper's quarter-amplitude check, corr $+0.88$/$+0.94$ (Sec.~V), succeeds where the full amplitude fails. If the series does not converge (or converges very slowly) at the fitted amplitude, the argument says nothing there. This is part of the reason exact diagonalization is the only safe judge.
+\textbf{13.} If the series converges, the error of stopping after second order is dominated by the third-order term, which contains three factors of the perturbation and so scales as $c^3$, while the second-order term scales as $c^2$. The relative error is roughly the ratio of the two, $c^3/c^2=c$, so it falls in proportion to the amplitude. Reducing every coefficient by a factor 4 multiplies the second-order shift by $1/16$ and the leading neglected term by $1/64$, so the neglected part shrinks four times faster than the part kept. In terms of \cref{eq:perturbation-validity}, the ratios $|\delta V_{nm}|/|E_n-E_m|$ all fall by 4, moving the fit back toward the perturbative regime. That is why the paper's quarter-amplitude check, corr $+0.88$/$+0.94$ (Sec.~V), succeeds where the full amplitude fails. If the series does not converge (or converges very slowly) at the fitted amplitude, the argument says nothing there. This is part of the reason exact diagonalization is the only safe judge.
 
 \textbf{15.} With $N_b=60$: at $c=1$ the error of the second-order value is $2.954736-2.954413=3.2\times10^{-4}$. At $c=0.5$ the error is close to one eighth of that. The ratio is close to $2^3=8$ because the leading neglected term is third order (it contains, for example, the product $\delta V_{11}|\delta V_{13}|^2$), which scales as $c^3$. Halving $c$ divides it by 8.
 

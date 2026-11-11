@@ -1,0 +1,135 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Problem 23 asks you to confirm the prediction numerically.",
+  "problem": "Problem 23 is a different problem from the one that checks the difference table. It is also Problem 23 only if the list is counted by position, and the stated 'Problem 23' with the polynomial is at position 23, which is fine; but the checks never verify that the stated fourth-difference value 2.1 is correct for the data.",
+  "fix": "Add a check that the fourth difference of y equals 2.1 and that extending the table gives 15.0."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Montgomery \\cite{montgomery}, proved under the assumption of the Riemann hypothesis and covering only part of the picture",
+  "problem": "Montgomery's theorem is for a restricted range of the pair-correlation test function (Fourier support in (-1,1)). Calling it 'part of the picture' is vague, and the problem 4 answer implies it covers gap statistics.",
+  "fix": "State that the theorem concerns pair correlation for a restricted test-function range, under RH; the full match, and the nearest-neighbor spacing match, are numerical observations."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Mathematicians have studied these numbers for more than a century and a half.",
+  "problem": "Minor, but the first zeros were computed in the 1850s to 1900s; the claim is acceptable. More seriously the chapter says 'it goes on forever' without noting these are only the first five of RE1, fine. No error; however 'the gaps never get extremely small' is an unsupported claim contradicted by smaller gaps at greater height.",
+  "fix": "Rewrite as 'among the first ten, the gaps are not extremely small; small gaps are rare at all heights'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper uses the first $10^4$ of them; its zero number 1000 is $t_{1000} = 1419.42248\\ldots$",
+  "problem": "The operator fits use only the first 1000 zeros; only the oracle uses 10^4. 'Uses the first 10^4' is imprecise.",
+  "fix": "Say: the oracle experiments use the first 10^4 zeros and the operator fits at most the first 1000."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Fig.~2 of the paper is the level-repulsion evidence of \\cref{fig:intro-barcode}, made quantitative in Chapter~\\ref{ch:level-statistics}.",
+  "problem": "Paper Fig. 2 is a GUE spacing histogram of 10^4 zeros, not the barcode figure.",
+  "fix": "Say the barcode figure illustrates qualitatively what paper Fig. 2 shows quantitatively."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The three strands of circumstantial evidence (GUE statistics \\cite{montgomery,odlyzko87}, the trace-formula analogy \\cite{berrykeating99,schumayer}, and operator proposals)",
+  "problem": "Operator proposals are not circumstantial evidence; and Sec. I A lists four strands, which the chapter also lists elsewhere inconsistently ('four strands' in intro, 'three strands' here).",
+  "fix": "Say two strands of evidence plus the continuing operator proposals."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Every zero used in the paper has been verified to lie on the line, so for our purposes \\cref{eq:intro-rho} is a fact about the data, not an assumption.",
+  "problem": "Numerical verification to finite precision for the zeros computed; fine, but mixes with RH status; also the bible says verified numerically only.",
+  "fix": "Add 'to numerical precision' and note that this does not bear on RH."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "If someone found such a system, the realness of its energies would force every $t_n$ to be real, and that would put every zero on the line: the Riemann hypothesis would follow.",
+  "problem": "Needs that the spectrum is exactly the set of t_n in the sense of zeros 1/2+it_n; stated loosely but acceptable; however the chapter says the phrase 'It predicts the zeros remarkably well' without scope.",
+  "fix": "Add 'a self-adjoint operator whose spectrum is exactly the set of t_n' and keep status labelled conjecture."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The wave for the prime $p$ oscillates as you move up in $t$ with an angular frequency equal to $\\log p$, and its amplitude shrinks like $1/\\sqrt p$.",
+  "problem": "Stated as fact; the prime-wave sum is formal/heuristic and non-convergent on the critical line. Only deferred in a later beyond box.",
+  "fix": "Add 'approximately, in the sense made precise (and heuristic) in Chapter on the explicit formula'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "A valley whose walls open out slowly gives levels that crowd together as energy grows, just like the zeros.",
+  "problem": "Contradicted by the earlier statement that a box gives growing spacing; fine, but the claim is unsupported at this stage and oversimplified (slowly growing potentials).",
+  "fix": "Say 'a potential that grows slowly (slower than a parabola) gives levels whose spacing shrinks'; this is derived in Chapter on bound states."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Typical fluctuations are a fraction of one spacing.",
+  "problem": "Fluctuation is defined as (t_n - s_n)/gap_n but the chapter never shows a worked numerical example with real t_n and s_n; no code or figure computes it.",
+  "fix": "Add a sample computing s_n and the fluctuation for n=1..3 using qmnt, and a check."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{pycode}\nimport numpy as np\nimport qmnt\n\nt = qmnt.zeros(10)",
+  "problem": "Section Problems must have at least 15 problems; fine, but checks do not verify the pycode outputs, and 'N(100)' counting with zeros(40) is not checked. Also Sample Problem on s_n absent.",
+  "fix": "Add checks for the listing outputs."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Appendix~A teaches all the Python you need, starting from nothing.",
+  "problem": "Plain 'Appendix~A' hard-coded reference rather than a label; acceptable only if no label exists, but the figure scripts section is missing from the supplied response (figures intro_staircase, intro_prime2, intro_barcode, intro_memorize, intro_trainhold, intro_roadmap are referenced).",
+  "fix": "Provide a FIGURES part with a script for each of the six figures."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{1}{The paper's largest cosine fit on the first scale uses $M = 900$ coefficients for 500 zeros.",
+  "problem": "Paper: the M=900 fit is in-sample on all 500 zeros at scale 1 (coverage); acceptable, but Problem 9 is graded 1 and is not odd/answered issue; also problems are not ordered by difficulty. Several \\prob{1} appear after \\prob{2}.",
+  "fix": "Reorder or accept; at least ensure the answers cover all \\prob{1} (done) and clarify grading."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{Using \\texttt{qmnt} or numpy, compute the average spacing of the first ten zeros and of the first 100 zeros.",
+  "problem": "Answers are given for even numbered computational problems too, fine; but problem 15 answer code is fragmentary (uses qmnt.score expecting indices), and problem 21 has no required computational check.",
+  "fix": "Present the code as a pycode block and verify it in CHECKS."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Plotted against $T$, $N(T)$ is a staircase with a step of height 1 at each zero",
+  "problem": "The claim 'size of the oscillation stays below about one step' in Fig. caption is not justified for T up to 100; wobble at 50 is 0.58 but is not demonstrated beyond.",
+  "fix": "Replace with 'in this range stays within about 0.6 of a step' after checking numerically."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Squaring makes positive and negative errors count alike. The rms has the same units as the errors.",
+  "problem": "Fine, but 'e_1..e_K' symbol K is reused later; also the paper's 'rms' is defined without noting it is not a standard deviation.",
+  "fix": "Optional: note that rms of errors differs from standard deviation (Chapter on probability)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Its correlation is undefined, since a constant prediction has no shape; we say it carries no information about the shape.",
+  "problem": "The sample's boxed answer lists the null's rms but then says nothing for the correlation; a student may be confused since the statement in Finding 2 treats 0 correlation separately.",
+  "fix": "State that correlation requires nonconstant predictions and is not reported for the null."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The paper reports held-out rms $0.074$ and correlation $+0.96$ for this formula on zeros 401--500 (paper Table~V).",
+  "problem": "Fig. 1 caption quotes +0.96 for zeros 370-460 display; Table V values are for 401-500; OK. But the figure caption says 'The shaded region is held out' while showing zeros from 370.",
+  "fix": "No change needed except to note the plotted window vs scored window differ."
+ }
+]

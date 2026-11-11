@@ -1,0 +1,149 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\section{Paper connection}\\label{sec:least-squares-paper}",
+  "problem": "The chapter has no figure scripts: it includes eight figures (line, projection, svd, filter, poly, degree, re2, sensitivity) but, as supplied, no FIGURES part was provided.",
+  "fix": "Add a FIGURES section with a ### FIG script for each of least-squares_line, _projection, _svd, _filter, _poly, _degree, _re2 and _sensitivity."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\prob{2}{Using qmnt, build the sensitivity matrix $A_{nk}$ for the first 100 levels",
+  "problem": "Problem numbering contradicts the answers. The problem list has 28 problems, but answers refer to 'Problem 24' (best ridge strength) and 'Problem 27' (kappa of RE4), and the problem order differs. Problem 22 ('Prove ridge limits') is answered under 23, and so on. The ridge sample cites 'Problem~24' and the polynomial text cites 'Problem~27' and 'Problem~18'.",
+  "fix": "Renumber consistently and fix all cross-references and answer labels to match the actual problem order."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{3.} $A^\\top A = \\begin{pmatrix}3&3\\\\3&5\\end{pmatrix}$",
+  "problem": "Answers must cover every odd-numbered problem and all \\prob{1}. Odd problems 19, 21 and 23 are answered, but their numbers do not match the problem list. Answers 1 and 2 are run together with no paragraph break.",
+  "fix": "Add the missing answers after renumbering and put a blank line between answers."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "which by \\cref{eq:least-squares-dS0}'s general form $\\partial S/\\partial c = -2A^\\top r$",
+  "problem": "The cited equation is the line-specific derivative; the general-form gradient is derived in an unlabeled align block. The sentence is awkward and the reference is misleading.",
+  "fix": "Label the general gradient equation (e.g. eq:least-squares-grad) and cite it."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The denominator in \\cref{eq:least-squares-line-sol} equals $m\\sum_i (t_i-\\bar t)^2$. To see this, expand the square:",
+  "problem": "The expansion's second line, '-2(\\sum t_i)^2/m + (\\sum t_i)^2/m', is correct, but the step 2\\bar t\\sum t_i=2(\\sum t)^2/m and m\\bar t^2=(\\sum t)^2/m is not shown.",
+  "fix": "Show the two substitutions separately."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Sample Problem~\\ref{sec:least-squares-line}.1 data",
+  "problem": "The sample is not a labeled item and the reference points to a section label; the rendered text will read 'Sample Problem 1.1' wrongly.",
+  "fix": "Write 'the first Sample Problem' or label the sample properly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The ridge gain is $g(\\sigma) = \\sigma/(\\sigma^2+\\alpha)$. By the quotient rule,",
+  "problem": "Claim that 'no component is amplified by more than 1/(2\\sqrt\\alpha)' is correct, but the Problem about relative form says the max is at sigma/sigma_1=0.01, consistent. No error there; however the Sample claim 'filter factor exactly 1/2 cancels the noise exactly' is correct only because noise equals signal; fine. The step 'c_2 = 0.01*0.02/(1e-4+alpha)' is fine.",
+  "fix": "No change needed to this passage."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Typically the noise has comparable components along every pattern $u_j$ (it has no reason to prefer one), while a smooth true signal has components",
+  "problem": "Unproved claim (Picard-type condition) presented as typical without justification or the needed probability.",
+  "fix": "Label it explicitly as a heuristic and note it is problem-dependent."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Numerically its rank is $6$ (CHECKS), so its columns are independent",
+  "problem": "The textbook text refers a reader to a hidden script for a rank claim; a student cannot follow it.",
+  "fix": "Give the numerical singular values in the text or say 'computed with numpy.linalg.matrix_rank' with the code shown."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "in the variable $u$ the condition number is far smaller (the CHECKS script confirms a reduction by more than a factor 100)",
+  "problem": "The reader cannot see CHECKS and no number is given.",
+  "fix": "Quote the two condition numbers (computed in CHECKS) in the text."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The singular values are unique; the singular vectors are unique up to sign when the $\\sigma_j$ are distinct",
+  "problem": "Stated without proof or beyond-box; also fails for zero singular values (null vectors not unique).",
+  "fix": "Say 'nonzero distinct sigma_j' and note that uniqueness follows from uniqueness of eigenvalues of A^T A."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Rotations and reflections are orthogonal matrices.",
+  "problem": "Stated without justification; students know only rotations in 2D/3D.",
+  "fix": "Add one line: rotations preserve lengths and angles, hence orthonormal columns."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The mean spacing at $t = 34.31$ is $2\\pi/\\log(34.31/2\\pi)$",
+  "problem": "Answer cites a formula from Chapter 17; acceptable, but 'about 4% larger' reasoning is hand-wavy.",
+  "fix": "State 3.863/3.70=1.044 explicitly."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Chapter~\\ref{ch:perturbation} derives the fact we take on trust here",
+  "problem": "Chapter 13 precedes this chapter? No: Ch.13 follows Ch.9, so the reader has not seen first-order perturbation; also quantum symbols psi_n are not yet defined. The forward reference is flagged but the 'beyond' status is not.",
+  "fix": "Put this in a beyond box stating it is taken on trust until Chapter 13."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Ridge removes the damage that unregularized fitting does in poorly constrained directions (\\cref{eq:least-squares-noise}); it cannot add information the parametrization lacks.",
+  "problem": "Attributes the paper's gap damage to the noise-amplification mechanism; the paper only says heuristically that the optimizer places structure where only held-out levels probe.",
+  "fix": "Hedge: 'is consistent with' and cite the paper's heuristic explanation."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "which explains why near-perfect in-sample agreement is unsurprising and, as RE4 showed, carries no information about held-out levels.",
+  "problem": "The paper does not claim this derivation; it is the chapter's heuristic and RE4 does not 'show' it for the operator.",
+  "fix": "Say 'suggests' and mark as heuristic."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "With 800 training zeros it gives $0.100/{+0.94}$ (Table~IV); note that even then $900 > 800$",
+  "problem": "The paper's budget table is Table IV in the bible (budget comparison), but the paper's text labels it Table~\\ref{tab:budget}; fine. However the claim of a null space at least 100 treats 900 coefficients on 800 equations, correct. No error; but C1 'stays within 0.005 of the null (0.258 against 0.263)' is correct.",
+  "fix": "No change."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Equation~\\cref{eq:least-squares-min-identity} is Pythagoras' theorem",
+  "problem": "The figure/shadow analogy is fine, but the sunlight analogy requires rays perpendicular to the table, only true at noon; minor. More importantly no figure of the ridge effect on the ill-conditioned example.",
+  "fix": "Optionally clarify the noon-sun analogy."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/least-squares_line.pdf}",
+  "problem": "Figure filenames use a hyphenated slug 'least-squares_...' which is fine, but the figure scripts are missing so compilation fails.",
+  "fix": "Supply the scripts."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "In this step $\\lambda$ is the Levenberg--Marquardt damping (the book's notation, Section~6 of the bible: $\\lambda$ for damping, $\\mu$ for ridge strength).",
+  "problem": "Refers to 'the bible' in the textbook text, which readers do not have.",
+  "fix": "Say 'the book's notation (Appendix B)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\textbf{2.} The condition $\\partial S/\\partial c_0 = 0$ is $-2\\sum r_i = 0$ \\cref{eq:least-squares-dS0}. In general the normal equations say $a_k^\\top r = 0$ for each column; the intercept's column is all ones, so $\\sum_i r_i = 0$. For $y = c_1 t$ there is no column of ones; the only condition is $\\sum t_ir_i = 0$, and $\\sum r_i$ need not vanish (for Problem~7's fit, residuals are $0,\\ -0.4,\\ 0.2$, sum $-0.2$).",
+  "problem": "Answer 2 is correct, but the references 'Problem 7' and 'Problem 1' are fine; residual for t=1: 1-1.4=-0.4, t=2: 3-2.8=0.2. OK. However answer text merges with the next answer without line break (LaTeX renders them in one paragraph).",
+  "fix": "Insert a blank line before '\\textbf{3.}'."
+ }
+]

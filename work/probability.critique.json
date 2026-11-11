@@ -1,0 +1,107 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{keyideas}\n\\item A random variable attaches a number to each outcome;",
+  "problem": "The chapter uses figures (hist_fluct, gaussian, exponential, corr_rms, autocorr, lln) but the response as given contains no FIGURES section with scripts; the bible requires a script for each figure.",
+  "fix": "Add a FIGURES part with a '### FIG probability_<name>' script for each of the six figures."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{prerequisites}\n\\item Chapter~\\ref{ch:series}",
+  "problem": "Prerequisites items are not inside an itemize, although the bible says the environment contains a bullet list (the bible says 'itemize inside it').",
+  "fix": "Wrap the items in \\begin{itemize}...\\end{itemize} inside prerequisites."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\prob{3}{Prove the equality case of Cauchy--Schwarz in detail: if $(\\sum u_iv_i)^2=\\sum u_i^2\\sum v_i^2$ and $\\sum v_i^2>0$, then $u_i=\\lambda v_i$ for one constant $\\lambda$ and all $i$.}\\label{prob:probability-cs-eq}",
+  "problem": "Labels use the prefix 'prob:' rather than the allowed prefixes sec/eq/fig/tab; also \\label placed outside \\prob after the argument.",
+  "fix": "Rename labels to a permitted form (e.g. eq:probability-prob-...) or avoid labels; place consistently."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{25.} About $0.263$ on 401--500 and $0.270$ on 501--1000",
+  "problem": "Answers section omits answers to several odd-numbered problems (e.g. 29 Bessel, 18 paper-only fine, but 19-ok; odd 29 (acf bound), 31 missing) and problem numbering relies on implicit counting. Odd problems 29 and 31 (Cov, Cauchy-Schwarz acf, Bessel) have no answers.",
+  "fix": "Add short solutions for all odd-numbered problems, including 29 and 31."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The window covers about 15 periods of the wave, enough for the long-run average to be a good approximation, and the two values agree to the digits shown.",
+  "problem": "Sampled at the smooth zeros (discrete, ~100 points), the agreement 0.1708 vs 0.1709 is not guaranteed; the checks only test within 0.01, so 'agree to the digits shown' is unverified. Also paper's probe-null is not stated to be from smooth-zero sampling.",
+  "fix": "Compute the sampled rms in CHECKS to 4 digits or soften to 'agree closely'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "it oscillates with a period of roughly 6--7 levels, the level-count of one period $2\\pi/\\log 2\\approx9.07$ in $t$ at these heights (compare paper Sec.~V)",
+  "problem": "The paper says ~6-7 levels (Sec. V) is for the p=2 oscillation; fine, but the sample autocorrelation of a sampled sinusoid also includes harmonics m=2,3 so it is not a pure cosine; claim 'by eq sin-acf oscillates' is approximate.",
+  "fix": "Say the m=1 term dominates and harmonics modify the shape."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Replace the sums in \\cref{eq:probability-acf} by averages over one full period $P=2\\pi/\\omega$",
+  "problem": "Passing from a sample autocorrelation to a time average is asserted without justification; also the acf in the figure is at integer lags on irregular levels, not continuous tau.",
+  "fix": "State this as an approximation for fine sampling and long windows, and note that level-sampling makes the lag in levels correspond to variable tau."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Choose $\\lambda^*=\\sum u_iv_i\\big/\\sum v_i^2$ (the value that minimizes $g$; you can confirm this by setting $g'(\\lambda)=0$).",
+  "problem": "Student is told to confirm; the proof does not actually need minimality but the remark invites a gap.",
+  "fix": "Say 'any real lambda works in g>=0; we choose this one' and drop the minimization claim, or show g'=0 line."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The same conclusion holds for incommensurate frequencies averaged over a long time, Chapter~\\ref{ch:fourier-series}.",
+  "problem": "Cross-term vanishing for incommensurate frequencies is asserted by pointer; also Chapter 5 is mentioned but the wave RE2 has commensurate frequencies so fine.",
+  "fix": "Clarify the pointer names the orthogonality result, or omit the remark."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "and why the paper's zero-parameter prime formula sits almost exactly where the identity says the best possible predictor with its correlation must sit.",
+  "problem": "This is the author's own observation, with rounded correlations; presented in the intro as a finding. Also the bound assumes mean zero and equality of the 'null' with sigma_y.",
+  "fix": "Label as 'our observation from the paper's rounded numbers' in the introduction too."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "has, for large $n$, a standard deviation of approximately $(1-\\rho^2)/\\sqrt n$.",
+  "problem": "Correct for Gaussian pairs, but the paper-connection says the widths 'agree in order of magnitude' with ±0.2 near r=0 using 1.96*... ; the paper interval for r≈-0.07 is about ±0.15, fine; however 'derivation in efron' is doubtful (Efron-Tibshirani is bootstrap text, not the normal-theory derivation).",
+  "fix": "Cite the result as standard normal-theory (e.g. via the Fisher transformation) and do not attribute its derivation to efron; or point to rhb."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Why does the Gaussian appear so often? The reason is a theorem about sums of many independent random contributions, which we state in \\cref{sec:probability-sampling} (the central limit theorem).",
+  "problem": "Forward reference; fine, but Chebyshev bound in pitfall is also referenced before it is proved.",
+  "fix": "Add 'proved later in this chapter' wording for Chebyshev."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The rms current of an alternating supply is the peak current divided by $\\sqrt2$",
+  "problem": "Reader of first-year physics knows this, but 'joint distribution' for continuous variables and independence for continuous variables are never defined; covariance formulas proved only discrete.",
+  "fix": "Add a sentence that the continuous case replaces sums by double integrals."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Their widths agree in order of magnitude with the Gaussian rule of thumb $(1-\\rho^2)/\\sqrt n$ of the second \\texttt{beyond} box: about $\\pm0.2$ near $r=0$",
+  "problem": "The paper's interval for corr is [-0.21,+0.08], asymmetric around -0.07 with half-width ~0.15; stating ±0.2 slightly overstates agreement.",
+  "fix": "Say 'about ±0.2 (1.96 SE)' compared with the paper's half-width about 0.15."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{Using numpy, draw $10^4$ exponential numbers of mean 1 with \\texttt{default\\_rng(0)}.",
+  "problem": "Answers section lacks answer for this problem (24) though only odd required; fine, but the bible requires at least 3 computational problems whose checks exist; ok. However there are no problem answers for 25's code beyond line mentions.",
+  "fix": "No change needed beyond completing odd answers."
+ }
+]

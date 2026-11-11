@@ -1,0 +1,100 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{figure}[htbp]\\centering\n\\includegraphics[width=0.85\\linewidth]{figs/controls_bootstrap_enum.pdf}",
+  "problem": "The chapter includes figures (bootstrap_enum, oraclecorr, ar1, blocks, surrogates, capacity, posthoc) but the response shows no FIGURES section with scripts, so none can be built.",
+  "fix": "Add a FIGURES part with a '### FIG controls_<name>' script for each of the seven figures."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "\\textbf{Step 3:} Expected mean: $\\frac1{27}\\sum(\\text{weight}\\times\\text{mean})=\\frac{81}{27}\\cdot\\frac{1}{1}\\cdot\\frac{1}{3}\\cdot 3=3$.",
+  "problem": "Garbled arithmetic: 81/27 times 1/3 times 3 equals 3 only by accident, and the expression is meaningless. The check script also contains a nonsense 'placeholder guard' assert.",
+  "fix": "Write: the weighted sum of resample sums is 243, so the expected mean is 243/(27*3)=3. Remove the garbled expression and the placeholder assert."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Table~II gives the bootstrap $95\\%$ interval $[0.32,0.42]$ for the same configuration.",
+  "problem": "Sample uses the Table II (bases) cosine row, but the paper's Table I caption repeats are for the random-restart replicate whose Sec. III interval is [0.33,0.43]; the paper's Table II is the within-height table in the paper's numbering confusion. Paper Table II (other bases) is correct in the paper's R1 numbering only if tables are I herm, II bases; acceptable, but the sample mixes held-out rms 0.365--0.379 with the 0.369 interval from a different run.",
+  "fix": "State explicitly that the interval is for the deterministic cosine row (0.369) and that the comparison is approximate, or use [0.33,0.43] from Sec. III."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the pairs with $j=i+k$ need $1\\le i\\le n-k$, giving $n-k$ pairs, and the pairs with $i=j+k$ give another $n-k$.",
+  "problem": "Fine, but the code comment later claims AR(1) block formula 'about 3% low' using factor 2.8 vs 2.99: sqrt(2.8/2.99)=0.968, ok. However the stated Fig. caption says the dashed curve is a 'block formula evaluated with true autocovariances' while Eq. (cbbvar) is for the sample (circular) autocovariances with n=b*ell; fine. No error here beyond rounding.",
+  "fix": "No change needed."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "it is a theorem that the bootstrap distribution of $\\sqrt n(\\hat\\theta^*-\\hat\\theta)$ approaches the true sampling distribution",
+  "problem": "Stated as a blanket theorem for rms and correlation; requires finite moments and smooth-function-of-means conditions that are only loosely stated.",
+  "fix": "Add 'under finite-moment conditions' and cite the result as proved but beyond the book."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "it is computed as $d_R=\\int_{-\\infty}^{\\infty}\\big[1-\\Phi(x)^R-(1-\\Phi(x))^R\\big]\\dd x$",
+  "problem": "Formula given without derivation, and refers to 'Problem 18 of Chapter probability style', an invalid pointer to another chapter's problem.",
+  "fix": "Put it in a beyond box or derive via E[max]-E[min]; delete the Problem 18 reference."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The \\textbf{Bonferroni correction} runs each test at $\\alpha/k$; then, by the same formula, the family-wise probability is $1-(1-\\alpha/k)^k\\le\\alpha$.",
+  "problem": "The inequality is asserted without proof.",
+  "fix": "Add: by Bernoulli's inequality (1-a/k)^k >= 1-a, or the union bound."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the relative error of a standard deviation estimated from $B$ draws is about $1/\\sqrt{2B}$",
+  "problem": "Stated without derivation.",
+  "fix": "Note it follows from Var(s^2) = 2 sigma^4/(B-1) for Gaussian data and delta method, or label as quoted."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Neglecting the tails beyond $k=n-1$ (they are of size $\\varphi^n$)",
+  "problem": "The neglected tail of the sum k*phi^k also carries a factor n; the claim 'size phi^n' is loose.",
+  "fix": "Say tails are of order n phi^n, negligible for |phi|^n n small."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Imagine scoring a model on zeros 401--500 and getting rms error $0.369$ (in units of the local mean spacing; recall from Chapter~\\ref{ch:generalization}",
+  "problem": "Awkward phrase 'zeros of a slightly different stretch' conflicts with 'same height'.",
+  "fix": "Rephrase: 'a different hundred zeros from the same height range'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The paper's exact definition of the binomial score is in the Zenodo record; we have not reproduced it here.",
+  "problem": "Claims about a record content not given in the paper; the paper only says documented in the record.",
+  "fix": "Say 'the paper refers to the record for the construction; this book does not reproduce it'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Table~V of the paper reports that the six-prime explicit formula",
+  "problem": "Bible says Table V is the oracle table; the Table V caption interval [+0.95,+0.97] is in the paper Table V caption, correct. But the Sec. III quote 'rms 0.074 correlation 0.96' fine. Minor: later text says Table II caption warns about independent resampling, whereas paper's Table II (bases) caption says brackets from independent resampling, correct.",
+  "fix": "No change."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The right panel of Fig.~\\ref{fig:controls-ar1} confirms this by simulation.",
+  "problem": "Claims confirmation of a specific 3% and 42% figures that are not checked by the check script.",
+  "fix": "Add the simulation to CHECKS or soften to 'is expected to show'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\item[1.] $\\bar x=5$; deviations $-3,0,3$",
+  "problem": "Answers section lacks answers to all odd-numbered problems (e.g. 3 done, but 9, 11 fine; 17, 19 present; 33, 35, 37, 39 missing, 21 and 23 present, 25 present) and at least problem 33,35,37,39 odd are unanswered.",
+  "fix": "Add short solutions for the remaining odd-numbered problems (including the computational ones)."
+ }
+]

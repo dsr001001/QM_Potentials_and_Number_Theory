@@ -368,7 +368,7 @@ The natural measure of ``short'' is the number of grid points per wavelength, $n
 \toprule
 $n_{\rm pw}$ & 4 & 6 & 8 & 12 & 24 & 50\\
 \midrule
-$1-K_h/q^2$ & 19\% & 8.8\% & 5.0\% & 2.3\% & 0.57\% & 0.13\%\\
+$1-K_h/q^2$ & 18.9\% & 8.81\% & 5.04\% & 2.26\% & 0.570\% & 0.13\%\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -397,7 +397,7 @@ Running example RE3 is the box $[-L,L]$ with $L=44.883$, the half-width the pape
 \boxed{E_{500}-E^{(h)}_{500}=1.74\ \text{energy units}=1.42\ \text{level spacings}.}
 \end{equation*}
 
-\textbf{Step 6: Points per wavelength.} With $q=500\pi/(2L)$, $n_{\rm pw}=2\pi/(qh)=4L/(500h)=2(N+1)/500=24.0$. \Cref{tab:finite-differences-ppw} says $24$ points per wavelength costs $0.57\%$, matching Step 4.
+\textbf{Step 6: Points per wavelength.} With $q=500\pi/(2L)$, $n_{\rm pw}=2\pi/(qh)=4L/(500h)=2(N+1)/500=24.0$. \Cref{tab:finite-differences-ppw} says $24$ points per wavelength costs $0.570\%$, matching Step 4.
 
 By contrast the ground state, $E_1=1.22483\times10^{-3}$, has error $h^2E_1^2/12\approx3\times10^{-11}$, completely negligible. A grid that is superb for low levels can misplace level 500 by more than a level spacing.
 \end{sample}
@@ -451,7 +451,7 @@ By \eqref{eq:finite-differences-second-difference}, applied to a smooth wavefunc
 \begin{equation*}
 H_{\rm grid}\approx H+W,\qquad W=-\frac{h^2}{12}\frac{\dd^4}{\dd x^4}.
 \end{equation*}
-Treating $W$ as a small perturbation and using the continuum form of \eqref{eq:finite-differences-hf}, the grid level should sit at
+This step is heuristic, for three reasons: Eq.~\eqref{eq:finite-differences-hf} was proved for matrices, not for differential operators; the replacement of the grid operator by $H+W$ holds only when acting on smooth functions; and $W$ is not a small operator in general (it is large on rapidly varying functions). We nevertheless treat $W$ as a small perturbation and use the continuum first-order formula $\delta E\approx\int\psi\,\delta H\,\psi\,\dd x$, which Chapter~\ref{ch:perturbation} derives. Then the grid level should sit at
 \begin{equation*}
 E_n^{\rm grid}-E_n\approx\int_{-L}^{L}\psi_n\,W\psi_n\,\dd x=-\frac{h^2}{12}\int_{-L}^{L}\psi_n\,\psi_n''''\,\dd x,
 \end{equation*}
@@ -460,7 +460,7 @@ where $\psi_n$ is the normalized true eigenfunction (real, as bound states in on
 \int_{-L}^{L}\psi_n\psi_n''''\,\dd x&=\Big[\psi_n\psi_n'''\Big]_{-L}^{L}-\int_{-L}^{L}\psi_n'\psi_n'''\,\dd x\\
 &=\Big[\psi_n\psi_n'''\Big]_{-L}^{L}-\Big[\psi_n'\psi_n''\Big]_{-L}^{L}+\int_{-L}^{L}(\psi_n'')^2\,\dd x.
 \end{align*}
-At the walls $\psi_n=0$, so the first bracket vanishes. For the second, use the Schr\"odinger equation, $\psi_n''=(V-E_n)\psi_n$, which also vanishes at the walls (for a potential that is finite there, as all ours are). So both brackets are zero and
+At the walls $\psi_n=0$, so the first bracket vanishes. For the second, use the Schr\"odinger equation, $\psi_n''=(V-E_n)\psi_n$, which also vanishes at the walls, provided $V$ is finite and smooth up to the walls, so that $\psi_n''$ is continuous up to the wall (true for ours: the Wu--Sprung potential is smooth and only about $1000$ at $x=\pm L$). So both brackets are zero and
 \begin{equation*}
 \int\psi_n\psi_n''''\,\dd x=\int(\psi_n'')^2\,\dd x=\int(E_n-V)^2\psi_n^2\,\dd x.
 \end{equation*}
@@ -504,10 +504,10 @@ Solving the tridiagonal problem on $[-10,10]$ with $N=199$ (so $h=20/200=0.1$; t
 
 Now we can see the size of the problem the paper faced. At scale~1 the paper uses $L=44.883$ and $N=6000$ interior points, the same $h=0.0149585$ as our box example. Its levels 401--500 lie at heights roughly between $t_{401}$ and $t_{500}=811.18$ (the latter from the paper's Appendix~A key anchors). Two things conspire:
 \begin{itemize}
-\item The bias \eqref{eq:finite-differences-bias-estimate} grows roughly like the square of the local kinetic energy, and these are high levels. At the bottom of the Wu--Sprung well, where $V=V_0=3.10073\pi$, a level at $E=811.18$ has $q=\sqrt{E-V_0}=28.31$ and therefore only $2\pi/(qh)=14.8$ points per wavelength.
+\item The bias \eqref{eq:finite-differences-bias-estimate} grows roughly like the square of the local kinetic energy, and these are high levels. At the bottom of the Wu--Sprung well, where $V=V_0=3.10073\pi$, a level at $E=811.18$ has $q=\sqrt{E-V_0}=28.31$ and therefore only $2\pi/(qh)=14.8$ points per wavelength. This is the \emph{shortest} local wavelength of the state, reached at the bottom of the well where the kinetic energy is largest; elsewhere the wave is longer and better resolved, so this is a worst case, not a typical value.
 \item The quantity we care about is not the energy error but the error in units of the \emph{mean spacing of the zeros}, which near height $t$ is $2\pi/\log(t/2\pi)$ (Chapter~\ref{ch:counting-zeros} derives this) and is only about $1.3$ near $t=811$. The spacing shrinks while the bias grows.
 \end{itemize}
-The paper reports the result: the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C). The fluctuations of the zeros that the paper studies have an rms of only about $0.26$ mean spacings on this range (the null of $0.263$). A bias eight times larger than the signal cannot be left in.
+The paper reports the result: the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C). The fluctuations of the zeros that the paper studies have an rms of only about $0.26$ mean spacings on this range (the null of $0.263$). A bias about eight times larger than the signal ($2/0.263\approx7.6$) cannot be left in.
 
 \begin{checkpoint}
 Two levels of the same potential are computed on the same grid: level 10 and level 400. Which is more accurate in energy units, and why?
@@ -836,7 +836,7 @@ L = x_of_V(1000.0)                               # about 44.883
 \paragraph{Correcting the targets (Sec.~II~B, App.~A step 5).} The paper states that ``discretization bias is removed from the \emph{targets} rather than the operator'': all fitting runs on the working grid against $\tilde t_n=t_n+(E^{\rm grid}_n[\mathrm{smooth}]-E^{\rm Rich}_n[\mathrm{smooth}])$. That is \eqref{eq:finite-differences-Delta}--\eqref{eq:finite-differences-ttilde}. The Richardson pairs are $12000/24000$ (scale~1) and $16000/32000$ (scale~2). Because $h=2L/(N+1)$, doubling $N$ from $12000$ to $24000$ halves $h$ only approximately ($r=24001/12001$); Problem~11 shows the leftover $h^2$ error is below $3\times10^{-5}$ of the coarse grid's, utterly negligible.
 
 \begin{pitfall}
-The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$ \ldots\ over grid doubling''. The derivation of \cref{sec:finite-differences-richardson} shows that the weight 4 must go to the \emph{finer} grid. The paper's subscripts are therefore best read as labels for the grid with twice as many points (the second member of each listed pair, $24000$ or $32000$), not as a spacing of $2h$. In terms of spacings the formula is $(4E_{h/2}-E_h)/3$, Eq.~\eqref{eq:finite-differences-richardson}. If you reconstruct the pipeline, give the weight 4 to the finer grid; Problem~31 shows that the opposite assignment is worse than no extrapolation at all.
+The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$ \ldots\ over grid doubling''. The derivation of \cref{sec:finite-differences-richardson} shows that the weight 4 must go to the \emph{finer} grid. We therefore read the paper's subscripts (this is our interpretation; the paper does not spell it out) as labels for the grid with twice as many points (the second member of each listed pair, $24000$ or $32000$), not as a spacing of $2h$. In terms of spacings the formula is $(4E_{h/2}-E_h)/3$, Eq.~\eqref{eq:finite-differences-richardson}. If you reconstruct the pipeline, give the weight 4 to the finer grid; Problem~31 shows that the opposite assignment is worse than no extrapolation at all.
 \end{pitfall}
 
 \paragraph{How good is the smooth potential after correction (Sec.~II~B).} The paper reports that ``the residual of $E^{\rm Rich}$ against the smooth zeros is $0.005$ spacings mean, $0.063$ max (worst at low $n$, the known semiclassical weakness of the construction)''. Read this carefully: once the grid bias is removed, what remains is not a grid error but a property of the Wu--Sprung potential itself. That potential is built from a semiclassical approximation (Chapter~\ref{ch:wkb}) that is least accurate for the lowest levels (Chapter~\ref{ch:wu-sprung}). Richardson cannot and should not remove it. \Cref{fig:finite-differences-wsbias} shows both quantities computed with the spline construction above.
@@ -847,7 +847,7 @@ The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$
 \label{fig:finite-differences-wsbias}
 \end{figure}
 
-\paragraph{No leakage (Sec.~II~C, Eq.~(3)).} The paragraph ``No leakage through the bias correction'' is the identity \eqref{eq:finite-differences-leakage}: ``scoring the fit against $\tilde t_n$ is algebraically identical to correcting the \emph{prediction} by the fit-independent quantity $\Delta_n$ and scoring against the raw zeros''; $\Delta_n$ ``is built solely from eigenvalues of the \emph{unperturbed} potential on two grids; no zero, in-sample or held-out, enters it''. (The paper says ``two grids''; in the Richardson sense the Richardson pair is two grids, and the working grid supplies $E^g$.) The paper also states why the correction cannot be skipped: finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings and would otherwise dominate both the null and every model identically''. Appendix~A (step 20, revision computations) adds an empirical counterpart for the sinusoidal controls: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical''. Algebra and experiment agree that held-out values do not reach the fit.
+\paragraph{No leakage (Sec.~II~C, Eq.~(3)).} The paragraph ``No leakage through the bias correction'' is the identity \eqref{eq:finite-differences-leakage}: ``scoring the fit against $\tilde t_n$ is algebraically identical to correcting the \emph{prediction} by the fit-independent quantity $\Delta_n$ and scoring against the raw zeros''; $\Delta_n$ ``is built solely from eigenvalues of the \emph{unperturbed} potential on two grids; no zero, in-sample or held-out, enters it''. (The paper's ``two grids'' refers to the Richardson pair. The full $\Delta_n$ of Eq.~\eqref{eq:finite-differences-Delta} uses three grids: the working grid supplies $E^g_n$ and the pair supplies $E^{\rm Rich}_n$. None of the three involves a zero.) The paper also states why the correction cannot be skipped: finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings and would otherwise dominate both the null and every model identically''. Appendix~A (step 20, revision computations) adds an empirical counterpart for the sinusoidal controls: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical''. That experiment concerns the sinusoidal controls only, not the operator fits; for the operator fits the guarantee is the algebraic identity \eqref{eq:finite-differences-leakage} together with the zero-free construction of $\Delta_n$.
 
 \paragraph{The raw-zero null 2.09 (App.~A, key anchors).} The null model of Sec.~II~C is the unperturbed potential itself. Scored against corrected targets, its error on zeros 401--500 is $0.2631$ mean spacings (key anchors; $0.263$ in the tables). By the rewriting in \cref{sec:finite-differences-targets}, this is the rms of $t_n-E_n^{\rm Rich}[\mathrm{smooth}]$, the genuine fluctuation of the zeros about the smooth levels. Scored instead against the \emph{raw} zeros on the uncorrected working grid, the same null gives $2.09$. That number is dominated by the grid bias of about two spacings computed in this chapter; the real fluctuations of size $0.26$ are buried underneath it (Problem~14). This is also why the paper's two nulls can coincide numerically (Sec.~II~C): after correction, $E_n^{\rm Rich}[\mathrm{smooth}]$ agrees with the smooth zeros $s_n$ to $0.005$ spacings on average, so ``unperturbed levels'' and ``smooth zeros'' are, as predictions, nearly the same.
 

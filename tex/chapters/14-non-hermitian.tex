@@ -181,14 +181,14 @@ where $V$ is real (the Wu--Sprung potential, Chapter~\ref{ch:wu-sprung}, or in o
 The letter $A$ is overloaded in the paper. In Sec.~II C (and in Chapters~\ref{ch:perturbation} and~\ref{ch:fitting}) $A_{nk}$ is the \emph{sensitivity matrix} $\int|\psi_n|^2\phi_k\,\dd x$. In Sec.~II E, Eq.~(5), and in this chapter, $A$ is the real multiplication operator in $H+iA$, and $A_{nm}=\langle n|A|m\rangle$ are its matrix elements between two unperturbed states. Read the subscripts: $A_{nm}$ with two level indices is a matrix element of the operator; $A_{nk}$ with a basis index $k$ is a sensitivity.
 \end{pitfall}
 
-Let $\psi_n$, $n=1,2,\dots$, be the normalized eigenfunctions of $H_0$ with levels $E_n$. Because $V$ is real, the $\psi_n$ can be chosen real (Chapter~\ref{ch:eigen}: a real symmetric matrix has real eigenvectors; the same holds for the real differential operator $H_0$). Expand any wavefunction as $\psi=\sum_m v_m\psi_m$. Then $H\psi=E\psi$ becomes, after taking the inner product with $\psi_n$, the matrix equation $\sum_m M_{nm}v_m = E v_n$ with
+Let $\psi_n$, $n=1,2,\dots$, be the normalized eigenfunctions of $H_0$ with levels $E_n$. Because $V$ is real, the $\psi_n$ can be chosen real (Chapter~\ref{ch:eigen}: a real symmetric matrix has real eigenvectors; the same holds for the real differential operator $H_0$). Expand any wavefunction as $\psi=\sum_m v_m\psi_m$. The set of all $\psi_m$ is infinite, so this is an infinite sum. Then $H\psi=E\psi$ becomes, after multiplying by $\psi_n$ and integrating over $[-L,L]$ (the inner product with the real function $\psi_n$), the matrix equation $\sum_m M_{nm}v_m = E v_n$ with
 \begin{equation}
 M_{nm} = \int\psi_n\,(H_0+iA)\,\psi_m\,\dd x = E_n\delta_{nm} + iA_{nm},
 \qquad
 A_{nm} = \int_{-L}^{L}\psi_n(x)\,A(x)\,\psi_m(x)\,\dd x .
 \label{eq:non-hermitian-Anm}
 \end{equation}
-Here $\delta_{nm}$ is the Kronecker delta: 1 if $n=m$, 0 otherwise. We used $H_0\psi_m = E_m\psi_m$ and $\int\psi_n\psi_m\,\dd x=\delta_{nm}$ (orthonormality). In a basis of $K$ states, write $D=\mathrm{diag}(E_1,\dots,E_K)$ and let $\mathsf{A}$ be the $K\times K$ matrix of the $A_{nm}$. Then
+Here $\delta_{nm}$ is the Kronecker delta: 1 if $n=m$, 0 otherwise. We used $H_0\psi_m = E_m\psi_m$ and $\int\psi_n\psi_m\,\dd x=\delta_{nm}$ (orthonormality). The exact matrix $M_{nm}$ is infinite. On a computer we keep only the lowest $K$ states, $m=1,\dots,K$. This truncation is an approximation: it is accurate for levels well below $E_K$ when their couplings to the discarded states are small, and we will see in Section~\ref{sec:non-hermitian-sumrule} what it does to the levels near the cutoff. In this truncated basis write $D=\mathrm{diag}(E_1,\dots,E_K)$ and let $\mathsf{A}$ be the $K\times K$ matrix of the $A_{nm}$. Then
 \begin{equation}
 M = D + i\mathsf{A}.
 \label{eq:non-hermitian-M}
@@ -254,7 +254,11 @@ So the eigenvalues of $M(-c)$ are the conjugates of those of $M(c)$. Conjugation
 \end{equation}
 This is exact, not perturbative. It already tells you that if real shifts can be expanded in powers of $c$, they contain only even powers: $c^2$, $c^4$, and so on. There can be no real shift linear in $c$.
 
-\paragraph{Fact 3: an absorbing $A$ gives nonnegative widths.} The matrix version of \eqref{eq:non-hermitian-ImE} is short. If $Mv=\lambda v$, multiply on the left by the conjugate transpose $v^\dagger$: $v^\dagger D v + i\,v^\dagger\mathsf Av = \lambda\,v^\dagger v$. Both $v^\dagger Dv=\sum E_n|v_n|^2$ and $v^\dagger\mathsf Av$ are real (the latter because $\mathsf A$ is real symmetric, hence Hermitian). So $\Im\lambda = v^\dagger\mathsf A v/v^\dagger v$. Moreover $v^\dagger\mathsf Av=\int|\sum_n v_n\psi_n|^2A(x)\,\dd x$ by \eqref{eq:non-hermitian-Anm}, which is $\le0$ if $A(x)\le0$ everywhere. So even in a truncated basis, a pointwise-absorbing $A$ gives $\Im\lambda\le0$ for every eigenvalue.
+\paragraph{Fact 3: an absorbing $A$ gives nonnegative widths.} The matrix version of \eqref{eq:non-hermitian-ImE} is short. If $Mv=\lambda v$, multiply on the left by the conjugate transpose $v^\dagger$: $v^\dagger D v + i\,v^\dagger\mathsf Av = \lambda\,v^\dagger v$. Both $v^\dagger Dv=\sum E_n|v_n|^2$ and $v^\dagger\mathsf Av$ are real (the latter because $\mathsf A$ is real symmetric, hence Hermitian). Divide both sides by $v^\dagger v=\sum_n|v_n|^2$, which is a positive real number because $v\ne0$:
+\[
+\lambda = \frac{v^\dagger Dv}{v^\dagger v} + i\,\frac{v^\dagger\mathsf Av}{v^\dagger v}.
+\]
+The first term is real and the second is $i$ times a real number, so taking the imaginary part of both sides gives $\Im\lambda = v^\dagger\mathsf A v/v^\dagger v$. Moreover $v^\dagger\mathsf Av=\int|\sum_n v_n\psi_n|^2A(x)\,\dd x$ by \eqref{eq:non-hermitian-Anm}, which is $\le0$ if $A(x)\le0$ everywhere. So even in a truncated basis, a pointwise-absorbing $A$ gives $\Im\lambda\le0$ for every eigenvalue.
 
 \begin{checkpoint}
 For $M(c)=D+ic\mathsf A$ with real $D$ and $\mathsf A$, a computer reports an eigenvalue $3.0+0.2i$ at $c=0.1$. Name an eigenvalue of $M(-0.1)$ without computing anything.
@@ -348,7 +352,7 @@ Compare \eqref{eq:non-hermitian-second} with the Hermitian second-order term in 
 \item Hermitian ($\delta V$ with $V_{nm}=g$): the lower level gets $g^2/(E_n-E_m)<0$, the upper gets $g^2/(E_m-E_n)>0$. They are pushed apart: \emph{level repulsion} (Chapter~\ref{ch:perturbation}).
 \item Non-Hermitian ($iA$ with $A_{nm}=g$): the lower level gets $-g^2/(E_n-E_m)>0$, the upper gets $-g^2/(E_m-E_n)<0$. They are pulled together: \emph{level attraction}.
 \end{itemize}
-Two consequences are worth stating explicitly. The ground state $n=1$ has every other level above it, so every term $-|A_{1m}|^2/(E_1-E_m)$ is nonnegative: \emph{any} imaginary perturbation raises the ground level at second order. And in a truncated basis of $K$ states, the top state $n=K$ has every other state below it, so it is always lowered. We will see that the second fact causes a bias at the top of a truncated state sum.
+Two consequences are worth stating explicitly. The ground state $n=1$ has every other level above it, so every term $-|A_{1m}|^2/(E_1-E_m)$ is nonnegative: \emph{any} imaginary perturbation raises the real part of the ground level at second order (for nondegenerate levels, and as long as second order is valid). And in a truncated basis of $K$ states, the top state $n=K$ has every other state below it, so it is always lowered. We will see that the second fact causes a bias at the top of a truncated state sum.
 
 \subsection{When is it valid?}
 
@@ -363,7 +367,7 @@ Consider $M=\begin{pmatrix}E_1 & ia\\ ia & E_2\end{pmatrix}$ with $\Delta = E_2-
 \label{eq:non-hermitian-twolevel}
 \end{equation}
 
-\textbf{Step 2: exact shift of the lower level, while $2a<\Delta$.} Since $E_1=\bar E-\Delta/2$, the lower eigenvalue moves by
+\textbf{Step 2: exact shift of the lower level, while $2a<\Delta$.} Factor $\Delta^2$ out of the square root (allowed since $\Delta>0$): $\sqrt{\Delta^2-4a^2}=\Delta\sqrt{1-4a^2/\Delta^2}=\Delta\sqrt{1-x}$ with $x=4a^2/\Delta^2$. So $\lambda_-=\bar E-\tfrac\Delta2\sqrt{1-x}$. Since $E_1=\bar E-\Delta/2$, the lower eigenvalue moves by
 \begin{equation}
 \lambda_- - E_1 = \frac{\Delta}{2}\bigl(1-\sqrt{1-x}\bigr), \qquad x=\frac{4a^2}{\Delta^2}.
 \label{eq:non-hermitian-twolevelshift}
@@ -382,7 +386,7 @@ At small coupling the formula is excellent. Near $a=\Delta/2$ it is off by 20\%.
 \end{sample}
 
 \begin{sample}{The $i^2$ flip in the harmonic oscillator}
-In units $\hbar=2m=1$, the oscillator $H_0=-\dd^2/\dd x^2+x^2$ has ground state $\psi_0=\pi^{-1/4}e^{-x^2/2}$ with $E_0=1$ and first excited state $\psi_1=\pi^{-1/4}\sqrt2\,x\,e^{-x^2/2}$ with $E_1=3$ (Chapter~\ref{ch:bound-states}). Compare the ground-state energy for the Hermitian perturbation $\epsilon x$ and the imaginary perturbation $i\epsilon x$, exactly and at second order, with $\epsilon=0.6$.
+\emph{Indexing note:} in this sample, in the box that follows it, and in Problem 28, oscillator levels are labelled from $n=0$, as is traditional (ground state $E_0=1$, then $E_1=3$, in general $E_n=2n+1$). These $E_n$ are oscillator energies, not the box levels $E_n=(n\pi/2L)^2$, $n\ge1$, used everywhere else in this chapter. In units $\hbar=2m=1$, the oscillator $H_0=-\dd^2/\dd x^2+x^2$ has ground state $\psi_0=\pi^{-1/4}e^{-x^2/2}$ with $E_0=1$ and first excited state $\psi_1=\pi^{-1/4}\sqrt2\,x\,e^{-x^2/2}$ with $E_1=3$ (Chapter~\ref{ch:bound-states}). Compare the ground-state energy for the Hermitian perturbation $\epsilon x$ and the imaginary perturbation $i\epsilon x$, exactly and at second order, with $\epsilon=0.6$.
 
 \textbf{Step 1: the matrix elements of $x$ from the ground state.} Multiply $\psi_0$ by $x$: $x\psi_0 = \pi^{-1/4}xe^{-x^2/2}=\psi_1/\sqrt2$. Since the $\psi_m$ are orthonormal, $\langle m|x|0\rangle = \int\psi_m\,x\psi_0\,\dd x = \delta_{m1}/\sqrt2$. Only $m=1$ couples, with $x_{01}=1/\sqrt2$.
 
@@ -441,7 +445,7 @@ In the RE3 box ($L=44.883$), place the absorber $A(x)=-g\bigl[1+\cos(\pi x/L)\bi
 
 \textbf{Step 3: lifetimes.} $\tau_1=1/0.03=33.3$, $\tau_n=1/0.02=50$.
 
-\textbf{Step 4: physical check.} The ground state $\psi_1\propto\cos(\pi x/2L)$ is concentrated at the center, where absorption is strongest, so it should decay fastest. Indeed $|\psi_1|^2=\frac{1}{2L}(1+\cos(\pi x/L))$ has the same shape as the absorber.
+\textbf{Step 4: physical check.} The ground state $\psi_1\propto\cos(\pi x/2L)$ is concentrated at the center, where absorption is strongest, so it should decay fastest. Indeed, from \eqref{eq:non-hermitian-box}, $\psi_1=L^{-1/2}\sin\bigl(\pi x/2L+\pi/2\bigr)=L^{-1/2}\cos(\pi x/2L)$ (using $\sin(\theta+\pi/2)=\cos\theta$), so $|\psi_1|^2=\frac1L\cos^2(\pi x/2L)=\frac{1}{2L}(1+\cos(\pi x/L))$ (using $\cos^2\theta=\tfrac12(1+\cos2\theta)$), which has the same shape as the absorber.
 \[
 \boxed{\Gamma_1 = 0.03,\ \tau_1=33.3;\qquad \Gamma_{n\ge2}=0.02,\ \tau_n = 50}
 \]
@@ -500,7 +504,7 @@ The letter $T$ is also overloaded. In this chapter $T^{(n)}$ is the second-order
 \begin{itemize}
 \item \textbf{Symmetric.} Swapping $k$ and $l$ in \eqref{eq:non-hermitian-tensor} swaps two factors in a product, so $T^{(n)}_{lk}=T^{(n)}_{kl}$.
 \item \textbf{Even in $c$.} Replacing $c$ by $-c$ leaves $c^\top T^{(n)}c$ unchanged; doubling $c$ quadruples it. This is \eqref{eq:non-hermitian-parity-in-c} again. A fit to real level data therefore always has at least two equally good solutions, $c$ and $-c$.
-\item \textbf{Gradient.} For a symmetric matrix $T$, $\partial(c^\top Tc)/\partial c_k = 2(Tc)_k$. (Proof: $c^\top Tc=\sum_{a,b}c_aT_{ab}c_b$; differentiating with respect to $c_k$ gives $\sum_bT_{kb}c_b+\sum_ac_aT_{ak} = 2\sum_b T_{kb}c_b$, using symmetry in the second sum.) So $\partial\,\delta E_n/\partial c_k = -2(T^{(n)}c)_k$. This is the Jacobian an optimizer needs (Chapter~\ref{ch:fitting}).
+\item \textbf{Gradient.} For a symmetric matrix $T$, $\partial(c^\top Tc)/\partial c_k = 2(Tc)_k$. (Proof: $c^\top Tc=\sum_{a,b}c_aT_{ab}c_b$; differentiating with respect to $c_k$ gives $\sum_bT_{kb}c_b+\sum_ac_aT_{ak} = 2\sum_b T_{kb}c_b$, using symmetry in the second sum.) So $\partial\,\delta E_n/\partial c_k = -2(T^{(n)}c)_k$. The matrix of these partial derivatives, with one row per level $n$ and one column per coefficient $k$, is called the \emph{Jacobian} of the model; an optimizer such as Levenberg--Marquardt uses it to decide how to change $c$ at each step (Chapter~\ref{ch:fitting}).
 \item \textbf{Indefinite, with a sign pattern.} For $n=1$ every denominator $E_1-E_m$ is negative, and $c^\top T^{(1)}c = \sum_{m\ne1}A_{1m}^2/(E_1-E_m)\le0$, so $\delta E_1\ge0$ for every $c$. For middle levels the terms from above and below have opposite signs and $T^{(n)}$ has both positive and negative eigenvalues. Fitting real targets $y_n$ by minimizing $\sum_n(y_n+c^\top T^{(n)}c)^2$ is therefore a \emph{nonconvex} problem with several local minima, which is why the paper uses Levenberg--Marquardt with random restarts.
 \end{itemize}
 
@@ -551,7 +555,7 @@ T^{(4)} &= \tfrac{0.1940^2}{16-1}+\tfrac{0.4527^2}{16-9} = 0.00251+0.02928 = 0.0
 \boxed{\delta E_1 = +0.1562\,c^2,\ \ \delta E_2 = -0.1067\,c^2,\ \ \delta E_3=-0.0178\,c^2,\ \ \delta E_4=-0.0318\,c^2}
 \]
 
-\textbf{Step 4: the sum.} $0.1562-0.1067-0.0178-0.0318 = -0.0001$, which is zero to the rounding of the four-digit entries (to full precision it is zero, as the CHECKS script confirms). The ground level rose, as it must, and the top level fell, as it must in a truncated basis. Level 4 has a large downward shift partly because its partners above (5, 7, \dots) were left out; Problem 17 shows how much it changes when state 5 is added.
+\textbf{Step 4: the sum.} $0.1562-0.1067-0.0178-0.0318 = -0.0001$, which is zero to the rounding of the four-digit entries (to full precision it is zero, as the CHECKS script confirms). The ground level rose, as it must, and the top level fell, as it must in a truncated basis. Level 4 is pushed down partly because its partners above (states 5, 7, 9, \dots, those with $4+m$ odd) were left out; Problem 17 shows how much it changes when state 5 is added.
 \end{sample}
 
 \begin{checkpoint}
@@ -612,11 +616,11 @@ the magnitudes of the individual terms. Two effects make $w_{nm}$ small when $|n
 
 The second effect is a Fourier statement (Chapter~\ref{ch:fourier-series}), which we give as a \emph{heuristic}. A level $n$ has a local wavenumber $k_n$; in the box $k_n=n\pi/(2L)$. The product $\psi_n\psi_m$ contains oscillations at the difference wavenumber $k_n-k_m$ and the sum $k_n+k_m$. Integrating it against $A(x)$ picks out the Fourier components of $A$ at those wavenumbers. A smooth $A$ has little weight at high wavenumber, so it couples mainly states whose wavenumbers differ by little, that is, nearby levels. The box makes this exact: $\cos(k\pi x/L)$ has wavenumber $k\pi/L = 2k\cdot\pi/(2L)$, and \eqref{eq:non-hermitian-coselem} shows it couples only $|n-m|=2k$ (apart from the single pair with $n+m=2k$). Higher basis functions reach further in the index. For the sine, \eqref{eq:non-hermitian-sinelem} decays like $1/(n-m)^2$ for large $|n-m|$.
 
-For a concrete number, take $A=c\sin(\pi x/L)$ in the box with $E_n=n^2$ and level $n=20$. Summing \eqref{eq:non-hermitian-weights} over all partners (computed in the CHECKS script up to $m=400$), about 89\% of the total weight comes from the two immediate neighbors $m=19$ and $m=21$. \Cref{fig:non-hermitian-locality} shows the weights.
+For a concrete number, take $A=c\sin(\pi x/L)$ in the box with $E_n=n^2$ and level $n=20$. Summing \eqref{eq:non-hermitian-weights} over all partners $m\le400$ (the range used in the CHECKS script), about 89\% of that total weight comes from the two immediate neighbors $m=19$ and $m=21$. \Cref{fig:non-hermitian-locality} shows the weights.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/non-hermitian_locality.pdf}
-\caption{Locality of the second-order redistribution. Weights $w_{20,m}=A_{20,m}^2/|E_{20}-E_m|$ for $A=\sin(\pi x/L)$ in the box with $E_n=n^2$ (dimensionless energy units, $\hbar=2m=1$, $L=\pi/2$). Only partners with $20+m$ odd couple. The two neighbors $m=19,21$ carry about 89\% of the total; the weights fall by orders of magnitude within a few levels.}
+\caption{Locality of the second-order redistribution. Weights $w_{20,m}=A_{20,m}^2/|E_{20}-E_m|$ for $A=\sin(\pi x/L)$ in the box with $E_n=n^2$ (dimensionless energy units, $\hbar=2m=1$, $L=\pi/2$). Only partners with $20+m$ odd couple. The two neighbors $m=19,21$ carry about 89\% of the total weight summed over partners $m\le400$ (only $m\le60$ are plotted); the weights fall by orders of magnitude within a few levels.}
 \label{fig:non-hermitian-locality}
 \end{figure}
 
@@ -652,7 +656,7 @@ The coefficient $c_0$ drops out of $c^\top T^{(n)}c$ entirely: it is a \emph{nul
 
 \subsection{When zero is not zero}
 
-On a computer the overlaps $(\phi_0)_{nm}=\sum_j\psi_n(x_j)\psi_m(x_j)\,h$ are computed from sampled eigenvectors (Chapter~\ref{ch:finite-differences}), and rounding makes the off-diagonal ones small but not exactly zero. In double precision they come out at the $10^{-12}$ level or below in the example of \cref{fig:non-hermitian-nullmode}. If the eigenvectors are stored in single precision (float32, machine epsilon $1.2\times10^{-7}$; Chapter~\ref{ch:asymptotics}), the same overlaps are nonzero at the level of float32 rounding, many orders of magnitude larger.
+On a computer the overlaps $(\phi_0)_{nm}=\sum_j\psi_n(x_j)\psi_m(x_j)\,h$ are computed from sampled eigenvectors (Chapter~\ref{ch:finite-differences}), and rounding makes the off-diagonal ones small but not exactly zero. In double precision they come out below $10^{-11}$ in the example of \cref{fig:non-hermitian-nullmode}. If the eigenvectors are stored in single precision (float32, machine epsilon $1.2\times10^{-7}$; Chapter~\ref{ch:asymptotics}), the same overlaps are nonzero at the level of float32 rounding, many orders of magnitude larger.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/non-hermitian_nullmode.pdf}
@@ -753,7 +757,7 @@ The two agree for all $f$ if and only if
 When every eigenfunction is also a $\mathcal{PT}$ eigenfunction, the symmetry is called \emph{unbroken} and the whole spectrum is real. When some eigenfunctions are not, the symmetry is \emph{broken}, and by (a) those eigenvalues appear in conjugate pairs.
 
 \begin{beyond}
-\textbf{Taken on trust:} for the Bender--Boettcher family $-\dd^2/\dd x^2+x^2(ix)^\varepsilon$, the spectrum is entirely real and positive for $\varepsilon\ge0$ (with suitable boundary conditions in the complex plane), and PT symmetry is broken for $\varepsilon<0$. This was found numerically in \cite{bender98} and later proved by others; the proof is far beyond this book.
+\textbf{Taken on trust:} for the Bender--Boettcher family $-\dd^2/\dd x^2+x^2(ix)^\varepsilon$, the spectrum is entirely real and positive for $\varepsilon\ge0$ (with suitable boundary conditions in the complex plane), and PT symmetry is broken for $\varepsilon<0$. This was found numerically in \cite{bender98}; a rigorous proof was given later, in the mathematical literature that followed that paper, and it is far beyond this book.
 \end{beyond}
 
 \subsection{The PT-odd class}
@@ -762,7 +766,7 @@ Now take the paper's situation: $V$ is real and even (the Wu--Sprung potential, 
 
 For such $A$ the first-order imaginary shift vanishes. In an even potential, each $\psi_n$ is even or odd (Chapter~\ref{ch:bound-states}), so $\psi_n^2$ is even, and $\psi_n^2A$ is odd. The integral of an odd function $g$ over $[-L,L]$ vanishes: $\int_{-L}^{0}g(x)\,\dd x=\int_{0}^{L}g(-y)\,\dd y=-\int_0^Lg(y)\,\dd y$ (substituting $x=-y$), which cancels $\int_0^L g$. Hence $A_{nn}=0$, as we found for the box sines in \eqref{eq:non-hermitian-sinelem}. The same parity argument shows that an odd $A$ couples only states of opposite parity, and an even $A$ only states of the same parity.
 
-So for the PT-odd class the eigenvalue is $E_n-\sum_{m\ne n}|A_{nm}|^2/(E_n-E_m)+\cdots$ with no imaginary part at first or second order; this is what the paper means by ``real spectrum to leading order''. By the theorem, while the symmetry is unbroken the levels stay exactly real. How does it break? Because eigenvalues move continuously with the amplitude and complex eigenvalues must come in conjugate pairs, a simple real eigenvalue cannot leave the real axis on its own; it can do so only by first colliding with another real eigenvalue. (This continuity argument is stated here without proof.) Level attraction makes such collisions happen.
+So for the PT-odd class the eigenvalue is $E_n-\sum_{m\ne n}|A_{nm}|^2/(E_n-E_m)+\cdots$ with no imaginary part at first or second order; this is what the paper means by ``real spectrum to leading order''. By the theorem, while the symmetry is unbroken the levels stay exactly real. How does it break? Because eigenvalues move continuously with the amplitude and complex eigenvalues must come in conjugate pairs, a simple real eigenvalue cannot leave the real axis on its own. Here is why. Suppose an eigenvalue $E$ is real for amplitudes below some value and complex just above it. By part (a), $E^*$ is then also an eigenvalue just above that value, and as the amplitude decreases back to the departure point both $E$ and $E^*$ approach the same real number. So at the departure point two eigenvalues coincide: a real eigenvalue can leave the axis only by first colliding with another real eigenvalue. (The continuity of eigenvalues in the amplitude is taken on trust, as in the `beyond' box of Section~\ref{sec:non-hermitian-perturb}.) Level attraction makes such collisions happen.
 
 \begin{sample}{PT symmetry breaking with two levels}
 Return to $M=\begin{pmatrix}E_1&ia\\ia&E_2\end{pmatrix}$ of Section~\ref{sec:non-hermitian-perturb}, now read as an even state 1 and an odd state 2 coupled by an odd $A$. Show that $M$ is PT-symmetric, and describe its spectrum as $a$ grows, for $\Delta=E_2-E_1=1$.
@@ -789,7 +793,7 @@ Contrast the Hermitian coupling $a$ (without the $i$): $\bar E\pm\frac12\sqrt{1+
 
 \subsection{Many levels}
 
-In a many-level system the lowest levels break first if the couplings are comparable throughout, because they are closest together relative to the coupling. In the box with $E_n=n^2$ and $A=c\sin(\pi x/L)$, the spacing between levels 1 and 2 is 3, while the coupling is $0.679\,c$ by \eqref{eq:non-hermitian-sinelem}; the two-level estimate puts the break where $0.679\,c\approx1.5$. Higher pairs have larger spacings and slightly smaller couplings. \Cref{fig:non-hermitian-complexplane} shows the exact eigenvalues of a 60-state truncation for several amplitudes, computed as in Section~\ref{sec:non-hermitian-exact}: at $c=1$ all 60 eigenvalues are real to rounding error, and at $c=4$ a complex-conjugate pair has formed near the bottom of the spectrum. The right panel shows the absorptive-even case $A=-g[1+\cos(\pi x/L)]\le0$: every eigenvalue lies on or below the real axis, as Fact 3 of Section~\ref{sec:non-hermitian-matrices} guarantees.
+In a many-level system the lowest levels break first if the couplings are comparable throughout, because they are closest together relative to the coupling. In the box with $E_n=n^2$ and $A=c\sin(\pi x/L)$, the spacing between levels 1 and 2 is 3, while the coupling is $0.679\,c$ by \eqref{eq:non-hermitian-sinelem}; the two-level estimate puts the break where $0.679\,c\approx1.5$, that is, at $c\approx2.2$. This is only an estimate: in the full truncation each level also couples to other partners, so the true threshold can differ. The numerics below establish only that it lies between $c=1$ and $c=4$; Problem 18 lets you probe $c=2.5$. Higher pairs have larger spacings and slightly smaller couplings. \Cref{fig:non-hermitian-complexplane} shows the exact eigenvalues of a 60-state truncation for several amplitudes, computed as in Section~\ref{sec:non-hermitian-exact}: at $c=1$ all 60 eigenvalues are real to rounding error, and at $c=4$ a complex-conjugate pair has formed near the bottom of the spectrum. The right panel shows the absorptive-even case $A=-g[1+\cos(\pi x/L)]\le0$: every eigenvalue lies on or below the real axis, as Fact 3 of Section~\ref{sec:non-hermitian-matrices} guarantees.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/non-hermitian_complexplane.pdf}

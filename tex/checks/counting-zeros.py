@@ -100,10 +100,16 @@ assert abs((t[99] - s100) / gap(s100) - 0.310) < 1e-3
 assert abs(-np.log(30 / (2 * np.pi)) / (2 * np.pi) - (-0.249)) < 1e-3
 # Problem 17
 assert abs(Nsm(1001) - Nsm(1000) - 0.807) < 1e-3
-# Problem 19
+# Problem 19 (Gram point g_0 by Newton)
 g0 = brentq(th_asym, 10, 30)
-assert abs(g0 - 17.8456) < 1e-3 and abs(float(mp.grampoint(0)) - 17.8456) < 1e-3
-assert abs(th_asym(17.8) - (-0.02411)) < 1e-4
+assert abs(g0 - 17.8456) < 1e-4 and abs(float(mp.grampoint(0)) - 17.8456) < 1e-4
+f0 = th_asym(17.8); fp0 = 0.5 * np.log(17.8 / (2 * np.pi))
+assert abs(f0 - (-0.0238)) < 1e-4
+assert abs(fp0 - 0.5207) < 1e-4
+g1 = 17.8 - f0 / fp0
+assert abs(g1 - 17.8457) < 1e-4
+assert abs((g1 - g0) - 6e-5) < 2e-5
+assert abs(0.0238 / 0.5207 + 17.8 - 17.8457) < 1e-4
 # Problem 21
 assert abs((Nsm(t[999]) - Nsm(t[0])) / 999 - 0.99997) < 2e-5
 # Problem 23

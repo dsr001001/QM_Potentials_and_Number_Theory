@@ -1,0 +1,107 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Setting $E_k=700$ gives $k=2L\\sqrt{700}/\\pi=755.97$; take $k=756$",
+  "problem": "The check run fails on this value. Since 2L = 89.766, 2L*sqrt(700)/pi is about 755.99, not 755.97, and the quoted 755.97 does not match. The downstream figures E_756 = 700.03 and the 6.8-spacing shortfall must be rechecked against the corrected value.",
+  "fix": "Recompute k with qmnt or numpy, state it to the correct digits, and make the checks assert the corrected number."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$E^{\\rm disc}_{100}=12.1479$",
+  "problem": "The check run fails on E_disc(100, N=1000) = 12.1479, so the quoted answer to Problem 8 does not match the computation. The error -0.100 and the Richardson error may also be off.",
+  "fix": "Recompute E_disc(100,1000) and the Richardson error, and correct the answer text (or the check)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "\\texttt{qmnt} gives $t_{10000}\\approx9879$",
+  "problem": "The check run fails: t_10000 is not within 1 of 9879. The spacing 0.854 and the ratio of about 3e9 inherit the error.",
+  "fix": "Use the actual t_10000 from qmnt (about 9877.78) and recompute the spacing, the uncertainty and the ratio."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Repeating at the new point (where $\\Nsm=0.5015$ and $\\Nsm'=0.1335$) gives $s_1\\approx14.521$.",
+  "problem": "The Newton step from 14.53 using these numbers gives about 14.53 - 0.0015/0.1335 = 14.519, not 14.521. The second iterate is also not shown clearly. The final value is right but the arithmetic as written is not.",
+  "fix": "Show the second Newton iterate explicitly and either keep one more step or say 'converging to 14.521'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Table~III marks rows with $M\\ge200$ as ``saturated''.",
+  "problem": "The paper says odd/even rows with M at or above the number of training levels (200 at scale 1) are saturated, and the 'random' rows are not labelled that way. Table III does not mark rows with a 'saturated' label, and the M=200 row is at the boundary.",
+  "fix": "Say that the paper's caption describes rows with M at or above the number of training levels as saturated."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "With at least as many coefficients as training levels, the linearized fit is (at least) square, and generically underdetermined when $M>200$",
+  "problem": "The sentence is muddled: 'at least square' and 'underdetermined' are used for the same case, and an M=200 fit is square, not overdetermined.",
+  "fix": "Say: with M = 200 the linearized system is square (exactly solvable), and with M > 200 it is underdetermined."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "the mean unfolded spacing of the first $10^4$ zeros is 1 to better than one part in a thousand",
+  "problem": "This is a claim quoted from a computation that the checks do not confirm to this precision. The telescoping mean is (Nsm(t_10000)-Nsm(t_1))/9999, and the check only asserts 1e-3.",
+  "fix": "State the value computed in the checks, or soften the claim to 'about 1'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The paper does not spell out the reason, so here is our reading",
+  "problem": "The reading is labelled as ours, which is fine, but the statement 'every scored level has its turning points inside the box' is presented as a firm check, and the margin is not quantified.",
+  "fix": "Add 'heuristic' and compute V at the level of each scored top level."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/paper-setup_unfolding.pdf}",
+  "problem": "The figure file names use the slug with a hyphen (paper-setup_...), and no FIGURES scripts appear in the response for unfolding, gue, wusprung, splits, oracle and pipeline. The bible requires one script per figure.",
+  "fix": "Provide ### FIG scripts for all six figures, with names consistent with the slug."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\section{Paper connection}\\label{sec:paper-setup-paper}",
+  "problem": "The mandatory anatomy puts Paper connection after the teaching sections, which is done, but the chapter has more than 25 problems whose answers are only partly given; the bible requires answers to all \\prob{1} and every odd-numbered problem. Problems 1, 2, 3, 4, 9, 17 are covered, but odd problems such as 25 are the only answer at the end, and 27 and others are not.",
+  "fix": "Add answers for every odd-numbered problem (for example 5, 7, 9, 15, 17, 19, 21, 23, 25) and all \\prob{1} problems, including problem 18."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:paper-critique} lists the audit among the points a referee could press.",
+  "problem": "Abstract and other references to ch:paper-critique and other Part VI chapters are allowed, but the Problems refer to 'Problem~25' and 'Problem~19' by number, which are internal and fragile; also the problem numbering depends on the list order.",
+  "fix": "Use \\ref labels for problem cross-references or confirm the numbering."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Wu--Sprung and van Zyl--Hutchinson \\cite{vanzyl} indexed by Semantic Scholar (accessed August 2026; 28 and 29 works respectively)",
+  "problem": "The sentence assigns the counts to the two works in the order given, but the chapter's own order is Wu--Sprung then van Zyl--Hutchinson, so this is consistent; however, the 'Key anchors' argument that the operator null equals the smooth-zero null is stated as if exact, while the paper only says they coincide numerically on 401--500.",
+  "fix": "Add a sentence saying that the coincidence on 401--500 is numerical, not exact."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Montgomery's result is a theorem proved under the assumption of RH and for a restricted class of test functions; the full pair-correlation statement is a conjecture",
+  "problem": "The paper calls it a 'pair-correlation theorem'; the chapter's status statement is correct but the first-year reader has no way to see the restriction, and the refinement is not tied to a chapter result.",
+  "fix": "Point to the specific statement in Chapter 20 and say that the test-function restriction concerns the Fourier transform of the test function."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper's Eq.~(1) is the smooth part,",
+  "problem": "The chapter sets u = t/2\\pi but never uses it in the derivative that follows.",
+  "fix": "Remove the unused substitution or use it in the derivative."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "At $n=1$ it returns $s_2-s_1\\approx6.13$ instead of the analytic $\\gap_1\\approx7.50$",
+  "problem": "np.gradient at the first point gives the one-sided difference s_2-s_1; the value 6.13 is checked, but the claim that the null over zeros 1--400 changes by less than 1e-4 depends on the array length and is only checked for that window.",
+  "fix": "State that the claim is for the window 1--400 and that the check was done."
+ }
+]

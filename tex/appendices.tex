@@ -53,7 +53,7 @@ def Nsm(t):
     u = t / (2 * math.pi)
     return u * math.log(u) - u + 7 / 8
 
-print(Nsm(14.134725))   # about 0.4997: the first zero sits where Nsm is near 1/2
+print(Nsm(14.134725))   # about 0.449: the first zero comes slightly before s_1 = 14.52
 \end{pycode}
 \texttt{def} names the function and its inputs; \texttt{return} gives back the result. The text in triple quotes is a description for human readers. \texttt{import math} makes the standard mathematical functions available as \texttt{math.log}, \texttt{math.sin}, \texttt{math.pi}, and so on. Note that \texttt{log} is the natural logarithm, as everywhere in this book.
 
@@ -88,7 +88,7 @@ The \emph{slice} \texttt{a[i:j]} takes positions $i$ up to but not including $j$
 err = np.array([0.1, -0.3, 0.2])
 rms = np.sqrt(np.mean(err ** 2))          # 0.2160
 a, b = np.array([1., 2, 3, 4]), np.array([2., 4, 5, 9])
-r = np.corrcoef(a, b)[0, 1]               # Pearson correlation, 0.9649
+r = np.corrcoef(a, b)[0, 1]               # Pearson correlation, 0.9648
 \end{pycode}
 
 \section{SciPy and mpmath}
@@ -238,6 +238,42 @@ Sparse model (C2): selected frequencies & $K=24$ (fit 1--400), $K=43$ (fit 1--80
 Non-Hermitian unconstrained floors (odd / even) & 0.2321 / 0.2358 (0.2322 with artifact) & \ref{ch:paper-spurious-floor}\\
 Exact-spectrum in-sample rms of those fits & 0.2523 / 0.2477 & \ref{ch:paper-spurious-floor}\\
 Fair $R=4$ floors, exact-verified & 0.2391 / 0.2423 & \ref{ch:paper-spurious-floor}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+%======================================================================
+\chapter{Map from the Paper to This Book}\label{ch:ap-claims}
+
+For each part of the paper \cite{soniR1} (revision R1 numbering), the chapters that supply the tools and the chapter of Part~VI that reads it.
+
+\begin{center}\small
+\begin{tabular}{p{0.40\linewidth}p{0.38\linewidth}l}
+\toprule
+Paper element & Tools & Read in\\
+\midrule
+Abstract, Sec.~I, Fig.~1 & \ref{ch:intro}, \ref{ch:generalization}, \ref{ch:explicit-formula} & \ref{ch:paper-setup}\\
+Sec.~I A a: inverse-spectral fits & \ref{ch:wu-sprung}, \ref{ch:hilbert-polya} & \ref{ch:paper-setup}\\
+Sec.~I A b: explicit formulae, Connes & \ref{ch:explicit-formula} & \ref{ch:paper-setup}\\
+Sec.~I A c: machine learning on arithmetic data & \ref{ch:generalization} & \ref{ch:paper-setup}\\
+Sec.~I A d: operator proposals & \ref{ch:hilbert-polya}, \ref{ch:non-hermitian} & \ref{ch:paper-setup}\\
+Sec.~II A, Eq.~(1), Fig.~2: zeros, unfolding & \ref{ch:zeta}, \ref{ch:counting-zeros}, \ref{ch:level-statistics} & \ref{ch:paper-setup}\\
+Sec.~II B, Eq.~(2): Wu--Sprung potential, solver & \ref{ch:wkb}, \ref{ch:wu-sprung}, \ref{ch:finite-differences} & \ref{ch:paper-setup}\\
+Sec.~II C: Hermitian fit, OOS protocol, bases, within-height splits & \ref{ch:perturbation}, \ref{ch:least-squares}, \ref{ch:fitting}, \ref{ch:generalization} & \ref{ch:paper-setup}\\
+Eq.~(3): no leakage & \ref{ch:finite-differences} & \ref{ch:paper-setup}\\
+Sec.~II D, Eq.~(4): oracle and fitted sinusoidal controls & \ref{ch:explicit-formula}, \ref{ch:fourier-transform}, \ref{ch:sparse-frequency} & \ref{ch:paper-arithmetic}\\
+Sec.~II E, Eq.~(5): non-Hermitian classes & \ref{ch:perturbation}, \ref{ch:non-hermitian} & \ref{ch:paper-spurious-floor}\\
+Sec.~II F: use of AI & none & \ref{ch:paper-setup}, \ref{ch:paper-critique}\\
+Sec.~III, Table~I, Fig.~3: memorization & \ref{ch:fitting}, \ref{ch:generalization}, \ref{ch:controls} & \ref{ch:paper-memorization}\\
+Table~II: other bases & \ref{ch:fitting}, \ref{ch:controls} & \ref{ch:paper-memorization}\\
+Table~III: within-height splits, kriging & \ref{ch:generalization}, \ref{ch:level-statistics} & \ref{ch:paper-memorization}\\
+Permutation and surrogate tests & \ref{ch:fourier-transform}, \ref{ch:controls} & \ref{ch:paper-memorization}\\
+Interpolation split, Fig.~4 & \ref{ch:wkb}, \ref{ch:fitting}, \ref{ch:generalization} & \ref{ch:paper-memorization}\\
+Arithmetic-continuation probe & \ref{ch:fourier-series}, \ref{ch:explicit-formula}, \ref{ch:generalization} & \ref{ch:paper-memorization}\\
+Sec.~IV, Tables~IV--V & \ref{ch:explicit-formula}, \ref{ch:sparse-frequency}, \ref{ch:controls} & \ref{ch:paper-arithmetic}\\
+Sec.~V, V A, Fig.~5: spurious floor & \ref{ch:non-hermitian}, \ref{ch:asymptotics} (float32) & \ref{ch:paper-spurious-floor}\\
+Sec.~VI: discussion and proposed standard & all & \ref{ch:paper-critique}\\
+Appendix~A: reconstruction record & \ref{ch:ap-python}, \ref{ch:finite-differences}, \ref{ch:fitting} & \ref{ch:paper-critique}\\
 \bottomrule
 \end{tabular}
 \end{center}

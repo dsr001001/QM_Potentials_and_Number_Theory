@@ -1,0 +1,65 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "$s_{201}\\approx400.4$, $s_{300}\\approx542.6$. (Quick check of the first: $\\Nsm(400)=63.66\\log63.66-63.66+0.875\\approx201.6$, close to $200.5$ and slightly high, so $s_{201}$ lies just below $400$",
+  "problem": "The check script fails for s_201 and s_300. The text is also self-contradictory: it says s_201 is about 400.4, then says it lies just below 400. Nsm(400) is about 201.6 versus the target 200.5, so s_201 is near 399 (below 400), not 400.4.",
+  "fix": "Recompute s_201 and s_300 with the script and replace 400.4 and 542.6 everywhere (sample, answer 9, Paper connection, Summary). Redo x(s_201) and the quoted band, and the V(x)≈400--540 remark."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$x(s_{201})\\approx22.6$ and $x(s_{300})\\approx28.5$.",
+  "problem": "The check on x(s_201)=22.6 fails because s_201 is wrong. The value is probably nearer 22.5, which would agree with the paper's 22.5.",
+  "fix": "Use the computed value; if it rounds to 22.5, say it matches the paper and drop the 22.6 versus 22.5 discrepancy in the sample, Problem 9 answer and Summary."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$100/2\\pi=15.915$, $\\log15.915=2.7674$, $\\gap=2\\pi/2.7674=2.270$.",
+  "problem": "The check fails. In fact 100/(2π)=15.9155 and log(15.9155)=2.7675, so one of the quoted digits is off.",
+  "fix": "Use the exact computed values (15.9155, 2.7675, gap about 2.270) and match the check tolerances."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$t_1/2\\pi=2.24963$, $\\log2.24963=0.81077$; $\\Nsm=2.24963\\times0.81077-2.24963+0.875=0.449$.",
+  "problem": "The check fails on the quoted intermediate digits, so they are inaccurate.",
+  "fix": "Recompute the values to 5 digits with the script and correct them; Nsm(t_1)≈0.449 should be rechecked."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the first zero lies $0.05$ of a spacing below $s_1$.",
+  "problem": "Nsm(t_1)=0.449 means t_1 is above s_1 by (0.5-0.449) times the local spacing, i.e. t_1 is greater than s_1 (Nsm is increasing). 'Below' is wrong.",
+  "fix": "Say the first zero lies about 0.05 spacings above s_1."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper takes $V_0=3.10073\\pi$ as given (it is the value of the Wu--Sprung construction in the literature) and does not derive it",
+  "problem": "This is an unsupported claim about provenance, and it conflicts with the bible's request to check numerically. It is also unclear whether 'WKB levels track s_n' is consistent with a 0.0045 shift. The paper does not say the value comes from the literature.",
+  "fix": "Say only that the paper gives V_0=3.10073π without derivation, and that we do not know its origin."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Check 2: the true quantum levels. Bohr--Sommerfeld is itself an approximation.",
+  "problem": "The text states that the exact levels track s_n and that the max deviation is below 0.1 (the paper's 0.063), but the chapter's own numerics are never reported. The student sees no actual numbers from the code.",
+  "fix": "Report the computed mean and max deviation from the CHECKS run, and note the comparison with the paper's 0.005/0.063."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "(You can check it numerically: in the CHECKS script the integral with $V=2$, $W=5$ returns $\\pi$ to ten digits.)",
+  "problem": "The reader cannot see the CHECKS script. The book should show a visible snippet or state the check in the text.",
+  "fix": "Replace it with an explicit numerical value or a pycode listing."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper's value corresponds to $y=3.10073/2=1.550365$",
+  "problem": "There is no justification for preferring the paper's V_0 to the self-consistent root, and the chapter still calls the root 'where V_0 comes from'. It is also unclear why levels deviate by 0.0045 yet the paper reports mean 0.005.",
+  "fix": "State plainly that the paper's V_0 differs slightly from the consistent root and that the chapter derives only the approximate origin."
+ }
+]

@@ -1,0 +1,100 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Both states are even, so $\\psi(-L)=\\psi(L)$ and $\\phi'(-L)=-\\phi'(L)$, and the left side is $-2\\phi'(L)\\psi(L)$.",
+  "problem": "The left side is [psi' phi - phi' psi] from -L to L = (psi'(L)phi(L)-phi'(L)psi(L)) - (psi'(-L)phi(-L)-phi'(-L)psi(-L)) = -phi'(L)psi(L)+phi'(-L)psi(-L) = -2phi'(L)psi(L). This is correct, but then Step 5 sign: phi'(L)≈-2L psi(L) gives E_b-1 = +4L psi^2, fine. However the same sample says 'Near x=L, phi is psi minus the growing solution' without justification of the logarithmic slope (growing slope 'close to +x'), which is hand-waved.",
+  "fix": "Label Step 5 clearly as heuristic and justify the growing solution's slope (e.g. WKB: psi_grow ~ e^{+x^2/2}, so psi'/psi ≈ +x)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the first integral is strictly positive.",
+  "problem": "Sample 'lower bound' assumes psi psi' -> 0 at ends but Step 6 says a constant vanishing at the ends; fine. But for the box V_min=0 and E>V_min is claimed for V=+infty walls, where the integral of V psi^2 is taken over the interior only; acceptable. The real flaw: V_min for oscillator with E>V_min is fine, but the checkpoint says 'lowest level should approximate t_1' while the Wu-Sprung lowest level follows s_1, not t_1, and WKB is poor at low n.",
+  "fix": "Reword the checkpoint to say only that t_1=14.13 exceeds V_0=9.741, so no inconsistency arises."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the slowly rising level density of the Riemann zeros is exactly what forces that potential to grow a little more slowly than a harmonic well.",
+  "problem": "Overstated: the chapter's argument is a heuristic local power-law (semiclassical) reading, not a forcing.",
+  "fix": "Say 'suggests, at the heuristic level of Section on density'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The empty box of RE3 (Sample Problem ``The empty box of the paper'') is what you get by deleting the potential.",
+  "problem": "The paper's Hamiltonian is not an empty box; the sentence is fine, but the claim in the sample that 'far fewer levels below 1000' relies on 652 from the paper's tensor computation, which is the Sec. II E state sum, and the chapter cites 'Sec.~II~E and App.~A step~4' as if 652 were the filled-box count for the smooth potential; the paper uses 652 basis states of the smooth potential, consistent, but N_sm(1000)+1/2 comparison is loose.",
+  "fix": "State that 652 is the number of states of the smooth potential with E<=1000 used in the tensor sums."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Even potential, even and odd solutions: exactly as the parity theorem promised.",
+  "problem": "Series solutions are used for the oscillator on the whole line, but the claim that the terminating polynomial times Gaussian is the complete set of bound states (no other E) relies on the divergence heuristic; also power series, ratio asymptotics and convergence of series are beyond assumed background (Ch. 3 is not listed in prerequisites).",
+  "fix": "Add Chapter~\\ref{ch:series} to prerequisites and state explicitly that completeness of the Hermite states is taken on trust."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Leibniz's rule for differentiating an integral with variable limits",
+  "problem": "Leibniz's rule is invoked but the integrand's derivative 1/(2 sqrt(E-V)) diverges at the endpoints, so the 'integral of the derivative' is improper; the justification is skipped.",
+  "fix": "Note that the integrand's E-derivative is integrable, or substitute x=x_E u in a power-law case to verify."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:finite-differences} analyzes this method in depth; here we use it as a black box.",
+  "problem": "Listing uses 'select' and 'select_range' keywords and the second-difference matrix without explaining that indices are zero-based (0,9) giving ten levels.",
+  "fix": "Add a comment that select_range=(0,9) means the lowest ten eigenvalues (0-based indices)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Section~II~B of \\cite{soniR1} states the setting: ``In units $\\hbar=2m=1$, $H=-d^2/dx^2+V(x)$ with $V$ even.''",
+  "problem": "Paper text is 'In units hbar = 2m = 1, H = -d^2/dx^2 + V(x) with V even.' Fine, but the chapter then says the paper's 'Dirichlet walls' quote and 'the domain [-L,L]' quote are verbatim; the latter is 'the domain $[-L, L]$ with $L = x(V{=}1000) = 44.883$' ok. Minor: 'App.~A step~4: eigenvalue range [0,900]' is reported correctly.",
+  "fix": "No change needed beyond checking quotes."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The paper's Wu--Sprung potential has its minimum $V_0=3.10073\\pi\\approx 9.741$ at $x=0$",
+  "problem": "Figure scripts and the FIGURES part are absent from the supplied response; six figures are included (shooting, box, oscillator, wall, ladders, density, wusprung) with no scripts.",
+  "fix": "Provide a '### FIG bound-states_<name>' script for each of the seven figures."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{pycode}\nimport numpy as np\nimport qmnt",
+  "problem": "Check script does not verify the paper-connection listing outputs or claims such as 'below 0.01 ... growing with n', '10% high', 'numerics 0.075', 'numerical shift below 1e-5', turning points 22.5--28.5, 190 value to tolerance, and Problems 19-21 numbers (652 vs 903 vs 648.6 fine) partially.",
+  "fix": "Add asserts for 0.075 (L=2 shift), the 22.5--28.5 band via qmnt, and Problem 6/12/14/18/22/26/28/30 numbers quoted."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{Prove that if $\\psi(x)$ solves",
+  "problem": "Answers section omits many odd-numbered problems (e.g., 33 absent; 9 present but 'every odd-numbered problem' requires all odd, such as problem 1..31 odd: 21,25,27,29,31 ok but check 9, 11, 13 ... all given); also problems numbered by references like 'Problem 31' and 'Problem 13' in text must match actual list order.",
+  "fix": "Verify numbering: the infinite-box-probability problem is 31 (ok) but 'Problem 13 computes' forbidden-region probability matches item 13; recheck 'Problem 19' reference for the 652 count (item 19) and 'Problem 22' turning points (item 22), 'Problem 23', 26, 27 and add missing odd answers."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The zeros (and hence the Wu--Sprung levels) are about 1.5 times denser there",
+  "problem": "Answer 21 compares 0.774 with 0.502 but the density of the filled-box level count versus 'fewer levels below that energy in total' is confusing and mixes a heuristic empty box with the actual filled one.",
+  "fix": "Remove the clause about totals or clarify it compares density at one energy, not cumulative counts."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "and the 500th zero is $t_{500}=811.1843588465$ (App.~A, key anchors). So every scored level lies well below the potential at the wall.",
+  "problem": "Statement 'wall influence exponentially small' is heuristic extrapolated from the oscillator, and level 500's turning point value 38.5 is asserted without noting it is computed.",
+  "fix": "Mark as heuristic estimate; note the 38.5 is computed from Eq.(2) via qmnt."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The agreement is close but not exact; we do not analyze the small difference here (Problem 19 suggests one likely contributor).",
+  "problem": "Problem 19 as posed asks only for counts; the contributor is given in Answer 19, speculative (grid dispersion), and presented as 'likely' without evidence.",
+  "fix": "Label as conjecture or compute the count of qmnt levels below 1000 to test it."
+ }
+]

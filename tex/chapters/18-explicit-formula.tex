@@ -56,7 +56,7 @@ f(r)=\sum_{m=1}^{\infty}\frac{(rw)^{m}}{m},\qquad g(r)=(1-rw)\,e^{f(r)}.
 \]
 Then $f(1)=\ell(w)$, and $f(0)=0$, so $g(0)=1\cdot e^{0}=1$.
 
-\textbf{Step 3: differentiate $f$.} Here $f$ is a power series in the real variable $r$ with complex coefficients $w^m/m$, and its radius of convergence is $1/\abs{w}>1$. A power series may be differentiated term by term inside its radius of convergence (a theorem of calculus; see \cite{rhb}). So
+\textbf{Step 3: differentiate $f$.} Here $f$ is a power series in the real variable $r$ with complex coefficients $w^m/m$. Its radius of convergence is $1/\abs{w}>1$ (infinite if $w=0$; in that case $f\equiv0$ and everything below is trivially true). Write $w^m=a_m+ib_m$ with $a_m,b_m$ real. Then $f(r)=\sum_m a_mr^m/m+i\sum_m b_mr^m/m$ is a pair of real power series, and each converges for $\abs{r}<1/\abs{w}$ by comparison, because $\abs{a_m}\le\abs{w}^m$ and $\abs{b_m}\le\abs{w}^m$. A real power series may be differentiated term by term inside its radius of convergence (a theorem of calculus; see \cite{rhb}). Applying this to the real and imaginary parts separately and recombining them,
 \[
 f'(r)=\sum_{m=1}^{\infty}\frac{m\,w^{m}r^{m-1}}{m}=w\sum_{m=1}^{\infty}(rw)^{m-1}=\frac{w}{1-rw},
 \]
@@ -237,7 +237,7 @@ Find the root mean square of $N^{p=2}_{\rm fl}(t)$ over one period.
 \]
 \end{sample}
 
-Keep this number in mind. In the paper's continuation probe (Sec.~III) the target fluctuation is exactly this wave, and the paper's App.~A lists the ``probe-null'' (the error of predicting no fluctuation on levels 401--500) as $0.1708$. Evaluating $N^{p=2}_{\rm fl}$ at the smooth zeros $s_{401},\dots,s_{500}$ and taking the rms gives the same value to within $0.003$ (verified in this chapter's check script); sampling at roughly 15 periods' worth of nearly evenly spaced points reproduces the time average.
+Keep this number in mind. In the paper's continuation probe (Sec.~III) the target fluctuation is exactly this wave, and the paper's App.~A lists the ``probe-null'' (the error of predicting no fluctuation on levels 401--500) as $0.1708$. Evaluating $N^{p=2}_{\rm fl}$ at the smooth zeros $s_{401},\dots,s_{500}$ and taking the rms gives the same value to within $0.003$ (verified in this chapter's check script). The reason is that these 100 points span about 14 periods of the wave, and their spacing, about $1.3$ to $1.4$ in $t$, is less than half the shortest period $3.0216$ of the three harmonics; so the samples resolve all three harmonics, and their mean square approximates the time average.
 
 \begin{checkpoint}
 At which angular frequency does the prime power $25=5^2$ appear, what is its amplitude $1/(m\sqrt k)$, and is this wave included in the paper's Eq.~(4) when $5\in P$?
@@ -277,7 +277,7 @@ Is $\Phi_\sigma(t)$ the same as the continuously varied argument used to define 
 \item $\Phi_\sigma(t)$ is continuous in $\sigma$ and $t$ for $\sigma\ge\sigma_0>1$. Each term is bounded in absolute value by $p^{-m\sigma_0}/m$, a fixed summable number independent of $\sigma$ and $t$, so the convergence is uniform; a uniformly convergent series of continuous functions has a continuous sum (see the box below).
 \item At $s=2$ every sine vanishes, so $\Phi_2(0)=0$, the agreed starting value.
 \end{enumerate}
-Two continuous arguments of the same nonvanishing function along a path differ by $2\pi\times$(an integer), and that integer, being a continuous integer-valued function, is constant. Starting from the same value $0$, they agree everywhere. So on the vertical segment from $2$ to $2+iT$, and on the horizontal segment from $2+iT$ to $\sigma+iT$ for any $\sigma>1$, the continuous argument \emph{is} $\Phi$. This much is a \textbf{theorem (proved)}.
+For $\sigma>1$ the function $\zeta$ never vanishes: by \cref{eq:explicit-formula-logzeta}, $\zeta(s)=e^{\log\zeta(s)}$, and an exponential is never zero because $\abs{e^{z}}=e^{\Re z}>0$. Two continuous arguments of the same nonvanishing function along a path differ by $2\pi\times$(an integer), and that integer, being a continuous integer-valued function, is constant. Starting from the same value $0$, they agree everywhere. So on the vertical segment from $2$ to $2+iT$, and on the horizontal segment from $2+iT$ to $\sigma+iT$ for any $\sigma>1$, the continuous argument \emph{is} $\Phi$. This much is a \textbf{theorem (proved)}.
 
 \begin{beyond}
 \textbf{Taken on trust: uniform limits are continuous.} If continuous functions $f_K$ converge to $f$ uniformly on an interval (the maximum of $\abs{f_K-f}$ tends to $0$), then $f$ is continuous. The ``M-test'' used above (if $\abs{\text{term}_j}\le M_j$ with $\sum M_j<\infty$, convergence is uniform) is its standard companion. Both are proved in any real-analysis text and in \cite{rhb}.
@@ -323,7 +323,7 @@ Even the $m=2$ amplitudes, $1/(2p)$, have a divergent sum by the same result. On
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/explicit-formula_partial.pdf}
-\caption{Partial sums $\sum_{p\le x}p^{-\sigma}$ over primes up to $x$ (both axes logarithmic, dimensionless). For $\sigma=2$ the sum levels off; for $\sigma=1$ it creeps upward without bound (like $\log\log x$); for $\sigma=\tfrac12$, the critical line, it grows roughly like $\sqrt{x}$. The amplitudes of the waves in \cref{eq:explicit-formula-formal} are not summable.}
+\caption{Partial sums $\sum_{p\le x}p^{-\sigma}$ over primes up to $x$ (both axes logarithmic, dimensionless). For $\sigma=2$ the sum levels off; for $\sigma=1$ it creeps upward without bound (like $\log\log x$); for $\sigma=\tfrac12$, the critical line, it grows like $2\sqrt{x}/\log x$ for large $x$ (dashed curve; a consequence of the prime number theorem, Chapter~\ref{ch:primes}). The amplitudes of the waves in \cref{eq:explicit-formula-formal} are not summable.}
 \label{fig:explicit-formula-partial}
 \end{figure}
 
@@ -421,7 +421,7 @@ Just below a zero, $S=-0.2$; just above it, $S=+0.8$. What value of $S$ enters \
 \checkanswer{The midpoint, $0.3$. Then $\Nsm(t_n)=n-\tfrac12-0.3<\Nsm(s_n)$, and since $\Nsm$ increases, $t_n<s_n$: the zero is early, by about $0.3$ mean spacings.}
 
 \begin{keyideas}
-\item A zero satisfies $\Nsm(t_n)+S(t_n)=n-\tfrac12$ with $S(t_n)$ the midpoint of its jump; prediction needs only that midpoint.
+\item Up to the neglected $\order(1/t)$ term, a zero satisfies $\Nsm(t_n)+S(t_n)=n-\tfrac12$ with $S(t_n)$ the midpoint of its jump; prediction needs only that midpoint.
 \item Heuristically, truncated prime sums behave like truncated Fourier series, which converge to midpoints at jumps; low frequencies carry the slow part of $S$, which is what moves zeros early or late.
 \item This explanation is heuristic; its support is rigorous smoothed versions plus numerical accuracy.
 \end{keyideas}
@@ -467,7 +467,7 @@ A positive $\Nfl$ means an early zero, as in the checkpoint above. Neglected: se
 \begin{sample}{Predicting $t_1$ from the prime 2}
 Predict the first zero using $P=\{2\}$, and compare with $t_1=14.134725$ and with the null prediction $s_1$.
 
-\textbf{Step 1: the smooth zero.} Solving $\Nsm(s)=\tfrac12$ by Newton's method from $s=t_1$ (slope $0.129$, then a second iteration) gives $s_1=14.5214$, and $\gap_1=2\pi/\log(s_1/2\pi)=2\pi/0.837746=7.500$.
+\textbf{Step 1: the smooth zero.} Solve $\Nsm(s)=\tfrac12$ by Newton's method (Chapter~\ref{ch:asymptotics}), $s\mapsto s+(\tfrac12-\Nsm(s))/\Nsm'(s)$, starting from $s=t_1$. There $\Nsm(t_1)=0.44928$ (previous sample) and $\Nsm'(t_1)=\frac{1}{2\pi}\log\frac{t_1}{2\pi}=0.8107574/2\pi=0.12904$, so the first step is $0.05072/0.12904=0.3931$ and the first iterate is $14.5278$. At the first iterate, $\Nsm(14.5278)-\tfrac12=8.5\times10^{-4}$ and $\Nsm'(14.5278)=0.1334$, so the second step is $-8.5\times10^{-4}/0.1334=-0.0064$, giving $s_1=14.5214$; a further step changes this by less than $10^{-5}$. Then $\gap_1=2\pi/\log(s_1/2\pi)=2\pi/0.837746=7.500$.
 
 \textbf{Step 2: $\Nfl$ and its slope at $s_1$.} As in the previous sample, $s_1\log2=10.065465=3\pi+0.640687$, and so on; the result is $N^{p=2}_{\rm fl}(s_1)=0.09350$. Differentiating \cref{eq:explicit-formula-re2}, $\Nfl'(t)=-\frac{\log2}{\pi}\sum_{m=1}^3\frac{\cos(mt\log2)}{2^{m/2}}$, which at $s_1$ gives $\Nfl'(s_1)=0.0667$.
 
@@ -475,7 +475,7 @@ Predict the first zero using $P=\{2\}$, and compare with $t_1=14.134725$ and wit
 
 \textbf{Step 4: why, and the better first order.} At $t\approx14$, $1/\gap_1=0.1333$ while $\Nfl'(s_1)=0.0667$: the condition $\abs{\Nfl'}\ll1/\gap$ fails. Using \cref{eq:explicit-formula-delta}, $\Delta=-0.09350/(0.13333+0.06675)=-0.4673$, so $t\approx14.054$.
 
-\textbf{Step 5: solve \cref{eq:explicit-formula-level} exactly.} Let $f(t)=\Nsm(t)+\Nfl(t)-\tfrac12$. Evaluating, $f(13.8202)=-0.0635$ and $f(14.1347)=+0.0110$: a sign change, so a root lies between (bisection logic, Chapter~\ref{ch:asymptotics}). Linear interpolation gives $14.0883$, where $f=+0.00036$; one more secant step gives the root
+\textbf{Step 5: solve \cref{eq:explicit-formula-level} exactly.} Let $f(t)=\Nsm(t)+\Nfl(t)-\tfrac12$ and evaluate it at the two estimates already in hand. At $t=14.1347$ (essentially $t_1$) the previous sample gives $\Nsm=0.4493$ and $\Nfl=0.0617$, so $f(14.1347)=0.4493+0.0617-0.5=+0.0110$. At $t=13.8202$: $13.8202/2\pi=2.199553$, so $\Nsm(13.8202)=2.199553\log(2.199553)-2.199553+0.875=0.4093$. The three RE2 phases reduce to $3\pi+0.15465$, $6\pi+0.30931$ and $9\pi+0.46396$, so (with the sign rules of the previous sample) the sines are $-0.1540$, $0.3044$, $-0.4475$; dividing by $1.414214$, $4$, $8.485281$, adding and multiplying by $-1/\pi$ gives $\Nfl(13.8202)=0.0272$. Hence $f(13.8202)=0.4093+0.0272-0.5=-0.0635$. This is a sign change, so a root lies between (bisection logic, Chapter~\ref{ch:asymptotics}). Linear interpolation gives $14.0883$, where $f=+0.00036$; one more secant step gives the root
 \[
 \boxed{t^{\rm pred}_1=14.087.}
 \]
@@ -714,10 +714,10 @@ Now probe the zeros with a pure wave: compute $\sum_n x^{\rho_n}$ over the zeros
 \sum_{0<t_n\le T}x^{\rho_n}=-\frac{T}{2\pi}\Lambda(x)+\order(\log T),
 \label{eq:explicit-formula-landau}
 \end{equation}
-where $\Lambda(x)=0$ unless $x$ is an integer prime power \cite{landau}. A version uniform in $x$ is due to Gonek \cite{gonek}.
+where the sum runs over the zeros with $0<t_n\le T$, each counted once (the conjugates $\bar\rho_n$ are not included); $T$ here is the upper height of the zeros included, not a training window (one of the other meanings of $T$ in the paper); and $\Lambda(x)=0$ unless $x$ is an integer prime power \cite{landau}. A version uniform in $x$ is due to Gonek \cite{gonek}.
 \end{beyond}
 
-Write $x=e^{\omega}$. Then $x^{\rho_n}=e^{\omega/2}e^{i\omega t_n}$, and the real part of \cref{eq:explicit-formula-landau} gives
+Write $x=e^{\omega}$ with $\omega>0$. Then $x^{\rho_n}=x^{1/2}x^{it_n}=e^{\omega/2}e^{i\omega t_n}$, so the real part of the left side of \cref{eq:explicit-formula-landau} is $e^{\omega/2}\sum_{0<t_n\le T}\cos(\omega t_n)$, while the main term on the right is real. Dividing both sides by the positive factor $e^{\omega/2}$ (which also divides the $\order(\log T)$ error by $e^{\omega/2}$) gives
 \begin{equation}
 \sum_{0<t_n\le T}\cos(\omega t_n)\approx-\frac{T}{2\pi}\frac{\Lambda(e^{\omega})}{e^{\omega/2}}.
 \label{eq:explicit-formula-landaucos}
@@ -900,7 +900,7 @@ In \cref{eq:explicit-formula-psiwave} the angular frequency (in $\log x$) of the
 
 \textbf{19.} Suppose $\log2/\log3=a/b$ with positive integers $a,b$. Then $b\log2=a\log3$, so $2^b=3^a$. The left side is even and the right side is odd, a contradiction (equivalently, unique factorization). If $f(t)=\sin(t\log2)+\sin(t\log3)$ had a period $\tau>0$, the two components would each have to repeat with $\tau$ (by the uniqueness of Fourier coefficients for periodic functions, Chapter~\ref{ch:fourier-series}), so $\tau\log2=2\pi j$ and $\tau\log3=2\pi l$ for positive integers $j,l$; dividing, $\log2/\log3=j/l$, which is impossible.
 
-\textbf{21.} The computed sum is close to $-110.7$ (within the $\order(\log T)$ error of Landau's formula; this chapter's check script confirms agreement within $30\%$). The five deepest dips sit at $\log7$, $\log5$, $\log11$, $\log3$, $\log13$ in roughly the order of the weights listed in answer 11 (exact order depends on the finite-$T$ error terms).
+\textbf{21.} The computed sum should be close to $-110.7$; how close depends on the $\order(\log T)$ error term ($\log T\approx7$) and on leakage from neighboring lines, and this chapter's check script confirms agreement within $30\%$. For the scan, Landau's formula predicts a dip of depth $\frac{T}{2\pi}\Lambda(k)/\sqrt k=225.908\,\Lambda(k)/\sqrt k$ at each prime power $k\le e^{3.5}\approx33$. Ranking the weights (those of answer 11, plus $0.654$ for $k=23$ and smaller values for $29,31,25,27,32$), the five deepest predicted lines are at $\log7$, $\log11$, $\log5$, $\log13$, $\log17$. The predicted depths of the first four differ from one another by less than $6$, which is below the size of the $\order(\log T)$ error, so in your computed spectrum these four may appear in a different order. The line at $\log3$ (weight $0.634$) is not among the predicted five, because $\log17$, $\log19$ and $\log23$ all have larger weights.
 
 \textbf{23.} Almost but not exactly. The oracle with $P=\{2\}$ contains exactly the right function, so it predicts the fluctuation $(t-s_n)/\gap_n$ that solves $\Nsm(t)+N^{p=2}_{\rm fl}(t)=n-\frac12$, which by \cref{eq:explicit-formula-delta} equals $-N^{p=2}_{\rm fl}(s_n)$ only to first order; the difference is a small slope correction. Crucially, its accuracy does not degrade beyond any window, because it has no window: it contains the frequency $\log2$ itself. The fitted operator, by contrast, scored $0.1958$ out of sample, worse than predicting no fluctuation ($0.1708$), with corr $+0.07$: it painted the wave onto its training levels but did not continue it.
 

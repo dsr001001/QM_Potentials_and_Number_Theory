@@ -19,7 +19,7 @@ Where this shows up in the paper \cite{soniR1}: every bracketed interval in Secs
 %======================================================================
 \section{Sampling variability: every score is one draw}\label{sec:controls-variability}
 
-Imagine scoring a model on zeros 401--500 and getting rms error $0.369$ (in units of the local mean spacing; recall from Chapter~\ref{ch:generalization} that the rms error is $\sqrt{\frac1n\sum_j(\text{pred}_j-\text{true}_j)^2}$). Had you scored on another hundred zeros of the same height, say zeros of a slightly different stretch, you would have gotten a somewhat different number. The score depends on \emph{which} levels happened to be in the test set. This dependence is called \textbf{sampling variability}, and the first task of this chapter is to measure it.
+Imagine scoring a model on zeros 401--500 and getting rms error $0.369$ (in units of the local mean spacing; recall from Chapter~\ref{ch:generalization} that the rms error is $\sqrt{\frac1n\sum_j(\text{pred}_j-\text{true}_j)^2}$). Had you scored on a different hundred zeros from the same height range, you would have gotten a somewhat different number. The score depends on \emph{which} levels happened to be in the test set. This dependence is called \textbf{sampling variability}, and the first task of this chapter is to measure it.
 
 \subsection{Estimators and their sampling distributions}
 
@@ -129,7 +129,7 @@ Data $x=(1,2,6)$. List the bootstrap distribution of the mean exactly, and check
 
 \textbf{Step 2:} The sum of a resample is $k_1+2k_2+6k_6$, and the mean is the sum divided by 3. Tabulating all ten count patterns gives Table~\ref{tab:controls-enum}.
 
-\textbf{Step 3:} Expected mean: $\frac1{27}\sum(\text{weight}\times\text{mean})=\frac{81}{27}\cdot\frac{1}{1}\cdot\frac{1}{3}\cdot 3=3$. (Directly: the weighted sum of the resample \emph{sums} is $243$, and $243/(27\times3)=3$.) This equals $\bar x=3$, as Eq.~\eqref{eq:controls-bootmean} requires.
+\textbf{Step 3:} Expected mean. Multiply each resample sum by its weight and add: $3\cdot1+4\cdot3+5\cdot3+6\cdot1+8\cdot3+9\cdot6+10\cdot3+13\cdot3+14\cdot3+18\cdot1=243$. Divide by the 27 resamples, and by 3 to turn sums into means: $243/(27\times3)=3$. This equals $\bar x=3$, as Eq.~\eqref{eq:controls-bootmean} requires.
 
 \textbf{Step 4:} Expected squared mean: $\frac1{27}\sum(\text{weight}\times\text{mean}^2)=285/27=10.556$. So $\mathrm{Var}^*=10.556-3^2=1.556$.
 
@@ -171,7 +171,7 @@ For $n=3$ this is $\binom53=10$, matching the table. For $n=100$ held-out zeros 
 
 \subsection{The Monte Carlo bootstrap}
 
-Draw $B$ resamples at random (with a seeded generator, so the result is reproducible; Chapter~\ref{ch:probability}), compute $\hat\theta^*_1,\dots,\hat\theta^*_B$, and use their standard deviation as the standard error. The Monte Carlo step adds its own small error. As a rule of thumb (a heuristic that holds when the bootstrap distribution is close to Gaussian), the relative error of a standard deviation estimated from $B$ draws is about $1/\sqrt{2B}$; for $B=2\times10^4$ this is $0.5\%$, negligible next to the sampling uncertainty itself.
+Draw $B$ resamples at random (with a seeded generator, so the result is reproducible; Chapter~\ref{ch:probability}), compute $\hat\theta^*_1,\dots,\hat\theta^*_B$, and use their standard deviation as the standard error. The Monte Carlo step adds its own small error. How large is that error? We quote one standard statistical result without proof (see \cite{efron}). For $B$ independent Gaussian draws with standard deviation $\sigma$, the sample variance $s_B^2$ has variance $2\sigma^4/(B-1)$. Its relative standard deviation is therefore $\sqrt{2/(B-1)}$. The standard deviation is $s_B=\sqrt{s_B^2}$, and a small relative change $\epsilon$ in $s_B^2$ produces a relative change of about $\epsilon/2$ in $s_B$, because $\sqrt{1+\epsilon}\approx1+\epsilon/2$ to first order in Taylor's expansion. So the relative error of $s_B$ is about $\tfrac12\sqrt{2/(B-1)}\approx1/\sqrt{2B}$. This is a heuristic: it holds when the bootstrap distribution is close to Gaussian. For $B=2\times10^4$ it gives $0.5\%$, which is negligible next to the sampling uncertainty itself.
 
 \begin{pycode}
 import numpy as np
@@ -181,7 +181,7 @@ B = 20000
 idx = rng.integers(0, len(x), size=(B, len(x)))  # B resamples of positions
 means = x[idx].mean(axis=1)             # one bootstrap mean per row
 print(means.std())                      # close to the exact 1.166
-print(np.percentile(means, [2.5, 97.5]))  # percentile interval (Sec. 26.2.5)
+print(np.percentile(means, [2.5, 97.5]))  # percentile interval (see below)
 \end{pycode}
 
 For the five data of the first Sample Problem, Eq.~\eqref{eq:controls-bootvarmean} gives the exact ideal-bootstrap standard error $\sqrt{6.8/5}=\sqrt{1.36}=1.166$, and the listing reproduces it to within about one percent.
@@ -211,7 +211,7 @@ The $95\%$ interval is the whole range of possible means: with $n=3$ the bootstr
 \end{figure}
 
 \begin{beyond}
-\textbf{When does the bootstrap work?} For iid data and statistics that are smooth functions of averages (the mean, the variance, the rms, and the Pearson correlation, which is a smooth function of five averages), it is a theorem that the bootstrap distribution of $\sqrt n(\hat\theta^*-\hat\theta)$ approaches the true sampling distribution of $\sqrt n(\hat\theta-\theta)$ as $n\to\infty$, and the coverage of percentile intervals approaches the nominal level. The proofs are beyond this book; Efron and Tibshirani \cite{efron} give the ideas and references, and \cite{esl} discusses the bootstrap in a learning context. For finite $n$, coverage is approximate, and improved intervals (bias-corrected and accelerated, or ``BCa'', and others) exist \cite{efron}. The bootstrap fails, or needs modification, for very small samples (as the Sample Problem shows), for statistics like the sample maximum, and for dependent data (Sec.~\ref{sec:controls-serial}).
+\textbf{When does the bootstrap work?} For iid data and statistics that are smooth functions of averages (the mean, the variance, the rms, and the Pearson correlation, which is a smooth function of five averages), it is a theorem (under the condition that the relevant moments of the data are finite; for the rms and the correlation, finite fourth moments) that the bootstrap distribution of $\sqrt n(\hat\theta^*-\hat\theta)$ approaches the true sampling distribution of $\sqrt n(\hat\theta-\theta)$ as $n\to\infty$, and the coverage of percentile intervals approaches the nominal level. The proofs are beyond this book; Efron and Tibshirani \cite{efron} give the ideas and references, and \cite{esl} discusses the bootstrap in a learning context. For finite $n$, coverage is approximate, and improved intervals (bias-corrected and accelerated, or ``BCa'', and others) exist \cite{efron}. The bootstrap fails, or needs modification, for very small samples (as the Sample Problem shows), for statistics like the sample maximum, and for dependent data (Sec.~\ref{sec:controls-serial}).
 \end{beyond}
 
 \subsection{A bootstrap interval from the paper, rerun}
@@ -348,7 +348,7 @@ S-\varphi S=\sum_{k\ge1}\big[k-(k-1)\big]\varphi^k=\sum_{k\ge1}\varphi^k=\frac{\
 \qquad\text{so}\qquad S=\frac{\varphi}{(1-\varphi)^2}.
 \label{eq:controls-kphik}
 \end{equation}
-Then, neglecting the tails beyond $k=n-1$ (they are of size $\varphi^n$),
+Next, replace the finite sums $\sum_{k=1}^{n-1}$ by infinite ones. This adds the tail $\sum_{k\ge n}(1-k/n)\varphi^k$. Write $k=n+j$, so that $\abs{1-k/n}=j/n$. The magnitude of the tail is then at most $\sum_{j\ge0}(j/n)\abs{\varphi}^{n+j}=\frac{\abs{\varphi}^{n+1}}{n(1-\abs{\varphi})^2}$, using Eq.~\eqref{eq:controls-kphik} with $\abs{\varphi}$ in place of $\varphi$. This is negligible when $\abs{\varphi}^n\ll1$. Making the replacement,
 \begin{equation}
 f_n\approx1+2\Big[\frac{\varphi}{1-\varphi}-\frac1n\,\frac{\varphi}{(1-\varphi)^2}\Big].
 \label{eq:controls-fn}
@@ -458,7 +458,7 @@ Compare with Eq.~\eqref{eq:controls-varcorr}. The block bootstrap uses the data'
 \item $\ell$ must be longer than the range over which correlations matter, or they are cut off (bias).
 \item $\ell$ must be much shorter than $n$, so that there are many blocks to resample (otherwise the estimate is noisy, and the weights $1-k/\ell$ still discount real correlations).
 \end{itemize}
-For the AR(1) with $\varphi=0.5$, $n=400$ and $\ell=20$, inserting the true autocovariances into Eq.~\eqref{eq:controls-cbbvar} gives a factor $1+2(1-2/20)=2.8$ instead of the true $f_{400}=1+2(1-2/400)=2.99$ (Eq.~\eqref{eq:controls-fn}), so the block standard error is about $3\%$ low, while the independent bootstrap is about $42\%$ low (factor $1/\sqrt{2.99}=0.578$). The right panel of Fig.~\ref{fig:controls-ar1} confirms this by simulation.
+For the AR(1) with $\varphi=0.5$, $n=400$ and $\ell=20$, inserting the true autocovariances into Eq.~\eqref{eq:controls-cbbvar} gives a factor $1+2(1-2/20)=2.8$ instead of the true $f_{400}=1+2(1-2/400)=2.99$ (Eq.~\eqref{eq:controls-fn}), so the block standard error is about $3\%$ low, while the independent bootstrap is about $42\%$ low (factor $1/\sqrt{2.99}=0.578$). The right panel of Fig.~\ref{fig:controls-ar1} compares these predictions with a simulation. The simulated ratios sit close to the dashed curve, slightly below it, because the bootstrap uses autocovariances measured about the sample mean.
 
 In practice nobody knows the right $\ell$, so the honest procedure is to report a range: compute intervals for several block lengths and check whether conclusions change. That is exactly what the paper does with ``block lengths 3 to 20'' (Sec.~III; Appendix~A step 22).
 
@@ -794,7 +794,14 @@ The simplest way the steering inflates evidence: each look at the data is a chan
 P(\text{at least one false positive})=1-(1-\alpha)^k,
 \label{eq:controls-fwer}
 \end{equation}
-because each test stays silent with probability $1-\alpha$ and independence multiplies these. The \textbf{Bonferroni correction} runs each test at $\alpha/k$; then, by the same formula, the family-wise probability is $1-(1-\alpha/k)^k\le\alpha$.
+because each test stays silent with probability $1-\alpha$ and independence multiplies these. The \textbf{Bonferroni correction} runs each test at $\alpha/k$. By the same formula, the family-wise probability is then $1-(1-\alpha/k)^k$, and this is at most $\alpha$.
+
+To see why, use \textbf{Bernoulli's inequality}: $(1+u)^k\ge1+ku$ for $u\ge-1$ and every integer $k\ge1$. We prove it by induction.
+\begin{itemize}
+\item For $k=1$ it holds with equality.
+\item Suppose it holds for some $k$. Then $(1+u)^{k+1}=(1+u)^k(1+u)\ge(1+ku)(1+u)=1+(k+1)u+ku^2\ge1+(k+1)u$. The first inequality multiplies both sides by $1+u\ge0$; the second drops the term $ku^2\ge0$. So it holds for $k+1$.
+\end{itemize}
+With $u=-\alpha/k$, Bernoulli's inequality gives $(1-\alpha/k)^k\ge1-\alpha$. Hence $1-(1-\alpha/k)^k\le\alpha$.
 
 \begin{sample}{Twenty cutoffs}
 A researcher computes a statistic for 20 different cutoffs and reports the one that crosses $p<0.05$. If none of the effects is real and the tests are independent, how often will something cross? What per-test threshold restores a $5\%$ family-wise rate?
@@ -880,10 +887,24 @@ If ten seeds randomly split the \emph{same} 400 zeros into training and test set
 
 \subsection{From a range to a spread}
 
-For $R$ independent draws from a Gaussian distribution with standard deviation $\sigma$, the expected range is $d_R\sigma$, where $d_R$ is a tabulated constant from quality-control practice: $d_2=1.128$, $d_4=2.059$, $d_{10}=3.078$. It is computed as $d_R=\int_{-\infty}^{\infty}\big[1-\Phi(x)^R-(1-\Phi(x))^R\big]\dd x$, with $\Phi$ the standard Gaussian cumulative distribution (Problem~18 of Chapter~\ref{ch:probability} style; the check script evaluates it). So a range over ten seeds is roughly three standard deviations wide, and a range over four repeats about two.
+For $R$ independent draws from a Gaussian distribution with standard deviation $\sigma$, the expected range is $d_R\sigma$, where $d_R$ is a tabulated constant from quality-control practice: $d_2=1.128$, $d_4=2.059$, $d_{10}=3.078$. It can be written as $d_R=\int_{-\infty}^{\infty}\big[1-\Phi(x)^R-(1-\Phi(x))^R\big]\dd x$, with $\Phi$ the standard Gaussian cumulative distribution. The box below explains where this formula comes from, and the check script evaluates it numerically. So a range over ten seeds is roughly three standard deviations wide, and a range over four repeats about two.
+
+\begin{beyond}
+\textbf{Where the formula for $d_R$ comes from.} Let $Z_1,\dots,Z_R$ be independent standard Gaussians.
+\begin{itemize}
+\item The maximum is $\le x$ exactly when every $Z_i\le x$, so by independence $P(\max\le x)=\Phi(x)^R$.
+\item The minimum is $>x$ exactly when every $Z_i>x$, so $P(\min>x)=(1-\Phi(x))^R$.
+\end{itemize}
+We take on trust the identity $E[Z]=\int_0^\infty P(Z>z)\,\dd z-\int_{-\infty}^0P(Z\le z)\,\dd z$, valid for any random variable with a finite mean. It follows from integration by parts; see \cite{rhb}. Apply it to the maximum and to the minimum, and subtract.
+\begin{itemize}
+\item On $(0,\infty)$ the integrands combine to $[1-\Phi^R]-(1-\Phi)^R$.
+\item On $(-\infty,0)$ they combine to $-\Phi^R+[1-(1-\Phi)^R]$, which is the same expression.
+\end{itemize}
+So $E[\max-\min]=\int_{-\infty}^{\infty}[1-\Phi(x)^R-(1-\Phi(x))^R]\,\dd x=d_R$. For a Gaussian with standard deviation $\sigma$ every value scales by $\sigma$, so the expected range is $d_R\sigma$.
+\end{beyond}
 
 \begin{sample}{Optimizer spread versus sampling uncertainty}
-Table~I's caption reports that four random-initialization repeats of the scale-1, $M=400$, zeros 1--400 fit give held-out rms from $0.365$ to $0.379$. Table~II gives the bootstrap $95\%$ interval $[0.32,0.42]$ for the same configuration. Compare the two sources of variability.
+Table~I's caption reports that four random-initialization repeats of the scale-1, $M=400$, zeros 1--400 fit give held-out rms from $0.365$ to $0.379$. Sec.~III gives the bootstrap $95\%$ interval $[0.33,0.43]$ for the held-out rms of a random-restart replicate of this configuration. (The deterministic run from $c=0$, rms $0.369$, has the similar interval $[0.32,0.42]$ in Table~II.) Both intervals are $0.10$ wide. Compare the two sources of variability.
 
 \textbf{Step 1:} Range of the four repeats: $0.379-0.365=0.014$. Estimated standard deviation: $0.014/d_4=0.014/2.059=0.0068$.
 
@@ -951,7 +972,7 @@ Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $
 
 \paragraph{Intervals for the arithmetic models (Sec.~IV, Tables IV and V).} The Table~IV caption gives intervals on 401--500: A (900 terms) $[0.015,0.020]$, B (900) $[0.158,0.201]$, C1 $[0.231,0.285]$, C2 $[0.028,0.041]$, against null $0.263$. Sec.~IV adds C1's correlation interval $[+0.08,+0.46]$. Reading them: the A, B and C2 intervals lie far below the null; the C1 rms interval contains the null, so ``capacity without a suitable prior does not generalize'', even though its correlation interval sits above zero. The Table~V caption gives the six-prime oracle's correlation intervals $[+0.95,+0.97]$ (401--500) and $[+0.91,+0.92]$ (5001--10000); the second is narrower because it uses 5000 held-out levels instead of 100, as the $1/\sqrt n$ law of Sec.~\ref{sec:controls-variability} leads you to expect.
 
-\paragraph{Surrogate refits: structure or capacity (Sec.~III; App.~A steps 12, 18).} Step 18 defines the surrogates on the fluctuation sequence in mean spacings, $d_n=(\tilde t_n-E_n[\text{smooth}])/\gap_n$ for $n\le400$ (here $\tilde t_n$ are the bias-corrected targets and $E_n[\text{smooth}]$ the levels of the unperturbed Wu--Sprung potential): ``permutation; phase randomization (real FFT, uniform phases); IAAFT (200 iterations); seeds 1--10; targets $E_n[\text{smooth}]+d'_n\gap_n$, refit with $M=400$''. Your \texttt{phase\_randomize} and \texttt{iaaft} functions implement the same recipes. The results (fifth Sample Problem of Sec.~\ref{sec:controls-capacity}) show the operator family fits all three surrogates as well as the true zeros. Sec.~III also explains a change from the original submission: permuting fluctuations in energy units ``also moves amplitude across heights'' and gave $0.148$, $0.149$ (step 12 anchors $0.1483/0.1493$ for seeds 1 and 2); permuting in spacing units keeps the amplitude at each height, which is ``the cleaner control''. Choosing which properties a surrogate keeps is the core design decision of Sec.~\ref{sec:controls-surrogates}.
+\paragraph{Surrogate refits: structure or capacity (Sec.~III; App.~A steps 12, 18).} Step 18 defines the surrogates on the fluctuation sequence in mean spacings, $d_n=(\tilde t_n-E_n[\text{smooth}])/\gap_n$ for $n\le400$ (here $\tilde t_n$ are the bias-corrected targets and $E_n[\text{smooth}]$ the levels of the unperturbed Wu--Sprung potential): ``permutation; phase randomization (real FFT, uniform phases); IAAFT (200 iterations); seeds 1--10; targets $E_n[\text{smooth}]+d'_n\gap_n$, refit with $M=400$''. Your \texttt{phase\_randomize} and \texttt{iaaft} functions implement the same recipes. The results (the Sample Problem ``Reading the paper's surrogate refits'' in Sec.~\ref{sec:controls-capacity}) show the operator family fits all three surrogates as well as the true zeros. Sec.~III also explains a change from the original submission: permuting fluctuations in energy units ``also moves amplitude across heights'' and gave $0.148$, $0.149$ (step 12 anchors $0.1483/0.1493$ for seeds 1 and 2); permuting in spacing units keeps the amplitude at each height, which is ``the cleaner control''. Choosing which properties a surrogate keeps is the core design decision of Sec.~\ref{sec:controls-surrogates}.
 
 \paragraph{Held-out surrogates and the kriging positive control (Sec.~III; App.~A steps 18, 19).} The paper does not stop at in-sample refits. A linear interpolator (simple kriging, Chapter~\ref{ch:generalization}) ``predicts held-out true zeros at $0.117$ with correlation $+0.87$ and permuted targets at the null'', which is a positive control: it shows the serial structure of the zeros is real and usable, and the permuted negative control confirms the interpolator is not exploiting anything else. The fitted operator, held out the same way, ``fails alike on true zeros and on surrogates ($0.57$--$0.70$; one split, illustrative)''. Note the honest qualifiers: one split, illustrative. Step 19 also records a forking path transparently: ``projection and nugget were added once, after a first version without them was numerically unstable, and not tuned.''
 
@@ -959,13 +980,13 @@ Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $
 
 \paragraph{Leakage controls (Sec.~II C, App.~A step 20).} Two controls guard against held-out data influencing the fit. One is algebraic: Eq.~(3) shows that scoring against bias-corrected targets equals correcting the prediction by a fit-independent quantity $\Delta_n$ built from unperturbed eigenvalues only. The other is empirical, in step 20: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.'' This is the leakage control of Sec.~\ref{sec:controls-capacity} in its cleanest form.
 
-\paragraph{The surrogate alignment check, and why it is exploratory (Sec.~IV; App.~A step 23).} The sparse sinusoidal control C2 selects frequencies from the zeros, and every one lies near some $\log p^m$. Because ``the frequencies are the output of a search'', the paper reruns ``the complete procedure on surrogate zero sets: phase-randomized surrogates and two families of sparse signals with non-arithmetic frequencies, 900 replicates in all''. Step 23 gives the composition: 200 (fit 1--400) and 100 (fit 1--800) replicates of each of three families, $3\times(200+100)=900$, with match criterion $|\omega-\log q|<\pi/T$, $q\le3000$, and a ``cutoff-maximized binomial score $24.7$ and $50.9$ on the real zeros, at most $4.7$ on surrogates (score defined after the data were seen)''. The paper's own words are measured: ``the qualifications that apply (the statistic was defined after the data were seen, so the check is exploratory) are documented in the reconstruction record \cite{zenodo}; no significance claim is made here beyond the size of the ensembles.'' After Sec.~\ref{sec:controls-permutation} you can unpack the last phrase: with no surrogate reaching the real score, an ensemble of 200 could at most support $p\le1/201\approx0.005$, and one of 100 at most $p\le1/101\approx0.01$; and because the score was designed post hoc (Sec.~\ref{sec:controls-posthoc}), even those bounds are not offered as p-values. The paper's exact definition of the binomial score is in the Zenodo record; we have not reproduced it here. Note also, from the chance-match Sample Problem, why a frequency cutoff is needed at all: near $\omega=8$ a window of width $2\pi/T$ catches a prime power by chance with probability close to 1. Finally, the paper stresses that the underlying fact, that the Fourier transform of the zeros concentrates at logarithms of prime powers, is classical \cite{landau,gonek}; the check concerns only whether the search procedure recovers it.
+\paragraph{The surrogate alignment check, and why it is exploratory (Sec.~IV; App.~A step 23).} The sparse sinusoidal control C2 selects frequencies from the zeros, and every one lies near some $\log p^m$. Because ``the frequencies are the output of a search'', the paper reruns ``the complete procedure on surrogate zero sets: phase-randomized surrogates and two families of sparse signals with non-arithmetic frequencies, 900 replicates in all''. Step 23 gives the composition: 200 (fit 1--400) and 100 (fit 1--800) replicates of each of three families, $3\times(200+100)=900$, with match criterion $|\omega-\log q|<\pi/T$, $q\le3000$, and a ``cutoff-maximized binomial score $24.7$ and $50.9$ on the real zeros, at most $4.7$ on surrogates (score defined after the data were seen)''. The paper's own words are measured: ``the qualifications that apply (the statistic was defined after the data were seen, so the check is exploratory) are documented in the reconstruction record \cite{zenodo}; no significance claim is made here beyond the size of the ensembles.'' After Sec.~\ref{sec:controls-permutation} you can unpack the last phrase: with no surrogate reaching the real score, an ensemble of 200 could at most support $p\le1/201\approx0.005$, and one of 100 at most $p\le1/101\approx0.01$; and because the score was designed post hoc (Sec.~\ref{sec:controls-posthoc}), even those bounds are not offered as p-values. The paper refers to the reconstruction record for the construction of the surrogates and of the score; this book does not reproduce them. Note also, from the chance-match Sample Problem, why a frequency cutoff is needed at all: near $\omega=8$ a window of width $2\pi/T$ catches a prime power by chance with probability close to 1. Finally, the paper stresses that the underlying fact, that the Fourier transform of the zeros concentrates at logarithms of prime powers, is classical \cite{landau,gonek}; the check concerns only whether the search procedure recovers it.
 
 \paragraph{Seeds and ensembles (Tables I and III captions; App.~A step 17).} Table~I's caption reports ``four random-init repeats \ldots\ give identical in-sample rms $0.1370$ and OOS $0.365$--$0.379$'' and ``three repeats of the (scale~2, $M=600$) row give OOS $0.279$--$0.283$'': ranges, summarizing optimizer variability, which the last Sample Problem showed to be several times smaller than held-out sampling uncertainty. The within-height random splits use ``\texttt{rng.choice(n, n/5, replace=False)}, seeds 1--10'' (step 17), and Table~III reports ranges over seeds with the explicit caveat that they ``are not standard errors''.
 
 \paragraph{The proposed standard (Sec.~VI).} The paper proposes that any claim that an operator ``captures'' the zeros come with: (i) a train/test split, including one within a height range; (ii) scoring of the actual operator spectrum; (iii) ``evidence that performance survives regularization and restarts'' (an ensemble over seeds and settings, Sec.~\ref{sec:controls-ensembles}); and (iv) ``a refit to permuted and phase-randomized targets'' (negative controls, Sec.~\ref{sec:controls-capacity}). Two of the four items are exactly this chapter's subject.
 
-\paragraph{Rerunning at small scale.} With \texttt{qmnt}, the null rms on zeros 401--500 (smooth zeros as prediction) is $0.2631$, matching the paper's anchor (Appendix~A, ``null OOS (401--500) $0.2631$''), and the six-prime oracle and its bootstrap interval are reproduced by the listing in Sec.~\ref{sec:controls-bootstrap}. The surrogate and operator refits require \texttt{qmnt.fit\_potential} and take minutes per fit; Problem~32 asks you to do a reduced version.
+\paragraph{Rerunning at small scale.} With \texttt{qmnt}, the null rms on zeros 401--500 (smooth zeros as prediction) is $0.2631$, matching the paper's anchor (Appendix~A, ``null OOS (401--500) $0.2631$''), and the six-prime oracle and its bootstrap interval are reproduced by the listing in Sec.~\ref{sec:controls-bootstrap}. The surrogate and operator refits require \texttt{qmnt.fit\_potential} and take minutes per fit; Problems~22 and 32 ask for related small-scale computations that do not need \texttt{fit\_potential}.
 
 %======================================================================
 \section{Summary}

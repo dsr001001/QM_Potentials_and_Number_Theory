@@ -192,7 +192,15 @@ The first of these says that $\abs{k'}/k^2\ll1$. Since $\lambda=2\pi/k$ gives $\
 \frac{\abs{k'}}{k^2}=\frac{\abs{V'(x)}}{2\,\bigl(E-V(x)\bigr)^{3/2}}\ll1.
 \label{eq:wkb-cond}
 \end{equation}
-The condition on $k''$ is of the same type for smooth potentials, and we will not track it separately. \Cref{eq:wkb-cond} is the practical test. It fails near every turning point, because the denominator vanishes there while $V'$ does not.
+The condition on $k''$ can also be written in terms of $V$. Differentiate $k'=-V'/(2k)$ once more with the quotient rule:
+\begin{equation}
+k''=-\frac{V''}{2k}+\frac{V'k'}{2k^2}=-\frac{V''}{2k}-\frac{V'^2}{4k^3},
+\end{equation}
+where the last step inserts $k'=-V'/(2k)$. Dividing by $k^3$ and using $\abs{a+b}\le\abs a+\abs b$,
+\begin{equation}
+\frac12\abs{\frac{k''}{k^3}}\le\frac{\abs{V''}}{4k^4}+\frac{V'^2}{8k^6}=\frac{\abs{V''}}{4(E-V)^2}+\frac12\Bigl(\frac{\abs{V'}}{2(E-V)^{3/2}}\Bigr)^2 .
+\end{equation}
+The second term is small whenever \cref{eq:wkb-cond} holds. The first term adds one requirement, $\abs{V''}\ll4(E-V)^2$: the curvature of $V$ must be small. For the smooth wells of this chapter it holds wherever \cref{eq:wkb-cond} holds, and like \cref{eq:wkb-cond} it fails near turning points. We treat it as part of the assumption that $V$ is smooth, and use \cref{eq:wkb-cond} as the practical test. It fails near every turning point, because the denominator vanishes there while $V'$ does not.
 
 \paragraph{Forbidden regions.} Where $V>E$, \cref{eq:wkb-tise} reads $\psi''=\kappa^2\psi$. Repeating every step above with $\psi=A e^{\pm\int\kappa}$ (or simply replacing $k$ by $\mp i\kappa$) gives
 \begin{equation}
@@ -272,11 +280,11 @@ Also $z^{-1/4}=F^{-1/12}(x-b)^{-1/4}$ and $\kappa^{-1/2}=F^{-1/4}(x-b)^{-1/4}$, 
 \begin{equation}
 \mathrm{Ai}(z)\approx\frac{F^{1/6}}{2\sqrt\pi}\,\frac{1}{\sqrt{\kappa}}\exp\Bigl(-\int_b^x\kappa\,\dd x'\Bigr),
 \end{equation}
-which is exactly the decaying WKB solution \cref{eq:wkb-forb}. To the left of $b$, put $w=-z=F^{1/3}(b-x)>0$. Then $k=\sqrt{E-V}=F^{1/2}(b-x)^{1/2}$, and the same two steps give $\int_x^bk\,\dd x'=\tfrac23w^{3/2}$ and $w^{-1/4}=F^{1/6}k^{-1/2}$. Finally, $\sin(\theta+\pi/4)=\cos(\theta-\pi/4)$, because $\cos(\theta-\pi/4)=\cos(\pi/4-\theta)=\sin(\pi/2-(\pi/4-\theta))$. The second form in \cref{eq:wkb-airyasym} becomes
+which is exactly the decaying WKB solution \cref{eq:wkb-forb}. To the left of $b$, put $w=-z=F^{1/3}(b-x)>0$. Then $k=\sqrt{E-V}=F^{1/2}(b-x)^{1/2}$, and the same two steps give $\int_x^bk\,\dd x'=\tfrac23w^{3/2}$ and $w^{-1/4}=F^{1/6}k^{-1/2}$. Finally, using $\sin\alpha=\cos(\pi/2-\alpha)$ and the evenness of cosine, $\sin(\theta+\pi/4)=\cos(\pi/2-\theta-\pi/4)=\cos(\pi/4-\theta)=\cos(\theta-\pi/4)$. The second form in \cref{eq:wkb-airyasym} becomes
 \begin{equation}
 \mathrm{Ai}(z)\approx\frac{F^{1/6}}{\sqrt\pi}\,\frac{1}{\sqrt{k}}\cos\Bigl(\int_x^b k\,\dd x'-\frac\pi4\Bigr).
 \end{equation}
-Comparing the two prefactors, the oscillating side carries twice the amplitude of the decaying side. The Airy function is a single exact solution, so these two WKB forms are two descriptions of one and the same wavefunction. Writing $D=F^{1/6}/(2\sqrt\pi)$ and then letting $D$ be any constant (the equation is linear), we arrive at the connection formula for a turning point with the forbidden region on the right:
+Both expressions are asymptotic forms of the same exact function $\mathrm{Ai}(z)$, valid at large $\abs z$ on its two sides. The matching therefore holds in the asymptotic sense, not as an identity at every $x$: it tells us which WKB wave on the left belongs to which WKB wave on the right. Comparing the two prefactors, the oscillating side carries twice the amplitude of the decaying side. Writing $D=F^{1/6}/(2\sqrt\pi)$, and then multiplying both sides by the same arbitrary constant (allowed because the Schr\"odinger equation is linear, so any multiple of a solution is a solution), we arrive at the connection formula for a turning point with the forbidden region on the right:
 \begin{equation}
 \boxed{\frac{2D}{\sqrt{k(x)}}\cos\Bigl(\int_x^b k\,\dd x'-\frac\pi4\Bigr)\ \ (x<b)\quad\longleftrightarrow\quad
 \frac{D}{\sqrt{\kappa(x)}}\exp\Bigl(-\int_b^x\kappa\,\dd x'\Bigr)\ \ (x>b).}
@@ -354,7 +362,7 @@ n\pi & \text{two hard walls.}
 \label{eq:wkb-bsgeneral}
 \end{equation}
 
-\paragraph{Restoring $\hbar$.} In ordinary units, $\int k\,\dd x=\int p\,\dd x/\hbar$, and \cref{eq:wkb-bs} becomes $\int_a^b p\,\dd x=(n-\tfrac12)\pi\hbar$. Over a full back-and-forth orbit the integral doubles: $\oint p\,\dd x=2\pi\hbar\,(n-\tfrac12)$. This is the form usually found in textbooks.
+\paragraph{Restoring $\hbar$.} In ordinary units, $\int k\,\dd x=\int p\,\dd x/\hbar$, and \cref{eq:wkb-bs} becomes $\int_a^b p\,\dd x=(n-\tfrac12)\pi\hbar$. Over a full back-and-forth orbit the integral doubles. On the return trip from $b$ to $a$ both $p$ and $\dd x$ are negative, so $p\,\dd x$ is positive and the return contributes the same $\int_a^bp\,\dd x$ again: $\oint p\,\dd x=2\pi\hbar\,(n-\tfrac12)$. This is the form usually found in textbooks.
 
 \begin{sample}{The harmonic oscillator: Bohr--Sommerfeld is exact}
 For the oscillator $V(x)=\frac14\omega^2x^2$ (which is $\frac12m\omega^2x^2$ with $m=\frac12$), find the Bohr--Sommerfeld levels and compare with the exact levels $(n-\frac12)\hbar\omega$ of Chapter~\ref{ch:bound-states}.
@@ -392,7 +400,7 @@ E_n^{\rm WKB}=\Bigl[\tfrac{3\pi}{4}\bigl(n-\tfrac12\bigr)\Bigr]^{2/3}.
 
 \textbf{Step 3: Exact levels.} For $x>0$ the equation is $\psi''=(x-E)\psi$, so after the shift $z=x-E$ it is the Airy equation \cref{eq:wkb-airy} with $F=1$. The solution decaying at large $x$ is $\mathrm{Ai}(x-E)$. Even states need $\psi'(0)=0$, so $\mathrm{Ai}'(-E)=0$. Odd states need $\psi(0)=0$, so $\mathrm{Ai}(-E)=0$. The exact levels are therefore the zeros of $\mathrm{Ai}'$ and of $\mathrm{Ai}$ with their signs reversed, taken alternately (computed with \texttt{scipy.special.ai\_zeros}).
 
-\textbf{Step 4: Compare.} The local mean spacing follows from Step 2: $E^{3/2}=\frac{3\pi}4(n-\frac12)$, so $\frac32E^{1/2}\,dE/dn=\frac{3\pi}{4}$ and $dE/dn=\pi/(2\sqrt E)$. \Cref{tab:wkb-linear} lists the results. The relative error falls from $9.5\%$ at $n=1$ to below $0.1\%$ by $n=6$.
+\textbf{Step 4: Compare.} The local mean spacing follows from Step 2: $E^{3/2}=\frac{3\pi}4(n-\frac12)$, so $\frac32E^{1/2}\,dE/dn=\frac{3\pi}{4}$ and $dE/dn=\pi/(2\sqrt E)$. \Cref{tab:wkb-linear} lists the results. Relative to the exact level, the error falls from $9.5\%$ at $n=1$ ($0.0967/1.0188$) to below $0.1\%$ by $n=6$ ($0.0034/5.5206=0.06\%$).
 \[
 \boxed{E_n^{\rm WKB}=\bigl[\tfrac{3\pi}{4}(n-\tfrac12)\bigr]^{2/3};\ \text{error }0.065\ \text{spacings at }n=1,\ 0.005\ \text{at }n=6}
 \]
@@ -571,7 +579,11 @@ and its reciprocal is the local mean spacing between levels:
 \end{equation}
 In ordinary units this reads $\Delta E=2\pi\hbar/T_{\rm cl}=\hbar\omega_{\rm cl}$, where $\omega_{\rm cl}$ is the classical angular frequency. This is Bohr's correspondence principle: high levels are spaced by $\hbar$ times the classical frequency.
 
-\emph{Check with the oscillator} $V=x^2$: here $\Phi(E)=\pi E/\omega$ with $\omega=2$, so $\Phi'=\pi/2$ and $T_{\rm cl}=\pi$. A classical oscillator with angular frequency $\omega=2$ has period $2\pi/\omega=\pi$, and the level spacing is $2\pi/T_{\rm cl}=2$, which matches $E_n=2n-1$. \emph{Check with the linear well}: $\Phi=\frac43E^{3/2}$ gives $\Phi'=2\sqrt E$ and $T_{\rm cl}=4\sqrt E$, so the spacing is $2\pi/(4\sqrt E)=\pi/(2\sqrt E)$. This is the spacing used in \cref{tab:wkb-linear}.
+\emph{Check with the oscillator} $V=x^2$: here $\Phi(E)=\pi E/\omega$ with $\omega=2$, so $\Phi'=\pi/2$ and $T_{\rm cl}=\pi$. A classical oscillator with angular frequency $\omega=2$ has period $2\pi/\omega=\pi$, and the level spacing is $2\pi/T_{\rm cl}=2$, which matches $E_n=2n-1$. \emph{Check with the linear well}: differentiating $\Phi=\frac43E^{3/2}$ directly gives $\Phi'=2\sqrt E$. The integral form \cref{eq:wkb-dphi} gives the same result:
+\[
+\int_{-E}^{E}\frac{\dd x}{2\sqrt{E-\abs x}}=2\int_0^E\frac{\dd x}{2\sqrt{E-x}}=\Bigl[-2\sqrt{E-x}\Bigr]_0^E=2\sqrt E .
+\]
+This confirms, in this case, that applying Leibniz's rule despite the square-root singularity of $\partial F/\partial E$ at the endpoints gives the right answer. Then $T_{\rm cl}=4\sqrt E$, so the spacing is $2\pi/(4\sqrt E)=\pi/(2\sqrt E)$. This is the spacing used in \cref{tab:wkb-linear}.
 
 \begin{sample}{Density of states in the box}
 For the box on $[-L,L]$ with $L=44.883$ (RE3), find the mean level spacing near $E=1000$ from \cref{eq:wkb-spacing}, and confirm it from the exact levels.
@@ -599,7 +611,7 @@ where $c_\alpha=2\int_0^1\sqrt{1-y^\alpha}\,\dd y$ is a constant. Quantization t
 \item $\alpha>2$ (steeper walls, with the box as $\alpha\to\infty$): the spacing grows with $n$;
 \item $\alpha<2$ (for example $\alpha=1$): the spacing shrinks with $n$, so the levels crowd together.
 \end{itemize}
-A well that widens quickly with height has a long classical period at high energy, and by \cref{eq:wkb-spacing} that means a small spacing. The Wu--Sprung potential, as we will see, grows a little more slowly than $x^2$. Its levels therefore crowd together slowly, just as the Riemann zeros do, whose mean spacing $2\pi/\log(t/2\pi)$ shrinks logarithmically.
+A well that widens quickly with height has a long classical period at high energy, and by \cref{eq:wkb-spacing} that means a small spacing. Looking ahead (the shape is derived in Chapter~\ref{ch:wu-sprung}): the Wu--Sprung potential grows roughly like $(x/\log x)^2$, a little more slowly than $x^2$, so the power-law rule suggests slowly shrinking spacings. The precise statement needs no power-law argument. The potential is built so that its smooth WKB count equals $\Nsm(E)$, so by \cref{eq:wkb-spacing} its WKB mean spacing is $1/\Nsm'(E)=2\pi/\log(E/2\pi)$, the mean spacing of the Riemann zeros, by construction.
 
 \begin{checkpoint}
 A potential grows like $V\propto\abs{x}^{1.5}$. Does the level spacing grow or shrink with $n$?
@@ -617,12 +629,14 @@ A potential grows like $V\propto\abs{x}^{1.5}$. Does the level spacing grow or s
 
 The derivation used two approximations: neglecting $A''/A$ away from turning points, and linearizing $V$ near them. Both get better as the number of wavelengths in the well grows. The error is therefore largest at the lowest levels and shrinks with $n$. This is a heuristic statement, not a theorem; the precise error depends on the potential.
 
-\Cref{tab:wkb-linear} shows this concretely for $V=\abs x$. Measured in local mean spacings, the error is $0.065$ at $n=1$, $0.017$ at $n=2$ and $0.005$ at $n=6$. The sign alternates between even and odd states. This happens because the exact even states feel the kink at $x=0$ differently from the odd states, which vanish there.
+\Cref{tab:wkb-linear} shows this concretely for $V=\abs x$. Measured in local mean spacings, the error is $0.065$ at $n=1$, $0.017$ at $n=2$ and $0.005$ at $n=6$. The sign alternates between even and odd states. We record this as a numerical observation rather than derive it, but a heuristic reading is available. The odd states vanish at $x=0$, so they are exactly the states of the half-well $x>0$ with a hard wall at the origin (Problem~7); for them the hard-wall phase is exact, and WKB is approximate only at the one smooth turning point $x=E$. The even states instead obey $\psi'(0)=0$ at the kink. In the WKB form $Ck^{-1/2}\cos\theta$ the derivative contains a term from $k'(0^+)=-V'(0^+)/(2k)\ne0$, so the condition $\psi'(0)=0$ is met only approximately. The two families therefore carry different boundary errors, and nothing forces those errors to have the same sign.
 
-Two exceptions are worth remembering. For the box and for the oscillator, WKB is exact (\cref{sec:wkb-bs}). For a general smooth well, measuring the error in units of the spacing is the natural choice. This is also why the paper quotes every error ``in units of the local mean spacing''. An error of $0.01$ in energy means little at $E=1000$ but a great deal near the ground state.
+Two exceptions are worth remembering: for the box and for the oscillator, WKB is exact (\cref{sec:wkb-bs}).
+
+\paragraph{Why measure errors in spacings?} Whether an error matters depends on how far apart the levels are. An error is serious when it is a sizable fraction of the distance to the next level, because then the predicted level could be mistaken for its neighbor. Dividing by the local mean spacing makes errors at different heights comparable. This is also why the paper quotes every error ``in units of the local mean spacing''. An error of $0.01$ in energy means little at $E=1000$ but a great deal near the ground state.
 
 \begin{pitfall}
-``WKB works for high levels'' is a statement about levels high \emph{in their own well}. A potential with a sharp feature, such as a narrow spike, can violate \cref{eq:wkb-cond} at any energy if $V'$ is large enough there. The paper's fitted corrections $\delta V$ have large, rapidly varying structure (Sec.~III, Fig.~4), so the smooth WKB picture describes only the background, not the fitted potentials. The paper always computes the levels by exact diagonalization (Chapter~\ref{ch:finite-differences}), never by WKB.
+``WKB works for high levels'' is a statement about levels high \emph{in their own well}. A potential with a sharp feature, such as a narrow spike, can violate \cref{eq:wkb-cond} at any energy if $V'$ is large enough there. The paper's fitted corrections $\delta V$ have large, rapidly varying structure (Sec.~III, Fig.~4), so the smooth WKB picture describes only the background, not the fitted potentials. The paper computes every level it scores by finite-difference diagonalization (Chapter~\ref{ch:finite-differences}); WKB enters only through the construction of the smooth background potential.
 \end{pitfall}
 
 \begin{keyideas}
@@ -644,12 +658,27 @@ Normalization requires $\int\overline{\abs\psi^2}\,\dd x=\frac{C^2}{2}\int_a^b\f
 \end{equation}
 The right-hand side is the classical probability density: the fraction of a period spent in $\dd x$, counting both directions, is $2\,\dd x/(v\,T_{\rm cl})$. (Replacing $\cos^2$ by its average is a heuristic step. It neglects the region within a few Airy lengths of the turning points, where the true density is finite but the formula diverges, though integrably.)
 
-\paragraph{The turning point labels the level.} Since $\overline{\abs\psi^2}\propto(E-V)^{-1/2}$, the density piles up near the turning points $\pm x_E$, where $V(x_E)=E$. Recall from Chapter~\ref{ch:perturbation} that a small change $\delta V$ shifts the $n$-th level by $\delta E_n=\int\abs{\psi_n}^2\delta V\,\dd x$. With \cref{eq:wkb-density-x}, this becomes the \emph{classical time average of $\delta V$ along the orbit}:
+\paragraph{The turning point labels the level.} Since $\overline{\abs\psi^2}\propto(E-V)^{-1/2}$, the density piles up near the turning points $\pm x_E$, where $V(x_E)=E$. How does a level respond when the potential changes by a small $\delta V(x)$? Chapter~\ref{ch:perturbation} treats this question in full; here we derive directly the one result we need. Take a real normalized bound state, multiply $-\psi_n''+V\psi_n=E_n\psi_n$ by $\psi_n$ and integrate. Integrating $-\psi_n\psi_n''$ by parts (the boundary term vanishes because $\psi_n\to0$ at the ends) gives
+\begin{equation}
+E_n=\int\bigl(\psi_n'^2+V\psi_n^2\bigr)\dd x .
+\end{equation}
+The same identity holds for the perturbed level, with $V\to V+\delta V$ and $\psi_n\to\psi_n+\delta\psi$. Subtracting and keeping only terms of first order in the small quantities $\delta V$ and $\delta\psi$:
+\begin{align}
+\delta E_n&=\int\bigl(2\psi_n'\delta\psi'+2V\psi_n\delta\psi+\psi_n^2\delta V\bigr)\dd x\notag\\
+&=\int\bigl(-2\psi_n''+2V\psi_n\bigr)\delta\psi\,\dd x+\int\psi_n^2\delta V\,\dd x\quad\text{(by parts; }\delta\psi\to0\text{ at the ends)}\notag\\
+&=2E_n\int\psi_n\delta\psi\,\dd x+\int\psi_n^2\delta V\,\dd x .\quad\text{(Schr\"odinger equation)}
+\end{align}
+The perturbed state is also normalized, $\int(\psi_n+\delta\psi)^2\dd x=1$, which to first order says $2\int\psi_n\delta\psi\,\dd x=0$. Hence
+\begin{equation}
+\delta E_n\approx\int\abs{\psi_n}^2\delta V\,\dd x .
+\label{eq:wkb-firstorder}
+\end{equation}
+With \cref{eq:wkb-density-x}, this becomes the \emph{classical time average of $\delta V$ along the orbit}:
 \begin{equation}
 \delta E_n\approx\frac{2}{T_{\rm cl}}\int_a^b\frac{\delta V(x)}{v(x)}\,\dd x .
 \label{eq:wkb-timeavg}
 \end{equation}
-Level $n$ is therefore most sensitive to $\delta V$ near its own turning points. It is completely insensitive to $\delta V$ beyond them, apart from the exponentially small tails. In an even, monotone well each level index $n$ is thus attached to a position $x_{E_n}$: lower levels probe the center, higher levels probe farther out (\cref{fig:wkb-turnmap}).
+The weight $1/v(x)$ is largest near the turning points, so a given $\delta V$ placed there counts for more than the same $\delta V$ placed near the center. But the weight is not concentrated there. The level responds to $\delta V$ everywhere inside $[a,b]$; in the linear well, for example, the outer tenth of the distance carries only about a third of the weight (Sample Problem below). What changes sharply at the turning point is the response to $\delta V$ \emph{beyond} it: outside $[a,b]$ the wavefunction decays exponentially, so level $n$ barely feels $\delta V$ there. In an even, monotone well each level index $n$ is thus attached to a position $x_{E_n}$, the outer edge of the region it probes. Lower levels probe only the center, higher levels reach farther out, and a correction placed at $x_*$ affects only levels with $x_{E_n}\gtrsim x_*$, with the turning-point enhancement for those that turn near $x_*$ (\cref{fig:wkb-turnmap}). This labeling is heuristic, since it rests on the averaged density \cref{eq:wkb-density-x}; it is the sense in which the paper says that position maps to level index through the turning point.
 
 \begin{sample}{Time spent near the turning point}
 For $V=\abs x$ at any energy $E$, what fraction of the classical period does the particle spend in the outer tenth of each half of the well, $0.9E\le\abs x\le E$?
@@ -782,11 +811,11 @@ If the prescribed density of states $\bar{\mathcal N}'(E)$ is doubled at every e
 
 \paragraph{``The known semiclassical weakness at low $n$''.} Sec.~II~B reports that the Richardson-extrapolated levels of the smooth potential differ from the smooth zeros by $0.005$ spacings on average and $0.063$ at most, ``worst at low $n$''. That pattern is the one you saw in \cref{tab:wkb-linear}. The potential was built so that its \emph{WKB} levels are $s_n$, and WKB is least accurate for the lowest levels.
 
-\paragraph{Turning points and the interpolation split.} Sec.~III (paragraph ``Interpolation split'') and Fig.~4 state that ``position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$.'' This is \cref{eq:wkb-timeavg}: a correction placed in that band shifts mainly the levels whose turning points lie there. Those are exactly the held-out levels, so the fit pays nothing in-sample for structure there. \Cref{fig:wkb-turnmap} reproduces the band from Eq.~(2) (Problem~13).
+\paragraph{Turning points and the interpolation split.} Sec.~III (paragraph ``Interpolation split'') and Fig.~4 state that ``position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$.'' This is \cref{eq:wkb-timeavg} read heuristically. A correction placed in that band is felt with the turning-point enhancement by the levels that turn there, which are exactly the held-out levels. The lower training levels 1--200 turn at smaller $x$, so the band lies in their forbidden region and they barely feel it. The higher training levels 301--500 do feel it, but only as one part of a broad time average that other coefficients can compensate. This is the heuristic behind the paper's remark that such structure ``costs nothing in-sample''. \Cref{fig:wkb-turnmap} reproduces the band from Eq.~(2) (Problem~13).
 
 \paragraph{The coverage law.} Sec.~III says the cosine family becomes effectively complete for joint level shifts once $M\pi/L>2\sqrt E$. Here $\sqrt E$ is the local WKB wavenumber $k$ near the well center, and $\abs\psi^2$ oscillates as $\cos^2(\int k)$, at wavenumber $2k$. A basis must contain wavenumbers up to $2k$ to resolve that structure; Chapter~\ref{ch:fitting} makes this argument. Numerically, at scale~1 with $E=t_{500}=811.18$ (the paper's anchor) the threshold is $M>813.8$, and at $E=1000$ it is $M>903.6$. These are consistent with the paper's report of rms below $10^{-4}$ by $M=900$. Notice that $2L\sqrt E/\pi$ is also the hard-wall count of box levels below $E$ (\cref{sec:wkb-bs}): the threshold is reached when the number of cosines matches the number of box states below $E$.
 
-\paragraph{Levels per prime period.} Sec.~V notes that the $p=2$ oscillation, of period $2\pi/\log2\approx9$ in $t$ (RE2), spans ``only $\sim$6--7 levels at these heights''. Dividing $9.065$ by the mean spacing $\gap_n$ gives about $6.0$ near $n=200$ and $6.8$ near $n=400$ (Problem~15). The mean spacing is itself the WKB density of states \cref{eq:wkb-spacing} of a potential built to reproduce $\Nsm$.
+\paragraph{Levels per prime period.} Sec.~V notes that the $p=2$ oscillation, of period $2\pi/\log2\approx9$ in $t$ (RE2), spans ``only $\sim$6--7 levels at these heights''. The mean spacings there, from $\gap_n=2\pi/\log(s_n/2\pi)$, are $\gap_{200}=1.52$ and $\gap_{400}=1.34$. Dividing $9.065$ by them gives about $6.0$ near $n=200$ and $6.8$ near $n=400$ (Problem~15). The mean spacing is itself the WKB density of states \cref{eq:wkb-spacing} of a potential built to reproduce $\Nsm$.
 
 \paragraph{The oracle as a ``quantization condition''.} Eq.~(4)'s predicted zeros solve $\Nsm(t)+\Nfl(t)=n-\frac12$. This has the form of \cref{eq:wkb-smooth} with a fluctuating correction added to the smooth count. This is only an analogy (Chapter~\ref{ch:hilbert-polya}); the oracle involves no potential at all.
 
@@ -841,19 +870,20 @@ If the prescribed density of states $\bar{\mathcal N}'(E)$ is doubled at every e
 \item[1.] $k(0)=4$, $\lambda=1.571$; $k(2)=\sqrt{12}=3.464$, $\lambda=1.814$.
 \item[2.] $n\le2L\sqrt E/\pi=20/\pi=6.37$, so $6$ levels.
 \item[3.] $E_n=2n-1\le10$ gives $n\le5$, so 5 levels. $\Phi/\pi=E/2=5$, and $\lfloor5.5\rfloor=5$. They agree.
-\item[4.] $\mathcal A=2\Phi=\frac83\cdot8^{3/2}=60.34$; $\Phi/\pi=4.80$. Level 5 has $\Phi/\pi=4.5$, so $E=8$ lies between levels 5 and 6.
+\item[4.] $\Phi(8)=\frac43\cdot8^{3/2}=30.17$, so $\mathcal A=2\Phi=60.34$ and $\Phi/\pi=\frac{4}{3\pi}8^{3/2}=9.60$. By \cref{eq:wkb-smooth}, level $n$ has $\Phi/\pi=n-\frac12$: level 10 has $9.5$ and level 11 has $10.5$, so $E=8$ lies between levels 10 and 11. The WKB count is $\lfloor10.10\rfloor=10$, matching the exact count, since the exact levels are $E_{10}=7.944$ and $E_{11}=8.488$.
 \item[5.] $T_{\rm cl}=4\sqrt9=12$; spacing $2\pi/12=0.5236$.
 \item[7.] $\Phi=\frac23E^{3/2}=(n-\frac14)\pi$, so $E_n=[\frac{3\pi}{2}(n-\frac14)]^{2/3}$ and $E_1=2.3203$. This is identical to the WKB value for $n=2$ of $\abs x$; the exact value is $2.3381$. (The odd states of $\abs x$ vanish at $0$, so they are exactly the states of the half-well with a wall.)
 \item[9.] $I=\lambda^3/2$, so $I'=3\lambda^2/2$. Leibniz gives $F(\lambda,\lambda)\cdot1+\int_0^\lambda u\,\dd u=\lambda^2+\lambda^2/2$. They agree.
 \item[11.] $\Phi=2E^{3/4}\int_0^1\sqrt{1-y^4}\,\dd y=1.74804\,E^{3/4}$, so $E_1^{\rm WKB}=(\pi/(2\times1.74804))^{4/3}=0.8672$. Diagonalization gives $1.0604$, an error of about $18\%$ for the ground state.
 \item[13.] $x(t_{201})\approx22.5$ and $x(t_{300})\approx28.5$, matching Sec.~III.
-\item[15.] About $6.0$ at $n=200$ and $6.8$ at $n=400$: one $p=2$ period spans 6--7 levels, as Sec.~V says.
+\item[14.] $2\times59.957\times\sqrt{1419.42}/\pi=1438.06$. The largest scale-2 basis in the paper, $M=900$, lies below this value at the top of the scored range.
+\item[15.] $\gap_{200}=1.52$ and $\gap_{400}=1.34$, so $9.065/\gap_n$ is about $6.0$ at $n=200$ and $6.8$ at $n=400$: one $p=2$ period spans 6--7 levels, as Sec.~V says.
 \item[17.] Average $\cos^2$ to $\frac12$ over the fast oscillations. Then $\int C^2/(2k)\,\dd x=C^2T_{\rm cl}/2=1$. This neglects the oscillation and the Airy regions near the turning points.
 \item[19.] The error is largest at $n=1$ and falls off within a few levels. This is consistent with the paper's maximum residual $0.063$ ``worst at low $n$'' (Sec.~II~B).
 \item[20.] The well holds less than one wavelength, so $A''/A$ is not small anywhere, and the two Airy regions overlap.
 \item[21.] $\Nsm(1000)=648.61$, so the WKB count is $\lfloor649.11\rfloor=649$. On the working grid the finite-difference matrix lowers the high levels (dispersion, Chapter~\ref{ch:finite-differences}), so a few extra levels fall below $1000$.
 \item[23.] $5/96^{3/2}=0.00532$: WKB is excellent there.
-\item[25.] Put $w=F^{1/3}(x-a)$ with $F=-V'(a)>0$. Repeating the matching gives $\frac{2D}{\sqrt k}\cos(\int_a^xk-\frac\pi4)\leftrightarrow\frac{D}{\sqrt\kappa}e^{-\int_x^a\kappa}$.
+\item[25.] Near $a$, $V(x)\approx E+V'(a)(x-a)=E+F(a-x)$ with $F=-V'(a)>0$. Put $z=F^{1/3}(a-x)$; since $(dz/dx)^2=F^{2/3}$, the equation $\psi''=F(a-x)\psi$ becomes $\psi_{zz}=z\psi$, and decay as $x\to-\infty$ (that is $z\to+\infty$) selects $\mathrm{Ai}(z)$. For $x<a$: $\kappa=F^{1/2}(a-x)^{1/2}$, $\int_x^a\kappa\,\dd x'=\frac23z^{3/2}$ and $z^{-1/4}=F^{1/6}\kappa^{-1/2}$. For $x>a$: put $w=-z=F^{1/3}(x-a)$, so $k=F^{1/2}(x-a)^{1/2}$, $\int_a^xk\,\dd x'=\frac23w^{3/2}$ and $w^{-1/4}=F^{1/6}k^{-1/2}$. Inserting into \cref{eq:wkb-airyasym} and using $\sin(\theta+\pi/4)=\cos(\theta-\pi/4)$ gives $\frac{2D}{\sqrt k}\cos(\int_a^xk\,\dd x'-\frac\pi4)\leftrightarrow\frac{D}{\sqrt\kappa}e^{-\int_x^a\kappa\,\dd x'}$, the mirror image of \cref{eq:wkb-conn}.
 \item[26.] Because a smooth count passes through $n-\frac12$ at the $n$-th step (\cref{eq:wkb-smooth}).
-\item[27.] Both say ``smooth count plus correction equals $n-\frac12$''. The oracle's correction comes from primes, not from any potential, so the resemblance is formal only.
+\item[27.] \Cref{eq:wkb-smooth} says that at a level the smooth count equals $n-\frac12$; the oracle says that at a predicted zero the smooth count $\Nsm$ plus a correction $\Nfl$ equals $n-\frac12$. So the oracle reads like a quantization condition with a fluctuating term added to the smooth count. But in \cref{eq:wkb-smooth} the count comes from a potential through $\Phi(E)/\pi$, whereas $\Nfl$ is a sum over primes (Eq.~(4)); no potential, Hamiltonian or wavefunction appears. Nobody has exhibited an operator whose quantization condition is the oracle equation, so the resemblance is formal only (Chapter~\ref{ch:hilbert-polya}).
 \end{enumerate}

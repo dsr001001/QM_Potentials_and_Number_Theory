@@ -20,7 +20,9 @@ tabE=[0.065,-0.017,0.015,-0.008,0.009,-0.005]
 for k in range(6):
     assert abs(Ew[k]-tabW[k])<1e-4 and abs(Ex[k]-tabX[k])<1e-4
     assert abs(Ew[k]-Ex[k]-(tabW[k]-tabX[k]))<2e-4 and abs(err[k]-tabE[k])<1.5e-3
-assert abs((Ew[0]-Ex[0])/Ew[0]-0.0967/1.1155)<1e-3 and abs(Ew[5]-Ex[5])/Ew[5]<1e-3
+# relative errors relative to exact level (Sample linear well, Step 4)
+assert abs((Ew[0]-Ex[0])/Ex[0]-0.0949)<5e-4
+assert abs(Ew[5]-Ex[5])/Ex[5]<1e-3 and abs(0.0034/5.5206*100-0.06)<0.005
 # Sample box
 L=44.883; assert abs((np.pi/(2*L))**2-1.225e-3)<1e-6
 assert abs(2*L*np.sqrt(1000)/np.pi-903.57)<0.01
@@ -28,6 +30,10 @@ assert abs(2*L*np.sqrt(1000)/np.pi-903.57)<0.01
 assert abs(5*np.pi-15.71)<0.01
 # density box
 assert abs(np.pi*np.sqrt(1000)/L-2.2135)<1e-3
+# Leibniz check, linear well: integral form of Phi' equals 2 sqrt(E)
+Et=4.0
+I=2*quad(lambda x:1/(2*np.sqrt(Et-x)),0,Et)[0]
+assert abs(I-2*np.sqrt(Et))<1e-6
 # time fraction
 assert abs(np.sqrt(0.1)-0.316)<1e-3
 # coverage
@@ -43,7 +49,12 @@ assert abs(cf-xab)<1e-8
 assert abs(2*np.pi/4-1.571)<1e-3 and abs(np.sqrt(12)-3.464)<1e-3 and abs(2*np.pi/np.sqrt(12)-1.814)<1e-3
 assert int(20/np.pi)==6 and abs(20/np.pi-6.37)<0.01
 assert int(np.floor(5.5))==5
-assert abs(8/3*8**1.5-60.34)<0.01 and abs(4/(3*np.pi)*8**1.5-4.80)<0.01
+# Problem 4 (corrected)
+Phi8=4/3*8**1.5
+assert abs(Phi8-30.17)<0.01 and abs(2*Phi8-60.34)<0.01
+assert abs(Phi8/np.pi-9.60)<0.01
+assert abs(Phi8/np.pi+0.5-10.10)<0.01 and int(np.floor(Phi8/np.pi+0.5))==10
+assert abs(Ex[9]-7.944)<1e-3 and abs(Ex[10]-8.488)<1e-3 and np.sum(Ex<=8)==10
 assert abs(2*np.pi/12-0.5236)<1e-4
 # Problem 7
 assert abs((1.5*np.pi*0.75)**(2/3)-2.3203)<1e-4
@@ -57,9 +68,12 @@ assert abs(w[0]-1.0604)<1e-3
 t=qmnt.zeros(1000)
 assert abs(qmnt.wu_sprung_x(t[200])-22.5)<0.3 and abs(qmnt.wu_sprung_x(t[299])-28.5)<0.3
 # Problem 14
-v14=2*59.957*np.sqrt(1419.42248094599)/np.pi; print("P14",v14)
-# Problem 15
+v14=2*59.957*np.sqrt(1419.42248094599)/np.pi
+assert abs(v14-1438.06)<0.01
+assert abs(2*59.957*np.sqrt(1419.42)/np.pi-1438.06)<0.01
+# Problem 15 and paper connection gap values
 g=qmnt.mean_gap(np.array([200,400]))
+assert abs(g[0]-1.52)<0.006 and abs(g[1]-1.34)<0.006
 r=2*np.pi/np.log(2)/g
 assert abs(2*np.pi/np.log(2)-9.065)<1e-3
 assert abs(r[0]-6.0)<0.1 and abs(r[1]-6.8)<0.1

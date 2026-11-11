@@ -1,0 +1,100 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "the measured sum is close to the prediction $-(t_{10000}/2\\pi)\\log2/\\sqrt2\\approx-770.6$ (with $t_{10000}\\approx9878.7$)",
+  "problem": "The check failed: the quoted value of t_10000 and the prediction -770.6 do not match qmnt. The true t_10000 is about 9877.8, so the prediction is about -770.5 or so. Also 'smaller relative discrepancy' is asserted without a computed measured value.",
+  "fix": "Compute t_10000 and the prediction in CHECKS and quote the computed values. Report the measured sum and the actual relative discrepancy against the T=t_1000 case."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "gives a value within $25\\%$ of the prediction at $\\log2$.",
+  "problem": "Vague, loosely checked claim. The check tolerates 25% but the actual discrepancy is never quoted, and a 25% bound for a 'theorem' check is weak.",
+  "fix": "Quote the actual measured value from the pycode run (and check it in CHECKS) instead of a loose bound."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Since $\\sin(\\pi\\delta\\pm\\pi)=-\\sin(\\pi\\delta)$, $s(\\delta\\pm1)=-\\sin(\\pi\\delta)/(\\pi(\\delta\\pm1))$.",
+  "problem": "Consistent, but the following simplification line writes the bracket with a minus sign and combines 1/(4(δ-1))+1/(4(δ+1)) as 2δ/(4(δ²-1)); the sign convention then needs the result -sin/(2πδ(δ²-1)), whose Hann peak at δ=0 is +1/2 only because of the sign. OK, but the stated 'highest Hann sidelobe 0.0267 of the peak' relies on dividing by 1/2, which is not stated.",
+  "fix": "State explicitly that sidelobe heights are normalized by the Hann peak 1/2."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Hence the 'first zero' ... the first zero is at $\\omega=2\\pi/T=\\pi/2=1.5708$.",
+  "problem": "Fine, but the Hann main-lobe claim 'twice as wide' is fine; however Problem 1 answer: f-hat at pi/T is 2T/pi, correct. No issue; however the surrogate answer for Problem 5 claims the extra phase is e^{-i(w-w0)T/2} which is right only if the shift is applied to the box then modulated; the text is muddled.",
+  "fix": "Write the answer cleanly: g(t)=e^{iw0 t} on [0,T] is the centered one shifted by T/2, so ĝ gets factor e^{-iωT/2} times the modulated box with ω-ω0, i.e. total extra phase e^{-i(ω)T/2}... derive explicitly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Worst offset a quarter bin: $s(\\frac14)=\\sin(\\pi/4)/(\\pi/4)=0.900$, i.e.\\ 90\\% of the amplitude.",
+  "problem": "Problem 9 is a coarse grid with step half a bin, so the worst offset is a quarter bin; correct. But the answer is placed under item 9 with the check lacking tolerance detail; fine. Minor: 0.900 is 0.9003.",
+  "fix": "No change needed beyond stating 0.9003."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "for points scattered at random this floor is typically of size $\\sqrt N$ (a heuristic that Chapter~\\ref{ch:probability} makes precise)",
+  "problem": "Ch. 19 (probability) is a later chapter than this one, so the book is invoking a forward result; the reader has no probability. Likewise 'average of the noise' is used before defined.",
+  "fix": "Give a one-line argument (N unit phasors with random angles have mean square N) and label it heuristic."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "A signal that lives for a time of order $1/a$ has a spectral width of order $a$; the product is a pure number (here $2$).",
+  "problem": "The width 2a times lifetime 1/a gives 2, but the 'lifetime' of e^{-a|t|} is not defined; the FWHM x (1/a) statement is loose.",
+  "fix": "Define lifetime as 1/a (the e-folding time of |f|) and state the product FWHM x lifetime = 2."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "$N'_{\\rm sm}(t)=\\frac{1}{2\\pi}\\log\\frac{t}{2\\pi}+\\frac{t}{2\\pi}\\cdot\\frac1t-\\frac1{2\\pi}",
+  "problem": "Step C claims the integral of e^{iωt}N'_sm is O((1/ω)log T) 'tiny compared with T' without showing the integration by parts, and the claim that the first two terms are bounded relies on S being small, only 'typically'.",
+  "fix": "Show the integration by parts line: ∫e^{iωt}N'_sm dt = [e^{iωt}N'_sm/(iω)] - ∫ e^{iωt}N''_sm/(iω)dt, with N''_sm=1/(2πt), and say S is bounded only heuristically (it grows like log T at worst)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Step D is heuristic: the prime sum does not converge on the critical line, and the infinitely many non-resonant terms are not controlled. But the conclusion is a theorem.",
+  "problem": "Landau's formula is a theorem for fixed x, but the chapter's stated version (-T/2π Λ(x)/√x with ≈) hides the O(log T) error and the key-ideas box says 'proved' for an approximate statement.",
+  "fix": "State the theorem with its O(log T) error term in the Key Ideas and in the displayed equation text."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "That the search recovered them is a numerical observation of the paper, consistent with the fact (Section~\\ref{sec:fourier-transform-sampling}) that irregular sampling breaks exact aliasing",
+  "problem": "Suggests the explanation is aliasing-breaking, but the chapter itself notes the zeros are not random and the explanation is unestablished.",
+  "fix": "Say it is 'compatible with' and add that the mechanism is not established here."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Is the spectral window of the zeros flat away from $\\omega=0$, as it would roughly be for random points?",
+  "problem": "Number of Problems is 25 but the problem list contains an out-of-order \\prob{2} for 'Complete the phase-randomization' placed after a \\prob{3}; also several answers use items not odd or prob 1 (e.g. 2, 4 are fine), but answers to all odd problems required: problems 1,3,5,...,25 are mostly present except 3? present; 25 present; however no answers for odd problem 'Problem 5'? present. Problem 7 is answered but statement of answer for 13-21 ok.",
+  "fix": "Check numbering order and ensure all odd and prob-1 answers are present; move problem 20 into sequence."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "This overloading of $T$ is noted in the book's notation table.",
+  "problem": "Refers to the notation appendix not yet written/visible; also uses 'Problem~10' and 'Problem~20' hard-coded cross refs that could break.",
+  "fix": "Remove the reference or say 'as flagged in Chapter 1 notation'; use \\ref-free wording for problem numbers or verify them."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The paper does not spell out whether its $T$ is $t_{400}-t_1$ or $t_{400}$; the two differ by 2\\%, which changes nothing below.",
+  "problem": "Figures are referenced as figs/fourier-transform_*.pdf but bible requires figs/<slug>_<name>.pdf with slug 'fourier-transform' fine; however no FIGURES part was supplied for the 6 figures, violating the response format.",
+  "fix": "Provide the FIGURES section with scripts for sinc, leakage, aliasing, re2, zerospec, surrogate and landau."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:paper-arithmetic}",
+  "problem": "The chapter references ch:paper-arithmetic and ch:sparse-frequency etc. before they exist; allowed labels, but 'Figure~1 of the paper' item and 'Table~V' references ok. Minor: a wrong slug would break.",
+  "fix": "Verify labels against the chapter map (ch:paper-arithmetic is valid)."
+ }
+]

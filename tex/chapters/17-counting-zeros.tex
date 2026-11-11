@@ -5,7 +5,7 @@ In Chapter~\ref{ch:zeta} you met the nontrivial zeros of the Riemann zeta functi
 
 This chapter derives that function. We count zeros with a tool from complex analysis, the argument principle, which turns ``how many zeros are inside this region?'' into ``how many times does the phase of the function wind around?''. Applied to the zeta function, it gives the Riemann--von Mangoldt formula $N(T)=\theta(T)/\pi+1+S(T)$. Stirling's formula (Chapter~\ref{ch:asymptotics}) then turns $\theta(T)$ into an elementary expression, and out drops the smooth counting function with its curious constant $\tfrac78$. From it we build the ``smooth zeros'' $s_n$, the local mean spacing $\gap_n$, and the idea of measuring every error in units of that spacing.
 
-\textbf{Where this shows up in the paper.} The smooth counting function is the paper's Eq.~(1); the smooth zeros and mean spacing are defined in its Sec.~II~A; and every rms number in every table of the paper (Tables I--V) is in units of $\gap_n$. The ``null'' error $0.263$ against which every model in the paper is judged is simply the rms size of the fluctuation $(t_n-s_n)/\gap_n$ over zeros 401--500, a quantity you will compute yourself at the end of this chapter.
+\textbf{Where this shows up in the paper.} The smooth counting function is the paper's Eq.~(1); the smooth zeros and mean spacing are defined in its Sec.~II~A; and every rms number in every table of the paper (Tables I--V) is in units of $\gap_n$. The principal ``null'' error $0.263$, against which the models in the paper are judged on its principal holdout, is simply the rms size of the fluctuation $(t_n-s_n)/\gap_n$ over zeros 401--500, a quantity you will compute yourself at the end of this chapter.
 \end{chapterintro}
 
 \begin{prerequisites}
@@ -140,7 +140,7 @@ computed with this continuous choice. It does not depend on which value we start
 
 Take the simplest function with a zero, $f(z)=z-a$, and let $C$ be a circle traversed once counterclockwise.
 
-\emph{Case 1: $a$ inside the circle.} Write the circle as $z=a+re^{i\phi}+b$... more simply, first suppose the circle is centered at $a$: $z=a+re^{i\phi}$, $0\le\phi\le2\pi$. Then $f(z)=re^{i\phi}$, whose argument is $\phi$ itself, so $\Delta_C\arg f=2\pi$. If the circle is not centered at $a$ but still encloses it, the vector $z-a$ from $a$ to the moving point still sweeps once all the way round, because $a$ is inside the loop; the net change is still $2\pi$.
+\emph{Case 1: $a$ inside the circle.} First suppose the circle is centered at $a$: $z=a+re^{i\phi}$, $0\le\phi\le2\pi$. Then $f(z)=re^{i\phi}$, whose argument is $\phi$ itself, so $\Delta_C\arg f=2\pi$. If the circle is not centered at $a$ but still encloses it, the vector $z-a$ from $a$ to the moving point still sweeps once all the way round, because $a$ is inside the loop; the net change is still $2\pi$.
 
 \emph{Case 2: $a$ outside the circle.} The vector $z-a$ now swings back and forth but never goes all the way round $a$, since $a$ is outside the loop. It returns to its starting direction without completing a turn, so $\Delta_C\arg f=0$.
 
@@ -239,8 +239,8 @@ One more property we can prove ourselves, using only Chapter~\ref{ch:zeta}.
 
 \emph{Proof.} Split into ranges.
 \begin{enumerate}
-\item $1<\sigma\le2$. Here $\zeta(\sigma)=\sum_k k^{-\sigma}>0$ (a sum of positive terms), $\sigma(\sigma-1)>0$, $\pi^{-\sigma/2}>0$ and $\Gamma(\sigma/2)>0$ by (d). The product of positive numbers is positive.
-\item $0<\sigma<1$. Recall $\eta(\sigma)=1-2^{-\sigma}+3^{-\sigma}-4^{-\sigma}+\cdots$, an alternating series whose terms decrease in size. From Chapter~\ref{ch:series}, its sum lies between any two consecutive partial sums, in particular between $1-2^{-\sigma}$ and $1$. Since $2^{-\sigma}<1$, the sum satisfies $\eta(\sigma)\ge1-2^{-\sigma}>0$. Also $1-2^{1-\sigma}<0$ because $1-\sigma>0$ makes $2^{1-\sigma}>1$. Hence $\zeta(\sigma)=\eta(\sigma)/(1-2^{1-\sigma})<0$. Meanwhile $\sigma(\sigma-1)<0$ (positive times negative). In Eq.~\eqref{eq:counting-zeros-xi} the two negative factors multiply to a positive number, and the remaining factors are positive, so $\xi(\sigma)>0$.
+\item $1<\sigma\le2$. Here the constant $\tfrac12$ is positive, $\zeta(\sigma)=\sum_k k^{-\sigma}>0$ (a sum of positive terms), $\sigma(\sigma-1)>0$, $\pi^{-\sigma/2}>0$ and $\Gamma(\sigma/2)>0$ by (d). The product of these five positive numbers is positive.
+\item $0<\sigma<1$. Recall $\eta(\sigma)=1-2^{-\sigma}+3^{-\sigma}-4^{-\sigma}+\cdots$, an alternating series whose terms decrease in size (because $\sigma>0$, $k^{-\sigma}$ decreases as $k$ increases) and tend to zero. From Chapter~\ref{ch:series}, its sum lies between any two consecutive partial sums, in particular between $1-2^{-\sigma}$ and $1$. Since $2^{-\sigma}<1$, the sum satisfies $\eta(\sigma)\ge1-2^{-\sigma}>0$. Also $1-2^{1-\sigma}<0$ because $1-\sigma>0$ makes $2^{1-\sigma}>1$. Hence $\zeta(\sigma)=\eta(\sigma)/(1-2^{1-\sigma})<0$. Meanwhile $\sigma(\sigma-1)<0$ (positive times negative). In Eq.~\eqref{eq:counting-zeros-xi} the two negative factors multiply to a positive number, and the remaining factors are positive, so $\xi(\sigma)>0$.
 \item $\sigma=1$ and $\sigma=0$. Near $s=1$, $(s-1)\zeta(s)\to1$ (the pole has residue 1, Chapter~\ref{ch:zeta}), and $\Gamma(\tfrac12)=\sqrt\pi$, so $\xi(1)=\tfrac12\cdot1\cdot\pi^{-1/2}\cdot\sqrt\pi\cdot1=\tfrac12>0$. By (b), $\xi(0)=\xi(1)=\tfrac12$.
 \item $-1\le\sigma<0$. By (b), $\xi(\sigma)=\xi(1-\sigma)$, and $1-\sigma$ lies in $(1,2]$, where we showed $\xi>0$. $\square$
 \end{enumerate}
@@ -335,14 +335,14 @@ S(T)=\frac1\pi\Delta_P\arg\zeta=\frac1\pi\arg\zeta\!\left(\tfrac12+iT\right),
 where $\arg\zeta(\tfrac12+iT)$ means the value reached by continuous variation along $P$, starting from $\arg\zeta(2)=0$.
 \end{quote}
 
-The first three factors together contribute $\pi+\theta(T)$, and $\zeta$ contributes $\pi S(T)$. Insert into Eq.~\eqref{eq:counting-zeros-NP}:
+The factors $\tfrac12$, $s(s-1)$, $\pi^{-s/2}$ and $\Gamma(s/2)$ together contribute $0+\pi-\tfrac T2\log\pi+\Im\log\Gamma(\tfrac14+\tfrac{iT}2)=\pi+\theta(T)$, and $\zeta$ contributes $\pi S(T)$. Insert into Eq.~\eqref{eq:counting-zeros-NP}:
 \begin{equation}
 N(T)=\frac1\pi\bigl[\pi+\theta(T)+\pi S(T)\bigr]
 \quad\Longrightarrow\quad
 \boxed{N(T)=\frac{\theta(T)}{\pi}+1+S(T)}
 \label{eq:counting-zeros-RvM}
 \end{equation}
-for every $T>0$ that is not the height of a zero. This is the \textbf{Riemann--von Mangoldt formula}. Riemann stated the leading behavior in 1859 \cite{riemann1859}; von Mangoldt gave the first complete proof decades later \cite{edwards,titchmarsh}. Its status in this book: a theorem, proved above with the argument principle and the properties of $\xi$ taken on trust.
+for every $T>0$ that is not the height of a zero. This is the \textbf{Riemann--von Mangoldt formula}. Riemann stated the leading behavior in 1859 \cite{riemann1859}; von Mangoldt gave the first complete proof decades later \cite{edwards,titchmarsh}. Its status in this book: a theorem. The proof above is complete modulo the results taken on trust in the boxes: the argument principle, and properties (a)--(e) of $\xi$ and $\Gamma$ (of which (e) on the line $\Re s=1$ is a deep theorem).
 
 Notice what we have achieved. The left side counts zeros, which are hard to find. On the right, $\theta(T)$ is a property of the gamma function, which we understand very well, and all the difficulty is pushed into $S(T)$, the argument of $\zeta$ on the critical line.
 
@@ -526,7 +526,7 @@ Two properties follow at once.
 \begin{equation}
 \frac{\dd S}{\dd T}=-\frac{\theta'(T)}{\pi}.
 \end{equation}
-Differentiating Eq.~\eqref{eq:counting-zeros-thetaasym} term by term (product rule on the first term: $\frac{\dd}{\dd T}\bigl[\frac T2\log\frac T{2\pi}\bigr]=\frac12\log\frac T{2\pi}+\frac T2\cdot\frac1T=\frac12\log\frac{T}{2\pi}+\frac12$),
+Differentiating an asymptotic expansion term by term is not automatically legitimate: a small remainder can still have a large derivative. Here it is legitimate, because Stirling's expansion of $\log\Gamma(z)$ may itself be differentiated term by term in the same sector, giving the corresponding expansion of $\Gamma'(z)/\Gamma(z)$ with remainder $\order(\abs z^{-4})$; this is a proved property of the gamma function that we take on trust (see \cite{titchmarsh}). With that understood, differentiating Eq.~\eqref{eq:counting-zeros-thetaasym} term by term (product rule on the first term: $\frac{\dd}{\dd T}\bigl[\frac T2\log\frac T{2\pi}\bigr]=\frac12\log\frac T{2\pi}+\frac T2\cdot\frac1T=\frac12\log\frac{T}{2\pi}+\frac12$),
 \begin{equation}
 \theta'(T)=\frac12\log\frac{T}{2\pi}+\frac12-\frac12-\frac{1}{48T^2}+\order(T^{-4})=\frac12\log\frac{T}{2\pi}-\frac{1}{48T^2}+\order(T^{-4}),
 \end{equation}
@@ -709,7 +709,7 @@ Use Eq.~\eqref{eq:counting-zeros-lambert} to find $s_{10}$ and $\gap_{10}$, and 
 \[
 \boxed{s_{10}\approx50.234,\qquad\gap_{10}\approx3.022,\qquad\frac{t_{10}-s_{10}}{\gap_{10}}\approx-0.152.}
 \]
-Note that the local mean spacing $3.02$ at $n=10$ is smaller than the average $3.96$ over the first ten zeros (first Sample Problem): the spacing at the bottom is larger, about $7.5$ at $n=1$.
+There is no contradiction with the average spacing $3.96$ of the first ten zeros (first Sample Problem). That average is taken over the whole range $n=1,\dots,10$, where the local mean spacing falls from about $7.5$ at $n=1$ to $3.02$ at $n=10$; an average of values running from $7.5$ down to $3.0$ naturally lies above the last of them.
 \end{sample}
 
 Table~\ref{tab:counting-zeros-gaps} collects the smooth count and the local mean spacing $2\pi/\log(t/2\pi)$ at heights that appear in this book and in the paper.
@@ -1008,7 +1008,7 @@ This chapter supplies the yardstick for the entire paper \cite{soniR1}. Here is 
 
 \textbf{17.} The expected number is $\Nsm(1001)-\Nsm(1000)=\int_{1000}^{1001}\Nsm'(t)\,\dd t\approx\Nsm'(1000.5)=\frac{1}{2\pi}\log\frac{1000.5}{2\pi}=\frac{5.070378}{6.283185}=0.807$. (The midpoint rule is accurate to about $10^{-8}$ here because $\Nsm''$ is tiny.)
 
-\textbf{19.} Solve $f(g)=\frac g2\log\frac g{2\pi}-\frac g2-\frac\pi8+\frac1{48g}=0$ with $f'(g)\approx\frac12\log\frac g{2\pi}$. Starting from $g=17.8$, $f(17.8)=-0.02411$ and $f'=0.52070$, so the first step gives $17.8463$; a second step gives $g_0=17.8456$. \texttt{mpmath.grampoint(0)} gives $17.8456$ as well.
+\textbf{19.} Solve $f(g)=\frac g2\log\frac g{2\pi}-\frac g2-\frac\pi8+\frac1{48g}=0$ with $f'(g)\approx\frac12\log\frac g{2\pi}$. Starting from $g=17.8$, $f(17.8)\approx-0.0238$ and $f'(17.8)\approx0.5207$, so the first step gives $17.8\,+\,0.0238/0.5207\approx17.8457$. A second step changes this only in the fifth decimal, giving $g_0=17.8456$. Because $f$ is increasing and convex there ($f''\approx1/(2g)>0$), a Newton step started to the left of the root lands slightly to its right, by about $6\times10^{-5}$ here. \texttt{mpmath.grampoint(0)} gives $17.8456$ as well.
 
 \textbf{21.} The sum $\sum_{n=1}^{N-1}(x_{n+1}-x_n)$ telescopes to $x_N-x_1$, so the mean is $(x_N-x_1)/(N-1)$. For $N=10$: $(9.348203-0.449278)/9=0.989$ (Sample Problem in Sec.~\ref{sec:counting-zeros-unfold}). For $N=1000$ the same formula with $x_{1000}=\Nsm(t_{1000})=999.418$ gives $(999.418-0.449)/999=0.99997$; the departure from 1 is $(\delta_{1000}-\delta_1)/999$, which shrinks as $N$ grows because the $\delta_n$ do not grow appreciably.
 

@@ -1,0 +1,54 @@
+{
+ "patches": [
+  {
+   "old": "why the operators of quantum mechanics must be \\emph{Hermitian} (self-adjoint), and why that guarantees real energies.",
+   "new": "why the operators of quantum mechanics must be \\emph{Hermitian} (self-adjoint; a property defined precisely in Sec.~\\ref{sec:schrodinger-hermitian}), and why that guarantees real energies."
+  },
+  {
+   "old": "The right panel of \\cref{fig:schrodinger-planewave} contrasts the two.",
+   "new": "The right panel of \\cref{fig:schrodinger-planewave}, which appears in Sec.~\\ref{sec:schrodinger-tdse} and uses the units of Sec.~\\ref{sec:schrodinger-units}, contrasts the two."
+  },
+  {
+   "old": "This is why the paper never needs the time-dependent equation: everything",
+   "new": "This is why the paper never needs the time-dependent equation: given completeness of the stationary states (taken on trust in the \\texttt{beyond} box of Sec.~\\ref{sec:schrodinger-hermitian}), everything"
+  },
+  {
+   "old": "Chapter~\\ref{ch:bound-states} proves that these are \\emph{all} the eigenfunctions.",
+   "new": "Chapter~\\ref{ch:bound-states} solves the box problem fully, including the question of whether there are any other eigenfunctions."
+  },
+  {
+   "old": "The same calculation with $u$ running from $0$ to $k\\pi$ shows that \\emph{every} box state $\\psi_k$ has normalization constant $1/\\sqrt L$ (the integral of $\\sin^2$ over $k$ half-periods is $k\\pi/2$, times $2L/\\pi$, divided by $k$... more simply: $\\int_0^{k\\pi}\\sin^2u\\,\\dd u=k\\pi/2$, and $\\dd x=(2L/k\\pi)\\dd u$ for $\\psi_k$, giving $A^2\\cdot(2L/k\\pi)(k\\pi/2)=A^2L$).",
+   "new": "The same calculation works for every box state. For $\\psi_k=A\\sin(k\\pi(x+L)/2L)$ substitute $u=k\\pi(x+L)/2L$, so that $\\dd x=(2L/k\\pi)\\dd u$ and $u$ runs from $0$ to $k\\pi$. Since\n\\[\n\\int_0^{k\\pi}\\sin^2u\\,\\dd u=\\left[\\frac u2-\\frac{\\sin2u}4\\right]_0^{k\\pi}=\\frac{k\\pi}2\\quad\\text{(because $\\sin2k\\pi=0$)},\n\\]\nthe normalization integral is $A^2\\cdot\\frac{2L}{k\\pi}\\cdot\\frac{k\\pi}{2}=A^2L$, and again $A=1/\\sqrt L$."
+  },
+  {
+   "old": "The second, with $u=g'$... more conveniently with $u=f^{*\\prime}$ and $\\dd v=g'\\dd x$:",
+   "new": "The second integration by parts, with $u=f^{*\\prime}$ and $\\dd v=g'\\dd x$ (so $v=g$):"
+  },
+  {
+   "old": "Recall from Chapter~\\ref{ch:eigen} that the second derivative becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below. The Hamiltonian (with $\\hbar^2/2m=1$) becomes the matrix",
+   "new": "Recall from Chapter~\\ref{ch:eigen} that the second derivative $\\dd^2/\\dd x^2$ becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below. The Hamiltonian contains $-\\dd^2/\\dd x^2$, so we multiply every entry by $-1$: the operator $-\\dd^2/\\dd x^2$ becomes the matrix with $+2/h^2$ on the diagonal and $-1/h^2$ just above and below. The potential multiplies each sample $\\psi(x_j)$ by $V(x_j)$, which adds $V(x_j)$ to the $j$-th diagonal entry. So the Hamiltonian (with $\\hbar^2/2m=1$) becomes the matrix"
+  },
+  {
+   "old": "$E=t_1=14.134725$ (RE1).",
+   "new": "$E=t_1=14.134725$ (the first of the ten zeros listed in Chapter~\\ref{ch:intro})."
+  },
+  {
+   "old": "The potential raises the energy everywhere inside the box, so fewer half-wavelengths fit below a given $E$ (Problem~\\ref{prob:schrodinger-count}).",
+   "new": "The potential is positive inside the box (it never drops below $V_0$), so at energy $E$ the local wavenumber $\\sqrt{E-V(x)}$ (Sec.~\\ref{sec:schrodinger-units}) is smaller than the empty-box value $\\sqrt E$, and fewer half-wavelengths fit below a given $E$ (Problem~\\ref{prob:schrodinger-count})."
+  },
+  {
+   "old": "find the exact speed of the envelope of the real part, and show",
+   "new": "find the exact speed of the envelope of the real part of this two-wave superposition, and show"
+  }
+ ],
+ "new_checks": "",
+ "new_figures": {
+  "schrodinger_standing": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\nell = 1.0\nx = np.linspace(0, ell, 400)\nfor n in (1, 2, 3):\n    a1.plot(x, np.sin(n*np.pi*x/ell), label=f\"n={n}\")\na1.axhline(0, color=\"k\", lw=0.5)\na1.set_xlabel(\"x / l (string length l)\")\na1.set_ylabel(\"y / y_max\")\na1.set_title(\"string harmonics\")\na1.legend(fontsize=7)\nL = 1.0\nX = np.linspace(-L, L, 400)\nfor k in (1, 2, 3):\n    a2.plot(X, np.sin(k*np.pi*(X + L)/(2*L))**2/L, label=f\"k={k}\")\na2.set_xlabel(\"x / L\")\na2.set_ylabel(\"|psi_k|^2  (units 1/L)\")\na2.set_title(\"box probability densities\")\na2.legend(fontsize=7)\nplt.tight_layout()\nplt.savefig(\"schrodinger_standing.pdf\", bbox_inches=\"tight\")\n",
+  "schrodinger_planewave": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\nk = 2.0\nx = np.linspace(0, 2*np.pi, 500)\na1.plot(x, np.cos(k*x), \"-\", label=\"Re\")\na1.plot(x, np.sin(k*x), \"--\", label=\"Im\")\na1.plot(x, np.ones_like(x), \":\", label=\"modulus\")\na1.set_xlabel(\"x (units with hbar = 2m = 1)\")\na1.set_ylabel(\"e^{ikx}, k = 2\")\na1.legend(fontsize=7, loc=\"lower left\")\nkk = np.linspace(0, 3, 300)\na2.plot(kk, 2*kk, label=\"string: omega = v k, v = 2\")\na2.plot(kk, kk**2, \"--\", label=\"matter wave: omega = k^2\")\na2.set_xlabel(\"wavenumber k\")\na2.set_ylabel(\"angular frequency omega\")\na2.legend(fontsize=7)\nplt.tight_layout()\nplt.savefig(\"schrodinger_planewave.pdf\", bbox_inches=\"tight\")\n",
+  "schrodinger_born": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, ax = plt.subplots(figsize=(6, 4))\na = 1.0\nx = np.linspace(-4, 4, 1601)\nrho = np.exp(-2*np.abs(x)/a)/a\nax.plot(x, rho, \"k\")\nm = np.abs(x) < a\nax.fill_between(x[m], 0, rho[m], alpha=0.35, label=\"P(|x|<a) = 1 - e^-2 = 0.865\")\nax.set_xlabel(\"x / a\")\nax.set_ylabel(\"|psi|^2  (units 1/a)\")\nax.legend()\nplt.savefig(\"schrodinger_born.pdf\", bbox_inches=\"tight\")\n",
+  "schrodinger_beats": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nL = 1.0\nx = np.linspace(-L, L, 2001)\npsi = lambda k: np.sin(k*np.pi*(x + L)/(2*L))/np.sqrt(L)\nE = lambda k: (k*np.pi/(2*L))**2\np1, p2 = psi(1), psi(2)\ndE = E(2) - E(1)\nT = 2*np.pi/dE\ndef dens(t):\n    Psi = (p1*np.exp(-1j*E(1)*t) + p2*np.exp(-1j*E(2)*t))/np.sqrt(2)\n    return np.abs(Psi)**2\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\nfor t, lab in [(0, \"t=0\"), (T/4, \"t=T/4\"), (T/2, \"t=T/2\")]:\n    a1.plot(x, dens(t), label=lab)\na1.set_xlabel(\"x / L\")\na1.set_ylabel(\"|Psi|^2  (units 1/L)\")\na1.legend(fontsize=7)\nts = np.linspace(0, 2*T, 300)\nxav = [np.trapz(x*dens(t), x) for t in ts]\na2.plot(ts/T, xav)\na2.axhline(0, color=\"k\", lw=0.5)\na2.set_xlabel(\"t / T\")\na2.set_ylabel(\"<x> / L\")\nplt.tight_layout()\nplt.savefig(\"schrodinger_beats.pdf\", bbox_inches=\"tight\")\n",
+  "schrodinger_staircase": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\ntry:\n    import qmnt\n    z = np.asarray(qmnt.zeros(40), dtype=float)\nexcept Exception:\n    import mpmath\n    z = np.array([float(mpmath.zetazero(j).imag) for j in range(1, 41)])\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\nL = 44.883\nEe = np.linspace(0, 5, 4000)\na1.plot(Ee, np.floor(2*L*np.sqrt(Ee)/np.pi), \"k\", lw=0.8, label=\"N_box(E)\")\na1.plot(Ee, 2*L*np.sqrt(Ee)/np.pi, \"r--\", label=\"2L sqrt(E)/pi\")\na1.set_xlabel(\"E (units hbar = 2m = 1)\")\na1.set_ylabel(\"number of levels\")\na1.legend(fontsize=7)\nt = np.linspace(1, 100, 4000)\nNt = np.array([np.sum(z <= tt) for tt in t])\nNsm = t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\na2.plot(t, Nt, \"k\", lw=0.8, label=\"N(t)\")\na2.plot(t, Nsm, \"r--\", label=\"N_sm(t)\")\na2.set_xlabel(\"height t\")\na2.set_ylabel(\"number of zeros\")\na2.legend(fontsize=7)\nplt.tight_layout()\nplt.savefig(\"schrodinger_staircase.pdf\", bbox_inches=\"tight\")\n",
+  "schrodinger_wusprung": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfrom scipy.optimize import brentq\nfrom scipy.linalg import eigh_tridiagonal\nV0 = 3.10073*np.pi\ndef x_of_V(V):\n    a = np.sqrt(max(V - V0, 0.0)); b = np.sqrt(V)\n    if a == 0.0:\n        return 0.0\n    return (a*np.log(V0/(2*np.pi*np.e**2)) + b*np.log((b + a)/(b - a)))/np.pi\ndef V_of_x(x):\n    x = abs(x)\n    if x < 1e-14:\n        return V0\n    return brentq(lambda V: x_of_V(V) - x, V0, 5000.0, xtol=1e-12)\nL, N = 44.883, 6000\nh = 2*L/(N + 1)\nx = -L + h*np.arange(1, N + 1)\nhalf = np.array([V_of_x(xi) for xi in x[N//2:]])\nV = np.concatenate([half[::-1], half])\nE, P = eigh_tridiagonal(2/h**2 + V, -np.ones(N - 1)/h**2, select='i', select_range=(0, 5))\nP = P/np.sqrt(np.sum(P**2, axis=0)*h)\nNsm = lambda t: t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\ns = [brentq(lambda t: Nsm(t) - (n - 0.5), 2*np.pi, 1e4) for n in range(1, 7)]\nfig, ax = plt.subplots(figsize=(6, 4))\nm = np.abs(x) < 4\nax.plot(x[m], V[m], \"k\", lw=2, label=\"V(x)\")\nfor n in range(6):\n    ax.axhline(E[n], color=\"0.7\", lw=0.5)\n    ax.plot(x[m], E[n] + 2.5*P[m, n], lw=1)\n    ax.plot([3.8, 4.0], [s[n], s[n]], \"r\", lw=1.5)\nax.set_xlim(-4, 4); ax.set_ylim(0, 50)\nax.set_xlabel(\"x (units hbar = 2m = 1)\")\nax.set_ylabel(\"V, E (units hbar = 2m = 1)\")\nax.legend(loc=\"upper center\")\nplt.savefig(\"schrodinger_wusprung.pdf\", bbox_inches=\"tight\")\n"
+ },
+ "notes": "Skipped the issue claiming odd-numbered answers may be missing: counting the 28 problems, every level-1 problem (1, 2, 3, 5, 15) and every odd-numbered problem (1 to 27) already has an answer, so no change was needed. Skipped the last ERROR item ('No change needed'), which the reviewer itself marks as not an error. The figure-script issue is addressed by supplying all six FIGURES scripts. The forward-reference issue for 'Hermitian' is handled by a pointer in the chapter intro, where the term first appears; Sec. 4 already forward-references the proof that E is real. The planewave-figure forward reference is handled by stating where the figure appears and which units it uses. No new numbers were added to the chapter text (the patched normalization sentence and the matrix-sign sentence are algebraic, and the figure captions' numbers were already checked), so CHECKS is unchanged."
+}

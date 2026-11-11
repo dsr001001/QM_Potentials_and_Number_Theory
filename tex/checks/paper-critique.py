@@ -35,7 +35,6 @@ assert abs(math.sqrt(1 - 0.96**2) - 0.280) < 1e-3
 assert abs(0.263 * math.sqrt(1 - 0.96**2) - 0.0736) < 1e-4
 assert abs(math.sqrt(1 - 0.07**2) - 0.9975) < 1e-4
 assert abs(0.263 * math.sqrt(1 - 0.07**2) - 0.2624) < 1e-4
-# numerical instance of Q_min = null^2 (1 - r^2) for mean-zero sequences
 rng = np.random.default_rng(3)
 f = rng.normal(size=200); f -= f.mean()
 g = 0.7 * f + rng.normal(size=200); g -= g.mean()
@@ -55,12 +54,19 @@ s800 = sz(800)[0]
 assert abs(s800 - 1184) < 1.0
 Mth2 = 2 * np.sqrt(s800) * L2 / np.pi
 assert abs(Mth2 - 1313) < 3
+# inverted coverage law at scale 2, M = 900
+assert abs(2 * 59.957 - 119.914) < 1e-9
+k900 = 900 * np.pi / (2 * L2)
+assert abs(k900 - 23.58) < 0.01
+E900 = k900 ** 2
+assert abs(E900 - 556) < 1.0
+assert abs(float(np.asarray(qmnt.Nsm(556.0)).ravel()[0]) + 0.5 - 310) < 2
 
-# ---- Sample "Why item (ii) matters"
+# ---- Sample "Why item (ii) matters" (improvement over null, positive = better)
 assert abs((0.2438 - 0.2321) / 0.2438 - 0.0480) < 1e-4
-assert abs((0.2523 - 0.2438) / 0.2438 - 0.0349) < 1e-4
+assert abs((0.2438 - 0.2523) / 0.2438 - (-0.0349)) < 1e-4
 assert abs((0.2438 - 0.2358) / 0.2438 - 0.0328) < 1e-4
-assert abs((0.2477 - 0.2438) / 0.2438 - 0.0160) < 1e-4
+assert abs((0.2438 - 0.2477) / 0.2438 - (-0.0160)) < 1e-4
 
 # ---- Sample "One marginal row among eight"
 assert abs(0.975**8 - 0.8167) < 1e-4
@@ -81,7 +87,6 @@ dphi1 = dw * dist
 assert abs(dphi1 - 2.397) < 1e-3
 assert abs(dphi1 / (2 * np.pi) - 0.38) < 5e-3
 assert abs(3 * dphi1 - 7.19) < 5e-3
-# RE2 period
 assert abs(2 * np.pi / np.log(2) - 9.065) < 1e-3
 
 # ---- Sample "What none out of n can support"
@@ -104,7 +109,7 @@ x201, x300 = wsx([s201, s300])
 assert abs(x201 - 22.5) < 0.2
 assert abs(x300 - 28.5) < 0.2
 
-# ---- W4 three-level example (sum rule and exact check)
+# ---- W4 three-level example
 E = np.array([1.0, 2.0, 4.0])
 A = np.array([[0.0, 0.05, 0.1], [0.05, 0.0, 0.15], [0.1, 0.15, 0.0]])
 dE = np.array([-sum(A[i, j]**2 / (E[i] - E[j]) for j in range(3) if j != i) for i in range(3)])
@@ -114,7 +119,6 @@ lam = np.linalg.eigvals(np.diag(E) + 1j * A)
 lam = lam[np.argsort(lam.real)]
 assert np.max(np.abs(lam.real - (E + dE))) < 1e-3
 assert abs(lam.real.sum() - 7.0) < 1e-12
-# trace identity also for a nonzero diagonal (Problem 14 instance)
 A2 = np.array([[0.3, 0.2, -0.1], [0.2, -0.4, 0.25], [-0.1, 0.25, 0.1]])
 lam2 = np.linalg.eigvals(np.diag(E) + 1j * A2)
 assert abs(lam2.real.sum() - E.sum()) < 1e-12
@@ -215,5 +219,6 @@ assert abs((1 - 0.05 ** (1 / 29)) / 0.8 - 0.123) < 1e-3
 
 # ---- Problem 25 and W8 factor
 assert abs(0.265 / 0.198 - 1.34) < 1e-2
+assert abs(0.264 / 0.198 - 1.33) < 1e-2
 
 print("all checks passed")

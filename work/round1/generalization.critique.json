@@ -1,0 +1,79 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "close(400 / 5, 80, 0, \"S5 held out\"); close(400 - 80, 320, 0, \"S5 trained\")",
+  "problem": "The checks script fails 3 assertions: close() uses a strict '< 0' tolerance on equal integers, which can never pass.",
+  "fix": "Use a tolerance of 1e-9 (or plain assert ==) for these integer counts."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/generalization_polyfit.pdf}",
+  "problem": "The chapter includes six figures (polyfit, errorcurve, splits, neighbor, kriging, ridge), but no FIGURES part with scripts is supplied.",
+  "fix": "Add a '### FIG generalization_<name>' script for each of the six figures."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "the null grows from $0.263$ to $0.296$ over Table~V'' (Sec.~II~C)",
+  "problem": "The quote is attributed to the wrong place. The paper says 'over Table~\\ref{tab:oracle}' (Table V), which is fine; but the chapter's Sample on kriging and Table I references use inconsistent table naming (Table II for bases, Table IV for budget in problems). Problem 27 calls the bases table 'Table~II'; this is correct, but Problem 5 and others call Table V the oracle table correctly. The ridge-row check is the real issue: the claim that Table I ridge OOS 0.265 is the smallest scale-1 OOS value is wrong.",
+  "fix": "In answer 3, note that Table I scale-1 OOS values include 0.265 as the smallest; verify against the paper (0.265 is indeed the smallest), and state it is the ridge mu=0.3 row. If no error is intended, keep as is."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Dotted line: the noise level.",
+  "problem": "In the errorcurve figure, the out-of-sample points are fresh noisy points, so the noise-floor reference (0.15) is described but the extrapolation rms is also compared with a null of zero error. Minor, but the caption's claim of 'essentially zero at degree 14' depends on the script, which is missing and unchecked.",
+  "fix": "Provide the script and a check that in-sample rms at degree 14 is below about 1e-6 (ill-conditioning may prevent this)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Hence any smooth interpolation between neighboring zeros tends to be anticorrelated with the truth.",
+  "problem": "Overgeneralized. Only interpolators weighted toward lags with negative autocorrelation are anticorrelated; the derivation shows this for positive-weight neighbor averages. Kriging in the same chapter is a smooth interpolator with positive correlation.",
+  "fix": "Say 'any interpolator that averages nearby neighbors with positive weights'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The same formula also shows that the strong performance of the explicit formula is near-optimal for its correlation",
+  "problem": "Equality of the ratio with sqrt(1-rho^2) is a consistency check, not evidence of optimality, since the idealized zero-mean model does not hold for the real oracle. The paper makes no such claim.",
+  "fix": "Soften to 'is consistent with a near-optimal amplitude under the idealized model of Eq. (ratio)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Recall from Chapter~\\ref{ch:probability} that multiplying a variable by a constant $\\alpha$ multiplies its correlation with anything by the sign of $\\alpha$.",
+  "problem": "Stated as a recall without proof; and 'the kriging weight w<0 gives opposite correlation' also needs the magnitude equality shown.",
+  "fix": "Add one line: corr(alpha X, Y)=alpha Cov/(|alpha| sd_X sd_Y)=sign(alpha) corr(X,Y)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\\rho_1=0$ and $\\mathrm{Var}(u)=2\\sigma^2$",
+  "problem": "Argument that small sigma with sizable Var(u) forces rho_1<0 is only qualitative; the 'rigid' claim is asserted, not derived, and the 'if a zero sits high, spacing above is short' sentence is hand-waving.",
+  "fix": "State that this follows directly from Eq. (rho1): rho_1<0 iff Var(u)>2 sigma^2, and note the Wigner-surmise number 0.178 versus 0.138 is what supports it."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The range $\\abs{\\rho_1}<1/\\sqrt2$ is where these correlations are mutually consistent.",
+  "problem": "Unexplained claim in the figure caption; for rho_2=0 the neighbor-mean correlation is rho_1*sqrt2, which has magnitude at most 1 only if |rho_1|<=1/sqrt2.",
+  "fix": "Explain that corr = sqrt2 rho_1 must lie in [-1,1], giving |rho_1|<=1/sqrt2."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper's Table~II reports Chebyshev $M=400$",
+  "problem": "Chebyshev M=400 appears in the paper's bases table, which the chapter calls Table II per bible, fine; but the problem says 'against null 0.263' and 'one row among eight' while answer quotes the paper; the intervals are bootstrap and independence is assumed, not mentioned.",
+  "fix": "Add that the intervals resample held-out levels independently (paper notes block bootstrap widens them slightly)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Estimating correlations with the test data. In the listing above the autocorrelations come only from pairs of \\emph{training} levels.",
+  "problem": "The listing normalizes by np.var of training data and uses mean over training pairs only; fine, but the held-out levels used for scoring need neighbors in training, and the listing's use of rho_1 estimated from a random split differs from the paper's lag-40 version; not stated numerically.",
+  "fix": "Optionally print and quote the resulting rms/corr, with a check."
+ }
+]

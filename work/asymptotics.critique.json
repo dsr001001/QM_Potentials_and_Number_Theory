@@ -1,0 +1,107 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "The actual error, using $s_1=14.5214$, is about $0.0099$.",
+  "problem": "The check run shows s_1 is not 14.52136 to 1e-5, so the quoted s_1 (14.5214/14.52136) is inconsistent with the computed root. The quoted error and the Newton claims rest on that value.",
+  "fix": "Recompute s_1 = brentq(Nsm(s)-1/2) and use that value consistently in the bisection error, Newton sample, and Lambert-W sample."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "At $x_0=7$: $f(7)=-0.618728$ and $f'(7)=\\frac1{2\\pi}\\log(7/2\\pi)=0.017194$. The step is $0.618728/0.017194=35.99$, so $x_1\\approx43.0$.",
+  "problem": "The check on these numbers failed. The values of f(7), f'(7) and the landing point are wrong.",
+  "fix": "Recompute f(7)=Nsm(7)-0.5, f'(7) and x_1 and replace the numbers."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Newton's method for any smooth zero, started anywhere above $2\\pi$, lands at or to the right of $s_n$ after one step",
+  "problem": "Problem 23 and the answer say the first step lands at x1≈43, but the theorem needs the iterates to stay in I=(2π,∞); a step from near 2π could in principle land anywhere right, fine, yet the statement 'started anywhere above 2π' is not proved for x0 where f'>0 only. Also the earlier text says from x0=14 the first step is 14.5333 (to the right), consistent. Minor but the overshoot claim is unproved for x0 in (2π, s_n).",
+  "fix": "State that since f'>0 and f convex on (2π,∞), the proof applies for x_k in that interval; x_{k+1}≥r automatically lies in the interval."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Applying this repeatedly, $\\Gamma(n+1)=n\\Gamma(n)=n(n-1)\\Gamma(n-1)=\\dots=n!\\,\\Gamma(1)=n!$.",
+  "problem": "Fine, but the convergence argument just above says u^{x+1}e^{-u}→0 makes the integrand below u^{-2}; the integrand is u^{x-1}e^{-u}=u^{-2}·u^{x+1}e^{-u}, ok. However the 'exponentials beat powers' was only stated as extension, not proved.",
+  "fix": "Add one line: e^u>u^{k+1}/(k+1)! so u^k e^{-u}<(k+1)!/u."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The sum is $6.568$, so the bound is $2.091$.",
+  "problem": "Answer to problem 30 is embedded in a 'sample' environment titled as an answer; also the number must match the later claim about 150 primes. The environment misuse breaks anatomy.",
+  "fix": "Present the solution as plain text in the answers section, not in a sample box; the answer for Problem 30 is even-numbered and not required."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{sample}{(Answer to Problem 30, odd-numbered companion: Problem 29 continued)}",
+  "problem": "Misuse of sample environment inside the Answers section; confusing title.",
+  "fix": "Replace with ordinary paragraph '\\textbf{Problem 30.}'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.7",
+  "problem": "The chapter's own answer to Problem 21 says the spacing at 10^4 is 0.854, not 0.7; internal contradiction left in the Paper connection section.",
+  "fix": "Change to 'from about 1.3 to about 0.85' and delete the 'corrects' remark in the answer."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The difference $(t^2+t)-t^2=t$ grows without bound. \\emph{Asymptotic equivalence controls the ratio, not the difference.}",
+  "problem": "No error, but the sum-integral eq (squeeze-inc) parenthetical is garbled: its derivation lines are muddled and the stated left inequality sums f(k)≤∫ giving sum_{k=1}^{n-1}f(k)≤∫_1^n f, which is a different statement from the left half claimed (∫_1^n f ≤ sum_{k=2}^n f).",
+  "fix": "Rewrite the derivation cleanly: ∫_k^{k+1}f ≤ f(k+1), sum k=1..n-1 gives ∫_1^n f ≤ Σ_{k=2}^n f; and f(k)≤∫_k^{k+1}f... gives Σ_{k=1}^{n-1}f(k)≤∫_1^n f, add f(n)-f(1)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Brent proved a worst case of about $(\\log_2\\tfrac{b-a}{\\delta})^2$ evaluations",
+  "problem": "Stated without source label or status; also Brent's algorithm acceptance criteria are described loosely.",
+  "fix": "Label it as quoted from \\cite{brent} without proof, or put in a beyond box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Its default tolerances are an absolute $2\\times10^{-12}$ and a relative $8.88\\times10^{-16}$",
+  "problem": "Forward reference to machine epsilon via 'four times' claim not explained and relies on scipy defaults unverified in checks.",
+  "fix": "Add check or soften to 'close to machine epsilon'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Problem~26 asks you to prove it",
+  "problem": "Problem numbering: the gamma_n problem is problem 26 only if counted correctly; several cross references (Problem 18, 20, 22, 23, 28, 30) may point to the wrong problems (e.g. 'Problem 28 practices Richardson' is the finite-difference problem; 'Problem 20' float32 estimate).",
+  "fix": "Verify every Problem number reference against the list and correct."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\section{Answers to selected problems}",
+  "problem": "Answers are required for all prob 1 and every odd problem; many odd problems (e.g. 31 not given; 5,7 ok; 25 ok; 33?) and problems 1-level like 20 (Problem 22 is difficulty 1 but 6 is also 1) are inconsistent; Problem 3 is difficulty 1 and answered, but Problem 21,22 answered while 31 and others missing.",
+  "fix": "Add answers for all remaining odd-numbered and difficulty-1 problems."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\prob{2}{\\emph{(Computational, paper.)} Using \\texttt{qmnt.zeros} and \\texttt{qmnt.fluct}",
+  "problem": "Checks script contains a meaningless placeholder assertion and does not verify several quoted numbers (Problem 28 Richardson, Problem 25 answers, gap 0.854 only loosely, W at n=1000 solved).",
+  "fix": "Replace placeholder with real checks for Problems 28, 20, 21 and the Richardson numbers."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(The paper writes it $(4E_{2h}-E_h)/3$; with the pair of grids named in Appendix~A step 3 this is read with $E_{2h}$ denoting the twice-refined grid.",
+  "problem": "Confusing speculation about the paper's notation; the paper's formula as written with 2h is a notation inconsistency the book bible says is E_{h/2}.",
+  "fix": "State plainly: the paper's Eq. uses (4E_{2h}-E_h)/3 where E_{2h} means the finer grid; defer to Chapter on finite differences."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "so a model that works at one height is being tested over a narrow range of $\\log t$.",
+  "problem": "Interpretive claim about the paper not made by the paper.",
+  "fix": "Mark as the book's own remark or delete."
+ }
+]

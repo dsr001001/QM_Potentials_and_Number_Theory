@@ -1,0 +1,79 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Periods in training: $(680-14.13)/9.0647=665.9/9.0647=73.4$.",
+  "problem": "The check script failed on this assertion. 665.87/9.0647 = 73.46, so the value is not 73.4 within the tolerance used. The \"about 73 periods\" claim is fine, but the quoted figure and the check disagree.",
+  "fix": "Recompute: 665.87/9.0647 = 73.46. State 73.5 in the sample and boxed answer, and update the check to match."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/paper-memorization_tableI.pdf}",
+  "problem": "The slug is 'paper-memorization', so figure files should be figs/paper-memorization_<name>.pdf. The chapter output contains no FIGURES section, so no figure script exists for the five figures used (tableI, bases, neighbors, turning, probe, toy).",
+  "fix": "Add a ### FIG script for every figure, with filenames matching exactly what the chapter includes."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\label{fig:paper-memorization-toy}",
+  "problem": "The toy figure is described as computed from a script and the problems refer to 'the script of Fig.', but no script is given in the chapter. A reader cannot rerun it.",
+  "fix": "Include the script as a pycode listing or point to the FIG script, and verify the numbers."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Section~III's claim has three parts: capacity, no transfer, diagnosis.",
+  "problem": "The sections label 'Four probes' and then list five paper paragraphs, so the counts are inconsistent. The chapter also states 'twelve cosine configurations, eight alternative-basis rows' as if the 8 rows were configurations in the paper's count.",
+  "fix": "Make the counts consistent: say 'twelve configurations of Table I, plus the eight rows of Table II'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Training levels with turning points below 22.5 are confined inside the band's inner edge and feel the band only through the exponentially small tails",
+  "problem": "The explanation that levels 301--500 'integrate the correction with nearly uniform weight' so a large delta V leaves them unchanged is asserted without support. A correction of rms 40 does not average out unless it is oscillatory or compensated; this is speculation presented as mechanism.",
+  "fix": "Mark clearly as the author's heuristic and not the paper's, or remove the claim about compensation."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the in-sample rms of the $M=400$ odd and even rows is below $10^{-3}$",
+  "problem": "Fine for the paper, but the sample lists M=200 odd/even rows as saturated: with 200 training levels M=200 rows give in-sample 0.17, not near zero, which shows saturation is not sufficient in practice.",
+  "fix": "Add a note that M=200 rows are nominally saturated but the optimizer does not reach exact fits (0.176, 0.171)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "which is at most $\\frac1{2T_w}\\left(\\frac1{|\\omega-\\omega'|}+\\frac1{\\omega+\\omega'}\\right)$ in magnitude",
+  "problem": "The integral of the sine product from 0 to T_w was stated without showing the antiderivative step; also the sampling at irregular levels s_n is not equivalent to continuous t averaging, used later as 'good approximation'.",
+  "fix": "Show the integration of cos((w-w')t) and cos((w+w')t) explicitly."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The robust lesson of Section~III is methodological: in-sample spectral agreement demonstrates capacity, and only held-out tests and surrogate refits can show more.",
+  "problem": "'Only' held-out tests can show more is stronger than the paper claims.",
+  "fix": "Say 'held-out tests and surrogate refits are ways to show more'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Step 7 is a heuristic estimate: it uses the Wigner surmise instead of the exact distribution of the zeros",
+  "problem": "The sample uses sigma=0.263 (a holdout null at 401--500) as the stationary variance and approximates d_{n+1}-d_n by u_n-1 treating gap as constant; Var(d) is not stationary in n. Result -0.287 compared to paper's -0.26 to -0.41 is presented as consistent, which is loose.",
+  "fix": "State the comparison cautiously and note that the real autocorrelation is measured in Problem 15."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The correction in the band is about $40/15=2.7$ and $40/13=3.1$ times its size on either side",
+  "problem": "The paper's 15 and 13 refer to rms inside the band? The paper text says 'rms delta V = 40 in that band against 15 inside it and 13 outside it', which is ambiguous; the chapter's parenthetical reinterpretation (x<22.5, x>28.5) conflicts with 'inside it'.",
+  "fix": "Quote the paper's wording and flag that its 'inside it' is ambiguous, rather than asserting an interpretation."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{1}{In plain words, explain why the unregularized interpolation fit can put a correction of rms 40",
+  "problem": "Problem numbering/answers: answers given for P22 and P25 labelled as selected, but answers to every odd-numbered problem are required; odd problems such as 7? present; P17, P19, P21, P23, P25 present, but P2, P4 etc. fine; P1-level problem 25 answered. Several odd ones (e.g. 9 present, 11 present, 13, 15, 17, 19, 21, 23, 25) present; 27? none exist. Problem count 25 is within range but fewer than 15 are computational-with-qmnt only about 6.",
+  "fix": "Verify all odd and difficulty-1 problems have answers; Problem 3 and 22 are present, ok."
+ }
+]

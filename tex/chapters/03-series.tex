@@ -53,7 +53,7 @@ For $a_n=1/n^2$ the limit is $a=0$. Find an $N$ such that $\abs{a_n-0}<10^{-3}$ 
 For a smaller tolerance $\varepsilon$ the same steps give $N$ at least $1/\sqrt{\varepsilon}$, which exists for every $\varepsilon>0$. That is exactly what Eq.~\eqref{eq:series-limit-def} demands.
 \end{sample}
 
-The limit laws you used for functions in calculus hold for sequences too: if $a_n\to a$ and $b_n\to b$ then $a_n+b_n\to a+b$, $a_nb_n\to ab$, and $a_n/b_n\to a/b$ when $b\ne0$. If $f$ is a continuous function, $a_n\to a$ implies $f(a_n)\to f(a)$. We use these freely.
+The limit laws you used for functions in calculus hold for sequences too: if $a_n\to a$ and $b_n\to b$ then $a_n+b_n\to a+b$, $a_nb_n\to ab$, and $a_n/b_n\to a/b$ when $b\ne0$ and every $b_n\ne0$ (so that each quotient is defined). If $f$ is a continuous function, $a_n\to a$ implies $f(a_n)\to f(a)$. These are proved exactly like the corresponding limit laws for functions in calculus (the proofs replace ``$x$ close to $x_0$'' by ``$n$ large''); we use them freely.
 
 \subsection{The most important sequence: powers $r^n$}
 
@@ -87,7 +87,11 @@ Here, however,
 \[
 \abs{z_{n+1}-z_n}=\abs{e^{in\theta}}\,\abs{e^{i\theta}-1}=\abs{e^{i\theta}-1}=2\abs{\sin(\theta/2)},
 \]
-a fixed positive number (the last step is Problem~2.x-style algebra: $\abs{e^{i\theta}-1}^2=(\cos\theta-1)^2+\sin^2\theta=2-2\cos\theta=4\sin^2(\theta/2)$). So the differences do not tend to zero, and the sequence diverges. The phase $e^{-it\log p}$ that rotates at angular frequency $\log p$ in $t$ (Chapter~\ref{ch:complex}) is exactly this kind of object, and it never settles down.
+a fixed positive number. The last equality comes from
+\[
+\abs{e^{i\theta}-1}^2=(\cos\theta-1)^2+\sin^2\theta=\cos^2\theta-2\cos\theta+1+\sin^2\theta=2-2\cos\theta=4\sin^2(\theta/2),
+\]
+where the third step uses $\cos^2\theta+\sin^2\theta=1$ and the last step uses the half-angle identity $\cos\theta=1-2\sin^2(\theta/2)$, so that $2-2\cos\theta=2\cdot2\sin^2(\theta/2)$. Taking the square root gives $2\abs{\sin(\theta/2)}$, which is positive because $0<\theta/2<\pi$ for $\theta=\log2$. So the differences do not tend to zero, and the sequence diverges. The phase $e^{-it\log p}$ that rotates at angular frequency $\log p$ in $t$ (Chapter~\ref{ch:complex}) is exactly this kind of object, and it never settles down.
 
 \subsection{Monotone sequences}
 
@@ -296,7 +300,7 @@ The terms of $\sum_{k=1}^\infty\log(1+1/k)$ tend to zero. Does the series conver
 
 \section{The harmonic series diverges}\label{sec:series-harmonic}
 
-The \textbf{harmonic series} is $\sum_{k=1}^\infty\frac1k$, and its partial sums are the \textbf{harmonic numbers} $H_n=\sum_{k=1}^n\frac1k$. The name comes from music: a string vibrating in its $k$-th harmonic has wavelength $1/k$ of the fundamental (HRW~\cite{hrw}, standing waves).
+The \textbf{harmonic series} is $\sum_{k=1}^\infty\frac1k$, and its partial sums are the \textbf{harmonic numbers} $H_n=\sum_{k=1}^n\frac1k$. The name comes from music: a string fixed at both ends and vibrating in its $k$-th harmonic has a wavelength equal to $1/k$ of the fundamental wavelength (standing waves, HRW~\cite{hrw}), so the relative wavelengths $1,\tfrac12,\tfrac13,\dots$ are the terms of the series.
 
 \subsection{Oresme's proof}
 
@@ -345,7 +349,13 @@ A decreasing sequence bounded below converges (monotone convergence, \cref{sec:s
 \gamma=\lim_{n\to\infty}\bigl(H_n-\log n\bigr)=0.5772156649\ldots
 \label{eq:series-gamma}
 \end{equation}
-(The digits are a standard constant; our proof shows only that $0\le\gamma\le g_1=1$.) At $n=10$, $g_{10}=2.928968-2.302585=0.626383$, still decreasing toward $\gamma$. A sharper statement, $H_n=\log n+\gamma+\frac1{2n}+\order(n^{-2})$, follows from the Euler--Maclaurin comparison of sums and integrals developed in Chapter~\ref{ch:asymptotics}; we quote it here as an approximation useful for numbers.
+(The digits are a standard constant; our proof shows only that $0\le\gamma\le g_1=1$.) At $n=10$, $g_{10}=2.928968-2.302585=0.626383$, still decreasing toward $\gamma$. \begin{beyond}
+\textbf{A sharper form of $H_n$ (proved; proof beyond this book).} The Euler--Maclaurin summation formula, a refined comparison of sums with integrals, gives
+\[
+H_n=\log n+\gamma+\frac1{2n}+\order(n^{-2}).
+\]
+We do not prove it here; see Riley, Hobson and Bence~\cite{rhb} or Apostol~\cite{apostol}. We use it only to estimate numbers, never inside a proof.
+\end{beyond}
 
 \begin{sample}{When does $H_n$ first exceed 10?}
 Estimate the smallest $n$ with $H_n>10$, first from Oresme's bound and then from $\gamma$.
@@ -357,7 +367,7 @@ Estimate the smallest $n$ with $H_n>10$, first from Oresme's bound and then from
 \textbf{Step 3 (exact check):} Summing directly on a computer (CHECKS script) gives $H_{12366}<10<H_{12367}$.
 
 \[\boxed{n=12367}\]
-Oresme's bound is about 21 times too pessimistic, but it is a proof; the $\gamma$ estimate is accurate because the error $1/(2n)$ of the approximation is only $4\times10^{-5}$ here.
+Oresme's bound is about 21 times too pessimistic, but it is a proof; the $\gamma$ estimate is accurate because, by the sharper form quoted in the box above, the error of $H_n\approx\log n+\gamma$ is about $1/(2n)$, only $4\times10^{-5}$ here.
 \end{sample}
 
 \begin{keyideas}
@@ -434,7 +444,7 @@ the Riemann zeta function on the real axis; Chapter~\ref{ch:zeta} studies it in 
 \]
 
 \begin{sample}{Bracketing $\zeta(2)$}
-Compute $S_{10}=\sum_{k=1}^{10}1/k^2$ and use Eq.~\eqref{eq:series-tail-bounds} to bracket $\zeta(2)$. Compare with the known value $\zeta(2)=\pi^2/6$ (Euler's result, proved in Chapter~\ref{ch:fourier-series} by Parseval's theorem).
+Compute $S_{10}=\sum_{k=1}^{10}1/k^2$ and use Eq.~\eqref{eq:series-tail-bounds} to bracket $\zeta(2)$. Compare with the known value $\zeta(2)=\pi^2/6$ (Euler's result; it follows from Parseval's theorem applied to a suitable Fourier series, the tool of Chapter~\ref{ch:fourier-series}, and here we take it as a known value).
 
 \textbf{Step 1:} $S_{10}=1+0.25+0.111111+0.0625+0.04+0.027778+0.020408+0.015625+0.012346+0.01=1.549768$.
 
@@ -443,7 +453,7 @@ Compute $S_{10}=\sum_{k=1}^{10}1/k^2$ and use Eq.~\eqref{eq:series-tail-bounds} 
 \textbf{Step 3:} Therefore $1.549768+0.090909\le\zeta(2)\le1.549768+0.1$.
 
 \[\boxed{1.640677\le\zeta(2)\le1.649768}\]
-The true value $\pi^2/6=1.644934$ lies inside. The midpoint of the bracket, $1.645222$, is off by only $0.00029$, much better than $S_{10}$ itself (off by $0.095$). Chapter~\ref{ch:asymptotics} explains why averaging the two integral bounds works so well.
+The true value $\pi^2/6=1.644934$ lies inside. The midpoint of the bracket, $1.645222$, is off by only $0.00029$, much better than $S_{10}$ itself (off by $0.095$). Averaging works so well because the two integral bounds err in opposite directions: the lower bound misses the true tail by the small curved slivers between the rectangles and the curve on one side, the upper bound overshoots by similar slivers on the other side, and for a slowly varying $f$ these nearly cancel in the average.
 \end{sample}
 
 \begin{sample}{How fast does $\sum k^{-1/2}$ diverge?}
@@ -553,10 +563,10 @@ At $\sigma=\tfrac12$ the moduli are $k^{-1/2}$, whose sum diverges (Sample Probl
 \[
 \sum_{k=1}^nk^{-s}=\zeta(s)+\frac{n^{1-s}}{1-s}+\frac12n^{-s}+\epsilon_n,\qquad\epsilon_n\to0,
 \]
-where $\zeta(s)$ is the analytically continued zeta function of Chapter~\ref{ch:zeta}, and $\abs{\epsilon_n}$ is small compared with $\tfrac12 n^{-\sigma}$ once $n$ is large compared with $\abs t$. The proof uses Euler--Maclaurin summation; see Titchmarsh~\cite{titchmarsh}, Chapter~4 of the book being the relevant place for approximations of this kind, or Edwards~\cite{edwards}. Since $\abs{n^{1-s}}=n^{1-\sigma}\to\infty$, the partial sums do not converge: the series diverges everywhere in $0<\sigma<1$, including the critical line.
+where $\zeta(s)$ is the analytically continued zeta function of Chapter~\ref{ch:zeta}, and $\abs{\epsilon_n}$ is small compared with $\tfrac12 n^{-\sigma}$ once $n$ is large compared with $\abs t$. The proof uses Euler--Maclaurin summation; see Titchmarsh~\cite{titchmarsh}, in the discussion of approximate formulas for $\zeta(s)$ in the critical strip, or Edwards~\cite{edwards}. Since $\abs{n^{1-s}}=n^{1-\sigma}\to\infty$, the partial sums do not converge: the series diverges everywhere in $0<\sigma<1$, including the critical line.
 \end{beyond}
 
-\Cref{fig:series-spiral} shows both regimes. At $s=2+it_1$ the partial sums wind briefly and settle on a point. At the first zero $s=\rho_1=\tfrac12+it_1$, where $\zeta(\rho_1)=0$, the beyond box predicts $S_n\approx n^{1-s}/(1-s)$: a spiral around the origin with radius $\sqrt n/\abs{1-s}$ growing without bound. Numerically, at $n=1000$ the radius is $\sqrt{1000}/14.1436=2.236$, and $\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching the size $\tfrac12\cdot1000^{-1/2}=0.0158$ of the next term in the beyond box (a numerical observation, checked in CHECKS).
+\Cref{fig:series-spiral} shows both regimes. At $s=2+it_1$ the partial sums wind briefly and settle on a point. At the first zero $s=\rho_1=\tfrac12+it_1$, where $\zeta(\rho_1)=0$, the beyond box predicts $S_n\approx n^{1-s}/(1-s)$: a spiral around the origin with radius $\sqrt n/\abs{1-s}$ growing without bound. More precisely, because $\zeta(\rho_1)=0$, the box gives $S_n-\frac{n^{1-s}}{1-s}=\tfrac12n^{-s}+\epsilon_n$, whose modulus should be close to $\abs{\tfrac12n^{-s}}=\tfrac12n^{-1/2}$. Numerically, at $n=1000$ the radius is $\sqrt{1000}/14.1436=2.236$, and $\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching $\tfrac12\cdot1000^{-1/2}=0.0158$ (a numerical observation, checked in CHECKS).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/series_spiral.pdf}
@@ -655,7 +665,7 @@ Same terms, different order, half the sum. \Cref{fig:series-alternating} shows b
 \end{figure}
 
 \begin{pitfall}
-Never reorder, regroup in a way that changes which terms are paired, or ``sum by a different cutoff'' a series that is not absolutely convergent and expect the same answer. For an absolutely convergent series any order is fine (\cref{sec:series-absolute}); for a conditionally convergent one, the answer depends on the order. Sums over primes on the critical line are of the second kind (\cref{sec:series-truncation}).
+Never reorder, regroup in a way that changes which terms are paired, or ``sum by a different cutoff'' a series that is not absolutely convergent and expect the same answer. For an absolutely convergent series any order is fine (\cref{sec:series-absolute}); for a conditionally convergent one, the answer depends on the order. Sums over primes on the critical line are not absolutely convergent, so they fall outside the safe first kind (\cref{sec:series-truncation}).
 \end{pitfall}
 
 \begin{checkpoint}
@@ -793,7 +803,7 @@ Show that $f_2^\infty(t)$ converges absolutely for every real $t$ and bound $\ab
 \abs{f_2^\infty(t)-f_2(t)}\le\frac1\pi\sum_{m=4}^\infty\frac{2^{-m/2}}m=\frac{1.227947-1.074958}{\pi}=\frac{0.152989}{\pi}.
 \]
 
-\textbf{Step 4 (a cruder geometric bound, for comparison):} Using $1/m\le1/4$ for $m\ge4$ and Eq.~\eqref{eq:series-geom-sum}: $\frac1{4\pi}\sum_{m\ge4}2^{-m/2}=\frac1{4\pi}\frac{2^{-2}}{1-2^{-1/2}}=0.067924$.
+\textbf{Step 4 (an alternative, cruder bound, for comparison):} Using $1/m\le1/4$ for $m\ge4$ and Eq.~\eqref{eq:series-geom-sum}: $\frac1{4\pi}\sum_{m\ge4}2^{-m/2}=\frac1{4\pi}\frac{2^{-2}}{1-2^{-1/2}}=0.067924$. This is also a valid upper bound, but it is larger than the Step~3 value $0.152989/\pi=0.048698$, so the Step~3 bound is the tighter one and is the one we keep.
 
 \begin{equation}
 \boxed{\abs{f_2^\infty(t)-f_2(t)}\le0.048698\ \text{ for all } t}
@@ -1014,7 +1024,7 @@ divergent & $\sum k^{-1/2-it}$ & no sum to approach & meaningless\\
 Which case is it? Look at the sum of moduli bounds, power by power.
 \begin{itemize}
 \item $m\ge3$: the moduli are at most $\frac{p^{-m/2}}{m\pi}$, and their total over all primes and all $m\ge3$ is finite (Problem~27 bounds it by $0.584$). This part is absolutely convergent: Case 1.
-\item $m=1$ and $m=2$: the moduli are $\frac{p^{-1/2}}{\pi}$ and $\frac{p^{-1}}{2\pi}$, and their sums over primes diverge (see the box). So the double sum is not absolutely convergent, and no tail bound from moduli exists. It is in fact not convergent in any ordinary sense at most $t$ (Chapter~\ref{ch:explicit-formula} discusses this), so truncating it to a finite prime set is a Case 3 truncation.
+\item $m=1$ and $m=2$: the moduli are $\frac{p^{-1/2}}{\pi}$ and $\frac{p^{-1}}{2\pi}$, and their sums over primes diverge (see the box). So the double sum is not absolutely convergent, and no tail bound from moduli exists. Whether, and in what order of summation, it converges at all on the critical line is not something the tools of this chapter can settle; Chapter~\ref{ch:explicit-formula} treats it as a formal, heuristic object. What we can say is that it is not absolutely convergent, so truncating it to a finite prime set comes with no tail bound from moduli, and it must be handled like Case 3: a truncation justified only by a separate argument.
 \end{itemize}
 
 \begin{beyond}
@@ -1050,6 +1060,7 @@ a sum of $3\abs P$ sinusoids. It is truncated in two ways.
 \begin{pycode}
 import numpy as np, qmnt
 n = np.arange(401, 501)                    # holdout RE5
+# the null predicts zero fluctuation, so its corr is undefined (nan)
 print("null", qmnt.score(qmnt.smooth_zeros(n), n))
 for k in [1, 3, 6, 25]:                    # prime budgets of Table V
     P = qmnt.first_primes(k)

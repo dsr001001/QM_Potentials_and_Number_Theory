@@ -24,7 +24,7 @@ for d in (CH_DIR, FIG_DIR, CHK_DIR, WORK):
     os.makedirs(d, exist_ok=True)
 
 DRAFT_MODEL = "claude-opus-5-5"
-CRITIC_MODEL = "claude-sonnet-5-5"
+CRITIC_MODEL = "claude-fable-5-2"
 REVISE_MODEL = "claude-opus-5-5"
 
 CHAPTERS = [(int(m.group(1)), m.group(2), m.group(3).strip())

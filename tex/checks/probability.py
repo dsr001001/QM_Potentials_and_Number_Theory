@@ -43,7 +43,6 @@ assert abs(special.erf(2/math.sqrt(2)) - 0.9545) < 1e-4
 assert abs(special.erf(3/math.sqrt(2)) - 0.9973) < 1e-4
 assert abs(stats.norm.ppf(0.975) - 1.960) < 1e-3
 assert abs(special.erf(1.96/math.sqrt(2)) - 0.95) < 1e-3
-# normalization, mean, variance of standard normal (numerical instance)
 I0 = integrate.quad(lambda u: np.exp(-u**2/2), -np.inf, np.inf)[0]
 assert abs(I0 - math.sqrt(2*math.pi)) < 1e-9
 I2 = integrate.quad(lambda u: u**2*np.exp(-u**2/2), -np.inf, np.inf)[0]
@@ -53,7 +52,6 @@ assert abs(I2 - math.sqrt(2*math.pi)) < 1e-9
 for nn, val in [(10, 0.348678), (100, 0.366032), (1000, 0.367695)]:
     assert abs((1 - 1/nn)**nn - val) < 1e-6
 assert abs(math.exp(-1) - 0.367879) < 1e-6
-# remainder bound s^2/(n-s) instance
 s_, n_ = 1.0, 100
 rem = -n_*math.log(1 - s_/n_) - s_
 assert 0 <= rem <= s_**2/(n_ - s_)
@@ -63,10 +61,9 @@ assert abs((1 - math.exp(-0.1)) - 0.0952) < 1e-4
 assert abs(math.exp(-0.1) - 0.904837) < 1e-6
 assert abs(math.exp(-2) - 0.1353) < 1e-4
 assert abs(math.log(2) - 0.693147) < 1e-6
-# mean and variance of exponential (Problem 16)
 m1 = integrate.quad(lambda s: s*np.exp(-s), 0, np.inf)[0]
 m2 = integrate.quad(lambda s: s**2*np.exp(-s), 0, np.inf)[0]
-assert abs(m1 - 1) < 1e-9 and abs(m2 - 2) < 1e-9
+assert abs(m1 - 1) < 1e-9 and abs(m2 - 2) < 1e-9   # Problem 16
 
 # ---------- Sample Problem: correlation by hand ----------
 x = np.array([1, 2, 3, 4, 5.]); y = np.array([2, 1, 4, 3, 5.])
@@ -116,15 +113,15 @@ ms = (a1**2 + a2**2 + a3**2)/2
 assert abs(ms - 0.029200) < 1e-6
 rms_re2 = math.sqrt(ms)
 assert abs(rms_re2 - 0.17088) < 1e-5
+# m=1 term carries 87% of the mean square (autocorrelation discussion)
+assert abs(round(100*a1**2/(a1**2 + a2**2 + a3**2)) - 87) < 1e-12
 # sampled at smooth zeros 401-500: close to the paper's probe-null 0.1708
 nh = np.arange(401, 501)
 yre2 = qmnt.Nfl(qmnt.smooth_zeros(nh), [2], mmax=3)
 assert abs(qmnt.rms(yre2) - 0.1708) < 0.01
-# window covers about 15 periods
 sh = qmnt.smooth_zeros(np.array([401, 500]))
 assert 13 < (sh[1] - sh[0])/(2*math.pi/math.log(2)) < 17
 assert abs(2*math.pi/math.log(2) - 9.07) < 0.01
-# period in levels roughly 6-7 near these heights
 gmid = qmnt.mean_gap(np.array([450]))[0]
 assert 6.0 < (2*math.pi/math.log(2))/gmid < 7.5
 
@@ -166,75 +163,59 @@ assert abs(r6 - 0.074) < 0.002 and abs(c6 - 0.96) < 0.01
 r2, c2 = qmnt.score(qmnt.oracle_zeros(n1, [2]), n1)   # Problem 26
 assert abs(r2 - 0.198) < 0.002 and abs(c2 - 0.66) < 0.01
 assert abs(0.263*math.sqrt(1 - c2**2) - 0.1976) < 0.01
+# paper interval [-0.21, +0.08] has half-width about 0.15
+assert abs((0.08 - (-0.21))/2 - 0.145) < 1e-12
 
 # ---------- Problems ----------
-# P1
-assert abs(3/6 - 0.5) < 1e-12
-# P2
-L2 = np.array([2, 4, 4, 4, 5, 5, 7, 9.])
+assert abs(3/6 - 0.5) < 1e-12   # P1
+L2 = np.array([2, 4, 4, 4, 5, 5, 7, 9.])   # P2
 assert L2.mean() == 5 and abs(L2.std() - 2) < 1e-12
 assert abs(L2.std(ddof=1) - 2.138) < 1e-3
 assert abs(np.mean(L2**2) - 29) < 1e-12 and abs(math.sqrt(29) - 5.385) < 1e-3
-# P3
-e1 = np.array([0.2, -0.2, 0.2, -0.2]); e2 = np.array([0.2]*4)
+e1 = np.array([0.2, -0.2, 0.2, -0.2]); e2 = np.array([0.2]*4)   # P3
 assert abs(np.sqrt(np.mean(e1**2)) - 0.2) < 1e-12 and abs(e1.std() - 0.2) < 1e-12 and abs(e1.mean()) < 1e-12
 assert abs(np.sqrt(np.mean(e2**2)) - 0.2) < 1e-12 and abs(e2.std()) < 1e-12
-# P4 numerical instance
-X = np.array([1., 2, 5, 7]); assert abs(np.var(3*X + 4) - 9*np.var(X)) < 1e-12
-# P5
-assert abs((1 - math.exp(-0.5)) - 0.3935) < 1e-4 and abs(math.exp(-0.5) - 0.606531) < 1e-6
-# P6
-mean_u = integrate.quad(lambda x: x, -0.5, 0.5)[0]
+X = np.array([1., 2, 5, 7]); assert abs(np.var(3*X + 4) - 9*np.var(X)) < 1e-12   # P4
+assert abs((1 - math.exp(-0.5)) - 0.3935) < 1e-4 and abs(math.exp(-0.5) - 0.606531) < 1e-6   # P5
+mean_u = integrate.quad(lambda x: x, -0.5, 0.5)[0]   # P6
 ms_u = integrate.quad(lambda x: x**2, -0.5, 0.5)[0]
 assert abs(mean_u) < 1e-12 and abs(math.sqrt(ms_u) - 0.2887) < 1e-4
-# P7
-assert abs(1 - 0.9545 - 0.0455) < 1e-12
-# P8
-assert abs(np.corrcoef([1, 2, 3, 4], [2, 1, 4, 3])[0, 1] - 0.6) < 1e-12
-# P9 instance
-xa = np.array([1., 3, 2, 7]); ya = np.array([2., 5, 1, 4])
+assert abs(1 - 0.9545 - 0.0455) < 1e-12   # P7
+assert abs(np.corrcoef([1, 2, 3, 4], [2, 1, 4, 3])[0, 1] - 0.6) < 1e-12   # P8
+xa = np.array([1., 3, 2, 7]); ya = np.array([2., 5, 1, 4])   # P9
 assert abs(np.corrcoef(-2*xa + 1, ya)[0, 1] + np.corrcoef(xa, ya)[0, 1]) < 1e-12
-# P10
-assert abs(1/9 - 0.111) < 1e-3 and abs((1 - special.erf(3/math.sqrt(2))) - 0.0027) < 1e-4
-# P11
-zsc = 0.5/0.263
+assert abs(1/9 - 0.111) < 1e-3 and abs((1 - special.erf(3/math.sqrt(2))) - 0.0027) < 1e-4   # P10
+zsc = 0.5/0.263   # P11
 assert abs(zsc - 1.901) < 1e-3
 assert abs(2*stats.norm.sf(zsc) - 0.0573) < 2e-4
-# P12
-r12 = autocorr([1, 1, -1, -1, 1, 1, -1, -1], 2)
+r12 = autocorr([1, 1, -1, -1, 1, 1, -1, -1], 2)   # P12
 assert abs(r12[1] - 0.125) < 1e-12 and abs(r12[2] + 0.75) < 1e-12
-# P13
-assert abs(0.25/20 - 0.0125) < 1e-12 and abs(1.96*0.0125 - 0.0245) < 1e-12
-# P14
-assert abs(38/(1000*0.1) - 0.38) < 1e-12
-# P19
-assert abs(0.263*math.sqrt(1 + 0.16**2) - 0.2663) < 1e-4
+assert abs(0.25/20 - 0.0125) < 1e-12 and abs(1.96*0.0125 - 0.0245) < 1e-12   # P13
+assert abs(38/(1000*0.1) - 0.38) < 1e-12   # P14
+assert abs(0.263*math.sqrt(1 + 0.16**2) - 0.2663) < 1e-4   # P19
 assert abs(0.263*math.sqrt(1 + 0.62**2) - 0.3094) < 1e-4
-# P20: probe inference
-yv, ev, rr = 0.1708, 0.1958, 0.07
+yv, ev, rr = 0.1708, 0.1958, 0.07   # P20
 bq = -2*rr*yv; cq = yv**2 - ev**2
 sp_ = (-bq + math.sqrt(bq**2 - 4*cq))/2
 assert abs(sp_ - 0.1084) < 2e-4
 assert abs(sp_/yv - 0.635) < 2e-3
 assert abs(np.sqrt(yv**2 + sp_**2 - 2*rr*yv*sp_) - ev) < 1e-12
-# P22
-assert abs(-0.2/math.sqrt((1 - 0.2)/2) - (-0.316)) < 1e-3
+assert abs(-0.2/math.sqrt((1 - 0.2)/2) - (-0.316)) < 1e-3   # P22
 assert abs(-0.41*math.sqrt(0.5) - (-0.290)) < 1e-3
-# P23 and text (correlation scatter)
-assert abs((1 - 0.96**2)/10 - 0.00784) < 1e-12
+assert abs((1 - 0.96**2)/10 - 0.00784) < 1e-12   # P23
 assert abs(1.96*0.00784 - 0.0154) < 1e-4
 assert abs(0.96 - 0.0154 - 0.945) < 1e-3 and abs(0.96 + 0.0154 - 0.975) < 1e-3
-assert abs(1.96*(1 - 0.07**2)/10 - 0.195) < 1e-3   # "about +-0.2 near r=0"
-# P24
-xe = np.random.default_rng(0).exponential(1.0, 10000)
+assert abs(1.96*(1 - 0.07**2)/10 - 0.195) < 1e-3   # about +-0.2 near r=0
+xe = np.random.default_rng(0).exponential(1.0, 10000)   # P24
 assert abs(xe.mean() - 1) < 0.05 and abs(xe.var() - 1) < 0.1
-# P27
-om = math.log(2); P = 2*math.pi/om
+om = math.log(2); P = 2*math.pi/om   # P27
 tt = np.linspace(0, 1000*P, 2_000_001)[:-1]
 re2 = -(1/math.pi)*sum(np.sin(m*tt*om)/(m*2**(m/2)) for m in (1, 2, 3))
 assert abs(np.sqrt(np.mean(re2**2)) - 0.1709) < 2e-4
-# P28: Cov(cos, sin) = 0 for uniform phase
-cv = integrate.quad(lambda th: math.cos(th)*math.sin(th)/(2*math.pi), 0, 2*math.pi)[0]
+cv = integrate.quad(lambda th: math.cos(th)*math.sin(th)/(2*math.pi), 0, 2*math.pi)[0]   # P28
 assert abs(cv) < 1e-12
+# P29 numerical instance of |r_k| <= 1
+xr = np.random.default_rng(4).normal(size=50)
+assert np.all(np.abs(autocorr(xr, 20)) <= 1 + 1e-12)
 
-print("all checks passed")
+print('all checks passed')
