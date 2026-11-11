@@ -1,0 +1,226 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "So failure of monotonicity is possible but rare for the oracle",
+  "problem": "This generalizes from the six-prime rms slope (0.415) to 'the oracle' as a whole. Using the chapter's own rms formula, the 25-prime oracle of Table V has rms slope of about 0.7, comparable with Nsm' of about 0.75, and control A with 300 primes exceeds it (about 1.2). Non-monotone stretches of G are therefore common for the larger budgets. Even for six primes, 0.415 against 0.75 is a roughly 1.8-sigma excursion, so 'well below' and 'rare' are too strong. The chapter also conflates non-monotonicity with multiple roots in the bracket.",
+  "fix": "Restrict the statement to six primes and soften it ('uncommon'). Add that for 25 or 300 primes the rms of Nfl' is comparable with or larger than Nsm', so G is often locally non-monotone. Explain that this need not produce several roots inside the bracket: G approximates a staircase and crosses n-1/2 steeply near the zero, with its flat or wiggly stretches lying near integer values. State that the paper reports root ambiguity only for the B-900 row."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Control B shows that amplitudes, unlike frequencies, are easy to learn from 400 zeros",
+  "problem": "'Unlike frequencies' contradicts the chapter's own central result: control C2 learns the frequencies from the same 400 zeros (24 frequencies, 0.034/+0.99). Control B says nothing about how hard frequencies are to learn.",
+  "fix": "Replace with: 'Control B shows that, once the frequencies are given, the amplitudes are easy to learn from 400 zeros'. Delete 'unlike frequencies'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "In B every column is a correct arithmetic frequency, so any combination continues in roughly the right way beyond the window.",
+  "problem": "This is stated as fact, but the main text has just called the same explanation 'plausible, not demonstrated' and noted that wrong weights can continue poorly. 'Any combination continues in roughly the right way' is false in general, and the paper gives no explanation for this row.",
+  "fix": "Rewrite as a hedge: 'A plausible reading (ours, not the paper's): B's columns all carry frequencies present in the target, so a regularized combination has a chance of continuing; C1's grid columns do not contain those frequencies exactly. The paper does not give a mechanism.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Many fitted parameters with a generic prior do not generalize, whatever the basis.",
+  "problem": "'Whatever the basis' goes beyond the evidence. The paper tested three bases for the potential on one background plus one uniform Fourier grid, and explicitly limits its claim to the tested parametrizations and optimizer.",
+  "fix": "Change to: 'Many fitted parameters with a generic prior did not generalize in any of the generic bases tested (cosine, Chebyshev, hat potentials; the uniform Fourier grid C1).'"
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "comfortably and have correlation above $0.95$ (CHECKS verifies both)",
+  "problem": "The chapter text repeatedly points the reader to 'CHECKS' (also 'see CHECKS', 'all verified in CHECKS', 'checked in CHECKS', '(CHECKS)'). That is the machine-check script of the production process, not something the reader has. This passage also gives no actual output for the control B listing, only inequalities.",
+  "fix": "Remove every mention of CHECKS from the chapter text; say 'running the listing gives ...' instead. Quote the actual rms and correlation that the control B listing produces, and assert those values in the checks script."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "so the comparison holds whichever row you use",
+  "problem": "The sample is checking the factor of about 1.3. The worst case just cited is 0.273/0.242 = 1.13, which is below 1.3. What holds 'whichever row you use' is only that one prime beats the operator, not the factor.",
+  "fix": "Replace with: 'so one prime still beats each of them whichever row is used (worst case 0.273/0.242 = 1.13); the factor of about 1.3 applies to matched or neighboring holdouts, e.g. 0.273/0.198 = 1.38 for the 1--350 fit against the 401--500 row.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "a ratio that changes by about a factor $1.4$ over a factor $25$ in height",
+  "problem": "The factor 25 is in zero index (400 to 10^4), not in height. In height t the range is about 680 to 9878, a factor of about 14.5. The factor 1.4 also applies only to the 6- and 25-prime columns; it is 1.09 for {2} and 1.30 for three primes.",
+  "fix": "Write: 'a ratio that changes by a factor of 1.1 to 1.4, depending on the prime budget, over a factor of 25 in zero index (about 15 in height t)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "For C1 the minimum-norm exact fit extrapolates poorly; the forward split detects this in the validation block",
+  "problem": "This is stated as fact in the answer to Problem 23. The paper does not report C1's selected ridge strength or the behavior of its unregularized fit, and the main text presents the same mechanism only conditionally ('If the validation block shows ...').",
+  "fix": "Hedge: 'If, as is plausible, the minimum-norm fit extrapolates poorly, the forward split would select a large lambda ... (the paper does not report the selected value).'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "C1's predictions are shrunk to small amplitude, near the optimal",
+  "problem": "The paper does not report the amplitude of C1's predictions. Solving the chapter's own variance identity with rms 0.258, rho 0.28 and sigma_Y 0.263 gives sigma_P of about 0.02 or 0.13, not specifically the optimum 0.074. The same inference recurs later as 'a weak, heavily shrunk prediction'.",
+  "fix": "Say: 'This is consistent with predictions of small amplitude (our inference from the two reported numbers; the paper does not report the amplitude).' Apply the same hedge in the C1 section."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "rather than on solved zeros; that is our simplification, not the paper's procedure",
+  "problem": "This implies the paper validates on solved zeros. The paper only says ridge strength and K are chosen by a forward split (first 75% fit, last 25% validate); it does not specify the validation metric in its text.",
+  "fix": "Rephrase: 'it validates lambda on the residual of y in the validation block; the paper's text does not specify the validation metric (see the Zenodo record), so this choice is ours.' Adjust the following 'unless you reproduce the paper's validation scoring exactly' to match."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "rad, more than a full cycle: the dominant term would be completely dephased",
+  "problem": "The preceding arithmetic is slightly off: 0.0047 x 1600 = 7.5 (7.55 with pi/666), not 7.6.",
+  "fix": "Replace '7.6' with '7.5' and tighten the corresponding assertion in the checks script."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\cite{theiler,schreiber} for surrogates; \\cite{zenodo} for the reconstruction record",
+  "problem": "This bullet is headed 'References used in Sec. IV', but the paper cites Theiler and Schreiber--Schmitz in Sec. III (permutation and surrogate tests), not in Sec. IV. Sec. IV cites only Landau, Gonek and the Zenodo record.",
+  "fix": "Change to 'Landau and Gonek and the Zenodo record are cited in Sec. IV; the surrogate methods (Theiler; Schreiber--Schmitz) are cited in Sec. III and underlie step 23.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "key anchors $K=24$ and $K=43$",
+  "problem": "This is listed under 'Appendix A step 23'. In the paper, K = 24 and K = 43 appear in the 'Key anchors' paragraph (revision anchors) and in Sec. IV, not in step 23.",
+  "fix": "Move this to a separate bullet: 'Appendix A, Key anchors: sparse model K = 24 and K = 43.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Root ambiguity arises when $|F'|$ exceeds $\\Nsm'$",
+  "problem": "The condition is imprecise. G can only decrease where F' < -Nsm' (the sign matters), and that is necessary but not sufficient for several roots in the bracket, as the chapter's own Problem 21 answer shows.",
+  "fix": "Write: 'Root ambiguity can arise only where F' < -Nsm' (G decreasing); several roots then occur if such an excursion straddles the level n-1/2.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Step 5: weights of the faintest included ones.",
+  "problem": "w(113) = 0.0941 is not among the faintest included prime powers. w(27) = 0.0642 and w(49) = 0.0714 are fainter and are not listed, and w(27) is the closest to the threshold after 16.",
+  "fix": "List w(16) = 0.0625, w(27) = 0.0642, w(211) = 0.0688 and w(49) = 0.0714 as the faintest included, and add assertions for w(27) and w(49) to the checks script."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "they look like the real signal in every respect except arithmetic",
+  "problem": "The paper describes the two sparse surrogate families only briefly (displaced prime frequencies; random base frequencies). 'In every respect except arithmetic' is not established by the paper's text.",
+  "fix": "Replace with 'they share the sparse, harmonic structure of the explicit formula but not its arithmetic frequencies (details in the reconstruction record)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "same power spectrum as the real fluctuation sequence, phases scrambled, no arithmetic content in the phases",
+  "problem": "The paper says only 'sorted phase-randomized surrogates'. Sorting changes the sequence, so the power spectrum is no longer exactly preserved. The stated reason for sorting is the chapter's guess, presented as fact.",
+  "fix": "Say 'phase-randomized surrogates (power spectrum preserved before sorting), then sorted, presumably so the surrogate zeros are increasing; the paper's text gives no further detail (see the Zenodo record).'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "and has no local description that implies its own continuation",
+  "problem": "This is dubious as stated. A finite sum of sinusoids is fully determined by a finite window; that is exactly how C2 succeeds. The sentence reads as a fact about almost-periodic functions when it is really about the potential family's local addressing of levels.",
+  "fix": "Rephrase: 'continuing such a function requires identifying its frequencies; a family that addresses levels locally through turning points has no mechanism, under the protocol tested, that encodes those frequencies (heuristic reading).'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "which prime powers it finds is explained partly by their weights",
+  "problem": "The weight-and-resolution account is the chapter's own heuristic. The paper does not explain which prime powers are selected, and the sample itself admits the reading cannot be tested. The Key Idea states it as established.",
+  "fix": "Change to 'which prime powers it finds is consistent with (our heuristic) their weights and the window's resolution'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "That is why the paper solves the level equation by root finding instead of stepping once from",
+  "problem": "This attributes a motivation to the paper that it does not state. The paper simply defines predicted zeros as solutions of the level equation.",
+  "fix": "Write: 'This shows why solving the level equation, as the paper does, matters: a single linearized step from s_n would be badly off.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "which is why the matching uses $q\\le3000$",
+  "problem": "The paper does not give a reason for the cutoff q <= 3000; the link to e^8 of about 2981 is the chapter's inference.",
+  "fix": "Write 'which is presumably why the matching uses q <= 3000 (the search range ends at omega = 8)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Four controls (A, B, C1, C2 of Table~IV) settle this.",
+  "problem": "'Settle' is stronger than the paper, which limits the conclusion to the tested families and optimizer and calls the explanation heuristic.",
+  "fix": "Use 'address this' or 'separate the two for the families tested'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Even at the worst choice of root the score would be at most $0.192$",
+  "problem": "The paper's 'varies by at most 0.012' is read as plus or minus 0.012 about 0.180, here and in the answer to Problem 19 ([0.168, 0.192]). It could equally mean a total spread of 0.012. The interpretation is not flagged.",
+  "fix": "Add: 'reading \"varies by at most 0.012\" in the most pessimistic way, as plus or minus 0.012 around the reported value'. Put the same caveat in the Problem 19 answer."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "They nearly do, so we use the null as an approximation to",
+  "problem": "The claim that the true fluctuations on the holdout average nearly to zero is a numerical statement that the checks script does not verify.",
+  "fix": "Quote the actual mean of the fluctuations of zeros 401--500 (computed with qmnt.fluct) and assert it in the checks script."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the periodogram becomes an irregular, roughly flat noise floor",
+  "problem": "The answer to computational Problem 15 (the permuted periodogram, seed 1) describes a result that the checks script does not compute. The Problem 11 answer ('where it also performs well' on zeros 1--400) likewise gives no number and is unchecked.",
+  "fix": "Add checks: the permuted-y periodogram has a peak-to-median ratio far below the real one; and compute and quote the six-prime rms/corr on zeros 1--400 for the Problem 11 answer."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\label{prob:paper-arithmetic-rmsslope}Starting from Eq.~\\eqref{eq:paper-arithmetic-dnfl}, show that the mean square of",
+  "problem": "The label prefix 'prob:' is not among the allowed prefixes (sec:, eq:, fig:, tab: plus slug). The same applies to prob:paper-arithmetic-selberg. Also, \\ref to a label inside \\prob will give the section number unless \\prob steps a referable counter, so 'Problem~\\ref{...}' may print the wrong number.",
+  "fix": "Remove both prob: labels and refer to the problems in words or by explicit number ('Problem 28', 'Problem 20')."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "are no better than the \"no fluctuation\" null",
+  "problem": "Straight double quotes are used throughout the chapter. In LaTeX a straight opening quote is typeset as a closing quote, so every quotation opens with the wrong glyph.",
+  "fix": "Replace every \"...\" in running text with ``...'' (leave the code listings unchanged)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Taylor's theorem with remainder (Chapter~\\ref{ch:asymptotics}) applied to",
+  "problem": "The Lagrange remainder form (the 'some xi between') is not in the contracted content of Chapter 4 or any assumed chapter, so the reader may never have seen it.",
+  "fix": "Either state the theorem in one sentence here ('for a twice-differentiable f, f(s+d) = f(s) + d f'(s) + (1/2) d^2 f''(xi) for some xi between s and s+d, a consequence of the mean value theorem'), or use the second-order Taylor approximation and state the neglected cubic term."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Least squares pins the phase where the data are, roughly at the window center",
+  "problem": "This is asserted without justification. A student cannot see why the fitted phase offset equals -delta-omega times t_c.",
+  "fix": "Add a short justification: the fit minimizes the mean square of e(t) over the window; for small phase error this is proportional to the window average of (phi_0 + delta-omega t)^2, which is minimized over phi_0 when the phase error vanishes at the mean t of the samples, i.e. near t_c."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Treating the $\\log q$ as scattered at random (a heuristic)",
+  "problem": "The formula Pr = 1 - e^{-lambda} (the Poisson probability of at least one point) is used without derivation or a reference to the chapter where it was obtained.",
+  "fix": "Add: 'for points scattered independently at mean count lambda per window, the probability of an empty window is e^{-lambda} (the Poisson process of the probability chapter), so ...'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Estimate the expected number $\\lambda(\\omega)$ of prime powers $q$ with",
+  "problem": "The symbol lambda is already used in this chapter (and fixed in the bible) for the ridge / Levenberg--Marquardt strength. Reusing it for an expected count invites confusion, especially next to Problem 9's 'lambda approx 0.21'.",
+  "fix": "Rename the expected count, e.g. nu(omega), in the sample and in the answer to Problem 9."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "four controls of increasing ignorance about arithmetic (A, B, C1, C2",
+  "problem": "The listed order is not one of increasing ignorance. By the paper's three levels, C2 (sparsity prior) sits at level (ii) and C1 (generic) at level (iii). The same Key Ideas box says every claim uses nulls 0.263 and 0.274, but Table V's other holdouts have nulls 0.270 to 0.296.",
+  "fix": "Write 'four controls that differ in how much of the form they are given (A, B, then C2, then C1 in order of decreasing prior)', and 'each claim is measured against the null of its own holdout (0.263 on 401--500, 0.274 on 801--1000, 0.270--0.296 in Table V)'."
+ }
+]

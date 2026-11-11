@@ -1,0 +1,151 @@
+{
+ "patches": [
+  {
+   "old": "It is defined only implicitly, through Eq.~(2) of the paper, and",
+   "new": "It is defined only implicitly, through Eq.~(2) of the paper \\cite{soniR1}, and"
+  },
+  {
+   "old": "The ``known semiclassical weakness'' at low $n$ mentioned in Sec.~II~B is the WKB error",
+   "new": "The excess error at low $n$ that Sec.~II~B calls ``the known semiclassical weakness of the construction'' is the WKB error"
+  },
+  {
+   "old": "Finally, the coverage law of Sec.~III and the remark in Sec.~V that the prime-2 period spans ``6--7 levels'' both use the WKB density of states.",
+   "new": "Finally, the coverage law of Sec.~III and the remark in Sec.~V that the prime-2 period spans 6--7 levels are both read in this book through WKB ideas: the local wavenumber for the coverage law and the mean level spacing for the prime-2 period."
+  },
+  {
+   "old": "\\paragraph{The amplitude--phase form.} Any complex solution can be written as a real amplitude $A(x)>0$ times a phase factor:",
+   "new": "\\paragraph{The amplitude and phase form.} We look for solutions of the form of a real amplitude $A(x)>0$ times a phase factor:"
+  },
+  {
+   "old": "with $A$ and $S$ real functions. For a free particle, $A$ is constant and $S=kx$.",
+   "new": "with $A$ and $S$ real functions. Such solutions never vanish, so they describe travelling waves; real standing-wave solutions, which have nodes, will be built below by adding two of them. (In this chapter only, $A(x)$ and $S(x)$ denote the WKB amplitude and phase; they are unrelated to the matrix $A_{nk}$ and to the fluctuation $S(t)$ used elsewhere in the book.) For a free particle, $A$ is constant and $S=kx$."
+  },
+  {
+   "old": "This has a physical meaning. In our units the probability current of Chapter~\\ref{ch:schrodinger} is $j=2\\Im(\\psi^*\\psi')$. For the form \\cref{eq:wkb-ansatz} this equals $2A^2S'$, so \\cref{eq:wkb-amp} says",
+   "new": "This has a physical meaning. The \\emph{probability current} $j=(\\hbar/m)\\Im(\\psi^*\\psi')$ measures the rate at which probability flows past a point. (We take this definition on trust here; it follows from the time-dependent Schr\\\"odinger equation.) With $\\hbar=1$ and $m=\\tfrac12$ it is $j=2\\Im(\\psi^*\\psi')$. For the form \\cref{eq:wkb-ansatz}, $\\psi^*\\psi'=Ae^{-iS}(A'+iAS')e^{iS}=AA'+iA^2S'$, whose imaginary part is $A^2S'$. So $j=2A^2S'$, and \\cref{eq:wkb-amp} says"
+  },
+  {
+   "old": "Bound-state wavefunctions in one dimension can be chosen real (Chapter~\\ref{ch:bound-states}). Adding the two solutions in \\cref{eq:wkb-psi} with suitable complex coefficients gives the general real WKB solution",
+   "new": "Bound-state wavefunctions in one dimension can be chosen real (Chapter~\\ref{ch:bound-states}). Because \\cref{eq:wkb-tise2} is linear, $\\tfrac12e^{i\\varphi}\\psi_++\\tfrac12e^{-i\\varphi}\\psi_-$ is also a solution, for any real $\\varphi$. Writing $\\theta(x)=\\int^xk(x')\\,\\dd x'$, it equals\n\\[\n\\frac{C}{\\sqrt k}\\cdot\\frac12\\Bigl(e^{i(\\theta+\\varphi)}+e^{-i(\\theta+\\varphi)}\\Bigr)=\\frac{C}{\\sqrt k}\\cos(\\theta+\\varphi),\n\\]\nby $\\cos\\alpha=(e^{i\\alpha}+e^{-i\\alpha})/2$ (Chapter~\\ref{ch:complex}). This is the real WKB solution"
+  },
+  {
+   "old": "this is the same as $\\abs{\\lambda'}\\ll2\\pi$: the wavelength changes by much less than itself over one wavelength.",
+   "new": "this is the same as $\\abs{\\lambda'}\\ll2\\pi$. Over one wavelength the wavelength changes by about $\\abs{\\lambda'}\\lambda$, so, up to the factor $2\\pi$, the condition says that this change is small compared with $\\lambda$ itself."
+  },
+  {
+   "old": "For the smooth wells of this chapter it holds wherever \\cref{eq:wkb-cond} holds, and like \\cref{eq:wkb-cond} it fails near turning points.",
+   "new": "For smooth wells at high energy it holds wherever \\cref{eq:wkb-cond} holds comfortably. At low energy it can fail even where $V'=0$: for $V=x^2$ at $x=0$, where $V''=2$ and $E-V=E$, it requires $E^2\\gg\\tfrac12$. Like \\cref{eq:wkb-cond}, it fails near turning points. (The kink of $V=\\abs x$ at $x=0$, where $V''$ is not defined, is a separate issue, discussed in the answer to Problem~6.)"
+  },
+  {
+   "old": "the kink at the origin is discussed in Problem~6",
+   "new": "the kink at the origin is discussed in Problem~6 and its answer"
+  },
+  {
+   "old": "It has one solution, called $\\mathrm{Ai}(z)$, that decays as $z\\to+\\infty$ (deep into the forbidden region). The bound state must be proportional to it near $b$.",
+   "new": "A second-order equation has two independent solutions. We take on trust (see the box below) that one of them, called $\\mathrm{Ai}(z)$, decays as $z\\to+\\infty$ (deep into the forbidden region), and that every solution independent of it, such as the standard one called $\\mathrm{Bi}(z)$, grows there. The bound state must therefore be proportional to $\\mathrm{Ai}$ near $b$."
+  },
+  {
+   "old": "\\textbf{Taken on trust: the Airy asymptotic forms.}",
+   "new": "\\textbf{Taken on trust: the decaying solution $\\mathrm{Ai}$ and its asymptotic forms.}"
+  },
+  {
+   "old": "the Airy equation $\\psi_{zz}=z\\psi$ with",
+   "new": "the Airy equation $\\dd^2\\psi/\\dd z^2=z\\psi$ with"
+  },
+  {
+   "old": "Each smooth turning point contributes $\\pi/4$ and each hard wall $\\pi/2$. Repeating Steps 1--4 with the phases $\\varphi_a$ and $\\varphi_b$ at the two ends gives $\\Phi-\\varphi_a-\\varphi_b=(n-1)\\pi$:",
+   "new": "Each smooth turning point contributes $\\pi/4$ and each hard wall $\\pi/2$. Repeat Steps 1--4 with phase $\\varphi_a$ at $a$ and $\\varphi_b$ at $b$. The two descriptions of the wavefunction are now proportional to $\\cos(\\Phi-\\theta-\\varphi_b)$ and $\\cos(\\theta-\\varphi_a)$. Cosine is even, so the first equals $\\cos(\\theta+\\varphi_b-\\Phi)=\\cos(\\alpha-\\beta)$ with $\\alpha=\\theta-\\varphi_a$ and $\\beta=\\Phi-\\varphi_a-\\varphi_b$ (check: $\\alpha-\\beta=\\theta+\\varphi_b-\\Phi$). Step 3 again forces $\\sin\\beta=0$. Since $\\Phi>0$ and $\\varphi_a+\\varphi_b\\le\\pi$, we have $\\beta>-\\pi$, so Step 4 gives $\\beta=(n-1)\\pi$ with $n\\ge1$, that is $\\Phi-\\varphi_a-\\varphi_b=(n-1)\\pi$:"
+  },
+  {
+   "old": "The oscillator is special: WKB happens to be exact there. Do not expect this in general.",
+   "new": "The oscillator is special: the Bohr--Sommerfeld energies happen to be exact there. (The WKB wavefunctions are still only approximate; they diverge at the turning points.) Do not expect this in general."
+  },
+  {
+   "old": "\\item WKB is exact for the box and for the oscillator. For the linear well",
+   "new": "\\item The Bohr--Sommerfeld levels are exact for the box and for the oscillator. For the linear well"
+  },
+  {
+   "old": "Two exceptions are worth remembering: for the box and for the oscillator, WKB is exact (\\cref{sec:wkb-bs}).",
+   "new": "Two exceptions are worth remembering: for the box and for the oscillator, the Bohr--Sommerfeld levels are exact (\\cref{sec:wkb-bs}). For the box the WKB wavefunctions are exact too; for the oscillator they are not."
+  },
+  {
+   "old": "An error of $0.01$ in energy means little at $E=1000$ but a great deal near the ground state.",
+   "new": "For example, in the box of RE3 an error of $0.01$ is negligible at $E=1000$, where the spacing is $2.2$, but amounts to $2.7$ spacings near the ground state, where $E_2-E_1=0.0037$. For the zeros the trend is the opposite: the mean spacing $2\\pi/\\log(t/2\\pi)$ shrinks slowly with height, from $7.75$ at $t=t_1$ to $1.24$ at $t=1000$, so a fixed error in $t$ matters somewhat more higher up."
+  },
+  {
+   "old": "\\item This is a heuristic expectation. It is exact for the box and the oscillator, and it fails for sharply varying potentials.",
+   "new": "\\item This is a heuristic expectation. The Bohr--Sommerfeld levels are exact for the box and the oscillator, and the approximation fails for sharply varying potentials."
+  },
+  {
+   "old": "\\paragraph{Non-uniqueness.} Not uniquely. Shifting the right half of a well sideways changes the shape without changing $\\Phi$, because only the \\emph{width} of the allowed region at each height enters $\\Phi$.",
+   "new": "\\paragraph{Non-uniqueness.} Not uniquely. For a single well with minimum $V_{\\min}$, let $x_L(V)<x_R(V)$ be the two turning points at height $V$ and $w(V)=x_R(V)-x_L(V)$ the width. Changing variable from $x$ to $V$ separately on the two sides of the minimum (exactly as in Step~1 below) gives $\\Phi(E)=\\int_{V_{\\min}}^{E}\\sqrt{E-V}\\,\\bigl[x_R'(V)-x_L'(V)\\bigr]\\dd V=\\int_{V_{\\min}}^{E}\\sqrt{E-V}\\,w'(V)\\,\\dd V$. So $\\Phi$ depends only on the width at each height. Sliding each horizontal slice of the well sideways by an amount that depends on height (a shear, which keeps $w(V)$ fixed) changes the shape without changing $\\Phi$. Example: $V=\\abs x$ has $w=2V$; the lopsided well $V=-2x$ for $x<0$, $V=\\tfrac23x$ for $x>0$ has $x_L=-V/2$, $x_R=3V/2$, so also $w=2V$, and both have $\\Phi=\\tfrac43E^{3/2}$."
+  },
+  {
+   "old": "\\paragraph{``The known semiclassical weakness at low $n$''.}",
+   "new": "\\paragraph{The semiclassical weakness at low $n$.}"
+  },
+  {
+   "old": "Numerically, at scale~1 with $E=t_{500}=811.18$ (the paper's anchor) the threshold is $M>813.8$, and at $E=1000$ it is $M>903.6$. These are consistent with the paper's report of rms below $10^{-4}$ by $M=900$.",
+   "new": "The relevant energy is that of the highest fitted level, $E=t_{500}=811.18$ (the paper's anchor). At scale~1 the threshold there is $M>813.8$, which lies below $M=900$, consistent with the paper's report of rms below $10^{-4}$ by $M=900$. At the top of the box, $E=1000$, the threshold would be $903.6$."
+  },
+  {
+   "old": "The mean spacing is itself the WKB density of states",
+   "new": "The mean spacing is itself the reciprocal of the WKB density of states"
+  },
+  {
+   "old": "level shifts are orbit time averages of $\\delta V$ concentrated near turning points",
+   "new": "level shifts are orbit time averages of $\\delta V$, with weight $1/v$ enhanced (but not concentrated) near the turning points and negligible beyond them"
+  },
+  {
+   "old": "Let $I(\\lambda)=\\int_{a(\\lambda)}^{b(\\lambda)}F(\\lambda,u)\\,\\dd u$. Write $\\partial F/\\partial\\lambda$ for the derivative of $F$ with respect to $\\lambda$ with $u$ held fixed (a \\emph{partial derivative}). Change $\\lambda$ by a small $\\epsilon$ and split the new range of integration into three pieces:\n\\begin{align}\nI(\\lambda+\\epsilon)-I(\\lambda)\n&=\\int_{a(\\lambda)}^{b(\\lambda)}\\bigl[F(\\lambda+\\epsilon,u)-F(\\lambda,u)\\bigr]\\dd u\\notag\\\\\n&\\quad+\\int_{b(\\lambda)}^{b(\\lambda+\\epsilon)}F(\\lambda+\\epsilon,u)\\,\\dd u-\\int_{a(\\lambda)}^{a(\\lambda+\\epsilon)}F(\\lambda+\\epsilon,u)\\,\\dd u .\n\\end{align}\nIn the first integral, $F(\\lambda+\\epsilon,u)-F(\\lambda,u)\\approx\\epsilon\\,\\partial F/\\partial\\lambda$. The second integral runs over a short interval of length $b(\\lambda+\\epsilon)-b(\\lambda)\\approx\\epsilon\\,b'(\\lambda)$, on which $F\\approx F(\\lambda,b)$; similarly for the third. Dividing by $\\epsilon$ and letting $\\epsilon\\to0$ gives \\emph{Leibniz's rule}:\n\\begin{equation}\n\\frac{dI}{d\\lambda}=F(\\lambda,b)\\,b'(\\lambda)-F(\\lambda,a)\\,a'(\\lambda)+\\int_{a}^{b}\\frac{\\partial F}{\\partial\\lambda}\\,\\dd u .",
+   "new": "Let $I(s)=\\int_{a(s)}^{b(s)}G(s,u)\\,\\dd u$, where $s$ is a parameter and $a(s)$, $b(s)$ are general limits (below they will be the turning points). Write $\\partial G/\\partial s$ for the derivative of $G$ with respect to $s$ with $u$ held fixed (a \\emph{partial derivative}). Change $s$ by a small $\\epsilon$ and split the new range of integration into three pieces:\n\\begin{align}\nI(s+\\epsilon)-I(s)\n&=\\int_{a(s)}^{b(s)}\\bigl[G(s+\\epsilon,u)-G(s,u)\\bigr]\\dd u\\notag\\\\\n&\\quad+\\int_{b(s)}^{b(s+\\epsilon)}G(s+\\epsilon,u)\\,\\dd u-\\int_{a(s)}^{a(s+\\epsilon)}G(s+\\epsilon,u)\\,\\dd u .\n\\end{align}\nIn the first integral, $G(s+\\epsilon,u)-G(s,u)\\approx\\epsilon\\,\\partial G/\\partial s$. The second integral runs over a short interval of length $b(s+\\epsilon)-b(s)\\approx\\epsilon\\,b'(s)$, on which $G\\approx G(s,b)$; similarly for the third. Dividing by $\\epsilon$ and letting $\\epsilon\\to0$ gives \\emph{Leibniz's rule}:\n\\begin{equation}\n\\frac{dI}{ds}=G(s,b)\\,b'(s)-G(s,a)\\,a'(s)+\\int_{a}^{b}\\frac{\\partial G}{\\partial s}\\,\\dd u ."
+  },
+  {
+   "old": "requires $F$ and $\\partial F/\\partial\\lambda$ to be continuous",
+   "new": "requires $G$ and $\\partial G/\\partial s$ to be continuous"
+  },
+  {
+   "old": "when $\\partial F/\\partial\\lambda$ has an integrable",
+   "new": "when $\\partial G/\\partial s$ has an integrable"
+  },
+  {
+   "old": "despite the square-root singularity of $\\partial F/\\partial E$ at the endpoints",
+   "new": "despite the square-root singularity of $\\partial G/\\partial E$ at the endpoints"
+  },
+  {
+   "old": "\\prob{2}{Verify Leibniz's rule \\cref{eq:wkb-leibniz} for $I(\\lambda)=\\int_0^\\lambda\\lambda u\\,\\dd u$.}",
+   "new": "\\prob{2}{Verify Leibniz's rule \\cref{eq:wkb-leibniz} for $I(s)=\\int_0^s s u\\,\\dd u$.}"
+  },
+  {
+   "old": "\\item[9.] $I=\\lambda^3/2$, so $I'=3\\lambda^2/2$. Leibniz gives $F(\\lambda,\\lambda)\\cdot1+\\int_0^\\lambda u\\,\\dd u=\\lambda^2+\\lambda^2/2$. They agree.",
+   "new": "\\item[9.] $I=s^3/2$, so $I'=3s^2/2$. With $G(s,u)=su$, Leibniz gives $G(s,s)\\cdot1+\\int_0^s u\\,\\dd u=s^2+s^2/2$. They agree."
+  },
+  {
+   "old": "\\prob{3}{Show using \\cref{eq:wkb-period} that $V=x^2$ is the only even monotone potential with $V(0)=0$ whose classical period is independent of energy, within WKB.}",
+   "new": "\\prob{3}{Show, using \\cref{eq:wkb-period} and \\cref{eq:wkb-abelinv}, that within WKB the only even monotone potentials with $V(0)=0$ whose classical period is independent of energy are $V=cx^2$ with $c>0$, and that the period $\\pi$ selects $V=x^2$.}"
+  },
+  {
+   "old": "\\item[7.] $\\Phi=\\frac23E^{3/2}",
+   "new": "\\item[6.] At $x=0$ the slope $V'$ jumps from $-1$ to $+1$, so $V''$ is not defined there (it behaves like an infinitely tall, narrow spike) and the curvature part of the validity condition fails at that single point. Away from the origin $V$ is linear and the validity parameter is small (second Sample Problem of \\cref{sec:wkb-ansatz}), so the WKB form is good there. The Bohr--Sommerfeld rule still works because, by symmetry, the states split into odd ones with $\\psi(0)=0$ and even ones with $\\psi'(0)=0$, each a half-well problem on $x>0$. For the odd states $\\psi(0)=0$ is a hard wall, which WKB treats exactly (Problem~7). For the even states the WKB form meets $\\psi'(0)=0$ only approximately, which is one reason the two families have different errors in \\cref{tab:wkb-linear} (\\cref{sec:wkb-accuracy}).\n\\item[7.] $\\Phi=\\frac23E^{3/2}"
+  },
+  {
+   "old": "\\item[19.] The error is largest at $n=1$ and falls off within a few levels. This is consistent with the paper's maximum residual $0.063$ ``worst at low $n$'' (Sec.~II~B).",
+   "new": "\\item[19.] By analogy with \\cref{tab:wkb-linear}, expect the largest error among the lowest few levels, falling off as $n$ grows. We do not quote values, because your numbers depend on the grid and on whether you apply Richardson extrapolation. The paper reports this pattern for its Richardson-extrapolated levels: mean residual $0.005$ and maximum $0.063$ spacings, ``worst at low $n$'' (Sec.~II~B)."
+  },
+  {
+   "old": "On the working grid the finite-difference matrix lowers the high levels (dispersion, Chapter~\\ref{ch:finite-differences}), so a few extra levels fall below $1000$.",
+   "new": "The three-level difference is not computed in this chapter. The main effect is expected to be finite-difference dispersion, which lowers high levels on a grid (Chapter~\\ref{ch:finite-differences}) and so lets extra levels fall below $1000$. The Dirichlet wall at $L=x(1000)$, which pushes the top levels up, and the WKB error itself are expected to contribute at the level of a state or so."
+  },
+  {
+   "old": "\\item[23.] $5/96^{3/2}=0.00532$: WKB is excellent there.",
+   "new": "\\item[23.] $\\abs{V'}=2x=10$ and $E-V=101-25=76$, so the parameter is $10/(2\\cdot76^{3/2})=5/76^{3/2}=0.00755$: WKB is excellent there."
+  },
+  {
+   "old": "becomes $\\psi_{zz}=z\\psi$, and decay",
+   "new": "becomes $\\dd^2\\psi/\\dd z^2=z\\psi$, and decay"
+  }
+ ],
+ "new_checks": "import numpy as np\nfrom scipy.special import ai_zeros\nfrom scipy.integrate import quad\nimport qmnt\nfrom scipy.linalg import eigh_tridiagonal\n\n# Sample: local wavelength linear well\nassert abs(2*np.pi/np.sqrt(10)-1.987)<1e-3\nassert abs(2*np.pi/np.sqrt(5)-2.810)<1e-3\nassert abs(2*np.pi/np.sqrt(0.1)-19.87)<1e-2\n# Sample: validity parameter\nf=lambda x:1/(2*(10-x)**1.5)\nassert abs(f(0)-0.0158)<1e-4 and abs(f(5)-0.0447)<1e-4 and abs(f(9.9)-15.8)<0.05\nassert abs(5**(2/3)-2.924)<1e-3 and abs(10-5**(2/3)-7.08)<5e-3\n# Table linear well\na,ap,_,_=ai_zeros(50); Ex=np.sort(np.concatenate([-a,-ap]))\nn=np.arange(1,21); Ew=(0.75*np.pi*(n-0.5))**(2/3); err=(Ew-Ex[:20])/(np.pi/(2*np.sqrt(Ew)))\ntabW=[1.1155,2.3203,3.2616,4.0818,4.8263,5.5172]; tabX=[1.0188,2.3381,3.2482,4.0879,4.8201,5.5206]\ntabE=[0.065,-0.017,0.015,-0.008,0.009,-0.005]\nfor k in range(6):\n    assert abs(Ew[k]-tabW[k])<1e-4 and abs(Ex[k]-tabX[k])<1e-4\n    assert abs(Ew[k]-Ex[k]-(tabW[k]-tabX[k]))<2e-4 and abs(err[k]-tabE[k])<1.5e-3\nassert abs((Ew[0]-Ex[0])/Ex[0]-0.0949)<5e-4\nassert abs(Ew[5]-Ex[5])/Ex[5]<1e-3 and abs(0.0034/5.5206*100-0.06)<0.005\n# Sample box\nL=44.883; assert abs((np.pi/(2*L))**2-1.225e-3)<1e-6\nassert abs(2*L*np.sqrt(1000)/np.pi-903.57)<0.01\nassert abs(2*L*np.sqrt(1000)/np.pi-903.6)<0.05\n# Accuracy section: box spacings and zero spacings\nE1b=(np.pi/(2*L))**2; d21=4*E1b-E1b\nassert abs(d21-0.0037)<5e-5\nassert abs(0.01/d21-2.7)<0.05\nassert abs(np.pi*np.sqrt(1000)/L-2.2)<0.05\nt1=14.134725141734695\nassert abs(2*np.pi/np.log(t1/(2*np.pi))-7.75)<0.01\nassert abs(2*np.pi/np.log(1000/(2*np.pi))-1.24)<0.005\n# phase space\nassert abs(5*np.pi-15.71)<0.01\n# density box\nassert abs(np.pi*np.sqrt(1000)/L-2.2135)<1e-3\n# Leibniz check, linear well\nEt=4.0\nI=2*quad(lambda x:1/(2*np.sqrt(Et-x)),0,Et)[0]\nassert abs(I-2*np.sqrt(Et))<1e-6\n# Non-uniqueness: lopsided well has same Phi as |x|\nEl=3.0\nPhiL=quad(lambda x:np.sqrt(El+2*x),-El/2,0)[0]+quad(lambda x:np.sqrt(El-2*x/3),0,1.5*El)[0]\nassert abs(PhiL-4/3*El**1.5)<1e-8\n# time fraction\nassert abs(np.sqrt(0.1)-0.316)<1e-3\n# coverage\nassert abs(2*L*np.sqrt(811.1843588465)/np.pi-813.8)<0.05\n# Abel numeric vs L\nV0=qmnt.V0; W=1000; aa=np.sqrt(W-V0)\nxab=quad(lambda u:np.log((W-u*u)/(2*np.pi)),0,aa)[0]/np.pi\nassert abs(xab-44.883)<1e-3 and abs(xab-qmnt.L_of(1000))<1e-3\ncf=(aa*np.log(V0/(2*np.pi*np.e**2))+np.sqrt(W)*np.log((np.sqrt(W)+aa)/(np.sqrt(W)-aa)))/np.pi\nassert abs(cf-xab)<1e-8\n# Problems 1-5\nassert abs(2*np.pi/4-1.571)<1e-3 and abs(np.sqrt(12)-3.464)<1e-3 and abs(2*np.pi/np.sqrt(12)-1.814)<1e-3\nassert int(20/np.pi)==6 and abs(20/np.pi-6.37)<0.01\nassert int(np.floor(5.5))==5\nPhi8=4/3*8**1.5\nassert abs(Phi8-30.17)<0.01 and abs(2*Phi8-60.34)<0.01\nassert abs(Phi8/np.pi-9.60)<0.01\nassert abs(Phi8/np.pi+0.5-10.10)<0.01 and int(np.floor(Phi8/np.pi+0.5))==10\nassert abs(Ex[9]-7.944)<1e-3 and abs(Ex[10]-8.488)<1e-3 and np.sum(Ex<=8)==10\nassert abs(2*np.pi/12-0.5236)<1e-4\n# Problem 7\nassert abs((1.5*np.pi*0.75)**(2/3)-2.3203)<1e-4\n# Problem 9 (numeric instance s=2)\ns=2.0; assert abs(s**3/2*0+1.5*s**2-(s*s+s*s/2))<1e-12\n# Problem 11\nc=2*quad(lambda y:np.sqrt(1-y**4),0,1)[0]; assert abs(c-1.74804)<1e-5\nE1=(np.pi/(2*c))**(4/3); assert abs(E1-0.8672)<1e-4\nLq=6.0; Nq=4000; h=2*Lq/(Nq+1); xg=-Lq+h*np.arange(1,Nq+1)\nw=eigh_tridiagonal(2/h**2+xg**4,-np.ones(Nq-1)/h**2,select='i',select_range=(0,0))[0]\nassert abs(w[0]-1.0604)<1e-3\n# Problem 13\nt=qmnt.zeros(1000)\nassert abs(qmnt.wu_sprung_x(t[200])-22.5)<0.3 and abs(qmnt.wu_sprung_x(t[299])-28.5)<0.3\n# Problem 14\nv14=2*59.957*np.sqrt(1419.42248094599)/np.pi\nassert abs(v14-1438.06)<0.01\n# Problem 15\ng=qmnt.mean_gap(np.array([200,400]))\nassert abs(g[0]-1.52)<0.006 and abs(g[1]-1.34)<0.006\nr=2*np.pi/np.log(2)/g\nassert abs(2*np.pi/np.log(2)-9.065)<1e-3\nassert abs(r[0]-6.0)<0.1 and abs(r[1]-6.8)<0.1\n# Problem 21\nassert abs(qmnt.Nsm(1000.0)-648.61)<0.01 and int(np.floor(qmnt.Nsm(1000.0)+0.5))==649\n# Problem 23 (corrected: V=x^2, E=101, x=5)\nx23=5.0; p23=abs(2*x23)/(2*(101-x23**2)**1.5)\nassert abs(p23-0.00755)<1e-5 and abs(5/76**1.5-0.00755)<1e-5\nprint(\"all checks passed\")\n",
+ "new_figures": {},
+ "notes": "All issues addressed. For issue 24 (Answer 19 numerical claim) I did not add a Wu--Sprung finite-difference/Richardson computation to CHECKS, because I could not run it to obtain verified numbers; instead the answer is rephrased as a qualitative expectation, and it quotes only the paper's reported values (0.005 mean, 0.063 max, Sec. II B), which need not be rechecked. For issue 12 (652 vs 649) I took the hedging option rather than adding an unverified computation. For the kink issue I added an answer to Problem 6 and a pointer from the text. The Leibniz subsection now uses s and G, and Problem 9 and its answer were updated to match. The probability current is now defined in place, with its definition explicitly taken on trust. Every new number (0.0037, 2.7, 2.2, 7.75, 1.24, 903.6, 0.00755, and the lopsided-well Phi) is covered by the new CHECKS."
+}

@@ -1,0 +1,86 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "Your program finds $Z(30)<0$ and $Z(31)>0$. What can you conclude",
+  "problem": "The checks report fails for siegelz(30)<0 and siegelz(31)>0. Z changes sign at each zero. After t_3=25.01 the sign is (+,-,+) pattern: negative on (t1) start, so Z>0 on (t1,t2), <0 on (t2,t3), >0 on (t3,t4), <0 on (t4,t5). Thus Z(30)>0 and Z(31)<0, so the checkpoint premise is false.",
+  "fix": "Swap the signs: 'finds Z(30)>0 and Z(31)<0', or just say 'Z(30) and Z(31) have opposite signs'. Fix the check script accordingly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "1 & 14.5 & $+$ & $[14,\\ 14.5]$\\\\",
+  "problem": "Bisection table is inconsistent with Z(14)<0, Z(15)>0 and t_1=14.1347. Z(14.5)>0 gives bracket [14,14.5] fine, but the later rows are checked only by the script, which shows the rule 'Zm*Za<0' is applied correctly; however the quoted final midpoint 14.13671875 is the 8th midpoint, not the bracket midpoint 14.134765625 claimed in Step 3 (bracket [14.1328125,14.13671875]).",
+  "fix": "Verify Step 3: the bracket midpoint is 14.134765625 (correct), but state clearly that this is the midpoint of the final bracket, not the table's step-8 midpoint."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Each step gains one binary digit; about 20 more steps would reach $10^{-6}\\times$ the starting width",
+  "problem": "After 8 steps width is 2^-8; 20 more steps gives 2^-28 ~ 4e-9 of the starting width, not 1e-6. Twenty total steps give about 1e-6.",
+  "fix": "Say 'about 12 more steps (20 in total) would reach about $10^{-6}$ of the starting width'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "close(mpmath.eta(0.5), 0.604899, 1e-6)",
+  "problem": "The checks script uses mpmath.eta, which is the Dedekind eta, not the Dirichlet eta, and fails; the quoted 0.604899 and pi^2/12 checks are therefore unverified.",
+  "fix": "Use mpmath.altzeta(s) or (1-2**(1-s))*zeta(s) in checks."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "which near $t_{1000}$ is about 1.159 (Chapter~\\ref{ch:counting-zeros}; Problem 21), and the smallest error the paper quotes is an rms below $10^{-4}$ spacings (Sec.~III)",
+  "problem": "Referencing Problem 21 is fine, but the answer to Problem 21(b) says 20 digits near 1.4e3 gives error ~1e-16 and 15 digits gives ~1e-11, while Section 5 text says double precision resolution near 14 is 1e-15; 20 significant digits at 1.4e3 is ~1e-17. Minor inconsistent order estimates.",
+  "fix": "State 20 digits at 1.4e3 gives about 1e-17 to 1e-16 consistently."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "At $m\\ne0$ the formula is $0/0$: $\\eta$ also vanishes there (a fact we take on trust here;",
+  "problem": "A claim taken on trust without a beyond box, and the justification is deferred to problems that only prove finiteness by a different route.",
+  "fix": "Wrap in a beyond box, or note that Problems 25-26 make the claim unnecessary."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\end{pycode}\n\\label{lst:zeta-eta}",
+  "problem": "Label placed after environment outside any float; \\cref{lst:zeta-eta} will not resolve properly (undefined or points to wrong object).",
+  "fix": "Remove the label and refer to 'the listing below/above' or put caption/label inside a figure-like float."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\prob{3}{Let $c_k=1$ if $3\\nmid k$ and $c_k=-2$ if $3\\mid k$",
+  "problem": "Problems refer to 'Problem 25, 26, 21, 13...' by number but numbering is automatic and unverified; also fewer than the required computational/paper connections are fine but Problem numbers cited may not match.",
+  "fix": "Use \\label/\\ref for problems or verify numbering (the sums: count problems to ensure 25 is the eta_3 problem)."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The CHECKS script verifies \\cref{eq:zeta-fe,eq:zeta-xi} numerically at a sample point.",
+  "problem": "Reader-facing text refers to the CHECKS script, an internal machinery.",
+  "fix": "Remove or rephrase as an exercise for the reader."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "made rigorous with a method due to Turing",
+  "problem": "Brief unsupported claim about the verification method with no source.",
+  "fix": "Put in a beyond box noting it is taken on trust."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Hardy proved in 1914 that infinitely many zeros lie on the critical line, and Conrey proved in 1989 that more than two fifths",
+  "problem": "Fine, but 'roughly T/2pi log T/2pi' omits the -T/2pi term; acceptable only as leading order.",
+  "fix": "Say 'to leading order'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A partial sum ending inside a group differs from the last complete group's sum by at most two terms of modulus at most $2(3J)^{-\\sigma}$ in total size order",
+  "problem": "Vague phrase 'in total size order'.",
+  "fix": "State: the extra terms have modulus at most 3(3J+1)^{-sigma}... which tends to 0."
+ }
+]

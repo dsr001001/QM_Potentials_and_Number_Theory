@@ -1,0 +1,71 @@
+{
+ "patches": [
+  {
+   "old": "a fixed positive number (the last step is Problem~2.x-style algebra: $\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2)$).",
+   "new": "a fixed positive number. The last equality comes from\n\\[\n\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=\\cos^2\\theta-2\\cos\\theta+1+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2),\n\\]\nwhere the third step uses $\\cos^2\\theta+\\sin^2\\theta=1$ and the last step uses the half-angle identity $\\cos\\theta=1-2\\sin^2(\\theta/2)$, so that $2-2\\cos\\theta=2\\cdot2\\sin^2(\\theta/2)$. Taking the square root gives $2\\abs{\\sin(\\theta/2)}$, which is positive because $0<\\theta/2<\\pi$ for $\\theta=\\log2$."
+  },
+  {
+   "old": "and $a_n/b_n\\to a/b$ when $b\\ne0$. If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. We use these freely.",
+   "new": "and $a_n/b_n\\to a/b$ when $b\\ne0$ and every $b_n\\ne0$ (so that each quotient is defined). If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. These are proved exactly like the corresponding limit laws for functions in calculus (the proofs replace ``$x$ close to $x_0$'' by ``$n$ large''); we use them freely."
+  },
+  {
+   "old": "The name comes from music: a string vibrating in its $k$-th harmonic has wavelength $1/k$ of the fundamental (HRW~\\cite{hrw}, standing waves).",
+   "new": "The name comes from music: a string fixed at both ends and vibrating in its $k$-th harmonic has a wavelength equal to $1/k$ of the fundamental wavelength (standing waves, HRW~\\cite{hrw}), so the relative wavelengths $1,\\tfrac12,\\tfrac13,\\dots$ are the terms of the series."
+  },
+  {
+   "old": "A sharper statement, $H_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2})$, follows from the Euler--Maclaurin comparison of sums and integrals developed in Chapter~\\ref{ch:asymptotics}; we quote it here as an approximation useful for numbers.",
+   "new": "\\begin{beyond}\n\\textbf{A sharper form of $H_n$ (proved; proof beyond this book).} The Euler--Maclaurin summation formula, a refined comparison of sums with integrals, gives\n\\[\nH_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2}).\n\\]\nWe do not prove it here; see Riley, Hobson and Bence~\\cite{rhb} or Apostol~\\cite{apostol}. We use it only to estimate numbers, never inside a proof.\n\\end{beyond}"
+  },
+  {
+   "old": "the $\\gamma$ estimate is accurate because the error $1/(2n)$ of the approximation is only $4\\times10^{-5}$ here.",
+   "new": "the $\\gamma$ estimate is accurate because, by the sharper form quoted in the box above, the error of $H_n\\approx\\log n+\\gamma$ is about $1/(2n)$, only $4\\times10^{-5}$ here."
+  },
+  {
+   "old": "(Euler's result, proved in Chapter~\\ref{ch:fourier-series} by Parseval's theorem)",
+   "new": "(Euler's result; it follows from Parseval's theorem applied to a suitable Fourier series, the tool of Chapter~\\ref{ch:fourier-series}, and here we take it as a known value)"
+  },
+  {
+   "old": "Chapter~\\ref{ch:asymptotics} explains why averaging the two integral bounds works so well.",
+   "new": "Averaging works so well because the two integral bounds err in opposite directions: the lower bound misses the true tail by the small curved slivers between the rectangles and the curve on one side, the upper bound overshoots by similar slivers on the other side, and for a slowly varying $f$ these nearly cancel in the average."
+  },
+  {
+   "old": "The proof uses Euler--Maclaurin summation; see Titchmarsh~\\cite{titchmarsh}, Chapter~4 of the book being the relevant place for approximations of this kind, or Edwards~\\cite{edwards}.",
+   "new": "The proof uses Euler--Maclaurin summation; see Titchmarsh~\\cite{titchmarsh}, in the discussion of approximate formulas for $\\zeta(s)$ in the critical strip, or Edwards~\\cite{edwards}."
+  },
+  {
+   "old": "Numerically, at $n=1000$ the radius is $\\sqrt{1000}/14.1436=2.236$, and $\\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching the size $\\tfrac12\\cdot1000^{-1/2}=0.0158$ of the next term in the beyond box (a numerical observation, checked in CHECKS).",
+   "new": "More precisely, because $\\zeta(\\rho_1)=0$, the box gives $S_n-\\frac{n^{1-s}}{1-s}=\\tfrac12n^{-s}+\\epsilon_n$, whose modulus should be close to $\\abs{\\tfrac12n^{-s}}=\\tfrac12n^{-1/2}$. Numerically, at $n=1000$ the radius is $\\sqrt{1000}/14.1436=2.236$, and $\\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching $\\tfrac12\\cdot1000^{-1/2}=0.0158$ (a numerical observation, checked in CHECKS)."
+  },
+  {
+   "old": "\\textbf{Step 4 (a cruder geometric bound, for comparison):} Using",
+   "new": "\\textbf{Step 4 (an alternative, cruder bound, for comparison):} Using"
+  },
+  {
+   "old": "\\frac{2^{-2}}{1-2^{-1/2}}=0.067924$.",
+   "new": "\\frac{2^{-2}}{1-2^{-1/2}}=0.067924$. This is also a valid upper bound, but it is larger than the Step~3 value $0.152989/\\pi=0.048698$, so the Step~3 bound is the tighter one and is the one we keep."
+  },
+  {
+   "old": "Sums over primes on the critical line are of the second kind (\\cref{sec:series-truncation}).",
+   "new": "Sums over primes on the critical line are not absolutely convergent, so they fall outside the safe first kind (\\cref{sec:series-truncation})."
+  },
+  {
+   "old": "It is in fact not convergent in any ordinary sense at most $t$ (Chapter~\\ref{ch:explicit-formula} discusses this), so truncating it to a finite prime set is a Case 3 truncation.",
+   "new": "Whether, and in what order of summation, it converges at all on the critical line is not something the tools of this chapter can settle; Chapter~\\ref{ch:explicit-formula} treats it as a formal, heuristic object. What we can say is that it is not absolutely convergent, so truncating it to a finite prime set comes with no tail bound from moduli, and it must be handled like Case 3: a truncation justified only by a separate argument."
+  },
+  {
+   "old": "print(\"null\", qmnt.score(qmnt.smooth_zeros(n), n))",
+   "new": "# the null predicts zero fluctuation, so its corr is undefined (nan)\nprint(\"null\", qmnt.score(qmnt.smooth_zeros(n), n))"
+  }
+ ],
+ "new_checks": "",
+ "new_figures": {
+  "series_partialsums": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(1, 41)\nk = n.astype(float)\ngeo = np.cumsum(2.0**-(k - 1))\np2 = np.cumsum(1/k**2)\nalt = np.cumsum((-1.0)**(n + 1)/k)\nhar = np.cumsum(1/k)\nfig, ax = plt.subplots(figsize=(6, 4))\nfor y in [2.0, np.pi**2/6, np.log(2)]:\n    ax.axhline(y, color='gray', lw=0.8)\nax.plot(n, geo, 'o-', ms=3, lw=0.8, label=r'$\\sum 2^{-(k-1)}\\to 2$')\nax.plot(n, p2, 's-', ms=3, lw=0.8, label=r'$\\sum 1/k^2\\to\\pi^2/6$')\nax.plot(n, alt, '^-', ms=3, lw=0.8, label=r'$\\sum (-1)^{k+1}/k\\to\\log 2$')\nax.plot(n, har, 'd-', ms=3, lw=0.8, label=r'$\\sum 1/k$ (diverges)')\nax.plot(n, np.log(k) + 0.5772156649, 'k--', lw=0.8, label=r'$\\log n+\\gamma$')\nax.set_xlabel('number of terms $n$ (dimensionless)')\nax.set_ylabel('partial sum $S_n$ (dimensionless)')\nax.legend(fontsize=8, loc='upper left')\nplt.savefig(\"series_partialsums.pdf\", bbox_inches=\"tight\")\n",
+  "series_integraltest": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nx = np.linspace(1, 8.5, 400)\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)\nfor k in range(1, 8):\n    a1.bar(k, 1.0/k, width=1, align='edge', color='C0', alpha=0.35, edgecolor='C0')\nfor k in range(2, 9):\n    a2.bar(k - 1, 1.0/k, width=1, align='edge', color='C1', alpha=0.35, edgecolor='C1')\nfor ax in (a1, a2):\n    ax.plot(x, 1/x, 'k', lw=1.5, label=r'$f(x)=1/x$')\n    ax.set_xlabel('$x$ (dimensionless)')\n    ax.set_xlim(0.8, 8.7)\n    ax.legend(fontsize=8)\na1.set_ylabel('$f(x)$ (dimensionless)')\na1.set_title(r'height $f(k)$ on $[k,k+1]$: above', fontsize=9)\na2.set_title(r'height $f(k)$ on $[k-1,k]$: below', fontsize=9)\nplt.savefig(\"series_integraltest.pdf\", bbox_inches=\"tight\")\n",
+  "series_spiral": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport mpmath as mp\nt1 = 14.134725141734695\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\ns = 2.0 + 1j*t1\nk = np.arange(1, 201).astype(float)\nS = np.cumsum(np.exp(-s*np.log(k)))\nz = complex(mp.zeta(mp.mpc(2.0, t1)))\na1.plot(S.real, S.imag, '.-', ms=2, lw=0.6)\na1.plot(z.real, z.imag, 'r*', ms=12, label=r'$\\zeta(2+it_1)$')\na1.set_title(r'$s=2+it_1$', fontsize=9)\na1.legend(fontsize=8)\ns = 0.5 + 1j*t1\nk = np.arange(1, 1001).astype(float)\nS = np.cumsum(np.exp(-s*np.log(k)))\nmain = k**(1 - s)/(1 - s)\na2.plot(S.real, S.imag, lw=0.6, label='$S_n$')\na2.plot(main.real, main.imag, 'k', lw=0.4, label=r'$n^{1-s}/(1-s)$')\na2.plot(0, 0, 'r+', ms=10)\na2.set_title(r'$s=\\frac12+it_1$ (first zero)', fontsize=9)\na2.legend(fontsize=8)\nfor ax in (a1, a2):\n    ax.set_xlabel(r'$\\mathrm{Re}\\,S_n$ (dimensionless)')\n    ax.set_ylabel(r'$\\mathrm{Im}\\,S_n$ (dimensionless)')\n    ax.set_aspect('equal', adjustable='datalim')\nplt.tight_layout()\nplt.savefig(\"series_spiral.pdf\", bbox_inches=\"tight\")\n",
+  "series_alternating": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(1, 41)\nalt = np.cumsum((-1.0)**(n + 1)/n)\nterms = []\nfor j in range(1, 20):\n    terms += [1/(2*j - 1), -1/(4*j - 2), -1/(4*j)]\nR = np.cumsum(terms)[:40]\nL = np.log(2)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.fill_between(n, L - 1/(n + 1), L + 1/(n + 1), color='gray', alpha=0.2, label=r'$\\log 2\\pm 1/(n+1)$')\nax.plot(n, alt, 'o', ms=4, label='alternating harmonic')\nax.plot(n, R, 's', ms=4, label='rearrangement')\nax.axhline(L, color='C0', lw=0.8)\nax.axhline(L/2, color='C1', lw=0.8, ls='--')\nax.set_xlabel('number of terms $n$ (dimensionless)')\nax.set_ylabel('partial sum (dimensionless)')\nax.legend(fontsize=8)\nplt.savefig(\"series_alternating.pdf\", bbox_inches=\"tight\")\n",
+  "series_logseries": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nx = np.linspace(-1, 0.99, 500)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(x, -np.log(1 - x), 'k', lw=2.5, label=r'$-\\log(1-x)$')\nfor n in [1, 2, 3, 5, 10]:\n    ax.plot(x, sum(x**m/m for m in range(1, n + 1)), lw=1, label=f'$n={n}$')\nax.set_ylim(-1, 5)\nax.set_xlabel('$x$ (dimensionless)')\nax.set_ylabel('value (dimensionless)')\nax.legend(fontsize=8, loc='upper left')\nplt.savefig(\"series_logseries.pdf\", bbox_inches=\"tight\")\n",
+  "series_re2": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nt = np.linspace(0, 40, 2000)\ndef w(M):\n    return -sum(np.sin(m*t*np.log(2))/(m*2**(m/2)) for m in range(1, M + 1))/np.pi\nbound = 0.048698\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\na1.plot(t, w(1), lw=0.8, label='$m=1$')\na1.plot(t, w(3), lw=1.2, label=r'$m\\le 3$')\na1.plot(t, w(40), 'k--', lw=0.8, label=r'$m\\le 40$')\na1.set_xlabel('height $t$ (dimensionless)')\na1.set_ylabel('wave (mean-spacing units)')\na1.legend(fontsize=7)\na2.plot(t, w(40) - w(3), lw=0.8)\na2.axhline(bound, color='k', ls='--', lw=0.8)\na2.axhline(-bound, color='k', ls='--', lw=0.8)\na2.set_xlabel('height $t$ (dimensionless)')\na2.set_ylabel(r'$m\\le40$ minus $m\\le3$')\nplt.tight_layout()\nplt.savefig(\"series_re2.pdf\", bbox_inches=\"tight\")\n",
+  "series_products": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(2, 51).astype(float)\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\na1.semilogy(n, n + 1, 'o', ms=3, label=r'$\\prod(1+1/k)$')\na1.semilogy(n, (n + 1)/(2*n), 's', ms=3, label=r'$\\prod(1-1/k^2)$')\na1.semilogy(n, 1/n, '^', ms=3, label=r'$\\prod(1-1/k)$')\na1.set_xlabel('number of factors $n$ (dimensionless)')\na1.set_ylabel('partial product (dimensionless)')\na1.legend(fontsize=7)\nsieve = np.ones(600, bool); sieve[:2] = False\nfor i in range(2, 25):\n    if sieve[i]:\n        sieve[i*i::i] = False\nprimes = np.nonzero(sieve)[0][:100].astype(float)\nP = np.cumprod(primes**2/(primes**2 - 1))\na2.plot(np.arange(1, 101), P, '.-', ms=3, lw=0.6)\na2.axhline(np.pi**2/6, color='k', ls='--', lw=0.8, label=r'$\\pi^2/6$')\na2.set_xlabel('number of primes used (dimensionless)')\na2.set_ylabel('partial Euler product at $s=2$')\na2.legend(fontsize=8)\nplt.tight_layout()\nplt.savefig(\"series_products.pdf\", bbox_inches=\"tight\")\n"
+ },
+ "notes": "Fixed: figure scripts for all seven figures; the dangling 'Problem 2.x' placeholder (now a full derivation including the half-angle step); RE2 Step 4 relabeled with a statement of which bound is tighter; Titchmarsh pointer made non-specific; beyond-box numerical remark restated with the 1/2 n^{-s} term explicit (using zeta(rho_1)=0); Euler-Maclaurin claim moved into a beyond box instead of promising it from Chapter 4, and the averaging explanation is now given in place; zeta(2) Parseval wording softened to 'taken as known'; overclaim about non-convergence of the critical-line prime sum replaced by an honest statement of status (and the matching pitfall sentence no longer calls it conditionally convergent); limit laws now require b_n nonzero and say where the proofs come from; harmonic-series etymology tightened; a comment added to the null pycode line explaining the nan correlation (the source of the stderr warning, which is harmless). No new numbers were introduced, so the CHECKS script is unchanged. Skipped: the problem-numbering issue (I recounted: 30 problems, and the cross-references to Problems 11, 13, 15 and 27 are all correct; difficulty tags need not be in sorted order). Skipped: the missing-answers issue (answers are already present for every prob{1} (1 to 5 and 29) and every odd-numbered problem 1 to 29; problem 30 is even). Skipped: adding answers and checks for Problems 20 and 22 (both even-numbered, so no answer is required; adding unverified numbers would violate the no-invented-numbers rule)."
+}

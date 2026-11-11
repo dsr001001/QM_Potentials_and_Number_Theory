@@ -16,6 +16,9 @@ assert abs(shift(0.1)-0.010102)<1e-6
 assert abs(shift(0.4)-0.2)<1e-9
 assert abs(shift(1.0)-0.5)<1e-9
 assert abs(np.sqrt(3)/2-0.8660)<1e-4
+# 20% at a=0.4, 50% at a=Delta/2
+assert abs((shift(0.4)-0.16)/shift(0.4)-0.2)<1e-9
+assert abs(shift(0.5)-0.5)<1e-9 and abs((shift(0.5)-0.25)/shift(0.5)-0.5)<1e-9
 # Sample: HO with i eps x, numerical
 Lb,N=10.0,3000; h=2*Lb/(N+1); x=-Lb+h*np.arange(1,N+1); eps=0.6
 from scipy.sparse import diags; from scipy.sparse.linalg import eigs
@@ -27,6 +30,9 @@ assert abs(1-0.6**2/4-0.91)<1e-12
 def s1(a,b):
     if (a+b)%2==0: return 0.0
     return -4/np.pi*(1/(4-(a-b)**2)-1/(4-(a+b)**2))
+def sj(j,a,b):
+    if (a+b)%2==0: return 0.0
+    return (-1)**j*4*j/np.pi*(1/(4*j*j-(a-b)**2)-1/(4*j*j-(a+b)**2))
 assert abs(s1(1,2)+0.6791)<1e-4 and abs(s1(1,4)-0.1940)<1e-4
 assert abs(s1(2,3)+0.4850)<1e-4 and abs(s1(3,4)+0.4527)<1e-4
 def Tn(K):
@@ -38,6 +44,7 @@ assert abs(T4.sum())<1e-14
 Lp=np.pi/2; xx=np.linspace(-Lp,Lp,200001)
 ps=lambda k: np.sin(k*np.pi*(xx+Lp)/(2*Lp))/np.sqrt(Lp)
 assert abs(np.trapezoid(ps(1)*ps(2)*np.sin(np.pi*xx/Lp),xx)-s1(1,2))<1e-6
+assert abs(np.trapezoid(ps(1)*ps(2)*np.sin(2*np.pi*xx/Lp),xx)-sj(2,1,2))<1e-6
 # Problem 17
 assert abs(s1(4,5)+0.4410)<1e-4 and abs(s1(2,5)-0.2264)<1e-4
 T5=Tn(5); assert abs(T5[3]-0.0102)<3e-4 and abs(T5.sum())<1e-14
@@ -55,6 +62,7 @@ frac=(s1(20,19)**2/39+s1(20,21)**2/41)/w.sum(); assert abs(frac-0.89)<0.01
 assert abs(1.5/0.6791-2.2)<0.05
 # complex plane claims
 K=60; nn=np.arange(1,K+1); E=nn**2.0
+assert np.allclose(np.diff(E),2*nn[:-1]+1)   # spacing 2n+1
 S=np.array([[s1(a,b) for b in nn] for a in nn])
 assert np.abs(eig(np.diag(E)+1j*S,right=False).imag).max()<1e-8
 assert np.abs(eig(np.diag(E)+4j*S,right=False).imag).max()>0.1
@@ -66,6 +74,18 @@ dE=E[:,None]-E[None,:]; np.fill_diagonal(dE,np.inf); T=(S**2/dE).sum(1)
 l,v=eig(np.diag(E)+0.5j*S); mt=np.argmax(np.abs(v)**2,0); ex=np.zeros(K)
 for j in range(K): ex[mt[j]]=l[j].real-E[mt[j]]
 assert len(set(mt))==K and np.corrcoef(ex[:50],-0.25*T[:50])[0,1]>0.99
+# c=4: complex pair near the bottom; second order overstates shifts of levels 1, 2
+l4=eig(np.diag(E)+4j*S,right=False)
+cpx=l4[np.abs(l4.imag)>0.1]
+assert len(cpx)>=2 and cpx.real.max()<10
+r=cpx.real.min()
+assert 16*abs(T[0])>abs(r-E[0]) and 16*abs(T[1])>abs(r-E[1])
+# Problem 19: two-function basis sum rule
+S1=np.array([[sj(1,a,b) for b in nn] for a in nn]); S2=np.array([[sj(2,a,b) for b in nn] for a in nn])
+assert np.allclose(S1,S)
+cc=np.random.default_rng(0).normal(size=2); Am=cc[0]*S1+cc[1]*S2
+dEn=-(Am**2/dE).sum(1)
+assert abs(dEn.sum())<1e-12*np.abs(dEn).max()
 # null-mode overlaps
 Lq,Nq=np.pi/2,400; hq=2*Lq/(Nq+1)
 _,psi=eigh_tridiagonal(np.full(Nq,2/hq**2),np.full(Nq-1,-1/hq**2),select="i",select_range=(0,59))
@@ -73,6 +93,8 @@ psi/=np.sqrt(hq); off=~np.eye(60,dtype=bool)
 assert np.abs((psi.T@psi*hq)[off]).max()<1e-11
 p32=psi.astype(np.float32); m32=np.abs(((p32.T@p32)*np.float32(hq))[off]).max()
 assert 1e-9<m32<1e-5
+# quarter amplitude: shifts fall 16-fold
+assert abs((0.25)**2-1/16)<1e-15
 # problems
 assert abs(np.log(2)/0.1-6.931)<1e-3 and abs(np.exp(-2)-0.1353)<1e-4      # P1
 assert abs(1/0.6-1.667)<1e-3                                              # P2

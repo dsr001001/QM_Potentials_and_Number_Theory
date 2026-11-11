@@ -1,0 +1,209 @@
+{
+ "patches": [
+  {
+   "old": "Sec.~VI of the paper has six paragraphs. We take them in order.",
+   "new": "Sec.~VI of the paper has five paragraphs. We take them in order."
+  },
+  {
+   "old": "every model that uses the arithmetic structure, given or learned, sits far below it.",
+   "new": "every model that uses the arithmetic structure, given or learned, sits below it, and all but the underdetermined, root-ambiguous B row ($0.180$, Table~IV) sit far below it."
+  },
+  {
+   "old": "A local-in-energy vocabulary has no word for ``keep oscillating at frequency $\\log 2$ forever''.",
+   "new": "On this heuristic reading, and for the parametrizations and optimizer tested, a local-in-energy vocabulary did not produce ``keep oscillating at frequency $\\log 2$ forever''."
+  },
+  {
+   "old": "The oracle's actual rms, $0.074$ (Table~V), already equals its best-rescaled value: its amplitudes are right.",
+   "new": "The oracle's actual rms, $0.074$ (Table~V), is consistent with its best-rescaled value within the rounding of $r$. As $r$ runs from $0.965$ down to $0.955$, the best-rescaled rms $0.263\\sqrt{1-r^2}$ runs from $0.069$ up to $0.078$, so with two-digit inputs we can say only that its amplitudes are close to right. The mean-zero assumption of the sample is reasonable here: the mean of the true fluctuations on 401--500 is less than a fifth of their rms (check it with \\texttt{qmnt.fluct})."
+  },
+  {
+   "old": "\\subsection{Paragraphs 3 to 6}",
+   "new": "\\subsection{Paragraphs 3 to 5}"
+  },
+  {
+   "old": "Paragraph 5 proposes the falsifiability standard; we read it in \\cref{sec:paper-critique-standard}. Paragraph 6 concludes that",
+   "new": "Paragraph 5 proposes the falsifiability standard (read in \\cref{sec:paper-critique-standard}) and closes by concluding that"
+  },
+  {
+   "old": "It says explicitly that this ``is not a statement about what a potential can represent''",
+   "new": "It says explicitly that this is ``not a statement about what a potential can represent''"
+  },
+  {
+   "old": "and a correlation of $+0.02$, which is indistinguishable from zero for 100 levels.",
+   "new": "and a correlation of $+0.02$, which is indistinguishable from zero for 100 levels (for 100 independent pairs, the standard error of a correlation near zero is about $1/\\sqrt{100}=0.1$)."
+  },
+  {
+   "old": "\\begin{sample}{Why item (ii) matters: the spurious floor in numbers}",
+   "new": "Recall from Chapter~\\ref{ch:non-hermitian} that Sec.~V of the paper perturbs $H\\to H+iA$, with $A=\\sum_k c_k\\phi_k$ a real multiplication operator, in two classes. The \\emph{PT-odd} class uses odd basis functions $\\phi_k=\\sin((k+1)\\pi x/L)$. The \\emph{absorptive-even} class uses even basis functions $\\phi_k=\\cos(k\\pi x/L)$ and models a decay width $\\Gamma$ through $-i\\Gamma/2$. In the even class the constant function $\\phi_0=1$, with coefficient $c_0$, is the \\emph{null mode*}: a constant $iA$ shifts every level by the same imaginary constant and has zero second-order real shift. Before it was repaired, the optimizer drove $c_0$ to about $2.2\\times10^6$ by exploiting float32 noise in tensor entries that are analytically zero (Chapter~\\ref{ch:paper-spurious-floor}).\n\n\\begin{sample}{Why item (ii) matters: the spurious floor in numbers}"
+  },
+  {
+   "old": "\\emph{null mode*}",
+   "new": "\\emph{null mode}"
+  },
+  {
+   "old": "nothing tested so far suggests it would.",
+   "new": "nothing tested so far gives reproducible evidence that it would (one Chebyshev row is marginal; see Limit 2)."
+  },
+  {
+   "old": "not evidence of prediction, not excluded.\n\\end{sample}",
+   "new": "not evidence of prediction, not excluded.\n\\end{sample}\n\nTable~II also contains one row whose correlation interval lies entirely \\emph{below} zero: hat, $M=400$, $[-0.37,-0.01]$. Count excursions of either sign. A 95\\% interval of a null row then excludes zero with probability $\\alpha=0.05$, and \\eqref{eq:paper-critique-atleastone} gives $1-0.95^8\\approx0.34$ for at least one such row among eight. Excursions of either sign are what a table of null rows produces, and one positive and one negative excursion among eight rows fit that picture."
+  },
+  {
+   "old": "A model learns the $p=2$ frequency $\\omega=\\log 2$ from a window of length $T$ in $t$, with error $\\delta\\omega$ no larger than half a Fourier resolution cell, $\\abs{\\delta\\omega}\\le\\pi/T$. This bound is our worst-case assumption, not a measured error; we take it equal to the tolerance the paper uses when matching selected frequencies to prime powers (App.~A step 23), and we use it only to size a worst case. Suppose the training window is zeros 1--500, so $T=t_{500}-t_1$, with $t_1=14.1347251417$ and $t_{500}=811.1843588465$ (App.~A key anchors). Assume the learned and true waves agree in phase at the end of the window, $t_*=t_{500}$. Find the worst-case phase error at $t_{1000}=1419.42248094599$ (Sec.~II~A), for the fundamental $m=1$ and for the harmonic $m=3$.",
+   "new": "Control C2 fitted on zeros 1--400 scores $0.034$/$+0.99$ on 401--500 and $0.078$/$+0.96$ on 1001--2000 (Sec.~IV). To see why skill must eventually decay, suppose a model learns the $p=2$ frequency $\\omega=\\log 2$ from the window of zeros 1--400, of length $T=t_{400}-t_1$ in $t$, with an error $\\delta\\omega$ no larger than half a Fourier resolution cell, $\\abs{\\delta\\omega}\\le\\pi/T$. This bound is the tolerance the paper uses when matching selected frequencies to prime powers (App.~A step 23). It is an upper bound, not a measured error, and Step 6 shows that a good fit cannot come close to it. Assume the learned and true waves agree in phase at the end of the window, $t_*=t_{400}$. Find the phase error of the fundamental $m=1$ at $t_{1001}$ and at $t_{2000}$, the two ends of the paper's 1001--2000 holdout."
+  },
+  {
+   "old": "Step 3: Window length: $T=811.1843588-14.1347251=797.0496$. Worst-case frequency error: $\\pi/T=0.003942$.\n\nStep 4: Distance: $t_{1000}-t_{500}=1419.4224809-811.1843588=608.2381$.\n\nStep 5: Fundamental: $\\delta\\phi_1=0.003942\\times608.2381=2.397$ rad, which is $2.397/(2\\pi)=0.38$ of a cycle.\n\nStep 6: Third harmonic: $\\delta\\phi_3=3\\times2.397=7.19$ rad, more than a full cycle.\n\n$\\boxed{\\delta\\phi_1\\approx2.40\\text{ rad},\\qquad \\delta\\phi_3\\approx7.19\\text{ rad at }t_{1000}}$\n\nThis is a worst case: well-sampled frequencies are usually estimated much better than half a resolution cell, which is why C2 still scores $+0.96$ on 1001--2000. But it shows that a learned frequency model has a finite range of validity in height, while the exact frequencies $m\\log p$ of the oracle never dephase (Table~V).",
+   "new": "Step 3: Window: $T=t_{400}-t_1\\approx666$ (computed with \\texttt{qmnt.zeros}), so the largest allowed frequency error is $\\pi/T\\approx0.00472$.\n\nStep 4: Distances, from \\texttt{qmnt.zeros(2000)}: $t_{1001}-t_{400}\\approx741$ and $t_{2000}-t_{400}\\approx1836$.\n\nStep 5: By \\eqref{eq:paper-critique-dephase} with $m=1$: $\\delta\\phi_1\\approx0.00472\\times741\\approx3.5$ rad at $t_{1001}$, and $\\delta\\phi_1\\approx0.00472\\times1836\\approx8.7$ rad at $t_{2000}$. The third harmonic, $m=3$, has three times these phase errors.\n\n$\\boxed{\\delta\\phi_1\\approx3.5\\text{ rad at }t_{1001},\\qquad \\delta\\phi_1\\approx8.7\\text{ rad at }t_{2000}}$\n\nStep 6: Why the bound is far from a typical error. Apply \\eqref{eq:paper-critique-dephase} inside the window. Between $t_1$ and $t_{400}$ an error $\\delta\\omega=\\pi/T$ produces a phase drift $\\delta\\omega\\,T=\\pi$, half a cycle. A learned wave that slides half a cycle out of step across its own training data cannot fit those data well. So a model that does fit them must have $\\abs{\\delta\\omega}$ well below $\\pi/T$. Chapter~\\ref{ch:sparse-frequency} showed that the least-squares frequency error scales like $1/T$ times a factor that shrinks as the number of samples and the signal-to-noise ratio grow. If, for illustration, $\\abs{\\delta\\omega}$ were a tenth of the bound, the fundamental's phase error at $t_{2000}$ would be about $0.87$ rad. (We matched the phase at the end of the window for simplicity. A least-squares fit tends to get the phase right nearer the middle of the window. That would add $\\delta\\omega\\,T/2$ to every phase error beyond the window, so matching at the end understates the error rather than exaggerating it.)\n\nWhat the sample shows is the shape, not the size. The phase error grows linearly with distance from the window, so any learned frequency model has a finite range of validity in height (C2's rms rises from $0.034$ on 401--500 to $0.078$ on 1001--2000). The exact frequencies $m\\log p$ of the oracle never dephase (Table~V)."
+  },
+  {
+   "old": "\\includegraphics[width=0.95\\linewidth]{figs/paper-critique_dephase.pdf}",
+   "new": "\\includegraphics[width=0.85\\linewidth]{figs/paper-critique_dephase.pdf}"
+  },
+  {
+   "old": "Left: the exact wave ($\\omega=\\log2$, solid) and a learned wave whose frequency is off by half a Fourier resolution cell, $\\delta\\omega=\\pi/T$ with $T=t_{500}-t_1$ (dashed), matched in phase at $t_{500}$ (vertical line). Right: phase error $m\\,\\delta\\omega\\,(t-t_{500})$ in radians for $m=1,2,3$, with $\\pi/2$ and $\\pi$ marked. The horizontal axis is the height $t$.}",
+   "new": "The frequency is learned from zeros 1--400. Left: near $t_{1001}$, the exact wave ($\\omega=\\log2$, solid) and a learned wave whose frequency is off by the matching tolerance $\\delta\\omega=\\pi/T$, with $T=t_{400}-t_1$ (dashed). The two waves are matched in phase at $t_{400}$, and the vertical line marks $t_{1001}$. Right: magnitude of the phase error, $m\\,\\delta\\omega\\,\\abs{t-t_{400}}$, in radians for $m=1,2,3$, with $\\pi/2$ and $\\pi$ marked and vertical lines at $t_{400}$, $t_{1001}$ and $t_{2000}$. The horizontal axes are the height $t$. The tolerance is an upper bound, much larger than the error of a good fit (see text).}"
+  },
+  {
+   "old": "Chapter~\\ref{ch:controls} showed that independent resampling understates uncertainty when neighboring values are correlated, and the zeros' fluctuations are serially correlated (negative autocorrelation at lags 1--3, Sec.~III).",
+   "new": "Independent resampling can misestimate uncertainty when neighboring values are correlated (Chapter~\\ref{ch:controls}). Consider the mean of $n$ values with standard deviation $\\sigma$. Its variance is $\\sigma^2/n$ plus $2/n^2$ times the sum of the covariances of all pairs. That variance equals $\\sigma^2/n$ only when those covariances vanish. Positive correlations between neighbors increase it and negative correlations decrease it. Independent resampling ignores these pair terms, so it understates the uncertainty in the first case and can overstate it in the second. The zeros' fluctuations have negative autocorrelation at lags 1--3 (Sec.~III), and for statistics such as rms and corr the direction of the effect is not obvious in advance."
+  },
+  {
+   "old": "the worst case at $t_{1000}$ for a 500-zero window is about 2.4 rad for the fundamental.",
+   "new": "with the matching tolerance as the worst case, a frequency learned from zeros 1--400 could be about 3.5 rad out of phase at $t_{1001}$. A good fit does much better, but the linear growth with distance is unavoidable."
+  },
+  {
+   "old": "(probably well under one work in ten)",
+   "new": "(probably under one work in ten, and under about one in twenty if the two citing lists do not overlap)"
+  },
+  {
+   "old": "would make $f_{95}$ larger still (Problem 23).",
+   "new": "would make $f_{95}$ larger still (Problem 25)."
+  },
+  {
+   "old": "Operator fits stop at zero 1000. Two questions a referee could ask: would larger fits behave differently, and are the scale-2 fits saturated? The coverage sample in \\cref{sec:paper-critique-claims} showed that at scale 2 the basis sizes used ($M\\le900$) are below the heuristic coverage threshold ($\\approx1313$) for the top training levels, so scale 2 tests a less saturated regime than scale 1. This does not weaken the negative result (less saturation did not produce skill: scale-2 rows sit at or above the null $0.274$), but it means the two scales are not simply ``the same experiment, bigger''.",
+   "new": "Operator fits stop at zero 1000. A referee could ask two questions: would larger fits behave differently, and how saturated are the held-out fits? Apply the coverage law of \\cref{sec:paper-critique-claims} to the training ranges.\n\nAt scale 1 the principal fits train on zeros 1--400. With $E\\approx s_{400}\\approx680$, the threshold is $2\\sqrt{680}\\times44.883/\\pi\\approx745$. The bases used, $M=200$ to $600$, give $M/745\\approx0.27$ to $0.81$.\n\nAt scale 2 the fits train on zeros 1--800. The threshold is about 1313, and $M=300$ to $900$ give $0.23$ to $0.69$.\n\nSo the held-out fits at \\emph{both} scales are below the heuristic coverage threshold for their top training levels, by comparable factors. Only the in-sample coverage run on all 500 zeros at scale 1, with $M=900$ above its threshold of about 814, is fully saturated. The negative result held across this whole range of $M$ relative to the threshold: the scale-2 rows sit at or above their null $0.274$, as the scale-1 rows sit at or above theirs."
+  },
+  {
+   "old": "For that finite matrix the real shifts sum to zero \\emph{exactly}, at every order.",
+   "new": "For that finite matrix the exact real shifts sum to zero. The second-order sum rule is one piece of this identity, as the following argument shows.\n\nReplace $A$ by $\\epsilon A$, with $\\epsilon$ a real bookkeeping parameter. Suppose the unperturbed levels $E_n$ are distinct, so that each eigenvalue can be expanded as a power series in $\\epsilon$ (Chapter~\\ref{ch:perturbation}):\n\\[\n\\lambda_n(\\epsilon)=E_n+\\epsilon a_n+\\epsilon^2 b_n+\\order(\\epsilon^3).\n\\]\nChapter~\\ref{ch:non-hermitian} found $a_n=iA_{nn}$. It also found, from second-order perturbation theory with $V\\to iA$ (the product of two matrix elements carries $i^2=-1$), that\n\\[\nb_n=-\\sum_{m\\ne n}\\frac{A_{nm}^2}{E_n-E_m},\n\\]\nwhich is the shift $\\delta E_n$ of paper Eq.~(5). The trace identity holds for every $\\epsilon$:\n\\[\n\\sum_n\\lambda_n(\\epsilon)=\\sum_nE_n+i\\epsilon\\sum_nA_{nn}.\n\\]\nThe right side has no $\\epsilon^2$ term. Two power series in $\\epsilon$ that agree for all small $\\epsilon$ have equal coefficients. Comparing the coefficients of $\\epsilon^2$ therefore gives $\\sum_n b_n=\\sum_n\\delta E_n=0$. The same comparison at every higher power shows that each order sums to zero separately."
+  },
+  {
+   "old": "beyond the size of the ensembles.''\n\nWhy is a surrogate check needed at all?",
+   "new": "beyond the size of the ensembles.''\n\nThe paper describes the score only briefly, as a ``cutoff-maximized binomial score'' and as ``a statistic that does not depend on a chosen frequency cutoff''. Our reading, in outline, has three steps. First, count how many selected frequencies lie within $\\pi/T$ of $\\log q$ for some prime power $q$ up to a cutoff. Second, compare that count with a binomial distribution, which gives the number of chance matches if each frequency matched independently with a chance probability of the kind estimated in the sample below. The less probable the observed count under that model, the larger the score. Third, maximize the score over the cutoff, so that no single cutoff has to be chosen by hand. The exact definition is in the Zenodo record~\\cite{zenodo}, and Chapter~\\ref{ch:paper-arithmetic} discusses it. What matters here is the comparison: $24.7$ and $50.9$ on the real zeros against at most $4.7$ on any surrogate.\n\nWhy is a surrogate check needed at all?"
+  },
+  {
+   "old": "which is exactly why the paper built a surrogate ensemble and why its statistic is cutoff-maximized.",
+   "new": "which is consistent with the paper's decision to check the alignment against a surrogate ensemble (its stated reason: ``the frequencies are the output of a search'') and to use a statistic that does not depend on a chosen frequency cutoff."
+  },
+  {
+   "old": "Problem 25 asks you to redo the computation.",
+   "new": "Problem 6 asks you to redo the computation."
+  },
+  {
+   "old": "a leakage argument (paper Eq.~(3)) and a leakage test (``overwriting",
+   "new": "a leakage argument for the operator fits (paper Eq.~(3)) and, for the sinusoidal controls, a leakage test (``overwriting"
+  },
+  {
+   "old": "W8 points are already stated in captions.",
+   "new": "W8 collects small points, most of which the paper states itself in captions or text; the factor-1.3 check is ours and concerns how widely one sentence applies."
+  },
+  {
+   "old": "the revision computations name \\texttt{numpy}~2.5.3 and \\texttt{scipy}~1.18.1.",
+   "new": "the revision computations name \\texttt{numpy}~2.5.3 and \\texttt{scipy}~1.18.1.\n\nUsing only what the paper states, a reconstruction goes as follows.\n\\begin{enumerate}\n\\item Download version R1 of the record from DOI 10.5281/zenodo.24035819.\n\\item Create a Python~3 environment with \\texttt{numpy}, \\texttt{scipy} and \\texttt{mpmath}, preferably at the versions named above.\n\\item Run \\texttt{run\\_all.sh}, which drives the complete pipeline.\n\\item Compare the outputs with the key anchors of App.~A and with the stored result files, using the audit file to find which script produced which number.\n\\end{enumerate}\nThe paper names no file other than \\texttt{run\\_all.sh} and the audit file, and it gives no run times. Even the reduced-cost operator fit \\texttt{qmnt.fit\\_potential} takes minutes, so expect the full-size operator fits to dominate the run time."
+  },
+  {
+   "old": "(a) $t_1=14.1347251417$, $t_{500}=811.1843588465$, $t_{1000}=1419.42248094599$;",
+   "new": "(a) $t_1=14.1347251417$ and $t_{500}=811.1843588465$ (App.~A key anchors) and $t_{1000}=1419.42248094599$ (Sec.~II~A);"
+  },
+  {
+   "old": "They agree with the anchors to every digit printed.",
+   "new": "They agree with these values to at least eight decimal places (absolute differences below $10^{-8}$)."
+  },
+  {
+   "old": "App.~A step 20 reports a simple but powerful check:",
+   "new": "App.~A step 20 reports, for the sinusoidal controls, a simple but powerful check:"
+  },
+  {
+   "old": "The null grows slowly with height; the oracle's error grows in proportion, so its relative skill is nearly constant, as the Table~V caption states.",
+   "new": "The null grows slowly with height. The oracle's error grows somewhat faster than the null: for six primes, $\\mathcal S$ of \\eqref{eq:paper-critique-skill} falls from $0.72$ to $0.60$ between the first and last holdout, and for 25 primes from $0.84$ to $0.77$. The Table~V caption describes this as nearly constant relative skill."
+  },
+  {
+   "old": "the harmonic-oscillator eigenfunctions of Chapter~\\ref{ch:bound-states} with a length scale $\\ell$ you choose.",
+   "new": "the harmonic-oscillator eigenfunctions of Chapter~\\ref{ch:bound-states} (up to normalization) with a length scale $\\ell$ you choose. Here $H_j$ is the Hermite polynomial of degree $j$. It is defined by $H_0(u)=1$, $H_1(u)=2u$ and the recurrence $H_{j+1}(u)=2uH_j(u)-2jH_{j-1}(u)$; for example, $H_2(u)=4u^2-2$. \\texttt{scipy.special.eval\\_hermite} evaluates these polynomials."
+  },
+  {
+   "old": "a different even confining potential whose WKB levels also track $s_n$ less well, or add Wu and Sprung's fractal corrections~\\cite{wusprung} to the background.",
+   "new": "a different even confining potential (for example one whose WKB levels track $s_n$ only approximately, to test sensitivity to the background), or add Wu and Sprung's fractal corrections~\\cite{wusprung} to the background."
+  },
+  {
+   "old": "or taken from Odlyzko's published tables~\\cite{odlyzko87}.",
+   "new": "or taken from the tables of zeros that Odlyzko has made publicly available. These tables are not the cited paper; his study of spacings is~\\cite{odlyzko87}."
+  },
+  {
+   "old": "evaluate it for $T=797.05$.}",
+   "new": "evaluate it for $T=666$, the window of zeros 1--400.}"
+  },
+  {
+   "old": "\\prob{2}{The scale-2 $M=300$ row of Table~I required a relaxed step-acceptance threshold. Explain why the paper calls it a ``sensitivity result'', and why including it does not change the qualitative conclusion.}\n\n\\prob{1}{Check the paper's claim (Sec.~IV) that one prime beats every fitted operator's holdout performance by a factor $\\gtrsim1.3$ for the two lowest-rms operator rows scored on 401--500, Table~I ridge $\\mu=0.3$ (OOS $0.265$) and Table~II Chebyshev ridge $\\mu=0.3$ (OOS $0.264$), against the one-prime oracle ($0.198$, Table~V). Why does this check not cover every operator row in Table~I?}\n\\end{problemlist}",
+   "new": "\\end{problemlist}"
+  },
+  {
+   "old": "\\prob{1}{From the Data Availability statement, list what the Zenodo record contains, and give the DOI of the version as first submitted.}",
+   "new": "\\prob{1}{From the Data Availability statement, list what the Zenodo record contains, and give the DOI of the version as first submitted.}\n\n\\prob{1}{Check the paper's claim (Sec.~IV) that one prime beats every fitted operator's holdout performance by a factor $\\gtrsim1.3$. Use the two lowest-rms operator rows scored on 401--500, Table~I ridge $\\mu=0.3$ (OOS $0.265$) and Table~II Chebyshev ridge $\\mu=0.3$ (OOS $0.264$), and compare them with the one-prime oracle ($0.198$, Table~V). Why does this check not cover every operator row in Table~I?}"
+  },
+  {
+   "old": "by how many spreads does the true-zero value differ from each surrogate mean? What do you conclude?}",
+   "new": "by how many spreads does the true-zero value differ from each surrogate mean? What do you conclude?}\n\n\\prob{2}{The scale-2 $M=300$ row of Table~I required a relaxed step-acceptance threshold. Explain why the paper calls it a ``sensitivity result'', and why including it does not change the qualitative conclusion.}"
+  },
+  {
+   "old": "\n\n\\textbf{Problem 25.} $0.265/0.198=1.34$ and $0.264/0.198=1.33$; both are consistent with ``$\\gtrsim1.3$'', narrowly. The other Table~I rows are scored on different holdouts (and the scale-2 rows with a different null); checking them would need the one-prime oracle on exactly those holdouts, which Table~V does not list. So the check covers only the rows scored on 401--500. You could compute the missing one-prime values yourself with \\texttt{qmnt.oracle\\_zeros}.",
+   "new": ""
+  },
+  {
+   "old": "\\textbf{Problem 23.} A relevant work",
+   "new": "\\textbf{Problem 25.} A relevant work"
+  },
+  {
+   "old": "\\textbf{Problem 21.} The construction",
+   "new": "\\textbf{Problem 23.} The construction"
+  },
+  {
+   "old": "\\textbf{Problem 19.} $\\log131",
+   "new": "\\textbf{Problem 19.} Under the strict acceptance rule (an improvement factor of $0.999$, App.~A step 6), the optimizer accepts no step for this configuration. The fitted potential therefore stays at $c=0$, which is the null. To obtain a fitted row at all, the threshold was relaxed to $1-10^{-5}$ for this row only. A result that exists only after changing one setting of the protocol measures how sensitive the outcome is to that setting; it is not a default-protocol result, hence ``sensitivity result''. Including it does not change the conclusion. The relaxed fit scores OOS $0.370$ with corr $-0.01$, worse than the null $0.274$, and the strict fit is at the null. Neither shows skill.\n\n\\textbf{Problem 21.} $\\log131"
+  },
+  {
+   "old": "\\textbf{Problem 17.} Permuted:",
+   "new": "\\textbf{Problem 17.} Overwrite every held-out height (all zeros beyond the training window) with noise. Also overwrite any other source of held-out information, such as a precomputed table of fluctuations. Then rerun the \\emph{complete} C2 procedure: the periodogram search, the forward split inside the training window that chooses $K$ and the ridge strength, and the final refit on the whole window. The number $K$, the selected frequencies, the chosen ridge strength and all fitted amplitudes must be bit-identical to those from the clean run. Comparing only the final amplitudes would miss leakage into the model-selection step.\n\n\\textbf{Problem 18.} Permuted:"
+  },
+  {
+   "old": "\\textbf{Problem 15.} In a forward split",
+   "new": "\\textbf{Problem 15.} One example: $E=(1,2,4)$, and $A$ with diagonal $(0.3,-0.4,0.1)$ and off-diagonal entries $A_{12}=0.2$, $A_{13}=-0.1$, $A_{23}=0.25$. The diagonal does not enter Eq.~(5), because the sum excludes $m=n$; it gives only the imaginary first-order shifts $iA_{nn}$. Eq.~(5) gives\n\\begin{align*}\n\\delta E_1&=-[0.04/(-1)+0.01/(-3)]=0.04333,\\\\\n\\delta E_2&=-[0.04/1+0.0625/(-2)]=-0.00875,\\\\\n\\delta E_3&=-[0.01/3+0.0625/2]=-0.03458.\n\\end{align*}\nThese sum to zero, because each pair $(n,m)$ contributes $-A_{nm}^2/(E_n-E_m)$ to level $n$ and the opposite amount to level $m$. The real parts of the exact eigenvalues sum to $7=1+2+4$, as \\eqref{eq:paper-critique-trace} requires: the trace is $7+i(0.3-0.4+0.1)=7$.\n\n\\textbf{Problem 16.} In a forward split"
+  },
+  {
+   "old": "\\textbf{Problem 13.} $2\\pi/666",
+   "new": "\\textbf{Problem 13.} The phase error of the fundamental is $\\delta\\omega\\,(t-t_*)$ with $\\delta\\omega=\\pi/T$. Setting it equal to $\\pi/2$ gives $(\\pi/T)(t-t_*)=\\pi/2$, so $t-t_*=T/2$. For $T=666$ this is $333$ in $t$.\n\n\\textbf{Problem 14.} $2\\pi/666"
+  },
+  {
+   "old": "\\textbf{Problem 11.} $s_{401}",
+   "new": "\\textbf{Problem 11.} Run the Table~V listing of \\cref{sec:paper-critique-repro} with $k=1$ and $k=3$. The results are rms $0.198$, corr $+0.66$ and rms $0.116$, corr $+0.90$, the Table~V entries. Relative skill: $1-0.198/0.263=0.247$ and $1-0.116/0.263=0.559$.\n\n\\textbf{Problem 12.} $s_{401}"
+  },
+  {
+   "old": "\\textbf{Problem 9.} Compute",
+   "new": "\\textbf{Problem 9.} By \\eqref{eq:paper-critique-atleastone}, $1-0.975^{12}=1-0.738=0.262$. The most clearly violated assumption is independence. The rows share training and held-out zeros, and several differ only in $M$ or in the ridge strength, so their errors are strongly related.\n\n\\textbf{Problem 10.} Compute"
+  },
+  {
+   "old": "\\textbf{Problem 7.} Odd:",
+   "new": "\\textbf{Problem 8.} Odd:"
+  },
+  {
+   "old": "The first-submission version has DOI 10.5281/zenodo.21842988.",
+   "new": "The first-submission version has DOI 10.5281/zenodo.21842988.\n\n\\textbf{Problem 6.} $0.265/0.198=1.34$ and $0.264/0.198=1.33$. Both are consistent with ``$\\gtrsim1.3$'', narrowly. The other Table~I rows are scored on different holdouts (and the scale-2 rows with a different null). Checking them would need the one-prime oracle on exactly those holdouts, which Table~V does not list, so the check covers only the rows scored on 401--500. You could compute the missing one-prime values yourself with \\texttt{qmnt.oracle\\_zeros}.\n\n\\textbf{Problem 7.} $(0.1958-0.1708)/0.1708=0.0250/0.1708=0.146$, so the fit is about $14.6\\%$ worse than predicting zero fluctuation. The probe-null is the rms of the synthetic target itself, which contains only the $p=2$ terms ($m\\le3$). The real fluctuations also contain the contributions of all other primes, so their rms is larger."
+  }
+ ],
+ "new_checks": "import math\nimport numpy as np\nimport scipy.special\nimport qmnt\n\ndef sz(n):\n    n = np.atleast_1d(np.asarray(n))\n    try:\n        out = np.asarray(qmnt.smooth_zeros(n), dtype=float)\n        if out.shape != n.shape:\n            raise ValueError\n        return out\n    except Exception:\n        return np.array([float(qmnt.smooth_zeros(int(k))) for k in n])\n\ndef wsx(V):\n    V = np.atleast_1d(np.asarray(V, dtype=float))\n    try:\n        out = np.asarray(qmnt.wu_sprung_x(V), dtype=float)\n        if out.shape != V.shape:\n            raise ValueError\n        return out\n    except Exception:\n        return np.array([float(qmnt.wu_sprung_x(v)) for v in V])\n\nt2 = np.asarray(qmnt.zeros(2000), dtype=float)\nt = t2[:1000]\n\n# ---- Sample relative skill\nassert abs((1 - 0.369 / 0.263) - (-0.403)) < 1e-3\nassert abs(0.369 / 0.263 - 1.403) < 1e-3\nassert abs((1 - 0.074 / 0.263) - 0.719) < 1e-3\nassert abs(0.074 / 0.263 - 0.281) < 1e-3\n\n# ---- Sample what a correlation is worth\nassert abs(math.sqrt(1 - 0.96**2) - 0.280) < 1e-3\nassert abs(0.263 * math.sqrt(1 - 0.96**2) - 0.0736) < 1e-4\nassert abs(math.sqrt(1 - 0.07**2) - 0.9975) < 1e-4\nassert abs(0.263 * math.sqrt(1 - 0.07**2) - 0.2624) < 1e-4\nassert abs(0.263 * math.sqrt(1 - 0.955**2) - 0.078) < 5e-4\nassert abs(0.263 * math.sqrt(1 - 0.965**2) - 0.069) < 5e-4\nrng = np.random.default_rng(3)\nf = rng.normal(size=200); f -= f.mean()\ng = 0.7 * f + rng.normal(size=200); g -= g.mean()\na = np.sum(f * g) / np.sum(g * g)\nQmin = np.mean((f - a * g) ** 2)\nr = np.corrcoef(f, g)[0, 1]\nassert abs(Qmin - np.mean(f**2) * (1 - r**2)) < 1e-12\nnh = np.arange(401, 501)\nfl = np.asarray(qmnt.fluct(t[nh - 1], nh), dtype=float)\nassert abs(np.mean(fl)) < 0.2 * qmnt.rms(fl)   # mean less than a fifth of rms\n\n# ---- Coverage sample\nL1 = qmnt.L_of(1000); L2 = qmnt.L_of(1500)\nassert abs(L1 - 44.883) < 1e-3 and abs(L2 - 59.957) < 1e-3\nassert abs(math.sqrt(811.18) - 28.481) < 1e-3\nassert abs(2 * math.sqrt(811.18) - 56.963) < 2e-3\nMth1 = 2 * np.sqrt(t[499]) * L1 / np.pi\nassert abs(Mth1 - 813.8) < 0.2\ns800 = sz(800)[0]\nassert abs(s800 - 1184) < 1.0\nMth2 = 2 * np.sqrt(s800) * L2 / np.pi\nassert abs(Mth2 - 1313) < 3\nassert abs(2 * 59.957 - 119.914) < 1e-9\nk900 = 900 * np.pi / (2 * L2)\nassert abs(k900 - 23.58) < 0.01\nassert abs(k900**2 - 556) < 1.0\nassert abs(float(np.asarray(qmnt.Nsm(556.0)).ravel()[0]) + 0.5 - 310) < 2\n# W3: scale-1 training threshold and ratios\ns400 = sz(400)[0]\nassert abs(s400 - 680) < 1\nMth1tr = 2 * np.sqrt(s400) * L1 / np.pi\nassert abs(Mth1tr - 745) < 1.5\nassert abs(2 * np.sqrt(680) * 44.883 / np.pi - 745) < 1.5\nfor M, thr, claim in ((200, Mth1tr, 0.27), (600, Mth1tr, 0.81), (300, Mth2, 0.23), (900, Mth2, 0.69)):\n    assert abs(M / thr - claim) < 6e-3\nassert 900 > Mth1\n\n# ---- Checkpoint hypothetical paper\nassert abs((1 - 0.262 / 0.263) - 0.004) < 5e-4\nassert abs(1 / math.sqrt(100) - 0.1) < 1e-12\n\n# ---- Item (ii) sample\nassert abs((0.2438 - 0.2321) / 0.2438 - 0.0480) < 1e-4\nassert abs((0.2438 - 0.2523) / 0.2438 - (-0.0349)) < 1e-4\nassert abs((0.2438 - 0.2358) / 0.2438 - 0.0328) < 1e-4\nassert abs((0.2438 - 0.2477) / 0.2438 - (-0.0160)) < 1e-4\n\n# ---- Marginal row sample and two-sided remark\nassert abs(0.975**8 - 0.8167) < 1e-4\nassert abs(1 - 0.975**8 - 0.183) < 1e-3\nassert abs(8 * 0.025 - 0.2) < 1e-12\nassert abs(1 - 0.95**8 - 0.34) < 5e-3\n\n# ---- Anchors\nassert abs(t[0] - 14.1347251417) < 1e-8\nassert abs(t[499] - 811.1843588465) < 1e-8\nassert abs(t[999] - 1419.42248094599) < 1e-8\nassert abs(2 * np.pi / np.log(2) - 9.065) < 1e-3\n\n# ---- Dephasing sample (window zeros 1--400)\nT400 = t2[399] - t2[0]\nassert abs(T400 - 666) < 3\ndw4 = np.pi / T400\nassert abs(dw4 - 0.00472) < 2e-5\nd1001 = t2[1000] - t2[399]\nd2000 = t2[1999] - t2[399]\nassert abs(d1001 - 741) < 2\nassert abs(d2000 - 1836) < 2\nassert abs(dw4 * d1001 - 3.5) < 0.05\nassert abs(dw4 * d2000 - 8.7) < 0.07\nassert abs(0.00472 * 741 - 3.5) < 0.01\nassert abs(0.00472 * 1836 - 8.7) < 0.05\nassert abs(dw4 * T400 - np.pi) < 1e-12\nassert abs(0.1 * dw4 * d2000 - 0.87) < 0.01\n\n# ---- Rule of three sample\nf29 = 1 - 0.05 ** (1 / 29)\nf57 = 1 - 0.05 ** (1 / 57)\nassert abs(math.log(0.05) - (-2.996)) < 1e-3\nassert abs(math.log(0.05) / 29 - (-0.10330)) < 1e-5\nassert abs(math.exp(math.log(0.05) / 29) - 0.90186) < 1e-5\nassert abs(f29 - 0.0981) < 1e-4 and f29 < 0.1\nassert abs(3 / 29 - 0.103) < 1e-3\nassert abs(math.log(0.05) / 57 - (-0.05256)) < 1e-5\nassert abs(math.exp(math.log(0.05) / 57) - 0.94880) < 1e-5\nassert abs(f57 - 0.0512) < 1e-4 and abs(f57 - 0.05) < 2e-3\nassert abs(3 / 57 - 0.053) < 1e-3\n\n# ---- Turning points sample\ns201, s300 = sz([201, 300])\nassert abs(s201 - 398) < 1.5 and abs(s300 - 543) < 1.5\nx201, x300 = wsx([s201, s300])\nassert abs(x201 - 22.5) < 0.2\nassert abs(x300 - 28.5) < 0.2\n\n# ---- W4 three-level example and epsilon expansion\nE = np.array([1.0, 2.0, 4.0])\nA = np.array([[0.0, 0.05, 0.1], [0.05, 0.0, 0.15], [0.1, 0.15, 0.0]])\ndE = np.array([-sum(A[i, j]**2 / (E[i] - E[j]) for j in range(3) if j != i) for i in range(3)])\nassert np.allclose(dE, [0.005833, 0.00875, -0.014583], atol=1e-6)\nassert abs(dE.sum()) < 1e-15\nlam = np.linalg.eigvals(np.diag(E) + 1j * A)\nlam = lam[np.argsort(lam.real)]\nassert np.max(np.abs(lam.real - (E + dE))) < 1e-3\nassert abs(lam.real.sum() - 7.0) < 1e-12\neps = 1e-3\nlame = np.linalg.eigvals(np.diag(E) + 1j * eps * A)\nlame = lame[np.argsort(lame.real)]\nassert np.allclose((lame.real - E) / eps**2, dE, atol=1e-5)\n\n# ---- Problem 15 example\nA2 = np.array([[0.3, 0.2, -0.1], [0.2, -0.4, 0.25], [-0.1, 0.25, 0.1]])\ndE2 = np.array([-sum(A2[i, j]**2 / (E[i] - E[j]) for j in range(3) if j != i) for i in range(3)])\nassert np.allclose(dE2, [0.04333, -0.00875, -0.03458], atol=1e-5)\nassert abs(dE2.sum()) < 1e-14\nlam2 = np.linalg.eigvals(np.diag(E) + 1j * A2)\nassert abs(lam2.real.sum() - E.sum()) < 1e-12\nassert abs(np.trace(A2)) < 1e-12\n\n# ---- Chance-match sample\nt400 = t2[:400]\nassert abs((t400[-1] - t400[0]) - 666) < 3\nc = 2 * np.pi / 666\nassert abs(c - 0.009434) < 1e-6\nm2 = c * np.exp(2) / 2; m5 = c * np.exp(5) / 5; m8 = c * np.exp(8) / 8\nassert abs(np.exp(2) / 2 - 3.695) < 1e-3 and abs(m2 - 0.0349) < 1e-4 and abs(1 - np.exp(-m2) - 0.034) < 1e-3\nassert abs(np.exp(5) / 5 - 29.68) < 1e-2 and abs(m5 - 0.280) < 1e-3 and abs(1 - np.exp(-m5) - 0.244) < 1e-3\nassert abs(np.exp(8) / 8 - 372.6) < 0.1 and abs(m8 - 3.52) < 5e-3 and abs(1 - np.exp(-m8) - 0.970) < 1e-3\nassert abs(np.log(3000) - 8.006) < 1e-3\n\n# ---- Null and six-prime oracle\nnull_401 = qmnt.rms(qmnt.fluct(t[nh - 1], nh))\nassert abs(null_401 - 0.2631) < 6e-4\nr6, c6 = qmnt.score(qmnt.oracle_zeros(nh, qmnt.first_primes(6)), nh)\nassert abs(r6 - 0.074) < 1.5e-3\nassert abs(c6 - 0.96) < 6e-3\n\n# ---- Height figure caption: relative skill at first and last holdout\nassert abs((1 - 0.074 / 0.263) - 0.72) < 5e-3\nassert abs((1 - 0.119 / 0.296) - 0.60) < 5e-3\nassert abs((1 - 0.043 / 0.263) - 0.84) < 5e-3\nassert abs((1 - 0.067 / 0.296) - 0.77) < 5e-3\n\n# ---- Leakage test listing\nn5 = np.arange(1, 501)\ntt5 = t2[:500].copy()\ntrain = n5 <= 400\nP3 = qmnt.first_primes(3)\nomegas = np.array([m * np.log(p) for p in P3 for m in (1, 2, 3)])\ndef fitB(heights):\n    y = n5 - 0.5 - qmnt.Nsm(heights)\n    tt, yy = heights[train], y[train]\n    X = np.hstack([np.sin(np.outer(tt, omegas)), np.cos(np.outer(tt, omegas))])\n    return np.linalg.lstsq(X, yy, rcond=None)[0]\ncA = fitB(tt5)\nrngL = np.random.default_rng(0)\ntn = tt5.copy()\ntn[~train] = rngL.uniform(0, 5000, size=100)\ncB = fitB(tn)\nassert np.array_equal(cA, cB)\n\n# ---- Project 5 Hermite polynomials\nassert abs(scipy.special.eval_hermite(2, 0.7) - (4 * 0.49 - 2)) < 1e-12\nassert abs(scipy.special.eval_hermite(3, 0.7) - (2 * 0.7 * scipy.special.eval_hermite(2, 0.7) - 4 * scipy.special.eval_hermite(1, 0.7))) < 1e-12\n\n# ---- Problem 2\nassert abs((1 - 0.313 / 0.263) - (-0.190)) < 1e-3\nassert abs((1 - 0.258 / 0.263) - 0.019) < 1e-3\nassert abs((1 - 0.028 / 0.263) - 0.894) < 1e-3\n\n# ---- Problem 3\nassert abs(2.64 / 0.255 - 10.35) < 1e-2\nassert abs(2.6434 / 0.255 - 10.37) < 1e-2\n\n# ---- Problem 6 (factor 1.3)\nassert abs(0.265 / 0.198 - 1.34) < 1e-2\nassert abs(0.264 / 0.198 - 1.33) < 1e-2\n\n# ---- Problem 7\nassert abs((0.1958 - 0.1708) / 0.1708 - 0.146) < 1e-3\n\n# ---- Problem 8\nassert abs((0.2438 - 0.2391) / 0.2438 - 0.0193) < 1e-4\nassert abs((0.2438 - 0.2423) / 0.2438 - 0.0062) < 1e-4\n\n# ---- Problem 9\nassert abs(0.975**12 - 0.738) < 1e-3\nassert abs(1 - 0.975**12 - 0.262) < 1e-3\n\n# ---- Problem 10\nn2 = np.arange(501, 1001)\nnull_501 = qmnt.rms(qmnt.fluct(t[n2 - 1], n2))\nassert abs(null_401 - 0.263) < 1e-3\nassert abs(null_501 - 0.270) < 1.5e-3\n\n# ---- Problem 11\nr1, c1 = qmnt.score(qmnt.oracle_zeros(nh, qmnt.first_primes(1)), nh)\nr3, c3 = qmnt.score(qmnt.oracle_zeros(nh, qmnt.first_primes(3)), nh)\nassert abs(r1 - 0.198) < 1.5e-3 and abs(c1 - 0.66) < 6e-3\nassert abs(r3 - 0.116) < 1.5e-3 and abs(c3 - 0.90) < 6e-3\nassert abs((1 - 0.198 / 0.263) - 0.247) < 1e-3\nassert abs((1 - 0.116 / 0.263) - 0.559) < 1e-3\n\n# ---- Problem 12\ns401, s500 = sz([401, 500])\nassert abs(s401 - 681) < 1.5 and abs(s500 - 811) < 1.5\nx401, x500 = wsx([s401, s500])\nassert abs(x401 - 33.9) < 0.3\nassert abs(x500 - 38.5) < 0.3\nassert abs(33.9 / 44.883 - 0.755) < 1e-3\nassert abs(38.5 / 44.883 - 0.858) < 1e-3\n\n# ---- Problem 13\nassert abs(666 / 2 - 333) < 1e-12\nassert abs((np.pi / 666) * 333 - np.pi / 2) < 1e-12\n\n# ---- Problem 14\nm3 = c * np.exp(3) / 3; m6 = c * np.exp(6) / 6\nassert abs(np.exp(3) / 3 - 6.695) < 1e-3 and abs(m3 - 0.0632) < 1e-4\nassert abs(1 - np.exp(-m3) - 0.061) < 1e-3\nassert abs(np.exp(6) / 6 - 67.24) < 1e-2 and abs(m6 - 0.634) < 1e-3\nassert abs(1 - np.exp(-m6) - 0.470) < 1e-3\n\n# ---- Problem 18\nassert abs((0.137 - 0.134) / 0.010 - 0.3) < 1e-9\nassert abs((0.141 - 0.137) / 0.006 - 0.67) < 5e-3\nassert abs((0.138 - 0.137) / 0.005 - 0.2) < 1e-9\n\n# ---- Problem 21\nT800 = t[799] - t[0]\nassert abs(T800 - 1170) < 3\nassert abs(np.log(131) - 4.875) < 1e-3\nassert abs(131 / np.log(131) - 26.87) < 1e-2\nc800 = 2 * np.pi / 1170\nassert abs(c800 - 0.005370) < 1e-6\nm131 = c800 * 131 / np.log(131)\nassert abs(m131 - 0.144) < 1e-3\nassert abs(1 - np.exp(-m131) - 0.134) < 1e-3\n\n# ---- Problem 25\nassert abs((1 - 0.05 ** (1 / 29)) / 0.8 - 0.123) < 1e-3\n\nprint(\"all checks passed\")\n",
+ "new_figures": {
+  "paper-critique_dephase": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport qmnt\n\nt = np.asarray(qmnt.zeros(2000), dtype=float)\nT = t[399] - t[0]          # window of zeros 1--400\ndw = np.pi / T             # matching tolerance (upper bound)\nts = t[399]                # phases matched at t_400\nw = np.log(2.0)\n\ndef wave(tt, shift):\n    out = np.zeros_like(tt)\n    for m in (1, 2, 3):\n        out += np.sin(m * w * tt + m * shift * (tt - ts)) / (m * 2.0 ** (m / 2))\n    return -out / np.pi\n\nfig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.5, 3))\ntt = np.linspace(t[1000] - 20, t[1000] + 20, 1500)\nax1.plot(tt, wave(tt, 0.0), \"k-\", lw=1.2, label=r\"exact, $\\omega=\\log 2$\")\nax1.plot(tt, wave(tt, dw), \"r--\", lw=1.2, label=r\"learned, $\\omega+\\pi/T$\")\nax1.axvline(t[1000], color=\"gray\", lw=0.8)\nax1.set_xlabel(r\"height $t$ (dimensionless)\")\nax1.set_ylabel(\"prime-2 wave (counts)\")\nax1.set_title(r\"near $t_{1001}$\", fontsize=9)\nax1.legend(fontsize=7, loc=\"upper right\")\n\ntg = np.linspace(t[0], t[1999], 2000)\nfor m, st in zip((1, 2, 3), (\"-\", \"--\", \":\")):\n    ax2.plot(tg, m * dw * np.abs(tg - ts), st, color=\"C0\", label=\"m = %d\" % m)\nfor y in (np.pi / 2, np.pi):\n    ax2.axhline(y, color=\"gray\", lw=0.6, ls=\"-.\")\nfor k in (399, 1000, 1999):\n    ax2.axvline(t[k], color=\"gray\", lw=0.6)\nax2.set_ylim(0, 15)\nax2.set_xlabel(r\"height $t$ (dimensionless)\")\nax2.set_ylabel(\"phase error (rad)\")\nax2.legend(fontsize=7, loc=\"upper left\")\nplt.tight_layout()\nplt.savefig(\"paper-critique_dephase.pdf\", bbox_inches=\"tight\")\n"
+ },
+ "notes": "All 26 issues addressed. Issue 7: the suggested relation 'b_n = -delta E_n' has the wrong sign. With H+i*eps*A, the eps^2 coefficient is b_n = -sum A_nm^2/(E_n-E_m), which equals the Eq. (5) shift delta E_n, so the text states b_n = delta E_n; CHECKS verifies this numerically with eps = 1e-3. Issue 12: the unrounded qmnt correlation is not quoted, because its rounding could not be guaranteed. Only the rounding range and the mean-fluctuation bound are stated and checked. Issue 18: the alignment score is described as 'our reading' of the paper's brief wording, since the exact definition is only in the Zenodo record. Issue 25: I used the issue's fallback ('at least eight decimal places') rather than tightening tolerances to 5e-11, because qmnt's cached precision is not documented. Issue 26: the run-time remark rests only on the bible's statement that qmnt.fit_potential takes minutes. Problems were renumbered (old 25 becomes 6, old 24 becomes 19; old 6-17 shift by +1 and old 18-23 by +2), with answers added for all difficulty-1 and odd-numbered problems. The dephasing figure was rewritten for the 1--400 window."
+}

@@ -1,0 +1,191 @@
+{
+ "patches": [
+  {
+   "old": "complex exponentials, Taylor expansion with remainder, Lambert $W$",
+   "new": "complex exponentials, Taylor series, Lambert $W$"
+  },
+  {
+   "old": "vectors and norms, the triangle inequality, eigenvalues, least squares and ridge.",
+   "new": "vectors and norms, eigenvalues, least squares and ridge."
+  },
+  {
+   "old": "rms, Pearson correlation, GUE statistics,",
+   "new": "rms, Pearson correlation, the Cauchy--Schwarz inequality, GUE statistics,"
+  },
+  {
+   "old": "One has 900 coefficients spread over a uniform grid of frequencies and does no better than the null.",
+   "new": "One has 900 coefficients spread over a uniform grid of frequencies and stays within 0.005 of the null."
+  },
+  {
+   "old": "(c) machine learning & no & yes & yes (train/test splits) \\\\",
+   "new": "(c) machine learning & no & yes for zero regression \\cite{sdsu}; others fit arithmetic data & yes (train/test splits) \\\\"
+  },
+  {
+   "old": "In \\cref{tab:paper-setup-strands}, the paper sits in the empty cell: operator, fitted to zeros, \\emph{and} tested on held-out zeros.",
+   "new": "The paper's own work is the combination missing from \\cref{tab:paper-setup-strands}: operator yes, fitted to zeros yes, held-out test yes."
+  },
+  {
+   "old": "You quantify this in Problem~25: the smallest error the paper reports is a few hundredths of a mean spacing, while 15 significant digits at height $10^4$ fix a zero to roughly $10^{-11}$ in $t$.",
+   "new": "You quantify this in Problem~25: the smallest held-out error the paper reports is about 0.02 mean spacings (Table~IV), and its tightest in-sample statement is rms $<10^{-4}$ spacings (Sec.~III), while 15 significant digits at height $10^4$ fix a zero to roughly $10^{-11}$ in $t$, at least seven orders of magnitude below either."
+  },
+  {
+   "old": "(Sample Problems~\\ref{sp:paper-setup-first} and~\\ref{sp:paper-setup-units})",
+   "new": "(see the first and third Sample Problems of this section, below)"
+  },
+  {
+   "old": "\\label{sp:paper-setup-first}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-lambert}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-units}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-L}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-dispersion}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-rich}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-bound}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-leak}",
+   "new": ""
+  },
+  {
+   "old": "\\label{sp:paper-setup-tablev}",
+   "new": ""
+  },
+  {
+   "old": "This agrees with Sample Problem~\\ref{sp:paper-setup-first}.",
+   "new": "This agrees with the Sample Problem ``Unfolding the first zero''."
+  },
+  {
+   "old": "let $\\delta_n=t_n-s_n$ and expand $\\Nsm$ about $s_n$ with the Lagrange remainder (Chapter~\\ref{ch:asymptotics}):",
+   "new": "let $\\delta_n=t_n-s_n$ and expand $\\Nsm$ about $s_n$ using Taylor's theorem with remainder, which we state here.\n\\begin{beyond}\nTaylor's theorem with the Lagrange remainder: if $g$ has a continuous second derivative on an interval containing $s$ and $s+\\delta$, then $g(s+\\delta)=g(s)+g'(s)\\,\\delta+\\tfrac12 g''(\\xi)\\,\\delta^2$ for some $\\xi$ between $s$ and $s+\\delta$. We take it on trust; a proof (by repeated use of the mean value theorem) is in \\cite{rhb}.\n\\end{beyond}\nWith $g=\\Nsm$, $s=s_n$ and $\\delta=\\delta_n$:"
+  },
+  {
+   "old": "Running this listing prints null values of about 0.244, 0.263 and 0.274 for the three windows, matching the paper's anchors 0.2438, 0.2631 and 0.2739 (Appendix~A). (The paper's in-sample and scale-2 anchors are measured against the unperturbed potential's levels; \\cref{sec:paper-setup-nulls} explains why these agree with the smooth-zero values to the precision shown.)",
+   "new": "Running this listing prints null values within $0.002$ of the paper's anchor 0.2631 for zeros 401--500, and within $0.004$ of its anchors 0.2438 (zeros 1--400) and 0.2739 (zeros 801--1000) (Appendix~A). (The paper's anchors are measured against the unperturbed potential's levels; \\cref{sec:paper-setup-nulls} bounds the difference from the smooth-zero values by 0.063 and discusses why it is in practice much smaller. That the values agree as closely as they do is a numerical observation.)"
+  },
+  {
+   "old": "If the zeros had been computed wrongly, or if the unfolding used the wrong $\\Nsm$, the histogram would not have unit mean or would not vanish at $s=0$.",
+   "new": "Gross errors, such as missed zeros or a wrong density in the unfolding, would typically show up as a non-unit mean or as weight near $s=0$; the check cannot detect every error (a slightly wrong constant in $\\Nsm$, or a few slightly perturbed zeros, would leave both features intact)."
+  },
+  {
+   "old": "then cubic-spline interpolation onto the working grid). Bracketing works because $x(V)$ increases with $V$, which you can see in \\cref{fig:paper-setup-wusprung} over the whole range used.",
+   "new": "then cubic-spline interpolation onto the working grid; a cubic spline is a smooth piecewise-cubic curve through the reference points, used to evaluate $V$ between them). Bracketing works because $x(V)$ increases strictly with $V$ (\\cref{fig:paper-setup-wusprung}); we prove this after \\eqref{eq:paper-setup-wsstable} below."
+  },
+  {
+   "old": "\\label{eq:paper-setup-wsstable}\n\\end{equation}\n",
+   "new": "\\label{eq:paper-setup-wsstable}\n\\end{equation}\n\nNow the monotonicity. Write $a=\\sqrt{V-V_0}$ and $b=\\sqrt V$, so that $da/dV=1/(2a)$ and $db/dV=1/(2b)$, and let $c=\\log\\bigl(V_0/(2\\pi e^2)\\bigr)$. By \\eqref{eq:paper-setup-wsstable}, $\\pi x=ac+2b\\log\\bigl((b+a)/\\sqrt{V_0}\\bigr)$. Differentiate term by term for $V>V_0$:\n\\begin{align}\n\\frac{d(ac)}{dV}&=\\frac{c}{2a},\\nonumber\\\\\n\\frac{d}{dV}\\Bigl[2b\\log\\frac{b+a}{\\sqrt{V_0}}\\Bigr]&=\\frac1b\\log\\frac{b+a}{\\sqrt{V_0}}+2b\\,\\frac{1/(2b)+1/(2a)}{b+a}\n&&\\text{(product and chain rules)}\\nonumber\\\\\n&=\\frac1b\\log\\frac{b+a}{\\sqrt{V_0}}+\\frac{(a+b)/a}{a+b}\n&&\\text{($2b\\bigl(\\tfrac1{2b}+\\tfrac1{2a}\\bigr)=1+\\tfrac ba$)}\\nonumber\\\\\n&=\\frac1b\\log\\frac{b+a}{\\sqrt{V_0}}+\\frac1a .\\nonumber\n\\end{align}\nAdding the two pieces, and using $1+\\tfrac c2=1+\\tfrac12\\log V_0-\\tfrac12\\log(2\\pi)-1=\\tfrac12\\log\\frac{V_0}{2\\pi}$,\n\\begin{equation}\n\\pi\\frac{dx}{dV}=\\frac{1}{\\sqrt V}\\log\\frac{\\sqrt V+\\sqrt{V-V_0}}{\\sqrt{V_0}}+\\frac{\\log(V_0/2\\pi)}{2\\sqrt{V-V_0}} .\n\\label{eq:paper-setup-dxdv}\n\\end{equation}\nBoth terms are positive for $V>V_0$: the first because $\\sqrt V+\\sqrt{V-V_0}>\\sqrt{V_0}$, the second because $V_0/2\\pi=3.10073/2=1.5504>1$. So $x(V)$ is strictly increasing, and its inverse $V(x)$ is well defined for $x\\ge0$.\n"
+  },
+  {
+   "old": "In the Wu--Sprung potential the bias at a given energy is smaller, because only the kinetic part $E-V(x)$ of the energy feels the discretized derivative and that part is smaller than $E$ over most of the well.",
+   "new": "In the Wu--Sprung potential we expect the bias at a given energy to be smaller. Heuristically (we do not derive this here), the leading error is proportional to $h^2$ times the average of $k(x)^4=(E-V(x))^2$ over the state, where $k(x)$ is the local WKB wavenumber of Chapter~\\ref{ch:wkb}, and in a well this average is smaller than $E^2$."
+  },
+  {
+   "old": "So the paper's subscript ``$2h$'' must be read as ``the grid with twice the points'' (spacing halved), which is what Appendix~A step~3 confirms by listing the Richardson pairs $12000/24000$ and $16000/32000$. The extrapolation is from the finer pair,",
+   "new": "So the weight 4 must multiply the eigenvalue on the finer grid: only then does the $h^2$ error cancel. The paper's subscript ``$2h$'' must therefore be read as ``the grid with twice the points''. Appendix~A step~3 lists the Richardson pairs $12000/24000$ and $16000/32000$, consistent with that reading. With $h=2L/(N+1)$, doubling $N$ halves $h$ only approximately: $h_{24000}/h_{12000}=12001/24001=\\tfrac12(1+\\eta)$ with $\\eta=1/24001\\approx4.2\\times10^{-5}$ (smaller still for the scale-2 pair). Repeating Step~2 with $h/2$ replaced by $h(1+\\eta)/2$ gives $E+\\tfrac{2\\eta+\\eta^2}{3}\\,ah^2\\approx E+2.8\\times10^{-5}\\,ah^2$, a negligible residual compared with the coarse-grid error $ah^2$. The extrapolation is from the finer pair,"
+  },
+  {
+   "old": "accept a step only if the rms improves by the factor $0.999$;",
+   "new": "accept a step only if the new rms is below $0.999$ times the old one (the scale-2, $M=300$ row of Table~I used $1-10^{-5}$ instead, as its caption notes);"
+  },
+  {
+   "old": "Two numbers are reported. Let $H$ be the set of held-out indices, with $K$ members. Let $P_n$ be a model's predicted height for zero $n$, $t_n$ the true height, and $R_n$ a reference (the model's smooth baseline). Define the predicted and true fluctuations relative to the reference,\n\\begin{equation}\np_n=\\frac{P_n-R_n}{\\gap_n},\\qquad q_n=\\frac{t_n-R_n}{\\gap_n}.\n\\label{eq:paper-setup-pq}\n\\end{equation}\nThen\n\\begin{equation}\n\\rms=\\Bigl[\\frac1K\\sum_{n\\in H}\\Bigl(\\frac{P_n-t_n}{\\gap_n}\\Bigr)^2\\Bigr]^{1/2}=\\Bigl[\\frac1K\\sum_{n\\in H}(p_n-q_n)^2\\Bigr]^{1/2},\n\\qquad\n\\corr=\\text{Pearson}(p,q),\n\\label{eq:paper-setup-score}\n\\end{equation}\nwhere the second form of the rms follows because $p_n-q_n=(P_n-t_n)/\\gap_n$, the reference cancelling. For the oracle, $P_n$ solves the level equation of \\cref{sec:paper-setup-oracle} and $R_n=s_n$. For the operator, the fit is scored against $\\tilde t_n$ with the reference $E_n^{\\rm g}[\\text{smooth}]$ (``both measured relative to the unperturbed smooth-potential levels'', Sec.~II~C); \\cref{sec:paper-setup-nulls} shows this is the same as using the corrected prediction $P_n=E_n[\\text{fit}]-\\Delta_n$ and reference $R_n=E^{\\rm Rich}_n[\\text{smooth}]$ against the raw zeros.",
+   "new": "Two numbers are reported. Let $\\mathcal T$ be the set of held-out indices, with $n_{\\rm test}$ members. Let $\\hat t_n$ be a model's predicted height for zero $n$, $t_n$ the true height, and $R_n$ a reference (the model's smooth baseline). Define the predicted and true fluctuations relative to the reference,\n\\begin{equation}\n\\hat f_n=\\frac{\\hat t_n-R_n}{\\gap_n},\\qquad f^{\\rm ref}_n=\\frac{t_n-R_n}{\\gap_n}.\n\\label{eq:paper-setup-pq}\n\\end{equation}\nThen\n\\begin{equation}\n\\rms=\\Bigl[\\frac{1}{n_{\\rm test}}\\sum_{n\\in\\mathcal T}\\Bigl(\\frac{\\hat t_n-t_n}{\\gap_n}\\Bigr)^2\\Bigr]^{1/2}=\\Bigl[\\frac{1}{n_{\\rm test}}\\sum_{n\\in\\mathcal T}(\\hat f_n-f^{\\rm ref}_n)^2\\Bigr]^{1/2},\n\\qquad\n\\corr=\\text{Pearson}(\\hat f,f^{\\rm ref}),\n\\label{eq:paper-setup-score}\n\\end{equation}\nwhere the second form of the rms follows because $\\hat f_n-f^{\\rm ref}_n=(\\hat t_n-t_n)/\\gap_n$, the reference cancelling. (We write $\\mathcal T$, $n_{\\rm test}$ and hats to avoid clashes with the Hamiltonian $H$, the number $K$ of frequencies in control C2, the prime set $P$ and the prime $p$.) For the oracle, $\\hat t_n$ solves the level equation of \\cref{sec:paper-setup-oracle} and $R_n=s_n$. For the operator, the fit is scored against $\\tilde t_n$, which plays the role of the true height, with the reference $E_n^{\\rm g}[\\text{smooth}]$ (``both measured relative to the unperturbed smooth-potential levels'', Sec.~II~C). Writing $E^{\\rm g}_n$ and $E^{\\rm Rich}_n$ for the smooth-potential eigenvalues on the working grid and from Richardson extrapolation, and $\\Delta_n=E^{\\rm g}_n-E^{\\rm Rich}_n$ for the grid bias \\eqref{eq:paper-setup-delta}, this is the same as using the corrected prediction $\\hat t_n=E_n[\\text{fit}]-\\Delta_n$ and the reference $R_n=E^{\\rm Rich}_n$ against the raw zeros, because both fluctuations are unchanged:\n\\begin{align}\n\\bigl(E_n[\\text{fit}]-\\Delta_n\\bigr)-E^{\\rm Rich}_n\n&=E_n[\\text{fit}]-E^{\\rm g}_n+E^{\\rm Rich}_n-E^{\\rm Rich}_n=E_n[\\text{fit}]-E^{\\rm g}_n,\n&&\\text{(insert $\\Delta_n$)}\\nonumber\\\\\nt_n-E^{\\rm Rich}_n\n&=t_n+\\Delta_n-E^{\\rm g}_n=\\tilde t_n-E^{\\rm g}_n\n&&\\text{(add and subtract $E^{\\rm g}_n$; $\\tilde t_n=t_n+\\Delta_n$)}.\\nonumber\n\\end{align}\nDividing by $\\gap_n$ shows that the predicted and true fluctuations, and hence both scores, are the same in the two descriptions."
+  },
+  {
+   "old": "where the fluctuation amplitude is slightly larger: ``the null grows from 0.263 to 0.296 over Table~V''.",
+   "new": "where the fluctuation amplitude is slightly larger; the paper notes that the null grows from 0.263 to 0.296 over Table~V."
+  },
+  {
+   "old": "\\checkanswer{With $M=200$ the linearized system has as many unknowns as equations (it is square), so the 200 training residuals can generically be matched exactly; with $M>200$ it is underdetermined and has infinitely many exact fits. In either case a small in-sample error says nothing about predictive skill.}",
+   "new": "\\checkanswer{With $M$ at or above the number of training levels (200 here), the model has at least as many adjustable numbers as data, so counting alone no longer prevents an exact fit (Chapter~\\ref{ch:least-squares}: a square or underdetermined linear system can generically be solved exactly). In practice exactness also requires the basis to cover the levels and the nonlinear iteration to converge (Chapter~\\ref{ch:fitting}): Table~III shows in-sample rms 0.176 and 0.171 at $M=200$ but $<10^{-3}$ at $M=400$. Either way, a small in-sample error in these rows says nothing about predictive skill.}"
+  },
+  {
+   "old": "$P_n=R_n$, so $p_n=0$ and, by",
+   "new": "$\\hat t_n=R_n$, so $\\hat f_n=0$ and, by"
+  },
+  {
+   "old": "\\rms_{\\rm null}=\\Bigl[\\frac1K\\sum_{n\\in H}q_n^2\\Bigr]^{1/2},",
+   "new": "\\rms_{\\rm null}=\\Bigl[\\frac{1}{n_{\\rm test}}\\sum_{n\\in\\mathcal T}\\bigl(f^{\\rm ref}_n\\bigr)^2\\Bigr]^{1/2},"
+  },
+  {
+   "old": "its predicted fluctuations $p_n$ are all zero",
+   "new": "its predicted fluctuations $\\hat f_n$ are all zero"
+  },
+  {
+   "old": "Write $\\rms(a)=\\norm{a}/\\sqrt K$ with $\\norm{\\cdot}$ the Euclidean norm of a $K$-component vector (Chapter~\\ref{ch:linear-algebra}). The triangle inequality $\\norm{a+b}\\le\\norm a+\\norm b$ gives",
+   "new": "Write $\\rms(a)=\\norm{a}/\\sqrt{n_{\\rm test}}$ with $\\norm{\\cdot}$ the Euclidean norm of an $n_{\\rm test}$-component vector (Chapter~\\ref{ch:linear-algebra}). We need the triangle inequality $\\norm{a+b}\\le\\norm a+\\norm b$. It follows from the Cauchy--Schwarz inequality $a\\cdot b\\le\\norm a\\,\\norm b$ (Chapter~\\ref{ch:probability}):\n\\begin{align}\n\\norm{a+b}^2&=\\norm a^2+2\\,a\\cdot b+\\norm b^2 &&\\text{(expand the dot product)}\\nonumber\\\\\n&\\le\\norm a^2+2\\norm a\\,\\norm b+\\norm b^2 &&\\text{(Cauchy--Schwarz)}\\nonumber\\\\\n&=(\\norm a+\\norm b)^2,\\nonumber\n\\end{align}\nand taking square roots of the two nonnegative sides gives the inequality. Applied twice, it gives"
+  },
+  {
+   "old": "On zeros 401--500 they agree to four digits, which tells you that $\\varepsilon_n$ is much smaller there than its worst value; that is consistent with the paper's remark that the worst residuals occur at low $n$.",
+   "new": "On zeros 401--500 they agree to four digits. This is consistent with $\\varepsilon_n$ being much smaller there than its worst value (the paper says the worst residuals occur at low $n$), although agreement of the rms values alone does not prove it: expanding the squares, $\\rms(f-\\varepsilon)^2-\\rms(f)^2=\\overline{\\varepsilon^2}-2\\,\\overline{f\\varepsilon}$ (bars denote averages over the holdout), so an $\\varepsilon$ that is uncorrelated with $f$ changes the rms only through the second-order term $\\overline{\\varepsilon^2}$."
+  },
+  {
+   "old": "In this illustration the fit has the right magnitude of fluctuation but the wrong sign, the kind of behaviour the paper finds within height (Table~III).",
+   "new": "In this illustration the fit predicts a fluctuation of $E_n[\\text{fit}]-E^{\\rm g}_n[\\text{smooth}]=+0.300$ where the true one is $\\tilde t_n-E^{\\rm g}_n[\\text{smooth}]=+0.150$: right sign, twice the size, so its error ($0.150$ in magnitude) is no smaller than the null's."
+  },
+  {
+   "old": "returns the rms of $(P_n-t_n)/\\gap_n$ and the Pearson correlation of $p_n=(P_n-s_n)/\\gap_n$ with $q_n=f_n$, as in",
+   "new": "returns the rms of $(\\hat t_n-t_n)/\\gap_n$ and the Pearson correlation of $\\hat f_n=(\\hat t_n-s_n)/\\gap_n$ with $f^{\\rm ref}_n=f_n$, as in"
+  },
+  {
+   "old": "it was caught only because exact verification was possible.",
+   "new": "the artifact was removed by zeroing the analytically vanishing tensor entries, and the remaining floor was shown to be a property of the surrogate only when the exact spectrum was computed. Both repairs depended on being able to rerun and recheck the computation."
+  },
+  {
+   "old": "(the nulls 0.244, 0.263, 0.274 of Appendix~A's anchors,",
+   "new": "(the nulls of Appendix~A's anchors, 0.2438, 0.2631 and 0.2739, to within a few thousandths,"
+  },
+  {
+   "old": "Estimate $y_1+f_1$ using Sample Problem~\\ref{sp:paper-setup-first}.",
+   "new": "Estimate $y_1+f_1$ using the Sample Problem ``Unfolding the first zero''."
+  },
+  {
+   "old": "Illustrate with $q=(-1,1,0)$, $p=(0.5,-0.5,0)$ and a reference change that adds $d=(0,0,3)$ to both.}",
+   "new": "Illustrate with $f^{\\rm ref}=(-1,1,0)$, $\\hat f=(0.5,-0.5,0)$ and a reference change that adds $d=(0,0,3)$ to both.}"
+  },
+  {
+   "old": "convert it to mean spacings, and compare with the smallest rms in Table~IV (0.018).}",
+   "new": "convert it to mean spacings, and compare with the smallest rms in Table~IV (0.018) and with the in-sample bound rms $<10^{-4}$ quoted in Sec.~III.}"
+  },
+  {
+   "old": "matching the next-order estimate $-E^3h^4/1440$.",
+   "new": "matching the next-order estimate $-E^3h^4/1440$. To see where this comes from, note that the angle $k\\pi/(2(N+1))$ equals $x=\\sqrt{E}\\,h/2$ with $E=(k\\pi/2L)^2$. Expanding $\\sin^2x=x^2-x^4/3+2x^6/45-\\dots$ gives $E^{\\rm disc}=\\frac4{h^2}\\sin^2x=E-E^2h^2/12+E^3h^4/360-\\dots$. In the Richardson combination the $h^2$ term cancels and the $h^4$ term is multiplied by $(4\\cdot\\tfrac1{16}-1)/3=-\\tfrac14$, leaving $-E^3h^4/1440$."
+  },
+  {
+   "old": "\\textbf{13.} About $0.238$ on the even-indexed zeros and about $0.250$ on the odd-indexed zeros (to within a few thousandths;",
+   "new": "\\textbf{13.} Within $0.006$ of $0.238$ on the even-indexed zeros and within $0.006$ of $0.250$ on the odd-indexed zeros ("
+  },
+  {
+   "old": "\\textbf{19.} With $p_n=(P_n-R_n)/\\gap_n$ and $q_n=(t_n-R_n)/\\gap_n$, the difference $p_n-q_n=(P_n-t_n)/\\gap_n$ does not contain $R_n$, so the rms is unchanged. Replacing $R_n$ by $R'_n$ adds the same sequence $d_n=(R_n-R'_n)/\\gap_n$ to both $p$ and $q$, which changes their covariance and variances, so the correlation can change. Example: $p=(0.5,-0.5,0)$, $q=(-1,1,0)$ has correlation $-1$; after adding $d=(0,0,3)$, $p'=(0.5,-0.5,3)$, $q'=(-1,1,3)$, both with mean 1;",
+   "new": "\\textbf{19.} With $\\hat f_n=(\\hat t_n-R_n)/\\gap_n$ and $f^{\\rm ref}_n=(t_n-R_n)/\\gap_n$, the difference $\\hat f_n-f^{\\rm ref}_n=(\\hat t_n-t_n)/\\gap_n$ does not contain $R_n$, so the rms is unchanged. Replacing $R_n$ by $R'_n$ adds the same sequence $d_n=(R_n-R'_n)/\\gap_n$ to both $\\hat f$ and $f^{\\rm ref}$, which changes their covariance and variances, so the correlation can change. Example: $\\hat f=(0.5,-0.5,0)$, $f^{\\rm ref}=(-1,1,0)$ has correlation $-1$; after adding $d=(0,0,3)$, $\\hat f'=(0.5,-0.5,3)$, $f^{\\rm ref\\prime}=(-1,1,3)$, both with mean 1;"
+  },
+  {
+   "old": "The fraction from the first $10^4$ zeros is a few percent at most, far closer to GUE than to Poisson:",
+   "new": "The fraction from the first $10^4$ zeros is below $0.05$ (the check script confirms this bound), far closer to GUE than to Poisson:"
+  },
+  {
+   "old": "``Many orders'' means roughly nine orders of magnitude.",
+   "new": "Against the in-sample bound $10^{-4}$ of Sec.~III the ratio is about $1.7\\times10^7$. ``Many orders'' therefore means at least seven orders of magnitude, and about nine for the held-out errors."
+  }
+ ],
+ "new_checks": "import numpy as np\nfrom scipy.special import lambertw\nfrom scipy.optimize import brentq\nfrom scipy.integrate import quad\nimport qmnt\n\nTWO_PI = 2*np.pi\ndef Nsm(t):\n    u = np.asarray(t, float)/TWO_PI\n    return u*np.log(u) - u + 7/8\ndef dNsm(t): return np.log(np.asarray(t, float)/TWO_PI)/TWO_PI\ndef smooth_zero(n):\n    n = np.asarray(n, float); z = (n - 11/8)/np.e\n    return TWO_PI*(n - 11/8)/np.real(lambertw(z, 0))\ndef gap(t): return TWO_PI/np.log(np.asarray(t, float)/TWO_PI)\ndef rms(a): return np.sqrt(np.mean(np.asarray(a, float)**2))\ndef corr(a, b): return np.corrcoef(a, b)[0, 1]\n\ntz = np.asarray(qmnt.zeros(10000), float)\nt1 = tz[0]\n\n# Data anchors quoted from the paper (Sec. II A, App. A)\nassert abs(t1 - 14.134725141734695) < 1e-9\nassert abs(tz[499] - 811.1843588465) < 1e-8\nassert abs(tz[999] - 1419.42248094599) < 1e-8\n\n# Sample Problem: unfolding the first zero\ns1 = float(smooth_zero(1))\nassert abs(Nsm(s1) - 0.5) < 1e-10\nassert abs(s1 - 14.521) < 1e-3\nassert abs(float(np.asarray(qmnt.smooth_zeros(np.array([1])))[0]) - s1) < 1e-6\ng1 = float(gap(s1)); assert abs(g1 - 7.500) < 1e-3\nf1 = (t1 - s1)/g1; assert abs(f1 - (-0.0515)) < 5e-4\nassert abs(Nsm(14.0) - 0.432) < 1e-3 and abs(Nsm(15.0) - 0.565) < 1e-3   # bracket\nassert abs(dNsm(14.0) - 0.1275) < 5e-5\nassert abs(Nsm(14.0) - 0.4320) < 5e-5\nx1 = 14.0 + (0.5 - Nsm(14.0))/dNsm(14.0)\nassert abs(x1 - 14.533) < 5e-4\nassert abs(Nsm(x1) - 0.5016) < 1e-4 and abs(dNsm(x1) - 0.1335) < 1e-4\nstep = (Nsm(x1) - 0.5)/dNsm(x1); assert abs(step - 0.0120) < 2e-4\nx2 = x1 - step; assert abs(x2 - 14.521) < 5e-4\nx3 = x2 + (0.5 - Nsm(x2))/dNsm(x2); assert abs(x3 - x2) < 1e-5\n\n# Sample Problem: Lambert W\nz1 = (1 - 11/8)/np.e\nassert abs(z1 - (-0.13795)) < 1e-5\nw1 = np.real(lambertw(z1, 0)); assert abs(w1 - (-0.16225)) < 1e-5\nassert abs(Nsm(smooth_zero(500)) - 499.5) < 1e-9\n\n# Sample Problem: units\nassert abs(gap(811.1843588465) - 1.293) < 5e-4\nassert abs(0.263*gap(811.1843588465) - 0.340) < 1e-3\nassert abs(gap(1419.42248094599) - 1.159) < 5e-4\n\n# Nulls (text, pycode): smooth-zero nulls vs paper anchors (tolerances as stated in text)\nn_all = np.arange(1, 10001)\ns_all = smooth_zero(n_all); g_all = gap(s_all)\nf_all = (tz - s_all)/g_all\ndef null(lo, hi): return rms(f_all[lo-1:hi])\nassert abs(null(1, 400) - 0.2438) < 0.004\nassert abs(null(401, 500) - 0.2631) < 0.002\nassert abs(null(801, 1000) - 0.2739) < 0.004\nnq = np.arange(401, 501)\nassert abs(qmnt.rms(qmnt.fluct(tz[nq-1], nq)) - 0.2631) < 0.002\n\n# y_n + f_n relation (eq. ynfn, Problem 15)\ny_all = n_all - 0.5 - Nsm(tz)\nd500 = tz[499] - s_all[499]\nassert abs((y_all[499] + f_all[499]) - (-6.8e-6)) < 3e-7\nassert abs((y_all[0] + f_all[0]) - (-8.3e-4)) < 1e-4\nassert np.all(y_all + f_all <= 1e-12)\n\n# np.gradient endpoint pitfall (window 1--400)\ns2 = float(smooth_zero(2)); assert abs((s2 - s1) - 6.13) < 0.01\ns400 = s_all[:400]; ggrad = np.gradient(s400)\nassert abs(rms((tz[:400]-s400)/ggrad) - rms(f_all[:400])) < 1e-4\n\n# GUE check: mean unfolded spacing and telescoping identity\nsp = np.diff(Nsm(tz)); assert abs(sp.mean() - 1) < 1e-3\nassert abs(sp.mean() - (1 + (y_all[0] - y_all[-1])/9999)) < 1e-9\n\n# Sample Problem: L from Eq. (2)\nV0 = 3.10073*np.pi\nassert abs(V0 - 9.7412) < 1e-4\nlt = np.log(V0/(TWO_PI*np.e**2)); assert abs(lt - (-1.5615)) < 1e-4\nassert abs(np.sqrt(1000 - V0) - 31.4684) < 1e-4\nassert abs(np.sqrt(V0) - 3.1211) < 1e-4\ndef x_of_V(V):\n    a = np.sqrt(V - V0); b = np.sqrt(V)\n    return (a*lt + b*2*np.log((b + a)/np.sqrt(V0)))/np.pi\ndef x_naive(V):\n    a = np.sqrt(V - V0); b = np.sqrt(V)\n    return (a*lt + b*np.log((b + a)/(b - a)))/np.pi\nassert abs(x_of_V(1000.0) - x_naive(1000.0)) < 1e-8\nassert abs(np.pi*x_of_V(1000.0) - 141.003) < 1e-3\nassert abs(x_of_V(1000.0) - 44.883) < 5e-4\nassert abs(x_of_V(1500.0) - 59.957) < 5e-4\nassert abs(qmnt.L_of(1000) - 44.883) < 1e-3\nassert abs(qmnt.L_of(1500) - 59.957) < 1e-3\nassert abs(x_of_V(V0)) < 1e-12\nVg = np.linspace(V0 + 1e-9, 1600, 5000); assert np.all(np.diff(x_of_V(Vg)) > 0)\n\n# Monotonicity derivation (eq. dxdv)\nassert abs(3.10073/2 - 1.550365) < 1e-6\nassert abs(V0/TWO_PI - 1.5504) < 1e-4\nassert abs(1 + lt/2 - 0.5*np.log(V0/TWO_PI)) < 1e-12\ndef dxdV(V):\n    a = np.sqrt(V - V0); b = np.sqrt(V)\n    return (np.log((b + a)/np.sqrt(V0))/b + np.log(V0/TWO_PI)/(2*a))/np.pi\nfor VV in [20.0, 500.0, 1000.0, 1500.0]:\n    num = (x_of_V(VV + 1e-5) - x_of_V(VV - 1e-5))/2e-5\n    assert abs(num - dxdV(VV)) < 1e-6\n    assert dxdV(VV) > 0\n\n# grid spacings\nL1 = 44.883\nassert abs(2*L1/6001 - 0.0150) < 1e-4 and abs(2*59.957/8001 - 0.0150) < 1e-4\n\n# Sample Problem: dispersion in the box\nh = 2*L1/6001; assert abs(h - 0.0149585) < 1e-7\nk = 756\nEc = (k*np.pi/(2*L1))**2; assert abs(Ec - 700.03) < 0.01\nth = k*np.pi/(2*6001); assert abs(th - 0.197887) < 1e-6\nEd = 4/h**2*np.sin(th)**2; assert abs(Ed - 690.94) < 0.01\nassert abs((Ec - Ed) - 9.09) < 0.01\nassert abs(gap(700.0) - 1.333) < 5e-4\nassert abs((Ec - Ed)/gap(700.0) - 6.8) < 0.05\nassert abs(2*L1*np.sqrt(700)/np.pi - 755.98) < 0.01\n\n# Sample Problem: Richardson subscript\nE, a, hh = 100.0, -50.0, 0.02\nEh, Eh2, E2h = E + a*hh**2, E + a*(hh/2)**2, E + a*(2*hh)**2\nassert abs((4*Eh2 - Eh)/3 - 100.000) < 1e-9\nassert abs((4*E2h - Eh)/3 - 99.900) < 1e-9\nassert abs(qmnt.richardson(Eh, Eh2) - 100.0) < 1e-9\n# grid doubling halves h only approximately\neta = 24002/24001 - 1\nassert abs(eta - 1/24001) < 1e-15 and abs(eta - 4.2e-5) < 1e-6\nassert abs((2*eta + eta**2)/3 - 2.8e-5) < 1e-6\nassert (32002/32001 - 1) < eta\nEh2b = E + a*(hh*(1 + eta)/2)**2\nassert abs(((4*Eh2b - Eh)/3 - E) - (2*eta + eta**2)/3*a*hh**2) < 1e-12\n\n# Sample Problem: rms bound\nf = np.array([0.30, -0.20, 0.10, -0.40]); e = np.array([0.010, -0.020, 0.005, 0.015])\nassert abs(rms(f) - 0.2739) < 1e-4 and abs(rms(f - e) - 0.2728) < 1e-4\nassert abs(abs(rms(f - e) - rms(f)) - 0.0010) < 1e-4\nassert abs(rms(e) - 0.0137) < 1e-4\nassert abs(rms(f-e)-rms(f)) <= rms(e) <= np.max(np.abs(e))\nassert abs((rms(f-e)**2 - rms(f)**2) - (np.mean(e**2) - 2*np.mean(f*e))) < 1e-15\n\n# Sample Problem: leakage numbers\nt_n, Eg, ER, Ef = 700.250, 698.300, 700.100, 698.600\nD = Eg - ER; assert abs(D - (-1.800)) < 1e-9\ntt = t_n + D; assert abs(tt - 698.450) < 1e-9\nassert abs((tt - Ef) - (-0.150)) < 1e-9 and abs((t_n - (Ef - D)) - (-0.150)) < 1e-9\nassert abs((t_n - ER) - 0.150) < 1e-9\nassert abs((Ef - Eg) - 0.300) < 1e-9 and abs((tt - Eg) - 0.150) < 1e-9\n# protocol identities: fluctuations unchanged between descriptions\nassert abs(((Ef - D) - ER) - (Ef - Eg)) < 1e-9\nassert abs((t_n - ER) - (tt - Eg)) < 1e-9\n\n# Sample Problem: Table V entries via qmnt\ndef oracle_score(nn, P):\n    tp = np.asarray(qmnt.oracle_zeros(nn, P, mmax=3), float)\n    return qmnt.score(tp, nn)\nr, c = oracle_score(nq, [2]); assert abs(r - 0.198) < 0.003 and abs(c - 0.66) < 0.01\nr, c = oracle_score(nq, list(qmnt.first_primes(6))); assert abs(r - 0.074) < 0.003 and abs(c - 0.96) < 0.01\n\n# Why 500 levels: N_sm(1000), count, turning-point margins\nassert abs(Nsm(1000.0) - 648.6) < 0.05\nassert int(np.sum(s_all <= 1000)) == 649\nassert tz[499] < 1000 and tz[999] < 1500\nxt1 = x_of_V(811.18); xt2 = x_of_V(1419.42)\nassert abs(xt1 - 38.53) < 0.02 and abs(xt2 - 57.66) < 0.02\nassert abs((L1 - xt1) - 6.35) < 0.02 and abs((59.957 - xt2) - 2.29) < 0.02\n\n# Problem 2, 3\nassert abs(Nsm(100.0) - 29.00) < 0.01\nassert int(np.sum(tz <= 100)) == 29\nassert abs(gap(100.0) - 2.271) < 5e-4\n\n# Problem 5\nxa = np.sqrt(1000)/np.pi*np.log(2000/(np.pi*np.e**2))\nassert abs(xa - 44.86) < 0.005 and abs(np.log(2000/(np.pi*np.e**2)) - 4.4562) < 1e-4\n\n# Problem 6\ns500 = float(smooth_zero(500)); assert abs(s500 - 811.448) < 0.002\nassert abs((500 - 11/8)/np.e - 183.43) < 0.01\nassert abs(float(np.asarray(qmnt.smooth_zeros(np.array([500])))[0]) - s500) < 1e-5\nassert abs(gap(s500) - 1.2926) < 1e-4\nassert abs((tz[499] - s500)/gap(s500) - (-0.204)) < 0.002\nassert abs(d500 - (-0.2635)) < 5e-4\n\n# Problem 8: Richardson in the empty box\ndef Edisc(kk, N): hh_ = 2*L1/(N + 1); return 4/hh_**2*np.sin(kk*np.pi/(2*(N + 1)))**2\nEk = (100*np.pi/(2*L1))**2; assert abs(Ek - 12.2483) < 1e-4\ne1 = Edisc(100, 1000) - Ek; assert abs(e1 - (-0.100)) < 1e-3\neR = (4*Edisc(100, 2001) - Edisc(100, 1000))/3 - Ek\nassert -9e-5 < eR < -7.5e-5\nassert abs(Edisc(100, 1000) - 12.1481) < 1e-4\nh1000 = 2*L1/1001\nassert abs(2*L1/2002 - h1000/2) < 1e-15\nassert abs(eR - (-Ek**3*h1000**4/1440)) < 5e-6\nxs = 0.1; assert abs(np.sin(xs)**2 - (xs**2 - xs**4/3 + 2*xs**6/45)) < 1e-10\nassert abs((4/16 - 1)/3 - (-0.25)) < 1e-15\nEfd = np.sort(np.asarray(qmnt.fd_levels(np.zeros(1000), L1, k=100), float))\nassert abs(Efd[99] - Edisc(100, 1000)) < 1e-6\n\n# Problem 10\nassert abs(null(501, 1000) - 0.270) < 0.003\nassert abs(null(1001, 2000) - 0.279) < 0.003\n\n# Problem 11\nn501 = np.arange(501, 1001)\nr, c = oracle_score(n501, [2]); assert abs(r - 0.208) < 0.003 and abs(c - 0.64) < 0.01\nr, c = oracle_score(n501, [2, 3, 5]); assert abs(r - 0.127) < 0.003 and abs(c - 0.88) < 0.01\n\n# Problem 12: within-height random split null\nrng = np.random.default_rng(1)\ntest = rng.choice(400, 80, replace=False) + 1\nassert 400 - len(test) == 320\nnr = rms(f_all[test - 1]); assert 0.20 < nr < 0.29\n\n# Problem 13: odd/even nulls (within 0.006 as stated)\nassert abs(rms(f_all[1:400:2]) - 0.238) < 0.006\nassert abs(rms(f_all[0:400:2]) - 0.250) < 0.006\n\n# Problem 19\np = np.array([0.5, -0.5, 0.0]); q = np.array([-1.0, 1.0, 0.0]); d = np.array([0, 0, 3.0])\nassert abs(corr(p, q) - (-1)) < 1e-12\nassert abs(corr(p + d, q + d) - 5/np.sqrt(52)) < 1e-12 and abs(5/np.sqrt(52) - 0.693) < 1e-3\nassert abs(rms(p - q) - 1.225) < 1e-3 and abs(rms((p+d) - (q+d)) - rms(p - q)) < 1e-12\n\n# Problem 20: GUE normalization and mean\npg = lambda s: 32/np.pi**2*s**2*np.exp(-4*s**2/np.pi)\nassert abs(quad(pg, 0, np.inf)[0] - 1) < 1e-10\nassert abs(quad(lambda s: s*pg(s), 0, np.inf)[0] - 1) < 1e-10\n\n# Problem 21\nPg = quad(pg, 0, 0.2)[0]; assert abs(Pg - 0.0084) < 3e-4\nassert abs(1 - np.exp(-0.2) - 0.181) < 1e-3\nfrac = np.mean(sp < 0.2); assert frac < 0.05\n\n# Problem 23: own oracle with brentq; bracket never needs widening\ndef Nfl(t, P):\n    return -sum(np.sin(m*t*np.log(pp))/(m*pp**(m/2)) for pp in P for m in (1, 2, 3))/np.pi\ntp = []\nwiden = 0\nfor nn in nq:\n    sn, gn = s_all[nn-1], g_all[nn-1]\n    F = lambda t: Nsm(t) + Nfl(t, [2, 3, 5]) - (nn - 0.5)\n    lo, hi = sn - 3*gn, sn + 3*gn\n    while F(lo)*F(hi) > 0:\n        lo -= gn; hi += gn; widen += 1\n    tp.append(brentq(F, lo, hi))\nassert widen == 0\ntp = np.array(tp)\nassert abs(rms((tp - tz[nq-1])/g_all[nq-1]) - 0.116) < 0.003\nassert abs(corr((tp - s_all[nq-1])/g_all[nq-1], f_all[nq-1]) - 0.90) < 0.01\n\n# Problem 25\nt10k = tz[-1]; assert abs(t10k - 9877.78) < 0.01\nassert abs(gap(t10k) - 0.854) < 2e-3\nassert abs(5e-12/gap(t10k) - 6e-12) < 1e-12\nassert abs(0.018/(6e-12) - 3e9) < 1e8\nassert abs(1e-4/(5e-12/gap(t10k)) - 1.7e7) < 0.1e7\n\nprint('all checks passed')\n",
+ "new_figures": {},
+ "notes": "All issues addressed. Partial handling: (14) the printed null values could not be rerun by us to confirm three-digit rounded values, so the text now states the agreement only to the tolerances the checks verify (0.002 for 401--500, 0.004 for the other two windows, 0.006 for the odd/even nulls in Answer 13), which removes the unverified digits. (15) For the same reason the GUE small-spacing answer now states the checked bound (fraction below 0.05) instead of a two-significant-figure value. (16) The no-widening claim is kept; it is now asserted in the checks with a widening counter. The bracket +-3 gaps must change sign because N_sm changes by about 6 across it, while |N_fl| for {2,3,5} with m<=3 is at most about 0.78. (12) is addressed with a proof that dx/dV>0 (new eq. paper-setup-dxdv), plus a numerical derivative check. The sp: labels were removed and samples are referred to in words. Held-out set, prediction and fluctuation symbols were renamed throughout (\\mathcal T, n_test, \\hat t_n, \\hat f_n, f^{ref}_n)."
+}

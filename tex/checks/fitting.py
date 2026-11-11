@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.optimize import brentq
 from scipy.linalg import eigh_tridiagonal
+import mpmath
+from numpy.polynomial import chebyshev as Cheb
 
 def Nsm(t):
     return t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8
@@ -57,6 +59,7 @@ assert abs(2*0.973249*(-0.229753) + 0.447214) < 1e-5
 Ep = -cst/np.sqrt(1 + cst**2); Epp = -(1 + cst**2)**(-1.5)
 assert abs(Ep + 0.7454) < 1e-4 and abs(Epp + 0.2963) < 1e-4
 K = abs(Epp/(2*Ep)); assert abs(K - 0.199) < 1e-3
+assert Epp/(2*Ep) > 0
 assert abs(0.199*0.0082**2 - 1.3e-5) < 0.05e-5
 e2 = cs[2] - cst; e3 = cs[3] - cst
 assert abs(e3/e2**2 - K) < 0.03
@@ -110,6 +113,23 @@ hat = lambda u, j, M: max(0, 1 - (M-1)*abs(u - j/(M-1)))
 assert abs(hat(0.6, 2, 5) - 0.6) < 1e-12 and abs(hat(0.6, 3, 5) - 0.4) < 1e-12
 assert abs(hat(0.3, 0, 3) - 0.4) < 1e-12 and abs(hat(0.3, 1, 3) - 0.6) < 1e-12   # Problem 13
 
+# Chebyshev kink: T_k'(-1) = (-1)^(k+1) k^2, slope of phi_k at 0+ = (2/L) T_k'(-1)
+for k in range(1, 8):
+    dcoef = Cheb.chebder([0]*k + [1])
+    assert abs(Cheb.chebval(-1.0, dcoef) - (-1)**(k+1)*k**2) < 1e-9
+    eps = 1e-6
+    sl = (Cheb.chebval(2*eps/L - 1, [0]*k + [1]) - Cheb.chebval(-1.0, [0]*k + [1]))/eps
+    assert abs(sl - 2*(-1)**(k+1)*k**2/L) < 1e-3*abs(2*k**2/L) + 1e-6
+
+# Stationary-phase illustration, a = 100, X = 3
+a = 100.0; X = 3.0
+xs = np.linspace(-X, X, 2000001)
+lin = np.trapezoid(np.cos(a*xs), xs)
+assert abs(lin - 2*np.sin(a*X)/a) < 1e-6 and abs(lin) <= 0.02 + 1e-9
+quad = np.trapezoid(np.cos(a*xs**2), xs)
+assert abs(quad - 0.13) < 0.005
+assert abs(np.sqrt(np.pi/(2*a)) - 0.125) < 0.001
+
 # Sample 9, coverage text and figure
 assert abs(2*np.sqrt(811.1843588465)*L/np.pi - 813.8) < 0.2
 Emax = (400*np.pi/(2*L))**2; assert abs(Emax - 196.0) < 0.1
@@ -118,6 +138,16 @@ assert 600*np.pi/L < 2*np.sqrt(811.1843588465) < 900*np.pi/L   # only M=900 clea
 assert abs(V0 - 9.7412) < 1e-3
 assert abs(V0/(2*811.1843588465) - 0.006) < 2e-4               # 0.6%
 assert abs(np.sqrt(1 - V0/14.134725) - 0.56) < 0.005
+
+# Coverage reconciliation: t_400 ~ 679.7, law asks M >~ 745
+t400 = float(mpmath.zetazero(400).imag)
+assert abs(t400 - 679.7) < 0.05
+assert abs(2*np.sqrt(t400)*L/np.pi - 745) < 1
+
+# Problem 18: cutoff for n=50 lies between 300 and 500
+t50 = float(mpmath.zetazero(50).imag)
+cut50 = 2*L*np.sqrt(t50 - V0)/np.pi
+assert 300 < cut50 < 499
 
 # Problem 11 (scale 2, 800 training levels)
 s800 = s_n(800); assert abs(s800 - 1184) < 1

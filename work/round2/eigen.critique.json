@@ -1,0 +1,93 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "For $g=0.3$: $\\varepsilon=-2$: $0.9945$; $\\varepsilon=0$: $0.5$; $\\varepsilon=0.5$: $0.2425$; $\\varepsilon=2$: $0.0055$.",
+  "problem": "The checks run failed on these values. The stated formula 0.5(1-eps/r) with g=0.3 gives about 0.9945 at eps=-2 and 0.0055 at eps=2, but at eps=0.5 it gives 0.5(1-0.5/0.583)=0.0714, not 0.2425. The ev numbers are wrong.",
+  "fix": "Recompute with g=0.3, r=sqrt(eps^2+0.09): eps=-2: 0.9945; 0: 0.5; 0.5: 0.0714; 2: 0.0055. Fix the CHECKS script to match."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "the overlap of the lower eigenvector with $e_1$ is $\\tfrac12\\bigl(1-\\varepsilon/\\sqrt{\\varepsilon^2+g^2}\\bigr)$",
+  "problem": "Consistency with the checks: the formula itself is right, but the answer's tabulated value at eps=0.5 contradicts it, so the problem and answer disagree.",
+  "fix": "Keep the formula and correct the tabulated numerical value as above."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the second equation, $-v_1+a(av_1)-v_1=(a^2-2)v_1=0$, holds automatically because $a^2=2$. Choosing $v_1=1$:",
+  "problem": "The step assumes a is nonzero but never states a^2=2 comes from the roots; acceptable. However the eigenvalue assignment a=sqrt2 gives lambda=2-sqrt2 with v2=a v1 positive, which is correct. Minor: no error here beyond the missing note that a=0 case is treated separately before use.",
+  "fix": "No change needed; optionally state that a=±sqrt2 is used."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The product formula above shows only that the two counts have the same parity",
+  "problem": "The product of the q_j is det(T-xI)=prod(lambda_k-x), whose sign is (-1)^(number of eigenvalues below x... ) so parity agrees; fine. But the statement 'Their product is therefore det' is only true if the q_j are pivots with no row swaps, which the text says. OK. However the paper-connection claim that the paper uses select='v' is an inference, not stated in the paper.",
+  "fix": "Say 'range [0,900] is naturally implemented by a value-range selection such as select=\"v\"' to avoid asserting the paper's code."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "so its real shift vanishes to all orders, not only to second order as stated in Sec.~II~E (i)",
+  "problem": "Paper says 'zero second-order real shift'; the chapter's correction is mathematically fine but the sentence phrases it as contradicting the paper; also the earlier chapter text says the shift is imaginary constant, consistent. Tone slightly misrepresents the paper.",
+  "fix": "Rephrase: 'consistent with Sec. II E (i); in fact the shift is exact to all orders.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Since $\\norm{u_j}^2>0$, $a_j=0$. This holds for every $j$",
+  "problem": "Fine, but the spectral theorem proof uses 'n linearly independent vectors form a basis' and 'every vector is a combination' with only a recall; acceptable. More serious: the Rayleigh bound and weighted-average claim use nonnegative weights summing to a positive number without saying so.",
+  "fix": "Add: weights |a_k|^2/sum|a_j|^2 are nonnegative and sum to 1."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Problem~16",
+  "problem": "Problem numbering in cross-references does not match the list: 'degeneracy becomes possible (Problem~16)' points to the 4x4 split problem, which is the 17th item in order; similarly Problems 8, 15, 18, 20, 21, 25, 27, 29 are cited by number but the list has varying order (e.g. a \\prob{3} placed after \\prob{2} items, and two problems numbered by position).",
+  "fix": "Recount the problem list and fix every cross-reference, or use \\label on problems."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\section{Problems}",
+  "problem": "Anatomy requires at least 15 problems with at least 4 using the paper and 3 computational; present, but answers section covers 'CHECKS script' references for problems whose check lines (e.g. Problem 32 loop with 'pass') are vacuous.",
+  "fix": "Remove the empty loop in CHECKS and add a real check of the 4/pi^2 limit (e.g. ratio at N=10^5)."
+ },
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/eigen_stretch.pdf}",
+  "problem": "Figures are referenced (stretch, modes, spectrum, wavefunctions, avoided) but no FIGURES part with scripts was provided.",
+  "fix": "Add ### FIG scripts for eigen_stretch, eigen_modes, eigen_spectrum, eigen_wavefunctions, eigen_avoided."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{27.} The lower eigenvalue is $-r$",
+  "problem": "Answers are given for even problems too (fine) but Problem 11 answer says 'A numerical check is in the CHECKS script', a reference to build tooling inside the textbook.",
+  "fix": "Remove mentions of the CHECKS script from the reader-facing text."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Even with 6000 grid points, level 500 of the matrix is more than a full level spacing below the true level.",
+  "problem": "Compared with paper's potential, the empty-box statement is fine, but the figure caption claims ratio about 0.41 at k=N for N=600; ratio is 4/pi^2=0.405, consistent. No error; however the Problem 32 claim and Fig. fine.",
+  "fix": "None."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Problem~25 proves this without the formula",
+  "problem": "Reference to Problem 25 relies on the numbering that appears off (the D_N positivity problem is not 25th in the list as given).",
+  "fix": "Fix numbering as above."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "which is how a solver returns ``all eigenvalues in a range''.",
+  "problem": "Presents the internal algorithm of the LAPACK driver as established; actual routine choice (stebz/stemr) is not stated.",
+  "fix": "Say 'one standard way (bisection with Sturm counts)'."
+ }
+]

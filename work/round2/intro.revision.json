@@ -1,0 +1,302 @@
+{
+ "patches": [
+  {
+   "old": "small gaps turn out to be rare at every height, \\cref{sec:intro-hp})",
+   "new": "small gaps are observed numerically to be rare at all heights computed, \\cref{sec:intro-hp})"
+  },
+  {
+   "old": "The paper you will learn to read uses the first $10^4$ of them in its explicit-formula experiments and at most the first 1000 in its fitted potentials;",
+   "new": "The paper you will learn to read uses the first $10^4$ of them for its explicit-formula oracle and its spacing statistics (paper Table~V, Fig.~2) and at most the first 1000 in its fitted potentials;"
+  },
+  {
+   "old": "\"add 4 each time\"",
+   "new": "``add 4 each time''"
+  },
+  {
+   "old": "read \"N of T\", as",
+   "new": "read ``N of T'', as"
+  },
+  {
+   "old": "The subscript \"sm\" stands for \"smooth\".",
+   "new": "The subscript ``sm'' stands for ``smooth''."
+  },
+  {
+   "old": "so the average spacing there is $\\ell$. In Chapter~\\ref{ch:counting-zeros} we turn this into the formula for the \\emph{local mean spacing}; near height $t$ it is approximately",
+   "new": "so the average spacing there is $\\ell$. The slope of the smooth curve is\n\\[\n\\Nsm'(t) = \\frac{1}{2\\pi}\\log\\frac{t}{2\\pi} + \\frac{t}{2\\pi}\\cdot\\frac{1}{t} - \\frac{1}{2\\pi} = \\frac{1}{2\\pi}\\log\\frac{t}{2\\pi}\n\\]\n(the product rule on the first term of \\cref{eq:intro-Nsm}, using $\\frac{\\dd}{\\dd t}\\log\\frac{t}{2\\pi} = \\frac1t$, produces a $+\\frac{1}{2\\pi}$ that cancels the $-\\frac{1}{2\\pi}$ from the second term). So one unit of climb takes a stretch $\\ell \\approx 1/\\Nsm'(t)$, provided the slope changes little over that stretch. This gives the \\emph{local mean spacing}; near height $t$ it is approximately"
+  },
+  {
+   "old": "You can think of $s_n$ as \"where zero $n$ would be if there were no wobble\". The difference $t_n - s_n$, divided by the local mean spacing, is called the \\emph{fluctuation} of zero $n$, measured in mean spacings. Typical fluctuations are a fraction of one spacing. All the predictions in the paper are predictions of these fluctuations.",
+   "new": "You can think of $s_n$ as ``where zero $n$ would be if there were no wobble''. The paper defines the spacing near zero $n$ precisely as $\\gap_n = \\dd s_n/\\dd n$, the rate at which the smooth zero moves as $n$ increases (treating $n$ as a continuous variable). Differentiating $\\Nsm(s_n) = n - \\tfrac12$ with respect to $n$ by the chain rule gives $\\Nsm'(s_n)\\,\\dd s_n/\\dd n = 1$, so $\\gap_n = 1/\\Nsm'(s_n) = 2\\pi/\\log(s_n/2\\pi)$: exactly \\cref{eq:intro-gap} evaluated at $t = s_n$ (Chapter~\\ref{ch:counting-zeros} returns to this). The difference $t_n - s_n$, divided by the local mean spacing, is called the \\emph{fluctuation} of zero $n$, measured in mean spacings. Typical fluctuations are a fraction of one spacing. All the predictions in the paper are predictions of these fluctuations. (For the fitted potentials the paper measures fluctuations relative to the levels of the unperturbed potential, which track $s_n$ closely; see \\cref{sec:intro-memorize}.)"
+  },
+  {
+   "old": "of the first ten zeros from Sample Problem 1.",
+   "new": "of the first ten zeros from the Sample Problem ``Reading the spacings of the first ten zeros''."
+  },
+  {
+   "old": "The function $f$ increases for $u > 1$, because its derivative is $\\log u + 1 - 1 = \\log u > 0$. So the solution lies between $2.30$ and $2.32$.",
+   "new": "The function $f$ increases for $u > 1$, because its derivative is $\\log u + 1 - 1 = \\log u > 0$ (product rule: $\\frac{\\dd}{\\dd u}(u\\log u) = \\log u + 1$). Since $f$ is increasing there, it crosses $-0.375$ exactly once, and the crossing lies between $2.30$ and $2.32$."
+  },
+  {
+   "old": "$f(2.311) = 2.311\\times 0.837680 - 2.311 = -0.3751$, short of $-0.375$ by $0.00012$. Near $u = 2.311$ the slope of $f$ is $\\log u = 0.838$, so $u$ must grow by a further $0.00012/0.838 = 0.00015$, giving $u = 2.31115$.",
+   "new": "$f(2.311) = 2.311\\times 0.8376803 - 2.311 = -0.375121$, short of $-0.375$ by $0.000121$. Near $u = 2.311$ the slope of $f$ is $\\log u = 0.838$, so $u$ must grow by a further $0.000121/0.838 = 0.000144$, giving $u = 2.311144$."
+  },
+  {
+   "old": "$s_1 = 2\\pi u = 6.2831853\\times 2.31115 = 14.5214$. The mean spacing is $2\\pi/\\log 2.31115 = 6.2831853/0.83775 = 7.500$.",
+   "new": "$s_1 = 2\\pi u = 6.2831853\\times 2.311144 = 14.5213$. The mean spacing is $2\\pi/\\log 2.311144 = 6.2831853/0.837743 = 7.500$."
+  },
+  {
+   "old": "$(14.134725 - 14.5214)/7.500 = -0.3867/7.500 = -0.0516$.",
+   "new": "$(14.134725 - 14.5213)/7.500 = -0.3866/7.500 = -0.0515$."
+  },
+  {
+   "old": "$f(3.2875) = 0.6250$ to four decimals; the same refining step gives $u = 3.28746$.",
+   "new": "$f(3.2875) = 3.2875\\times 1.1901274 - 3.2875 = 0.625044$, above $0.625$ by $0.000044$. With slope $\\log u = 1.190$, reduce $u$ by $0.000044/1.190 = 0.000037$, giving $u = 3.287463$, which we round to $3.28746$."
+  },
+  {
+   "old": "\\boxed{s_1 = 14.5214,",
+   "new": "\\boxed{s_1 = 14.5213,"
+  },
+  {
+   "old": "(\"zeta of $s$\")",
+   "new": "(``zeta of $s$'')"
+  },
+  {
+   "old": "For now, \"complex number\" means \"a point in a plane\".",
+   "new": "For now, ``complex number'' means ``a point in a plane''."
+  },
+  {
+   "old": "Every zero used in the paper has been verified numerically to lie on the line (to the precision of the computation), so for our purposes \\cref{eq:intro-rho} is a fact about the data, not an assumption.",
+   "new": "The zeros used in the paper lie far below the height up to which all zeros have been verified numerically to lie on the line (the range described in Chapter~\\ref{ch:zeta}), so for our purposes \\cref{eq:intro-rho} is a fact about the data, not an assumption; the paper itself simply writes $\\rho_n = \\tfrac12 + i t_n$."
+  },
+  {
+   "old": "Higher \"overtones\" with frequencies $2\\log p$, $3\\log p$, and so on are quieter still.",
+   "new": "Higher ``overtones'' with frequencies $2\\log p$, $3\\log p$, and so on are quieter still. In the paper's Eq.~(4) the $m$-th overtone of prime $p$ has amplitude $1/(\\pi m p^{m/2})$ and an overall minus sign, and only $m \\le 3$ is kept; Chapter~\\ref{ch:explicit-formula} explains where each factor comes from."
+  },
+  {
+   "old": "mean spacing is $1.292672$ (Sample Problem 3).",
+   "new": "mean spacing is $1.292672$ (Sample Problem ``Measuring an error in mean spacings'')."
+  },
+  {
+   "old": "all zeros used in the paper have been verified on the line.",
+   "new": "all zeros used in the paper lie in the range where the line has been verified numerically."
+  },
+  {
+   "old": "A friend says: \"The Riemann hypothesis was proved when computers found that billions of zeros lie on the line.\"",
+   "new": "A friend says: ``The Riemann hypothesis was proved when computers found that billions of zeros lie on the line.''"
+  },
+  {
+   "old": "has a \"spectrum\" of equally spaced frequencies",
+   "new": "has a ``spectrum'' of equally spaced frequencies"
+  },
+  {
+   "old": "only waves that \"fit\" in the valley",
+   "new": "only waves that ``fit'' in the valley"
+  },
+  {
+   "old": "A valley whose walls rise more slowly than a parabola gives levels whose spacing shrinks as energy grows, just like the zeros (Chapter~\\ref{ch:bound-states} shows this).",
+   "new": "For valleys of power-law shape, $V \\propto \\abs{x}^a$, walls rising more slowly than a parabola ($a < 2$) give levels whose spacing shrinks as energy grows, just like the zeros (Chapter~\\ref{ch:bound-states} shows this; it is a semiclassical result, accurate for high levels)."
+  },
+  {
+   "old": "The top row shows the first 29 zeros as tick marks. The bottom row shows 29 equally spaced ticks over the same range, like harmonics. The zeros are irregular, but not in the way random dots would be irregular. Random dots often land almost on top of each other. The zeros almost never do: small gaps are rare.",
+   "new": "The top row shows the first 29 zeros as tick marks; the middle row shows 29 points thrown down independently at random over the same range; the bottom row shows 29 equally spaced ticks, like harmonics. The zeros are irregular, but not in the way the random points are irregular. Random points often land almost on top of each other. The zeros almost never do: small gaps are rare (a numerical observation, made over all the zeros computed)."
+  },
+  {
+   "old": "match those of the eigenvalues of large random matrices of a particular type, the Gaussian unitary ensemble (GUE).",
+   "new": "match those of the eigenvalues of large random matrices of a particular type, the Gaussian unitary ensemble (GUE). (A matrix is a square table of numbers; its eigenvalues are a list of characteristic numbers attached to it, which for the matrices of quantum mechanics are the energy levels; a random matrix has entries drawn at random. Chapters~\\ref{ch:eigen} and \\ref{ch:level-statistics} explain these ideas.)"
+  },
+  {
+   "old": "Never read \"the zeros look like energy levels\" as \"the zeros are energy levels\".",
+   "new": "Never read ``the zeros look like energy levels'' as ``the zeros are energy levels''."
+  },
+  {
+   "old": "\"a potential reproducing many zeros accurately has captured something about the putative zeta operator\"",
+   "new": "``a potential reproducing many zeros accurately has captured something about the putative zeta operator''"
+  },
+  {
+   "old": "its wave is most sensitive to the shape of the valley near its classical turning points.",
+   "new": "its wave is most sensitive to the shape of the valley near its classical turning points (a semiclassical, approximate statement, made precise in Chapter~\\ref{ch:wkb})."
+  },
+  {
+   "old": "Levels that turn well inside never reach that region strongly, and levels that turn far outside pass through it quickly.}",
+   "new": "Levels that turn well inside never reach that region strongly, and levels that turn far outside are affected too, but less: by the classical analogy the particle moves fast there and spends little time in that region (Chapter~\\ref{ch:wkb} makes this quantitative).}"
+  },
+  {
+   "old": "The differences between the data and the model at the data points are the \\emph{residuals}. To summarize how well a model fits, we use the root mean square (rms) of the errors $e_1, \\ldots, e_K$:",
+   "new": "The differences between the data and the model at the data points are the \\emph{residuals}; in this chapter we also call them errors. To summarize how well a model fits, we use the root mean square (rms) of the errors $e_1, \\ldots, e_K$, where $K$ is simply how many errors there are:"
+  },
+  {
+   "old": " Chapter~\\ref{ch:probability} explains the difference.) Chapter~\\ref{ch:probability} discusses it properly.",
+   "new": " Chapter~\\ref{ch:probability} explains the difference.)"
+  },
+  {
+   "old": "For the five points of Sample Problem 6, the degree-4 polynomial through all of them is unique.",
+   "new": "For the five points of the Sample Problem ``Fitting with a ruler'', the degree-4 polynomial through all of them is unique. (Two such polynomials would differ by a polynomial of degree at most 4 that vanishes at all five points; a nonzero polynomial of degree at most 4 has at most four roots, a fact from algebra taken on trust here and revisited with polynomial fitting in Chapter~\\ref{ch:least-squares}; so the difference is zero.)"
+  },
+  {
+   "old": "(Each differencing lowers the degree of a polynomial by one, so after four differencings a degree-4 polynomial becomes a constant; Problem 23 asks you to confirm the prediction numerically.)",
+   "new": "(Why: for a power $x^k$, the binomial expansion gives $(x+1)^k - x^k = k x^{k-1} + (\\text{terms with lower powers of } x)$, so taking differences at points spaced by 1 turns a polynomial of degree $k$ into one of degree $k-1$. Four differencings turn a degree-4 polynomial into a polynomial of degree 0, a constant. For example, the values of $x^4$ at $x = 0,1,2,3,4$ are $0, 1, 16, 81, 256$; their first differences are $1, 15, 65, 175$, the second $14, 50, 110$, the third $36, 60$, and the fourth $24$, and every further fourth difference is also $24$. Problem 23 asks you to confirm the prediction numerically.)"
+  },
+  {
+   "old": "With 900 knobs and 500 zeros there are more knobs than data, the same situation as the degree-4 polynomial through five points.",
+   "new": "With 900 knobs and 500 zeros there are more knobs than data, a situation even more permissive than the degree-4 polynomial through five points, where knobs and data were equal in number. (Because the levels depend on the knobs in a nonlinear way, counting knobs alone does not guarantee an exact fit; in practice the paper's fits come very close, Finding 1 of \\cref{sec:intro-result}.)"
+  },
+  {
+   "old": "(\"delta V\")",
+   "new": "(``delta V'')"
+  },
+  {
+   "old": "A beats guessing only because of the 4 repeated questions.",
+   "new": "A beats guessing only because of the 4 repeated questions. Those repeats are a \\emph{leak} of training data into the test. A clean held-out test contains none of the training questions; on such a test A would expect exactly $20\\times\\tfrac14 = 5$ out of 20, the guessing (null) score, while B would still expect 17. The clean case is the one the paper sets up for the zeros."
+  },
+  {
+   "old": "Neither prediction ever uses a zero past the boundary (paper Fig.~1 caption).",
+   "new": "Neither the fitted potential's prediction nor that of the explicit formula (which has nothing fitted at all) uses any zero past the boundary (paper Fig.~1 caption)."
+  },
+  {
+   "old": "It is \"no fluctuation\": predict",
+   "new": "It is ``no fluctuation'': predict"
+  },
+  {
+   "old": "an rms of $0.263$ mean spacings (paper Sec.~II~C).",
+   "new": "an rms of $0.263$ mean spacings (paper Sec.~II~C). The two are different objects (an eigenvalue spectrum and the solution of a counting equation); it is their numerical coincidence on this holdout (both $0.2631$) that lets the paper use one baseline."
+  },
+  {
+   "old": "That is why the paper always gives the pair \"rms / corr\", and why it calls a result skilful only if the rms is below the null \\emph{and} the correlation is positive.",
+   "new": "That is why the paper always gives the pair ``rms / corr'', and why, in this book, we call a result skillful only if the rms is below the null \\emph{and} the correlation is reproducibly positive, which is how the paper reads its own tables."
+  },
+  {
+   "old": "\"Fitted potentials on the Wu--Sprung background memorize the Riemann zeros while the explicit formula predicts them.\"",
+   "new": "``Fitted potentials on the Wu--Sprung background memorize the Riemann zeros while the explicit formula predicts them.''"
+  },
+  {
+   "old": "in three families of wiggles (cosine, Chebyshev, and local \"hat\" functions), with one fitting method.",
+   "new": "in three families of wiggles (cosines; Chebyshev polynomials, a standard family of polynomials; and local ``hat'' functions, little triangular bumps; all defined in Chapter~\\ref{ch:fitting}), with one fitting method, in two box sizes that the paper calls scale~1 ($L = 44.883$, first 500 levels scored) and scale~2 ($L = 59.957$, first 1000 levels)."
+  },
+  {
+   "old": "On held-out zeros the fitted potentials never beat the null and show no reproducible positive correlation with the truth, across two scales, several splits, three bases, a range of $M$, regularization and restarts (paper Tables~I--III).",
+   "new": "In every configuration examined (two scales, several splits, three bases, a range of $M$, regularization, that is a penalty that discourages large coefficients (Chapter~\\ref{ch:least-squares}), and optimizer restarts), the fitted potentials show no reproducible held-out skill: their held-out rms never improves on the null, and no reproducible positive correlation with the truth appears (paper Tables~I--III). One Chebyshev row is marginal, and the paper reports it as such: rms $0.291$ with correlation $+0.18$, whose bootstrap intervals include the null and reach down to zero; a small positive correlation for that row is not excluded (paper Table~II)."
+  },
+  {
+   "old": "\\textbf{Finding 3: the fit cannot tell real zeros from fakes.} Refitted to shuffled versions of the fluctuations and to \"phase-randomized\" fakes that keep the wiggliness but discard the arithmetic \\cite{theiler,schreiber}, the fit reaches the same in-sample accuracy as on the real zeros (paper Sec.~III).",
+   "new": "\\textbf{Finding 3: the fit does as well on fakes as on the real zeros.} In the principal configuration (scale~1, $M = 400$, zeros 1--400, ten fake draws of each kind), refitted to shuffled versions of the fluctuations, to phase-randomized fakes \\cite{theiler} and to amplitude-adjusted fakes \\cite{schreiber} (the last two keep the overall wiggliness, the power spectrum, but have no arithmetic content), the fit reaches the same in-sample accuracy as on the real zeros (paper Sec.~III)."
+  },
+  {
+   "old": "\\textbf{Finding 4: it cannot even continue one prime wave.}",
+   "new": "\\textbf{Finding 4: it did not continue even one prime wave.}"
+  },
+  {
+   "old": "and fails to continue it on levels 401--500 (correlation $+0.07$)",
+   "new": "and, under the fitting protocol used, did not continue it on levels 401--500 (held-out correlation $+0.07$, rms worse than predicting zero fluctuation)"
+  },
+  {
+   "old": "The paper calls this \"the memorization mechanism exhibited in isolation\".",
+   "new": "The paper calls this ``the memorization mechanism exhibited in isolation''."
+  },
+  {
+   "old": "A separate investigation of complex-valued (non-Hermitian) corrections found an apparently meaningful in-sample \"floor\"",
+   "new": "A separate investigation of complex-valued (non-Hermitian) corrections (``Hermitian'' is the property that guarantees real energies, Chapter~\\ref{ch:schrodinger}; these corrections lack it, Chapter~\\ref{ch:non-hermitian}) found an apparently meaningful in-sample ``floor''"
+  },
+  {
+   "old": "a fitted operator \"captures\" the zeros",
+   "new": "a fitted operator ``captures'' the zeros"
+  },
+  {
+   "old": "The arithmetic oracle \"is not a fair machine-learning competitor\"",
+   "new": "The arithmetic oracle ``is not a fair machine-learning competitor''"
+  },
+  {
+   "old": "\\item The fits succeed equally on shuffled and phase-randomized fakes, and cannot continue a single prime wave.",
+   "new": "\\item The fits succeed equally on shuffled and phase-randomized fakes, and did not, under the fitting protocol used, continue a single prime wave."
+  },
+  {
+   "old": "\\item A fitted model with only a sparsity prior in frequency recovers the prime frequencies; the obstacle is the potential as parametrization.",
+   "new": "\\item A fitted model with only a sparsity prior in frequency (the assumption that only a few frequencies are present) recovers the prime frequencies; the obstacle, for the families and fitting protocol tested, is the potential as parametrization rather than the number of parameters."
+  },
+  {
+   "old": "Parts I and II followed by Chapters~\\ref{ch:wkb} and \\ref{ch:wu-sprung} give the quantum side.",
+   "new": "Parts I and II, then Chapters~\\ref{ch:counting-zeros}, \\ref{ch:hilbert-polya} and \\ref{ch:wu-sprung}, give the quantum side."
+  },
+  {
+   "old": "\"empirical Hilbert--P\\'olya constructions\" (\\cref{sec:intro-hp}); \"fit quantum Hamiltonians to the nontrivial Riemann zeros\" (\\cref{sec:intro-fitting}); \"out-of-sample prediction\" (\\cref{sec:intro-memorize}); \"up to 900 fitted coefficients, in cosine, Chebyshev, and local piecewise-linear bases\" (the three families of wiggles); \"relative to the unfitted potential\" (the null); \"shuffled and phase-randomized surrogate targets\" (Finding 3 of \\cref{sec:intro-result}); \"a pure prime-2 explicit-formula oscillation\" (RE2, \\cref{eq:intro-re2}); \"zero fitted parameters ... correlation up to $+0.99$ through zero $10^4$\" (Finding 5).",
+   "new": "``empirical Hilbert--P\\'olya constructions'' (\\cref{sec:intro-hp}); ``fit quantum Hamiltonians to the nontrivial Riemann zeros'' (\\cref{sec:intro-fitting}; a Hamiltonian is the energy operator of a quantum system, Chapter~\\ref{ch:schrodinger}); ``out-of-sample prediction'' (\\cref{sec:intro-memorize}); ``up to 900 fitted coefficients, in cosine, Chebyshev, and local piecewise-linear bases'' (the three families of wiggles); ``relative to the unfitted potential'' (the null); ``shuffled and phase-randomized surrogate targets'' (Finding 3 of \\cref{sec:intro-result}); ``a pure prime-2 explicit-formula oscillation'' (RE2, \\cref{eq:intro-re2}); ``with zero fitted parameters predicts held-out zeros with correlation up to $+0.99$ through zero $10^4$'' (Finding 5)."
+  },
+  {
+   "old": "\"Spectrum of a self-adjoint operator\" is the Hilbert--P\\'olya idea",
+   "new": "The phrase ``the spectrum of a self-adjoint operator'' is the Hilbert--P\\'olya idea"
+  },
+  {
+   "old": "its \"implicit logic\", are summarized",
+   "new": "its ``implicit logic'', are summarized"
+  },
+  {
+   "old": "\"capture\" means predictive transfer",
+   "new": "``capture'' means predictive transfer"
+  },
+  {
+   "old": "Notice also the sentence \"The novelty claimed is ... not the explicit formula\":",
+   "new": "Notice also the sentence ``The novelty claimed is likewise not the explicit formula'':"
+  },
+  {
+   "old": "\"all errors below are quoted in units of the local mean spacing $\\gap_n = ds_n/dn$\" (paper Sec.~II~A) is the convention of Sample Problem 3.",
+   "new": "``All errors below are quoted in units of the local mean spacing $\\gap_n = ds_n/dn$'' (paper Sec.~II~A) is the convention of the Sample Problem ``Measuring an error in mean spacings''."
+  },
+  {
+   "old": "The headline rows used in Sample Problem 10 are from",
+   "new": "The headline rows used in the Sample Problem ``Reading headline numbers against the null'' are from"
+  },
+  {
+   "old": "and \"6--7 levels\" appear",
+   "new": "and ``6--7 levels'' appear"
+  },
+  {
+   "old": "why the paper calls this experiment \"the memorization mechanism exhibited in isolation\".",
+   "new": "why the paper calls this experiment ``the memorization mechanism exhibited in isolation''."
+  },
+  {
+   "old": "a claim that a fitted model \"captures\" the zeros",
+   "new": "a claim that a fitted model ``captures'' the zeros"
+  },
+  {
+   "old": "fit a degree-4 polynomial through the five points of Sample Problem 6 with \\texttt{np.polyfit} and evaluate it at $x = 5$ and $x = 6$. Compare with the straight line of Sample Problem 6 at $x = 6$. Also confirm the value at $x=6$ by extending the difference table of Sample Problem 7 one more column.",
+   "new": "fit a degree-4 polynomial through the five points of the Sample Problem ``Fitting with a ruler'' with \\texttt{np.polyfit} and evaluate it at $x = 5$ and $x = 6$. Compare with the straight line of that Sample Problem at $x = 6$. Also confirm the value at $x=6$ by extending the difference table of the Sample Problem ``The memorizing polynomial'' one more column."
+  },
+  {
+   "old": "(b) Correct (paper notation section and Sec.~II~A data).",
+   "new": "(b) Correct: the zeros used lie far below the height to which all zeros have been verified numerically to lie on the line (Chapter~\\ref{ch:zeta}); the paper itself simply writes $\\rho_n = \\tfrac12 + i t_n$."
+  },
+  {
+   "old": "regularization moves the fits \"from `memorize more' to `do nothing' and never creates skill\").",
+   "new": "regularization moves the fits ``from `memorize more' to `do nothing' and never creates skill'')."
+  },
+  {
+   "old": "\\textbf{13.} First ten: $3.959901$ (Sample Problem 1). First 100: $(t_{100} - t_1)/99 = (236.524230 - 14.134725)/99 = 2.246359$. The average spacing is smaller because the zeros crowd together with height, as \\cref{eq:intro-gap} predicts.",
+   "new": "\\textbf{13.} First ten: $3.959901$ (Sample Problem ``Reading the spacings of the first ten zeros''). First 100: $(t_{100} - t_1)/99 = (236.524230 - 14.134725)/99 = 2.246359$. The average spacing is smaller because the zeros crowd together with height, as \\cref{eq:intro-gap} predicts. Code:\n\\begin{pycode}\nimport qmnt\nt = qmnt.zeros(100)\nprint((t[9] - t[0]) / 9, (t[-1] - t[0]) / 99)\n\\end{pycode}"
+  },
+  {
+   "old": "\\textbf{14.} $N(50) = 10$, $\\Nsm(50) = 9.423$, wobble $+0.577$. $N(100) = 29$, $\\Nsm(100) = 29.002$, wobble $-0.002$.",
+   "new": "\\textbf{14.} $N(50) = 10$, $\\Nsm(50) = 9.423$, wobble $+0.577$. $N(100) = 29$, $\\Nsm(100) = 29.002$, wobble $-0.002$. Code:\n\\begin{pycode}\nimport numpy as np\nimport qmnt\nt = qmnt.zeros(40)\nfor T in (50.0, 100.0):\n    N = np.sum(t <= T)\n    print(T, N, qmnt.Nsm(T), N - qmnt.Nsm(T))\n\\end{pycode}"
+  },
+  {
+   "old": "express \"continue oscillating\".",
+   "new": "express ``continue oscillating''."
+  },
+  {
+   "old": "Compare with a null such as \"tomorrow will be the same as today\" or \"tomorrow will be the long-term average for this date\".",
+   "new": "Compare with a null such as ``tomorrow will be the same as today'' or ``tomorrow will be the long-term average for this date''."
+  },
+  {
+   "old": "the neighbouring zero",
+   "new": "the neighboring zero"
+  }
+ ],
+ "new_checks": "import numpy as np\nfrom scipy.optimize import brentq\nimport qmnt\n\ntwopi = 2 * np.pi\ndef gap(t):\n    return twopi / np.log(t / twopi)\ndef Nsm(t):\n    u = t / twopi\n    return u * np.log(u) - u + 7.0 / 8.0\n\n# RE1 values, Table and Sample Problem 1\nt10 = np.array([14.134725, 21.022040, 25.010858, 30.424876, 32.935062,\n                37.586178, 40.918719, 43.327073, 48.005151, 49.773832])\ntz = np.asarray(qmnt.zeros(500))\nassert np.allclose(tz[:10], t10, atol=1e-6)\nd = np.diff(t10)\nclaimed = [6.887315, 3.988818, 5.414018, 2.510186, 4.651116,\n           3.332541, 2.408354, 4.678078, 1.768681]\nassert np.allclose(d, claimed, atol=1e-6)\nassert abs(t10[-1] - t10[0] - 35.639107) < 1e-6\nassert abs(d.mean() - 3.959901) < 1e-6\nassert abs(d.max() - 6.887315) < 1e-6 and abs(d.min() - 1.768681) < 1e-6\n\n# pycode listing outputs\nassert np.sum(np.asarray(qmnt.zeros(40)) <= 100.0) == 29\nassert abs(float(qmnt.Nsm(100.0)) - 29.002350) < 1e-5\n\n# Sample Problem 2: counting\nassert abs(tz[10] - 52.970321) < 1e-5\nassert abs(tz[28] - 98.831194) < 1e-5\nassert abs(tz[29] - 101.317851) < 1e-5\nassert np.sum(tz <= 50) == 10 and np.sum(tz <= 100) == 29\nassert abs(50 / twopi - 7.957747) < 1e-6\nassert abs(np.log(50 / twopi) - 2.074146) < 1e-6\nassert abs(Nsm(50.0) - 9.422781) < 1e-5\nassert abs(Nsm(100.0) - 29.002350) < 1e-5\nassert abs((10 - Nsm(50.0)) - 0.577) < 1e-3\nassert abs((29 - Nsm(100.0)) - (-0.002)) < 1e-3\n\n# Staircase figure caption: departure below one step on 8 <= T <= 100\nzs = tz[(tz >= 8) & (tz <= 100)]\ndev = [abs(0 - Nsm(8.0)), abs(29 - Nsm(100.0))]\nfor k, z in enumerate(zs):\n    nbelow = np.sum(tz < z)\n    dev.append(abs(nbelow - Nsm(z)))\n    dev.append(abs(nbelow + 1 - Nsm(z)))\nassert max(dev) < 1.0\n\n# Mean-spacing derivation: slope of Nsm equals 1/gap (numerical instance)\nhh = 1e-5\nfor tt in (50.0, 500.0, 811.0):\n    slope_num = (Nsm(tt + hh) - Nsm(tt - hh)) / (2 * hh)\n    assert abs(slope_num - 1.0 / gap(tt)) < 1e-8\n\n# Pitfall and checkpoint: spacings near t=30 and t=800\nassert abs(gap(30.0) - 4.02) < 0.01\nassert abs(0.5 / gap(30.0) - 0.125) < 0.005\nassert abs(gap(800.0) - 1.3) < 0.01\nassert abs(gap(30.0) / gap(800.0) - 3.1) < 0.05\n\n# Sample Problem 3: gap near zero 500\nt500 = 811.1843588465\nassert abs(tz[499] - t500) < 1e-6\nassert abs(t500 / twopi - 129.10399) < 1e-4\nassert abs(np.log(t500 / twopi) - 4.860618) < 1e-5\ng500 = gap(t500)\nassert abs(g500 - 1.292672) < 1e-5\nassert abs(0.5 / g500 - 0.3868) < 1e-4\nassert abs(3.959901 / g500 - 3.063) < 1e-3\n\n# Sample Problem 4: smooth zeros and fluctuations of zeros 1 and 2\nf = lambda u: u * np.log(u) - u\nassert abs(np.log(2.30) - 0.832909) < 1e-6\nassert abs(np.log(2.32) - 0.841567) < 1e-6\nassert abs(np.log(2.311) - 0.8376803) < 2e-7\nassert abs(f(2.30) - (-0.3843)) < 1e-4\nassert abs(f(2.32) - (-0.3676)) < 1e-4\nassert abs(f(2.311) - (-0.375121)) < 1e-6\nassert abs((-0.375 - f(2.311)) - 0.000121) < 1e-6\nassert abs(0.000121 / 0.838 - 0.000144) < 1e-6\nu1 = brentq(lambda u: f(u) + 0.375, 2.0, 3.0)\nassert abs(u1 - 2.311144) < 1e-6\ns1 = twopi * u1\nassert abs(s1 - 14.5213) < 1e-4\nassert abs(np.log(u1) - 0.837743) < 1e-6\nassert abs(gap(s1) - 7.500) < 1e-3\nfl1 = (tz[0] - s1) / gap(s1)\nassert abs((tz[0] - s1) - (-0.3866)) < 1e-4\nassert abs(fl1 - (-0.0515)) < 1e-4 and abs(fl1 - (-0.052)) < 1e-3\nassert abs(np.log(3.28) - 1.187843) < 1e-6\nassert abs(np.log(3.29) - 1.190887) < 1e-6\nassert abs(f(3.28) - 0.6161) < 1e-4\nassert abs(f(3.29) - 0.6280) < 1e-4\nassert abs(np.log(3.2875) - 1.1901274) < 2e-7\nassert abs(f(3.2875) - 0.625044) < 1e-6\nassert abs(0.000044 / 1.190 - 0.000037) < 1e-6\nu2 = brentq(lambda u: f(u) - 0.625, 3.0, 4.0)\nassert abs(u2 - 3.287463) < 1e-6\nassert abs(u2 - 3.28746) < 1e-5\ns2 = twopi * u2\nassert abs(s2 - 20.6557) < 2e-4\nassert abs(np.log(u2) - 1.19012) < 1e-5\nassert abs(gap(s2) - 5.2795) < 2e-4\nfl2 = (tz[1] - s2) / gap(s2)\nassert abs((tz[1] - s2) - 0.3663) < 2e-4\nassert abs(fl2 - 0.0694) < 3e-4 and abs(fl2 - 0.069) < 1e-3\nsq = np.asarray(qmnt.smooth_zeros(np.array([1, 2])))\nassert np.allclose(sq, [s1, s2], atol=1e-3)\nfq = np.asarray(qmnt.fluct(tz[:2], np.array([1, 2])))\nassert np.allclose(fq, [fl1, fl2], atol=1e-3)\n\n# Sample Problem 5 (prime period) and Problems 3, 11, 20, 24\nP = twopi / np.log(2)\nassert abs(P - 9.064720) < 1e-6\nassert abs(P / 2 - 4.532) < 1e-3 and abs(P / 3 - 3.022) < 1e-3\ng50 = gap(50.0)\nassert abs(g50 - 3.029288) < 1e-5\nassert abs(P / g500 - 7.012) < 1e-3\nassert abs(P / g50 - 2.992) < 1e-3\nassert abs(0.6 / g50 - 0.198) < 1e-3\nassert abs(0.5 / g50 - 0.165) < 1e-3\nassert abs(0.5 / g500 - 0.387) < 1e-3\n\n# Scale definitions (Wu--Sprung L values)\nassert abs(qmnt.L_of(1000) - 44.883) < 1e-3\nassert abs(qmnt.L_of(1500) - 59.957) < 1e-3\n\n# Sample Problem 6: ruler\nx = np.array([0, 1, 2, 3, 4], float)\ny = np.array([1.0, 2.9, 5.2, 6.9, 9.1])\nslope = (y[-1] - y[0]) / 4\nassert abs(slope - 2.025) < 1e-12\nmodel = 1.0 + slope * x\nres = y - model\nassert np.allclose(res, [0, -0.125, 0.15, -0.175, 0], atol=1e-12)\nr = np.sqrt(np.mean(res**2))\nassert abs(np.sum(res**2) - 0.06875) < 1e-12\nassert abs(r - 0.11726) < 1e-5\nassert abs((1.0 + slope * 5) - 11.125) < 1e-12\n\n# Sample Problem 7 and Problem 23: memorizing polynomial and difference table\nxs = np.arange(0, 10.0)\nassert np.allclose(xs[:5]**4, [0, 1, 16, 81, 256])\nassert np.allclose(np.diff(xs[:5]**4, 1), [1, 15, 65, 175])\nassert np.allclose(np.diff(xs[:5]**4, 2), [14, 50, 110])\nassert np.allclose(np.diff(xs[:5]**4, 3), [36, 60])\nassert np.allclose(np.diff(xs**4, 4), 24)\nassert np.allclose(np.diff(y, 1), [1.9, 2.3, 1.7, 2.2], atol=1e-12)\nassert np.allclose(np.diff(y, 2), [0.4, -0.6, 0.5], atol=1e-12)\nassert np.allclose(np.diff(y, 3), [-1.0, 1.1], atol=1e-12)\nassert abs(np.diff(y, 4)[0] - 2.1) < 1e-12\nd3 = 1.1 + 2.1; d2 = 0.5 + d3; d1 = 2.2 + d2; y5 = 9.1 + d1\nassert abs(d3 - 3.2) < 1e-12 and abs(d2 - 3.7) < 1e-12 and abs(d1 - 5.9) < 1e-12\nassert abs(y5 - 15.0) < 1e-12\ne3 = d3 + 2.1; e2 = d2 + e3; e1 = d1 + e2; y6 = y5 + e1\nassert abs(e3 - 5.3) < 1e-12 and abs(e2 - 9.0) < 1e-12 and abs(e1 - 14.9) < 1e-12\nassert abs(y6 - 29.9) < 1e-12\np4 = np.polyfit(x, y, 4)\nassert np.allclose(np.polyval(p4, x), y, atol=1e-9)\nassert abs(np.polyval(p4, 5.0) - 15.0) < 1e-8\nassert abs(np.polyval(p4, 6.0) - 29.9) < 1e-7\nassert abs((15.0 - 11.0) / 0.125 - 32) < 1e-12\nassert abs((1.0 + slope * 6) - 13.15) < 1e-12\n\n# Sample Problem 8 and Problem 8: exams (including the clean, leak-free case)\nassert abs((4 + 16 * 0.25) / 20 - 0.40) < 1e-12\nassert abs(0.85 * 20 - 17) < 1e-12\nassert abs(20 * 0.25 - 5) < 1e-12\nassert abs((5 + 20 * 0.2) / 25 - 0.36) < 1e-12\nassert abs(25 * 0.2 / 25 - 0.20) < 1e-12\n\n# Sample Problem 9 (rms and correlation)\ntruth = np.array([0.2, -0.3, 0.1, 0.4, -0.4])\nrnull = np.sqrt(np.mean(truth**2))\nassert abs(np.sum(truth**2) - 0.46) < 1e-12\nassert abs(rnull - 0.3033) < 1e-4\nassert abs(np.sqrt(np.mean((truth - 0.5 * truth)**2)) - 0.1517) < 1e-4\nassert abs(np.sqrt(np.mean((truth + 0.5 * truth)**2)) - 0.4550) < 1e-4\nassert abs(np.corrcoef(truth, 0.5 * truth)[0, 1] - 1) < 1e-12\nassert abs(np.corrcoef(truth, -0.5 * truth)[0, 1] + 1) < 1e-12\n\n# Sample Problem 10 and Problems 6, 7, 9, 16, 17 (paper-number ratios)\nassert abs(0.369 / 0.263 - 1.403) < 1e-3\nassert abs(0.074 / 0.263 - 0.281) < 1e-3\nassert abs((1 - 0.074 / 0.263) - 0.719) < 1e-3\nassert abs((1 - 0.043 / 0.263) - 0.837) < 1e-3\nassert abs((1 - 0.034 / 0.263) - 0.871) < 1e-3\nassert abs(0.265 / 0.263 - 1.0076) < 1e-4\nassert abs(900 / 500 - 1.8) < 1e-12\nassert len(range(370, 401)) == 31 and len(range(401, 461)) == 60\nassert abs(2.64 / 0.255 - 10.35) < 0.01\n\n# Problem 5\ny5p = np.array([2.0, 3.4, 5.1, 6.4])\ns5 = (y5p[-1] - y5p[0]) / 3\nassert abs(s5 - 1.4667) < 1e-4\nassert abs((3.4 - (2.0 + s5)) - (-0.0667)) < 1e-4\nassert abs((5.1 - (2.0 + 2 * s5)) - 0.1667) < 1e-4\nassert abs((2.0 + 4 * s5) - 7.867) < 1e-3\n\n# Problem 10\ne10 = np.array([0.3, -0.1, 0.0, -0.2])\nassert abs(np.sqrt(np.mean(e10**2)) - 0.187) < 1e-3\n\n# Problem 12\nR = 0.263\nfor a, val in [(0, 0.263), (0.5, 0.1315), (2, 0.263), (-1, 0.526)]:\n    tr = R * truth / rnull\n    assert abs(np.sqrt(np.mean((tr - a * tr)**2)) - val) < 1e-9\n\n# Problem 13\nt100 = tz[99]\nassert abs(t100 - 236.524230) < 1e-5\nassert abs((t100 - tz[0]) / 99 - 2.246359) < 1e-5\nassert abs((tz[9] - tz[0]) / 9 - 3.959901) < 1e-5\n\n# Problem 15: null and six-prime oracle on zeros 401-500 (paper Table V)\nn = np.arange(401, 501)\nnull = qmnt.rms(qmnt.fluct(tz[n - 1], n))\nassert abs(null - 0.2631) < 0.002\npred = qmnt.oracle_zeros(n, qmnt.first_primes(6))\nrr, cc = qmnt.score(pred, n)\nassert abs(rr - 0.074) < 0.003\nassert abs(cc - 0.96) < 0.01\n\nprint('all intro checks passed')\n",
+ "new_figures": {
+  "intro_staircase": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nimport qmnt\nt = np.asarray(qmnt.zeros(40))\nt = t[t <= 100]\nT = np.linspace(8, 100, 4000)\nN = np.searchsorted(t, T, side='right')\nu = T / (2 * np.pi)\nNs = u * np.log(u) - u + 7.0 / 8.0\nfig, ax = plt.subplots(figsize=(6, 4))\nax.step(T, N, where='post', color='k', label='$N(T)$ (staircase)')\nax.plot(T, Ns, 'r--', label='$N_{\\\\rm sm}(T)$, paper Eq. (1)')\nax.set_xlabel('height $T$ (dimensionless)')\nax.set_ylabel('number of zeros (dimensionless)')\nax.legend()\nax.grid(alpha=0.3)\nplt.savefig('intro_staircase.pdf', bbox_inches='tight')\n",
+  "intro_prime2": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nt = np.linspace(0, 60, 3000)\nL2 = np.log(2.0)\nw = -(1 / np.pi) * sum(np.sin(m * t * L2) / (m * 2 ** (m / 2)) for m in (1, 2, 3))\nP = 2 * np.pi / L2\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(t, w, 'b-')\nfor k in (1, 2):\n    ax.axvline(k * P, ls=':', color='gray')\nax.annotate('', xy=(P, 0.33), xytext=(0, 0.33), arrowprops=dict(arrowstyle='<->'))\nax.text(P / 2, 0.35, 'period $2\\\\pi/\\\\log 2 \\\\approx 9.065$', ha='center')\nax.set_ylim(-0.4, 0.42)\nax.set_xlabel('height $t$ (dimensionless)')\nax.set_ylabel('prime-2 wave (counting units)')\nax.grid(alpha=0.3)\nplt.savefig('intro_prime2.pdf', bbox_inches='tight')\n",
+  "intro_barcode": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nimport qmnt\nt = np.asarray(qmnt.zeros(40))\nt = t[t <= 100]\nrng = np.random.default_rng(0)\nr = np.sort(rng.uniform(t[0], t[-1], len(t)))\ne = np.linspace(t[0], t[-1], len(t))\nfig, ax = plt.subplots(figsize=(6, 4))\nfor yv, pts in [(2, t), (1, r), (0, e)]:\n    ax.vlines(pts, yv - 0.35, yv + 0.35, color='k')\nax.set_yticks([0, 1, 2])\nax.set_yticklabels(['equally spaced', 'random (seed 0)', 'zeros $t_n$'])\nax.set_xlabel('height $t$ (dimensionless)')\nax.set_ylim(-0.6, 2.6)\nplt.savefig('intro_barcode.pdf', bbox_inches='tight')\n",
+  "intro_memorize": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nx = np.array([0, 1, 2, 3, 4.0])\ny = np.array([1.0, 2.9, 5.2, 6.9, 9.1])\nxx = np.linspace(-0.2, 5.3, 400)\np = np.polyfit(x, y, 4)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(xx, 1.0 + 2.025 * xx, 'b--', label='line through first and last points')\nax.plot(xx, np.polyval(p, xx), 'r-', label='degree-4 polynomial')\nax.plot(x, y, 'ko', label='measured points')\nax.plot([5], [11.0], 'ks', ms=8, mfc='none', label='later measurement')\nax.set_xlabel('$x$ (arbitrary units)')\nax.set_ylabel('$y$ (arbitrary units)')\nax.legend()\nax.grid(alpha=0.3)\nplt.savefig('intro_memorize.pdf', bbox_inches='tight')\n",
+  "intro_trainhold": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nimport qmnt\nn = np.arange(370, 461)\nt = np.asarray(qmnt.zeros(460))[n - 1]\nfl = qmnt.fluct(t, n)\npred = qmnt.oracle_zeros(n, qmnt.first_primes(6))\nfp = qmnt.fluct(pred, n)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.axvspan(400.5, 460.5, color='0.9', label='held out')\nax.plot(n, fl, 'ko', ms=3, label='true fluctuation')\nax.plot(n, fp, 'b-', label='six-prime formula')\nax.set_xlabel('zero index $n$')\nax.set_ylabel('fluctuation (mean spacings)')\nax.legend(loc='upper left', fontsize=8)\nax.grid(alpha=0.3)\nplt.savefig('intro_trainhold.pdf', bbox_inches='tight')\n",
+  "intro_roadmap": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nfig, ax = plt.subplots(figsize=(6, 4))\nax.axis('off')\nax.set_xlim(0, 1)\nax.set_ylim(0, 1)\npos = {'I': (0.5, 0.92), 'II': (0.22, 0.70), 'III': (0.78, 0.70), 'IV': (0.5, 0.48), 'V': (0.5, 0.27), 'VI': (0.5, 0.06)}\nlab = {'I': 'Part I: mathematical foundations', 'II': 'Part II: quantum mechanics', 'III': 'Part III: primes and zeta', 'IV': 'Part IV: spectra, randomness, operators', 'V': 'Part V: computation, fitting, generalization', 'VI': 'Part VI: the paper (uses Parts I-V)'}\nfor k, (xp, yp) in pos.items():\n    ax.text(xp, yp, lab[k], ha='center', va='center', fontsize=8, bbox=dict(boxstyle='round', fc='w'))\nedges = [('I', 'II'), ('I', 'III'), ('II', 'IV'), ('III', 'IV'), ('II', 'V'), ('IV', 'V'), ('V', 'VI')]\nfor a, b in edges:\n    ax.annotate('', xy=pos[b], xytext=pos[a], arrowprops=dict(arrowstyle='->', shrinkA=12, shrinkB=12))\nplt.savefig('intro_roadmap.pdf', bbox_inches='tight')\n"
+ },
+ "notes": "Applied all valid issues. Skipped: the last RULE issue (checkanswer placement / \\% in \\boxed), since the reviewer states no change is required. On Sample Problem 4, while adding the requested digits I found the earlier rounding was slightly off in the last place; the root is u = 2.311144, so s_1 = 14.5213 and the fluctuation is -0.0515. These values and the extra digits in the zero-2 refinement (log 3.2875 = 1.1901274, f = 0.625044, excess 0.000044, u = 3.287463) are now in the text and asserted in CHECKS. For the 'more knobs' issue I kept the reviewer's wording and added that nonlinearity means counting alone does not guarantee an exact fit. Sample Problem references now use titles throughout. Straight double quotes were converted to LaTeX quotes everywhere they occurred. Scripts for all six figures are supplied. New numbers are checked in the new CHECKS: spacings near t = 30 and 800, the slope identity, x^4 differences, and the L values for the two scales. The 0.2631 coincidence of the two nulls is quoted from the paper's Appendix A anchors."
+}

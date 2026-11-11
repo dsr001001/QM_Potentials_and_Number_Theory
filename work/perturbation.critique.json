@@ -1,107 +1,170 @@
 [
  {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\section{Paper connection}\\label{sec:perturbation-paper}",
-  "problem": "Chapter anatomy requires figure scripts in a FIGURES part and the chapter lists five figures (overlap, sensitivity, repulsion, validity, scatter, newton), but no FIGURES section was delivered in the visible response; the checks script also fails at the Problem 15 / P25 block with a shape mismatch (200x200 vs 60x60), so the P15 and P25 answers are not verified.",
-  "fix": "Supply all figure scripts; fix the checks script (e.g. recompute C1 and E0 with the same Nb in g(c) and in err1/err2) so every assertion runs."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "the second-order correction to level 3 is $-2.83\\times10^{-6}$, less than 1\\% of the first-order shift; an exact computation (\\cref{sec:perturbation-validity}) agrees with first plus second order to better than $10^{-7}$.",
-  "problem": "Second-order term uses E_3-E_9 with coupling c/2, but level 3 also couples to level 3 (diagonal) and level 3 couples via n+m=2q=6 to m=3 only; fine. However 2.83e-6 is 0.57% of 5e-4, OK. The claim of agreement better than 1e-7 is only checked at 1e-7 tolerance; third-order terms may be of order 1e-9, fine. Lower concern: the statement is forward-referenced before the method is introduced.",
-  "fix": "Keep, but note the check tolerance; low priority."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "Level 20, near $E\\approx77$, turns at $|x|\\approx5.4$, less than an eighth of $L$.",
-  "problem": "The figures 77 and 5.4 are asserted without derivation in the chapter; the check only tests loose tolerances (2 and 0.2). 5.4/44.883=0.12 is less than an eighth (0.125), marginal. The A_{20,1}>0.9 and 'above 0.1 for at least five cosines' claims are checked only for at least three.",
-  "fix": "Quote values computed in CHECKS with tight tolerance, and either verify 'at least five' in checks or weaken the text to what is verified."
- },
- {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Because $|\\psi_n^{(0)}|^2\\ge 0$ and integrates to 1, \\cref{eq:perturbation-first} says: to first order, \\emph{a level moves by the average value of $\\delta V$",
-  "problem": "Next sentences say a classical particle moves slowest near turning points 'so it spends most of its time there' and that high-n density piles up near turning points; for the box (the main test bench) the density is uniform, and for the paper's claim the statement is only a WKB heuristic.",
-  "fix": "Label it as a semiclassical (WKB) statement valid for smoothly varying potentials, not for the box, and point to Chapter~\\ref{ch:wkb}."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Reading the condition as $E<(M\\pi/2L)^2$ with $L=44.883$ gives $E<110$ for $M=300$",
-  "problem": "The paper's condition M pi/L > 2 sqrt(E) gives E<(M pi/2L)^2 as stated, but the paper's levels are ordered by t_n up to 811 at M=300 scale 1 vs scale 2 (L=59.957, 1000 levels). The paper's M=300 and 900 results with 'all 500 zeros' are at scale 1, so ok; but the claim 'inside the last range only' ignores that M=600 (E<441) is not covered, fine. The remark that the paper's statement of M=900 reaching <1e-4 is consistent is fine.",
-  "fix": "Minor: state explicitly these are scale-1 values and mention M=600 gives E<441 too."
+  "quote": "The same ratio controls how big the second-order term is compared with the first-order term.",
+  "problem": "Not correct in general. The ratio of second-order to first-order shift is |δV_nm|²/(|E_n−E_m|·|δV_nn|), which equals the mixing amplitude only if δV_nn is comparable to δV_nm. For the tilt the first-order term is zero, so the statement is meaningless there.",
+  "fix": "Replace with: 'The same ratio controls the size of each second-order term compared with the coupling itself: |δV_nm|²/|E_n−E_m| = |δV_nm| × (mixing amplitude). Each higher order brings one more such factor.'"
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "each cosine with a nonzero integer multiple of $\\pi u/L$ integrates to zero over $[0,2L]$ for the same reason, so only the term with $n-q=0$ survives",
-  "problem": "Product-to-sum gives cos((n-q)pi u/L) and cos((n+q)pi u/L); the n+q term never vanishes identically but is nonzero integer multiple, fine; however the case q=n gives (1/2)(2L) only from n-q term, and n+q>0 always. Not stated that n+q>0.",
-  "fix": "Add 'since n+q>=2 is never zero'."
+  "quote": "Scoring the exact spectra in-sample gives rms $0.2523$ and $0.2477$, worse than the null $0.2438$.",
+  "problem": "The paper-connection section uses 'rms', 'corr', 'null', 'in-sample', 'out-of-sample', 'held-out' and 'unregularized' without a reminder of their meaning. Pearson correlation is Chapter 19, which comes later, and the bible requires every term to be defined in words on first use in the chapter.",
+  "fix": "At the start of the paper-connection section add one sentence: rms is the root-mean-square error in units of the local mean spacing; corr is the Pearson correlation (Chapter~\\ref{ch:probability}) between two lists of shifts; the null is the prediction with no fitted correction; in-sample means on the fitted levels, out-of-sample or held-out means on levels not used in the fit."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "and $\\int_0^\\pi\\cos j\\theta\\cos l\\theta\\,\\dd\\theta=\\tfrac\\pi2\\delta_{jl}$ for positive integers $j,l$ (and $0$ if one of them is $0$ and the other is not;",
-  "problem": "Derivation of Eq. (cosmat) skips the intermediate lines: the delta for n+m=2q and the sign, and the case j=0 (n=m) giving a constant term, and normalization factor (2L/pi)(1/2L)(pi/2)=1/2. Student cannot follow.",
-  "fix": "Write out the integral: (1/2L)(2L/pi)(-1)^q * [ (pi/2)(delta_{|n-m|,2q}) - (pi/2) delta_{n+m,2q} ] = ..., and treat n=m separately."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Reversing it flips the sign of every term. And the term $m=n$ is excluded; including it would divide by zero.",
-  "problem": "Fine, but the pitfall about Problem 14 values: 'keeping only two states changes the second-order shift of box level 2 from +0.0052F^2 to +0.0175F^2'. Level 2 is pushed up by level 1 and down by 3,4..., net sign depends; the quoted 0.0175 equals the ground-state shift magnitude with sign flipped, and Problem 8's result is only 'checked' for 0.0052 with tolerance 1e-4 while the problem asks to sum only m=1,3,5,7 (not full).",
-  "fix": "Verify that the 7-term truncated sum differs from the full sum and state which figure the pitfall refers to; make the pitfall refer to the full sum 0.0052 explicitly."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\emph{Sum rule.} Let $W$ be real and consider a finite set of $N_b$ nondegenerate levels.",
-  "problem": "Problems section: required answers for all \\prob{1} and every odd-numbered problem; answers 3, 9, 11, 13, 15, 17, 19, 21, 23, 25 given but answer 7 given (even number) while problems 3 etc. are fine; answers for odd problems are missing in places because problem numbering is inconsistent (e.g. 25 problems; answers to 1,2,3,4,5,7,9,11,13,15,17,19,21,23,25 but Problem 2 and 4 labelled \\prob{1} present). Problems 11, 13 and 23 are paper-based fine, but at least 3 computational problems also require checks for answers: P23 and P25 computed, P15 failed to run.",
-  "fix": "Fix the checks script so P15 and P25 assertions execute; ensure each odd answer's numbers are asserted."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The relative erroris roughly the ratio of the two",
-  "problem": "Typo 'erroris'. Also the argument claims the relative error falls in proportion to c: relative error = c^3/c^2 = c, fine.",
-  "fix": "Change to 'relative error is'."
- },
- {
-  "category": "CLARITY",
-  "severity": "medium",
-  "quote": "Hence, by \\cref{eq:perturbation-expand},\n\\begin{equation}\n\\psi_n^{(1)}=\\sum_{k\\ne n}",
-  "problem": "Intermediate normalization argument claims the overlap condition for all eps gives a_n=0 but also the same for psi^(2); fine. However the text uses 'psi_n^{(1)} vanishes at walls' without justification.",
-  "fix": "State that each psi^(j) vanishes at the walls because psi_n and psi^(0) do."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "It equals $(15-\\pi^2)\\pi^2/3072$, a closed form we check numerically but do not derive.",
-  "problem": "Unproved closed form stated within a derivation; labelled, acceptable, but not placed in a beyond box as bible requires for unproved results.",
-  "fix": "Wrap in a \\begin{beyond} or add a derivation hint/problem pointer (Problem 22 does the numerical check)."
+  "quote": "by using the fact that the trace of the matrix $H_{km}$ equals the sum of its eigenvalues",
+  "problem": "'Trace' is never defined in this chapter and is not in the bible's list for Chapter 8. Answer 19 then cites 'Chapter eigen' for a fact that may not be there.",
+  "fix": "Define it in the problem: 'the trace (the sum of the diagonal entries) of a symmetric matrix equals the sum of its eigenvalues; for a 2×2 matrix this follows from the characteristic polynomial, and you may take the general case on trust'. Drop the unverifiable chapter citation in the answer."
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "A single linearization from $\\bm c=0$ would be useless at that size (our estimate from \\cref{eq:perturbation-validity}, not a statement of the paper)",
-  "problem": "Estimate uses spacing 1.46 vs rms delta V 40, but the validity condition concerns matrix elements delta V_nm, not delta V rms; the comparison is loose.",
-  "fix": "Say 'plausibly inadequate' and note matrix elements may be smaller than rms delta V."
+  "quote": "with the current $A$ the method converges quadratically near the solution.",
+  "problem": "Quadratic convergence holds for Newton with a square invertible Jacobian, or for Gauss--Newton when the residual at the solution is zero. For the general least-squares case just described (more or fewer levels than coefficients) it is not guaranteed.",
+  "fix": "Write: 'with the current $A$ the square (Newton) case converges quadratically near the solution, and the least-squares case converges fast when the final residuals are small.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "small amplitude, agreement; large amplitude, the formula describes no operator",
+  "problem": "Stronger than the paper, which says the surrogate 'no longer describes the operator' (the fitted one). 'No operator' is an unproved universal statement. The same wording appears in the fitting section ('no longer describes any operator').",
+  "fix": "Change both to 'the formula no longer describes the operator being fitted'."
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "The first step overshoots in $c$ by about 3\\%",
-  "problem": "c1=1.0652 vs final 1.0965: it undershoots (c1 is smaller than the solution), not overshoots.",
-  "fix": "Replace 'overshoots' with 'undershoots'."
+  "quote": "the paper's in-sample and out-of-sample numbers are nonetheless the true eigenvalues of the fitted operators",
+  "problem": "The paper's numbers are rms and correlation scores, not eigenvalues. The quoted 'single plain eigensolve' sentence refers to the out-of-sample scoring only, and the eigenvalues are those of the finite-difference operator scored against bias-corrected targets.",
+  "fix": "Write: 'the paper's scores are nonetheless computed from actual numerical eigenvalues of the fitted (discretized) operators: each iteration ends with an eigensolve, and the held-out score uses \"a single plain eigensolve of the fitted potential\" (Sec. II C).'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "(first-year physics: kinetic energy is smallest there), so it spends most of its time there.",
+  "problem": "A classical particle spends more time per unit length near the turning points, not 'most of its time' there. For SHM the time density diverges at the turning points but most of the period is not spent in a small neighbourhood of them.",
+  "fix": "Replace with 'so it spends more time per unit length there than anywhere else'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "At large amplitude many points, especially for the low levels whose spacing is smallest, scatter far from it",
+  "problem": "This is a numerical observation from the chapter's own computation (the scatter figure), and the CHECKS script does not verify it. The random seed and amplitudes behind the figure are also not stated in the text.",
+  "fix": "Add a check that reproduces the figure's computation with a fixed seed and asserts, for example, corr(exact, first order) > 0.99 at small amplitude and a large maximum deviation for the low levels at large amplitude. State the seed in the caption."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The exact formula shows something the expansion does not: as you vary the diagonal energies so that the two levels approach each other",
-  "problem": "Used n for level index and N for grid and N_b; also 'Delta' used for both half-gap here and Delta_n grid bias in the paper; potential confusion.",
-  "fix": "Add a remark that Delta here is unrelated to the paper's grid bias Delta_n."
+  "quote": "with random Gaussian coefficients, in units of the local spacing",
+  "problem": "The local spacing is given as (π/2L)²·2n, but the chapter's own spacing equation has (2n+1). Also 'Gaussian coefficients' and 'standard deviation' belong to Chapter 19 and are not explained here.",
+  "fix": "Use (π/2L)²(2n+1) in the caption and the script, or say '(approximately, for large n)'. Add: 'coefficients drawn at random from a bell-shaped (Gaussian) distribution whose typical size (standard deviation, Chapter~\\ref{ch:probability}) is ...'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The Newton loop reaches $|E_1-3.5|<10^{-10}$ in fewer than six iterations.",
+  "problem": "The problem asks the reader to count the iterations, but the answer gives only a bound. The CHECKS script likewise asserts only it<6.",
+  "fix": "Run the loop, state the exact count ('in k iterations'), and assert that count in CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "At $c=0.5$ the error is close to one eighth of that.",
+  "problem": "The answer to a computational problem gives no number for the second error or for the ratio. CHECKS only asserts the ratio lies between 6 and 10.",
+  "fix": "Quote the computed error at c=0.5 and the ratio to two significant figures, and assert them in CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "so the constant column is $h$ instead of 1 and every predicted shift is wrong by a factor $1/h$",
+  "problem": "Ambiguous direction: the predicted shifts A·c are multiplied by h (too small by 1/h), while a fitted step would be too large by 1/h (as Answer 23 says). 'Wrong by a factor 1/h' can be read either way.",
+  "fix": "Write 'every predicted shift is too small by the factor $h$ (and any step computed from $A$ too large by $1/h$)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The figure confirms the $n=1$ estimate: the curves separate visibly long before $c\\approx40$.",
+  "problem": "A condition of the form c ≪ 39.5 has no sharp threshold, so a figure cannot 'confirm' it. The sentence may lead a student to treat 40 as the breakdown point.",
+  "fix": "Write 'The figure is consistent with this: the first-order curve departs visibly at $c$ of a few units and the second-order curve at roughly ten, both well below 40, as \"$\\ll$\" requires.' Check these values against the figure data."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and that higher levels are more robust. Evaluate the $n=1$ condition for $L=1$.",
+  "problem": "Problem 10 repeats the Sample Problem 'How large may the cosine be?' step for step, with the same result and the same numerical evaluation. The bible forbids length from repetition.",
+  "fix": "Change the problem to a new case, for example $\\delta V=c\\cos(2\\pi x/L)$ (couplings to $n\\pm4$ and $4-n$), or ask for the condition for level 2."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the semiclassical (WKB) picture of Chapter~\\ref{ch:wkb} says that in a state of high $n$",
+  "problem": "Chapter 13's contract assumes only Chapters 8 and 10--11. Chapter 12 (WKB) is not in the bible's assumed list nor in this chapter's prerequisites, yet its result is invoked.",
+  "fix": "Rephrase as a pointer, not a dependency: 'a result we do not need to derive here (it is the subject of Chapter~\\ref{ch:wkb})', and support the claim with the first-year time-of-stay argument only."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "since the normalization is constant. What remains is",
+  "problem": "Answer 9 applies the Hermiticity identity with g = ∂ψ_n/∂λ without noting that this function also vanishes at the walls (required by the identity). It also differentiates under the integral without comment.",
+  "fix": "Add: 'Since $\\psi_n(\\pm L;\\lambda)=0$ for every $\\lambda$, its $\\lambda$-derivative also vanishes at the walls, so the identity applies; we assume $\\psi_n$ depends smoothly on $\\lambda$ so that the derivative may be taken inside the integral.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "which avoid crossing with minimum gap $2|v|=1$",
+  "problem": "In the figure caption and Problem 17, λ is the diagonal parameter, while in the text just above λ± denote the eigenvalues. The same symbol has two roles within a page.",
+  "fix": "Use a different symbol for the parameter in the figure, caption and Problem 17 (for example $H(g)$ with diagonal $\\pm g$), or rename the eigenvalues in the text."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "Level repulsion in the two-level system",
+  "problem": "The caption contains a pmatrix environment (\\begin{pmatrix}...\\\\...\\end{pmatrix}) inside \\caption, a moving argument. This is fragile with older LaTeX kernels and hyperref.",
+  "fix": "Describe the matrix in words ('with diagonal entries $\\pm\\lambda$ and off-diagonal entry $v$') or use the optional short caption and \\protect."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The previous sample adds one refinement",
+  "problem": "The 'previous sample' is ambiguous: the nearest Sample Problem is in the preceding section ('Ground state with cos(πx/L)'), separated from this sentence by a code listing, a checkpoint and a figure.",
+  "fix": "Name it: 'The Sample Problem \"Ground state with $\\cos(\\pi x/L)$\" adds one refinement'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Each term of the sum in \\cref{eq:perturbation-second} has a positive numerator.",
+  "problem": "The numerator |δV_nm|² can be zero (uncoupled states, as with same-parity states under the tilt), so 'positive' is inaccurate. The checkpoint answer correctly says 'non-negative'.",
+  "fix": "Write 'has a non-negative numerator. When it is nonzero, the sign of the term is the sign of the denominator:'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "integrating by parts with $U=u$ and $\\dd V=\\cos(j\\pi u/a)\\dd u$",
+  "problem": "V is the potential throughout the chapter, and here it is reused as the integration-by-parts function. In the same subsection a=2L clashes with the expansion coefficients a_m and a_k.",
+  "fix": "Use $\\dd w=\\cos(j\\pi u/a)\\dd u$ for the parts, and call the box width $2L$ explicitly or use $\\ell=2L$ instead of $a$."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the two differ by only about $2\\times10^{-5}$",
+  "problem": "The values quoted in the text are 2.44987 and 2.449845, which differ by 2.5×10⁻⁵, not about 2×10⁻⁵. The boxed line also reads '≈ 2.44987 exactly', which is self-contradictory.",
+  "fix": "Quote the exact value to six decimals, state the difference consistently ('about $2.5\\times10^{-5}$', or whatever the six-decimal value gives), and change the box to '$E_1(F{=}1)=2.44987$ (exact diagonalization)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "(a) The PT-odd class uses",
+  "problem": "'PT-odd' (and 'absorptive') are used without any explanation. PT symmetry is the subject of Chapter 14, which comes later.",
+  "fix": "Add a gloss: 'the class the paper calls PT-odd (the name is explained in Chapter~\\ref{ch:non-hermitian}; here it only matters that the basis functions are odd in $x$)'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/perturbation_sensitivity.pdf}",
+  "problem": "The bible's figure template prescribes width=0.85\\linewidth. This figure and the scatter figure use 0.95\\linewidth.",
+  "fix": "Set width=0.85\\linewidth for both, or confirm with the editor that two-panel figures may be wider."
  }
 ]

@@ -1,0 +1,212 @@
+[
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Explain why these are undefined for a box but well defined for a Gaussian",
+  "problem": "This is problem 25, which is odd-numbered. The bible requires answers to every odd-numbered problem, but the Answers section stops at 24.",
+  "fix": "Add answer 25: a box h is defined only for real r, so h(±i/2) has no meaning, whereas the Gaussian extends to complex r with h(±i/2)=e^{1/(8a^2)}. Give g(u)=\\frac{a}{\\sqrt{2\\pi}}e^{-a^2u^2/2}, so the prime sum is cut off like k^{-1/2}e^{-a^2(\\log k)^2/2}, effectively at \\log k of a few times 1/a. Add a numerical instance to CHECKS."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Report the \\textbf{rms} of their difference and the Pearson \\textbf{correlation} (``corr'') between them.",
+  "problem": "Pearson correlation is taught in Chapter 19 (probability), which comes after this chapter and is not in its 'Assumes' list (Ch. 5–6, 15–17). The quantity is used here without a definition, and the later checkpoint answer cites Chapter~\\ref{ch:probability} as if already read.",
+  "fix": "Define it in place: for sequences a_n, b_n with means \\bar a, \\bar b, corr = \\sum(a_n-\\bar a)(b_n-\\bar b)/\\sqrt{\\sum(a_n-\\bar a)^2\\sum(b_n-\\bar b)^2}, a number in [-1,1] measuring shape agreement. Say the full treatment comes in Chapter 19, and turn the checkpoint's citation into a forward reference."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "with many frequencies up to $\\omega\\approx8$ (as in the paper's control B)",
+  "problem": "The range ω<8 belongs to controls C1 and C2 (uniform grid ω_j=8j/450; periodogram search on 0.05<ω<8). Control B uses the arithmetic frequencies m log p; for 150 primes these reach 3 log 863 ≈ 20.3.",
+  "fix": "Replace with 'with 450 frequencies $m\\log p$ reaching $3\\log 863\\approx20$ (the paper's 150-prime control B)'. Update answer 14 to match (an amplitude of 0.04 at ω≈20 already gives slope 0.8)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The right-hand curve (``six-prime explicit formula'') is the left panel of our \\cref{fig:explicit-formula-holdout}, extended into the training region",
+  "problem": "The paper's Fig. 1 is a single panel showing zeros 370–460, with the operator and six-prime predictions overlaid. It has no 'right-hand curve', and it is not our 401–500 panel extended; it covers a different range (370–460). The chapter intro repeats the 'right-hand curve' wording.",
+  "fix": "Write: 'The six-prime explicit-formula curve of Fig. 1 (zeros 370–460, with the held-out region past zero 400 shaded) is the same prediction as the left panel of our figure, which shows the full holdout 401–500.' In the intro, replace 'the right-hand curve of Fig. 1' with 'the explicit-formula curve of Fig. 1'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "both the null and the oracle errors grow slightly, but the ratio barely changes. The paper's Table~V continues this through zero $10^4$.",
+  "problem": "For six primes the rms/null ratio goes from 0.074/0.263=0.28 on 401–500 to 0.119/0.296=0.40 on 5001–10000. That is not 'barely changes', and it contradicts the chapter's own answer 4 ('the relative advantage shrinks somewhat'). The paper's hedge is 'nearly height-independent' / 'relative skill is nearly constant'.",
+  "fix": "Retitle the item 'Weak height dependence' and write: 'the ratio changes little (six primes: 0.28 to 0.31). Through zero $10^4$ it drifts to 0.40 at a fixed six-prime budget, while the correlation stays above $+0.9$; the paper describes relative skill as nearly constant and attributes the drift to more primes becoming relevant at height.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "only to first order; the difference is a small slope correction",
+  "problem": "At zeros 401–500 the gap is about 1.35 and |N_fl'| for p=2 reaches 0.344, so gap·N_fl' reaches about 0.47. The slope factor 1/(1+gap·N_fl') in the slope-corrected formula is therefore not a small correction, and the condition |N_fl'| ≪ 1/gap of the first-order relation is only marginally met at the paper's heights. The word 'small' is unquantified and unchecked. The Paper connection has the same looseness when it says the probe target is 'exactly the first-order relation'.",
+  "fix": "Compute in CHECKS the rms difference between the P={2} oracle fluctuations on 401–500 and −N^{p=2}_fl(s_n), and quote it. Reword to 'the difference is a slope correction of relative size up to gap·|N_fl'| ≈ 0.47'. In the Paper connection, say the probe target is defined as −N_fl(s_n), which coincides with the oracle only to first order."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "narrow enough not to reach the root belonging to level $n\\pm3$ or beyond",
+  "problem": "This is conceptually confused. The equation N_sm+N_fl=n−1/2 for a fixed n has no roots 'belonging to' other levels; other levels are different equations with different right-hand sides. The only spurious roots are extra crossings of the same level, which is the multi-root issue.",
+  "fix": "Replace the answer's last clause with: 'and since N_sm+N_fl rises by about one count per mean spacing, the level n−1/2 is crossed only near s_n; a bracket of ±3 spacings guarantees a sign change of the level function at its ends without being needlessly wide.' Also reword the question to 'Why is s_n the natural center for the bracket, and why is ±3 spacings wide enough?'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "By Stirling's formula for complex arguments (Chapter~\\ref{ch:asymptotics}), $\\frac{\\Gamma'}{\\Gamma}(z)\\approx\\log z$ for large $\\abs z$",
+  "problem": "Γ'/Γ, the logarithmic derivative of Γ, is never defined in this chapter. Getting its asymptotics requires differentiating Stirling's formula for log Γ, which is not shown. The step Re log z = log|z| is also used silently.",
+  "fix": "Add: 'Here Γ'/Γ = (d/dz) log Γ(z). Differentiating Stirling's formula log Γ(z) ≈ (z−½)log z − z + ½ log 2π gives Γ'/Γ(z) ≈ log z − 1/(2z) ≈ log z. Since log z = log|z| + i arg z (Chapter complex), Re log z = log|z|.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "the two components would each have to repeat with $\\tau$ (by the uniqueness of Fourier coefficients for periodic functions, Chapter~\\ref{ch:fourier-series})",
+  "problem": "This is hand-waving. The sum is not known to be periodic with a common period, so Fourier-series uniqueness does not directly apply, and a student cannot follow the step. The answer also never addresses the six-prime N_fl that the problem asks about.",
+  "fix": "Replace with an elementary argument. If f(t+τ)=f(t) for all t, then f'' is also τ-periodic. With a=log 2, b=log 3, f''+b²f=(b²−a²)sin(at) is τ-periodic, so aτ=2πj; likewise f''+a²f gives bτ=2πl. Then add a sentence on the six-prime sum (same argument, or note that it contains these two incommensurate frequencies)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "(the error term is of order $\\log T\\approx7$)",
+  "problem": "O(log T) hides an unspecified constant that depends on x, so presenting the error as about 7 is unjustified. Answer 21 leans on the same number ('below the size of the O(log T) error'), while the check script only asserts agreement within 30% (about 33).",
+  "fix": "Write '(the error term is $\\order(\\log T)$ with an $x$-dependent constant; numerically the sum at $\\log 2$ is within about N of the prediction)' with N the actual computed discrepancy, asserted in CHECKS. Adjust answer 21 accordingly."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "although in the previous sample the root near $14$ was unique within the bracket used",
+  "problem": "The previous sample showed only a sign change on [13.82, 14.13], not uniqueness. Near t=14, N_sm'≈0.13 is below the worst-case |N_fl'|=0.344, so monotonicity is not guaranteed by anything shown.",
+  "fix": "Either add a check that N_sm'+N_fl'>0 throughout [13.82,14.14] (evaluate on a fine grid in CHECKS) and say so, or delete the parenthesis."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "amplitudes that decrease as the prime power grows",
+  "problem": "The decrease is not monotone: in the chapter's own table, k=4 has amplitude 0.2500 while k=5 has 0.4472.",
+  "fix": "Write 'amplitudes $1/(m\\sqrt{k})$ that decrease overall as the prime power $k=p^m$ grows (not monotonically: higher powers $m$ carry the extra factor $1/m$)'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\textbf{Step 1: split $\\log\\zeta(\\sigma)$ for real $\\sigma>1$.} By \\cref{eq:explicit-formula-logzeta},",
+  "problem": "This sample has no problem statement before Step 1. The bible requires 'state, then numbered steps'.",
+  "fix": "Insert before Step 1: 'Show that $\\sum_p 1/p$ diverges, and deduce that $\\sum_p p^{-1/2}$ diverges.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "$s_1\\log2=10.065465=3\\pi+0.640687$, and so on; the result is $N^{p=2}_{\\rm fl}(s_1)=0.09350$",
+  "problem": "'And so on' skips the three sines and the weighted sum. The derivative value 0.0667 that follows is given with no intermediate cosines either. This breaks the no-jump rule, and the intermediate numbers are not asserted in CHECKS.",
+  "fix": "List the three reduced phases, the three sines and cosines, the weighted terms and their sums, as in the previous sample. Add the corresponding assertions to CHECKS."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "one more secant step gives the root",
+  "problem": "The secant method is not in the assumed toolkit (Chapter 4 teaches bisection, Newton and the idea of Brent). The step is also not shown.",
+  "fix": "Either show the interpolation explicitly (using f(14.0883)=+0.00036 and the local slope ≈0.24, the correction is −0.0015, giving 14.087), or say 'repeating the linear interpolation between 13.8202 and 14.0883 gives...' with the numbers."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{1}{\\label{prob:explicit-formula-coeff}Give the coefficient",
+  "problem": "Labels with prefix 'prob:' are outside the bible's allowed prefixes (sec:, eq:, fig:, tab: plus slug). It is also not guaranteed that \\prob steps a referenceable counter, so 'Problem~\\ref{prob:...}' may print a section number.",
+  "fix": "Remove the prob: labels and refer to problems by explicit number ('Problem 6'), or confirm with the coordinator that \\prob uses \\refstepcounter and that a prob:<slug>- prefix is permitted."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{Compute the amplitude $2\\sqrt x/\\abs{\\rho_n}$ of the wave contributed to $\\psi(x)$",
+  "problem": "Problems must be graded. This difficulty-2 problem sits after the block of difficulty-3 problems, and it merely repeats the sample problem in the duality section.",
+  "fix": "Move it into the difficulty-2 block and vary it (e.g. ask for the second zero pair, or x=1000). Renumber the Answers section accordingly."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/explicit-formula_holdout.pdf}",
+  "problem": "The bible's figure template fixes width=0.85\\linewidth.",
+  "fix": "Change to width=0.85\\linewidth (the two-panel script should use figsize=(6.5,3))."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The explanation is one of the most beautiful facts in mathematics",
+  "problem": "This is hype, which the bible's voice rule forbids. It also calls a heuristic approximation a 'fact' two sentences before the chapter says the key step is formal.",
+  "fix": "Replace with: 'The explanation, which is exact in a smoothed form and heuristic in the simple form we will use, is this:'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The paper's point is that such constructions ``consume only prime data''",
+  "problem": "Misquote. The paper says 'That construction consumes only prime data'.",
+  "fix": "Write: 'The paper's point is that this construction ``consumes only prime data'' and is therefore...'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "``as the estimated frequencies dephase, which the exact frequencies of the oracle do not''",
+  "problem": "The quotation silently removes the parenthetical '(0.078/+0.96 on zeros 1001–2000 for the 400-zero fit)' from the middle of the paper's sentence while presenting it as verbatim.",
+  "fix": "Insert an ellipsis: ``as the estimated frequencies dephase \\dots, which the exact frequencies of the oracle do not''."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Then, up to the neglected $\\order(1/t)$ term of $\\theta/\\pi$, every zero satisfies exactly",
+  "problem": "'Up to a neglected term' and 'exactly' contradict each other in one sentence.",
+  "fix": "Delete 'exactly', or write 'every zero satisfies, with an error of only $\\order(1/t)$,'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "As a function of $\\log x$, each zero contributes a wave of angular frequency $t_n$ and amplitude $2\\sqrt x/\\abs{\\rho_n}$.",
+  "problem": "The exact formula sums over all nontrivial zeros. Writing every term with amplitude √x presupposes that all zeros lie on the critical line, i.e. the Riemann hypothesis, which is verified only for finitely many zeros.",
+  "fix": "Add: 'for every zero on the critical line (all zeros computed so far; that all are is the Riemann hypothesis, which is open)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "bracketed by $\\pm3$ mean spacings around $s_n$",
+  "problem": "The paper's App. A step (8) says only 'bracketed ±3 around the smooth zero' and gives no unit. The chapter presents 'mean spacings' as the paper's statement.",
+  "fix": "Write 'bracketed by $\\pm3$ around $s_n$ (we take this, as \\texttt{qmnt} does, to mean three mean spacings)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Recall from Chapter~\\ref{ch:fourier-series} a fact about Fourier series",
+  "problem": "Convergence of Fourier partial sums to the midpoint of a jump is not in the Chapter 5 contract (only 'Gibbs phenomenon briefly'), so the reader may not have seen it. The whole heuristic rests on it.",
+  "fix": "State it in place with a one-line example (the square wave's sine series gives 0 at its jump, the midpoint of ±1), and label it 'proved, proof beyond this book' if Chapter 5 does not prove it."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "If continuous functions $f_K$ converge to $f$ uniformly on an interval",
+  "problem": "The box states the theorem for functions on an interval, but it is applied to Φ_σ(t) as a function of the two variables (σ, t) on a region.",
+  "fix": "State the theorem 'on a set (an interval, or a region of the plane)', or note that the same statement and proof hold for functions of two variables."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the three terms are $-0.257456$, $0.169553$, $-0.105975$, summing to $-0.193878$",
+  "problem": "Several stated intermediate numbers are not asserted in CHECKS: these terms and the sines at t_1, the phase residues 0.372664/0.745328/1.117992, 10.065465 and 0.640687, 0.101535, and 0.7012. The bible requires every quoted number to be checked.",
+  "fix": "Add assertions for these intermediates to the CHECKS script."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the five deepest predicted lines are at $\\log7$, $\\log11$, $\\log5$, $\\log13$, $\\log17$",
+  "problem": "Problem 21 asks the reader to scan the computed spectrum and list the five deepest dips. The answer gives only Landau's predicted ranking and no computed result.",
+  "fix": "Run the scan in CHECKS and report the actual five deepest dips and their depths next to the predictions."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "it creeps upward without bound (like $\\log\\log x$)",
+  "problem": "The log log x growth (Mertens' theorem) is asserted with no status label. The chapter proves only divergence.",
+  "fix": "Add '(Mertens' theorem; proved, proof beyond this book; we proved only the divergence)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "this is a phasor of fixed length $p^{-m\\sigma}$ turning clockwise",
+  "problem": "'Phasor' is not defined in this chapter and is not guaranteed by the assumed chapters. The bible requires every term to be defined or recalled at first use.",
+  "fix": "Add: '(a phasor is an arrow in the complex plane representing $re^{i\\phi}$; Chapter~\\ref{ch:complex})'."
+ }
+]

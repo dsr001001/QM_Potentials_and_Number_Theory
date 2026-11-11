@@ -1,0 +1,93 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{figure}[htbp]\\centering\n\\includegraphics[width=0.95\\linewidth]{figs/fitting_sensitivity.pdf}",
+  "problem": "The chapter includes six figures (sensitivity, landscape, lmpath, bases, coverage, toyfit) but the response has no FIGURES part with scripts for them.",
+  "fix": "Add a ### FIG script for each of fitting_sensitivity, fitting_landscape, fitting_lmpath, fitting_bases, fitting_coverage and fitting_toyfit."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The CHECKS script confirms that the finite-difference box reproduces these values to about $10^{-6}$ or better",
+  "problem": "Chapter text refers to the CHECKS script, which the reader never sees. Several quoted numbers are also unchecked: the 0.07 vs 0.01 ratio, 0.186 and the 814 threshold are in checks, but the toy-fit claims (collapse once M exceeds the number of levels plus one) and the Wu--Sprung sensitivity claim 'k of about 60' are not.",
+  "fix": "Remove the reference to CHECKS from the text and add checks for the figure claims, including the 'k about 60' statement."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "even the lowest level responds to cosines up to $k$ of about 60",
+  "problem": "The dashed curve is k=2L sqrt(E_n - V_0)/pi. For the lowest level E_1 is near V_0 plus a small zero-point energy, so the cutoff would be small. The value 60 is unsupported and likely wrong, because the zero-point energy of the Wu--Sprung well is small.",
+  "fix": "Compute the actual response range for n=1 and quote it, or say only that the response range widens with n."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$A_{nk}=\\frac{(-1)^{n+1}}{2}\\,\\delta_{nk}\\quad(k\\ge1)}",
+  "problem": "The text says 'cosine k moves only level n=k (up by c_k/2 for odd n, down for even n)'. The index n=k makes this statement about the level as a function of its own index, which is fine, but the continuum derivation and the discrete claim (Problem 8) differ at n+k near N+1, and the 'in fact exactly' claim in the sample is only true for n+k<N+1.",
+  "fix": "State the restriction n+k<N+1 in the sample's final remark."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the step vanishes exactly where the unregularized gradient vanishes, so the stationary points are unchanged",
+  "problem": "The ridge-variant claim rests on a guessed implementation; stated with certainty, it is an overclaim about the paper's code, though partly hedged afterwards.",
+  "fix": "Phrase it as 'under this literal reading'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "$M>56.96\\,L/\\pi=56.96\\times44.883/3.14159=813.8$",
+  "problem": "Fine numerically, but the paper's $M=900$ at scale 2 answer says 900 does not satisfy the law at scale 2 (needs 1438); the Sec. III claims there concern scale 1 only. The answer to Problem 11 is consistent, but 'in-sample rms 0.103' for M=900 at scale 2 is fitted on 800 zeros, not 1000, so comparing with the 1000-level requirement is mismatched.",
+  "fix": "In Problem 11 and its answer, use the 800 training levels (t_800) as the top level, or note the mismatch."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "which is the paper's coverage law (Sec.~III, first paragraph). We have used $\\sqrt{E}$ rather than $\\sqrt{E-V_0}$",
+  "problem": "The sentence 'the difference is a few percent' is stated without a check. For E near 800, correction is about 0.6 percent in k, but at low E it is large.",
+  "fix": "Quantify: relative change about V_0/(2E), and note it is large only at low E."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Above the curve the entries fall off sharply. Section~\\ref{sec:fitting-coverage} explains why.",
+  "problem": "The 'exponentially small because the stationary point has moved into the complex plane' claim is used without justification for a first-year reader.",
+  "fix": "Put it in a beyond box or give a brief justification, as the stationary condition 2k(x)=q has no real solution."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, and the eigenspace is one-dimensional.",
+  "problem": "The proof needs the recursion to close at the last row (v_{N+1}=0 is a constraint, not a free choice), and v_1 not zero (otherwise v=0). Neither is stated.",
+  "fix": "State that v_1=0 forces v=0, so a nonzero eigenvector has v_1≠0, giving a one-dimensional eigenspace."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Hellmann--Feynman relation",
+  "problem": "The name is used without definition or derivation for the reader, and the two-level example uses it without proof.",
+  "fix": "Add a one-line statement that dE/dc=<psi|dH/dc|psi> and cite Chapter on perturbation theory."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The paper's Appendix~A writes its update step in terms of \"$r$\", the residual vector, without saying whether each row has been divided by $\\gap_n$.",
+  "problem": "Appendix A step 10 uses division by gap for the NH fit, and for step 6 it is unspecified; the claim is accurate, but the chapter then asserts 'so that is what we do' while Eq. (rms) of the paper is in spacings, which supports weighting. Fine, but the Zenodo reference is for the authority only.",
+  "fix": "No change required beyond softening 'Do not assume the two choices give identical fits'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The errors $c^{(i)}-c_*$ are $-0.618$, $0.236$, $0.0082$, $0.000013$: once close, each error is roughly proportional to the square of the previous one",
+  "problem": "0.236 to 0.0082 is a ratio of 0.147 in squares (0.236²=0.056), so the quadratic claim is only rough, and the last step 0.0082² ≈ 6.7e-5 vs 1.3e-5 is not exact either. Gauss--Newton here is not exactly quadratic, since the residual is nonzero in general (here it is zero at the solution, so it is).",
+  "fix": "Say 'faster than linear' or note the constant of proportionality."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\begin{pycode}\nimport numpy as np\n\ndef lm_fit",
+  "problem": "The listing is about 30 lines, at the limit, and has no demonstration run, so the reader cannot see what it outputs.",
+  "fix": "Shorten slightly and give one example call."
+ }
+]

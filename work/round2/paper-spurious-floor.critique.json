@@ -1,0 +1,212 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the surrogate understates at the exceptional point, overstates beyond it",
+  "problem": "In the two-level model the ratio surrogate/exact beyond the exceptional point is x^2/(1/2) = 2x^2. So the surrogate still understates for 1/2 < x < 1/sqrt(2) and overstates only for x > 1/sqrt(2), about 0.707. 'Overstates beyond it' is wrong as stated. The same key idea lists 'three symptoms', but a two-level model has one shift per level and cannot show the poor-correlation symptom.",
+  "fix": "Replace with: 'the surrogate understates up to and somewhat past the exceptional point (ratio 2x^2), overstates for x > 1/sqrt(2) (twofold at a = Delta), and eigenvectors become unmatchable'. Say 'two of the three symptoms; the loss of correlation needs many levels (box figure)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "for every amplitude below the first collision. Beyond it they may pair off into complex conjugates",
+  "problem": "The preceding argument (only one eigenvalue lies near E_n) is established only for sufficiently small |a|. Extending reality to 'every amplitude below the first collision' needs a continuation argument that is not given.",
+  "fix": "Add the missing step: for every real a the spectrum of H(a) is closed under complex conjugation (E* is an eigenvalue of H(-a), which is similar to H(a)). A simple real eigenvalue moving continuously with a can therefore leave the real axis only by meeting another eigenvalue, since otherwise E and E* would be two distinct eigenvalues emerging from one simple one. Hence reality persists until the first collision on the real a-axis."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "(the CHECKS script asserts this bound; the individual values are plotted)",
+  "problem": "The textbook text refers to the internal 'CHECKS script', a production artifact the reader never sees. It also declines to state the computed block-coherent values, although the bible requires every number to be computed in CHECKS and then quoted.",
+  "fix": "Compute the five qmnt values (w = 3, 5, 7, 9, 13) in CHECKS with tight assertions and quote them in a small table next to the paper's values. Delete every mention of the CHECKS script from the chapter text."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Every value stays below 0.15 (the CHECKS script asserts this for all five windows)",
+  "problem": "The answer to Problem 11 is not a solution. It gives no numerical values and refers to an internal script. The bible requires short solutions with numbers verified in CHECKS.",
+  "fix": "State the five computed block-coherent rms values from qmnt and their ratios to 0.232, compare them explicitly with the paper's 0.108, 0.049, 0.033, 0.035, 0.019, and assert each in CHECKS."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "the surrogate is trustworthy: correlation with exact shifts",
+  "problem": "The chapter's own numbers show that at R=4 the odd-class surrogate floor 0.2335 (4.2% capture) becomes 0.2391 (1.9%) when scored exactly. The surrogate still overstates the gain by more than a factor of two even inside the 'verified' ball. Calling it 'trustworthy' without comment hides this.",
+  "fix": "Rephrase: 'At R=4 the surrogate tracks the exact shifts level by level (corr +0.93/+0.995, all states matched), yet for the odd class it still overstates the in-sample gain (4.2% surrogate against 1.9% exact). This is why the paper reports the exact-spectrum gains as the final numbers.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "small compared with $R$ so that they start inside the ball",
+  "problem": "A draw c ~ N(0,(R/20)^2)^M has norm about (R/20)*sqrt(M), which is inside the ball only if M < 400. The chapter itself says the paper does not give M for these fits, so 'start inside the ball' is not established. The checkpoint answer repeats the claim.",
+  "fix": "State: 'the typical starting norm is (R/20)sqrt(M), which is inside the ball provided M < 400; the paper does not state M, so we can only say the spread is scaled with R'. Adjust the checkpoint answer to match."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "a lower bound three to twelve times below the observed floor cannot be the floor",
+  "problem": "This is inconsistent with the chapter's own numbers. 0.232/0.108 = 2.1, so the range is about 2 to 12, as the figure caption and Answer 19 say.",
+  "fix": "Change 'three to twelve' to 'two to twelve'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "in energy units, comparable with level spacings of order 1",
+  "problem": "With the stated eta range of 1e-9 to 1e-7, c0*eta is 2.2e-3 to 0.22, not 0.26 (the 0.26 comes from using 1.2e-7). The lower end, 2.2e-3, is not 'comparable with level spacings of order 1'. The noise range is also quoted inconsistently in the chapter (1e-9 to 1e-7 here, 'near 1e-8' in the figure, '1e-8 to 1e-7' in the key ideas).",
+  "fix": "Use one noise range throughout, taken from the measured float32 overlaps. Write 'c0*eta of order 2e-3 to 0.2 in energy units, i.e. up to a sizeable fraction of a level spacing', and keep the hedge that this estimate is the book's."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "A random matrix of the right size is a new, arbitrary set of features",
+  "problem": "The paper locates the noise in 'analytically-zero tensor entries' (float32 storage of T^(n)_{0l}). It does not say the noise entered through non-orthogonal overlaps (phi_0)_nm, nor that it acted as a random operator matrix. The chapter presents its own reconstruction as the mechanism; the 'reading is ours' hedge covers only the size estimate.",
+  "fix": "Label the whole paragraph as one possible route by which the noise could enter. State that the paper only says the noise sat in the stored float32 tensor entries T^(n)_{0l}, whichever way it arose (rounding of overlaps or of the sums)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The paper's tensors were stored in float32",
+  "problem": "This is an inference from the phrase 'float32 noise' in Sec. II E, stated as fact. The paper does not describe the storage or computation precision of the pipeline beyond that phrase.",
+  "fix": "Write 'The paper's wording implies that the tensors were held in float32'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "All three symptoms (poor correlation, overstated magnitude, failed matching) appear in the simplest possible case.",
+  "problem": "A two-level model has a single pair of shifts. It cannot exhibit a drop in the correlation between exact and second-order shifts across levels. Only two of the three symptoms appear.",
+  "fix": "Say 'Two of the three symptoms (wrong magnitude, failed matching) appear already in the simplest case; the loss of correlation across levels needs many levels and is shown in the box example below.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "it shows that an overstatement of this size is exactly what happens when a quadratic surrogate is pushed past an exceptional point",
+  "problem": "The factor two arises only at the chosen value x = 1. The overstatement factor is 2x^2 and can take any value, including less than one just past the exceptional point. 'Exactly what happens' suggests more agreement with the paper's 'twofold' than the model supports.",
+  "fix": "Replace with: 'it shows that overstatements of order one, e.g. twofold at x = 1, arise naturally once a coupling exceeds the spacing'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "a quarter-amplitude control shows the code is right",
+  "problem": "Earlier the chapter correctly hedges that the test 'does not exclude every other cause'. Here, and in the lessons list ('the code is right and the amplitude is wrong'), it is stated without the hedge. The quarter-amplitude correlations are +0.88/+0.94, not 1.",
+  "fix": "Use 'supports the correctness of the machinery' in both places, matching the paper's 'confirming the machinery and isolating amplitude as the culprit'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "only the size changed. Agreement returned. This is strong evidence",
+  "problem": "The paper says only 'At quarter amplitude the surrogate is accurate'. That this means the fitted coefficient vector scaled by 1/4 (same direction) is the chapter's interpretation, stated as fact.",
+  "fix": "Add 'presumably the fitted coefficients scaled by 1/4; the paper does not spell out the construction'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "because the strongest couplings of the low levels exceed the exceptional-point threshold",
+  "problem": "This causal statement about the box figure is not verified. CHECKS only asserts a relative disagreement above 10%. The caption's 'the surrogate no longer describes the operator' is also stronger than a >10% disagreement supports.",
+  "fix": "Either verify in CHECKS (compare max |A_nm| with half the corresponding level difference for the low levels, and assert a low exact/surrogate correlation) or soften to 'consistent with the strongest couplings approaching the two-level exceptional-point threshold'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Halving the amplitude cuts the relative error by about four; quartering it, by about sixteen.",
+  "problem": "The condition is missing. This scaling holds only while the fourth-order term dominates the error, i.e. inside the radius of convergence. At the paper's fitted amplitude (3% of states unmatched) the series has already failed for some pairs, so the 16-fold rule cannot be applied directly to the paper's full-to-quarter comparison.",
+  "fix": "Add: 'provided the amplitude is small enough that the a^4 term dominates the error; once levels have passed an exceptional point the series no longer converges and this scaling is only a rough guide'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "the problem has many local minima, so the paper uses 6 random restarts",
+  "problem": "That a quadratic model yields 'many local minima' is asserted, not shown. The paper does not give this as its reason for restarts.",
+  "fix": "Write 'the least-squares problem is non-convex (for instance c and -c give identical shifts) and can have several local minima; the paper uses 6 random restarts'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "level in float32 and many orders of magnitude smaller in float64",
+  "problem": "The stated float32 noise level ('10^-8 level', 'near 10^-8') is not pinned by CHECKS, which only asserts 1e-10 < median < 1e-6. The quoted magnitude is therefore not a checked number.",
+  "fix": "Compute the median float32 and float64 off-diagonal overlaps, quote them to one significant figure, and assert them in CHECKS within a factor of 3."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "reaches in-sample 0.137 (Table~I of the paper), a capture of more than 40",
+  "problem": "Several numbers the chapter computes itself are not rechecked in CHECKS: the 43.8% capture here, 2500^3 = 1.6e10, the 7% surrogate deficit at x = 1/4, and the figure claim that the rms 'falls with every added column'.",
+  "fix": "Add one-line assertions for each of these in CHECKS."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "For $\\sigma_m=0.07$: $\\sigma_r^2=0.059438-2(0.3)(0.2416)(0.07)+0.0049=0.054193$",
+  "problem": "Arithmetic slip in the last digits: 0.059438 - 0.010147 + 0.0049 = 0.054191, not 0.054193. The final rms 0.2328 is unaffected.",
+  "fix": "Replace 0.054193 by 0.054191."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Nothing in this chapter is new mathematics. You already have every tool",
+  "problem": "The chapter does introduce new mathematics: the even-in-amplitude argument, analytic (Rellich–Kato) perturbation theory in a beyond box, similar matrices, exceptional points, and the moving-average lower bound. This contradicts the sentence and the bible's rule that Part VI chapters teach no new mathematics.",
+  "fix": "Either move the parity-in-amplitude and similarity arguments to references to Chapter 14 in words, or change the sentence to 'Almost nothing here is new; the few short extra arguments (evenness in the amplitude, the moving-average bound) are derived in full where used'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The update is Levenberg--Marquardt with \"diag scaling\" (Marquardt's form",
+  "problem": "The bible contract for Chapter 24 covers LM as an interpolation and the paper's SVD-damped step. It does not guarantee the diag(J^T J) scaling. The reader is given the formula without knowing why the diagonal replaces the identity.",
+  "fix": "Add one sentence: 'Replacing the identity by diag(J^T J) damps each coefficient in proportion to its own sensitivity, so the step is unchanged if a coefficient is rescaled.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "both eigenvalues are real. The exact shift of the lower level is",
+  "problem": "Symbol overloading within the chapter. x is used for a/Delta and for position. a is used for the expansion coefficients a_m, the amplitude scale, the coupling, integer labels and the alternating-sequence amplitude. u is both a substitution variable and an eigenvector component. v' looks like a derivative. j is both a cosine index and a grid index.",
+  "fix": "Rename the dimensionless coupling (e.g. xi = a/Delta), the eigenvector components (e.g. (v_1, v_2)), and the alternating amplitude (e.g. d_0). Add a sentence where a is reused."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Let $H_0$ have real eigenvalues $E_n$ (nondegenerate) and real orthonormal eigenvectors",
+  "problem": "The unperturbed Hamiltonian was called H up to this point and silently becomes H_0. Later H(a) = H_0 + iaA appears alongside the paper's H + iA.",
+  "fix": "Add 'we write H_0 for the unperturbed Hamiltonian called H in the paper, to distinguish it from the perturbed H(a)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "up to an edge factor $\\sqrt{N/(N-w+1)}$ that is negligible for $N=400$",
+  "problem": "N here means the number of levels (400). Elsewhere in the chapter N is the grid size (800, 2500), and in the paper it is also the counting function. The inequality with the edge factor is not written out.",
+  "fix": "Use a different symbol (e.g. n_fit = 400) and display the inequality: rms(x) >= sqrt((n_fit - w + 1)/n_fit) * rms(B_w(x))."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "all imaginary, no real change",
+  "problem": "'Eigenvalues E_n + i c_0: all imaginary' reads as if the eigenvalues were purely imaginary. What is meant is that the shifts are imaginary.",
+  "fix": "Replace with 'the shift is purely imaginary; the real parts do not change'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A penalty this large dwarfs an rms objective of order",
+  "problem": "'rms objective of order 0.06 (squared)' is confusing. The rms is about 0.24 and its square, the mean-square residual, is about 0.06. The chapter does not say whether the objective is a mean or a sum of squares (the sum would be about 24).",
+  "fix": "Write 'dwarfs the least-squares objective (mean-square residual about 0.24^2 = 0.06, or about 24 summed over 400 levels)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "at $c=8$ and at $c=2$ (quarter amplitude)",
+  "problem": "At c = 8 the coupling between levels 1 and 3 is 4, exactly half their spacing of 8, which is the two-level exceptional-point threshold. Level 1 also carries a diagonal term 4i. Overlap matching and 'relative error' may be ill-defined for the lowest levels, which could mislead a student.",
+  "fix": "Choose a clearly sub-threshold pair such as c = 4 and c = 1, or tell the student to expect and report matching failures for the lowest levels at c = 8."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "The \"law\" was a property of the instrument.",
+  "problem": "Straight double quotes are used throughout (\"law\", \"floor\", \"null\", \"surrogate\", ...). In LaTeX these typeset as closing quotes on both sides. The usage is also inconsistent with the ``...'' used for paper quotations.",
+  "fix": "Replace every \"word\" with ``word'' throughout the chapter."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "($H$ Hermitian, real: first integral is 0)",
+  "problem": "Lines 2 and 4 of this align carry long right-hand annotations after already long expressions. They will produce overfull lines running into the margin or the equation number.",
+  "fix": "Move the annotations onto separate lines (\\\\ &\\qquad\\text{...}) or into a sentence below the display."
+ }
+]

@@ -1,79 +1,142 @@
 [
  {
-  "category": "RULE",
+  "category": "LATEX",
   "severity": "high",
-  "quote": "close(400 / 5, 80, 0, \"S5 held out\"); close(400 - 80, 320, 0, \"S5 trained\")",
-  "problem": "The checks script fails 3 assertions: close() uses a strict '< 0' tolerance on equal integers, which can never pass.",
-  "fix": "Use a tolerance of 1e-9 (or plain assert ==) for these integer counts."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/generalization_polyfit.pdf}",
-  "problem": "The chapter includes six figures (polyfit, errorcurve, splits, neighbor, kriging, ridge), but no FIGURES part with scripts is supplied.",
-  "fix": "Add a '### FIG generalization_<name>' script for each of the six figures."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "the null grows from $0.263$ to $0.296$ over Table~V'' (Sec.~II~C)",
-  "problem": "The quote is attributed to the wrong place. The paper says 'over Table~\\ref{tab:oracle}' (Table V), which is fine; but the chapter's Sample on kriging and Table I references use inconsistent table naming (Table II for bases, Table IV for budget in problems). Problem 27 calls the bases table 'Table~II'; this is correct, but Problem 5 and others call Table V the oracle table correctly. The ridge-row check is the real issue: the claim that Table I ridge OOS 0.265 is the smallest scale-1 OOS value is wrong.",
-  "fix": "In answer 3, note that Table I scale-1 OOS values include 0.265 as the smallest; verify against the paper (0.265 is indeed the smallest), and state it is the ridge mu=0.3 row. If no error is intended, keep as is."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Dotted line: the noise level.",
-  "problem": "In the errorcurve figure, the out-of-sample points are fresh noisy points, so the noise-floor reference (0.15) is described but the extrapolation rms is also compared with a null of zero error. Minor, but the caption's claim of 'essentially zero at degree 14' depends on the script, which is missing and unchecked.",
-  "fix": "Provide the script and a check that in-sample rms at degree 14 is below about 1e-6 (ill-conditioning may prevent this)."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Hence any smooth interpolation between neighboring zeros tends to be anticorrelated with the truth.",
-  "problem": "Overgeneralized. Only interpolators weighted toward lags with negative autocorrelation are anticorrelated; the derivation shows this for positive-weight neighbor averages. Kriging in the same chapter is a smooth interpolator with positive correlation.",
-  "fix": "Say 'any interpolator that averages nearby neighbors with positive weights'."
+  "quote": "\\langle(d_0-\\bm w'^\\top\\bm d)^2\\rangle=\\langle(e-\\bm v^\\top\\bm d)^2\\rangle",
+  "problem": "A prime followed directly by a superscript (`w'^\\top`) raises the TeX error \"Double superscript\"; the chapter will not compile. The same answer also sets the scalar error in bold (`\\bm e`) and then uses plain `e`.",
+  "fix": "Write `{\\bm w'}^{\\top}\\bm d` (or rename the alternative weights to `\\tilde{\\bm w}`), and replace `Let $\\bm e=` by `Let $e=`."
  },
  {
   "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "The same formula also shows that the strong performance of the explicit formula is near-optimal for its correlation",
-  "problem": "Equality of the ratio with sqrt(1-rho^2) is a consistency check, not evidence of optimality, since the idealized zero-mean model does not hold for the real oracle. The paper makes no such claim.",
-  "fix": "Soften to 'is consistent with a near-optimal amplitude under the idealized model of Eq. (ratio)'."
+  "severity": "high",
+  "quote": "Once the family can realize essentially any joint shift of the training levels, the Result of Sec.~\\ref{sec:generalization-overfit} says (in its linearized form) that the training data do not constrain the held-out levels.",
+  "problem": "The Result needs the stacked train+test matrix to have full row rank, so M must be at least n_tr+n_te. Saturation on the training levels alone is not enough. For the paper's principal configuration (M=400, 400 training and 100 held-out levels) the stacked matrix has 500 rows and rank at most 400, so the Result does not apply. The same holds for most Table I rows.",
+  "fix": "State the condition correctly: the Result applies only when M >= n_tr+n_te and the joint sensitivity matrix has full row rank (for example M=600 fitted to 1--400 and scored on 401--500, or the M=400 odd/even splits). For M < n_tr+n_te say that held-out shifts are only partly constrained, through weakly determined small-singular-value directions, and that the argument is heuristic there."
  },
  {
-  "category": "JUMP",
+  "category": "ERROR",
   "severity": "medium",
-  "quote": "Recall from Chapter~\\ref{ch:probability} that multiplying a variable by a constant $\\alpha$ multiplies its correlation with anything by the sign of $\\alpha$.",
-  "problem": "Stated as a recall without proof; and 'the kriging weight w<0 gives opposite correlation' also needs the magnitude equality shown.",
-  "fix": "Add one line: corr(alpha X, Y)=alpha Cov/(|alpha| sd_X sd_Y)=sign(alpha) corr(X,Y)."
+  "quote": "(This is App.~A step 6 with $\\lambda$ replaced by the ridge strength $\\mu$; the paper's ridge variant",
+  "problem": "This misdescribes the paper. In App. A step 6 the ridge variant adds μΣ1² to the filter denominator alongside the Levenberg--Marquardt term λΣ1²; it does not replace λ. The paper's step is also an iterated update c += V(...)Uᵀr on residuals, not a one-shot c = V(...)Uᵀy.",
+  "fix": "Say that Eq. (filter) is the one-shot linear analogue. State the paper's actual step: c += V diag(σ_j/(σ_j²+(λ+μ)σ_1²)) Uᵀ r, iterated. Note that as μ→∞ every step vanishes, so c stays at its start value 0 and the fit stays at the null."
  },
  {
-  "category": "JUMP",
+  "category": "ERROR",
   "severity": "medium",
-  "quote": "For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\\rho_1=0$ and $\\mathrm{Var}(u)=2\\sigma^2$",
-  "problem": "Argument that small sigma with sizable Var(u) forces rho_1<0 is only qualitative; the 'rigid' claim is asserted, not derived, and the 'if a zero sits high, spacing above is short' sentence is hand-waving.",
-  "fix": "State that this follows directly from Eq. (rho1): rho_1<0 iff Var(u)>2 sigma^2, and note the Wigner-surmise number 0.178 versus 0.138 is what supports it."
+  "quote": "At $M\\le200$ the correlations are clearly negative ($-0.26$ to $-0.40$)",
+  "problem": "The range is misquoted from Table III. The odd/even rows at M=100 and M=200 span −0.26 to −0.39. The −0.40 is the minimum of the M=200 random-split row, whose maximum is −0.14.",
+  "fix": "Replace with: \"At M ≤ 200 the correlations are all negative: −0.26 to −0.39 for the odd/even rows, and −0.40 to −0.14 across the random splits at M=200.\""
  },
  {
   "category": "CLARITY",
   "severity": "medium",
-  "quote": "The range $\\abs{\\rho_1}<1/\\sqrt2$ is where these correlations are mutually consistent.",
-  "problem": "Unexplained claim in the figure caption; for rho_2=0 the neighbor-mean correlation is rho_1*sqrt2, which has magnitude at most 1 only if |rho_1|<=1/sqrt2.",
-  "fix": "Explain that corr = sqrt2 rho_1 must lie in [-1,1], giving |rho_1|<=1/sqrt2."
+  "quote": "minimize $\\norm{X\\bm c-\\bm y}^2+\\mu\\norm{\\bm c}^2$, which penalizes large coefficients",
+  "problem": "With this penalty the filter is σ/(σ²+μ), and the one-parameter formula uses Σx²+μ. Eq. (filter) a page later uses σ/(σ²+μσ1²). The same symbol μ therefore means two things that differ by a factor σ1², and the paper's μ=0.03, 0.3 are in the second convention.",
+  "fix": "Either write the penalty as μσ1²‖c‖² throughout (in the one-parameter case σ1²=Σx², so c=Σxy/((1+μ)Σx²)), or use a different symbol for the unscaled penalty and state the relation μ_paper = μ_unscaled/σ1² explicitly."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "We also use, with short reminders, the smooth zeros $s_n$ and the local mean spacing $\\gap_n$ (Chapter~\\ref{ch:counting-zeros}).",
+  "problem": "The bible fixes this chapter's assumptions as Chs. 9, 19, 24 (and what they assume). The chapter also relies on Chapter 20 (Wigner surmise and its mean), Chapter 12 (turning points: \"recall from Chapter wkb\"), Chapter 18 (explicit formula), and Chapters 5/6. None of these is in the prerequisites list, and the Ch. 12 and Ch. 20 material gets no self-contained reminder.",
+  "fix": "Add these chapters to the prerequisites as \"used with reminders\". Give a one-sentence self-contained reminder at each use: what a turning point is and why |ψ_n|² is largest near it; that the Wigner surmise is a normalized density with unit mean, with the integral shown or stated as taken on trust."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The CHECKS script confirms that the measured lag-1 autocorrelation is negative and that the neighbor-mean prediction is anticorrelated with the truth.",
+  "problem": "The book text refers the reader to the CHECKS script, which is not part of the book (also \"the CHECKS script does so\" in the RE5 sample). The measured numbers are never given: the lag-1 to lag-5 autocorrelations and the neighbor-mean rms/corr printed by the listing.",
+  "fix": "Remove references to the CHECKS script from the prose. Quote the listing's actual output instead (ρ_1..ρ_5, neighbor-mean rms and corr, null rms) and assert those values in CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "This is an estimate, not a measurement",
+  "problem": "The chapter derives ρ1≈−0.29 but never compares it with the measured lag-1 autocorrelation of the real fluctuations, although the listing right below computes it. The reader cannot judge how good the estimate is.",
+  "fix": "Add a sentence giving the measured sample ρ_1 for zeros 1--400 (and 401--500) from the listing, compare it with −0.29, and add the value to CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The two facts are compatible only if the displacement of one zero is partly undone by the displacement of its neighbor",
+  "problem": "The wording is misleading. Negative ρ1 means the neighbor tends to be displaced in the opposite direction, which enlarges the spacing variance beyond 2σ². \"Undone\" suggests a compensation that reduces something.",
+  "fix": "Rewrite: \"The two facts are compatible only if neighboring zeros tend to be displaced in opposite directions (when one sits above its smooth position the next tends to sit below), which is what a negative ρ1 means.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "There is a neat exact identity behind it.",
+  "problem": "The relation ρ1 = 1 − Var(u)/(2σ²) is derived using the approximations s_{n+1}−s_n≈gap_n, gap_{n+1}≈gap_n and stationarity. It is not exact, and the text says so itself a few lines later.",
+  "fix": "Replace \"exact identity\" by \"simple approximate relation\". In the following sentence write \"says when\" instead of \"says exactly when\"."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The paper's Table~II reports Chebyshev $M=400$",
-  "problem": "Chebyshev M=400 appears in the paper's bases table, which the chapter calls Table II per bible, fine; but the problem says 'against null 0.263' and 'one row among eight' while answer quotes the paper; the intervals are bootstrap and independence is assumed, not mentioned.",
-  "fix": "Add that the intervals resample held-out levels independently (paper notes block bootstrap widens them slightly)."
+  "quote": "print(\"null\", qmnt.rms(d[j]))",
+  "problem": "The kriging listing on real zeros is given without any introduction and without reporting its output. The reader never learns whether two-neighbor kriging beats the null and flips the correlation sign on the real data. CHECKS only tests the sign flip conditionally.",
+  "fix": "Introduce the listing in one sentence. Report its printed rms/corr for neighbor mean, kriging and null (seed 1), and assert those numbers in CHECKS."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "Estimating correlations with the test data. In the listing above the autocorrelations come only from pairs of \\emph{training} levels.",
-  "problem": "The listing normalizes by np.var of training data and uses mean over training pairs only; fine, but the held-out levels used for scoring need neighbors in training, and the listing's use of rho_1 estimated from a random split differs from the paper's lag-40 version; not stated numerically.",
-  "fix": "Optionally print and quote the resulting rms/corr, with a check."
+  "quote": "Sec.~\\ref{sec:generalization-kriging} predicts that a correlation-aware linear predictor can turn negative lag correlations into positive skill. The paper reports exactly this",
+  "problem": "The two-neighbor theory with ρ1≈−0.3 gives a correlation of only about 0.4 and an rms ratio of about 0.9. The paper's kriging reaches 0.117 (ratio about 0.45) and +0.87. The size of the gap is not explained, so the reader may think the two-neighbor result accounts for the paper's number.",
+  "fix": "Add: \"Two neighbors alone would give only corr ≈ 0.4; the paper's much larger skill comes from using many training neighbors out to lag 40, whose joint correlations carry far more information than lag 1 and 2 alone.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "a standard integral; it follows by differentiating $\\int_0^\\infty e^{-bs^2}ds=\\frac12\\sqrt{\\pi}\\,b^{-1/2}$ twice with respect to $b$",
+  "problem": "Differentiating under the integral sign is not a first-year tool, and the two differentiations are not shown. The preceding claim \"The surmise has mean 1\" is also asserted without calculation or a precise pointer.",
+  "fix": "Show the two lines: −d/db gives ∫s²e^{−bs²}ds = (√π/4)b^{−3/2}; again gives ∫s⁴e^{−bs²}ds = (3√π/8)b^{−5/2}. Note that differentiation under the integral is taken on trust. For the mean, say it was verified in Chapter level-statistics, or compute ∫s³e^{−bs²}ds = 1/(2b²)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The second derivative matrix of $\\mathcal E$ is $2C$",
+  "problem": "Partial derivatives with respect to several weights and a \"second derivative matrix\" (Hessian) with a semidefiniteness argument are used without introduction. The reader knows only single-variable calculus.",
+  "fix": "Replace with an elementary argument: for any change v of the weights, E(w+v) = E(w) + ⟨(vᵀd)²⟩ when w solves the normal equations (the cross term vanishes), and ⟨(vᵀd)²⟩ ≥ 0, so w is a minimum. Also note that \"differentiate with respect to w_k\" means holding the other weights fixed."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The out-of-sample error behaves differently for test points inside the training range and for test points beyond it.",
+  "problem": "The text never says how the two curves in the error-curve figure behave (where the interpolation error is minimal, how the extrapolation error grows with degree). The key lesson of the figure is left unstated and no numbers are quoted.",
+  "fix": "Add two or three sentences describing the curves with values from the listing: the degree of minimum in-range test error, and the size of the extrapolation error at low and high degree. Check those values in CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "for example in the treatment of linear prediction in~\\cite{esl}",
+  "problem": "The citation points to a proof (the Gaussian conditional mean equals the best linear predictor) that the cited text does not obviously contain. The bible asks for the source to be described in words when no allowed key fits.",
+  "fix": "Replace by \"it is proved in standard texts on multivariate statistics and Gaussian processes\" without a citation, or cite esl only for the general discussion of linear prediction."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Fluctuations of the right size and no shape",
+  "problem": "The sample title contradicts its content. The amplitudes considered are 0.16--0.62 of the true amplitude, which is not the right size; the point is uncorrelated output of any size.",
+  "fix": "Rename to \"Fluctuations with some size and no shape\" or \"Uncorrelated output always adds error\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "for $\\rho_1<0$ the prediction is the negative of the neighbor sum",
+  "problem": "This is imprecise. The prediction is a negative multiple w = ρ1/(1+ρ2) of the neighbor sum (shrunk), not its negative.",
+  "fix": "Write \"for ρ1<0 the prediction is a negative, shrunken multiple of the neighbor sum\"."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "(means are zero, so averages of products are variances and covariances)",
+  "problem": "A very long \\text annotation in the right-hand column of an align will overflow the text width (overfull hbox, possibly colliding with the equation).",
+  "fix": "Shorten the annotation to \"(zero means)\" and move the explanation into the sentence before the display."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "then the set of exact training fits is an affine subspace on which the map $\\bm c\\mapsto X_{\\rm te}\\bm c$ is onto $\\mathbb R^{n_{\\rm te}}$",
+  "problem": "The terms \"affine subspace\" and \"onto\" are not defined in this chapter. If the assumed linear-algebra chapter does not define them (it cannot be checked from here), the problem is unreadable for the target reader.",
+  "fix": "Add in-line definitions: \"(an affine subspace is a particular solution plus any vector of a subspace; 'onto' means every vector of R^{n_te} is reached)\"."
  }
 ]

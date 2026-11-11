@@ -1,0 +1,93 @@
+[
+ {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/series_partialsums.pdf}",
+  "problem": "The chapter includes six figures (partialsums, integraltest, spiral, alternating, logseries, re2, products) but no FIGURES part or scripts are provided in the response.",
+  "fix": "Add a FIGURES section with a ### FIG script for every included figure: series_partialsums, series_integraltest, series_spiral, series_alternating, series_logseries, series_re2, series_products."
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "the last step is Problem~2.x-style algebra: $\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2)$",
+  "problem": "The reference 'Problem 2.x-style' is a dangling placeholder; the algebra also skips the identity 1-cos θ = 2 sin²(θ/2).",
+  "fix": "Remove the placeholder and add the line 2-2cosθ = 4 sin²(θ/2) via the half-angle identity cosθ = 1-2sin²(θ/2)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "\\boxed{\\abs{f_2^\\infty(t)-f_2(t)}\\le0.048698\\ \\text{ for all } t}",
+  "problem": "The step 4 'cruder bound' of 0.067924 is shown, yet the box states the exact-moduli bound; fine, but Step 4 says '0.067924' while the quantity compared is 1/(4π)·... (OK). However the bound is reasoned as worst case sum of moduli, which is not 'sharp'; minor. More importantly the 4-term crude bound formula omits the explicit 1/π in text of Problem 15 consistency.",
+  "fix": "Label Step 4 clearly as an alternative upper bound and note which is tighter."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Titchmarsh~\\cite{titchmarsh}, Chapter~4 of the book being the relevant place for approximations of this kind, or Edwards~\\cite{edwards}.",
+  "problem": "Vague, awkward and possibly inaccurate chapter attribution; unverifiable pointer.",
+  "fix": "Cite Titchmarsh and Edwards without a specific chapter number, e.g. 'see Titchmarsh~\\cite{titchmarsh} on approximate functional equations, or Edwards~\\cite{edwards}'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "and $\\abs{\\epsilon_n}$ is small compared with $\\tfrac12 n^{-\\sigma}$ once $n$ is large compared with $\\abs t$.",
+  "problem": "The beyond box claims the remainder is small relative to the next term, but then the numerical check at n=1000 finds the difference comparable to (equal in size to) 0.0158=½n^{-1/2}, which includes the ½n^{-s} term itself; the statement mixes whether the ½n^{-s} term is part of the main asymptotic. Also the formula's sign/form for S_n at a zero is asserted without verification in the text.",
+  "fix": "State the asymptotic as S_n - n^{1-s}/(1-s) ≈ ζ(s) + ½ n^{-s}, and in the numerical remark say the observed difference is the size of ½n^{-s} since ζ(ρ1)=0."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Euler--Maclaurin comparison of sums and integrals developed in Chapter~\\ref{ch:asymptotics}; we quote it here as an approximation useful for numbers.",
+  "problem": "Chapter 4's must-teach list does not include Euler–Maclaurin; forward reference may not be delivered. Same for 'Chapter~\\ref{ch:asymptotics} explains why averaging the two integral bounds works so well'.",
+  "fix": "Say 'beyond this book' or state the expansion as taken on trust in a beyond box rather than promising Chapter 4."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "proved in Chapter~\\ref{ch:fourier-series} by Parseval's theorem",
+  "problem": "Chapter 5 must teach Parseval, but not necessarily the evaluation of ζ(2); promised derivation is not guaranteed.",
+  "fix": "Say 'Euler's result; it follows from Parseval's theorem applied to a Fourier series (Chapter~\\ref{ch:fourier-series}) and we take it as a known value here'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "It is in fact not convergent in any ordinary sense at most $t$ (Chapter~\\ref{ch:explicit-formula} discusses this)",
+  "problem": "Unproved assertion about convergence of the critical-line prime sum; status is not given and 'at most t' is vague.",
+  "fix": "Say 'its convergence on the critical line is not established by the tools of this chapter; the series is not absolutely convergent and is treated heuristically (Chapter 18)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Problem~11 shows a far faster route to $\\log2$.",
+  "problem": "Problem numbering: the log2 at x=1/2 problem is the 11th problem in the list only if counted; it is, but later problems are inserted with out-of-order prob numbering (problem 19 is a Using numpy item while 18 is a hard one), and references like 'Problem~27' and 'Problem~13','Problem~15' must match. Check: item 27 is the m≥3 bound, OK; however Answers refer 'P29' etc. Mostly consistent, but problem 26 listing order puts 'prob{3}' physics with prob{2}.",
+  "fix": "Verify the problem numbering against all cross references and difficulty tags (e.g. the bouncing-ball problem is tagged 2 but follows a 3)."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\section{Answers to selected problems}",
+  "problem": "Bible requires answers to all \\prob{1} and every odd-numbered problem. Missing odd-numbered answers: 3 ok, but 31 (odd, problem list item 31?) and others such as 21 ok; answers for odd problems like 25 given; but problem 31 (log log integral) and 28? lack answers.",
+  "fix": "Add answers for every remaining odd-numbered problem (e.g. the last problem on ∑1/(k(log k)^q)), and for all \\prob{1} problems (including problem 5)."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Problems~11 shows",
+  "problem": "Anatomy requires at least 3 computational problems and 4 paper problems; satisfied, but several computational problems (20, 22) lack answers and checks for their stated claims such as 'relative deficit at P=100'.",
+  "fix": "Add CHECKS for Euler-product deficit at P=100 and n(ζ(2)-S_n)→1, and give answers."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. We use these freely.",
+  "problem": "Limit laws are asserted without proof or beyond box; the quotient law with a_n/b_n needs b_n nonzero.",
+  "fix": "Add 'provided b_n ≠ 0 for all n' and note these are the same laws as for functions in calculus."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The name comes from music: a string vibrating in its $k$-th harmonic has wavelength $1/k$ of the fundamental",
+  "problem": "Correct for wavelength but the series is of frequencies/wavelengths; mildly confusing and cites HRW generally.",
+  "fix": "State 'wavelength is 1/k of the fundamental wavelength' and drop or tighten the citation."
+ }
+]

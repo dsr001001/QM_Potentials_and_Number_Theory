@@ -75,9 +75,19 @@ close(mpmath.zeta(0.5), -1.460355, 1e-6)
 close(1 - np.sqrt(2), -0.414214, 1e-6)
 close(1001**-0.5, 0.0316, 1e-4)
 
-# Figure / Problem 20: eta at rho1 small
+# Figure / Problem 20: eta at rho1 small (eta_avg works unchanged for complex s)
 t1 = float(mpmath.zetazero(1).imag)
 assert abs(eta_avg(0.5 + 1j * t1, 1000)) < 1e-3
+
+# eta(0) = (1-2) zeta(0) = 1/2
+close((1 - 2) * mpmath.zeta(0), 0.5, 1e-12)
+close(mpmath.altzeta(0), 0.5, 1e-12)
+
+# Gamma recurrence and factorial (numerical instance)
+zz = mpmath.mpc(1.3, 0.7)
+assert abs(mpmath.gamma(zz + 1) - zz * mpmath.gamma(zz)) < 1e-20
+assert abs(mpmath.quad(lambda x: x**(zz - 1) * mpmath.exp(-x), [0, mpmath.inf]) - mpmath.gamma(zz)) < 1e-12
+close(mpmath.gamma(5), 24, 1e-12)
 
 # Functional equation numeric check at s=0.3+7i
 sp = mpmath.mpc(0.3, 7.0)
@@ -134,19 +144,40 @@ assert mpmath.siegelz(30) > 0 and mpmath.siegelz(31) < 0
 # Z real
 assert abs(mpmath.im(mpmath.exp(1j * mpmath.siegeltheta(20)) * mpmath.zeta(0.5 + 20j))) < 1e-15
 
+# Problem 19: sign changes of Z on the grid 0, 0.05, ..., 50
+ts = np.arange(0, 50.0001, 0.05)
+Zs = np.array([float(mpmath.siegelz(t)) for t in ts])
+assert np.all(Zs != 0)
+assert int(np.sum(Zs[:-1] * Zs[1:] < 0)) == 10
+assert min(np.diff(tz[:10])) > 0.05
+
 # Paper anchors t1, t500, t1000 (mpmath)
 mpmath.mp.dps = 20
 close(mpmath.zetazero(1).imag, 14.134725141734695, 1e-14)
 close(mpmath.zetazero(500).imag, 811.1843588465, 1e-9)
 t1000 = float(mpmath.zetazero(1000).imag)
 close(t1000, 1419.42248094599, 1e-10)
+# Problem 17: |zeta(rho_n)| below 1e-17 with 20 working digits
+mz = max(abs(mpmath.zeta(mpmath.zetazero(n))) for n in range(1, 11))
+assert mz < 1e-17
 mpmath.mp.dps = 25
+# Paper connection: 20-digit value of t1 quoted as 14.13472514173469379...
+assert mpmath.nstr(mpmath.zetazero(1).imag, 19) == '14.13472514173469379'
 
 # Problem 21: mean spacing at t1000
 g = 2 * np.pi / np.log(t1000 / (2 * np.pi))
 close(g, 1.159, 1e-3)
 close(t1000 / (2 * np.pi), 225.91, 1e-2)
 close(np.log(t1000 / (2 * np.pi)), 5.4201, 1e-3)
+# Problem 21 revised: heights 1e3..1e4 have four digits before the point
+mpmath.mp.dps = 15
+t10000 = float(mpmath.zetazero(10000).imag)
+mpmath.mp.dps = 25
+assert 1000 < t1000 and t10000 < 1e4
+g4 = 2 * np.pi / np.log(1e4 / (2 * np.pi))
+close(g4, 0.852, 1e-3)
+assert 0.5e-11 / g4 < 1e-11
+assert 1e-4 / 1e-11 >= 1e7
 
 # Problem 1
 S5 = sum(1.0 / k**2 for k in range(1, 6))

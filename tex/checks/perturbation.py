@@ -50,6 +50,8 @@ assert abs(Ef[0]-ex)<1e-4
 # two-level
 assert abs(2-np.sqrt(1.25)-0.881966)<1e-6 and abs(2+np.sqrt(1.25)-3.118034)<1e-6
 assert abs(np.sqrt(1.25)-1-0.125+0.0070)<1e-3
+# repulsion figure: minimum gap 2|v|=1 for v=0.5
+gg=np.linspace(-3,3,601); assert abs(np.min(2*np.sqrt(gg**2+0.25))-1.0)<1e-12
 # Newton
 n60,E060,cm60,_=box(1.0,60); C1=cm60(1)
 def g(c):
@@ -61,8 +63,29 @@ assert 0.02<(c2-c1)/c2<0.035
 # validity n=1, coverage
 assert abs(4*pi**2-39.5)<0.05; assert abs(2*pi**2-19.7)<0.05
 for M,v in [(300,110),(400,196),(600,441),(900,992)]: assert abs((M*pi/(2*L))**2-v)<1
+# validity curves: where first- and second-order errors reach 0.1 (text: near c=3 and c=7)
+cs=np.arange(0.01,15,0.01); exc=np.array([e60(cc) for cc in cs])
+e1err=np.abs(pi**2/4+cs/2-exc); e2err=np.abs(pi**2/4+cs/2-cs**2/(8*pi**2)-exc)
+cA=cs[np.argmax(e1err>0.1)]; cB=cs[np.argmax(e2err>0.1)]
+assert 2.5<cA<3.5 and 6<cB<8
 # mean spacing levels 201-300
 assert abs(np.mean(qmnt.mean_gap(np.arange(201,301)))-1.46)<0.03
+# scatter figure: seed 0, 20 cosines, 300 box states
+Lb=44.883; Nb=300; K=20; nl=100; ub=(pi/(2*Lb))**2
+nb,E0b,cmb,_=box(Lb,Nb)
+Cs=[np.eye(Nb)]+[cmb(q) for q in range(1,K)]
+z=np.random.default_rng(0).standard_normal(K)
+spb=ub*(2*nb[:nl]+1)
+res={}
+for sig in (0.2,20.0):
+    cc=sig*ub*z
+    H=np.diag(E0b)+sum(ck*Ck for ck,Ck in zip(cc,Cs))
+    Ex=np.linalg.eigvalsh(H)[:nl]
+    fo=np.array([sum(cc[k]*Cs[k][i,i] for k in range(K)) for i in range(nl)])
+    res[sig]=((Ex-E0b[:nl])/spb, fo/spb)
+y,f=res[0.2]; assert np.corrcoef(y,f)[0,1]>0.99
+y,f=res[20.0]; dev=np.abs(y-f)
+assert dev[:10].max()>0.3 and dev[:10].mean()>10*dev[90:].mean()
 # Problems
 a12=(32/(9*pi**2))**2/(3*pi**2/4); assert abs(a12-0.0175)<1e-4  # P14
 n,E0,cm,xm=box(1.0,200); full=sum(xm[1,j]**2/(E0[1]-E0[j]) for j in range(200) if j!=1)
@@ -71,7 +94,7 @@ four=sum(xm[1,j]**2/(E0[1]-E0[j]) for j in [0,2,4,6]); assert abs(four-0.0052)<1
 assert abs(-1/(12*pi**2)+0.0084434)<1e-7  # P7
 assert abs(1-np.sqrt(1.01)+0.0049876)<1e-7  # P5
 err1=abs(pi**2/4+0.5-1/(8*pi**2)-e60(1.0)); err2=abs(pi**2/4+0.25-0.25/(8*pi**2)-e60(0.5))
-assert abs(err1-3.2e-4)<1e-5 and 6<err1/err2<10  # P15
+assert abs(err1-3.2e-4)<1e-5 and abs(err2-4.0e-5)<1e-6 and abs(err1/err2-8.0)<0.1  # P15
 assert abs(-2*1024/pi**6*S+0.035112)<1e-6  # P21
 hh=2*44.8827/6001; assert abs(hh-0.014958)<1e-6 and abs(1/hh-66.85)<0.01  # P23
 c=0.0; it=0
@@ -79,5 +102,5 @@ while True:
     En,A1=g(c)
     if abs(En-3.5)<1e-10 or it>50: break
     c+= (3.5-En)/A1; it+=1
-assert it<6 and abs((3.5-pi**2/4)/0.5-2.065198)<1e-6  # P25
-print("all checks passed")
+assert it==4 and abs((3.5-pi**2/4)/0.5-2.065198)<1e-6  # P25
+print('all checks passed')

@@ -1,0 +1,275 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "This year's exam reuses 4 of last year's questions; on the other 16, student A guesses at random. Student B understands the material and answers 85\\% of any set of questions correctly.",
+  "problem": "The sample is built to illustrate memorizing versus predicting, but the later text says \"Memorizing gives a perfect training score and no held-out skill\" while student A scores 40% against 25% guessing because of leaked (repeated) questions. The example mixes test-set leakage into the memorization story without naming it, which confuses the concept being taught.",
+  "fix": "Either make this year's exam entirely new (A expects 5/20 = 25%, equal to the null), or keep the repeats and add an explicit sentence: \"The 4 repeated questions are a leak of training data into the test; a clean held-out test contains none, and then A scores exactly the null 25%.\" Update the CHECKS accordingly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "An error of $0.5$ is about one eighth of a spacing near $t=30$ but nearly two fifths",
+  "problem": "Near t=30 the mean spacing from the chapter's own formula is 2π/log(30/2π) ≈ 4.02, so 0.5 is about 0.124 spacings: that is fine, but the number is not checked in CHECKS, and the checkpoint just below says the spacing near t=30 is 'about 4' also unchecked. Every quoted number must be checked.",
+  "fix": "Add to CHECKS: assert abs(gap(30.0) - 4.02) < 0.01 and assert abs(0.5/gap(30.0) - 0.125) < 0.005; also assert gap(800) ≈ 1.3."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper you will learn to read uses the first $10^4$ of them in its explicit-formula experiments and at most the first 1000 in its fitted potentials",
+  "problem": "Slightly inaccurate summary of the paper: the first 10^4 zeros are also used for the GUE spacing histogram (paper Fig. 2), and the fitted sinusoidal controls are scored only below zero 2000. Saying 'explicit-formula experiments' alone is incomplete.",
+  "fix": "Replace with: \"uses the first $10^4$ of them for its explicit-formula oracle and its spacing statistics (paper Table V, Fig. 2) and at most the first 1000 in its fitted potentials\"."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Neither prediction ever uses a zero past the boundary (paper Fig.~1 caption).",
+  "problem": "\"Neither prediction\" has no antecedent: the paragraph has discussed only one model (the fitted potential). In the paper's caption the two predictions are the fitted operator and the six-prime formula.",
+  "fix": "Replace with: \"Neither the fitted potential's prediction nor that of the explicit formula (which has nothing fitted at all) uses any zero past the boundary (paper Fig.~1 caption).\""
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "With 900 knobs and 500 zeros there are more knobs than data, the same situation as the degree-4 polynomial through five points.",
+  "problem": "The polynomial has exactly as many parameters as points (5 and 5, a unique interpolant); 900 knobs on 500 zeros is underdetermined (infinitely many exact fits). These are not \"the same situation\". Also the model is nonlinear in the coefficients, so counting alone does not guarantee an exact fit.",
+  "fix": "Replace with: \"With 900 knobs and 500 zeros there are more knobs than data, a situation even more permissive than the degree-4 polynomial through five points, where knobs and data were equal in number.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "On held-out zeros the fitted potentials never beat the null and show no reproducible positive correlation with the truth, across two scales, several splits, three bases, a range of $M$, regularization and restarts (paper Tables~I--III).",
+  "problem": "The paper hedges: 'never improves on the null' is stated for the twelve cosine configurations of Table I; for other bases 'every unregularized held-out error is above the null', and one Chebyshev row (M=400, 0.291, corr +0.18) is marginal with an rms interval containing the null. The chapter drops this hedge.",
+  "fix": "Add: \"One Chebyshev row is marginal and the paper reports it as such (rms $0.291$, correlation $+0.18$, with intervals that include the null and zero); a small positive correlation for that row is not excluded (paper Table~II).\" and restrict 'never beat the null' to the configurations examined."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "why it calls a result skilful only if the rms is below the null \\emph{and} the correlation is positive",
+  "problem": "The paper never states such a criterion; it reports rms and correlation relative to the null and speaks of 'no reproducible predictive skill'. Attributing an explicit two-part definition to the paper is a claim about the paper it does not make.",
+  "fix": "Replace with: \"and why, in this book, we will call a result skilful only if the rms is below the null and the correlation is reproducibly positive, which is how the paper reads its own tables.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The fits succeed equally on shuffled and phase-randomized fakes, and cannot continue a single prime wave.",
+  "problem": "'Cannot' overstates: the paper says the fit 'did not' continue the wave under the protocol used, and explicitly that this is 'not a statement about what a potential can represent'.",
+  "fix": "Replace 'cannot continue' with 'did not, under the fitting protocol used, continue'. Apply the same softening to the heading \"Finding 4: it cannot even continue one prime wave.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "\\textbf{Finding 3: the fit cannot tell real zeros from fakes.}",
+  "problem": "The paper's statement is that the fit reaches the same in-sample accuracy on surrogates; 'cannot tell' is a stronger capability claim than the evidence (ten draws, one configuration, scale 1, M=400).",
+  "fix": "Retitle: \"Finding 3: the fit does as well on fakes as on the real zeros.\" and mention the configuration (scale 1, $M=400$, zeros 1--400, ten draws each)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "the obstacle is the potential as parametrization",
+  "problem": "The paper restricts this to the tested parametrizations and optimizer together ('evidence about the tested parametrizations and optimizer together, not a statement about what a potential can represent').",
+  "fix": "Replace with: \"the obstacle, for the families and fitting protocol tested, is the potential as parametrization rather than the number of parameters\"."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "(b) Correct (paper notation section and Sec.~II~A data).",
+  "problem": "The paper has no 'notation section', and its Sec. II A does not state that the zeros were verified to lie on the critical line. The citation is to something that does not exist in the paper. The same unsupported attribution appears in the body (\"Every zero used in the paper has been verified numerically to lie on the line\").",
+  "fix": "Replace with: \"(b) Correct: the zeros used are far below the height to which the Riemann hypothesis has been verified numerically (Chapter~\\ref{ch:zeta}); the paper itself simply writes $\\rho_n=\\tfrac12+it_n$.\" and reword the body sentence the same way."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "using the fact that the fourth differences of a degree-4 polynomial at equally spaced points are constant",
+  "problem": "This fact is not known to a first-year reader and is justified only by a one-line parenthesis ('Each differencing lowers the degree of a polynomial by one') which is itself unproved. Uniqueness of the interpolating polynomial is also asserted without reason.",
+  "fix": "Add a short demonstration: show for $x^k$ that $(x+1)^k - x^k$ has leading term $kx^{k-1}$ (binomial expansion), hence differencing lowers the degree by one; and say uniqueness (two degree-4 polynomials agreeing at five points differ by a degree-4 polynomial with five roots, hence zero) is proved in Chapter~\\ref{ch:least-squares}, or put both in a beyond box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Near $u = 2.311$ the slope of $f$ is $\\log u = 0.838$, so $u$ must grow by a further $0.00012/0.838 = 0.00015$",
+  "problem": "Shown values f(2.311) = -0.3751 and target -0.375 give a shortfall of 0.0001, not 0.00012; the 0.00012 comes from unshown extra digits. A student cannot reproduce the line from what is printed.",
+  "fix": "Print more digits: \"$f(2.311) = -0.375122$, short of $-0.375$ by $0.000122$\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "$f(3.2875) = 0.6250$ to four decimals; the same refining step gives $u = 3.28746$",
+  "problem": "If f(3.2875) equals the target to the digits shown, the 'refining step' cannot be carried out by the reader; intermediate numbers are missing.",
+  "fix": "Show: \"$f(3.2875) = 3.2875\\times1.190127 - 3.2875 = 0.625043$, above $0.625$ by $0.000043$; with slope $\\log u = 1.190$ reduce $u$ by $0.000043/1.190 = 0.00004$, giving $u = 3.28746$.\" Add these to CHECKS."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The function $f$ increases for $u > 1$, because its derivative is $\\log u + 1 - 1 = \\log u > 0$.",
+  "problem": "Uses the product rule on u log u without showing it; fine for the reader, but the bracket trial values compare with -0.375 using 'below/above' without stating that increasing f implies a unique crossing.",
+  "fix": "Add: \"(product rule: $\\frac{\\dd}{\\dd u}(u\\log u) = \\log u + 1$). Since $f$ is increasing there, it crosses $-0.375$ exactly once.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The paper writes this spacing as $\\gap_n$ for the region near zero $n$.",
+  "problem": "The paper defines gap_n = ds_n/dn (derivative of smooth zeros in index), evaluated at s_n, not at t; the chapter does not state this definition here nor that it equals 2π/log(s_n/2π), yet Sample 4 uses 'the local mean spacings there from Eq. gap' at s_n. The link is left implicit.",
+  "fix": "Add: \"Precisely, the paper defines $\\gap_n = \\dd s_n/\\dd n$, the rate at which the smooth zero moves as $n$ increases; Chapter~\\ref{ch:counting-zeros} shows this equals $2\\pi/\\log(s_n/2\\pi)$, i.e. \\cref{eq:intro-gap} evaluated at $t=s_n$.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "If the curve climbs by one unit over a stretch of length $\\ell$ in $t$, then on average one zero sits in that stretch, so the average spacing there is $\\ell$.",
+  "problem": "The formula 2π/log(t/2π) then appears with only a forward reference, though the reader knows enough calculus to see it: spacing ≈ 1/N_sm'(t) and N_sm'(t) = (1/2π) log(t/2π). A one-line derivation is within prerequisites and avoids a gap.",
+  "fix": "Insert: \"The slope of the curve is $\\Nsm'(t) = \\frac{1}{2\\pi}\\log\\frac{t}{2\\pi}$ (differentiate \\cref{eq:intro-Nsm}: the $+\\frac1{2\\pi}$ from the product rule cancels the $-\\frac1{2\\pi}$), so one unit of climb takes $\\ell \\approx 1/\\Nsm'(t)$.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and its amplitude shrinks like $1/\\sqrt p$",
+  "problem": "Then Eq. (re2) shows amplitudes 1/(m p^{m/2}) including a factor 1/m and an overall 1/π and minus sign that are not explained even in words.",
+  "fix": "Add a sentence: \"In the paper's Eq.~(4) the $m$-th overtone of prime $p$ has amplitude $1/(\\pi m p^{m/2})$ and an overall minus sign; Chapter~\\ref{ch:explicit-formula} derives each factor.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "match those of the eigenvalues of large random matrices of a particular type, the Gaussian unitary ensemble (GUE)",
+  "problem": "'Eigenvalues' and 'random matrices' are undefined for this reader (bible: no matrices beyond 2x2, no eigenvalues) and get no gloss.",
+  "fix": "Add a parenthetical gloss: \"(a matrix is a square table of numbers; its eigenvalues are a list of characteristic numbers attached to it, which for the matrices of quantum mechanics are the energy levels; Chapters~\\ref{ch:eigen} and \\ref{ch:level-statistics})\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "complex-valued (non-Hermitian) corrections",
+  "problem": "'Hermitian' is never defined in this chapter; likewise 'Hamiltonian', 'ridge', 'regularization', 'Chebyshev', 'sparsity prior' appear in the findings and problems without a plain-word gloss (Problem 7 asks what regularization does).",
+  "fix": "Add one-line glosses at first use, e.g. \"regularization (a penalty that discourages large coefficients, Chapter~\\ref{ch:least-squares})\", \"Hermitian (the property that guarantees real energies, Chapter~\\ref{ch:schrodinger})\", \"a sparsity prior (the assumption that only a few frequencies are present)\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Typical fluctuations are a fraction of one spacing. All the predictions in the paper are predictions of these fluctuations.",
+  "problem": "The paper measures the operator's fluctuations relative to the unperturbed smooth-potential levels, not relative to s_n; the two baselines coincide only numerically. Stating a single definition here and later mentioning 'two nulls' may confuse.",
+  "fix": "Add: \"(for the fitted potentials the paper measures fluctuations relative to the levels of the unperturbed potential, which track $s_n$ closely; see \\cref{sec:intro-memorize}).\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "(c) Compare the spacing with the average spacing of the first ten zeros from Sample Problem 1.",
+  "problem": "Sample problems are referred to by number throughout ('Sample Problem 1', '3', '6', '7', '10') but the sample environment takes only a title; numbering is not guaranteed by the preamble and there are no labels, so the references may not match the typeset output.",
+  "fix": "Refer to samples by title, e.g. \"the Sample Problem `Reading the spacings of the first ten zeros'\", or add labels if the environment supports them."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The rms has the same units as the errors. (It is not the same as the standard deviation, which measures spread about the mean of a list; Chapter~\\ref{ch:probability} explains the difference.) Chapter~\\ref{ch:probability} discusses it properly.",
+  "problem": "Redundant consecutive forward references to the same chapter; standard deviation is an undefined term for this reader.",
+  "fix": "Delete the final sentence \"Chapter~\\ref{ch:probability} discusses it properly.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The differences between the data and the model at the data points are the \\emph{residuals}. To summarize how well a model fits, we use the root mean square (rms) of the errors $e_1, \\ldots, e_K$:",
+  "problem": "Switches from 'residuals' to 'errors' without saying they are the same thing here; K is the bible's symbol for the number of selected frequencies, a needless overload.",
+  "fix": "Write \"of the residuals (errors) $e_1,\\dots,e_n$\" and say $n$ is the number of data points, or note that $K$ here is just the count of errors."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The first 29 zero heights $t_1,\\ldots,t_{29}$ (all zeros with $t \\le 100$) as tick marks. Middle: 29 points placed independently at random",
+  "problem": "The body text describes the figure as having two rows ('The top row ... The bottom row shows 29 equally spaced ticks') while the caption describes three rows including random points; the text then argues about random dots without pointing to the middle row.",
+  "fix": "Rewrite the text: \"The top row shows the first 29 zeros; the middle row 29 points thrown down at random; the bottom row 29 equally spaced ticks.\""
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "levels that turn far outside pass through it quickly",
+  "problem": "Physically misleading and unexplained for this reader: in the quantum problem the reason is that the state's probability density near x is small (∝1/k) and oscillatory there, not that something 'passes through'. It also suggests high levels are essentially unaffected, whereas a perturbation at x shifts all levels with turning points beyond x by a nonzero amount.",
+  "fix": "Replace with: \"and levels that turn far outside are affected too, but less: by the classical analogy the particle moves fast there and spends little time in that region (Chapter~\\ref{ch:wkb} makes this quantitative).\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "its wave is most sensitive to the shape of the valley near its classical turning points",
+  "problem": "Stated as fact; it is a semiclassical heuristic (the paper says 'position maps to level index through the classical turning point'). Status should be labelled per the bible.",
+  "fix": "Add \"(a semiclassical, approximate statement, made precise in Chapter~\\ref{ch:wkb})\" directly after the sentence."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "A box with vertical walls gives levels whose spacing grows with energy. A parabolic valley (a spring) gives equally spaced levels. A valley whose walls rise more slowly than a parabola gives levels whose spacing shrinks",
+  "problem": "Wrong as stated: a valley rising more slowly than a parabola need not have shrinking spacing in the sense needed unless it is slower than parabolic in the right way (e.g. V∝|x| gives E_n∝n^{2/3}, shrinking: fine), but 'walls rise more slowly than a parabola' is correct for power laws only; no status label or condition is given.",
+  "fix": "Qualify: \"For power-law valleys $V\\propto|x|^a$, walls rising more slowly than a parabola ($a<2$) give levels whose spacing shrinks as energy grows (Chapter~\\ref{ch:bound-states}).\""
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Random dots often land almost on top of each other. The zeros almost never do: small gaps are rare.",
+  "problem": "Earlier the chapter says \"small gaps turn out to be rare at every height, \\cref{sec:intro-hp}\" as fact; this is a numerical observation (plus GUE conjecture), not established at every height. Status labelling required.",
+  "fix": "In the first section change to \"small gaps are observed numerically to be rare at all heights computed\" and here add \"(a numerical observation)\"."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\textbf{13.} First ten: $3.959901$ (Sample Problem 1). First 100: $(t_{100} - t_1)/99 = (236.524230 - 14.134725)/99 = 2.246359$.",
+  "problem": "Bible requires at least 3 computational problems phrased for qmnt/numpy and at least 15 problems: satisfied (25 problems), but the answers section must give short solutions for all level-1 and odd problems; it gives answers to all 25, fine. However the answer does not show the code for a computational problem, while answer 15 does: inconsistent.",
+  "fix": "Add a two-line pycode listing (t = qmnt.zeros(100); print((t[-1]-t[0])/99)) to answers 13 and 14."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/intro_staircase.pdf}",
+  "problem": "The chapter includes six figures (intro_staircase, intro_prime2, intro_barcode, intro_memorize, intro_trainhold, intro_roadmap) but no FIGURES part with scripts was supplied for review; the bible requires a script for each figure.",
+  "fix": "Supply the six '### FIG intro_<name>' scripts in the FIGURES part (the roadmap as a matplotlib schematic), each writing exactly the named PDF."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "There is no obvious formula like \"add 4 each time\".",
+  "problem": "Straight double-quote characters are used throughout the LaTeX source (\"add 4 each time\", \"sm\", \"N of T\", etc.); in LaTeX these typeset as two closing quotes, giving wrong opening quotation marks.",
+  "fix": "Replace every \"...\" with ``...'' throughout the chapter."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "(d) Correct, as a numerical observation (paper Fig.~2; Odlyzko's computations).",
+  "problem": "The bible says the answer section gives short solutions; fine, but British spelling 'neighbouring' appears in answer 24 ('the neighbouring zero') against the consistent American spelling rule.",
+  "fix": "Change 'neighbouring' to 'neighboring' in answer 24."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The paper calls this \"the memorization mechanism exhibited in isolation\".",
+  "problem": "Not a verbatim quote: the paper says \"This is the memorization mechanism exhibited in isolation, on a target where...\"; acceptable fragment, but the earlier quoted 'implicit logic' sentence is presented 'in the paper's words' and is exact; however the abstract quote \"zero fitted parameters ... correlation up to $+0.99$ through zero $10^4$\" in the Paper connection section splices text with an ellipsis and omits 'predicts held-out zeros with'. Check all quotes are exact.",
+  "fix": "Keep quotes verbatim: e.g. \"with zero fitted parameters predicts held-out zeros with correlation up to $+0.99$ through zero $10^4$\"."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Refitted to shuffled versions of the fluctuations and to \"phase-randomized\" fakes that keep the wiggliness but discard the arithmetic \\cite{theiler,schreiber}",
+  "problem": "Conflates two surrogate types: Theiler's phase randomization (keeps power spectrum) and Schreiber–Schmitz amplitude-adjusted surrogates (keep marginal exactly, spectrum approximately). Citing schreiber for 'phase-randomized' is imprecise.",
+  "fix": "Write: \"to phase-randomized fakes \\cite{theiler} and amplitude-adjusted fakes \\cite{schreiber}, which keep the overall wiggliness (power spectrum) but have no arithmetic content\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper finds that these two nulls give the same error on zeros 401--500, an rms of $0.263$ mean spacings (paper Sec.~II~C).",
+  "problem": "Omits the paper's caveat that the two nulls are conceptually distinct and coincide numerically on the principal holdout (0.2631); a reader may think they are identical by construction.",
+  "fix": "Add: \"The two are different objects (an eigenvalue spectrum and the solution of a counting equation); it is their numerical coincidence on this holdout that lets the paper use one baseline.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "with one fitting method",
+  "problem": "The paper also varies ridge strength, restarts, and (one row) the acceptance threshold; 'one fitting method' is fine but the paper's own phrase is 'specific optimizer'; meanwhile 'two scales' is used without ever defining 'scale' in this chapter (scale 1: L=44.883, 500 levels; scale 2: L=59.957, 1000 levels).",
+  "fix": "Define on first use: \"two box sizes, which the paper calls scale 1 ($L=44.883$, 500 levels scored) and scale 2 ($L=59.957$, 1000 levels)\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "If you are mainly interested in the physics, Parts I and II followed by Chapters~\\ref{ch:wkb} and \\ref{ch:wu-sprung} give the quantum side.",
+  "problem": "Chapter wkb is already inside Part II, so 'Parts I and II followed by Chapter wkb' is redundant; Wu–Sprung also assumes Chapters counting-zeros and hilbert-polya per the chapter map, so the suggested path is incomplete.",
+  "fix": "Replace with: \"Parts I and II, then Chapters~\\ref{ch:counting-zeros}, \\ref{ch:hilbert-polya} and \\ref{ch:wu-sprung}, give the quantum side.\""
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\textbf{Answer:}\n\\[\n\\boxed{\\text{Last year: A } 100\\%,\\ \\text{B } 85\\%.\\qquad \\text{This year: A } 40\\%,\\ \\text{B } 85\\%.}\n\\]",
+  "problem": "Minor: the Key Ideas boxes are required 'at the end of each main section'; the Paper connection, Summary are exempt, fine. But the checkpoint answers are placed outside the checkpoint environment via \\checkanswer after \\end{checkpoint}; confirm this matches the preamble's intended usage ('answer given right after in \\checkanswer{...}'): acceptable. No change needed except to ensure \\% inside \\text within \\boxed compiles (it does).",
+  "fix": "No change required; verify compile of \\% inside \\text{} in \\boxed."
+ }
+]

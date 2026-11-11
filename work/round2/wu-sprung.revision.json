@@ -1,0 +1,175 @@
+{
+ "patches": [
+  {
+   "old": "\\item Chapter~\\ref{ch:asymptotics}: big-$\\mathcal O$ notation, root finding (Brent), floating-point round-off and machine epsilon.",
+   "new": "\\item Chapter~\\ref{ch:asymptotics}: big-$\\mathcal O$ notation, root finding (Brent), floating-point round-off and machine epsilon; an exponential grows faster than any power.\n\\item Chapter~\\ref{ch:schrodinger}: the Hamiltonian $H=-d^2/dx^2+V$ in units $\\hbar=2m=1$ and the meaning of an energy level.\n\\item Chapter~\\ref{ch:series}: the Taylor series of $\\log(1\\pm r)$.\n\\item Chapter~\\ref{ch:eigen}: tridiagonal matrices and numerical eigensolvers used as black boxes.\n\\item Chapter~\\ref{ch:explicit-formula}: the explicit formula, as background for the fluctuations discussed in Section~\\ref{sec:wu-sprung-empirical}.\n\\item Chapter~\\ref{ch:finite-differences} (a later chapter): its results are used once, in Section~\\ref{sec:wu-sprung-check}, and are stated there explicitly as taken on trust."
+  },
+  {
+   "old": "the antiderivative $w\\log w-w$ of $\\log w$, the fundamental theorem of calculus.",
+   "new": "the antiderivative $z\\log z-z$ of $\\log z$, the fundamental theorem of calculus."
+  },
+  {
+   "old": "\\textbf{Translation.} On the whole line, shift the potential sideways: $\\tilde V(x)=V(x-a)$ for a constant $a$. If $\\psi$ solves $-\\psi''(x)+V(x)\\psi(x)=E\\psi(x)$ for all $x$, define $\\varphi(x)=\\psi(x-a)$. By the chain rule $\\varphi''(x)=\\psi''(x-a)$, so evaluating the original equation at the point $x-a$ gives\n\\[\n-\\varphi''(x)+V(x-a)\\varphi(x)=E\\varphi(x).\n\\]",
+   "new": "\\textbf{Translation.} On the whole line, shift the potential sideways: $\\tilde V(x)=V(x-x_0)$ for a constant $x_0$. If $\\psi$ solves $-\\psi''(x)+V(x)\\psi(x)=E\\psi(x)$ for all $x$, define $\\varphi(x)=\\psi(x-x_0)$. By the chain rule $\\varphi''(x)=\\psi''(x-x_0)$, so evaluating the original equation at the point $x-x_0$ gives\n\\[\n-\\varphi''(x)+V(x-x_0)\\varphi(x)=E\\varphi(x).\n\\]"
+  },
+  {
+   "old": "running the argument backwards with $-a$, vice versa.",
+   "new": "running the argument backwards with $-x_0$, vice versa."
+  },
+  {
+   "old": "Now the integrand is smooth. Use Leibniz's rule for a variable upper limit: if $f(u,W)$ and $\\partial f/\\partial W$ are continuous, then\n\\[\n\\frac{\\dd}{\\dd W}\\int_0^{\\beta(W)}f(u,W)\\,\\dd u=f\\bigl(\\beta(W),W\\bigr)\\,\\beta'(W)+\\int_0^{\\beta(W)}\\frac{\\partial f}{\\partial W}\\,\\dd u\n\\]\n(the first term is the fundamental theorem plus the chain rule; the second is differentiation under the integral sign, proved in \\cite{rhb}). Here $f=2\\Phi(W-u^2)$, $\\beta=\\sqrt{W-V_0}$, $\\beta'=1/(2\\sqrt{W-V_0})$, and $f(\\beta,W)=2\\Phi(V_0)$. Hence",
+   "new": "Now the integrand is smooth. We need one piece of notation from multivariable calculus. For a function $f(u,W)$ of two variables, the \\emph{partial derivative} $\\partial f/\\partial W$ is the ordinary derivative with respect to $W$ while $u$ is held fixed. For example, if $f(u,W)=2\\Phi(W-u^2)$, then holding $u$ fixed and using the chain rule gives $\\partial f/\\partial W=2\\Phi'(W-u^2)$. Leibniz's rule for a variable upper limit $g(W)$ says: if $f$ and $\\partial f/\\partial W$ are continuous, then\n\\[\n\\frac{\\dd}{\\dd W}\\int_0^{g(W)}f(u,W)\\,\\dd u=f\\bigl(g(W),W\\bigr)\\,g'(W)+\\int_0^{g(W)}\\frac{\\partial f}{\\partial W}\\,\\dd u .\n\\]\nThe first term is the fundamental theorem of calculus combined with the chain rule: it accounts for moving the upper limit. The second term accounts for the change of the integrand with the limits held fixed.\n\\begin{beyond}\n\\textbf{Differentiation under the integral sign.} That the change of the integrand at fixed limits contributes $\\int\\partial f/\\partial W\\,\\dd u$ (that is, that one may differentiate inside the integral) is a theorem of analysis that needs the continuity hypotheses just stated. A proof is in Riley, Hobson and Bence \\cite{rhb}. We take it on trust.\n\\end{beyond}\nAre the hypotheses met? For the harmonic test below, $\\Phi'$ is a constant. For the Riemann target, $\\Phi'(E)=\\tfrac12\\log(E/2\\pi)$ (Eq.~\\eqref{eq:wu-sprung-phiprime} in the next subsection) is continuous for every $E>0$, hence on the whole interval $[V_0,W]$ because $V_0>0$; and $\\Phi$ itself is continuous there. So the rule applies. Here $f=2\\Phi(W-u^2)$, $g(W)=\\sqrt{W-V_0}$, $g'(W)=1/(2\\sqrt{W-V_0})$, and $f\\bigl(g(W),W\\bigr)=2\\Phi\\bigl(W-(W-V_0)\\bigr)=2\\Phi(V_0)$. Hence"
+  },
+  {
+   "old": "So $x(V)=\\frac1\\pi\\,(I_1+I_2-I_3)$ with\n\\[\nI_1=\\int_0^a\\log(b+u)\\,\\dd u,\\qquad I_2=\\int_0^a\\log(b-u)\\,\\dd u,\\qquad I_3=\\int_0^a\\log2\\pi\\,\\dd u .\n\\]",
+   "new": "So $x(V)=\\frac1\\pi\\,(Q_1+Q_2-Q_3)$ with\n\\[\nQ_1=\\int_0^a\\log(b+u)\\,\\dd u,\\qquad Q_2=\\int_0^a\\log(b-u)\\,\\dd u,\\qquad Q_3=\\int_0^a\\log2\\pi\\,\\dd u .\n\\]"
+  },
+  {
+   "old": "\\textbf{Step 3: $I_1$.} With $w=b+u$ and the antiderivative $w\\log w-w$ of $\\log w$ (check: its derivative is $\\log w+1-1$):\n\\[\nI_1=\\bigl[",
+   "new": "\\textbf{Step 3: $Q_1$.} With $z=b+u$ and the antiderivative $z\\log z-z$ of $\\log z$ (check: its derivative is $\\log z+1-1$):\n\\[\nQ_1=\\bigl["
+  },
+  {
+   "old": "\\textbf{Step 4: $I_2$.} With $w=b-u$, $\\dd w=-\\dd u$, the limits $u=0$ and $u=a$ become $w=b$ and $w=b-a$:\n\\[\nI_2=\\int_{b}^{b-a}\\log w\\,(-\\dd w)=\\int_{b-a}^{b}\\log w\\,\\dd w=\\bigl[w\\log w-w\\bigr]_{b-a}^{b}",
+   "new": "\\textbf{Step 4: $Q_2$.} With $z=b-u$, $\\dd z=-\\dd u$, the limits $u=0$ and $u=a$ become $z=b$ and $z=b-a$:\n\\[\nQ_2=\\int_{b}^{b-a}\\log z\\,(-\\dd z)=\\int_{b-a}^{b}\\log z\\,\\dd z=\\bigl[z\\log z-z\\bigr]_{b-a}^{b}"
+  },
+  {
+   "old": "\\textbf{Step 5: $I_3$.} The integrand is constant, so $I_3=a\\log2\\pi$.",
+   "new": "\\textbf{Step 5: $Q_3$.} The integrand is constant, so $Q_3=a\\log2\\pi$."
+  },
+  {
+   "old": "In $I_1+I_2$ the terms $\\pm b\\log b$ cancel:\n\\[\nI_1+I_2-I_3=",
+   "new": "In $Q_1+Q_2$ the terms $\\pm b\\log b$ cancel:\n\\[\nQ_1+Q_2-Q_3="
+  },
+  {
+   "old": "Since $-1<-\\tfrac78<0$, and $f\\to0$ as $y\\to0^+$ while $f\\to\\infty$ as $y\\to\\infty$, there are exactly two roots, one on each side of $y=1$ (\\cref{fig:wu-sprung-v0func}).",
+   "new": "Two limits complete the picture. As $y\\to0^+$, put $y=e^{-u}$, so that $u\\to\\infty$; then $y\\log y=-ue^{-u}\\to0$, because an exponential grows faster than any power (Chapter~\\ref{ch:asymptotics}), and also $y\\to0$, so $f(y)\\to0$. As $y\\to\\infty$, $f(y)=y(\\log y-1)$ is a product of two factors that both grow without bound, so $f\\to\\infty$. Now count roots. On $(0,1]$ the continuous function $f$ decreases strictly from values arbitrarily close to $0$ down to $f(1)=-1$; since $-1<-\\tfrac78<0$, it takes the value $-\\tfrac78$ exactly once there. On $[1,\\infty)$ it increases strictly from $-1$ without bound, so it takes the value $-\\tfrac78$ exactly once more. There are exactly two roots, one on each side of $y=1$ (\\cref{fig:wu-sprung-v0func})."
+  },
+  {
+   "old": "Run the Abel equation forward for the potential defined by \\eqref{eq:wu-sprung-ws}: Step D gives back $\\Phi$ with $\\Phi'=\\pi\\Nsm'$ and $\\Phi(V_0)=0$, so",
+   "new": "What, then, is the actual phase integral of the well defined by \\eqref{eq:wu-sprung-ws}? Call it $\\Phi_{\\rm WS}(E)$. Steps A--G showed only one direction: \\emph{if} a well has a phase integral $\\Phi$ with $\\Phi(V_0)=0$, \\emph{then} its $x(V)$ is given by \\eqref{eq:wu-sprung-abel-inv}. We now need the converse for our particular $x(V)$.\n\nBecause this well is even and monotone (Problem~5), Eq.~\\eqref{eq:wu-sprung-layer} applies: $\\Phi_{\\rm WS}(E)=\\int_{V_0}^{E}x(V)\\,\\dd V/\\sqrt{E-V}$. At $E=V_0$ this is an integral over an interval of zero length, so $\\Phi_{\\rm WS}(V_0)=0$ and the proviso of Step~F holds automatically. We take $\\Phi_{\\rm WS}'$ to be continuous, as Step~E requires; this is plausible because $x(V)$ is smooth for $V>V_0$, but we do not prove it here. Steps A--G applied to $\\Phi_{\\rm WS}$ then give\n\\[\n\\text{(i)}\\quad x(W)=\\frac1\\pi\\int_{V_0}^{W}\\frac{\\Phi_{\\rm WS}'(E)}{\\sqrt{W-E}}\\,\\dd E .\n\\]\nOn the other hand, our $x(V)$ was constructed from Eqs.~\\eqref{eq:wu-sprung-xint} and \\eqref{eq:wu-sprung-phiprime}, which say\n\\[\n\\text{(ii)}\\quad x(W)=\\frac1\\pi\\int_{V_0}^{W}\\frac{\\pi\\Nsm'(E)}{\\sqrt{W-E}}\\,\\dd E .\n\\]\nSubtract (ii) from (i), multiply by $\\pi$, and write $D(E)=\\Phi_{\\rm WS}'(E)-\\pi\\Nsm'(E)$:\n\\[\n\\int_{V_0}^{W}\\frac{D(E)}{\\sqrt{W-E}}\\,\\dd E=0\\qquad\\text{for every }W>V_0 .\n\\]\nThis is an Abel equation of the form \\eqref{eq:wu-sprung-abel}, with the unknown $D$ in place of $x$ and zero on the right. Apply Steps A--D to it: multiply by $1/\\sqrt{Y-W}$ and integrate over $W$ from $V_0$ to $Y$, swap the order of integration, and use the kernel integral $K=\\pi$. (The swap in Step B was justified for a positive weight; for a weight of either sign, the same theorem in the form known as Fubini's theorem requires only that the integral of the absolute value be finite. That holds here because $D$ is continuous and the only singularities are inverse square roots, which are integrable.) The result is\n\\[\n\\pi\\int_{V_0}^{Y}D(E)\\,\\dd E=0\\qquad\\text{for every }Y>V_0 .\n\\]\nDifferentiating with respect to $Y$ (fundamental theorem of calculus) gives $D(Y)=0$. So $\\Phi_{\\rm WS}'=\\pi\\Nsm'$ everywhere above $V_0$. Integrating from $V_0$ and using $\\Phi_{\\rm WS}(V_0)=0$ gives"
+  },
+  {
+   "old": "In short, $V_0$ is fixed, up to such tiny shifts, by the requirement that the well have no levels below its floor.",
+   "new": "In short, the requirement that the well have no levels below its floor fixes $V_0$ up to such tiny shifts; it does not by itself single out the last digits of the paper's value."
+  },
+  {
+   "old": "The bottom is a harmonic well. The Riemann target does not care about this detail: the low-lying levels are exactly where WKB is least accurate.",
+   "new": "The bottom is a harmonic well. This harmonic bottom is a by-product of the semiclassical construction. Only the lowest few levels are sensitive to it, and those are the levels for which Bohr--Sommerfeld, and hence the construction, is least accurate (the paper's maximum residual, $0.063$ spacings, occurs there)."
+  },
+  {
+   "old": "\\item $V_0$ is set by the consistency condition $\\Nsm(V_0)=0$: no levels below the floor. Of its two roots, only the one with $V_0>2\\pi$ gives a well with its minimum at $x=0$.",
+   "new": "\\item The natural consistency condition for $V_0$ is $\\Nsm(V_0)=0$: no levels below the floor. Of its two roots, only the one with $V_0>2\\pi$ gives a well with its minimum at $x=0$."
+  },
+  {
+   "old": "\\item The root is $V_0\\approx3.0803\\pi$; the paper's $3.10073\\pi$ gives $\\Nsm(V_0)\\approx0.0045$, a uniform level shift of $0.0045$ spacings, Eq.~\\eqref{eq:wu-sprung-phiws}.",
+   "new": "\\item The root is $V_0\\approx3.0803\\pi$. The paper's $3.10073\\pi$ is close to this root but not equal to it, and its exact origin is not derived here; it gives $\\Nsm(V_0)\\approx0.0045$, a uniform level shift of $0.0045$ spacings, Eq.~\\eqref{eq:wu-sprung-phiws}."
+  },
+  {
+   "old": "so $V$ grows roughly like $(x/\\log x)^2$: just slower than harmonic, by a logarithm. That matches the expectation of Section~\\ref{sec:wu-sprung-target}: a density growing like $\\log E$ needs a well ``softer than harmonic by a logarithm''.",
+   "new": "so $V$ grows roughly like $(x/\\log x)^2$: slower than harmonic by a factor $(\\log x)^2$ (equivalently, the chord $x(V)$ is wider than the harmonic chord $\\sqrt V$ by one logarithm). That matches the expectation of Section~\\ref{sec:wu-sprung-target}: a density growing like $\\log E$ needs a well that is softer than harmonic, but only logarithmically so."
+  },
+  {
+   "old": "\\textbf{Step 2: $V=1000$.} $a=\\sqrt{990.259}=31.468$, $b=31.623$; $\\frac{b+a}{b-a}=\\frac{63.091}{0.1546}$, whose log is about $6.012$. Then $\\pi x=31.468(-1.5615)+31.623(6.012)=-49.14+190.1$, and $x\\approx44.88$.",
+   "new": "\\textbf{Step 2: $V=1000$.} $a=\\sqrt{990.259}=31.468$ and $b=31.623$. Their difference suffers from cancellation (Chapter~\\ref{ch:asymptotics}), so compute it as $b-a=(b^2-a^2)/(b+a)=V_0/(b+a)=9.7412/63.091=0.1544$. Then $\\frac{b+a}{b-a}=\\frac{63.091}{0.1544}$, whose log is $6.0128$. So $\\pi x=31.468(-1.5615)+31.623(6.0128)=-49.14+190.14=141.00$, and $x=141.00/\\pi\\approx44.88$."
+  },
+  {
+   "old": "\\textbf{Step 3: precise evaluation} (CHECKS script):",
+   "new": "\\textbf{Step 3: precise evaluation} (carrying more digits, or with \\texttt{qmnt.L\\_of}):"
+  },
+  {
+   "old": "$\\frac{\\sqrt{1000}}{\\pi}(\\log\\frac{2000}{\\pi}-2)=44.86$, about $0.05\\%$ low.",
+   "new": "$\\frac{\\sqrt{1000}}{\\pi}(\\log\\frac{2000}{\\pi}-2)=44.855$, about $0.06\\%$ low."
+  },
+  {
+   "old": "In this sense \\emph{each level probes the potential most strongly near its turning points}, and the map $n\\mapsto x_n$ converts level indices into positions.",
+   "new": "In this sense \\emph{each level probes the potential most strongly near its turning points}, and the map $n\\mapsto x_n$ converts level indices into positions. This does not mean that level $n$ ignores the rest of the well: $|\\psi_n|^2$ is spread over the whole allowed region $|x|<x_n$, so level $n$ feels a change anywhere inside its turning points, only less strongly. What level $n$ hardly feels is a change beyond $x_n$, where its wavefunction is exponentially small."
+  },
+  {
+   "old": "A change there costs nothing on levels 1--500.",
+   "new": "A change there costs almost nothing on levels 1--500 (only through the exponentially small tails of their wavefunctions)."
+  },
+  {
+   "old": "\\item For large $V$, $x(V)\\approx\\frac{\\sqrt V}{\\pi}(\\log\\frac{2V}{\\pi}-2)$, Eq.~\\eqref{eq:wu-sprung-asym}, so $V$ grows roughly like $(x/\\log x)^2$: softer than harmonic by a logarithm.",
+   "new": "\\item For large $V$, $x(V)\\approx\\frac{\\sqrt V}{\\pi}(\\log\\frac{2V}{\\pi}-2)$, Eq.~\\eqref{eq:wu-sprung-asym}, so $V$ grows roughly like $(x/\\log x)^2$: softer than harmonic by a factor $(\\log x)^2$."
+  },
+  {
+   "old": "The CHECKS script confirms this for $n=1,\\dots,500$ to better than $10^{-6}$: by construction,",
+   "new": "A numerical evaluation with adaptive quadrature at $n=1,2,10,100,250,500$ confirms this to better than $10^{-6}$ (Problem~13 asks you to do all 500): by construction,"
+  },
+  {
+   "old": "We compute them with the finite-difference method of Chapter~\\ref{ch:finite-differences} (treated there in full; here it is a black box): sample $V$ on a uniform grid of $N$ interior points, build a symmetric tridiagonal matrix, and find its lowest eigenvalues with \\texttt{scipy.linalg.eigh\\_tridiagonal} (Chapter~\\ref{ch:eigen}). The grid introduces an error of order $h^2$, which we remove by Richardson extrapolation over a grid doubling, $E^{\\rm Rich}=(4E_{h/2}-E_h)/3$.",
+   "new": "We compute them with a method that is developed only later, in Chapter~\\ref{ch:finite-differences}; here we use it as a black box and state exactly what we take on trust.\n\\begin{beyond}\n\\textbf{Finite differences, taken on trust (forward reference to Chapter~\\ref{ch:finite-differences}).} We assume three facts proved there. (1) Sampling $V$ at $N$ equally spaced interior points $x_j$ of $(-L,L)$, with spacing $h=2L/(N+1)$ and $\\psi=0$ at the walls, turns $H$ into a symmetric tridiagonal matrix with diagonal entries $2/h^2+V(x_j)$ and off-diagonal entries $-1/h^2$. Its lowest eigenvalues, found with \\texttt{scipy.linalg.eigh\\_tridiagonal} (Chapter~\\ref{ch:eigen}), approximate the lowest levels of $H$ in the box. (2) For a fixed level, the error of the corresponding eigenvalue is of order $h^2$. (3) Hence the Richardson combination $E^{\\rm Rich}=(4E_{h/2}-E_h)/3$ of results on grids of spacing $h$ and $h/2$ cancels the $h^2$ term. Note that this grid size $N$ is not the counting function $N(E)$ of Chapter~\\ref{ch:wkb}; the paper uses the same letter for both.\n\\end{beyond}"
+  },
+  {
+   "old": "from scipy.linalg import eigh_tridiagonal",
+   "new": "from scipy.linalg import eigh_tridiagonal\nV0 = qmnt.V0\ndef xws(V):                                   # Eq. (2)\n    a, b = np.sqrt(V - V0), np.sqrt(V)\n    return (a*np.log(V0/(2*np.pi*np.e**2)) + b*np.log((b+a)/(b-a)))/np.pi\naa = np.linspace(0, np.sqrt(1200 - V0), 400001)\nVV = V0 + aa**2                               # fine table of heights V\nXX = np.concatenate([[0.0], xws(VV[1:])])     # and their x(V)"
+  },
+  {
+   "old": "    V = np.array([qmnt.wu_sprung_V(xi) for xi in x])",
+   "new": "    V = np.interp(np.abs(x), XX, VV)   # table lookup of V(x)"
+  },
+  {
+   "old": "That pattern is expected: Bohr--Sommerfeld becomes exact only as $n\\to\\infty$.",
+   "new": "That pattern is expected: Bohr--Sommerfeld is in general only asymptotically accurate, improving as $n$ grows (Chapter~\\ref{ch:wkb}); the harmonic well is a special case where it is exact for every $n$."
+  },
+  {
+   "old": "We ran this computation with the potential taken from a fine table of Eq.~\\eqref{eq:wu-sprung-ws}, interpolated onto the grid. The run gives a mean deviation below $0.02$ spacings and a maximum deviation below $0.1$ spacings, consistent with the paper's $0.005$ and $0.063$. We quote bounds rather than more digits because the last digits depend on details we do not fix here, such as how $V$ is interpolated between table points. The listing prints the actual values for your run.",
+   "new": "We ran exactly the listing above, in which the potential is taken from a fine table of Eq.~\\eqref{eq:wu-sprung-ws} and interpolated linearly onto the grid. Our run gives a signed mean deviation (the average of $(E_n-s_n)/\\gap_n$, keeping its sign) of $0.004$ spacings and a maximum of $|E_n-s_n|/\\gap_n$ of $0.05$ spacings, attained at the lowest levels. These are close to the paper's $0.005$ and $0.063$. The paper does not say whether its mean is signed or a mean of absolute values, and the last digits depend on details such as the interpolation between table points, so we compare only to the digits shown. Our signed mean is numerically close to the WKB offset $0.0045$ of Check~1."
+  },
+  {
+   "old": "The corrections they found were very irregular, with structure on every scale they examined, and they described the resulting potential as \\emph{fractal}, hence the title of their paper ``Riemann zeros and a fractal potential''. It is plausible on general grounds:",
+   "new": "They described the fitted potential as \\emph{fractal}, hence the title of their paper ``Riemann zeros and a fractal potential''. That a potential reproducing the zeros must be irregular is plausible on general grounds:"
+  },
+  {
+   "old": "Van~Zyl and Hutchinson \\cite{vanzyl} connected the fractal corrections to the primes and extended the fits; Slater \\cite{slater} extended the fractal fits further; and Jaksch",
+   "new": "Van~Zyl and Hutchinson \\cite{vanzyl} and Slater \\cite{slater} extended the fractal fits; and Jaksch"
+  },
+  {
+   "old": "then when $M$ approaches $n$ you can make the agreement as good as you like whether or not the potential ``knows'' anything; Chapter~\\ref{ch:least-squares} showed that underdetermined fits have infinitely many exact solutions, and Chapter~\\ref{ch:generalization} develops the memorizing polynomial (RE4) in full.",
+   "new": "then when $M$ is large enough you can make the agreement as good as you like whether or not the potential ``knows'' anything. The paper finds in-sample rms $0.137$ spacings with $M=400$ on 400 zeros (Table~I) and below $10^{-4}$ spacings with $M=900$ on all 500 zeros (Sec.~III); the threshold is set by the coverage law of Chapter~\\ref{ch:fitting}, not simply by $M=n$. A useful analogy, but only an analogy because fitting a potential is a nonlinear problem, is the linear result of Chapter~\\ref{ch:least-squares}: an underdetermined linear fit has infinitely many exact solutions. Chapter~\\ref{ch:generalization} develops the memorizing polynomial (RE4) in full."
+  },
+  {
+   "old": "\\item \\textbf{Locality.} A correction $\\delta V$ near position $x$ affects mainly levels that turn near $x$ (Section~\\ref{sec:wu-sprung-shape}). Information about levels 1--400 constrains $\\delta V$ mostly inside $|x|<x_{400}$ and says comparatively little about the region where levels 401--500 turn.",
+   "new": "\\item \\textbf{Locality.} A correction $\\delta V$ near position $x$ affects all levels whose turning points lie at or beyond $x$, most strongly those turning near $x$, and hardly at all the levels that turn well inside $x$, whose wavefunctions are exponentially small there (Section~\\ref{sec:wu-sprung-shape}). Levels 1--400 all turn inside $|x|<x_{400}$, so they say almost nothing about $\\delta V$ in the region $x_{400}<|x|<x_{500}$, which only higher levels reach. Conversely, a correction placed in a band of positions also shifts every level turning beyond that band, not only the levels turning inside it; this is why the paper's interpolation-split result (Sec.~III) is not as simple as ``each level controls its own patch''."
+  },
+  {
+   "old": "\\item The turning-point map tells you which part of the potential each level constrains.",
+   "new": "\\item The turning-point map tells you which part of the potential each level constrains: level $n$ feels changes anywhere inside its turning points, most strongly near them, and hardly any change beyond them."
+  },
+  {
+   "old": "(only $V_0$, fixed by consistency), yet predicts every zero to within about a quarter spacing?",
+   "new": "(only $V_0$, fixed approximately by consistency), yet predicts the zeros with an rms error of about a quarter spacing?"
+  },
+  {
+   "old": "Our Section~\\ref{sec:wu-sprung-v0} explains what fixes $V_0$; the paper does not discuss it.",
+   "new": "The paper does not say how $V_0$ was obtained. Our Section~\\ref{sec:wu-sprung-v0} gives the natural consistency condition $\\Nsm(V_0)=0$, whose root is $3.0803\\pi$; the paper's $3.10073\\pi$ is close to but not equal to this root, and its exact origin is not derived here."
+  },
+  {
+   "old": "This chapter is why: the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing, so ``predict the Wu--Sprung levels'' and ``predict $s_n$'' have the same error.",
+   "new": "This chapter is why: the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing on average (the maximum deviation, $0.063$ in the paper and $0.05$ in our run, occurs at the lowest levels, far from the holdout 401--500), so ``predict the Wu--Sprung levels'' and ``predict $s_n$'' have the same error to the digits quoted."
+  },
+  {
+   "old": "Section~\\ref{sec:wu-sprung-inverse} explains the motivation: semiclassically the spectrum fixes only the width function, so evenness is the assumption that makes the inverse problem well posed, and it is kept for the corrections too.",
+   "new": "The paper does not state why it restricts to even corrections. A natural reading, from Section~\\ref{sec:wu-sprung-inverse}, is that the semiclassical spectrum cannot distinguish left from right, so odd parts of $\\delta V$ are not constrained by the levels. Evenness does not by itself make the fitted problem unique: the corrected potential need not be monotone, and the paper's point is precisely that many different $\\delta V$ fit equally well."
+  },
+  {
+   "old": "\\textbf{Sec.~V A and ``$p=2$ period'' remarks.} Sec.~V states",
+   "new": "\\textbf{Sec.~V ($p=2$ period remark).} Sec.~V (paragraph ``The proposed mechanism fails quantitatively'') states"
+  },
+  {
+   "old": "\\item $V_0$ is fixed by $\\Nsm(V_0)=0$ with $V_0>2\\pi$: root $\\approx3.0803\\pi$; the paper's $3.10073\\pi$ shifts levels uniformly by $\\approx0.0045$ spacings, Eq.~\\eqref{eq:wu-sprung-phiws}.",
+   "new": "\\item The natural consistency condition for $V_0$ is $\\Nsm(V_0)=0$ with $V_0>2\\pi$: root $\\approx3.0803\\pi$. The paper's $3.10073\\pi$ is close to but not equal to this root (its exact origin is not derived here) and shifts levels uniformly by $\\approx0.0045$ spacings, Eq.~\\eqref{eq:wu-sprung-phiws}."
+  },
+  {
+   "old": "corresponds to about 6--7 levels near $t=500$, as stated in the paper.}",
+   "new": "corresponds to about 6--7 levels near $t=500$, as stated in the paper. (The paper's ``these heights'' refers to the training zeros 1--400, which span $t$ up to about $680$; check that the count stays between 6 and 7 there too.)}"
+  },
+  {
+   "old": "The unperturbed Wu--Sprung levels equal $s_n$ to within a few thousandths of a spacing (Sec.~\\ref{sec:wu-sprung-check}), so",
+   "new": "The unperturbed Wu--Sprung levels equal $s_n$ to within a few thousandths of a spacing on average (Sec.~\\ref{sec:wu-sprung-check}; the largest deviations, a few hundredths, occur at the lowest levels, not in the holdout), so"
+  }
+ ],
+ "new_checks": "import numpy as np\nfrom scipy.optimize import brentq\nfrom scipy.integrate import quad\nfrom scipy.linalg import eigh_tridiagonal\n\nV0 = 3.10073*np.pi\ndef Nsm(t):\n    u = t/(2*np.pi); return u*np.log(u) - u + 7/8\ndef xws(V, V0=V0):\n    a = np.sqrt(V-V0); b = np.sqrt(V)\n    return (a*np.log(V0/(2*np.pi*np.e**2)) + b*np.log((b+a)/(b-a)))/np.pi\ndef sn(n):\n    return brentq(lambda t: Nsm(t)-(n-0.5), 7.0, 5000.0)\n\n# Sample: lopsided oscillator\nbeta = 0.4\nfor E in [1.0, 3.0, 7.0]:\n    ph = quad(lambda x: np.sqrt(max(E-x**2/(1+beta)**2, 0)), 0, (1+beta)*np.sqrt(E))[0] \\\n       + quad(lambda x: np.sqrt(max(E-x**2/(1-beta)**2, 0)), -(1-beta)*np.sqrt(E), 0)[0]\n    assert abs(ph - np.pi*E/2) < 1e-6\n\n# Sample: density at 1000\nu = 1000/(2*np.pi)\nassert abs(u-159.155) < 1e-3 and abs(np.log(u)-5.0699) < 1e-4\nassert abs(np.log(u)/(2*np.pi)-0.8069) < 1e-4\nassert abs(2*np.pi/np.log(u)-1.239) < 1e-3\nassert abs(Nsm(1000)-648.6) < 0.05\n\n# Sample: power-law integrals\nassert abs(quad(lambda v: np.sqrt(1-v**2), 0, 1)[0]-np.pi/4) < 1e-8\nassert abs(quad(lambda v: np.sqrt(1-v), 0, 1)[0]-2/3) < 1e-8\n\n# Kernel K = pi (V=2, W=5), pycode listing\nK = quad(lambda E: 1/np.sqrt((5-E)*(E-2)), 2, 5)[0]\nassert abs(K-np.pi) < 1e-9\n\n# Sample: harmonic inversion\nV = 7.0\nxv = quad(lambda E: 0.5/np.sqrt(V-E), 0, V)[0]\nassert abs(xv-np.sqrt(V)) < 1e-6\n\n# Closed form Eq.(2) vs integral\nfor V in [50.0, 500.0]:\n    num = quad(lambda uu: np.log((V-uu**2)/(2*np.pi)), 0, np.sqrt(V-V0))[0]/np.pi\n    assert abs(num - xws(V)) < 1e-8\n\n# Abel uniqueness: numerical instance, Phi_WS = pi(Nsm(E)-Nsm(V0)) at E=300\nE = 300.0\nPhiWS = 2*quad(lambda uu: xws(E-uu**2) if E-uu**2 > V0 else 0.0, 0, np.sqrt(E-V0), limit=200)[0]\nassert abs(PhiWS - np.pi*(Nsm(E)-Nsm(V0))) < 1e-5\n\n# Sample: V0 root; limits of f\nf = lambda y: y*np.log(y)-y+7/8\nassert f(1.5) < 0 and f(1.6) > 0\nassert abs(1.5*(np.log(1.5)-1)+0.8918) < 1e-4 and abs(1.6*(np.log(1.6)-1)+0.8480) < 1e-4\ny = brentq(f, 1.0, 3.0)\nassert abs(y-1.54013) < 1e-5\nassert abs(2*y-3.0803) < 1e-3\nassert abs(Nsm(V0)-0.0045) < 1e-4\nyl = brentq(f, 0.05, 1.0); assert yl < 1\nyy = 1e-8; assert abs(yy*np.log(yy) - yy) < 1e-6   # f-7/8 -> 0 as y->0+\n\n# Sample: harmonic bottom\nlg = np.log(V0/(2*np.pi))\nassert abs(lg-0.43849) < 1e-5 and abs(np.pi/lg-7.1645) < 1e-3\nassert abs((np.pi/lg)**2-51.33) < 0.02\nVt = V0+1e-4\nassert abs(xws(Vt) - np.sqrt(1e-4)/np.pi*lg) < 1e-6\n\n# Sample: box sizes, with intermediates\nassert abs(V0-9.7412) < 1e-3\nassert abs((lg-2)+1.56151) < 1e-5\na = np.sqrt(1000-V0); b = np.sqrt(1000)\nassert abs(1000-V0-990.259) < 1e-3\nassert abs(a-31.468) < 1e-3 and abs(b-31.623) < 1e-3\nassert abs(b+a-63.091) < 1e-3\nassert abs(V0/(b+a)-0.1544) < 1e-4 and abs((b-a)-0.1544) < 1e-4\nlr = np.log((b+a)/(b-a)); assert abs(lr-6.0128) < 1e-4\nassert abs(a*(lg-2)+49.14) < 0.01 and abs(b*lr-190.14) < 0.01\nassert abs(a*(lg-2)+b*lr-141.00) < 0.01\nassert abs(xws(1000.0)-44.883) < 1e-3\nassert abs(xws(1500.0)-59.957) < 1e-3\nasym = np.sqrt(1000)/np.pi*(np.log(2000/np.pi)-2)\nassert abs(asym-44.855) < 1e-3\nrel = (xws(1000.0)-asym)/xws(1000.0)\nassert abs(rel-0.0006) < 5e-5\ntry:\n    import qmnt\n    assert abs(qmnt.L_of(1000)-44.883) < 1e-3\n    assert abs(qmnt.L_of(1500)-59.957) < 1e-3\nexcept ImportError:\n    pass\n# s_500 approx 811\nassert abs(sn(500)-811.5) < 0.6\n\n# Sample: turning points 201, 300 (and Problem 9, Paper connection)\ns201, s300 = sn(201), sn(300)\nprint('s201, s300 =', s201, s300)\nassert abs(s201-398.3) < 0.05\nassert abs(s300-542.5) < 0.1\nassert abs(Nsm(400.0)-201.6) < 0.1\nassert abs(np.log(400/(2*np.pi))/(2*np.pi)-0.661) < 1e-3\nassert abs((Nsm(400.0)-200.5)/0.661-1.7) < 0.05\nassert abs(xws(s201)-22.5) < 0.05\nassert abs(xws(s300)-28.5) < 0.06\nassert abs(s201-398) < 0.5 and abs(s300-543) < 0.6\n# Checkpoint: x_500 about 38.5\nassert abs(xws(sn(500))-38.5) < 0.1\n\n# Check 1 / Problem 13 (n = 1, 2, 10, 100, 250, 500 as stated in text)\nfor n in [1, 2, 10, 100, 250, 500]:\n    E = sn(n)\n    Phi = 2*quad(lambda uu: xws(E-uu**2) if E-uu**2 > V0 else 0.0, 0, np.sqrt(E-V0), limit=200)[0]\n    assert abs(Phi/np.pi-(n-0.5)+Nsm(V0)) < 1e-6\n\n# Check 2: Richardson FD levels vs smooth zeros (same as listing: table + interp)\naa = np.linspace(0, np.sqrt(1200-V0), 400001); VV = V0+aa**2\nXX = np.concatenate([[0.0], xws(VV[1:])])\nL = xws(1000.0)\ndef levels(N, k=500):\n    x = -L + 2*L/(N+1)*np.arange(1, N+1); h = 2*L/(N+1)\n    Vv = np.interp(np.abs(x), XX, VV)\n    return eigh_tridiagonal(2/h**2+Vv, -np.ones(N-1)/h**2, select='i',\n                            select_range=(0, k-1), eigvals_only=True)\nER = (4*levels(23999)-levels(11999))/3\nns = np.arange(1, 501)\ns = np.array([sn(k) for k in ns])\ng = 2*np.pi/np.log(s/(2*np.pi))\ndev = (ER-s)/g\nprint('mean dev, max |dev| =', np.mean(dev), np.max(np.abs(dev)), np.argmax(np.abs(dev)))\nassert abs(np.mean(dev)-0.004) < 0.0006          # signed mean 0.004\nassert abs(np.max(np.abs(dev))-0.05) < 0.005      # max 0.05\nassert np.argmax(np.abs(dev)) < 50                # attained at lowest levels\n\n# Problem 2\nassert abs(100/(2*np.pi)-15.9155) < 1e-4\nassert abs(np.log(100/(2*np.pi))-2.7673) < 1e-4\nassert abs(2*np.pi/np.log(100/(2*np.pi))-2.2705) < 1e-4\n# Problem 7\nassert abs((1*np.log(1)-1)+1) < 1e-12\n# Problem 14\nper = 2*np.pi/np.log(2); gp = 2*np.pi/np.log(500/(2*np.pi))\nassert abs(per-9.065) < 1e-3 and 6 <= per/gp <= 7\nassert abs(sn(400)-680) < 1.0\ng680 = 2*np.pi/np.log(680/(2*np.pi)); assert 6 <= per/g680 <= 7\n# Problem 17\nVq = 3.0\nassert abs((2/np.pi)*quad(lambda E: np.sqrt(E)/np.sqrt(Vq-E), 0, Vq)[0]-Vq) < 1e-6\n# Problem 19\nt1 = 14.134725\nassert abs(t1/(2*np.pi)-2.24961) < 1e-5 and abs(np.log(t1/(2*np.pi))-0.81076) < 1e-5\nassert abs(Nsm(t1)-0.449) < 1e-3\nassert abs((0.5-Nsm(t1))-0.05) < 0.005\ns1 = sn(1); assert t1 < s1\nprint('all checks passed')\n",
+ "new_figures": {},
+ "notes": "All issues addressed. Notes on choices: (a) For the symbol clash in the Abel evaluation I renamed the log integrals to Q_1,Q_2,Q_3 rather than the reviewer's L_1..L_3, because L is the box half-width in this chapter. (b) Issue on the asymptotic comparison: the precise value of the large-V form is 44.855, so the relative error is 0.06% rather than 0.05%; text corrected and asserted. (c) The run report gives signed mean 0.00439 and max 0.0515; the text now quotes 0.004 and 0.05, with assertions tightened, and states that the max occurs at low n (asserted via argmax < 50). (d) The pycode listing now uses the same fine-table plus np.interp construction as the reported run. (e) The Abel converse argument assumes continuity of Phi_WS' and says so explicitly; Fubini is mentioned for the signed integrand. (f) Prerequisites were extended with schrodinger, series, eigen and explicit-formula, plus a flagged forward reference to finite-differences, whose results are placed in a beyond box. No figure scripts needed changes."
+}

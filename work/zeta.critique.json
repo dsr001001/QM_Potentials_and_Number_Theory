@@ -1,86 +1,177 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "Your program finds $Z(30)<0$ and $Z(31)>0$. What can you conclude",
-  "problem": "The checks report fails for siegelz(30)<0 and siegelz(31)>0. Z changes sign at each zero. After t_3=25.01 the sign is (+,-,+) pattern: negative on (t1) start, so Z>0 on (t1,t2), <0 on (t2,t3), >0 on (t3,t4), <0 on (t4,t5). Thus Z(30)>0 and Z(31)<0, so the checkpoint premise is false.",
-  "fix": "Swap the signs: 'finds Z(30)>0 and Z(31)<0', or just say 'Z(30) and Z(31) have opposite signs'. Fix the check script accordingly."
+  "severity": "medium",
+  "quote": "A zero of $\\zeta$ is a value of $s$ at which all these arrows add up to exactly nothing.",
+  "problem": "The arrow sum only converges for Re s>1, and the chapter later proves zeta has no zeros there. Every actual zero lies where the arrow sum diverges, so this sentence gives the student a false picture that the chapter must later undo.",
+  "fix": "Replace with: 'Where the sum converges (sigma>1) the arrows never cancel completely (we prove this in the next section). The zeros we want lie where this sum diverges, and making sense of them is the job of analytic continuation.'"
  },
  {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "1 & 14.5 & $+$ & $[14,\\ 14.5]$\\\\",
-  "problem": "Bisection table is inconsistent with Z(14)<0, Z(15)>0 and t_1=14.1347. Z(14.5)>0 gives bracket [14,14.5] fine, but the later rows are checked only by the script, which shows the rule 'Zm*Za<0' is applied correctly; however the quoted final midpoint 14.13671875 is the 8th midpoint, not the bracket midpoint 14.134765625 claimed in Step 3 (bracket [14.1328125,14.13671875]).",
-  "fix": "Verify Step 3: the bracket midpoint is 14.134765625 (correct), but state clearly that this is the midpoint of the final bracket, not the table's step-8 midpoint."
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "is the kind of statement that a sign-change argument for a real function, like the one for $Z(t)$",
+  "problem": "This is an unsupported guess about Connes's method. The paper says only that the approximations are 'provably located on the critical line'; it does not say this is certified by sign changes of Z. The next sentence ('does not prove RH, because it concerns finitely many zeros') also misses the point that these are approximations to zeros, not the zeta zeros. Problem 24(a) inherits the same conflation.",
+  "fix": "Delete the sign-change comparison. Say: 'In Connes's construction the approximating values lie on the critical line by a proof internal to that construction, which is beyond this book; they are approximations to the first 50 zeros, so this does not prove RH.' Reword Problem 24(a) as a question about Z(t) alone, not about how Connes's result is proved."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Chapter~\\ref{ch:asymptotics}: the Gamma function $\\Gamma$ as a generalized factorial with $\\Gamma(n+1)=n!$; bisection.",
+  "problem": "The bible's contract for Chapter 16 allows it to assume only Chapters 2, 3 and 15. The chapter lists Chapter 4 as a prerequisite and relies on it for Gamma, the recurrence Gamma(z+1)=z Gamma(z), bisection and double-precision resolution.",
+  "fix": "Remove Chapter 4 from the prerequisites. Add a two-sentence self-contained reminder of Gamma (definition as generalized factorial, recurrence) in the functional-equation section, and describe bisection in words in the sample problem. Mention Chapter 4 only as 'see also'."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Each step gains one binary digit; about 20 more steps would reach $10^{-6}\\times$ the starting width",
-  "problem": "After 8 steps width is 2^-8; 20 more steps gives 2^-28 ~ 4e-9 of the starting width, not 1e-6. Twenty total steps give about 1e-6.",
-  "fix": "Say 'about 12 more steps (20 in total) would reach about $10^{-6}$ of the starting width'."
+  "quote": "and for all $s\\ne0,1$,",
+  "problem": "The right side of the functional equation is also indeterminate at s=2,3,4,...: Gamma(1-s) has poles there, cancelled either by the zero of the sine (even s) or by the trivial zero of zeta(1-s) (odd s≥3). So the equation does not hold literally 'for all s≠0,1'.",
+  "fix": "Write 'for all s other than 0, 1, 2, 3, ... (at those points the right side is understood as a limit)'."
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "close(mpmath.eta(0.5), 0.604899, 1e-6)",
-  "problem": "The checks script uses mpmath.eta, which is the Dedekind eta, not the Dirichlet eta, and fails; the quoted 0.604899 and pi^2/12 checks are therefore unverified.",
-  "fix": "Use mpmath.altzeta(s) or (1-2**(1-s))*zeta(s) in checks."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "which near $t_{1000}$ is about 1.159 (Chapter~\\ref{ch:counting-zeros}; Problem 21), and the smallest error the paper quotes is an rms below $10^{-4}$ spacings (Sec.~III)",
-  "problem": "Referencing Problem 21 is fine, but the answer to Problem 21(b) says 20 digits near 1.4e3 gives error ~1e-16 and 15 digits gives ~1e-11, while Section 5 text says double precision resolution near 14 is 1e-15; 20 significant digits at 1.4e3 is ~1e-17. Minor inconsistent order estimates.",
-  "fix": "State 20 digits at 1.4e3 gives about 1e-17 to 1e-16 consistently."
+  "severity": "low",
+  "quote": "In particular, a zero on the critical line can move off the line only by splitting into two zeros mirror-symmetric about it.",
+  "problem": "Zeros of zeta are fixed points and do not move. Even under a hypothetical deformation, a single simple zero cannot split into two. The correct picture is that two zeros on the line would have to collide and leave as a symmetric pair.",
+  "fix": "Delete the sentence, or replace with: 'Put differently, an off-line zero always comes with a mirror partner at the same height on the other side of the critical line.'"
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "At $m\\ne0$ the formula is $0/0$: $\\eta$ also vanishes there (a fact we take on trust here;",
-  "problem": "A claim taken on trust without a beyond box, and the justification is deferred to problems that only prove finiteness by a different route.",
-  "fix": "Wrap in a beyond box, or note that Problems 25-26 make the claim unnecessary."
+  "quote": "since the sign changes of a real function are certain, this \\emph{proves} there is a zero exactly on the critical line",
+  "problem": "The section opens by asking how a rounded computation can prove anything, but never gives the key point. A computed sign is certain only when the computed |Z| exceeds a rigorous bound on the evaluation error. Bisection midpoints close to the zero have tiny |Z|, so their signs are exactly the uncertain ones.",
+  "fix": "Add: 'A computed sign can be trusted only when the computed |Z| is larger than a guaranteed bound on the rounding and truncation error. The proof therefore uses two points where |Z| is safely nonzero with opposite signs (for example Z(14) and Z(15)); the intermediate value theorem then gives a zero between them. Bisection refines the location, not the proof.'"
  },
  {
-  "category": "RULE",
+  "category": "JUMP",
   "severity": "medium",
-  "quote": "\\end{pycode}\n\\label{lst:zeta-eta}",
-  "problem": "Label placed after environment outside any float; \\cref{lst:zeta-eta} will not resolve properly (undefined or points to wrong object).",
-  "fix": "Remove the label and refer to 'the listing below/above' or put caption/label inside a figure-like float."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\prob{3}{Let $c_k=1$ if $3\\nmid k$ and $c_k=-2$ if $3\\mid k$",
-  "problem": "Problems refer to 'Problem 25, 26, 21, 13...' by number but numbering is automatic and unverified; also fewer than the required computational/paper connections are fine but Problem numbers cited may not match.",
-  "fix": "Use \\label/\\ref for problems or verify numbering (the sums: count problems to ensure 25 is the eta_3 problem)."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "The CHECKS script verifies \\cref{eq:zeta-fe,eq:zeta-xi} numerically at a sample point.",
-  "problem": "Reader-facing text refers to the CHECKS script, an internal machinery.",
-  "fix": "Remove or rephrase as an exercise for the reader."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "made rigorous with a method due to Turing",
-  "problem": "Brief unsupported claim about the verification method with no source.",
-  "fix": "Put in a beyond box noting it is taken on trust."
+  "quote": "(which holds wherever both sides are defined, by uniqueness)",
+  "problem": "eta has been defined only by a series that converges for Re s>0. At s=0 the series 1-1+1-... diverges, so eta(0) has no meaning yet. The statement is circular: the continuation of eta to s=0 is itself defined by (1-2^{1-s})zeta(s).",
+  "fix": "Say explicitly: 'For Re s≤0 we define the continuation of eta by eta(s)=(1-2^{1-s})zeta(s); this is analytic and agrees with the series for Re s>0, so by the identity theorem it is the continuation. With this definition eta(0)=1/2.' Adjust Problem 12(b,c) to match."
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "Hardy proved in 1914 that infinitely many zeros lie on the critical line, and Conrey proved in 1989 that more than two fifths",
-  "problem": "Fine, but 'roughly T/2pi log T/2pi' omits the -T/2pi term; acceptable only as leading order.",
-  "fix": "Say 'to leading order'."
+  "quote": "spinning at incommensurate rates",
+  "problem": "The rates log k are not mutually incommensurate: log 4 = 2 log 2, log 8 = 3 log 2, log 6 = log 2 + log 3. Only the logarithms of distinct primes are rationally independent.",
+  "fix": "Replace with 'spinning at different rates log k (the rates log p of distinct primes are mutually incommensurate, a fact used in Chapter 5 and Problem 26)'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "A partial sum ending inside a group differs from the last complete group's sum by at most two terms of modulus at most $2(3J)^{-\\sigma}$ in total size order",
-  "problem": "Vague phrase 'in total size order'.",
-  "fix": "State: the extra terms have modulus at most 3(3J+1)^{-sigma}... which tends to 0."
+  "quote": "At $m\\ne0$ the formula is $0/0$, so \\cref{eq:zeta-cont} by itself does not tell us the value of $\\zeta$ there.",
+  "problem": "At this point only the denominator is known to vanish. Calling it '0/0' assumes eta vanishes there, which is taken on trust only in the following box.",
+  "fix": "Write: 'At m≠0 the denominator vanishes, so the formula does not define zeta there; whether zeta is finite depends on whether eta also vanishes (it does; see the box).'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "reproduces $t_1$, $t_{500}$ and $t_{1000}$ to the digits printed",
+  "problem": "This contradicts the next sentence. The paper's printed t_1 = 14.134725141734695 differs from the 20-digit value ...4693790 in its last printed digit, so t_1 is not reproduced 'to the digits printed'. The CHECKS script only tests it to 1e-14.",
+  "fix": "Write 'reproduces t_500 and t_1000 to the digits printed, and t_1 to all but the last printed digit (see the reading lesson that follows)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Proofs are in \\cite{apostol} and \\cite{edwards}.",
+  "problem": "Apostol (1976) and Edwards (1974) predate Apéry's 1978 result and cannot contain its proof. The sentence as placed reads as covering it.",
+  "fix": "Write: 'Proofs of the even-integer formulas are in \\cite{apostol}; Apéry's theorem is beyond this book and is not in the cited texts.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Proofs: \\cite{titchmarsh}, Chapters~9--10.",
+  "problem": "Conrey's 1989 two-fifths theorem postdates the 1986 revised edition of Titchmarsh, so its proof is not there.",
+  "fix": "Restrict the citation to Hardy's theorem and the counting of zeros. State that Conrey's result is quoted without a reference in the book's bibliography."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The strip $0<\\Re s<1$ is already covered by \\cref{eq:zeta-cont}.",
+  "problem": "The lines Re s=0 and Re s=1 are not accounted for. On Re s=0 the functional equation needs zeta(1-s) on Re=1, which comes from the continuation, not the original series. The student is left unsure how those lines are reached.",
+  "fix": "Add: 'Equation (cont) in fact covers all of Re s>0 (including the line Re s=1 apart from s=1), and for Re s≤0, s≠0, the functional equation uses zeta(1-s) with Re(1-s)≥1, already known.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "it stays negative on $[0,t_1)$; it changes sign at each simple zero.",
+  "problem": "'Simple zero' and 'multiplicity' are used here and in Sec. 7 without definition. No reason is given why a simple zero forces a sign change. No reason is given either for Z having no zeros on [0,t_1); this needs the absence of zeros on the real segment, which is deferred to Problem 22.",
+  "fix": "Define: 'A zero t_0 of Z is simple if Z'(t_0)≠0 (multiplicity one); then Z≈Z'(t_0)(t-t_0) near t_0 and changes sign. A zero of multiplicity m behaves like (t-t_0)^m and changes sign only for odd m.' Note that t_1 is by definition the lowest zero height and that zeta(1/2)≠0."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Because the series converges uniformly on every half-plane $\\Re s\\ge\\sigma_0>1$",
+  "problem": "'Uniformly' has not been defined in this chapter or in the assumed chapters. The later box uses it again along with 'bounded away from 0'.",
+  "fix": "Add a parenthetical: '(uniformly: the error after N terms is below a bound that depends on N but not on s)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Dividing, $\\zeta(\\bar s)=\\overline{\\zeta(s)}$ throughout $\\Re s>0$.",
+  "problem": "Division is not possible at s=1 (pole) or at the points 1+2πim/log 2, where the denominator vanishes. Problem 14 ('for 0<Re s≤1, s≠1, using eq. cont') has the same hole.",
+  "fix": "Add 'except at the points where the denominator vanishes; there the identity follows by continuity of zeta (for m≠0), and s=1 is the pole'. In Problem 14, add a hint to treat the points 1+2πim/log 2 by continuity."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Theorem, proved here from \\cref{eq:zeta-fe} and the $\\Gamma$ facts in the box.",
+  "problem": "The bible requires status labels to distinguish 'proved' from 'proved but proof beyond this book'. This result rests on the functional equation and Gamma facts taken on trust, yet is labelled 'proved here'. Item 4 has the same status.",
+  "fix": "Label it 'Theorem; deduced here from the functional equation and Gamma facts, which are themselves taken on trust (proofs beyond this book)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Given only that $Z(14)<0$ and $Z(15)>0$, locate $t_1$ by eight steps of bisection",
+  "problem": "The sample says 'given only' two signs, but Step 2 obtains every midpoint sign from the already-known value t_1=14.134725. That is circular for a root-finding demonstration.",
+  "fix": "Reword the statement: 'Using mpmath.siegelz to evaluate the sign of Z at each midpoint, locate t_1 ...'. In Step 2 say the signs are computed by the listing, and that knowing t_1 afterwards is only a consistency check."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "for $x\\le-1$ (shaded) they oscillate with growing amplitude and the series diverges",
+  "problem": "At x=-1 the partial sums alternate between 1 and 0 with constant amplitude, not growing. The caption also ignores divergence for x≥1.",
+  "fix": "Write 'for x<-1 (shaded) they oscillate with growing amplitude (at x=-1 they hop between 1 and 0); the series also diverges for x≥1'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "$S_P$, the positive integers all of whose prime factors are at most $P$",
+  "problem": "The letter S is used for sets of integers (S_P, S_{P,J}) and for partial sums (S_10, S_N(z), S_N(s)). P is used for the prime cutoff and P_j for the paired terms of eta. A first-year reader will confuse these.",
+  "fix": "Rename the integer sets (e.g. \\mathcal{I}_P, \\mathcal{I}_{P,J}) and the pairs (e.g. D_j)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the upper bound tends to 1 and the lower bound to 0, while every term after the first vanishes; $\\zeta(s)\\to1$.",
+  "problem": "'Every term vanishes' does not prove that an infinite sum tends to 1. The lower bound 0 from the displayed inequality is useless here. The needed lower bound is zeta(s)≥1 (first term), which is not stated at this point.",
+  "fix": "Replace with: 'since the first term is 1 and the rest are positive, 1≤zeta(s)≤1+1/(s-1), and the right side tends to 1; so zeta(s)→1.'"
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Ten sign changes, at $t_1,\\dots,t_{10}$",
+  "problem": "The CHECKS script does not recompute this answer (no sign-change count on the 0.05 grid). It also does not check the claim in Answer 17 that |zeta(rho_n)| is about 1e-20, nor the 20-digit value 14.13472514173469379 quoted in the paper-connection section. The bible requires every numerical answer to be asserted.",
+  "fix": "Add to CHECKS: count sign changes of siegelz on np.arange(0,50.0001,0.05) and assert it equals 10; assert max |zeta(zetazero(n))| < 1e-17 at dps=20; assert mpmath.nstr(zetazero(1).imag,19) matches the quoted digits."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Modify the function \\texttt{eta\\_avg} of \\cref{sec:zeta-continuation} to take a complex $s$",
+  "problem": "The listed eta_avg already works unchanged for complex s (np.exp(-s*np.log(k)) accepts a complex scalar), as the CHECKS script itself shows. The instruction to 'modify' is misleading.",
+  "fix": "Reword: 'Call eta_avg with the complex argument s=1/2+i t_1 (the function works unchanged; explain why) ...'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "So all partial sums converge to the same limit. So all partial sums converge.",
+  "problem": "Duplicated concluding sentence in Answer 25.",
+  "fix": "Delete the second sentence."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "has at least 10 decimal places, so its rounding error is at most $0.5\\times10^{-10}$",
+  "problem": "Zeros 10^3 to 10^4 have heights 1419 to 9878, all with four digits before the decimal point. Fifteen significant digits therefore give 11 decimal places and an error of at most 0.5e-11. The stated figure is needlessly loose and inconsistent with the careful count given for t_1000 just before.",
+  "fix": "Write 'has 11 decimal places (four digits before the point), so its rounding error is at most 0.5×10^{-11}', and adjust part (c) to 'at least seven orders of magnitude'."
  }
 ]

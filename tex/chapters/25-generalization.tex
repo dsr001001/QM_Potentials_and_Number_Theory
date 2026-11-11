@@ -13,7 +13,7 @@ Where this shows up in the paper: the paper's central negative result is precise
 \item Chapter~\ref{ch:least-squares}: linear least squares, the normal equations, the singular value decomposition (SVD), minimum-norm solutions of underdetermined systems, ridge regularization with filter factors $\sigma/(\sigma^2+\lambda\sigma_1^2)$, and the memorizing polynomial (running example RE4).
 \item Chapter~\ref{ch:probability}: mean, variance, standard deviation, covariance, Pearson correlation and its range $[-1,1]$, rms, autocorrelation of a sequence, random seeds.
 \item Chapter~\ref{ch:fitting}: the fit of a potential correction $\delta V(x)=\sum_k c_k\phi_k(x)$ to a list of levels, the sensitivity matrix $A_{nk}$, the damped least-squares step, and the coverage law $M\pi/L>2\sqrt E$.
-\item We also use, with short reminders, the smooth zeros $s_n$ and the local mean spacing $\gap_n$ (Chapter~\ref{ch:counting-zeros}).
+\item Used with short reminders at the point of use: the smooth zeros $s_n$ and the local mean spacing $\gap_n$ (Chapter~\ref{ch:counting-zeros}); the Wigner surmise for unfolded spacings (Chapter~\ref{ch:level-statistics}); classical turning points and where a level feels the potential (Chapter~\ref{ch:wkb}); first-order perturbation theory (Chapter~\ref{ch:perturbation}); the bias-corrected targets (Chapter~\ref{ch:finite-differences}); the truncated explicit formula (Chapter~\ref{ch:explicit-formula}); almost-periodic sums and phase randomization (Chapters~\ref{ch:fourier-series} and~\ref{ch:fourier-transform}); bootstrap and surrogate controls (Chapter~\ref{ch:controls}, forward references only).
 \item First-year physics: graphs, averages, and the idea of a measurement uncertainty.
 \end{prerequisites}
 
@@ -228,18 +228,18 @@ Step 3: Six-prime formula: ratio $=0.074/0.263=0.281$, skill $=1-0.281=0.719$.
 \[
 \boxed{\mathrm{rms}_{\rm null}=0.2631;\quad \text{operator: ratio }1.40\ (\text{skill }-0.40);\quad \text{formula: ratio }0.281\ (\text{skill }+0.72)}
 \]
-The fitted operator is about 40\% \emph{worse} than predicting no fluctuation at all; the formula removes most of the null error. (You can reproduce the formula's numbers with \texttt{qmnt.oracle\_zeros} and \texttt{qmnt.score}; the CHECKS script does so.)
+The fitted operator is about 40\% \emph{worse} than predicting no fluctuation at all; the formula removes most of the null error. (You can reproduce the formula's numbers yourself with \texttt{qmnt.oracle\_zeros} and \texttt{qmnt.score}; Problem~30 does this for one prime.)
 \end{sample}
 
 \subsection{rms and correlation measure different things}
 
 Why does the paper always report \emph{two} numbers? Because a prediction can have the right shape and the wrong size, or the right size and no shape. Let us make that precise.
 
-Suppose that over the held-out set the true fluctuations $d$ have mean zero and standard deviation $\sigma$, and the predicted fluctuations $\hat d$ have mean zero, standard deviation $a\sigma$ (so $a$ is the \emph{amplitude ratio}) and correlation $\rho$ with $d$. Recall from Chapter~\ref{ch:probability} that $\mathrm{Cov}(\hat d,d)=\rho\,(a\sigma)(\sigma)$. The mean squared error is
+Suppose that over the held-out set the true fluctuations $d$ have mean zero and standard deviation $\sigma$, and the predicted fluctuations $\hat d$ have mean zero, standard deviation $a\sigma$ (so $a$ is the \emph{amplitude ratio}) and correlation $\rho$ with $d$. Recall from Chapter~\ref{ch:probability} that $\mathrm{Cov}(\hat d,d)=\rho\,(a\sigma)(\sigma)$. Because both means are zero, the average of a square is a variance and the average of a product is a covariance. The mean squared error is
 \begin{align}
 \mathrm{MSE}&=\overline{(\hat d-d)^2}\notag\\
 &=\overline{\hat d^{\,2}}-2\,\overline{\hat d\,d}+\overline{d^2}&&\text{(expand the square)}\notag\\
-&=a^2\sigma^2-2\rho a\sigma^2+\sigma^2&&\text{(means are zero, so averages of products are variances and covariances)}\notag\\
+&=a^2\sigma^2-2\rho a\sigma^2+\sigma^2&&\text{(zero means)}\notag\\
 &=\sigma^2\bigl(1+a^2-2\rho a\bigr).
 \end{align}
 The null has $\mathrm{MSE}=\sigma^2$, so
@@ -256,7 +256,7 @@ Three consequences follow directly.
 \end{enumerate}
 The assumption of zero means is an idealization; a constant offset between $\hat d$ and $d$ adds its square to the MSE and makes things worse still.
 
-\begin{sample}{Fluctuations of the right size and no shape}
+\begin{sample}{Uncorrelated output always adds error}
 The paper reports that the fitted Hermitian models ``emit fluctuations of $0.16$--$0.62\times$ the true amplitude that are uncorrelated with truth'' (Sec.~III). Using Eq.~\eqref{eq:generalization-ratio} with null $0.263$, find the held-out rms of a prediction with (a) $a=0.62$, $\rho=0$; (b) $a=0.62$, $\rho=-0.07$; (c) $a=0.16$, $\rho=0$.
 
 Step 1: (a) $\sqrt{1+0.62^2}=\sqrt{1.3844}=1.1766$; rms $=1.1766\times0.263=0.309$.
@@ -297,7 +297,7 @@ Recall running example RE4 from Chapter~\ref{ch:least-squares}: a few noisy samp
 
 \textbf{Definition.} A fit \emph{overfits} when it lowers its in-sample error by adapting to features of the training data that do not recur in new data (noise, or accidents of the particular sample), so that its out-of-sample error rises.
 
-Figure~\ref{fig:generalization-errorcurve} shows the error curves for a larger version of RE4 (15 training points). The in-sample error falls with degree, as nesting guarantees. The out-of-sample error behaves differently for test points inside the training range and for test points beyond it.
+Figure~\ref{fig:generalization-errorcurve} shows the error curves for a larger version of RE4 (15 training points). The in-sample error falls with degree, as nesting guarantees. The out-of-sample error behaves differently for test points inside the training range and for test points beyond it. Inside the range (squares), the test error is large at degrees 0 to 2, which cannot follow a full period of the sine. It reaches its minimum at a moderate degree (between 3 and 12 for the data of the listing below) and is larger again at degree 14, where the fit chases the noise. Beyond the range (triangles), the error grows rapidly with degree: at degree 14 it is more than ten times its value at degree 3.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/generalization_errorcurve.pdf}
@@ -537,7 +537,7 @@ Step 3: rms ratio: $\sqrt{2.05}=1.432$.
 
 \subsection{Why the zeros have negative lag-1 correlation}
 
-Is $\rho_1<0$ plausible for the zeros? There is a neat exact identity behind it. Define the unfolded spacing $u_n=(t_{n+1}-t_n)/\gap_n$. Using $t_n=s_n+\gap_n d_n$ and the approximation $s_{n+1}-s_n\approx\gap_n$, $\gap_{n+1}\approx\gap_n$ (the mean spacing changes slowly from one level to the next; we neglect its change),
+Is $\rho_1<0$ plausible for the zeros? There is a simple approximate relation behind it. Define the unfolded spacing $u_n=(t_{n+1}-t_n)/\gap_n$. Using $t_n=s_n+\gap_n d_n$ and the approximation $s_{n+1}-s_n\approx\gap_n$, $\gap_{n+1}\approx\gap_n$ (the mean spacing changes slowly from one level to the next; we neglect its change),
 \begin{equation}
 u_n\approx\frac{s_{n+1}-s_n}{\gap_n}+d_{n+1}-d_n\approx1+d_{n+1}-d_n.
 \label{eq:generalization-un}
@@ -553,14 +553,22 @@ and solving for $\rho_1$,
 \rho_1=1-\frac{\mathrm{Var}(u)}{2\sigma^2}.
 \label{eq:generalization-rho1}
 \end{equation}
-For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\rho_1=0$ and $\mathrm{Var}(u)=2\sigma^2$, consistent with Eq.~\eqref{eq:generalization-rho1}. Eq.~\eqref{eq:generalization-rho1} says exactly when $\rho_1$ is negative: $\rho_1<0$ if and only if $\mathrm{Var}(u)>2\sigma^2$. The sign is therefore decided by comparing two numbers, the variance of the unfolded spacings and twice the variance of the fluctuations. For the zeros the next Sample Problem gives $\mathrm{Var}(u)\approx0.178$ (from the Wigner surmise, Chapter~\ref{ch:level-statistics}) against $2\sigma^2\approx0.138$ (from the measured null rms $0.263$), so the inequality holds and $\rho_1<0$. In words: the positions stay close to their smooth values (small $\sigma$, often called \emph{rigidity}), while consecutive spacings vary by more than independent jitter of that size would produce. The two facts are compatible only if the displacement of one zero is partly undone by the displacement of its neighbor, which is what a negative $\rho_1$ means.
+For a perfectly regular lattice with independent jitter of each level, $d_n$ independent gives $\rho_1=0$ and $\mathrm{Var}(u)=2\sigma^2$, consistent with Eq.~\eqref{eq:generalization-rho1}. Eq.~\eqref{eq:generalization-rho1} says when $\rho_1$ is negative: $\rho_1<0$ if and only if $\mathrm{Var}(u)>2\sigma^2$. The sign is therefore decided by comparing two numbers, the variance of the unfolded spacings and twice the variance of the fluctuations. For the zeros the next Sample Problem gives $\mathrm{Var}(u)\approx0.178$ (from the Wigner surmise, Chapter~\ref{ch:level-statistics}) against $2\sigma^2\approx0.138$ (from the measured null rms $0.263$), so the inequality holds and $\rho_1<0$. In words: the positions stay close to their smooth values (small $\sigma$, often called \emph{rigidity}), while consecutive spacings vary by more than independent jitter of that size would produce. The two facts are compatible only if neighboring zeros tend to be displaced in opposite directions (when one sits above its smooth position the next tends to sit below), which is what a negative $\rho_1$ means.
 
 \begin{sample}{Estimating $\rho_1$ for the zeros from the Wigner surmise}
 Estimate $\rho_1$ for the zero fluctuations using Eq.~\eqref{eq:generalization-rho1}, taking $\mathrm{Var}(u)$ from the GUE Wigner surmise $p(s)=\frac{32}{\pi^2}s^2e^{-4s^2/\pi}$ (paper Fig.~2; Chapter~\ref{ch:level-statistics}) and $\sigma=0.263$, the null rms on zeros 401--500.
 
-Step 1: The surmise has mean 1, so $\mathrm{Var}(u)=\langle s^2\rangle-1$. Compute $\langle s^2\rangle=\frac{32}{\pi^2}\int_0^\infty s^4e^{-bs^2}\,ds$ with $b=4/\pi$.
+Step 1: Recall from Chapter~\ref{ch:level-statistics} that the Wigner surmise $p(s)$ is an approximate probability density for the unfolded spacings: $\int_0^\infty p(s)\,ds=1$, and its mean is 1. We check the mean. Write $b=4/\pi$. Then $\langle s\rangle=\frac{32}{\pi^2}\int_0^\infty s^3e^{-bs^2}\,ds$. Substitute $u=s^2$, $du=2s\,ds$: $\int_0^\infty s^3e^{-bs^2}\,ds=\frac12\int_0^\infty u\,e^{-bu}\,du=\frac12\cdot\frac1{b^2}$ (integration by parts). With $b^2=16/\pi^2$ this is $\pi^2/32$, so $\langle s\rangle=\frac{32}{\pi^2}\cdot\frac{\pi^2}{32}=1$. Taking the spacings $u$ to follow the surmise, $\mathrm{Var}(u)=\langle s^2\rangle-\langle s\rangle^2=\langle s^2\rangle-1$, with $\langle s^2\rangle=\frac{32}{\pi^2}\int_0^\infty s^4e^{-bs^2}\,ds$.
 
-Step 2: The Gaussian moment $\int_0^\infty s^4e^{-bs^2}ds=\frac38\sqrt\pi\,b^{-5/2}$ (a standard integral; it follows by differentiating $\int_0^\infty e^{-bs^2}ds=\frac12\sqrt{\pi}\,b^{-1/2}$ twice with respect to $b$). With $b^{-5/2}=(\pi/4)^{5/2}=\pi^{5/2}/32$:
+Step 2: Start from the Gaussian integral $\int_0^\infty e^{-bs^2}ds=\frac12\sqrt{\pi}\,b^{-1/2}$ (Chapter~\ref{ch:probability}). Differentiating with respect to $b$ under the integral sign (a step we take on trust here; it is justified in~\cite{rhb}) brings down a factor $-s^2$ each time. Once:
+\[
+\int_0^\infty s^2e^{-bs^2}ds=-\frac{d}{db}\Bigl(\tfrac12\sqrt\pi\,b^{-1/2}\Bigr)=\tfrac14\sqrt\pi\,b^{-3/2}.
+\]
+Twice:
+\[
+\int_0^\infty s^4e^{-bs^2}ds=-\frac{d}{db}\Bigl(\tfrac14\sqrt\pi\,b^{-3/2}\Bigr)=\tfrac38\sqrt\pi\,b^{-5/2}.
+\]
+With $b^{-5/2}=(\pi/4)^{5/2}=\pi^{5/2}/32$:
 \[
 \langle s^2\rangle=\frac{32}{\pi^2}\cdot\frac38\sqrt\pi\cdot\frac{\pi^{5/2}}{32}=\frac{3\pi^3}{8\pi^2}=\frac{3\pi}{8}=1.1781.
 \]
@@ -573,10 +581,10 @@ Step 4: $\rho_1\approx1-0.1781/0.1383=1-1.287=-0.287$.
 \[
 \boxed{\rho_1\approx-0.29}
 \]
-This is an estimate, not a measurement: the surmise is an approximation to the true spacing law, Eq.~\eqref{eq:generalization-un} neglects the slow change of $\gap_n$, and stationarity is approximate. It does show that negative $\rho_1$ is the expected sign. The paper reports that ``the fluctuation sequence has negative autocorrelation at lags 1--3'' (Sec.~III).
+This is an estimate, not a measurement: the surmise is an approximation to the true spacing law, Eq.~\eqref{eq:generalization-un} neglects the slow change of $\gap_n$, and stationarity is approximate. It does show that negative $\rho_1$ is the expected sign. How large is the measured value? The paper's measured correlations of the mean of the two nearest training fluctuations with the truth are $-0.26$ to $-0.41$ (Sec.~III). Inverting Eq.~\eqref{eq:generalization-nbrcorr} with $\rho_2=0$ gives $\rho_1=\mathrm{corr}/\sqrt2$, between about $-0.18$ and $-0.29$; a negative $\rho_2$, which the paper also reports, would make $\abs{\rho_1}$ somewhat smaller. (This inversion is approximate: in the random splits the nearest training neighbors are not always at lag 1.) So the estimate $-0.29$ has the right sign and the right size, at the large end of the range. You can measure $\rho_1$ directly with the listing below (Problem~8). The paper reports that ``the fluctuation sequence has negative autocorrelation at lags 1--3'' (Sec.~III).
 \end{sample}
 
-Figure~\ref{fig:generalization-neighbor} shows the real fluctuations of zeros 1--400 computed with \texttt{qmnt}, the neighbor-mean prediction for the even-indexed levels from their odd neighbors, and the sample autocorrelation. The CHECKS script confirms that the measured lag-1 autocorrelation is negative and that the neighbor-mean prediction is anticorrelated with the truth.
+Figure~\ref{fig:generalization-neighbor} shows the real fluctuations of zeros 1--400 computed with \texttt{qmnt}, the neighbor-mean prediction for the even-indexed levels from their odd neighbors, and the sample autocorrelation. When you run the listing below, you will find that the measured lag-1 autocorrelation of zeros 1--400 is negative, that the neighbor-mean prediction for the even-indexed levels is anticorrelated with the truth, and that its rms error is above the null of those levels, as Eqs.~\eqref{eq:generalization-nbrcorr} and~\eqref{eq:generalization-nbrmse} predict for $\rho_1<0$.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/generalization_neighbor.pdf}
@@ -622,7 +630,7 @@ Let the value to predict be $d_0$ and the available training values be $d_1,\dot
 &=C_{00}-2\sum_iw_iC_{i0}+\sum_i\sum_jw_iw_jC_{ij}.
 \label{eq:generalization-krigE}
 \end{align}
-Differentiate with respect to one weight $w_k$. The middle term gives $-2C_{k0}$. In the double sum, $w_k$ appears when $i=k$ (giving $\sum_jw_jC_{kj}$) and when $j=k$ (giving $\sum_iw_iC_{ik}$); since $C_{ik}=C_{ki}$ these are equal, totalling $2\sum_jC_{kj}w_j$. Setting the derivative to zero:
+Differentiate with respect to one weight $w_k$, holding all the other weights fixed (a partial derivative: ordinary differentiation in which the other weights are treated as constants). The middle term gives $-2C_{k0}$. In the double sum, $w_k$ appears when $i=k$ (giving $\sum_jw_jC_{kj}$) and when $j=k$ (giving $\sum_iw_iC_{ik}$); since $C_{ik}=C_{ki}$ these are equal, totalling $2\sum_jC_{kj}w_j$. Setting the derivative to zero:
 \begin{equation}
 -2C_{k0}+2\sum_jC_{kj}w_j=0\quad\Longrightarrow\quad\sum_{j=1}^KC_{kj}w_j=C_{k0},\quad k=1,\dots,K,
 \end{equation}
@@ -631,7 +639,13 @@ or in matrix form
 C\bm w=\bm c_0.
 \label{eq:generalization-krig}
 \end{equation}
-These are the \emph{kriging normal equations}. They have the same structure as the least-squares normal equations of Chapter~\ref{ch:least-squares}, with covariances in place of sums of products. The second derivative matrix of $\mathcal E$ is $2C$, and a covariance matrix satisfies $\bm v^\top C\bm v=\langle(\bm v^\top\bm d)^2\rangle\ge0$ for every $\bm v$, so the stationary point is a minimum.
+These are the \emph{kriging normal equations}. They have the same structure as the least-squares normal equations of Chapter~\ref{ch:least-squares}, with covariances in place of sums of products. To see that the solution is a minimum and not some other stationary point, change the weights from $\bm w$ to $\bm w+\bm v$ for an arbitrary vector $\bm v$. From Eq.~\eqref{eq:generalization-krigE} in matrix form, $\mathcal E(\bm w)=C_{00}-2\bm w^\top\bm c_0+\bm w^\top C\bm w$, so
+\begin{align}
+\mathcal E(\bm w+\bm v)&=C_{00}-2(\bm w+\bm v)^\top\bm c_0+(\bm w+\bm v)^\top C(\bm w+\bm v)\notag\\
+&=\mathcal E(\bm w)-2\bm v^\top\bm c_0+2\bm v^\top C\bm w+\bm v^\top C\bm v&&\text{($C$ symmetric, so $\bm w^\top C\bm v=\bm v^\top C\bm w$)}\notag\\
+&=\mathcal E(\bm w)+2\bm v^\top(C\bm w-\bm c_0)+\bm v^\top C\bm v.\notag
+\end{align}
+If $\bm w$ solves $C\bm w=\bm c_0$, the middle term vanishes, and $\bm v^\top C\bm v=\sum_i\sum_jv_iv_j\langle d_id_j\rangle=\langle(\bm v^\top\bm d)^2\rangle\ge0$. Hence $\mathcal E(\bm w+\bm v)\ge\mathcal E(\bm w)$ for every $\bm v$: the solution is a minimum.
 
 \emph{Minimum error.} At the solution, $\bm w^\top C\bm w=\bm w^\top\bm c_0$ (multiply Eq.~\eqref{eq:generalization-krig} by $\bm w^\top$), so Eq.~\eqref{eq:generalization-krigE} becomes
 \begin{equation}
@@ -706,6 +720,8 @@ Step 3: $-4w\rho_1=-4(-0.3158)(-0.3)=-0.3789$ and $2w^2(0.9)=2(0.09972)(0.9)=0.1
 A small nugget costs almost nothing in accuracy and buys numerical stability. The paper's kriging used a nugget of $0.05$, added once ``after a first version without them was numerically unstable, and not tuned'' (App.~A step 19).
 \end{sample}
 
+Now try two-neighbor kriging on the real zeros. The listing below makes a random 80/20 split of zeros 1--400 (seed 1), estimates $\rho_1$ and $\rho_2$ from pairs of training levels only, and predicts every held-out level whose two neighbors are both training levels, first by the neighbor mean and then by Eq.~\eqref{eq:generalization-w}. It subtracts the training mean first, because the sample mean of the fluctuations is not exactly zero. (In the listing the variable \texttt{mu} is that mean, not a ridge strength.)
+
 \begin{pycode}
 import numpy as np, qmnt
 t = qmnt.zeros(400); n = np.arange(1, 401); d = qmnt.fluct(t, n)
@@ -728,17 +744,19 @@ for name, pred in [("neighbor mean", mu + 0.5*s), ("kriging", mu + w*s)]:
 print("null", qmnt.rms(d[j]))
 \end{pycode}
 
+When you run it, the estimated weight $w$ comes out negative, the neighbor mean is anticorrelated with the held-out truth, and the kriging prediction is positively correlated with it, with exactly the same magnitude of correlation, as the Result above requires. Compare the two printed rms values with the printed null yourself.
+
 \begin{pitfall}
 Estimating correlations with the test data. In the listing above the autocorrelations come only from pairs of \emph{training} levels. In an odd/even split this matters sharply: no two training levels are adjacent, so $\rho_1$ cannot be estimated from the training set at all. Using all levels to estimate $\rho_1$ would leak held-out information into the predictor.
 \end{pitfall}
 
 \begin{beyond}
-For a sequence whose joint distribution is Gaussian (a ``Gaussian process''), the best linear predictor is also the best predictor of \emph{any} form, linear or not: the conditional mean of $d_0$ given the data is exactly $\bm w^\top\bm d$ with $\bm w$ from Eq.~\eqref{eq:generalization-krig}. We do not use this; it is proved in texts on statistical estimation, for example in the treatment of linear prediction in~\cite{esl}. Everything in this section is proved for linear predictors only.
+For a sequence whose joint distribution is Gaussian (a ``Gaussian process''), the best linear predictor is also the best predictor of \emph{any} form, linear or not: the conditional mean of $d_0$ given the data is exactly $\bm w^\top\bm d$ with $\bm w$ from Eq.~\eqref{eq:generalization-krig}. We do not use this; it is proved in standard texts on multivariate statistics and Gaussian processes. Everything in this section is proved for linear predictors only.
 \end{beyond}
 
 \begin{keyideas}
 \item The best linear predictor solves the kriging normal equations $C\bm w=\bm c_0$; its error is uncorrelated with the data used.
-\item With two neighbors, $w=\rho_1/(1+\rho_2)$; for $\rho_1<0$ the prediction is the negative of the neighbor sum, and its correlation equals that of the neighbor mean with the sign flipped.
+\item With two neighbors, $w=\rho_1/(1+\rho_2)$; for $\rho_1<0$ the prediction is a negative, shrunken multiple of the neighbor sum, and its correlation equals that of the neighbor mean with the sign flipped.
 \item A nugget $(C+\tau^2I)\bm w=\bm c_0$ stabilizes the solve and shrinks toward the null, like ridge.
 \end{keyideas}
 
@@ -747,38 +765,42 @@ For a sequence whose joint distribution is Gaussian (a ``Gaussian process''), th
 
 \subsection{Ridge in one parameter}
 
-Recall ridge (Tikhonov) regularization from Chapter~\ref{ch:least-squares}: minimize $\norm{X\bm c-\bm y}^2+\mu\norm{\bm c}^2$, which penalizes large coefficients. In the simplest case, a single parameter $c$ and the model $f(x)=cx$, the penalized error is $S(c)=\sum_i(cx_i-y_i)^2+\mu c^2$. Setting $dS/dc=2\sum_ix_i(cx_i-y_i)+2\mu c=0$ gives
+Recall ridge (Tikhonov) regularization from Chapter~\ref{ch:least-squares}. We write it in the paper's convention: minimize $\norm{X\bm c-\bm y}^2+\mu\sigma_1^2\norm{\bm c}^2$, where $\sigma_1$ is the largest singular value of the design matrix $X$. The penalty punishes large coefficients; scaling it by $\sigma_1^2$ makes $\mu$ a pure number that measures the penalty relative to the most strongly determined direction of the data. In the simplest case, a single parameter $c$ and the model $f(x)=cx$, the design matrix is the single column $(x_1,\dots,x_n)^\top$, and its only singular value is the length of that column, $\sigma_1=(\sum_ix_i^2)^{1/2}$ (Chapter~\ref{ch:least-squares}). The penalized error is therefore $S(c)=\sum_i(cx_i-y_i)^2+\mu\bigl(\sum_jx_j^2\bigr)c^2$. Setting $dS/dc=2\sum_ix_i(cx_i-y_i)+2\mu\bigl(\sum_jx_j^2\bigr)c=0$ gives $c\,(1+\mu)\sum_ix_i^2=\sum_ix_iy_i$, that is
 \begin{equation}
-c(\mu)=\frac{\sum_ix_iy_i}{\sum_ix_i^2+\mu}.
+c(\mu)=\frac{\sum_ix_iy_i}{(1+\mu)\sum_ix_i^2}.
 \label{eq:generalization-ridge1}
 \end{equation}
 At $\mu=0$ this is ordinary least squares; as $\mu\to\infty$, $c(\mu)\to0$ and every prediction $c(\mu)x$ tends to zero. If ``zero'' is the null (no fluctuation), then \emph{strong regularization returns any model to the null}.
 
 \begin{sample}{A ridge path}
-Data: $(x,y)=(1,2.1),(2,3.9),(3,6.2)$. Fit $f=cx$ with ridge strengths $\mu=0$, $14$ and $140$; give $c$, the in-sample rms for $\mu=0$ and $\mu=14$, and the prediction at $x=4$.
+Data: $(x,y)=(1,2.1),(2,3.9),(3,6.2)$. Fit $f=cx$ with ridge strengths $\mu=0$, $1$ and $10$ (in the convention of Eq.~\eqref{eq:generalization-ridge1}); give $c$, the in-sample rms for $\mu=0$ and $\mu=1$, and the prediction at $x=4$.
 
 Step 1: $\sum x_iy_i=2.1+7.8+18.6=28.5$; $\sum x_i^2=1+4+9=14$.
 
-Step 2: $c(0)=28.5/14=2.0357$; $c(14)=28.5/28=1.0179$; $c(140)=28.5/154=0.1851$.
+Step 2: $c(0)=28.5/14=2.0357$; $c(1)=28.5/(2\times14)=28.5/28=1.0179$; $c(10)=28.5/(11\times14)=28.5/154=0.1851$.
 
-Step 3: In-sample residuals at $\mu=0$: $2.1-2.0357=0.0643$, $3.9-4.0714=-0.1714$, $6.2-6.1071=0.0929$; rms $=\sqrt{(0.00413+0.02939+0.00862)/3}=0.119$. At $\mu=14$: residuals $1.0821$, $1.8643$, $3.1464$; rms $=\sqrt{(1.1710+3.4756+9.9000)/3}=2.20$.
+Step 3: In-sample residuals at $\mu=0$: $2.1-2.0357=0.0643$, $3.9-4.0714=-0.1714$, $6.2-6.1071=0.0929$; rms $=\sqrt{(0.00413+0.02939+0.00862)/3}=0.119$. At $\mu=1$: residuals $1.0821$, $1.8643$, $3.1464$; rms $=\sqrt{(1.1710+3.4756+9.9000)/3}=2.20$.
 
 Step 4: Predictions at $x=4$: $8.143$, $4.071$, $0.740$.
 
 \[
-\boxed{c=2.036,\ 1.018,\ 0.185;\quad E_{\rm in}(0)=0.119,\ E_{\rm in}(14)=2.20;\quad f(4)=8.14,\ 4.07,\ 0.74}
+\boxed{c=2.036,\ 1.018,\ 0.185;\quad E_{\rm in}(0)=0.119,\ E_{\rm in}(1)=2.20;\quad f(4)=8.14,\ 4.07,\ 0.74}
 \]
 In-sample error rises with $\mu$, and the prediction slides toward zero.
 \end{sample}
 
 \subsection{Ridge with many parameters}
 
-Recall the SVD solution with filter factors from Chapter~\ref{ch:least-squares}: writing $X=U\Sigma V^\top$ with singular values $\sigma_1\ge\sigma_2\ge\dots$, the paper's ridge step has the form
+Recall the SVD solution with filter factors from Chapter~\ref{ch:least-squares}: writing $X=U\Sigma V^\top$ with singular values $\sigma_1\ge\sigma_2\ge\dots$, the one-shot ridge solution in the convention above has the form
 \begin{equation}
 \bm c=V\,\mathrm{diag}\!\left(\frac{\sigma_j}{\sigma_j^2+\mu\sigma_1^2}\right)U^\top\bm y.
 \label{eq:generalization-filter}
 \end{equation}
-(This is App.~A step 6 with $\lambda$ replaced by the ridge strength $\mu$; the paper's ridge variant ``adds $\mu\Sigma_1^2$ to the filter denominator''.) Each filter factor satisfies $0\le\sigma_j/(\sigma_j^2+\mu\sigma_1^2)\le\sigma_j/(\mu\sigma_1^2)$, which tends to zero as $\mu\to\infty$. So every component of $\bm c$ tends to zero, $\delta V\to0$, and the predicted levels tend to the unperturbed (null) levels. For moderate $\mu$, the factor is suppressed most for small $\sigma_j$, i.e.\ for the parameter directions that the training data constrain least. Those are exactly the directions that, by the Result of Sec.~\ref{sec:generalization-overfit}, can produce arbitrary held-out behavior.
+This is the one-shot, linear analogue of what the paper does. The paper's fit of the potential is iterative (App.~A step 6): at each iteration it recomputes the sensitivity matrix, takes its SVD $U\Sigma V^\top$, and updates
+\[
+\bm c\;\leftarrow\;\bm c+V\,\mathrm{diag}\!\left(\frac{\sigma_j}{\sigma_j^2+(\lambda+\mu)\sigma_1^2}\right)U^\top\bm r,
+\]
+where $\bm r$ is the current residual vector and $\lambda$ the Levenberg--Marquardt damping (Chapter~\ref{ch:fitting}). The paper's ridge variant ``adds $\mu\Sigma_1^2$ to the filter denominator'' alongside $\lambda\Sigma_1^2$; it does not replace $\lambda$. Its $\mu$ is in the same $\sigma_1^2$-scaled convention as ours. Each filter factor satisfies $0\le\sigma_j/(\sigma_j^2+\mu\sigma_1^2)\le\sigma_j/(\mu\sigma_1^2)$, which tends to zero as $\mu\to\infty$. In the one-shot form every component of $\bm c$ therefore tends to zero. In the iterated form the same bound (with $\lambda+\mu$ in place of $\mu$) makes every step tend to zero, so $\bm c$ stays at its starting value $\bm c=\bm 0$. Either way $\delta V\to0$, and the predicted levels tend to the unperturbed (null) levels. For moderate $\mu$, the factor is suppressed most for small $\sigma_j$, i.e.\ for the parameter directions that the training data constrain least. Those are exactly the directions that, by the Result of Sec.~\ref{sec:generalization-overfit}, can produce arbitrary held-out behavior.
 
 Figure~\ref{fig:generalization-ridge} shows this for RE4.
 
@@ -824,7 +846,7 @@ In machine learning there are general ``no free lunch'' theorems, stating roughl
 
 \subsection{The fitted potential through this lens}
 
-For the fitted potential, recall the first-order relation $\delta E_n\approx\sum_kA_{nk}c_k$ (Chapters~\ref{ch:perturbation} and~\ref{ch:fitting}). The levels feel the correction $\delta V$ through $|\psi_n|^2$, and recall from Chapter~\ref{ch:wkb} that a high level is most sensitive near its classical turning points. A cosine correction with many terms can therefore shift the levels in almost any joint pattern, provided its basis is rich enough to resolve the local wavelength at the relevant energies. Chapter~\ref{ch:fitting} expressed this as the (heuristic) coverage law $M\pi/L>2\sqrt E$.
+For the fitted potential, recall the first-order relation $\delta E_n\approx\sum_kA_{nk}c_k$ (Chapters~\ref{ch:perturbation} and~\ref{ch:fitting}). The levels feel the correction $\delta V$ through $|\psi_n|^2$, and recall from Chapter~\ref{ch:wkb} that a level of energy $E$ has \emph{classical turning points} at the positions where $V(x)=E$, where a classical particle of that energy would stop and reverse. The particle moves slowest there, and correspondingly $|\psi_n|^2$ is largest near the turning points, so a high level is most sensitive to $\delta V$ near them. A cosine correction with many terms can therefore shift the levels in almost any joint pattern, provided its basis is rich enough to resolve the local wavelength at the relevant energies. Chapter~\ref{ch:fitting} expressed this as the (heuristic) coverage law $M\pi/L>2\sqrt E$.
 
 \begin{sample}{When is the cosine family complete for the scored levels?}
 At scale 1 the box half-width is $L=44.883$ and the highest scored level sits near $E\approx t_{500}=811.184$ (paper App.~A key anchors). Use the coverage law to estimate the basis size $M$ beyond which the cosine family can realize essentially arbitrary shifts of all 500 levels. Compare $M=300$ and $M=900$.
@@ -843,7 +865,7 @@ Step 4: For $M=300$: $M\pi/L=300\pi/44.883=21.0<56.96$, not covered. For $M=900$
 The paper reports in-sample rms $0.186$ on all 500 zeros at $M=300$ and below $10^{-4}$ at $M=900$, ``consistent with a basis-coverage law'' (Sec.~III). The law is a heuristic estimate, not a sharp threshold.
 \end{sample}
 
-Once the family can realize essentially any joint shift of the training levels, the Result of Sec.~\ref{sec:generalization-overfit} says (in its linearized form) that the training data do not constrain the held-out levels. What the fitted potential predicts for them is set by the optimizer: starting from $\bm c=\bm 0$, damped least-squares steps of the kind in Eq.~\eqref{eq:generalization-filter} build $\bm c$ from combinations of the rows of the training sensitivity matrix, and the held-out shifts are whatever those combinations happen to do to the held-out levels. This is a first-order, heuristic picture of a nonlinear fit; it explains the observed behavior without proving it.
+How far does the Result of Sec.~\ref{sec:generalization-overfit} carry over? Its hypothesis is that the stacked training-plus-test matrix has full row rank. That requires $M\ge n_{\rm tr}+n_{\rm te}$; saturation on the training levels alone is not enough. Some of the paper's configurations meet the counting condition: $M=600$ fitted on zeros 1--400 and scored on 401--500 (500 rows, 600 columns), and the $M=400$ odd/even splits (400 rows). For these, provided the joint (linearized) sensitivity matrix has full row rank, exact training fits exist with any held-out shifts, and the data cannot choose among them. For the principal configuration, $M=400$ fitted on 400 zeros and scored on 100, the stacked matrix has 500 rows but rank at most 400, so the Result does not apply. There the held-out shifts are not completely free. They are only partly constrained, because parameter directions with small singular values of the training sensitivity matrix are weakly determined by the training levels, and such directions can move the held-out levels at little in-sample cost. In both cases, what the fitted potential predicts for the held-out levels is largely set by the optimizer: starting from $\bm c=\bm 0$, damped least-squares steps of the kind in Eq.~\eqref{eq:generalization-filter} build $\bm c$ from combinations of the rows of the training sensitivity matrix, and the held-out shifts are whatever those combinations happen to do to the held-out levels. This is a first-order, heuristic picture of a nonlinear fit; it explains the observed behavior without proving it.
 
 \subsection{The right parametrization}
 
@@ -856,7 +878,7 @@ Two models fit the same 400 zeros to the same in-sample rms. Model P is a 400-co
 
 \begin{keyideas}
 \item Inductive bias is everything besides the data that determines predictions on new inputs.
-\item A family that can fit anything (including scrambled data) has its held-out predictions set by its bias, not by its data.
+\item A family that can fit anything (including scrambled data) has its held-out predictions set largely by its bias, not by its data; fully so when training and test rows are jointly of full row rank ($M\ge n_{\rm tr}+n_{\rm te}$).
 \item The coverage law estimates when the cosine family becomes effectively complete: $M\gtrsim814$ for all 500 scale-1 levels.
 \item Generalization requires a bias that matches the data-generating structure; for the zeros, sparsity in $t$-frequency is such a bias.
 \end{keyideas}
@@ -901,13 +923,13 @@ Table~III reads as follows.
 \begin{itemize}
 \item \emph{Random splits} are ``the principal evidence'': every held-out error is above the null, by a factor $1.5$--$3.0$ at scale 1 and $1.8$--$1.9$ at scale 2, with no reliably positive correlation.
 \item \emph{Odd/even splits} have 200 training levels at scale 1, so rows with $M\ge200$ are saturated (Sample Problem ``Counting levels''). The $M=400$ odd/even rows have in-sample error $<10^{-3}$, a lookup table in disguise, and held-out errors $0.351$ and $0.368$. With $M=100$, fewer coefficients than levels, the held-out error is still $0.312$ and $0.311$ against nulls $0.238$ and $0.250$.
-\item \emph{Sign of the correlations.} At $M\le200$ the correlations are clearly negative ($-0.26$ to $-0.40$). The paper calls this ``mechanical'': the fluctuation sequence has negative autocorrelation at lags 1--3, ``so any smooth interpolation between neighbouring training levels is anticorrelated with the truth (the mean of the two nearest training fluctuations gives $-0.26$ to $-0.41$).'' That is Eq.~\eqref{eq:generalization-nbrcorr} with $\rho_1<0$, and Eq.~\eqref{eq:generalization-rho1} explains why $\rho_1<0$ is expected for a rigid spectrum.
+\item \emph{Sign of the correlations.} At $M\le200$ the correlations are all negative: $-0.26$ to $-0.39$ for the odd/even rows, and $-0.40$ to $-0.14$ across the random splits at $M=200$. The paper calls this ``mechanical'': the fluctuation sequence has negative autocorrelation at lags 1--3, ``so any smooth interpolation between neighbouring training levels is anticorrelated with the truth (the mean of the two nearest training fluctuations gives $-0.26$ to $-0.41$).'' That is Eq.~\eqref{eq:generalization-nbrcorr} with $\rho_1<0$, and Eq.~\eqref{eq:generalization-rho1} explains why $\rho_1<0$ is expected for a rigid spectrum.
 \end{itemize}
 The paper concludes that the failure is ``not a covariate shift in height'' and is ``in fact worse within height than in forward extrapolation.'' On the same held-out sets the six-prime explicit formula scores $0.062$--$0.063$ with correlation $+0.97$.
 
 \subsection{Kriging: the serial structure is there to be used (Sec.~III)}
 
-Sec.~\ref{sec:generalization-kriging} predicts that a correlation-aware linear predictor can turn negative lag correlations into positive skill. The paper reports exactly this, within one height range: ``a linear interpolator (simple kriging from the training fluctuations) predicts held-out true zeros at $0.117$ with correlation $+0.87$ and permuted targets at the null.'' Its version uses autocovariances from training pairs up to lag 40, a $\cos^2$ taper, a positive-semidefinite projection and a nugget $0.05$ (App.~A step 19), so it is richer than our two-neighbor example. Note the role of the permuted targets: permutation destroys serial correlation, so kriging falls to the null, as it should. The fitted operator, by contrast, ``fails alike on true zeros and on surrogates ($0.57$--$0.70$; one split, illustrative).'' The paper labels this single-split comparison as illustrative, and so should we.
+Sec.~\ref{sec:generalization-kriging} predicts that a correlation-aware linear predictor can turn negative lag correlations into positive skill. The paper reports exactly this, within one height range: ``a linear interpolator (simple kriging from the training fluctuations) predicts held-out true zeros at $0.117$ with correlation $+0.87$ and permuted targets at the null.'' Its version uses autocovariances from training pairs up to lag 40, a $\cos^2$ taper, a positive-semidefinite projection and a nugget $0.05$ (App.~A step 19), so it is richer than our two-neighbor example, and its skill is far larger. Two neighbors with $\rho_1=-0.3$, $\rho_2=-0.1$ give only $\mathrm{corr}\approx0.45$ and an rms ratio of about $0.89$ (Sample Problem ``Kriging versus the neighbor mean''), whereas the paper reports $+0.87$. The difference comes from the richer predictor: it uses training neighbors out to lag 40, whose joint correlations carry information that lags 1 and 2 alone do not. Note the role of the permuted targets: permutation destroys serial correlation, so kriging falls to the null, as it should. The fitted operator, by contrast, ``fails alike on true zeros and on surrogates ($0.57$--$0.70$; one split, illustrative).'' The paper labels this single-split comparison as illustrative, and so should we.
 
 \subsection{The interpolation gap and Fig.~4: damage, not just ignorance}
 
@@ -936,7 +958,7 @@ Finally, the first item of the paper's proposed falsifiability standard is this 
 \item Neighbor-mean correlation with truth: $\rho_1\sqrt{2/(1+\rho_2)}$ (Eq.~\eqref{eq:generalization-nbrcorr}); its MSE, Eq.~\eqref{eq:generalization-nbrmse}.
 \item Lag-1 identity $\rho_1=1-\mathrm{Var}(u)/(2\sigma^2)$ (Eq.~\eqref{eq:generalization-rho1}); estimate $\rho_1\approx-0.29$ for the zeros.
 \item Kriging normal equations $C\bm w=\bm c_0$ (Eq.~\eqref{eq:generalization-krig}), minimum error Eq.~\eqref{eq:generalization-krigmin}; two-neighbor weight $w=\rho_1/(1+\rho_2)$ (Eq.~\eqref{eq:generalization-w}) flips the sign of the neighbor mean's correlation; nugget Eq.~\eqref{eq:generalization-nugget}.
-\item Ridge: $c(\mu)=\sum xy/(\sum x^2+\mu)$ in one parameter (Eq.~\eqref{eq:generalization-ridge1}); SVD filter Eq.~\eqref{eq:generalization-filter}; $\mu\to\infty$ returns to the null.
+\item Ridge (paper's $\mu\sigma_1^2$ convention): $c(\mu)=\sum xy/((1+\mu)\sum x^2)$ in one parameter (Eq.~\eqref{eq:generalization-ridge1}); SVD filter Eq.~\eqref{eq:generalization-filter}; $\mu\to\infty$ returns to the null.
 \item Coverage law estimate $M\gtrsim2\sqrt E\,L/\pi\approx814$ for scale 1.
 \end{itemize}
 
@@ -966,11 +988,11 @@ Finally, the first item of the paper's proposed falsifiability standard is this 
 
 \prob{2}{Fit $f(t)=c_0+c_1t+c_2t^2$ to $f(-1)=0$ and $f(1)=2$. (a) Find all exact fits and their prediction at $t=2$. (b) Find the minimum-norm fit and its prediction.}
 
-\prob{2}{Data $(x,y)=(1,1.2),(2,1.8),(4,4.1)$. Fit $f=cx$ with ridge strength $\mu$. Find $c(\mu)$ and the prediction at $x=5$ for $\mu=0,21,210$, and describe the trend.}
+\prob{2}{Data $(x,y)=(1,1.2),(2,1.8),(4,4.1)$. Fit $f=cx$ with ridge strength $\mu$. Find $c(\mu)$ and the prediction at $x=5$ for $\mu=0,1,10$ (convention of Eq.~\eqref{eq:generalization-ridge1}), and describe the trend.}
 
 \prob{2}{Use the coverage law $M\pi/L>2\sqrt E$ to estimate the basis size needed to cover all 1000 scale-2 levels, with $L=59.957$ and $E\approx t_{1000}=1419.422$ (paper Sec.~II~A). Is $M=900$ above or below this estimate?}
 
-\prob{3}{Prove the Result of Sec.~\ref{sec:generalization-overfit} in the form: if $X_{\rm tr}$ has full row rank $n_{\rm tr}$ and the stacked matrix $X$ has full row rank, then the set of exact training fits is an affine subspace on which the map $\bm c\mapsto X_{\rm te}\bm c$ is onto $\mathbb R^{n_{\rm te}}$. Show also that when $X$ does \emph{not} have full row rank, the training data can constrain the predictions; give a $2$-parameter example.}
+\prob{3}{Prove the Result of Sec.~\ref{sec:generalization-overfit} in the form: if $X_{\rm tr}$ has full row rank $n_{\rm tr}$ and the stacked matrix $X$ has full row rank, then the set of exact training fits is an affine subspace (one particular solution plus any vector of a subspace) on which the map $\bm c\mapsto X_{\rm te}\bm c$ is onto $\mathbb R^{n_{\rm te}}$ (every vector of $\mathbb R^{n_{\rm te}}$ is reached). Show also that when $X$ does \emph{not} have full row rank, the training data can constrain the predictions; give a $2$-parameter example.}
 
 \prob{2}{From the paper's Table~III, compute the ratio of held-out error to null for the scale-1, $M=100$ odd and even rows. Why are these rows more informative than the $M=400$ odd/even rows?}
 
@@ -1032,7 +1054,7 @@ Finally, the first item of the paper's proposed falsifiability standard is this 
 
 \textbf{19.} $2.09/0.2631=7.94$. The raw null is dominated by finite-difference dispersion (about two mean spacings at levels 401--500 on the working grid, paper Sec.~II~C), not by the zeros' fluctuations. Against the inflated null, any model that merely corrected the grid bias would look highly ``skillful''; conversely a real signal could be hidden under the bias. Skill is meaningful only against the null of the model's own smooth part.
 
-\textbf{21.} Let $\bm e=d_0-\bm w^\top\bm d$. Then $\langle e\,\bm v^\top\bm d\rangle=\sum_kv_k\langle e\,d_k\rangle=\sum_kv_k\bigl(C_{k0}-\sum_jC_{kj}w_j\bigr)=0$ by Eq.~\eqref{eq:generalization-krig}. For any other weights $\bm w'=\bm w+\bm v$: $\langle(d_0-\bm w'^\top\bm d)^2\rangle=\langle(e-\bm v^\top\bm d)^2\rangle=\langle e^2\rangle-2\langle e\,\bm v^\top\bm d\rangle+\langle(\bm v^\top\bm d)^2\rangle=\langle e^2\rangle+\langle(\bm v^\top\bm d)^2\rangle\ge\langle e^2\rangle$.
+\textbf{21.} Let $e=d_0-\bm w^\top\bm d$. Then $\langle e\,\bm v^\top\bm d\rangle=\sum_kv_k\langle e\,d_k\rangle=\sum_kv_k\bigl(C_{k0}-\sum_jC_{kj}w_j\bigr)=0$ by Eq.~\eqref{eq:generalization-krig}. For any other weights $\tilde{\bm w}=\bm w+\bm v$: $\langle(d_0-\tilde{\bm w}^{\top}\bm d)^2\rangle=\langle(e-\bm v^\top\bm d)^2\rangle=\langle e^2\rangle-2\langle e\,\bm v^\top\bm d\rangle+\langle(\bm v^\top\bm d)^2\rangle=\langle e^2\rangle+\langle(\bm v^\top\bm d)^2\rangle\ge\langle e^2\rangle$.
 
 \textbf{23.} $0.1958/0.1708=1.146$: about 15\% worse than predicting zero. The synthetic target is a single known sinusoid with no noise, so there is nothing to ``overfit'' in the noise sense; the only question is whether the family's bias continues the pattern. It does not.
 

@@ -1,0 +1,93 @@
+[
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "\\begin{tabular}{ccccccc}\n\\toprule\n$n_{\\rm pw}$ & 4 & 6 & 8 & 12 & 24 & 50\\\\",
+  "problem": "The check on the table of 1-K_h/q^2 fails (assertion at line 26). Some entries are misquoted. For n=4 the value is 1-(sin(pi/4)/(pi/4))^2 = 0.189 (19% is OK). The others need recomputation: n=6 gives 8.8%, n=8 gives 5.0%, n=12 gives 2.3%, n=24 gives 0.57%, n=50 gives 0.13%, and at least one is off beyond the tolerance (likely 8.8% or 5.0%).",
+  "fix": "Recompute every table entry with numpy, correct the mismatched value(s), and set the check tolerance consistently with the displayed digits."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Problem~21).\n\\end{pitfall}",
+  "problem": "The pitfall refers to Problem 21 for the central first difference, but the problem list is not numbered by hand; the numbering depends on order. Several other problem cross-references (Problem 6, 10, 11, 14, 28, 29, 31, 1) may be misaligned with the actual list order. For example, 'Problem~28' (constant shift) is the 28th item, but the listing has the constant-shift item at a different position.",
+  "fix": "Recount the problems and correct all cross-references, or use labels."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Problem~31 shows that the opposite assignment is worse than no extrapolation at all.",
+  "problem": "The answer to Problem 31 shows the wrong weighting gives error 0.155, worse than both raw values (0.124 and 0.032). This is consistent, but the 'Swapping them makes things worse' claim in the conditions list also cites Problem 31 while that problem concerns a different numbering, so the references are fragile.",
+  "fix": "Verify numbering; keep the claim."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Its levels 401--500 lie at heights roughly between $t_{401}$ and $t_{500}=811.18$",
+  "problem": "The text then uses E=811.18 to compute q, but the Wu--Sprung bias is also quoted as 'eight times larger than the signal' (2/0.26 is about 7.7); fine, but the 14.8 points per wavelength uses level 500 energy at the well bottom, where V=V0, so q is the maximum; this is not a typical value for the state.",
+  "fix": "State that this is the shortest wavelength (at the well bottom), not typical."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "The paper says ``two grids''; in the Richardson sense the Richardson pair is two grids, and the working grid supplies $E^g$.",
+  "problem": "Confusing and somewhat hand-waving. Also the chapter's Definitions say 'three times' on three grids while the paper's Eq.(3) text says two grids; the chapter's answer to Problem 13 says 'three grids'.",
+  "fix": "Say plainly: the paper's 'two grids' refers to the Richardson pair; the full Delta_n uses three grids including the working grid."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Because $h=2L/(N+1)$, doubling $N$ from $12000$ to $24000$ halves $h$ only approximately ($r=24001/12001$)",
+  "problem": "Chapter earlier says exact halving needs N+1 doubled; the paper's pair 12000/24000 is not exact halving, and the paper formula (4E_{2h}-E_h)/3 is attributed to a reading of subscripts; speculation about the paper's notation is asserted without evidence.",
+  "fix": "Hedge: 'we read the paper's subscripts as...' and note this is an interpretation."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Algebra and experiment agree that held-out values do not reach the fit.",
+  "problem": "The overwriting-with-noise experiment is for the sinusoidal controls only, not the operator fits; the chapter generalizes.",
+  "fix": "Say it supports the same conclusion for the sinusoidal controls."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Treating $W$ as a small perturbation and using the continuum form of \\eqref{eq:finite-differences-hf}, the grid level should sit at",
+  "problem": "Eq. hf was derived for matrices; the continuum version and the replacement of the grid operator by H+W acting on smooth functions is asserted. Also W (fourth derivative) is unbounded, so 'small' is not justified beyond the pitfall.",
+  "fix": "Add a sentence that this step is heuristic and refer to Chapter 13 for the continuum formula."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "which also vanishes at the walls (for a potential that is finite there, as all ours are)",
+  "problem": "The Wu--Sprung potential is only used up to V=1000 and finite; fine, but the second derivative argument also needs psi_n'' continuous up to the wall, not stated.",
+  "fix": "Mention smoothness of V."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The $n_{\\rm pw}=4$ entry reproduces the middle level of the three-point box: there $k=2$, $q=\\pi$, $h=0.5$",
+  "problem": "The three-point box k=2 energy error 18.9% uses (k pi/2L)=pi; consistent, but the table gives 19% vs 18.9%; minor rounding mismatch with the check tolerance.",
+  "fix": "Give the entry as 18.9%."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\item Chapter~\\ref{ch:complex}: $e^{i\\theta}=\\cos\\theta+i\\sin\\theta$. Chapter~\\ref{ch:series}: the geometric series.",
+  "problem": "Prerequisites uses \\item directly inside prerequisites; fine, but the chapter references ch:fitting, ch:wu-sprung, ch:counting-zeros, ch:wkb, ch:non-hermitian, ch:perturbation which are allowed. No issue; however no CHECKS cover several quoted numbers (e.g. 71,700 within tolerance, 51.3, 2.78e-5 are covered; the 0.12 factor sqrt(h), the 652/1079 states, 2.5 times larger, 1.0e-3) and figure scripts are missing from the response.",
+  "fix": "Add the FIGURES section with scripts for the six figures and checks for sqrt(h)=0.122 and the continuum level counts in Problem 18."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/finite-differences_taylor.pdf}",
+  "problem": "Figures are included but no FIGURES part with scripts was supplied for taylor, grid, dispersion, richardson, states, wsbias.",
+  "fix": "Provide a '### FIG' script for each of the six figures."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The paper reports the result: the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C).",
+  "problem": "The quote's location is Sec. II C paragraph 'No leakage', fine, but the chapter intro says Eq.(3) is in II C while the paper's reference sheet puts it there too; ok. Statement 'bias eight times larger than the signal' is rough (2/0.263=7.6).",
+  "fix": "Say 'about eight times'."
+ }
+]

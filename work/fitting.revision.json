@@ -1,82 +1,319 @@
 {
  "patches": [
   {
-   "old": "Do not assume the two choices give identical fits:",
-   "new": "The two choices need not give identical fits:"
+   "old": "except that the \"line\" is a whole function $\\delta V(x)$ and each \"point\" is an eigenvalue",
+   "new": "except that the ``line'' is a whole function $\\delta V(x)$ and each ``point'' is an eigenvalue"
   },
   {
-   "old": "Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, and the eigenspace is one-dimensional.",
-   "new": "Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, namely the vector that the recursion generates when it is started from $v_1=1$. The value $v_1=0$ is not available to a genuine eigenvector: if $v_1=0$, row 1 gives $v_2=0$, then row 2 gives $v_3=0$, and so on, so $v=0$, which is not an eigenvector. A nonzero eigenvector therefore has $v_1\\neq0$ and is a nonzero multiple of that one fixed vector. (The last row, $e\\,v_{N-1}+d_Nv_N=Ev_N$, has no $v_{N+1}$ to solve for; it is a condition that only certain values of $E$ satisfy, and it adds no freedom.) So the eigenspace is one-dimensional."
+   "old": "Sec.~II~C (\"Hermitian fluctuation fit and out-of-sample protocol\", including the paragraph \"Other bases\")",
+   "new": "Sec.~II~C (``Hermitian fluctuation fit and out-of-sample protocol'', including the paragraph ``Other bases'')"
   },
   {
-   "old": "This is often called the Hellmann--Feynman relation.",
-   "new": "This is often called the Hellmann--Feynman relation. In general form: if a Hamiltonian depends on a parameter $\\alpha$, a nondegenerate level obeys $\\dd E_n/\\dd\\alpha=\\langle\\psi_n|\\partial H/\\partial\\alpha|\\psi_n\\rangle$. This is nothing but first-order perturbation theory (Chapter~\\ref{ch:perturbation}) applied to the small change $(\\partial H/\\partial\\alpha)\\,\\delta\\alpha$ of the Hamiltonian, divided by $\\delta\\alpha$. Here $\\alpha=c_k$, and by Eqs.~\\eqref{eq:fitting-H} and \\eqref{eq:fitting-deltaV}, $\\partial H/\\partial c_k=\\phi_k(x)$."
+   "old": "\\item Chapter~\\ref{ch:asymptotics}: Newton's method for a single equation.",
+   "new": "\\item Chapter~\\ref{ch:asymptotics}: Newton's method for a single equation; Taylor's theorem with remainder.\n\\item Chapter~\\ref{ch:bound-states}: eigenfunctions and levels of the infinite square well.\n\\item Chapter~\\ref{ch:wkb}: the local wavenumber $\\sqrt{E-V(x)}$, turning points and the WKB wavefunction (restated where used).\n\\item Chapter~\\ref{ch:counting-zeros}: the smooth counting function $\\Nsm$, the smooth zeros $s_n$ and the mean spacing $\\gap_n$."
   },
   {
-   "old": "The CHECKS script confirms that the finite-difference box reproduces these values to about $10^{-6}$ or better; in fact for this discrete problem they hold exactly (Problem~8).",
-   "new": "For the finite-difference box with $N$ interior grid points the same values hold exactly, provided $n+k<N+1$ (Problem~8); on fine grids this covers every $n$ and $k$ of interest."
+   "old": "The rule \"$c$ in, list of levels out\" is called",
+   "new": "The rule ``$c$ in, list of levels out'' is called"
   },
   {
-   "old": "This is exactly what the pseudo-inverse of Chapter~\\ref{ch:least-squares} returns (checked in CHECKS).",
-   "new": "This is exactly what the pseudo-inverse of Chapter~\\ref{ch:least-squares} returns (you can confirm it with \\texttt{numpy.linalg.pinv})."
+   "old": "the $n$-th \"smooth zero\", the solution",
+   "new": "the $n$-th ``smooth zero'', the solution"
   },
   {
-   "old": "In the Wu--Sprung well each level responds to a whole range of cosines: even the lowest level responds to cosines up to $k$ of about 60, and the range widens as $n$ grows.",
-   "new": "In the Wu--Sprung well each level responds to a whole range of cosines, and the range widens as $n$ grows. Even for the lowest level the range is not small: the cutoff introduced below sits at $k=2L\\sqrt{E_1-V_0}/\\pi\\approx60$ if we take $E_1\\approx t_1=14.13$, because the lowest level lies about $4.4$ above the bottom of the well."
+   "old": "in terms of \"$r$\", the residual vector",
+   "new": "in terms of ``$r$'', the residual vector"
   },
   {
-   "old": "once close, each error is roughly proportional to the square of the previous one, the fast convergence typical of Newton-type methods. But the first step overshot by a lot.",
-   "new": "once close, each error is roughly a constant times the square of the previous one. The error analysis of Newton's method (Chapter~\\ref{ch:asymptotics}) predicts the constant: $e_{i+1}\\approx\\abs{E_-''(c_*)/2E_-'(c_*)}\\,e_i^2$. Here $E_-'(c)=-c(1+c^2)^{-1/2}$, and differentiating once more,\n\\[\nE_-''(c)=-(1+c^2)^{-1/2}+c^2(1+c^2)^{-3/2}=-(1+c^2)^{-3/2}.\n\\]\nAt $c_*$, $1+c_*^2=2.25$, so $E_-'(c_*)=-1.118034/1.5=-0.7454$ and $E_-''(c_*)=-1/1.5^3=-0.2963$, giving the constant $0.2963/(2\\times0.7454)=0.199$. Indeed $0.199\\times0.0082^2=1.3\\times10^{-5}$, the last error. The first two errors are too large for this asymptotic rule to apply. Quadratic convergence of this kind is typical of Newton-type methods when the fit can be made exact. But the first step overshot by a lot."
+   "old": "\\subsection{Which level is \"level $n$\"?}",
+   "new": "\\subsection{Which level is ``level $n$''?}"
   },
   {
-   "old": "    \"\"\"Paper-style damped fit (Appendix A, step 6).\n    resid(c): scaled residual vector r_n / gap_n\n    jac(c):   scaled sensitivity matrix A_nk / gap_n\"\"\"",
-   "new": "    # resid(c): r_n/gap_n;  jac(c): A_nk/gap_n  (paper App. A, step 6)"
+   "old": "(The same argument, with the Wronskian in place of the recursion, shows that bound states of the continuum problem in one dimension are nondegenerate.)",
+   "new": "(A similar argument for the differential equation itself, which we do not give here, shows that bound states of the continuum problem in one dimension are nondegenerate.)"
   },
   {
-   "old": "            r_try = resid(c_try)\n            rms_try = np.sqrt(np.mean(r_try**2))",
-   "new": "            r_try = resid(c_try); rms_try = np.sqrt(np.mean(r_try**2))"
+   "old": "A numerical eigensolver, however, returns eigenvectors $v_n$ of unit \\emph{Euclidean} length, $\\sum_jv_{jn}^2=1$. The two are related by $\\psi_n(x_j)=v_{jn}/\\sqrt h$, so\n\\begin{equation}\nA_{nk}=\\sum_j\\frac{v_{jn}^2}{h}\\,\\phi_k(x_j)\\,h=\\sum_jv_{jn}^2\\,\\phi_k(x_j).",
+   "new": "A numerical eigensolver, however, returns eigenvectors $w_n$ of unit \\emph{Euclidean} length, $\\sum_jw_{jn}^2=1$. (We write $w$, not $v$, for these eigenvectors, because $v_i$ will denote singular vectors in Section~\\ref{sec:fitting-svd}.) The two are related by $\\psi_n(x_j)=w_{jn}/\\sqrt h$, so\n\\begin{equation}\nA_{nk}=\\sum_j\\frac{w_{jn}^2}{h}\\,\\phi_k(x_j)\\,h=\\sum_jw_{jn}^2\\,\\phi_k(x_j)."
   },
   {
-   "old": "    return c, cur\n\\end{pycode}",
-   "new": "    return c, cur\n\n# example: two-level model, target 0.5, start c = 0.5\nEm = lambda c: 2 - np.sqrt(1 + c[0]**2)\nres = lambda c: np.array([0.5 - Em(c)])\njac = lambda c: np.array([[-c[0] / np.sqrt(1 + c[0]**2)]])\nprint(lm_fit(np.array([0.5]), res, jac))  # c close to 1.118034, rms near 0\n\\end{pycode}\n\nThe example call fits the two-level model of Section~\\ref{sec:fitting-gn}. It returns a coefficient within $10^{-6}$ of the exact answer $c_*=1.118034$ and an rms that is zero to within rounding; with \\texttt{maxiter=1} it returns $c=1.21175$, the single iteration worked out by hand in Sample~7."
+   "old": "If you rescale the solver's vectors to $\\psi=v/\\sqrt h$",
+   "new": "If you rescale the solver's vectors to $\\psi=w/\\sqrt h$"
   },
   {
-   "old": "With Eq.~\\eqref{eq:fitting-ridgestep}, the step vanishes exactly where",
-   "new": "Under this literal reading of the record, the step of Eq.~\\eqref{eq:fitting-ridgestep} vanishes exactly where"
+   "old": "a standing wave with $n$ humps per half-box",
+   "new": "a standing wave with $n$ humps across the box"
   },
   {
-   "old": "Above the cutoff the overlap is exponentially small rather than exactly zero, because the stationary point has moved into the complex plane; that is why the figure shows a sharp fall, not a hard edge.",
-   "new": "Above the cutoff the condition $2k(x)=q$ has no real solution anywhere in the well, so the positive and negative lobes of the integrand cancel along the whole range of integration and the overlap is small, though not exactly zero. That is why the figure shows a sharp fall, not a hard edge.\n\n\\begin{beyond}\nHow small is the overlap above the cutoff? A refinement of the stationary-phase method, the method of steepest descents, treats the condition $2k(x)=q$ as an equation for a \\emph{complex} $x$ and shows that above the cutoff the overlap decreases exponentially as $q$ grows. We take this on trust; the method is developed in the chapter on asymptotic expansions of \\cite{rhb}. In this chapter we use only the qualitative statement that the overlap is small above the cutoff, which is what \\Cref{fig:fitting-sensitivity} shows.\n\\end{beyond}"
+   "old": "\\emph{Step 1: equations.} By Sample~2, $\\delta E_n=",
+   "new": "\\emph{Step 1: equations.} By the Sample Problem ``The sensitivity matrix of the box'', $\\delta E_n="
   },
   {
-   "old": "since $V_0\\approx9.74$ is small compared with energies of hundreds, the difference is a few percent.",
-   "new": "for small $u$ the first-order Taylor expansion $\\sqrt{1-u}\\approx1-u/2$ gives $\\sqrt{E-V_0}=\\sqrt E\\,\\sqrt{1-V_0/E}\\approx\\sqrt E\\,(1-V_0/2E)$, so the relative difference is about $V_0/(2E)$. At the top scored level, $E\\approx811$, that is $0.6\\%$, so the paper's form is harmless where the law matters. At the bottom of the spectrum the difference is large (at $E=t_1=14.13$, $\\sqrt{E-V_0}\\approx0.56\\sqrt E$), but the coverage law is set by the highest level, not the lowest."
+   "old": "Writing $s_n=(-1)^{n+1}$, the equations give $c_n=2s_n(d_n-c_0)$",
+   "new": "Writing $\\epsilon_n=(-1)^{n+1}$, the equations give $c_n=2\\epsilon_n(d_n-c_0)$"
   },
   {
-   "old": "In-sample rms (in local spacings, log scale) falls with $M$ and collapses once $M$ exceeds the number of fitted levels plus one.",
-   "new": "In-sample rms (in local spacings, log scale) falls with $M$ and collapses to essentially zero once $M$ reaches the number of fitted levels, $M=30$, where the first-order equations first become exactly solvable (Problem~24)."
+   "old": "Do not expect the step of Sample~3 to produce",
+   "new": "Do not expect the step of the Sample Problem ``One linearized step in the box'' to produce"
   },
   {
-   "old": "\\prob{2}{Apply the coverage law at scale 2 ($L=59.957$, top scored level $t_{1000}=1419.42248094599$, paper Sec.~II~A). How many cosines does it require? Compare with the in-sample rms $0.103$ at $M=900$ (Table~I).}",
-   "new": "\\prob{2}{Apply the coverage law at scale 2 ($L=59.957$) to the fits of Table~I, which are trained on zeros 1--800. Take the top training level to be near the smooth zero $s_{800}$, the solution of $\\Nsm(s_{800})=799.5$. Find $s_{800}$ numerically, then the number of cosines the law requires, and the energy and approximate level index that $M=900$ reaches. Compare with the in-sample rms $0.103$ at $M=900$ (Table~I).}"
+   "old": "\\item With solver eigenvectors of unit Euclidean norm, $A_{nk}=\\sum_jv_{jn}^2\\phi_k(x_j)$; test with $A_{n0}=1$.",
+   "new": "\\item With solver eigenvectors $w_n$ of unit Euclidean norm, $A_{nk}=\\sum_jw_{jn}^2\\phi_k(x_j)$; test with $A_{n0}=1$."
   },
   {
-   "old": "show numerically that with $M$ cosines ($k=0,\\dots,M-1$) the first-order model can produce any shifts of levels $1,\\dots,M-1$ exactly, but not of level $M$.}",
-   "new": "show numerically that with $M$ cosines ($k=0,\\dots,M-1$) the first-order model can produce any shifts of levels $1,\\dots,M$ exactly, but not arbitrary shifts of levels $1,\\dots,M+1$ (hint: compute the rank of the sensitivity matrix). Explain why levels $M$ and $M+1$ are reached only through $c_0$ at first order, and connect the result with \\Cref{fig:fitting-toyfit}.}"
+   "old": "The error analysis of Newton's method (Chapter~\\ref{ch:asymptotics}) predicts the constant: $e_{i+1}\\approx\\abs{E_-''(c_*)/2E_-'(c_*)}\\,e_i^2$.",
+   "new": "The error analysis of Newton's method predicts the constant; here is the argument. Write $f(c)=E_-(c)-0.5$. Since $r=-f$ and $J=f'$, the Gauss--Newton step is $c_{i+1}=c_i-f(c_i)/f'(c_i)$. Taylor's theorem about $c_i$ gives, for some $\\xi$ between $c_i$ and $c_*$,\n\\[\n0=f(c_*)=f(c_i)+f'(c_i)(c_*-c_i)+\\tfrac12f''(\\xi)(c_*-c_i)^2 .\n\\]\nDividing by $f'(c_i)$ and moving terms,\n\\[\nc_i-\\frac{f(c_i)}{f'(c_i)}-c_*=\\frac{f''(\\xi)}{2f'(c_i)}(c_i-c_*)^2 .\n\\]\nThe left side is $c_{i+1}-c_*=e_{i+1}$, with $e_i=c_i-c_*$. Close to the solution $f'(c_i)\\approx f'(c_*)$ and $f''(\\xi)\\approx f''(c_*)$; also $f'=E_-'$ and $f''=E_-''$. Hence $e_{i+1}\\approx\\bigl[E_-''(c_*)/2E_-'(c_*)\\bigr]\\,e_i^2$, with constant of size $\\abs{E_-''(c_*)/2E_-'(c_*)}$."
   },
   {
-   "old": "\\textbf{11.} $M>2\\sqrt{1419.42}\\times59.957/\\pi=75.35\\times19.085\\approx1438$. $M=900$ does not satisfy the law at scale 2, consistent with its in-sample rms remaining at $0.103$ rather than near zero (also $900<1000$ levels).",
-   "new": "\\textbf{11.} Solving $\\Nsm(t)=799.5$ by bisection or Brent's method (Chapter~\\ref{ch:asymptotics}) gives $s_{800}\\approx1184$. Then $M>2\\sqrt{1184}\\times59.957/\\pi=68.8\\times19.085\\approx1313$. The reach of $M=900$ is $E=(900\\pi/2L)^2=(23.58)^2\\approx556$, and $\\Nsm(556)\\approx309$, so only about the lowest 309 of the 800 training levels are covered. Although $900>800$ coefficients, the coverage condition fails, which is consistent with the in-sample rms remaining at $0.103$ rather than near zero."
+   "old": "Dots: Gauss--Newton iterates from $c=0.5$ (Sample~4), which",
+   "new": "Dots: Gauss--Newton iterates from $c=0.5$ (Sample Problem ``Gauss--Newton on the two-level model''), which"
+  },
+  {
+   "old": "The objective $|r(c)|$ has two equally good minima",
+   "new": "The absolute residual $|r(c)|$ (equivalently the objective $\\Phi=\\tfrac12r^2$) has two equally good minima"
+  },
+  {
+   "old": "for instance $M=900$ on 500 levels (Sec.~III) and $M\\ge200$ on 200 odd-indexed levels (Table~III).",
+   "new": "for instance $M=900$ on 500 levels (Sec.~III), $M=400$ on 200 odd-indexed levels (Table~III), and $M=400$ on zeros 1--300 (Table~I)."
+  },
+  {
+   "old": "overshoots far from the solution, and is undefined when $M>n_{\\rm fit}$.",
+   "new": "overshoots far from the solution, and its step is not unique when $M>n_{\\rm fit}$."
+  },
+  {
+   "old": "\\emph{Step 1: ingredients.} From Sample~4, $J=",
+   "new": "\\emph{Step 1: ingredients.} From the Sample Problem ``Gauss--Newton on the two-level model'', $J="
+  },
+  {
+   "old": "the \"level patterns\" $u_i$",
+   "new": "the ``level patterns'' $u_i$"
+  },
+  {
+   "old": "the \"coefficient patterns\" $v_i$",
+   "new": "the ``coefficient patterns'' $v_i$"
+  },
+  {
+   "old": "(The symbol $\\mathrel{+}=$ is programmers' shorthand for \"add the right side to $c$\".)",
+   "new": "(The symbol $\\mathrel{+}=$ is programmers' shorthand for ``add the right side to $c$''.) Here we copy the paper's symbols; in our weighted convention read $r\\to\\hat r$ and take $\\sigma_i$, $\\bm U$ and $\\bm V$ from the SVD of $\\hat A$."
+  },
+  {
+   "old": "Three properties follow from",
+   "new": "Four properties follow from"
+  },
+  {
+   "old": "the minimum-norm step of Chapter~\\ref{ch:least-squares}, as in Sample~3.",
+   "new": "the minimum-norm step of Chapter~\\ref{ch:least-squares}, as in the Sample Problem ``One linearized step in the box''."
+  },
+  {
+   "old": "The paper also runs fits with a \"ridge variant\" that \"adds $\\mu\\Sigma_1^2$ to the filter denominator\" (Appendix~A step~6)",
+   "new": "The paper also runs fits with a ``ridge variant'' that ``adds $\\mu\\Sigma_1^2$ to the filter denominator'' (Appendix~A step~6)"
+  },
+  {
+   "old": "\\item The paper's ridge variant raises the floor of the damping; it is not the same as a Tikhonov penalty on $c$.",
+   "new": "\\item Read literally, the paper's ridge variant raises the floor of the damping, which would differ from a Tikhonov penalty on $c$; the archived scripts decide."
+  },
+  {
+   "old": "\"start $c=0$, at most 60 iterations, acceptance $0.999$\"",
+   "new": "``start $c=0$, at most 60 iterations, acceptance $0.999$''"
+  },
+  {
+   "old": "eigensolve with vectors & compute $E_n$ and eigenvectors $v_n$ of $H(c)$",
+   "new": "eigensolve with vectors & compute $E_n$ and eigenvectors $w_n$ of $H(c)$"
+  },
+  {
+   "old": "one SVD per iteration, then each trial step costs only a few matrix products\\\\",
+   "new": "one SVD per iteration, then each trial step costs only a few matrix products plus one eigenvalue-only solve to score it\\\\"
+  },
+  {
+   "old": "at most 60 iterations & a cap on the number of passes through the loop\\\\",
+   "new": "at most 60 iterations & a cap on the number of passes through the loop (stated for the revision computations, App.~A after step~15; not stated for the original fits)\\\\"
+  },
+  {
+   "old": "at the cost of four eigenvalue solves",
+   "new": "at the cost of at most four eigenvalue solves"
+  },
+  {
+   "old": "the scale-2 $M=300$ row of Table~I \"required relaxing the step-acceptance threshold; under the strict protocol the optimizer accepts no step at all\" (Table~I caption)",
+   "new": "the scale-2 $M=300$ row of Table~I ``required relaxing the step-acceptance threshold; under the strict protocol the optimizer accepts no step at all'' (Table~I caption)"
+  },
+  {
+   "old": "the single iteration worked out by hand in Sample~7.",
+   "new": "the single iteration worked out by hand in the Sample Problem ``One pass of the schedule on the two-level model''."
+  },
+  {
+   "old": "so the \"SVD\" of the $1\\times1$ matrix",
+   "new": "so the ``SVD'' of the $1\\times1$ matrix"
+  },
+  {
+   "old": "\\emph{Step 1: current state.} From Sample~4, $r=",
+   "new": "\\emph{Step 1: current state.} From the Sample Problem ``Gauss--Newton on the two-level model'', $r="
+  },
+  {
+   "old": "By Sample~5 this gives",
+   "new": "By the Sample Problem ``Damped steps on the two-level model'' this gives"
+  },
+  {
+   "old": "The paper's protocol \"is deterministic from $c=0$; optimizer variability is probed with randomized initial $c$\" (Sec.~II~C).",
+   "new": "The paper's protocol ``is deterministic from $c=0$; optimizer variability is probed with randomized initial $c$'' (Sec.~II~C)."
+  },
+  {
+   "old": "\"give identical in-sample rms $0.1370$ and OOS $0.365$--$0.379$\" (Table~I caption)",
+   "new": "``give identical in-sample rms $0.1370$ and OOS $0.365$--$0.379$'' (Table~I caption)"
+  },
+  {
+   "old": "stop when $\\lambda>10^4$ or after 60 iterations.",
+   "new": "stop when $\\lambda>10^4$ (and, in the revision computations, after at most 60 iterations)."
+  },
+  {
+   "old": "This is the paper's \"resolution concentrated near $x=0$ and $x=L$\" (Sec.~II~C, \"Other bases\"). The absolute value makes $\\phi_k$ even, at the price of a kink at $x=0$ for odd $k$ (visible in \\Cref{fig:fitting-bases}).",
+   "new": "This is the paper's ``resolution concentrated near $x=0$ and $x=L$'' (Sec.~II~C, ``Other bases''). The absolute value makes $\\phi_k$ even, at the price of a kink at $x=0$ for every $k\\ge1$. To see this, differentiate $T_k(\\cos\\theta)=\\cos k\\theta$ with respect to $\\theta$: $T_k'(y)\\,(-\\sin\\theta)=-k\\sin k\\theta$, so $T_k'(y)=k\\sin k\\theta/\\sin\\theta$. As $y\\to-1$, $\\theta\\to\\pi$ and both sines vanish; l'H\\^opital's rule gives $T_k'(-1)=k\\cdot k\\cos k\\pi/\\cos\\pi=(-1)^{k+1}k^2$. Just right of $x=0$, $\\dd\\phi_k/\\dd x=(2/L)T_k'(y)\\to(2/L)(-1)^{k+1}k^2$; by evenness the slope just left of $x=0$ is the negative of this, so the slope jumps by $4k^2/L\\neq0$ (visible in \\Cref{fig:fitting-bases})."
+  },
+  {
+   "old": "Put $M$ equally spaced nodes $u_j=j/(M-1)$, $j=0,\\dots,M-1$, on the interval $0\\le u\\le1$, where $u=|x|/L$.",
+   "new": "Put $M$ equally spaced nodes $u_j=j/(M-1)$, $j=0,\\dots,M-1$, on the interval $0\\le u\\le1$, where $u=|x|/L$. (The paper says only ``$M$ uniform nodes of $|x|/L$'' and does not specify their placement; we take nodes that include both ends, and the archived scripts \\cite{zenodo} record the paper's choice. The variable $u$ and the nodes $u_j$ have nothing to do with the left singular vectors $u_i$ of Section~\\ref{sec:fitting-svd}.)"
+  },
+  {
+   "old": "The paper calls this \"the simplest stand-in for a wavelet-type basis\".",
+   "new": "The paper calls this ``the simplest stand-in for a wavelet-type basis''."
+  },
+  {
+   "old": "with kinks at $x=0$ for odd $k$.",
+   "new": "with kinks at $x=0$ for every $k\\ge1$."
+  },
+  {
+   "old": "\\emph{Step 1: the WKB density.} Recall that between its turning points a level of energy $E$ has local wavenumber $k(x)=\\sqrt{E-V(x)}$ and WKB wavefunction",
+   "new": "\\emph{Step 1: the WKB density.} A warning on notation first: in this section $k(x)$ is the local wavenumber, a function of position, while the basis index of $\\cos(k\\pi x/L)$ is a plain integer $k$; to keep them apart we write the cosine's wavenumber as $q=k\\pi/L$. Recall from Chapter~\\ref{ch:wkb} that between its turning points (the points where $E=V(x)$, at which a classical particle would stop and turn back) a level of energy $E$ has local wavenumber $k(x)=\\sqrt{E-V(x)}$ and WKB wavefunction"
+  },
+  {
+   "old": "$\\theta(x)=\\int^xk(x')\\,\\dd x'-\\pi/4$ and $C$ is a constant.",
+   "new": "$\\theta(x)=\\int^xk(x')\\,\\dd x'-\\pi/4$ and $C$ is a constant. (The wave has the local wavelength $2\\pi/k(x)$ set by the classical momentum; the amplitude factor $k^{-1/2}$ makes $|\\psi|^2$ proportional to the time a classical particle spends near $x$; the phase $-\\pi/4$ comes from the connection formulas of Chapter~\\ref{ch:wkb}.)"
+  },
+  {
+   "old": " (This \"stationary phase\" reasoning is the same as the cancellation of a rapidly oscillating integrand in Chapter~\\ref{ch:fourier-transform}.)",
+   "new": " This is called \\emph{stationary-phase} reasoning. A small example shows why the stationary point dominates. With a phase that never stands still, $\\int_{-X}^{X}\\cos(ax)\\,\\dd x=\\bigl[\\sin(ax)/a\\bigr]_{-X}^{X}=2\\sin(aX)/a$, at most $2/a$ in size: the lobes cancel and only an endpoint remnant of order $1/a$ survives. With the phase $ax^2$, which is stationary at $x=0$, the integrand $\\cos(ax^2)$ stays positive throughout $ax^2<\\pi/2$, a central interval of width $2\\sqrt{\\pi/2a}$ that shrinks only like $1/\\sqrt a$; this uncancelled region contributes an amount of order $1/\\sqrt a$, far more than $1/a$ when $a$ is large. For $a=100$ and $X=3$ the first integral is at most $0.02$ in size, while numerically the second is about $0.13$.\n\n\\begin{beyond}\nThe infinite-range value $\\int_{-\\infty}^{\\infty}\\cos(ax^2)\\,\\dd x=\\sqrt{\\pi/2a}$ (about $0.125$ for $a=100$) is a Fresnel integral, and the general statement that an oscillatory integral is dominated by its points of stationary phase is the method of stationary phase. We take both on trust; they are treated with the method of steepest descents in \\cite{rhb}.\n\\end{beyond}"
+  },
+  {
+   "old": "Sample~2 found the exact answer",
+   "new": "The Sample Problem ``The sensitivity matrix of the box'' found the exact answer"
+  },
+  {
+   "old": "Equation~\\eqref{eq:fitting-coverage} is a heuristic rule of thumb, derived from WKB and stationary phase, not a proven statement about the minimum of $\\Phi$.",
+   "new": "Equation~\\eqref{eq:fitting-coverage} is a heuristic rule of thumb, derived from WKB and stationary phase, not a proven statement about the minimum of $\\Phi$. In particular it is not a necessary condition for a small in-sample error. It concerns shifting \\emph{all consecutive} levels up to $E_{\\max}$ independently. A level above the reach of the basis still responds to all $M$ cosines (its own cutoff lies above $M$), so if only some levels are fitted (every other one, say), or if $n_{\\rm fit}$ is well below $M$, the sensitivity matrix can still have full row rank and the fit can reach very small residuals even though $M\\pi/L<2\\sqrt{E_{\\max}}$. The paper's Table~III shows this: at scale 1, $M=400$ fits the 200 odd-indexed (or even-indexed) zeros among zeros 1--400 to rms $<10^{-3}$, whereas covering all consecutive levels up to $t_{400}\\approx679.7$ would, by Eq.~\\eqref{eq:fitting-coverage}, need $M\\gtrsim745$."
+  },
+  {
+   "old": "(paper Appendix~A, \"Key anchors\")",
+   "new": "(paper Appendix~A, ``Key anchors'')"
+  },
+  {
+   "old": "\\boxed{M\\gtrsim 814\\ \\text{for all 500 levels};\\quad M=400\\ \\text{covers up to }E\\approx196,\\ \\text{about level }77}\n\\]",
+   "new": "\\boxed{M\\gtrsim 814\\ \\text{for all 500 levels};\\quad M=400\\ \\text{gives full coverage only up to }E\\approx196,\\ \\text{about level }77}\n\\]\n``Full coverage'' means that every consecutive level up to that energy can be shifted independently. Levels above $E\\approx196$ still respond to all 400 cosines, so the law does not say they cannot be fitted; it says only that $M=400$ does not guarantee independent shifts of every consecutive level there."
+  },
+  {
+   "old": "\\checkanswer{Levels up to roughly 77, whose ripples the cosines can reach, can be moved independently and should fit well; higher levels respond only to the slow parts of their densities and to cosines shared with many neighbors, so they cannot all be adjusted independently. The residual error should be concentrated in the upper levels. (The law is heuristic, so expect a gradual, not sharp, transition.)}",
+   "new": "\\checkanswer{The law alone does not tell you. It guarantees independent shifts only for the consecutive levels up to about level 77. Levels above that still respond to all 400 cosines, and with as many coefficients as training levels the sensitivity matrix can have full row rank, so they may well be fitted too. The law is heuristic and is not a necessary condition for a small error: Table~III shows $M=400$ fitting 200 odd-indexed levels as high as $n=399$ to rms $<10^{-3}$. Where the residual of the 1--400 fit is concentrated can only be found by computing it, which this chapter does not do.}"
+  },
+  {
+   "old": "The paper reports that \"in-sample error falls steadily with basis size $M$\" (Fig.~3 caption)",
+   "new": "The paper reports that ``in-sample error falls steadily with basis size $M$'' (Fig.~3 caption)"
+  },
+  {
+   "old": "and \"the first-order sensitivity $A_{nk}=\\int|\\psi_n|^2\\cos(k\\pi x/L)\\,dx$\" (Eq.",
+   "new": "and ``the first-order sensitivity $A_{nk}=\\int|\\psi_n|^2\\cos(k\\pi x/L)\\,dx$'' (Eq."
+  },
+  {
+   "old": "and updates \"$c$ by SVD-damped least squares with a Levenberg--Marquardt schedule, accepting only steps that improve the rms\".",
+   "new": "and updates ``$c$ by SVD-damped least squares with a Levenberg--Marquardt schedule, accepting only steps that improve the rms''."
+  },
+  {
+   "old": "\"Iterated linearization\" is Gauss--Newton",
+   "new": "``Iterated linearization'' is Gauss--Newton"
+  },
+  {
+   "old": "the ridge variant \"adds $\\mu\\Sigma_1^2$ to the filter denominator\" (Eq.",
+   "new": "the ridge variant ``adds $\\mu\\Sigma_1^2$ to the filter denominator'' (literal reading: Eq."
+  },
+  {
+   "old": "Step~7, \"plain eigensolve of the fitted potential, scored on held-out zeros\", is",
+   "new": "Step~7, ``plain eigensolve of the fitted potential, scored on held-out zeros'', is"
+  },
+  {
+   "old": "and hats \"on $M$ uniform nodes of $|x|/L$\". \"Only the basis changes.\"",
+   "new": "and hats ``on $M$ uniform nodes of $|x|/L$''. ``Only the basis changes.''"
+  },
+  {
+   "old": "as Section~\\ref{sec:fitting-coverage} predicts for the best achievable error.",
+   "new": "as Section~\\ref{sec:fitting-coverage} predicts for the best achievable error in the nested cosine and Chebyshev families, and approximately for hats."
+  },
+  {
+   "old": "\\paragraph{Sec.~III, first paragraph.} \"On the full",
+   "new": "\\paragraph{Sec.~III, first paragraph.} ``On the full"
+  },
+  {
+   "old": "$)).\" Sample~9 shows",
+   "new": "$)).'' The Sample Problem ``How many cosines for 500 zeros?'' shows"
+  },
+  {
+   "old": "The paper calls this \"consistent with\", and",
+   "new": "The paper calls this ``consistent with'', and"
+  },
+  {
+   "old": "The two ridge rows ($\\mu=0.03$, $0.3$) end at higher in-sample rms, $0.142$ and $0.206$, as expected when the damping can never fall below $\\mu$. The Table~I caption reports that the scale-2 $M=300$ row \"required relaxing the step-acceptance threshold\"; in \\Cref{tab:fitting-schedule} terms, every trial of the first iteration failed the $0.999$ test, so $\\lambda$ climbed past $10^4$ with $c$ still zero.",
+   "new": "The two ridge rows ($\\mu=0.03$, $0.3$) end at higher in-sample rms, $0.142$ and $0.206$, which is consistent with either reading of the ridge variant (a damping floor that, with the accept rule and iteration cap, stops the iteration early, or a Tikhonov penalty that moves the minimum); see Section~\\ref{sec:fitting-svd}. The Table~I caption reports that the scale-2 $M=300$ row ``required relaxing the step-acceptance threshold''; in \\Cref{tab:fitting-schedule} terms, every trial in every iteration failed the $0.999$ test, so (in our reading of the schedule) $\\lambda$ was multiplied by 30 until it exceeded $10^4$, with $c$ still zero."
+  },
+  {
+   "old": "At $M=400$ the in-sample error is \"$<10^{-3}$\": with twice as many knobs as levels, the underdetermined damped steps (Section~\\ref{sec:fitting-svd}) drive the residuals to essentially zero. The paper calls these rows \"stress tests of memorization\".",
+   "new": "At $M=400$ the in-sample error is ``$<10^{-3}$'': with twice as many knobs as levels, the underdetermined damped steps (Section~\\ref{sec:fitting-svd}) drive the residuals to essentially zero. This does not contradict the coverage law: the law concerns independent shifts of all consecutive levels up to $E_{\\max}$, while here only every other level is fitted, and a $200\\times400$ sensitivity matrix can have full row rank (Section~\\ref{sec:fitting-coverage}). The paper calls these rows ``stress tests of memorization''."
+  },
+  {
+   "old": "\\item The paper's schedule (\\Cref{tab:fitting-schedule}):",
+   "new": "\\item The paper's schedule (\\Cref{tab:fitting-schedule}, our reading):"
+  },
+  {
+   "old": "discretely $A_{nk}=\\sum_jv_{jn}^2\\phi_k(x_j)$",
+   "new": "discretely $A_{nk}=\\sum_jw_{jn}^2\\phi_k(x_j)$"
+  },
+  {
+   "old": "the normalized eigenvectors are $v_{jn}=\\sqrt{2/(N+1)}",
+   "new": "the normalized eigenvectors are $w_{jn}=\\sqrt{2/(N+1)}"
+  },
+  {
+   "old": "\"the optimizer accepts no step at all\". Trace",
+   "new": "``the optimizer accepts no step at all''. Trace"
+  },
+  {
+   "old": "Discuss what this says about the meaning of \"converged\".}",
+   "new": "Discuss what this says about the meaning of ``converged''.}"
+  },
+  {
+   "old": "compute the lowest 50 eigenvectors and $A_{nk}$ for $k<300$.",
+   "new": "compute the lowest 50 eigenvectors and $A_{nk}$ for $k<500$."
+  },
+  {
+   "old": "have \"resolution concentrated near $x=0$ and $x=L$\". Find",
+   "new": "have ``resolution concentrated near $x=0$ and $x=L$''. Find"
+  },
+  {
+   "old": "\\prob{3}{Compare the ridge variant Eq.~\\eqref{eq:fitting-ridgestep} with a Tikhonov penalty",
+   "new": "\\prob{3}{Compare the literal reading of the ridge variant, Eq.~\\eqref{eq:fitting-ridgestep}, with a Tikhonov penalty"
+  },
+  {
+   "old": "\\textbf{15.} In the first iteration all four trials fail",
+   "new": "\\textbf{15.} In our reading of the schedule (the starting $\\lambda$ and the trial order are our choices), in every iteration all four trials fail"
+  },
+  {
+   "old": "(The paper notes this configuration \"remains at the null\" under the strict protocol.)",
+   "new": "(The paper notes this configuration ``remains at the null'' under the strict protocol.)"
+  },
+  {
+   "old": "\\textbf{17.} After one iteration $c=1.21175$ (Sample~7).",
+   "new": "\\textbf{17.} After one iteration $c=1.21175$ (Sample Problem ``One pass of the schedule on the two-level model'')."
+  },
+  {
+   "old": "\\textbf{23.} The variant's step is zero iff",
+   "new": "\\textbf{23.} Under the literal reading, the variant's step is zero if and only if"
   }
  ],
- "new_checks": "import numpy as np\nfrom scipy.optimize import brentq\nfrom scipy.linalg import eigh_tridiagonal\n\ndef Nsm(t):\n    return t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\ndef s_n(n):\n    return brentq(lambda t: Nsm(t) - (n - 0.5), 7.0, 1e5)\ndef gapn(n):\n    return 2*np.pi/np.log(s_n(n)/(2*np.pi))\n\n# Sample 1: gaps and rms\ng = [gapn(1), gapn(2), gapn(3)]\nfor gv, cl in zip(g, [7.500, 5.279, 4.486]):\n    assert abs(gv - cl) < 2e-3, gv\nt = np.array([14.134725, 21.022040, 25.010858]); E = np.array([14.30, 20.90, 25.10])\nrh = (t - E)/np.array([7.500, 5.279, 4.486])\nassert abs(np.sqrt(np.mean(rh**2)) - 0.0217) < 1e-4\nassert abs(gapn(500) - 1.3) < 0.05   # \"about 1.3\"\n\n# Sample 2 / Problem 8: discrete box A exact\nL = 44.883; N = 400; h = 2*L/(N+1); x = -L + h*np.arange(1, N+1)\nEv, v = eigh_tridiagonal(2/h**2*np.ones(N), -np.ones(N-1)/h**2, select='i', select_range=(0, 19))\nfor n in range(1, 21):\n    for k in range(0, 31):\n        A = np.sum(v[:, n-1]**2*np.cos(k*np.pi*x/L))\n        ex = 1.0 if k == 0 else (0.5*(-1)**(n+1) if k == n else 0.0)\n        assert abs(abs(A) - abs(ex)) < 1e-10 and (ex == 0 or np.sign(A) == np.sign(ex))\nassert abs(1/(2*L/6001) - 67) < 0.5   # pitfall 1/h\n\n# Sample 3: min-norm\nAm = np.array([[1, .5, 0, 0], [1, 0, -.5, 0], [1, 0, 0, .5]]); d = np.array([.01, -.02, .03])\nc = np.linalg.pinv(Am) @ d\nassert np.allclose(c, [0.0061538, 0.0076923, 0.0523077, 0.0476923], atol=1e-6)\n\n# pitfall: spacings, matrix element, second-order size\nassert abs(3*np.pi**2/(4*L**2) - 0.00367) < 1e-5 and abs(2*np.pi**2/L**2 - 0.00980) < 1e-5\nxx = np.linspace(-L, L, 200001); p = lambda n: np.sin(n*np.pi*(xx+L)/(2*L))/np.sqrt(L)\nassert abs(np.trapezoid(p(1)*p(3)*np.cos(2*np.pi*xx/L), xx) + 0.5) < 1e-6\nassert abs((0.0523077/2)**2/(2*np.pi**2/L**2) - 0.07) < 0.005\n\n# Wu-Sprung sensitivity text: cutoff for lowest level ~60, E1 - V0 ~ 4.4\nV0 = 3.10073*np.pi\nassert abs(2*L*np.sqrt(14.134725 - V0)/np.pi - 60) < 0.5\nassert abs(14.134725 - V0 - 4.4) < 0.05\n\n# Sample 4: Gauss-Newton\nEm = lambda c: 2 - np.sqrt(1 + c**2); Jf = lambda c: -c/np.sqrt(1 + c**2)\ncs = [0.5]\nfor _ in range(3):\n    cc = cs[-1]; cs.append(cc + (0.5 - Em(cc))/Jf(cc))\nassert np.allclose(cs[1:], [1.354102, 1.126201, 1.118047], atol=2e-6)\ncst = np.sqrt(1.25)\nassert np.allclose(np.array(cs) - cst, [-0.618, 0.236, 0.0082, 0.000013], atol=[1e-3, 1e-3, 1e-4, 2e-6])\nassert abs(2*0.973249*(-0.229753) + 0.447214) < 1e-5\n# Newton error constant\nEp = -cst/np.sqrt(1 + cst**2); Epp = -(1 + cst**2)**(-1.5)\nassert abs(Ep + 0.7454) < 1e-4 and abs(Epp + 0.2963) < 1e-4\nK = abs(Epp/(2*Ep)); assert abs(K - 0.199) < 1e-3\nassert abs(0.199*0.0082**2 - 1.3e-5) < 0.05e-5\ne2 = cs[2] - cst; e3 = cs[3] - cst\nassert abs(e3/e2**2 - K) < 0.03\n\n# Sample 5 and 7\nJr = Jf(0.5)*(0.5 - Em(0.5))\nfor lp, dc, rr in [(0.04, 0.71175, 0.0711), (0.2, 0.42705, 0.1364), (1, 0.14235, 0.3115), (5, 0.03285, 0.3669)]:\n    dd = Jr/(0.2 + lp); assert abs(dd - dc) < 1e-5\n    assert abs(abs(0.5 - Em(0.5 + dd)) - rr) < 1e-4\nassert abs(Jr/5 - 0.03416) < 1e-5\nassert abs(abs(0.5 - Em(1.21175)) - 0.071095) < 1e-5 and 0.071095 < 0.999*0.381966\n\n# lm_fit listing (pycode), example call, Problem 17\ndef lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):\n    r = resid(c); cur = np.sqrt(np.mean(r**2))\n    for it in range(maxiter):\n        U, s, Vt = np.linalg.svd(jac(c), full_matrices=False)\n        Utr = U.T @ r\n        accepted = False\n        for lam_try in (0.2*lam, lam, 5*lam, 25*lam):\n            f = s/(s**2 + lam_try*s[0]**2)\n            c_try = c + Vt.T @ (f*Utr)\n            r_try = resid(c_try); rms_try = np.sqrt(np.mean(r_try**2))\n            if rms_try < accept*cur:\n                c, r, cur = c_try, r_try, rms_try\n                lam = max(0.5*lam_try, 1e-7)\n                accepted = True\n                break\n        if not accepted:\n            lam = 30*lam\n            if lam > 1e4:\n                break\n    return c, cur\nEm2 = lambda c: 2 - np.sqrt(1 + c[0]**2)\nres2 = lambda c: np.array([0.5 - Em2(c)])\njac2 = lambda c: np.array([[-c[0]/np.sqrt(1 + c[0]**2)]])\nc1, r1 = lm_fit(np.array([0.5]), res2, jac2, maxiter=1)\nassert abs(c1[0] - 1.21175) < 1e-5 and abs(r1 - 0.0711) < 1e-4\ncf, rf = lm_fit(np.array([0.5]), res2, jac2)\nassert abs(cf[0] - cst) < 1e-6 and rf < 1e-6\n\n# Sample 6, Problems 5, 19\nf = lambda s, lam, s1: s/(s**2 + lam*s1**2)\nassert np.allclose([f(10, .01, 10), f(1, .01, 10), f(.01, .01, 10)], [0.0990, 0.5, 0.0099990], atol=1e-4)\nassert np.allclose([f(4, .25, 4), f(2, .25, 4), f(1, .25, 4)], [0.2, 0.25, 0.2])\nsg = np.linspace(1e-4, 1, 200001); assert abs(f(sg, .01, 1).max() - 5) < 1e-6\n\n# Sample 8\nassert abs(np.cos(3*np.arccos(-0.5)) - 1) < 1e-12 and abs(4*(-0.5)**3 - 3*(-0.5) - 1) < 1e-12\nhat = lambda u, j, M: max(0, 1 - (M-1)*abs(u - j/(M-1)))\nassert abs(hat(0.6, 2, 5) - 0.6) < 1e-12 and abs(hat(0.6, 3, 5) - 0.4) < 1e-12\nassert abs(hat(0.3, 0, 3) - 0.4) < 1e-12 and abs(hat(0.3, 1, 3) - 0.6) < 1e-12   # Problem 13\n\n# Sample 9, coverage text and figure\nassert abs(2*np.sqrt(811.1843588465)*L/np.pi - 813.8) < 0.2\nEmax = (400*np.pi/(2*L))**2; assert abs(Emax - 196.0) < 0.1\nassert abs(Nsm(196) - 77.0) < 0.2\nassert 600*np.pi/L < 2*np.sqrt(811.1843588465) < 900*np.pi/L   # only M=900 clears 500 levels\nassert abs(V0 - 9.7412) < 1e-3\nassert abs(V0/(2*811.1843588465) - 0.006) < 2e-4               # 0.6%\nassert abs(np.sqrt(1 - V0/14.134725) - 0.56) < 0.005\n\n# Problem 11 (scale 2, 800 training levels)\ns800 = s_n(800); assert abs(s800 - 1184) < 1\nassert abs(2*np.sqrt(s800) - 68.8) < 0.05 and abs(59.957/np.pi - 19.085) < 1e-3\nassert abs(2*np.sqrt(s800)*59.957/np.pi - 1313) < 2\nE900 = (900*np.pi/(2*59.957))**2\nassert abs(900*np.pi/(2*59.957) - 23.58) < 0.01 and abs(E900 - 556) < 1\nassert abs(Nsm(E900) - 309) < 1\n\n# Problems 2, 7\nassert abs(np.sqrt(0.03) - 0.1732) < 1e-4\nc = 1.0\nfor cl in [1.5, 1.41667]:\n    c = c + (2 - c**2)/(2*c); assert abs(c - cl) < 1e-5\n\n# Problem 24: rank of first-order box model, L=10, N=300\nLb = 10.0; Nb = 300; hb = 2*Lb/(Nb+1); xb = -Lb + hb*np.arange(1, Nb+1)\nwb, vb = eigh_tridiagonal(2/hb**2*np.ones(Nb), -np.ones(Nb-1)/hb**2, select='i', select_range=(0, 30))\nMm = 10\nPhb = np.cos(np.outer(xb, np.arange(Mm))*np.pi/Lb)\nAb = (vb**2).T @ Phb\nassert np.linalg.matrix_rank(Ab[:Mm], tol=1e-8) == Mm\nassert np.linalg.matrix_rank(Ab[:Mm+1], tol=1e-8) == Mm\n\n# Toy fit figure: collapse at M = nfit = 30\nnfit = 30\nE0 = wb\ngapb = np.gradient(E0)[:nfit]\nrng = np.random.default_rng(0); dd = rng.standard_normal(nfit); dd *= 0.2/np.sqrt(np.mean(dd**2))\ntgt = E0[:nfit] + dd*gapb\ndef toy_rms(M):\n    Ph = np.cos(np.outer(xb, np.arange(M))*np.pi/Lb)\n    def resid(c):\n        w = eigh_tridiagonal(2/hb**2 + Ph @ c, -np.ones(Nb-1)/hb**2, select='i', select_range=(0, nfit-1), eigvals_only=True)\n        return (tgt - w)/gapb\n    def jac(c):\n        w, vv = eigh_tridiagonal(2/hb**2 + Ph @ c, -np.ones(Nb-1)/hb**2, select='i', select_range=(0, nfit-1))\n        return ((vv**2).T @ Ph)/gapb[:, None]\n    return lm_fit(np.zeros(M), resid, jac)[1]\nr10, r20, r30 = toy_rms(10), toy_rms(20), toy_rms(30)\nassert r10 > r20 > r30 and r30 < 1e-6 and r20 > 1e-3\nprint(\"all checks passed\")\n",
- "new_figures": {
-  "fitting_sensitivity": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfrom scipy.linalg import eigh_tridiagonal\nimport qmnt\nL = 44.883; N = 3000; h = 2*L/(N+1); x = -L + h*np.arange(1, N+1)\nV0 = 3.10073*np.pi\nVws = np.array([float(qmnt.wu_sprung_V(xi)) for xi in x])\nks = np.arange(1, 500)\nC = np.cos(np.outer(x, ks)*np.pi/L)\nfig, axs = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)\nfor ax, V, vmin, title in [(axs[0], np.zeros(N), 0.0, \"infinite well\"), (axs[1], Vws, V0, \"Wu-Sprung\")]:\n    E, v = eigh_tridiagonal(2/h**2 + V, -np.ones(N-1)/h**2, select='i', select_range=(0, 99))\n    v = v/np.sqrt((v**2).sum(axis=0))\n    A = (v**2).T @ C\n    img = np.log10(np.maximum(np.abs(A), 1e-4))\n    im = ax.imshow(img, origin='lower', aspect='auto', extent=[0.5, 499.5, 0.5, 100.5], vmin=-4, vmax=0, cmap='viridis')\n    n = np.arange(1, 101)\n    kc = 2*L*np.sqrt(np.maximum(E - vmin, 0))/np.pi\n    ax.plot(kc, n, 'w--', lw=1)\n    ax.set_xlim(1, 499); ax.set_ylim(0.5, 100.5)\n    ax.set_title(title, fontsize=9)\n    ax.set_xlabel(\"cosine index k (dimensionless)\")\naxs[0].set_ylabel(\"level index n\")\nfig.colorbar(im, ax=list(axs), label=\"log10 |A_nk|\")\nplt.savefig(\"fitting_sensitivity.pdf\", bbox_inches=\"tight\")\n",
-  "fitting_landscape": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nEm = lambda c: 2 - np.sqrt(1 + c**2)\nJf = lambda c: -c/np.sqrt(1 + c**2)\nc = np.linspace(-2, 2, 801)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(c, np.abs(0.5 - Em(c)), 'b-', label=\"|0.5 - E_-(c)|\")\ncs = [0.5]\nfor _ in range(3):\n    cc = cs[-1]; cs.append(cc + (0.5 - Em(cc))/Jf(cc))\ncs = np.array(cs)\nax.plot(cs, np.abs(0.5 - Em(cs)), 'ro-', ms=5, lw=0.8, label=\"Gauss-Newton iterates from c = 0.5\")\nfor i, ci in enumerate(cs):\n    ax.annotate(str(i), (ci, abs(0.5 - Em(ci))), textcoords=\"offset points\", xytext=(4, 6), fontsize=8)\nax.axvline(np.sqrt(1.25), color='gray', ls=':'); ax.axvline(-np.sqrt(1.25), color='gray', ls=':')\nax.set_xlabel(\"coefficient c (dimensionless)\")\nax.set_ylabel(\"absolute residual (dimensionless)\")\nax.legend(fontsize=8)\nplt.savefig(\"fitting_landscape.pdf\", bbox_inches=\"tight\")\n",
-  "fitting_lmpath": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, (a, b) = plt.subplots(1, 2, figsize=(6.5, 3))\ns = np.logspace(-4, 0, 400)\nfor lam in [1e-6, 1e-4, 1e-2, 1.0]:\n    a.loglog(s, s/(s**2 + lam), label=\"lambda = %g\" % lam)\na.loglog(s, 1/s, 'k--', label=\"pseudo-inverse\")\na.set_xlabel(\"sigma / sigma_1 (dimensionless)\")\na.set_ylabel(\"sigma_1 f(sigma) (dimensionless)\")\na.legend(fontsize=6); a.set_title(\"(a)\", fontsize=9)\nA = np.array([[1.0, 0.9], [0.9, 1.0], [0.3, -0.2]])\nr = np.array([1.0, 0.5, 0.2])\ngn = np.linalg.lstsq(A, r, rcond=None)[0]\nlo = min(0, gn[0], gn[1]) - 0.6; hi = max(0, gn[0], gn[1]) + 0.6\nd1, d2 = np.meshgrid(np.linspace(lo, hi, 300), np.linspace(lo, hi, 300))\nQ = np.zeros_like(d1)\nfor i in range(3):\n    Q += 0.5*(r[i] - A[i, 0]*d1 - A[i, 1]*d2)**2\nb.contour(d1, d2, Q, levels=15, colors='gray', linewidths=0.6)\nlams = np.logspace(2, -4, 300)\npath = np.array([np.linalg.solve(A.T @ A + l*np.eye(2), A.T @ r) for l in lams])\nb.plot(path[:, 0], path[:, 1], 'b-', lw=1.5, label=\"LM step\")\ng = A.T @ r; g = 0.5*g/np.linalg.norm(g)\nb.annotate(\"\", xy=(g[0], g[1]), xytext=(0, 0), arrowprops=dict(arrowstyle=\"->\", color='r'))\nb.plot(gn[0], gn[1], 'k*', ms=10, label=\"Gauss-Newton\")\nb.set_xlabel(\"delta c_1 (dimensionless)\"); b.set_ylabel(\"delta c_2 (dimensionless)\")\nb.legend(fontsize=7); b.set_title(\"(b)\", fontsize=9); b.set_aspect('equal', adjustable='box')\nplt.tight_layout()\nplt.savefig(\"fitting_lmpath.pdf\", bbox_inches=\"tight\")\n",
-  "fitting_bases": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nL = 44.883\nx = np.linspace(-L, L, 2001)\nfig, axs = plt.subplots(1, 3, figsize=(6.5, 3), sharey=True)\nfor k in range(4):\n    axs[0].plot(x, np.cos(k*np.pi*x/L), label=\"k=%d\" % k)\ny = 2*np.abs(x)/L - 1\nfor k in range(4):\n    axs[1].plot(x, np.cos(k*np.arccos(np.clip(y, -1, 1))), label=\"k=%d\" % k)\nM = 5; u = np.abs(x)/L\nfor j in range(M):\n    axs[2].plot(x, np.maximum(0, 1 - (M-1)*np.abs(u - j/(M-1))), label=\"j=%d\" % j)\nfor ax, t in zip(axs, [\"cosine\", \"Chebyshev\", \"hat (M=5)\"]):\n    ax.set_title(t, fontsize=9); ax.set_xlabel(\"x (units hbar=2m=1)\"); ax.legend(fontsize=6)\naxs[0].set_ylabel(\"phi_k(x) (dimensionless)\")\nplt.tight_layout()\nplt.savefig(\"fitting_bases.pdf\", bbox_inches=\"tight\")\n",
-  "fitting_coverage": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport qmnt\nL = 44.883\nt = np.asarray(qmnt.zeros(500))\nn = np.arange(1, 501)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(n, 2*np.sqrt(t), 'k-', label=\"2 sqrt(t_n)\")\nfor M, col in zip([300, 400, 600, 900], ['C0', 'C1', 'C2', 'C3']):\n    ax.axhline(M*np.pi/L, color=col, ls='--', label=\"M = %d\" % M)\nax.set_xlabel(\"level index n\")\nax.set_ylabel(\"wavenumber (inverse length, units hbar=2m=1)\")\nax.legend(fontsize=8)\nplt.savefig(\"fitting_coverage.pdf\", bbox_inches=\"tight\")\n",
-  "fitting_toyfit": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfrom scipy.linalg import eigh_tridiagonal\ndef lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):\n    r = resid(c); cur = np.sqrt(np.mean(r**2))\n    for it in range(maxiter):\n        U, s, Vt = np.linalg.svd(jac(c), full_matrices=False)\n        Utr = U.T @ r\n        accepted = False\n        for lam_try in (0.2*lam, lam, 5*lam, 25*lam):\n            f = s/(s**2 + lam_try*s[0]**2)\n            c_try = c + Vt.T @ (f*Utr)\n            r_try = resid(c_try); rms_try = np.sqrt(np.mean(r_try**2))\n            if rms_try < accept*cur:\n                c, r, cur = c_try, r_try, rms_try\n                lam = max(0.5*lam_try, 1e-7)\n                accepted = True\n                break\n        if not accepted:\n            lam = 30*lam\n            if lam > 1e4:\n                break\n    return c, cur\nL = 10.0; N = 300; h = 2*L/(N+1); x = -L + h*np.arange(1, N+1); nfit = 30\nE0 = eigh_tridiagonal(2/h**2*np.ones(N), -np.ones(N-1)/h**2, select='i', select_range=(0, nfit), eigvals_only=True)\ngap = np.gradient(E0)[:nfit]\nrng = np.random.default_rng(0); d = rng.standard_normal(nfit); d *= 0.2/np.sqrt(np.mean(d**2))\ntgt = E0[:nfit] + d*gap\ndef toy_rms(M):\n    Ph = np.cos(np.outer(x, np.arange(M))*np.pi/L)\n    def resid(c):\n        w = eigh_tridiagonal(2/h**2 + Ph @ c, -np.ones(N-1)/h**2, select='i', select_range=(0, nfit-1), eigvals_only=True)\n        return (tgt - w)/gap\n    def jac(c):\n        w, vv = eigh_tridiagonal(2/h**2 + Ph @ c, -np.ones(N-1)/h**2, select='i', select_range=(0, nfit-1))\n        return ((vv**2).T @ Ph)/gap[:, None]\n    return lm_fit(np.zeros(M), resid, jac)[1]\nMs = [2, 5, 10, 15, 20, 25, 28, 30, 32, 35, 40]\nrs = [max(toy_rms(M), 1e-16) for M in Ms]\nfig, ax = plt.subplots(figsize=(6, 4))\nax.semilogy(Ms, rs, 'bo-')\nax.axvline(nfit, color='gray', ls=':', label=\"M = number of fitted levels\")\nax.set_xlabel(\"basis size M\")\nax.set_ylabel(\"in-sample rms (local mean spacings)\")\nax.legend(fontsize=8)\nplt.savefig(\"fitting_toyfit.pdf\", bbox_inches=\"tight\")\n"
- },
- "notes": "Issue on 'k of about 60': the reviewer's reasoning is incorrect. E_1 is about t_1=14.13 while V_0 is about 9.74, so E_1-V_0 is about 4.4 and 2L sqrt(E_1-V_0)/pi is about 60; the zero-point energy is not small. I kept the statement but attached it explicitly to the dashed cutoff formula with E_1 approximated by t_1, and added a check for it. While building the toy-fit check I found that the old caption ('collapses once M exceeds the number of fitted levels plus one') and Problem 24 were both off by one. With M cosines the first-order Jacobian has full rank for M levels, because c_0 alone reaches level M. I corrected both, and the rank and collapse claims are now asserted in CHECKS. Problem 11 now uses the 800 training levels (via s_800) instead of t_1000. All other issues were applied: the six figure scripts were added, CHECKS references were removed from the text, the n+k<N+1 restriction is stated, the ridge reading is hedged, the V_0/(2E) estimate is quantified, a beyond box was added for the exponential tail, the eigenspace proof was completed, the Hellmann-Feynman relation is stated, the pitfall wording was softened, the Newton constant 0.199 was added, and the listing was shortened with an example call. Every new number is checked."
+ "new_checks": "import numpy as np\nfrom scipy.optimize import brentq\nfrom scipy.linalg import eigh_tridiagonal\nimport mpmath\nfrom numpy.polynomial import chebyshev as Cheb\n\ndef Nsm(t):\n    return t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\ndef s_n(n):\n    return brentq(lambda t: Nsm(t) - (n - 0.5), 7.0, 1e5)\ndef gapn(n):\n    return 2*np.pi/np.log(s_n(n)/(2*np.pi))\n\n# Sample 1: gaps and rms\ng = [gapn(1), gapn(2), gapn(3)]\nfor gv, cl in zip(g, [7.500, 5.279, 4.486]):\n    assert abs(gv - cl) < 2e-3, gv\nt = np.array([14.134725, 21.022040, 25.010858]); E = np.array([14.30, 20.90, 25.10])\nrh = (t - E)/np.array([7.500, 5.279, 4.486])\nassert abs(np.sqrt(np.mean(rh**2)) - 0.0217) < 1e-4\nassert abs(gapn(500) - 1.3) < 0.05   # \"about 1.3\"\n\n# Sample 2 / Problem 8: discrete box A exact\nL = 44.883; N = 400; h = 2*L/(N+1); x = -L + h*np.arange(1, N+1)\nEv, v = eigh_tridiagonal(2/h**2*np.ones(N), -np.ones(N-1)/h**2, select='i', select_range=(0, 19))\nfor n in range(1, 21):\n    for k in range(0, 31):\n        A = np.sum(v[:, n-1]**2*np.cos(k*np.pi*x/L))\n        ex = 1.0 if k == 0 else (0.5*(-1)**(n+1) if k == n else 0.0)\n        assert abs(abs(A) - abs(ex)) < 1e-10 and (ex == 0 or np.sign(A) == np.sign(ex))\nassert abs(1/(2*L/6001) - 67) < 0.5   # pitfall 1/h\n\n# Sample 3: min-norm\nAm = np.array([[1, .5, 0, 0], [1, 0, -.5, 0], [1, 0, 0, .5]]); d = np.array([.01, -.02, .03])\nc = np.linalg.pinv(Am) @ d\nassert np.allclose(c, [0.0061538, 0.0076923, 0.0523077, 0.0476923], atol=1e-6)\n\n# pitfall: spacings, matrix element, second-order size\nassert abs(3*np.pi**2/(4*L**2) - 0.00367) < 1e-5 and abs(2*np.pi**2/L**2 - 0.00980) < 1e-5\nxx = np.linspace(-L, L, 200001); p = lambda n: np.sin(n*np.pi*(xx+L)/(2*L))/np.sqrt(L)\nassert abs(np.trapezoid(p(1)*p(3)*np.cos(2*np.pi*xx/L), xx) + 0.5) < 1e-6\nassert abs((0.0523077/2)**2/(2*np.pi**2/L**2) - 0.07) < 0.005\n\n# Wu-Sprung sensitivity text: cutoff for lowest level ~60, E1 - V0 ~ 4.4\nV0 = 3.10073*np.pi\nassert abs(2*L*np.sqrt(14.134725 - V0)/np.pi - 60) < 0.5\nassert abs(14.134725 - V0 - 4.4) < 0.05\n\n# Sample 4: Gauss-Newton\nEm = lambda c: 2 - np.sqrt(1 + c**2); Jf = lambda c: -c/np.sqrt(1 + c**2)\ncs = [0.5]\nfor _ in range(3):\n    cc = cs[-1]; cs.append(cc + (0.5 - Em(cc))/Jf(cc))\nassert np.allclose(cs[1:], [1.354102, 1.126201, 1.118047], atol=2e-6)\ncst = np.sqrt(1.25)\nassert np.allclose(np.array(cs) - cst, [-0.618, 0.236, 0.0082, 0.000013], atol=[1e-3, 1e-3, 1e-4, 2e-6])\nassert abs(2*0.973249*(-0.229753) + 0.447214) < 1e-5\n# Newton error constant\nEp = -cst/np.sqrt(1 + cst**2); Epp = -(1 + cst**2)**(-1.5)\nassert abs(Ep + 0.7454) < 1e-4 and abs(Epp + 0.2963) < 1e-4\nK = abs(Epp/(2*Ep)); assert abs(K - 0.199) < 1e-3\nassert Epp/(2*Ep) > 0\nassert abs(0.199*0.0082**2 - 1.3e-5) < 0.05e-5\ne2 = cs[2] - cst; e3 = cs[3] - cst\nassert abs(e3/e2**2 - K) < 0.03\n\n# Sample 5 and 7\nJr = Jf(0.5)*(0.5 - Em(0.5))\nfor lp, dc, rr in [(0.04, 0.71175, 0.0711), (0.2, 0.42705, 0.1364), (1, 0.14235, 0.3115), (5, 0.03285, 0.3669)]:\n    dd = Jr/(0.2 + lp); assert abs(dd - dc) < 1e-5\n    assert abs(abs(0.5 - Em(0.5 + dd)) - rr) < 1e-4\nassert abs(Jr/5 - 0.03416) < 1e-5\nassert abs(abs(0.5 - Em(1.21175)) - 0.071095) < 1e-5 and 0.071095 < 0.999*0.381966\n\n# lm_fit listing (pycode), example call, Problem 17\ndef lm_fit(c, resid, jac, lam=1.0, maxiter=60, accept=0.999):\n    r = resid(c); cur = np.sqrt(np.mean(r**2))\n    for it in range(maxiter):\n        U, s, Vt = np.linalg.svd(jac(c), full_matrices=False)\n        Utr = U.T @ r\n        accepted = False\n        for lam_try in (0.2*lam, lam, 5*lam, 25*lam):\n            f = s/(s**2 + lam_try*s[0]**2)\n            c_try = c + Vt.T @ (f*Utr)\n            r_try = resid(c_try); rms_try = np.sqrt(np.mean(r_try**2))\n            if rms_try < accept*cur:\n                c, r, cur = c_try, r_try, rms_try\n                lam = max(0.5*lam_try, 1e-7)\n                accepted = True\n                break\n        if not accepted:\n            lam = 30*lam\n            if lam > 1e4:\n                break\n    return c, cur\nEm2 = lambda c: 2 - np.sqrt(1 + c[0]**2)\nres2 = lambda c: np.array([0.5 - Em2(c)])\njac2 = lambda c: np.array([[-c[0]/np.sqrt(1 + c[0]**2)]])\nc1, r1 = lm_fit(np.array([0.5]), res2, jac2, maxiter=1)\nassert abs(c1[0] - 1.21175) < 1e-5 and abs(r1 - 0.0711) < 1e-4\ncf, rf = lm_fit(np.array([0.5]), res2, jac2)\nassert abs(cf[0] - cst) < 1e-6 and rf < 1e-6\n\n# Sample 6, Problems 5, 19\nf = lambda s, lam, s1: s/(s**2 + lam*s1**2)\nassert np.allclose([f(10, .01, 10), f(1, .01, 10), f(.01, .01, 10)], [0.0990, 0.5, 0.0099990], atol=1e-4)\nassert np.allclose([f(4, .25, 4), f(2, .25, 4), f(1, .25, 4)], [0.2, 0.25, 0.2])\nsg = np.linspace(1e-4, 1, 200001); assert abs(f(sg, .01, 1).max() - 5) < 1e-6\n\n# Sample 8\nassert abs(np.cos(3*np.arccos(-0.5)) - 1) < 1e-12 and abs(4*(-0.5)**3 - 3*(-0.5) - 1) < 1e-12\nhat = lambda u, j, M: max(0, 1 - (M-1)*abs(u - j/(M-1)))\nassert abs(hat(0.6, 2, 5) - 0.6) < 1e-12 and abs(hat(0.6, 3, 5) - 0.4) < 1e-12\nassert abs(hat(0.3, 0, 3) - 0.4) < 1e-12 and abs(hat(0.3, 1, 3) - 0.6) < 1e-12   # Problem 13\n\n# Chebyshev kink: T_k'(-1) = (-1)^(k+1) k^2, slope of phi_k at 0+ = (2/L) T_k'(-1)\nfor k in range(1, 8):\n    dcoef = Cheb.chebder([0]*k + [1])\n    assert abs(Cheb.chebval(-1.0, dcoef) - (-1)**(k+1)*k**2) < 1e-9\n    eps = 1e-6\n    sl = (Cheb.chebval(2*eps/L - 1, [0]*k + [1]) - Cheb.chebval(-1.0, [0]*k + [1]))/eps\n    assert abs(sl - 2*(-1)**(k+1)*k**2/L) < 1e-3*abs(2*k**2/L) + 1e-6\n\n# Stationary-phase illustration, a = 100, X = 3\na = 100.0; X = 3.0\nxs = np.linspace(-X, X, 2000001)\nlin = np.trapezoid(np.cos(a*xs), xs)\nassert abs(lin - 2*np.sin(a*X)/a) < 1e-6 and abs(lin) <= 0.02 + 1e-9\nquad = np.trapezoid(np.cos(a*xs**2), xs)\nassert abs(quad - 0.13) < 0.005\nassert abs(np.sqrt(np.pi/(2*a)) - 0.125) < 0.001\n\n# Sample 9, coverage text and figure\nassert abs(2*np.sqrt(811.1843588465)*L/np.pi - 813.8) < 0.2\nEmax = (400*np.pi/(2*L))**2; assert abs(Emax - 196.0) < 0.1\nassert abs(Nsm(196) - 77.0) < 0.2\nassert 600*np.pi/L < 2*np.sqrt(811.1843588465) < 900*np.pi/L   # only M=900 clears 500 levels\nassert abs(V0 - 9.7412) < 1e-3\nassert abs(V0/(2*811.1843588465) - 0.006) < 2e-4               # 0.6%\nassert abs(np.sqrt(1 - V0/14.134725) - 0.56) < 0.005\n\n# Coverage reconciliation: t_400 ~ 679.7, law asks M >~ 745\nt400 = float(mpmath.zetazero(400).imag)\nassert abs(t400 - 679.7) < 0.05\nassert abs(2*np.sqrt(t400)*L/np.pi - 745) < 1\n\n# Problem 18: cutoff for n=50 lies between 300 and 500\nt50 = float(mpmath.zetazero(50).imag)\ncut50 = 2*L*np.sqrt(t50 - V0)/np.pi\nassert 300 < cut50 < 499\n\n# Problem 11 (scale 2, 800 training levels)\ns800 = s_n(800); assert abs(s800 - 1184) < 1\nassert abs(2*np.sqrt(s800) - 68.8) < 0.05 and abs(59.957/np.pi - 19.085) < 1e-3\nassert abs(2*np.sqrt(s800)*59.957/np.pi - 1313) < 2\nE900 = (900*np.pi/(2*59.957))**2\nassert abs(900*np.pi/(2*59.957) - 23.58) < 0.01 and abs(E900 - 556) < 1\nassert abs(Nsm(E900) - 309) < 1\n\n# Problems 2, 7\nassert abs(np.sqrt(0.03) - 0.1732) < 1e-4\nc = 1.0\nfor cl in [1.5, 1.41667]:\n    c = c + (2 - c**2)/(2*c); assert abs(c - cl) < 1e-5\n\n# Problem 24: rank of first-order box model, L=10, N=300\nLb = 10.0; Nb = 300; hb = 2*Lb/(Nb+1); xb = -Lb + hb*np.arange(1, Nb+1)\nwb, vb = eigh_tridiagonal(2/hb**2*np.ones(Nb), -np.ones(Nb-1)/hb**2, select='i', select_range=(0, 30))\nMm = 10\nPhb = np.cos(np.outer(xb, np.arange(Mm))*np.pi/Lb)\nAb = (vb**2).T @ Phb\nassert np.linalg.matrix_rank(Ab[:Mm], tol=1e-8) == Mm\nassert np.linalg.matrix_rank(Ab[:Mm+1], tol=1e-8) == Mm\n\n# Toy fit figure: collapse at M = nfit = 30\nnfit = 30\nE0 = wb\ngapb = np.gradient(E0)[:nfit]\nrng = np.random.default_rng(0); dd = rng.standard_normal(nfit); dd *= 0.2/np.sqrt(np.mean(dd**2))\ntgt = E0[:nfit] + dd*gapb\ndef toy_rms(M):\n    Ph = np.cos(np.outer(xb, np.arange(M))*np.pi/Lb)\n    def resid(c):\n        w = eigh_tridiagonal(2/hb**2 + Ph @ c, -np.ones(Nb-1)/hb**2, select='i', select_range=(0, nfit-1), eigvals_only=True)\n        return (tgt - w)/gapb\n    def jac(c):\n        w, vv = eigh_tridiagonal(2/hb**2 + Ph @ c, -np.ones(Nb-1)/hb**2, select='i', select_range=(0, nfit-1))\n        return ((vv**2).T @ Ph)/gapb[:, None]\n    return lm_fit(np.zeros(M), resid, jac)[1]\nr10, r20, r30 = toy_rms(10), toy_rms(20), toy_rms(30)\nassert r10 > r20 > r30 and r30 < 1e-6 and r20 > 1e-3\nprint(\"all checks passed\")\n",
+ "new_figures": {},
+ "notes": "All issues judged valid and addressed. Notes on scope: (17) eigenvectors renamed to w_n/w_{jn} throughout; for the hat variable u_j and the local wavenumber k(x) I added explicit one-line notation warnings instead of renaming every occurrence, as the fix permits. The local vector v in the nondegeneracy proof is left as is (self-contained, before singular vectors appear). (24) Sample Problem references are now by title; references to Problems by number are kept, since problem numbering is fixed by the Answers section. (9) The stationary-phase illustration uses an exact elementary integral plus a numerical value; the Fresnel value and the general method are put in a beyond box. (8) Prerequisites now list bound-states, wkb and counting-zeros, and the WKB form is restated with a short justification. Paper-connection quote for Sec. III was patched via the closing fragment '$)).\" Sample~9 shows'. The bases figure script is unchanged (only the caption was corrected). New numbers (kink slope, 0.02, 0.13, 0.125, t_400=679.7, M=745, the n=50 cutoff range) are checked in new_checks."
 }

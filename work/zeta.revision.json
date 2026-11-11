@@ -1,63 +1,195 @@
 {
  "patches": [
   {
-   "old": "Your program finds $Z(30)<0$ and $Z(31)>0$. What can you conclude, and what can you not conclude?",
-   "new": "Your program finds $Z(30)>0$ and $Z(31)<0$. What can you conclude, and what can you not conclude?"
+   "old": "The value $\\zeta(s)$ is the tip-to-tail sum of infinitely many shrinking arrows spinning at incommensurate rates. A zero of $\\zeta$ is a value of $s$ at which all these arrows add up to exactly nothing.",
+   "new": "The value $\\zeta(s)$ is the tip-to-tail sum of infinitely many shrinking arrows spinning at different rates $\\log k$. (These rates are not all incommensurate, since $\\log4=2\\log2$ and $\\log6=\\log2+\\log3$. It is the rates $\\log p$ of distinct primes that are mutually incommensurate, a fact used in Chapter~\\ref{ch:fourier-series} and proved for $p=2,3$ in Problem 26.) Where the sum converges ($\\sigma>1$) the arrows never cancel completely; we prove this in \\cref{sec:zeta-euler}. The zeros we want lie where this sum diverges, and making sense of them is the job of analytic continuation (\\cref{sec:zeta-continuation})."
   },
   {
-   "old": "\\textbf{Step 3:} After eight halvings the bracket has width $1/2^8=0.00390625$; its midpoint is $14.134765625$, within half the width, $0.001953$, of the zero.",
-   "new": "\\textbf{Step 3:} After eight halvings the final bracket is $[14.1328125,\\ 14.13671875]$, of width $1/2^8=0.00390625$. Our estimate is the midpoint of this final bracket, $14.134765625$. (This is not the step-8 midpoint $14.13671875$ listed in the table; that point is now the right endpoint of the bracket.) The zero lies in the bracket, so the estimate is within half the width, $0.001953$, of the zero."
+   "old": "\\item Chapter~\\ref{ch:asymptotics}: the Gamma function $\\Gamma$ as a generalized factorial with $\\Gamma(n+1)=n!$; bisection.",
+   "new": "\\item Nothing from Chapter~\\ref{ch:asymptotics} is required. The Gamma function and bisection are recalled where they are used; that chapter treats both more fully."
   },
   {
-   "old": "Each step gains one binary digit; about 20 more steps would reach $10^{-6}\\times$ the starting width,",
-   "new": "Each step gains one binary digit; about 12 more steps (20 in total) would shrink the bracket to $2^{-20}\\approx9.5\\times10^{-7}$ of the starting width,"
+   "old": "Ap\\'ery proved in 1978 that $\\zeta(3)=1.202057\\ldots$ is irrational. Proofs are in \\cite{apostol} and \\cite{edwards}.",
+   "new": "Ap\\'ery proved in 1978 that $\\zeta(3)=1.202057\\ldots$ is irrational. Proofs of the even-integer formulas are in \\cite{apostol}; Ap\\'ery's theorem is beyond this book and is not in the cited texts."
   },
   {
-   "old": "At $m\\ne0$ the formula is $0/0$: $\\eta$ also vanishes there (a fact we take on trust here; Problems 25 and 26 give a self-contained proof that $\\zeta$ is finite at these points).",
-   "new": "At $m\\ne0$ the formula is $0/0$, so \\cref{eq:zeta-cont} by itself does not tell us the value of $\\zeta$ there.\n\n\\begin{beyond}\n\\textbf{$\\zeta$ is finite at $s=1+2\\pi i m/\\log2$, $m\\ne0$.} In this section we take on trust that $\\zeta$ has no pole at these points (equivalently, that $\\eta$ vanishes there, so the $0/0$ has a finite limit). The book does not leave this unproved: Problems 25 and 26 construct a second continuation $\\zeta=\\eta_3/(1-3^{1-s})$ whose denominator vanishes at different points, which shows that $\\zeta$ is finite at every point of $\\Re s>0$ except $s=1$. Once that is known, \\cref{eq:zeta-etazeta}, which holds on all of $\\Re s>0$ by uniqueness of continuation, gives $\\eta=(1-2^{1-s})\\zeta=0$ at these points. A direct treatment is in \\cite{titchmarsh}, Chapter~2.\n\\end{beyond}"
+   "old": "Second, as $s\\to\\infty$, the upper bound tends to 1 and the lower bound to 0, while every term after the first vanishes; $\\zeta(s)\\to1$.",
+   "new": "Second, the first term of \\cref{eq:zeta-def} is 1 and the rest are positive, so $1\\le\\zeta(s)\\le1+1/(s-1)$. The right side tends to 1 as $s\\to\\infty$, so $\\zeta(s)\\to1$."
   },
   {
-   "old": "reproduces $\\eta(\\tfrac12)=0.604899$ to within $10^{-5}$ (\\cref{lst:zeta-eta}).",
-   "new": "reproduces $\\eta(\\tfrac12)=0.604899$ to within $10^{-5}$ (see the listing that follows this sample problem)."
+   "old": "Because the series converges uniformly on every half-plane",
+   "new": "Because the series converges uniformly (the error after $N$ terms is below a bound that depends on $N$ but not on $s$) on every half-plane"
   },
   {
-   "old": "\\end{pycode}\n\\label{lst:zeta-eta}",
-   "new": "\\end{pycode}"
+   "old": "We use two sets of integers: $S_P$, the positive integers all of whose prime factors are at most $P$ (this includes $k=1$, which has no prime factors), and $S_{P,J}$, the members of $S_P$ in whose factorization",
+   "new": "We use two sets of integers: $\\mathcal{I}_P$, the positive integers all of whose prime factors are at most $P$ (this includes $k=1$, which has no prime factors), and $\\mathcal{I}_{P,J}$, the members of $\\mathcal{I}_P$ in whose factorization"
   },
   {
-   "old": "all others are computed numerically (CHECKS).",
-   "new": "all others are computed numerically with \\texttt{mpmath.zeta}."
+   "old": "belongs to $S_{P,J}$; conversely each $k\\in S_{P,J}$ arises",
+   "new": "belongs to $\\mathcal{I}_{P,J}$; conversely each $k\\in \\mathcal{I}_{P,J}$ arises"
   },
   {
-   "old": "The CHECKS script verifies \\cref{eq:zeta-fe,eq:zeta-xi} numerically at a sample point.",
-   "new": "You can verify both numerically with \\texttt{mpmath} at any sample point, for example $s=0.3+7i$."
+   "old": "=\\sum_{k\\in S_{P,J}}k^{-s}.",
+   "new": "=\\sum_{k\\in \\mathcal{I}_{P,J}}k^{-s}."
   },
   {
-   "old": "The CHECKS script confirms numerically that $\\Im Z(t)$ vanishes to working precision.",
-   "new": "A quick \\texttt{mpmath} evaluation of $e^{i\\theta(t)}\\zeta(\\tfrac12+it)$ at, say, $t=20$ confirms that its imaginary part vanishes to working precision."
+   "old": "On the right, the series $\\sum_{k\\in S_P}k^{-s}$ converges absolutely (its terms are a subset of those of $\\zeta$). An element of $S_P$ missing from $S_{P,J}$ has",
+   "new": "On the right, the series $\\sum_{k\\in \\mathcal{I}_P}k^{-s}$ converges absolutely (its terms are a subset of those of $\\zeta$). An element of $\\mathcal{I}_P$ missing from $\\mathcal{I}_{P,J}$ has"
   },
   {
-   "old": "and the CHECKS script of this chapter reproduces $t_1$, $t_{500}$ and $t_{1000}$ to the digits printed.",
-   "new": "and running \\texttt{mpmath.zetazero} at 20 digits reproduces $t_1$, $t_{500}$ and $t_{1000}$ to the digits printed."
+   "old": "\\Bigl|\\sum_{k\\in S_P}k^{-s}-\\sum_{k\\in S_{P,J}}k^{-s}\\Bigr|",
+   "new": "\\Bigl|\\sum_{k\\in \\mathcal{I}_P}k^{-s}-\\sum_{k\\in \\mathcal{I}_{P,J}}k^{-s}\\Bigr|"
   },
   {
-   "old": "This is the logic of the large verifications (made rigorous with a method due to Turing), and \\texttt{mpmath.zetazero} locates zeros with the same ingredients: sign changes of $Z$, organized with the help of the counting function, followed by refinement.",
-   "new": "This is the logic of the large verifications, and \\texttt{mpmath.zetazero} locates zeros with the same ingredients: sign changes of $Z$, organized with the help of the counting function, followed by refinement.\n\n\\begin{beyond}\n\\textbf{Making the count rigorous.} Turning the comparison above into a proof requires an exact, certified value of $N(T)$ at the chosen heights. A method due to A.~M.~Turing (1953) provides a checkable way to confirm the count using values of $Z$ alone. We take this method on trust; it is described in \\cite{edwards}.\n\\end{beyond}"
+   "old": "Therefore $E_P(s)=\\sum_{k\\in S_P}k^{-s}$.",
+   "new": "Therefore $E_P(s)=\\sum_{k\\in \\mathcal{I}_P}k^{-s}$."
   },
   {
-   "old": "counts the zeros up to height $T$: roughly $\\frac{T}{2\\pi}\\log\\frac{T}{2\\pi}$ of them.",
-   "new": "counts the zeros up to height $T$: to leading order, roughly $\\frac{T}{2\\pi}\\log\\frac{T}{2\\pi}$ of them."
+   "old": "Every integer $k\\le P$ belongs to $S_P$ (its prime factors are at most $k\\le P$). So the integers \\emph{not} in $S_P$ are",
+   "new": "Every integer $k\\le P$ belongs to $\\mathcal{I}_P$ (its prime factors are at most $k\\le P$). So the integers \\emph{not} in $\\mathcal{I}_P$ are"
   },
   {
-   "old": "(b) 20 significant digits of a number near $1.4\\times10^3$ means an absolute error near $10^{3-20}\\approx10^{-16}$ (rounding to about $10^{-17}$ to $10^{-16}$); 15 significant digits of a number below $10^4$ means about $10^{4-15}=10^{-11}$. (c) In spacings these are about $10^{-16}$ and $10^{-11}$. The smallest error reported in the paper is the coverage rms ``$<10^{-4}$ spacings'' at $M=900$ (Sec.~III), at least seven orders of magnitude larger, so the precision of the data never matters.",
-   "new": "(b) The number $1419.42\\ldots$ has four digits before the decimal point, so 20 significant digits reach the 16th decimal place; the rounding error is at most $0.5\\times10^{-16}$, that is, of order $10^{-17}$ to $10^{-16}$. A number below $10^4$ given to 15 significant digits has at least 10 decimal places, so its rounding error is at most $0.5\\times10^{-10}$, of order $10^{-11}$ to $10^{-10}$. (c) The mean spacing in this range is of order 1 (it is 1.159 at $t_{1000}$ by part (a)), so in spacings these errors are of the same orders, $10^{-17}$ to $10^{-16}$ and $10^{-11}$ to $10^{-10}$. The smallest error reported in the paper is the coverage rms ``$<10^{-4}$ spacings'' at $M=900$ (Sec.~III), at least six orders of magnitude larger, so the precision of the data never matters."
+   "old": "\\sum_{k\\notin S_P}k^{-s}",
+   "new": "\\sum_{k\\notin \\mathcal{I}_P}k^{-s}"
   },
   {
-   "old": "A partial sum ending inside a group differs from the last complete group's sum by at most two terms of modulus at most $2(3J)^{-\\sigma}$ in total size order, which tends to 0.",
-   "new": "A partial sum $\\sum_{k\\le N}c_kk^{-s}$ with $3J<N<3J+3$ differs from the complete-group sum $\\sum_{j\\le J}B_j$ by the term $(3J+1)^{-s}$ and possibly $(3J+2)^{-s}$, whose total modulus is at most $2(3J+1)^{-\\sigma}$; this tends to 0 as $J\\to\\infty$ because $\\sigma>0$. So all partial sums converge to the same limit."
+   "old": "(the square-free members of $S_P$)",
+   "new": "(the square-free members of $\\mathcal{I}_P$)"
+  },
+  {
+   "old": "=\\sum_{k\\in S_{x,J}}\\frac1k",
+   "new": "=\\sum_{k\\in \\mathcal{I}_{x,J}}\\frac1k"
+  },
+  {
+   "old": "every integer $k\\le x$ is in $S_{x,J}$: its primes",
+   "new": "every integer $k\\le x$ is in $\\mathcal{I}_{x,J}$: its primes"
+  },
+  {
+   "old": "gives each integer in $S_{x,J}$ exactly once (unique factorization). Last inequality: every $k\\le x$ is in $S_{x,J}$ because its exponents satisfy $2^j\\le k\\le x\\le2^J$, and the extra members of $S_{x,J}$ only add",
+   "new": "gives each integer in $\\mathcal{I}_{x,J}$ exactly once (unique factorization). Last inequality: every $k\\le x$ is in $\\mathcal{I}_{x,J}$ because its exponents satisfy $2^j\\le k\\le x\\le2^J$, and the extra members of $\\mathcal{I}_{x,J}$ only add"
+  },
+  {
+   "old": "for $x\\le-1$ (shaded) they oscillate with growing amplitude and the series diverges, yet $1/(1-x)$ is perfectly finite there.",
+   "new": "for $x<-1$ (shaded) they oscillate with growing amplitude (at $x=-1$ they hop between 1 and 0) and the series diverges, yet $1/(1-x)$ is perfectly finite there; the series also diverges for $x\\ge1$."
+  },
+  {
+   "old": "Group the terms in pairs, $P_j=(2j-1)^{-s}-(2j)^{-s}$ for $j=1,2,\\dots$, so that $S_{2J}=\\sum_{j=1}^{J}P_j$.",
+   "new": "Group the terms in pairs, $D_j=(2j-1)^{-s}-(2j)^{-s}$ for $j=1,2,\\dots$, so that $S_{2J}=\\sum_{j=1}^{J}D_j$."
+  },
+  {
+   "old": "\\sum_{j=1}^{J}|P_j|\\le|s|",
+   "new": "\\sum_{j=1}^{J}|D_j|\\le|s|"
+  },
+  {
+   "old": "So $\\sum_jP_j$ converges absolutely",
+   "new": "So $\\sum_jD_j$ converges absolutely"
+  },
+  {
+   "old": "and $\\sigma$ is bounded away from $0$;",
+   "new": "and $\\sigma$ is bounded away from $0$ (that is, $\\sigma\\ge\\sigma_0$ for some fixed $\\sigma_0>0$);"
+  },
+  {
+   "old": "At $m\\ne0$ the formula is $0/0$, so \\cref{eq:zeta-cont} by itself does not tell us the value of $\\zeta$ there.",
+   "new": "At $m\\ne0$ the denominator vanishes, so \\cref{eq:zeta-cont} does not define $\\zeta$ there; whether $\\zeta$ is finite depends on whether $\\eta$ also vanishes (it does; see the box)."
+  },
+  {
+   "old": "It involves the Gamma function. Recall from Chapter~\\ref{ch:asymptotics} that $\\Gamma$ generalizes the factorial, $\\Gamma(n+1)=n!$ for $n=0,1,2,\\dots$, and obeys $\\Gamma(z+1)=z\\,\\Gamma(z)$.",
+   "new": "It involves the Gamma function, which we now recall (Chapter~\\ref{ch:asymptotics} treats it more fully). For $\\Re z>0$ it is defined by\n\\[\n\\Gamma(z)=\\int_0^\\infty x^{z-1}e^{-x}\\,\\dd x,\\qquad x^{z-1}=e^{(z-1)\\log x}.\n\\]\nIntegrate by parts with $u=x^{z}$ and $\\dd v=e^{-x}\\,\\dd x$. The derivative formula proved in the lemma of \\cref{sec:zeta-continuation} gives $\\frac{\\dd}{\\dd x}x^{z}=z\\,x^{z-1}$, so\n\\[\n\\Gamma(z+1)=\\Bigl[-x^{z}e^{-x}\\Bigr]_0^\\infty+z\\int_0^\\infty x^{z-1}e^{-x}\\,\\dd x=z\\,\\Gamma(z).\n\\]\nThe boundary term vanishes because $|x^{z}|=x^{\\Re z}\\to0$ as $x\\to0$, and because $e^{-x}$ decays faster than any power grows as $x\\to\\infty$. Since $\\Gamma(1)=\\int_0^\\infty e^{-x}\\,\\dd x=1$, repeated use of $\\Gamma(z+1)=z\\,\\Gamma(z)$ gives $\\Gamma(n+1)=n!$ for $n=0,1,2,\\dots$. In this sense $\\Gamma$ generalizes the factorial."
+  },
+  {
+   "old": "and for all $s\\ne0,1$,",
+   "new": "and for all $s$ other than $0,1,2,3,\\dots$ (at those points the right side contains a pole of $\\Gamma(1-s)$ or of $\\zeta(1-s)$, and it is understood as a limit),"
+  },
+  {
+   "old": "The strip $0<\\Re s<1$ is already covered by \\cref{eq:zeta-cont}.",
+   "new": "The strip $0<\\Re s<1$ is already covered by \\cref{eq:zeta-cont}. In fact \\cref{eq:zeta-cont} covers all of $\\Re s>0$, including the line $\\Re s=1$ apart from $s=1$. For $\\Re s\\le0$, $s\\ne0$, the functional equation uses $\\zeta(1-s)$ with $\\Re(1-s)\\ge1$, which is already known."
+  },
+  {
+   "old": "By \\cref{eq:zeta-etazeta} (which holds wherever both sides are defined, by uniqueness), $\\eta(0)=(1-2)\\zeta(0)=\\tfrac12$: the continued value of",
+   "new": "The series for $\\eta$ converges only for $\\Re s>0$, so $\\eta(0)$ needs a definition. For $\\Re s\\le0$ we define the continuation of $\\eta$ by $\\eta(s)=(1-2^{1-s})\\zeta(s)$. This function is analytic: at $s=1$ the zero of $1-2^{1-s}$ cancels the pole of $\\zeta$. It agrees with the series for $\\Re s>0$, because there \\cref{eq:zeta-cont} says exactly this. By the identity theorem it is therefore the continuation of $\\eta$. With this definition $\\eta(0)=(1-2)\\zeta(0)=\\tfrac12$: the continued value of"
+  },
+  {
+   "old": "Theorem, proved here from \\cref{eq:zeta-fe} and the $\\Gamma$ facts in the box.",
+   "new": "Theorem; deduced here from \\cref{eq:zeta-fe} and the $\\Gamma$ facts in the box, which are themselves taken on trust (proofs beyond this book)."
+  },
+  {
+   "old": "\\item \\textbf{No zeros on the line $\\Re s=0$.} Follows from item 3:",
+   "new": "\\item \\textbf{No zeros on the line $\\Re s=0$.} Theorem; deduced here from item 3 and \\cref{eq:zeta-fe}, both taken on trust (proofs beyond this book):"
+  },
+  {
+   "old": "Proofs: \\cite{titchmarsh}, Chapters~9--10.",
+   "new": "Proofs of Hardy's theorem and of the count: \\cite{titchmarsh}, Chapters~9--10. Conrey's result postdates that text; we quote it without a reference from the book's bibliography."
+  },
+  {
+   "old": "In particular, a zero on the critical line can move off the line only by splitting into two zeros mirror-symmetric about it.",
+   "new": "Put differently, an off-line zero always comes with a mirror partner at the same height on the other side of the critical line."
+  },
+  {
+   "old": "Dividing, $\\zeta(\\bar s)=\\overline{\\zeta(s)}$ throughout $\\Re s>0$.",
+   "new": "Dividing, $\\zeta(\\bar s)=\\overline{\\zeta(s)}$ throughout $\\Re s>0$, except at the points where the denominator vanishes. At $s=1+2\\pi im/\\log2$ with $m\\ne0$ the identity follows by continuity of $\\zeta$, which is finite there (box in \\cref{sec:zeta-continuation}). The remaining point $s=1$ is the pole, which is real."
+  },
+  {
+   "old": "more than $10^{13}$ zeros, starting from the lowest, have been checked to lie on the critical line and to be simple (large computations were reported by X.~Gourdon in 2004 and by D.~Platt and T.~Trudgian in 2021).",
+   "new": "more than $10^{13}$ zeros, starting from the lowest, have been checked to lie on the critical line and to be simple, that is, of multiplicity one: near each such zero $\\rho$, $\\zeta(s)\\approx c\\,(s-\\rho)$ with $c\\ne0$ (see \\cref{sec:zeta-computing}). Large computations were reported by X.~Gourdon in 2004 and by D.~Platt and T.~Trudgian in 2021."
+  },
+  {
+   "old": "At $t=0$, $\\theta(0)=0$ and $Z(0)=\\zeta(\\tfrac12)=-1.460355<0$. Because $Z$ is continuous and has no zeros below $t_1$, it stays negative on $[0,t_1)$; it changes sign at each simple zero.",
+   "new": "At $t=0$, $\\theta(0)=0$ and $Z(0)=\\zeta(\\tfrac12)=-1.460355<0$. By definition $t_1$ is the lowest positive height of a nontrivial zero, and $\\zeta(\\tfrac12)\\ne0$, so $Z$ has no zero on $[0,t_1)$. Being continuous, it therefore stays negative there: a sign change would force a zero, by the intermediate value theorem.\n\nA zero $t_0$ of $Z$ is called \\emph{simple} (multiplicity one) if $Z'(t_0)\\ne0$; $Z$ is differentiable because it is built from analytic functions. Near a simple zero $Z(t)\\approx Z'(t_0)(t-t_0)$, which changes sign at $t_0$. More generally, a zero of \\emph{multiplicity} $m$ is one near which $Z(t)\\approx c\\,(t-t_0)^m$ with $c\\ne0$. Such a zero changes sign only for odd $m$. The same words apply to zeros of $\\zeta$ in the complex plane, with $(s-\\rho)^m$ in place of $(t-t_0)^m$."
+  },
+  {
+   "old": "Given only that $Z(14)<0$ and $Z(15)>0$, locate $t_1$ by eight steps of bisection (Chapter~\\ref{ch:asymptotics}), and bound the error.",
+   "new": "Start from $Z(14)<0$ and $Z(15)>0$, and use \\texttt{mpmath.siegelz} to evaluate the sign of $Z$ at each midpoint. Locate $t_1$ by eight steps of bisection: halve the bracket at each step and keep the half on which $Z$ changes sign (see also Chapter~\\ref{ch:asymptotics}). Bound the error."
+  },
+  {
+   "old": "(The signs follow from $t_1=14.134725$: $Z<0$ below it and $Z>0$ above it, up to $t_2=21.02$. The \\texttt{mpmath} values agree; see the listing below.)",
+   "new": "(The signs are computed by the listing below. As a consistency check only, they agree with what the known value $t_1=14.134725$ implies: $Z<0$ below it and $Z>0$ above it, up to $t_2=21.02$.)"
+  },
+  {
+   "old": "of the starting width, and since the sign changes of a real function are certain, this \\emph{proves} there is a zero exactly on the critical line in the final bracket.",
+   "new": "of the starting width.\n\nWhat, exactly, is proved? A computed sign can be trusted only when the computed $|Z|$ is larger than a guaranteed bound on the rounding and truncation error of the evaluation. The proof therefore uses two points where $|Z|$ is safely nonzero with opposite signs, for example $t=14$ and $t=15$. The intermediate value theorem then gives a zero of $Z$ between them, and hence a zero of $\\zeta$ exactly on the critical line. Bisection refines the location, not the proof. Midpoints close to the zero have tiny $|Z|$, and their computed signs are precisely the ones that need the error bound."
+  },
+  {
+   "old": "reproduces $t_1$, $t_{500}$ and $t_{1000}$ to the digits printed.",
+   "new": "reproduces $t_{500}$ and $t_{1000}$ to the digits printed, and $t_1$ to all but the last printed digit (see the reading lesson that follows)."
+  },
+  {
+   "old": "the resolution of a double-precision number near 14 (Chapter~\\ref{ch:asymptotics})",
+   "new": "the resolution of a double-precision number near 14 (a double carries about 16 significant digits; see also Chapter~\\ref{ch:asymptotics})"
+  },
+  {
+   "old": "The phrase ``provably on the critical line'' is the kind of statement that a sign-change argument for a real function, like the one for $Z(t)$ in \\cref{sec:zeta-computing}, can certify; how Connes does it is beyond this book. It does not prove RH, because it concerns finitely many zeros.",
+   "new": "In Connes's construction the approximating values lie on the critical line by a proof internal to that construction, which is beyond this book. They are approximations to the first 50 zeros, so this does not prove RH."
+  },
+  {
+   "old": "(b) Assuming $\\eta(0)=\\tfrac12$, use \\cref{eq:zeta-etazeta} to recover $\\zeta(0)=-\\tfrac12$. (c) Explain why (b) is legitimate even though \\cref{eq:zeta-etazeta} was derived for $\\Re s>1$.}",
+   "new": "(b) Use the continuation $\\eta(s)=(1-2^{1-s})\\zeta(s)$ defined in the sample problem on $\\zeta(0)$, together with $\\zeta(0)=-\\tfrac12$, to show $\\eta(0)=\\tfrac12$, agreeing with (a). (c) Explain why $(1-2^{1-s})\\zeta(s)$ is the unique analytic continuation of the series for $\\eta$, even though \\cref{eq:zeta-etazeta} was first derived for $\\Re s>1$.}"
+  },
+  {
+   "old": "\\prob{2}{Give a complete proof that $\\zeta(\\bar s)=\\overline{\\zeta(s)}$ for $0<\\Re s\\le1$, $s\\ne1$, using \\cref{eq:zeta-cont}.}",
+   "new": "\\prob{2}{Give a complete proof that $\\zeta(\\bar s)=\\overline{\\zeta(s)}$ for $0<\\Re s\\le1$, $s\\ne1$, using \\cref{eq:zeta-cont}. (Hint: at the points $1+2\\pi im/\\log2$, $m\\ne0$, where the denominator vanishes, use continuity of $\\zeta$.)}"
+  },
+  {
+   "old": "\\prob{2}{Modify the function \\texttt{eta\\_avg} of \\cref{sec:zeta-continuation} to take a complex $s$ and evaluate the averaged partial sums of $\\eta(s)$ at $s=\\tfrac12+i\\,t_1$ with $N=1000$.",
+   "new": "\\prob{2}{Call the function \\texttt{eta\\_avg} of \\cref{sec:zeta-continuation} with the complex argument $s=\\tfrac12+i\\,t_1$ and $N=1000$. The function works unchanged; explain why."
+  },
+  {
+   "old": "(a) Explain in your own words how a sign change of the real function $Z(t)$ certifies a zero \\emph{exactly} on the line, even though all computations are rounded. (b) Explain why no finite computation of this kind can prove RH.",
+   "new": "(a) Leave Connes's method aside (it is beyond this book). Explain in your own words how a sign change of the real function $Z(t)$, computed at two points where $|Z|$ exceeds a guaranteed error bound, certifies a zero of $\\zeta$ \\emph{exactly} on the line, even though all computations are rounded. (b) Explain why no finite computation of this kind can prove RH. Explain also why Connes's result, which concerns approximations to the first 50 zeros, does not prove it either."
+  },
+  {
+   "old": "the values $|\\zeta(\\rho_n)|$ are tiny (of the order of the working precision, about $10^{-20}$ at 20 digits), confirming they are zeros.",
+   "new": "the values $|\\zeta(\\rho_n)|$ are tiny (below $10^{-17}$ with 20 working digits, at the level of the working precision), confirming they are zeros."
+  },
+  {
+   "old": "A number below $10^4$ given to 15 significant digits has at least 10 decimal places, so its rounding error is at most $0.5\\times10^{-10}$, of order $10^{-11}$ to $10^{-10}$. (c) The mean spacing in this range is of order 1 (it is 1.159 at $t_{1000}$ by part (a)), so in spacings these errors are of the same orders, $10^{-17}$ to $10^{-16}$ and $10^{-11}$ to $10^{-10}$. The smallest error reported in the paper is the coverage rms ``$<10^{-4}$ spacings'' at $M=900$ (Sec.~III), at least six orders of magnitude larger, so the precision of the data never matters.",
+   "new": "The zeros $10^3$--$10^4$ have heights between $t_{1000}=1419.42$ and $t_{10^4}<10^4$, all with four digits before the decimal point. So 15 significant digits give 11 decimal places, and a rounding error of at most $0.5\\times10^{-11}$. (c) The mean spacing $2\\pi/\\log(t/2\\pi)$ decreases with height. It is 1.159 at $t_{1000}$ by part (a), and still 0.852 at $t=10^4$. So in spacings the errors are of order $10^{-16}$ for the first 1000 zeros and below $10^{-11}$ beyond. The smallest error reported in the paper is the coverage rms ``$<10^{-4}$ spacings'' at $M=900$ (Sec.~III). That is at least seven orders of magnitude larger, so the precision of the data never matters."
+  },
+  {
+   "old": "So all partial sums converge to the same limit. So all partial sums converge.",
+   "new": "So all partial sums converge to the same limit."
   }
  ],
- "new_checks": "import numpy as np, mpmath\nmpmath.mp.dps = 25\n\ndef close(a, b, tol):\n    assert abs(float(a) - float(b)) < tol, (a, b)\n\n# Table tab:zeta-values\nclose(mpmath.zeta(1.5), 2.612375, 1e-6)\nclose(mpmath.zeta(2), 1.644934, 1e-6)\nclose(mpmath.zeta(3), 1.202057, 1e-6)\nclose(mpmath.zeta(4), 1.082323, 1e-6)\nclose(np.pi**4 / 90, 1.082323, 1e-6)\n\n# Sample: partial sums of zeta(2)\nS10 = sum(1.0 / k**2 for k in range(1, 11))\nclose(S10, 1.549768, 1e-6)\nclose(S10 + 1 / 11, 1.640677, 1e-6)\nclose(S10 + 0.1, 1.649768, 1e-6)\n\n# Checkpoint zeta(1.001)\nz = mpmath.zeta(1.001)\nassert 1000 <= z <= 1001\n\n# Sample: two arrows at s=2+3i\ns = 2 + 3j\na2 = 2.0**(-s); a3 = 3.0**(-s)\nclose(a2.real, -0.1217, 1e-4); close(a2.imag, -0.2184, 1e-4)\nclose(a3.real, -0.1098, 1e-4); close(a3.imag, 0.0171, 1e-4)\nclose(3 * np.log(2), 2.0794, 1e-4); close(3 * np.log(3), 3.2958, 1e-4)\nassert abs(complex(mpmath.zeta(s))) <= np.pi**2 / 6\n\n# Checkpoint zeta(3+100i) bounds\nza = abs(complex(mpmath.zeta(3 + 100j)))\nassert 1 / 1.202057 <= za <= 1.202057\nclose(1 / float(mpmath.zeta(3)), 0.831907, 1e-6)\n\n# Table tab:zeta-euler\nE = 1.0\nexpect = {2: 1.333333, 3: 1.5, 5: 1.5625, 7: 1.595052, 11: 1.608344, 13: 1.617918}\nerr = {2: 0.311601, 3: 0.144934, 5: 0.082434, 7: 0.049882, 11: 0.036590, 13: 0.027016}\nfor p in [2, 3, 5, 7, 11, 13]:\n    E *= 1 / (1 - p**-2.0)\n    close(E, expect[p], 1e-6)\n    close(np.pi**2 / 6 - E, err[p], 1e-6)\n    assert np.pi**2 / 6 - E <= 1 / p\n\n# Sample: product beats harmonic sum x=10\nclose(210 / 48, 4.375, 1e-12)\nclose(sum(1 / k for k in range(1, 11)), 2.928968, 1e-6)\n\n# Period 2pi/log2\nclose(2 * np.pi / np.log(2), 9.0647, 1e-4)\nclose(2 * np.pi / np.log(2), 9.064720, 1e-6)\n\n# Sample: geometric at z=-2\nfor N, v in zip(range(5), [1, -1, 3, -5, 11]):\n    assert (1 - (-2)**(N + 1)) // 3 == v\n\n# Sample: close to the pole\nclose(mpmath.zeta(1.01), 100.578, 1e-3)\nclose(1 - 2**-0.01, 0.0069075, 1e-7)\nclose(0.01 * np.log(2), 0.0069315, 1e-7)\n\n# Sample: zeta(1/2) via eta (Dirichlet eta = mpmath.altzeta)\ndef eta_avg(s, N):\n    k = np.arange(1, N + 2)\n    terms = (-1.0)**(k + 1) * np.exp(-s * np.log(k))\n    S = np.cumsum(terms)\n    return 0.5 * (S[N - 1] + S[N])\ne = eta_avg(0.5, 1000)\nclose(mpmath.altzeta(0.5), 0.604899, 1e-6)\nclose((1 - mpmath.sqrt(2)) * mpmath.zeta(0.5), 0.604899, 1e-6)\nassert abs(e - float(mpmath.altzeta(0.5))) < 1e-5\nclose(mpmath.zeta(0.5), -1.460355, 1e-6)\nclose(1 - np.sqrt(2), -0.414214, 1e-6)\nclose(1001**-0.5, 0.0316, 1e-4)\n\n# Figure / Problem 20: eta at rho1 small\nt1 = float(mpmath.zetazero(1).imag)\nassert abs(eta_avg(0.5 + 1j * t1, 1000)) < 1e-3\n\n# Functional equation numeric check at s=0.3+7i\nsp = mpmath.mpc(0.3, 7.0)\nlhs = mpmath.zeta(sp)\nrhs = 2**sp * mpmath.pi**(sp - 1) * mpmath.sin(mpmath.pi * sp / 2) * mpmath.gamma(1 - sp) * mpmath.zeta(1 - sp)\nassert abs(lhs - rhs) < 1e-15\nxi = lambda s: s * (s - 1) / 2 * mpmath.pi**(-s / 2) * mpmath.gamma(s / 2) * mpmath.zeta(s)\nassert abs(xi(sp) - xi(1 - sp)) < 1e-15\n\n# zeta(-1), zeta(0), zeta(-3), trivial zeros\nclose(mpmath.zeta(-1), -1 / 12, 1e-12)\nclose(mpmath.zeta(0), -0.5, 1e-12)\nclose(mpmath.zeta(-3), 1 / 120, 1e-12)\nfor n in [-2, -4, -6, -8, -10]:\n    assert abs(mpmath.zeta(n)) < 1e-20\n\n# Table tab:zeta-zeros (RE1) and gaps\ntz = [float(mpmath.zetazero(n).imag) for n in range(1, 12)]\nRE1 = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062,\n       37.586178, 40.918719, 43.327073, 48.005151, 49.773832]\ngaps = [6.887315, 3.988818, 5.414018, 2.510186, 4.651116,\n        3.332541, 2.408354, 4.678078, 1.768681]\nfor a, b in zip(tz, RE1):\n    close(a, b, 1e-6)\nfor i, g in enumerate(gaps):\n    close(tz[i + 1] - tz[i], g, 2e-6)\nassert tz[10] > 50\nfor n in range(1, 11):\n    assert abs(mpmath.zetazero(n).real - 0.5) < 1e-20\n\n# Bisection sample\na, b = 14.0, 15.0\nZa = mpmath.siegelz(a); assert Za < 0\nassert mpmath.siegelz(15) > 0\nmids = [14.5, 14.25, 14.125, 14.1875, 14.15625, 14.140625, 14.1328125, 14.13671875]\nsigns = \"++-+++-+\"\nfor step in range(8):\n    m = 0.5 * (a + b)\n    assert m == mids[step]\n    Zm = mpmath.siegelz(m)\n    assert (Zm > 0) == (signs[step] == \"+\")\n    if Zm * Za < 0: b = m\n    else: a, Za = m, Zm\nassert (a, b) == (14.1328125, 14.13671875)\nest = 0.5 * (a + b)\nclose(est, 14.134765625, 1e-12)\nclose(abs(est - t1), 4.0e-5, 1e-6)\nclose(1 / 2**8, 0.00390625, 1e-12)\nclose(1 / 2**9, 0.001953, 1e-6)\nclose(2**-20, 9.5e-7, 1e-8)\nclose(mpmath.siegelz(0), -1.460355, 1e-6)\n# Checkpoint: Z(30)>0, Z(31)<0\nassert mpmath.siegelz(30) > 0 and mpmath.siegelz(31) < 0\n# Z real\nassert abs(mpmath.im(mpmath.exp(1j * mpmath.siegeltheta(20)) * mpmath.zeta(0.5 + 20j))) < 1e-15\n\n# Paper anchors t1, t500, t1000 (mpmath)\nmpmath.mp.dps = 20\nclose(mpmath.zetazero(1).imag, 14.134725141734695, 1e-14)\nclose(mpmath.zetazero(500).imag, 811.1843588465, 1e-9)\nt1000 = float(mpmath.zetazero(1000).imag)\nclose(t1000, 1419.42248094599, 1e-10)\nmpmath.mp.dps = 25\n\n# Problem 21: mean spacing at t1000\ng = 2 * np.pi / np.log(t1000 / (2 * np.pi))\nclose(g, 1.159, 1e-3)\nclose(t1000 / (2 * np.pi), 225.91, 1e-2)\nclose(np.log(t1000 / (2 * np.pi)), 5.4201, 1e-3)\n\n# Problem 1\nS5 = sum(1.0 / k**2 for k in range(1, 6))\nclose(S5, 1.463611, 1e-6)\nclose(S5 + 1 / 6, 1.630278, 1e-6)\nclose(S5 + 0.2, 1.663611, 1e-6)\n# Problem 2, 3\nclose(4**-1.5, 0.125, 1e-12)\nclose(5**-0.5, 0.447214, 1e-6); close(np.log(5), 1.609438, 1e-6)\n# Problem 9\nprod20 = 1.0\nfor p in [2, 3, 5, 7, 11, 13, 17, 19]:\n    prod20 *= p / (p - 1)\nclose(prod20, 5.847132, 1e-6)\nclose(sum(1 / k for k in range(1, 21)), 3.597740, 1e-6)\n# Problem 10\nclose(mpmath.zeta(1.1), 10.584, 1e-3)\n# Problem 11\nclose(np.pi**2 / 12, 0.822467, 1e-6)\nclose(mpmath.altzeta(2), np.pi**2 / 12, 1e-12)\n# Problem 23\nclose(2**-0.5, 0.707107, 1e-6); close(np.log(2), 0.693147, 1e-6)\n# Problem 27\nclose(float(mpmath.zeta(1.5)) - 2, 0.612375, 1e-6)\n# Problem 25 identity numeric\ns = 2.5 + 1j\nc = sum((1 if k % 3 else -2) * k**(-s) for k in range(1, 200001))\nassert abs(c - (1 - 3**(1 - s)) * complex(mpmath.zeta(s))) < 1e-6\nprint(\"all checks passed\")\n",
+ "new_checks": "import numpy as np, mpmath\nmpmath.mp.dps = 25\n\ndef close(a, b, tol):\n    assert abs(float(a) - float(b)) < tol, (a, b)\n\n# Table tab:zeta-values\nclose(mpmath.zeta(1.5), 2.612375, 1e-6)\nclose(mpmath.zeta(2), 1.644934, 1e-6)\nclose(mpmath.zeta(3), 1.202057, 1e-6)\nclose(mpmath.zeta(4), 1.082323, 1e-6)\nclose(np.pi**4 / 90, 1.082323, 1e-6)\n\n# Sample: partial sums of zeta(2)\nS10 = sum(1.0 / k**2 for k in range(1, 11))\nclose(S10, 1.549768, 1e-6)\nclose(S10 + 1 / 11, 1.640677, 1e-6)\nclose(S10 + 0.1, 1.649768, 1e-6)\n\n# Checkpoint zeta(1.001)\nz = mpmath.zeta(1.001)\nassert 1000 <= z <= 1001\n\n# Sample: two arrows at s=2+3i\ns = 2 + 3j\na2 = 2.0**(-s); a3 = 3.0**(-s)\nclose(a2.real, -0.1217, 1e-4); close(a2.imag, -0.2184, 1e-4)\nclose(a3.real, -0.1098, 1e-4); close(a3.imag, 0.0171, 1e-4)\nclose(3 * np.log(2), 2.0794, 1e-4); close(3 * np.log(3), 3.2958, 1e-4)\nassert abs(complex(mpmath.zeta(s))) <= np.pi**2 / 6\n\n# Checkpoint zeta(3+100i) bounds\nza = abs(complex(mpmath.zeta(3 + 100j)))\nassert 1 / 1.202057 <= za <= 1.202057\nclose(1 / float(mpmath.zeta(3)), 0.831907, 1e-6)\n\n# Table tab:zeta-euler\nE = 1.0\nexpect = {2: 1.333333, 3: 1.5, 5: 1.5625, 7: 1.595052, 11: 1.608344, 13: 1.617918}\nerr = {2: 0.311601, 3: 0.144934, 5: 0.082434, 7: 0.049882, 11: 0.036590, 13: 0.027016}\nfor p in [2, 3, 5, 7, 11, 13]:\n    E *= 1 / (1 - p**-2.0)\n    close(E, expect[p], 1e-6)\n    close(np.pi**2 / 6 - E, err[p], 1e-6)\n    assert np.pi**2 / 6 - E <= 1 / p\n\n# Sample: product beats harmonic sum x=10\nclose(210 / 48, 4.375, 1e-12)\nclose(sum(1 / k for k in range(1, 11)), 2.928968, 1e-6)\n\n# Period 2pi/log2\nclose(2 * np.pi / np.log(2), 9.0647, 1e-4)\nclose(2 * np.pi / np.log(2), 9.064720, 1e-6)\n\n# Sample: geometric at z=-2\nfor N, v in zip(range(5), [1, -1, 3, -5, 11]):\n    assert (1 - (-2)**(N + 1)) // 3 == v\n\n# Sample: close to the pole\nclose(mpmath.zeta(1.01), 100.578, 1e-3)\nclose(1 - 2**-0.01, 0.0069075, 1e-7)\nclose(0.01 * np.log(2), 0.0069315, 1e-7)\n\n# Sample: zeta(1/2) via eta (Dirichlet eta = mpmath.altzeta)\ndef eta_avg(s, N):\n    k = np.arange(1, N + 2)\n    terms = (-1.0)**(k + 1) * np.exp(-s * np.log(k))\n    S = np.cumsum(terms)\n    return 0.5 * (S[N - 1] + S[N])\ne = eta_avg(0.5, 1000)\nclose(mpmath.altzeta(0.5), 0.604899, 1e-6)\nclose((1 - mpmath.sqrt(2)) * mpmath.zeta(0.5), 0.604899, 1e-6)\nassert abs(e - float(mpmath.altzeta(0.5))) < 1e-5\nclose(mpmath.zeta(0.5), -1.460355, 1e-6)\nclose(1 - np.sqrt(2), -0.414214, 1e-6)\nclose(1001**-0.5, 0.0316, 1e-4)\n\n# Figure / Problem 20: eta at rho1 small (eta_avg works unchanged for complex s)\nt1 = float(mpmath.zetazero(1).imag)\nassert abs(eta_avg(0.5 + 1j * t1, 1000)) < 1e-3\n\n# eta(0) = (1-2) zeta(0) = 1/2\nclose((1 - 2) * mpmath.zeta(0), 0.5, 1e-12)\nclose(mpmath.altzeta(0), 0.5, 1e-12)\n\n# Gamma recurrence and factorial (numerical instance)\nzz = mpmath.mpc(1.3, 0.7)\nassert abs(mpmath.gamma(zz + 1) - zz * mpmath.gamma(zz)) < 1e-20\nassert abs(mpmath.quad(lambda x: x**(zz - 1) * mpmath.exp(-x), [0, mpmath.inf]) - mpmath.gamma(zz)) < 1e-12\nclose(mpmath.gamma(5), 24, 1e-12)\n\n# Functional equation numeric check at s=0.3+7i\nsp = mpmath.mpc(0.3, 7.0)\nlhs = mpmath.zeta(sp)\nrhs = 2**sp * mpmath.pi**(sp - 1) * mpmath.sin(mpmath.pi * sp / 2) * mpmath.gamma(1 - sp) * mpmath.zeta(1 - sp)\nassert abs(lhs - rhs) < 1e-15\nxi = lambda s: s * (s - 1) / 2 * mpmath.pi**(-s / 2) * mpmath.gamma(s / 2) * mpmath.zeta(s)\nassert abs(xi(sp) - xi(1 - sp)) < 1e-15\n\n# zeta(-1), zeta(0), zeta(-3), trivial zeros\nclose(mpmath.zeta(-1), -1 / 12, 1e-12)\nclose(mpmath.zeta(0), -0.5, 1e-12)\nclose(mpmath.zeta(-3), 1 / 120, 1e-12)\nfor n in [-2, -4, -6, -8, -10]:\n    assert abs(mpmath.zeta(n)) < 1e-20\n\n# Table tab:zeta-zeros (RE1) and gaps\ntz = [float(mpmath.zetazero(n).imag) for n in range(1, 12)]\nRE1 = [14.134725, 21.022040, 25.010858, 30.424876, 32.935062,\n       37.586178, 40.918719, 43.327073, 48.005151, 49.773832]\ngaps = [6.887315, 3.988818, 5.414018, 2.510186, 4.651116,\n        3.332541, 2.408354, 4.678078, 1.768681]\nfor a, b in zip(tz, RE1):\n    close(a, b, 1e-6)\nfor i, g in enumerate(gaps):\n    close(tz[i + 1] - tz[i], g, 2e-6)\nassert tz[10] > 50\nfor n in range(1, 11):\n    assert abs(mpmath.zetazero(n).real - 0.5) < 1e-20\n\n# Bisection sample\na, b = 14.0, 15.0\nZa = mpmath.siegelz(a); assert Za < 0\nassert mpmath.siegelz(15) > 0\nmids = [14.5, 14.25, 14.125, 14.1875, 14.15625, 14.140625, 14.1328125, 14.13671875]\nsigns = \"++-+++-+\"\nfor step in range(8):\n    m = 0.5 * (a + b)\n    assert m == mids[step]\n    Zm = mpmath.siegelz(m)\n    assert (Zm > 0) == (signs[step] == \"+\")\n    if Zm * Za < 0: b = m\n    else: a, Za = m, Zm\nassert (a, b) == (14.1328125, 14.13671875)\nest = 0.5 * (a + b)\nclose(est, 14.134765625, 1e-12)\nclose(abs(est - t1), 4.0e-5, 1e-6)\nclose(1 / 2**8, 0.00390625, 1e-12)\nclose(1 / 2**9, 0.001953, 1e-6)\nclose(2**-20, 9.5e-7, 1e-8)\nclose(mpmath.siegelz(0), -1.460355, 1e-6)\n# Checkpoint: Z(30)>0, Z(31)<0\nassert mpmath.siegelz(30) > 0 and mpmath.siegelz(31) < 0\n# Z real\nassert abs(mpmath.im(mpmath.exp(1j * mpmath.siegeltheta(20)) * mpmath.zeta(0.5 + 20j))) < 1e-15\n\n# Problem 19: sign changes of Z on the grid 0, 0.05, ..., 50\nts = np.arange(0, 50.0001, 0.05)\nZs = np.array([float(mpmath.siegelz(t)) for t in ts])\nassert np.all(Zs != 0)\nassert int(np.sum(Zs[:-1] * Zs[1:] < 0)) == 10\nassert min(np.diff(tz[:10])) > 0.05\n\n# Paper anchors t1, t500, t1000 (mpmath)\nmpmath.mp.dps = 20\nclose(mpmath.zetazero(1).imag, 14.134725141734695, 1e-14)\nclose(mpmath.zetazero(500).imag, 811.1843588465, 1e-9)\nt1000 = float(mpmath.zetazero(1000).imag)\nclose(t1000, 1419.42248094599, 1e-10)\n# Problem 17: |zeta(rho_n)| below 1e-17 with 20 working digits\nmz = max(abs(mpmath.zeta(mpmath.zetazero(n))) for n in range(1, 11))\nassert mz < 1e-17\nmpmath.mp.dps = 25\n# Paper connection: 20-digit value of t1 quoted as 14.13472514173469379...\nassert mpmath.nstr(mpmath.zetazero(1).imag, 19) == '14.13472514173469379'\n\n# Problem 21: mean spacing at t1000\ng = 2 * np.pi / np.log(t1000 / (2 * np.pi))\nclose(g, 1.159, 1e-3)\nclose(t1000 / (2 * np.pi), 225.91, 1e-2)\nclose(np.log(t1000 / (2 * np.pi)), 5.4201, 1e-3)\n# Problem 21 revised: heights 1e3..1e4 have four digits before the point\nmpmath.mp.dps = 15\nt10000 = float(mpmath.zetazero(10000).imag)\nmpmath.mp.dps = 25\nassert 1000 < t1000 and t10000 < 1e4\ng4 = 2 * np.pi / np.log(1e4 / (2 * np.pi))\nclose(g4, 0.852, 1e-3)\nassert 0.5e-11 / g4 < 1e-11\nassert 1e-4 / 1e-11 >= 1e7\n\n# Problem 1\nS5 = sum(1.0 / k**2 for k in range(1, 6))\nclose(S5, 1.463611, 1e-6)\nclose(S5 + 1 / 6, 1.630278, 1e-6)\nclose(S5 + 0.2, 1.663611, 1e-6)\n# Problem 2, 3\nclose(4**-1.5, 0.125, 1e-12)\nclose(5**-0.5, 0.447214, 1e-6); close(np.log(5), 1.609438, 1e-6)\n# Problem 9\nprod20 = 1.0\nfor p in [2, 3, 5, 7, 11, 13, 17, 19]:\n    prod20 *= p / (p - 1)\nclose(prod20, 5.847132, 1e-6)\nclose(sum(1 / k for k in range(1, 21)), 3.597740, 1e-6)\n# Problem 10\nclose(mpmath.zeta(1.1), 10.584, 1e-3)\n# Problem 11\nclose(np.pi**2 / 12, 0.822467, 1e-6)\nclose(mpmath.altzeta(2), np.pi**2 / 12, 1e-12)\n# Problem 23\nclose(2**-0.5, 0.707107, 1e-6); close(np.log(2), 0.693147, 1e-6)\n# Problem 27\nclose(float(mpmath.zeta(1.5)) - 2, 0.612375, 1e-6)\n# Problem 25 identity numeric\ns = 2.5 + 1j\nc = sum((1 if k % 3 else -2) * k**(-s) for k in range(1, 200001))\nassert abs(c - (1 - 3**(1 - s)) * complex(mpmath.zeta(s))) < 1e-6\nprint(\"all checks passed\")\n",
  "new_figures": {},
- "notes": "Issue 8 (problem numbering) checked and judged invalid: counting the \\prob entries in order gives 13 = zeta(-3), 20 = eta_avg, 21 = t_1000 paper problem, 22 = rho_n paper problem, 25 = eta_3, 26 = log2/log3, matching every cross-reference and answer label, so no change was made. Issue 2 was addressed by clarifying that the estimate is the final-bracket midpoint (the table and the number were already correct). All other issues were fixed: Z(30)>0, Z(31)<0 corrected in the checkpoint and checks; bisection step count fixed (2^-20 checked); mpmath.eta replaced by mpmath.altzeta (Dirichlet eta); Problem 21 precision estimates made consistent (orders 1e-17 to 1e-16 and 1e-11 to 1e-10, hence 'at least six orders'); the trust claim about eta vanishing moved into a beyond box; the stray listing label was removed and its reference rephrased; reader-facing CHECKS mentions were replaced by mpmath instructions; Turing's method was put in a beyond box citing Edwards; 'to leading order' added; Problem 25 answer clarified."
+ "notes": "All 25 issues are addressed. Chapter 4 is now only a 'see also' reference: Gamma is recalled with its integral definition, and the recurrence is derived by integration by parts; bisection is described in words. In the Euler-product proof the integer sets are renamed to mathcal I_P and mathcal I_{P,J}, and the paired eta terms to D_j; partial sums keep the letter S. The Connes discussion now defers to his own proof and drops the guessed sign-change mechanism; Problem 24 is reworded to match. The CHECKS script gains five things: a grid sign-change count (Problem 19), the |zeta(rho_n)|<1e-17 check (Answer 17), the 19-digit t_1 string, the t_10000<1e4 check, and the spacing 0.852 at t=1e4 (revised Answer 21). It also adds numerical instances of the Gamma recurrence and of eta(0)=1/2. The geometric-series figure script was not provided, so the caption's 'shaded' region now refers to x<-1. If the existing figure shades x<=-1, the single boundary point makes no visible difference, so the figure script is left unchanged."
 }

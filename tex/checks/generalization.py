@@ -25,12 +25,24 @@ close(np.max(np.abs(y - np.polyval(p2, t))), 0.0, 1e-9, "S1 quad exact")
 close(np.polyval(p2, 4.0), 0.4, 1e-9, "S1 quad prediction")
 close(abs(y4 - np.polyval(p2, 4.0)), 0.9, 1e-9, "S1 quad OOS")
 
-# ---------------- Fig errorcurve: degree-14 in-sample rms negligible
+# ---------------- Error-curve listing (Sec. overfit): description of curves
 rng = np.random.default_rng(3)
 t_tr = np.linspace(0, 2 * np.pi, 15)
 y_tr = np.sin(t_tr) + 0.15 * rng.standard_normal(15)
-p14 = np.polynomial.Polynomial.fit(t_tr, y_tr, 14)
-assert rms(p14(t_tr) - y_tr) < 1e-6, rms(p14(t_tr) - y_tr)
+t_in = rng.uniform(0, 2 * np.pi, 200)
+t_out = np.linspace(2 * np.pi, 2.4 * np.pi, 50)
+y_in = np.sin(t_in) + 0.15 * rng.standard_normal(200)
+y_out = np.sin(t_out) + 0.15 * rng.standard_normal(50)
+e_in, e_out = [], []
+for deg in range(15):
+    pp = np.polynomial.Polynomial.fit(t_tr, y_tr, deg)
+    e_in.append(rms(pp(t_in) - y_in)); e_out.append(rms(pp(t_out) - y_out))
+    if deg == 14:
+        assert rms(pp(t_tr) - y_tr) < 1e-6, rms(pp(t_tr) - y_tr)
+kmin = int(np.argmin(e_in))
+assert 3 <= kmin <= 12, kmin
+assert e_in[14] > e_in[kmin]
+assert e_out[14] > 10 * e_out[3], (e_out[14], e_out[3])
 
 # ---------------- Sample: Interpolation works, extrapolation fails (RE4)
 tt = np.array([0.0, np.pi / 2, np.pi]); yy = np.array([0.1, 0.9, 0.1])
@@ -65,9 +77,9 @@ close(c6, 0.96, 1.5e-2, "S3 six-prime oracle corr")
 for (a, b), val in zip([(401, 500), (501, 1000), (1001, 2000), (2001, 5000), (5001, 10000)],
                        [0.263, 0.270, 0.279, 0.288, 0.296]):
     nn = np.arange(a, b + 1)
-    close(qmnt.rms(qmnt.fluct(tz[a - 1:b], nn)), val, 2.5e-3, f"null {a}-{b}")
+    close(qmnt.rms(qmnt.fluct(tz[a - 1:b], nn)), val, 2.5e-3, "null %d-%d" % (a, b))
 
-# ---------------- Sample: fluctuations of the right size and no shape
+# ---------------- Sample: uncorrelated output always adds error
 ratio = lambda a, r: np.sqrt(1 + a ** 2 - 2 * r * a)
 close(ratio(0.62, 0.0), 1.1766, 5e-5, "S4a ratio")
 close(ratio(0.62, 0.0) * 0.263, 0.309, 5e-4, "S4a rms")
@@ -115,9 +127,21 @@ for rr in [0.3, 0.5, 0.7]:
 close(1 / np.sqrt(2) * np.sqrt(2), 1.0, 1e-12, "bound 1/sqrt2")
 
 # ---------------- Sample: Wigner surmise estimate of rho1
-p = lambda s: 32 / np.pi ** 2 * s ** 2 * np.exp(-4 * s ** 2 / np.pi)
+b = 4 / np.pi
+p = lambda s: 32 / np.pi ** 2 * s ** 2 * np.exp(-b * s ** 2)
+I3 = integrate.quad(lambda s: s ** 3 * np.exp(-b * s ** 2), 0, np.inf)[0]
+close(I3, 1 / (2 * b ** 2), 1e-10, "S8 s^3 integral")
+close(1 / (2 * b ** 2), np.pi ** 2 / 32, 1e-12, "S8 pi^2/32")
+close(32 / np.pi ** 2 * np.pi ** 2 / 32, 1.0, 1e-12, "S8 mean algebra")
+I2 = integrate.quad(lambda s: s ** 2 * np.exp(-b * s ** 2), 0, np.inf)[0]
+close(I2, np.sqrt(np.pi) / 4 * b ** -1.5, 1e-10, "S8 s^2 integral")
+I4 = integrate.quad(lambda s: s ** 4 * np.exp(-b * s ** 2), 0, np.inf)[0]
+close(I4, 3 * np.sqrt(np.pi) / 8 * b ** -2.5, 1e-10, "S8 s^4 integral")
+close(b ** -2.5, np.pi ** 2.5 / 32, 1e-12, "S8 b^-5/2")
+m0 = integrate.quad(p, 0, np.inf)[0]
 m1 = integrate.quad(lambda s: s * p(s), 0, np.inf)[0]
 m2 = integrate.quad(lambda s: s ** 2 * p(s), 0, np.inf)[0]
+close(m0, 1.0, 1e-8, "S8 normalized")
 close(m1, 1.0, 1e-8, "S8 mean 1")
 close(m2, 3 * np.pi / 8, 1e-8, "S8 <s^2>")
 close(m2, 1.1781, 5e-5, "S8 1.1781")
@@ -129,8 +153,11 @@ close(2 * 0.263 ** 2, 0.138, 5e-4, "text 0.138")
 close(varu / (2 * 0.263 ** 2), 1.287, 5e-4, "S8 ratio")
 rho1_est = 1 - varu / (2 * 0.263 ** 2)
 close(rho1_est, -0.287, 5e-4, "S8 rho1")
+# inversion of paper's neighbor-mean correlations with rho2 = 0
+close(-0.26 / np.sqrt(2), -0.18, 5e-3, "S8 inversion low")
+close(-0.41 / np.sqrt(2), -0.29, 5e-3, "S8 inversion high")
 
-# ---------------- Real zeros: lag-1 negative; neighbor mean anticorrelated
+# ---------------- Real zeros: lag-1 negative; neighbor mean anticorrelated, worse than null
 t4 = qmnt.zeros(400); n4 = np.arange(1, 401); d4 = qmnt.fluct(t4, n4)
 dc = d4 - d4.mean()
 lag1 = np.sum(dc[:-1] * dc[1:]) / np.sum(dc ** 2)
@@ -138,7 +165,9 @@ assert lag1 < 0, lag1
 ev = np.arange(1, 399, 2)
 pred_nb = 0.5 * (d4[ev - 1] + d4[ev + 1])
 assert qmnt.corr(pred_nb, d4[ev]) < 0
+assert qmnt.rms(pred_nb - d4[ev]) > qmnt.rms(d4[ev])
 
+# ---------------- Real-zero kriging listing (seed 1): w<0, sign flip
 rng = np.random.default_rng(1)
 test = np.zeros(400, bool); test[rng.choice(400, 80, replace=False)] = True
 train = ~test
@@ -146,14 +175,16 @@ mu = d4[train].mean()
 def acf(k):
     i = np.arange(400 - k)
     ok = train[i] & train[i + k]
-    a, b = d4[i[ok]] - mu, d4[i[ok] + k] - mu
-    return np.mean(a * b) / np.var(d4[train])
+    a, b2 = d4[i[ok]] - mu, d4[i[ok] + k] - mu
+    return np.mean(a * b2) / np.var(d4[train])
 w_est = acf(1) / (1 + acf(2))
 j = np.array([i for i in range(1, 399) if test[i] and train[i - 1] and train[i + 1]])
 s = (d4[j - 1] - mu) + (d4[j + 1] - mu)
 cn = qmnt.corr(mu + 0.5 * s, d4[j]); ck = qmnt.corr(mu + w_est * s, d4[j])
-if w_est < 0:
-    close(ck, -cn, 1e-10, "kriging sign flip")
+assert w_est < 0, w_est
+assert cn < 0, cn
+assert ck > 0, ck
+close(ck, -cn, 1e-10, "kriging sign flip")
 # sign(alpha) correlation identity
 Xa = np.random.default_rng(11).standard_normal(500); Ya = Xa + np.random.default_rng(12).standard_normal(500)
 close(np.corrcoef(-2.0 * Xa, Ya)[0, 1], -np.corrcoef(Xa, Ya)[0, 1], 1e-12, "corr sign")
@@ -164,12 +195,19 @@ close(w, -1 / 3, 1e-12, "S9 w")
 Emin = 1 - 2 * r1 ** 2 / (1 + r2)
 close(Emin, 0.8, 1e-12, "S9 Emin")
 close(np.sqrt(Emin), 0.894, 5e-4, "S9 rms ratio")
+close(np.sqrt(Emin), 0.89, 5e-3, "paper connection 0.89")
 varp = w ** 2 * 2 * (1 + r2); covp = 2 * w * r1
 close(varp, 0.2, 1e-12, "S9 var pred"); close(covp, 0.2, 1e-12, "S9 cov")
 close(covp / np.sqrt(varp), 0.447, 5e-4, "S9 corr")
+close(covp / np.sqrt(varp), 0.45, 5e-3, "paper connection 0.45")
 Csub = np.array([[1, r2], [r2, 1]]); c0 = np.array([r1, r1])
 ww = np.linalg.solve(Csub, c0); assert np.allclose(ww, [w, w])
 close(1 - ww @ c0, Emin, 1e-12, "S9 Emin matrix")
+# minimum check: E(w+v) >= E(w)
+Cfull = np.array([[1, r1, r1], [r1, 1, r2], [r1, r2, 1]])
+Ef = lambda wv: Cfull[0, 0] - 2 * wv @ Cfull[1:, 0] + wv @ Cfull[1:, 1:] @ wv
+for v in np.random.default_rng(4).standard_normal((20, 2)):
+    assert Ef(ww + v) >= Ef(ww) - 1e-12
 
 # ---------------- Sample: price of a small nugget
 wn = r1 / (1 + r2 + 0.05)
@@ -179,18 +217,24 @@ close(2 * wn ** 2 * (1 + r2), 0.1795, 5e-5, "S10 term2")
 En = 1 - 4 * wn * r1 + 2 * wn ** 2 * (1 + r2)
 close(En, 0.8006, 5e-5, "S10 E")
 
-# ---------------- Sample: ridge path
+# ---------------- Sample: ridge path (paper convention mu*sigma1^2)
 x = np.array([1.0, 2.0, 3.0]); yv = np.array([2.1, 3.9, 6.2])
 Sxy = np.sum(x * yv); Sxx = np.sum(x * x)
 close(Sxy, 28.5, 1e-12, "S11 Sxy"); close(Sxx, 14.0, 1e-12, "S11 Sxx")
-cr = lambda mu: Sxy / (Sxx + mu)
-close(cr(0), 2.0357, 5e-5, "S11 c0"); close(cr(14), 1.0179, 5e-5, "S11 c14")
-close(cr(140), 0.1851, 5e-5, "S11 c140")
+cr = lambda mu: Sxy / ((1 + mu) * Sxx)
+close(cr(0), 2.0357, 5e-5, "S11 c0"); close(cr(1), 1.0179, 5e-5, "S11 c1")
+close(cr(10), 0.1851, 5e-5, "S11 c10")
+close(Sxy / 28, cr(1), 1e-12, "S11 28"); close(Sxy / 154, cr(10), 1e-12, "S11 154")
 close(rms(yv - cr(0) * x), 0.119, 5e-4, "S11 Ein 0")
-close(rms(yv - cr(14) * x), 2.20, 5e-3, "S11 Ein 14")
+close(rms(yv - cr(1) * x), 2.20, 5e-3, "S11 Ein 1")
 close(4 * cr(0), 8.143, 5e-4, "S11 pred 0")
-close(4 * cr(14), 4.071, 5e-4, "S11 pred 14")
-close(4 * cr(140), 0.740, 5e-4, "S11 pred 140")
+close(4 * cr(1), 4.071, 5e-4, "S11 pred 1")
+close(4 * cr(10), 0.740, 5e-4, "S11 pred 10")
+U1, S1, Vt1 = np.linalg.svd(x[:, None], full_matrices=False)
+close(S1[0], np.sqrt(Sxx), 1e-12, "sigma1 = column length")
+for muv in [0.0, 1.0, 10.0]:
+    cf = Vt1.T @ ((S1 / (S1 ** 2 + muv * S1[0] ** 2)) * (U1.T @ yv))
+    close(cf[0], cr(muv), 1e-12, "filter = one-parameter ridge")
 A = np.random.default_rng(0).standard_normal((5, 3)); bb = np.ones(5)
 U_, S_, Vt_ = np.linalg.svd(A, full_matrices=False)
 cbig = Vt_.T @ ((S_ / (S_ ** 2 + 1e12 * S_[0] ** 2)) * (U_.T @ bb))

@@ -1,93 +1,177 @@
 [
  {
-  "category": "RULE",
+  "category": "ERROR",
   "severity": "high",
-  "quote": "\\begin{figure}[htbp]\\centering\n\\includegraphics[width=0.95\\linewidth]{figs/fitting_sensitivity.pdf}",
-  "problem": "The chapter includes six figures (sensitivity, landscape, lmpath, bases, coverage, toyfit) but the response has no FIGURES part with scripts for them.",
-  "fix": "Add a ### FIG script for each of fitting_sensitivity, fitting_landscape, fitting_lmpath, fitting_bases, fitting_coverage and fitting_toyfit."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "The CHECKS script confirms that the finite-difference box reproduces these values to about $10^{-6}$ or better",
-  "problem": "Chapter text refers to the CHECKS script, which the reader never sees. Several quoted numbers are also unchecked: the 0.07 vs 0.01 ratio, 0.186 and the 814 threshold are in checks, but the toy-fit claims (collapse once M exceeds the number of levels plus one) and the Wu--Sprung sensitivity claim 'k of about 60' are not.",
-  "fix": "Remove the reference to CHECKS from the text and add checks for the figure claims, including the 'k about 60' statement."
+  "quote": "Levels up to roughly 77, whose ripples the cosines can reach, can be moved independently and should fit well; higher levels",
+  "problem": "This prediction is unsupported and conflicts with the paper. By the chapter's own stationary-phase argument, a level above the 'reach' still responds to all M cosines (its cutoff lies above M), so its row of A is full, not empty. Table III shows M=400 fitting 200 odd-indexed levels up to n=399 to rms <1e-3, and Table I shows M=600 on 400 zeros reaching 0.064. The claim that residual error concentrates above level 77 is not checked anywhere.",
+  "fix": "Rewrite the answer: the law is a sufficient-style heuristic for full coverage of all levels up to E_max; below it, levels above the reach still respond to many cosines and may be fitted when M is at least the number of training levels (cite Table III, M=400 odd/even, <1e-3). Do not predict where the residual concentrates unless it is computed. Soften 'covers up to about level 77' in Sample 9 in the same way."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "even the lowest level responds to cosines up to $k$ of about 60",
-  "problem": "The dashed curve is k=2L sqrt(E_n - V_0)/pi. For the lowest level E_1 is near V_0 plus a small zero-point energy, so the cutoff would be small. The value 60 is unsupported and likely wrong, because the zero-point energy of the Wu--Sprung well is small.",
-  "fix": "Compute the actual response range for n=1 and quote it, or say only that the response range widens with n."
+  "quote": "with twice as many knobs as levels, the underdetermined damped steps (Section~\\ref{sec:fitting-svd}) drive the residuals to essentially zero",
+  "problem": "This is in unresolved tension with the coverage law as the chapter presents it. For zeros up to n≈400 (E≈680) the law demands M≳745, yet M=400 fits 200 levels to <1e-3. A student will see a contradiction with Sample 9 and Problem 11.",
+  "fix": "Add two or three sentences reconciling the two: the coverage law concerns shifting all consecutive levels up to E_max independently; with only every other level fitted (or n_fit well below M) the sensitivity matrix can have full row rank although Mπ/L<2√E. State that the law is heuristic and not a necessary condition for a small in-sample error."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "$A_{nk}=\\frac{(-1)^{n+1}}{2}\\,\\delta_{nk}\\quad(k\\ge1)}",
-  "problem": "The text says 'cosine k moves only level n=k (up by c_k/2 for odd n, down for even n)'. The index n=k makes this statement about the level as a function of its own index, which is fine, but the continuum derivation and the discrete claim (Problem 8) differ at n+k near N+1, and the 'in fact exactly' claim in the sample is only true for n+k<N+1.",
-  "fix": "State the restriction n+k<N+1 in the sample's final remark."
+  "quote": "at the price of a kink at $x=0$ for odd $k$",
+  "problem": "T_k(2|x|/L-1) has a kink at x=0 for every k≥1, not only odd k. The one-sided slope at x=0 is (2/L)T_k'(-1)=(2/L)(-1)^{k+1}k^2, which is nonzero. Example: T_2 gives 8x^2/L^2-8|x|/L+1, which contains |x|. The figure caption repeats the error ('with kinks at $x=0$ for odd $k$').",
+  "fix": "Replace with 'at the price of a kink at $x=0$ for every $k\\ge1$ (the slope there is $\\pm 2k^2/L$)' and correct the caption of the bases figure to match."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "the step vanishes exactly where the unregularized gradient vanishes, so the stationary points are unchanged",
-  "problem": "The ridge-variant claim rests on a guessed implementation; stated with certainty, it is an overclaim about the paper's code, though partly hedged afterwards.",
-  "fix": "Phrase it as 'under this literal reading'."
+  "quote": "For $n=50$, find the largest $k$ with $|A_{nk}|>10^{-3}$",
+  "problem": "The problem restricts to k<300, but for n=50 (E_50≈143) the predicted cutoff is 2L√(E_50−V_0)/π≈330, outside the computed range. The exercise cannot show the cutoff.",
+  "fix": "Change to 'compute $A_{nk}$ for $k<500$' or use n=20 (cutoff ≈235). Add a check that computes the cutoff for the chosen n."
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "$M>56.96\\,L/\\pi=56.96\\times44.883/3.14159=813.8$",
-  "problem": "Fine numerically, but the paper's $M=900$ at scale 2 answer says 900 does not satisfy the law at scale 2 (needs 1438); the Sec. III claims there concern scale 1 only. The answer to Problem 11 is consistent, but 'in-sample rms 0.103' for M=900 at scale 2 is fitted on 800 zeros, not 1000, so comparing with the 1000-level requirement is mismatched.",
-  "fix": "In Problem 11 and its answer, use the 800 training levels (t_800) as the top level, or note the mismatch."
+  "severity": "low",
+  "quote": "a standing wave with $n$ humps per half-box",
+  "problem": "cos(nπx/L) has period 2L/n, so |ψ_n|^2 has n humps across the whole box of width 2L, not per half-box.",
+  "fix": "Write 'with $n$ humps across the box'."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "which is the paper's coverage law (Sec.~III, first paragraph). We have used $\\sqrt{E}$ rather than $\\sqrt{E-V_0}$",
-  "problem": "The sentence 'the difference is a few percent' is stated without a check. For E near 800, correction is about 0.6 percent in k, but at low E it is large.",
-  "fix": "Quantify: relative change about V_0/(2E), and note it is large only at low E."
+  "quote": "The paper's ridge variant raises the floor of the damping; it is not the same as a Tikhonov penalty on $c$.",
+  "problem": "The Key Idea states as fact what the body text flags as the book's own literal reading of a one-line record. The paper calls it 'ridge regularization' and the implementation is not verified here. Problem 23 also treats 'the variant' as established.",
+  "fix": "Hedge: 'Read literally, the paper's ridge variant raises the floor of the damping, which would differ from a Tikhonov penalty on $c$; the archived scripts decide.' Phrase Problem 23 as 'the literal reading, Eq. (ridgestep)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "as expected when the damping can never fall below $\\mu$",
+  "problem": "This explains the ridge rows of Table I (0.142, 0.206) by the chapter's unverified interpretation of the ridge variant. Under that reading stationary points are unchanged, so a higher final rms is not obviously 'expected' unless the iteration is cut short.",
+  "fix": "Replace with 'which is consistent with either reading of the ridge variant (a damping floor that stops the iteration early, or a Tikhonov penalty that moves the minimum); see Section~\\ref{sec:fitting-svd}'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The argument uses the WKB picture of Chapter~\\ref{ch:wkb} and is approximate, not a theorem.",
+  "problem": "The chapter uses Chapter 12 (WKB wavefunction, turning points), Chapter 17 (gap_n, s_n, N_sm), Chapter 11 (box eigenfunctions) and Chapter 6. None of these is in the prerequisites list, and the bible's contract for this chapter assumes only Ch. 9, 13, 23.",
+  "fix": "Add Chapters wkb, counting-zeros and bound-states to the prerequisites. Alternatively make the coverage derivation self-contained by restating the WKB form ψ≈C k^{-1/2}cos(∫k dx−π/4) with a one-line justification and a reminder of turning points."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Above the curve the entries fall off sharply. Section~\\ref{sec:fitting-coverage} explains why.",
-  "problem": "The 'exponentially small because the stationary point has moved into the complex plane' claim is used without justification for a first-year reader.",
-  "fix": "Put it in a beyond box or give a brief justification, as the stationary condition 2k(x)=q has no real solution."
+  "quote": "is the same as the cancellation of a rapidly oscillating integrand in Chapter~\\ref{ch:fourier-transform}",
+  "problem": "Stationary phase is the key step of the coverage derivation, yet it is only asserted by analogy with a chapter that is neither a prerequisite nor contracted to teach it. No worked example shows that an oscillating integral is dominated by the stationary point.",
+  "fix": "Add a short self-contained illustration, e.g. compare ∫cos(ax)dx over many periods (cancels, of order 1/a) with ∫cos(a(x−x0)^2)dx (contribution of order 1/√a from near x0). Or put the stationary-phase principle in a `beyond` box."
  },
  {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Hence every eigenvector with eigenvalue $E$ is $v_1$ times one fixed vector, and the eigenspace is one-dimensional.",
-  "problem": "The proof needs the recursion to close at the last row (v_{N+1}=0 is a constraint, not a free choice), and v_1 not zero (otherwise v=0). Neither is stated.",
-  "fix": "State that v_1=0 forces v=0, so a nonzero eigenvector has v_1≠0, giving a one-dimensional eigenspace."
- },
- {
-  "category": "JUMP",
+  "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "Hellmann--Feynman relation",
-  "problem": "The name is used without definition or derivation for the reader, and the two-level example uses it without proof.",
-  "fix": "Add a one-line statement that dE/dc=<psi|dH/dc|psi> and cite Chapter on perturbation theory."
+  "quote": "at most 60 iterations & a cap on the number of passes through the loop",
+  "problem": "The 60-iteration cap is stated in the paper only for the revision computations (steps 16–23). The table presents it as a clause of Appendix A step 6, which applies to all fits, including the original Table I rows.",
+  "fix": "Mark the row '(revision computations, App. A after step 15; not stated for the original fits)' and adjust the Key Idea 'stop when λ>10^4 or after 60 iterations' in the same way."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "every trial of the first iteration failed the $0.999$ test, so $\\lambda$ climbed past $10^4$ with $c$ still zero",
+  "problem": "The paper says only that no step is accepted. The trace (every iteration fails, not only the first, until λ>10^4) depends on the book's assumed initial λ and try-list order, which the chapter admits are its own choices.",
+  "fix": "Write 'every trial in every iteration failed the test, so (in our reading of the schedule) λ was multiplied by 30 until it exceeded $10^4$, with $c$ still zero'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Put $M$ equally spaced nodes $u_j=j/(M-1)$, $j=0,\\dots,M-1$",
+  "problem": "The paper says only 'M uniform nodes of |x|/L'. Placing the nodes at j/(M−1) including both endpoints is the book's assumption, presented as the paper's definition.",
+  "fix": "Add: 'The paper does not specify the node placement; we take nodes including both ends, and the archived scripts \\cite{zenodo} record the paper's choice.'"
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "The paper's Appendix~A writes its update step in terms of \"$r$\", the residual vector, without saying whether each row has been divided by $\\gap_n$.",
-  "problem": "Appendix A step 10 uses division by gap for the NH fit, and for step 6 it is unspecified; the claim is accurate, but the chapter then asserts 'so that is what we do' while Eq. (rms) of the paper is in spacings, which supports weighting. Fine, but the Zenodo reference is for the authority only.",
-  "fix": "No change required beyond softening 'Do not assume the two choices give identical fits'."
+  "quote": "$M\\ge200$ on 200 odd-indexed levels (Table~III)",
+  "problem": "This is offered as an example of M>n_fit, but M=200 on 200 levels is M=n_fit, where Â^TÂ need not be singular.",
+  "fix": "Write '$M=400$ on 200 odd-indexed levels (Table~III)', or add Table I examples such as M=400 on zeros 1--300."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "and is undefined when $M>n_{\\rm fit}$",
+  "problem": "When M>n_fit the Gauss–Newton equations have infinitely many solutions; the step is non-unique, not undefined. The body text says this correctly.",
+  "fix": "Replace with 'and its step is not unique when $M>n_{\\rm fit}$'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Three properties follow from",
+  "problem": "Four properties are listed (pass, suppress, cap, step shrinks).",
+  "fix": "Change 'Three' to 'Four'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The errors $c^{(i)}-c_*$ are $-0.618$, $0.236$, $0.0082$, $0.000013$: once close, each error is roughly proportional to the square of the previous one",
-  "problem": "0.236 to 0.0082 is a ratio of 0.147 in squares (0.236²=0.056), so the quadratic claim is only rough, and the last step 0.0082² ≈ 6.7e-5 vs 1.3e-5 is not exact either. Gauss--Newton here is not exactly quadratic, since the residual is nonzero in general (here it is zero at the solution, so it is).",
-  "fix": "Say 'faster than linear' or note the constant of proportionality."
+  "quote": "Writing $s_n=(-1)^{n+1}$, the equations give",
+  "problem": "The symbol s_n was defined earlier in this chapter as the smooth zeros (N_sm(s_n)=n−1/2) and is fixed by the bible's notation. Reusing it for a sign is confusing.",
+  "fix": "Use another symbol, e.g. $\\epsilon_n=(-1)^{n+1}$."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A numerical eigensolver, however, returns eigenvectors $v_n$ of unit",
+  "problem": "The symbols v_n and v_{jn} denote eigenvectors of H here, but v_1,…,v_p later denote right singular vectors of Â. Likewise u_i (left singular vectors) and u_j (hat nodes) clash, and k is both the basis index and the local wavenumber k(x) around Eq. (fitting-reach).",
+  "fix": "Rename the eigenvector components (e.g. $w_{jn}$) or the singular vectors, and write the local wavenumber as $\\kappa(x)$ in Section 8; add a one-line note where a clash remains."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "so its step (Appendix~A step~6) is",
+  "problem": "Eq. (fitting-paperstep) is written with the unscaled r and with σ_i presumably of the unscaled A, whereas the chapter's own step and the Summary use r̂ and Â. It is not stated which matrix the singular values in this equation belong to.",
+  "fix": "Add after the equation: 'Here we copy the paper's symbols; in our weighted convention read $r\\to\\hat r$ and take $\\sigma_i$, $\\bm U$, $\\bm V$ from $\\hat A$.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The error analysis of Newton's method (Chapter~\\ref{ch:asymptotics}) predicts the constant",
+  "problem": "The formula e_{i+1}≈|f''/(2f')|e_i^2 is used without derivation, and the bible's contract for Chapter 4 does not guarantee it is derived there.",
+  "fix": "Add the two-line Taylor derivation: 0=f(c_*)=f(c_i)+f'(c_i)(c_*−c_i)+½f''(c_i)(c_*−c_i)^2+…, then divide by f' and compare with the Newton step."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "with the Wronskian in place of the recursion",
+  "problem": "The Wronskian is not defined in this chapter or in any assumed chapter.",
+  "fix": "Either delete the parenthetical or say 'by a similar argument for the differential equation, which we do not give'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The objective $|r(c)|$ has two equally good minima",
+  "problem": "The objective was defined as Φ=½Σr̂²; |r| is the rms for one level, not the objective.",
+  "fix": "Write 'The absolute residual $|r(c)|$ (equivalently the objective $\\Phi=\\tfrac12r^2$) has two equally good minima'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "at the cost of four eigenvalue solves",
+  "problem": "Under the book's own first-acceptable-trial rule, fewer than four trials are usually evaluated. The table row saying a trial 'costs only a few matrix products' also omits the eigenvalue solve needed to score it.",
+  "fix": "Write 'at the cost of at most four eigenvalue solves' and add 'plus one eigenvalue-only solve to score it' in the table row."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "as Section~\\ref{sec:fitting-coverage} predicts for the best achievable error",
+  "problem": "The nestedness argument of Section 8 was explicitly stated not to hold exactly for hats, yet it is invoked here for the hat rows of Table II.",
+  "fix": "Add 'for the nested cosine and Chebyshev families, and approximately for hats'."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\begin{pycode}\nimport numpy as np\n\ndef lm_fit",
-  "problem": "The listing is about 30 lines, at the limit, and has no demonstration run, so the reader cannot see what it outputs.",
-  "fix": "Shorten slightly and give one example call."
+  "quote": "By Sample~2, $\\delta E_n=c_0+\\tfrac12(-1)^{n+1}c_n$",
+  "problem": "Sample Problems and Problems are referenced by hard-coded numbers (Sample 2, 3, 4, 5, 7, 9; Problem 8, 23, 24) throughout. These break if the sample environment numbers by chapter or if a sample is inserted.",
+  "fix": "Refer to samples by title (e.g. 'the Sample Problem \"The sensitivity matrix of the box\"') or add labels with the fitting prefix and use \\ref."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "except that the \"line\" is a whole function $\\delta V(x)$",
+  "problem": "Straight double quotes are used throughout the chapter; in LaTeX they typeset as two closing quotation marks.",
+  "fix": "Replace every \"...\" in running text with ``...'' (outside the pycode listing)."
  }
 ]

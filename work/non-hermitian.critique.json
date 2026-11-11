@@ -1,121 +1,163 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "Compare the ground-state energy for the Hermitian perturbation $\\epsilon x$ and the imaginary perturbation $i\\epsilon x$, exactly and at second order, with $\\epsilon=0.6$.",
-  "problem": "Sample uses E_0 and E_1 for oscillator levels, clashing with the chapter's convention E_n, n=1,2,... for box states. Also the first-excited level is labelled E_1=3, while Problem 28 uses E_n=2n+1 with n starting at 0. Mixed indexing is confusing.",
-  "fix": "State explicitly that oscillator levels are indexed from 0 here, and use a different letter or a remark so they are not confused with box levels."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "the ground state $\\psi_1\\propto\\cos(\\pi x/2L)$ is concentrated at the center",
-  "problem": "The Step 4 check claims |psi_1|^2=(1/2L)(1+cos(pi x/L)), which is correct. But the 'ground state' is later indexed n=1 while the sample is correct only if psi_1=(1/sqrt L)sin(pi(x+L)/2L)=cos(pi x/2L)/sqrt L. Normalization 1/L on cos^2 gives (1/2L)(1+cos), consistent. Minor: 'concentrated' is fine; no error here, but the asserted width Gamma_1 differs from the others only because of the cos_1 diagonal at n=1, and that is correct.",
-  "fix": "No change needed beyond stating psi_1^2=(1/L)cos^2(pi x/2L) explicitly."
- },
- {
-  "category": "ERROR",
   "severity": "medium",
-  "quote": "Level 4 has a large downward shift partly because its partners above (5, 7, \\dots) were left out",
-  "problem": "Partner 7 has the wrong parity: (sin_1)_{47}=0 because 4+7... is odd, so it couples; but 6 is even-sum with 4 and does not couple. Listing 5,7 is fine, yet 'large' is misleading: dE_4=-0.0318 is smaller than |dE_2|. Also Problem 17's answer shows adding state 5 changes it to -0.0102.",
-  "fix": "Say 'a downward shift' rather than 'large', and note that partners 5, 7, 9,... couple."
+  "quote": "In a many-level system the lowest levels break first if the couplings are comparable throughout, because they are closest together relative to the coupling.",
+  "problem": "This is stated as a general rule but holds only when level spacings grow with index, as in the box with E_n=n^2. In the paper's Wu--Sprung spectrum the levels crowd together with height, so with comparable couplings the high levels would collide first. A reader will carry the wrong rule over to the paper.",
+  "fix": "Restrict the claim: 'In the box, where the spacing E_{n+1}-E_n=2n+1 grows with n while the couplings stay comparable, the lowest levels break first. In a spectrum whose spacing shrinks with height (such as the Wu--Sprung levels) the opposite ordering is expected.'"
  },
  {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "In double precision they come out at the $10^{-12}$ level or below in the example of \\cref{fig:non-hermitian-nullmode}.",
-  "problem": "Quoted number is not checked in a way matching the claim; the checks use <1e-11. The figure caption says values are 'many orders of magnitude smaller' with no number. Number is unverified by exact run output.",
-  "fix": "Quote the value actually computed by the CHECKS script (e.g. 'below 10^-11') or compute and assert 1e-12."
+  "quote": "It cannot, for example, raise a whole block of 50 consecutive levels together; that would require a nonzero net shift over the block, which the near-local cancellation forbids.",
+  "problem": "Nothing proved forbids this. The sum rule is global, not per block, and levels near a block's edges exchange shift with partners outside it. The paper itself reports only 90% of the weight within about 60 levels. This sentence is the block-coherence heuristic that the paper goes on to refute as an explanation of the floor.",
+  "fix": "Label it as a heuristic: 'Heuristically, a net shift of a long block is suppressed, because most pair contributions cancel inside the block and only pairs straddling its edges contribute. This is a tendency, not a theorem.'"
  },
  {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "assert np.allclose(l,[2-np.sqrt(3)*1j,2+np.sqrt(3)*1j])",
-  "problem": "The CHECKS script fails (sort_complex orders by real part then imaginary, but eigenvalues have equal real parts up to rounding so order differs), and two more statements raise exceptions (boolean subtraction in c1, which makes the later Cos check never run). The check report shows 3 failures.",
-  "fix": "Compare sorted by imaginary part: sorted(l,key=lambda z:z.imag). In c1 use int(abs(a-b)==2)-int(a+b==2). Rerun until all pass."
- },
- {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The two neighbors $m=19,21$ carry about 89\\% of the total",
-  "problem": "The weights w_{20,m} use A_{nm}^2/|E_n-E_m| with E=n^2; the 89% claim depends on summation to m=400 only. The truncation is stated only in text; the figure caption claims 'total'.",
-  "fix": "State 'of the total for m up to 400' in the caption and text."
+  "quote": "loss of one-to-one matching is the many-level signature of exceptional points",
+  "problem": "The paper does not attribute the 3% of unmatched states to exceptional points. Overlap matching can also fail through strong mixing among several states with no eigenvalue collision. The chapter shows only that an exceptional point is sufficient for failure, not that it is the cause in the paper.",
+  "fix": "Replace with: 'loss of one-to-one matching signals strong mixing of unperturbed states, of which exceptional points (Section 8) are the extreme case; the paper does not identify which occurs.'"
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Because eigenvalues move continuously with the amplitude and complex eigenvalues must come in conjugate pairs, a simple real eigenvalue cannot leave the real axis on its own",
-  "problem": "Argument is only sketched; the reader may not see why a lone real eigenvalue cannot go complex (its conjugate would have to be another eigenvalue at the same place).",
-  "fix": "Add one sentence: if E leaves the axis then E* must be an eigenvalue too, and at the departure point E=E*, so two eigenvalues must coincide there."
+  "quote": "the absorptive-even floor sat at $0.2322$, ``spuriously close to the PT-odd value'' $0.2321$",
+  "problem": "The Paper connection uses 'floor', 'in-sample rms', 'null', 'surrogate', 'fluc_n', 'gap_n' and 'mean spacings' without defining them in this chapter. Most come from chapters this one does not assume (17, 24, 25), and the bible requires every symbol to be defined on first use in the chapter.",
+  "fix": "Open the Paper connection with a short glossary: the floor is the lowest in-sample rms the optimizer reaches; in-sample rms is the root-mean-square misfit on the fitted zeros in units of the local mean spacing gap_n; the null is the misfit with no perturbation; the surrogate is the second-order formula used in place of the exact spectrum; fluc_n is the target fluctuation of level n."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Fact 3: an absorbing $A$ gives nonnegative widths.",
-  "problem": "Fact 3 uses v^dagger A v real, then claims Im lambda = v^dagger A v / v^dagger v; the step that v^dagger D v is real but multiplied by 1 while i v^dagger A v is imaginary requires taking Im of lambda v^dagger v, which is not shown.",
-  "fix": "Show: take the imaginary part of both sides after dividing by the real positive number v^dagger v."
+  "quote": "is therefore a \\emph{nonconvex} problem with several local minima, which is why the paper uses Levenberg--Marquardt with random restarts",
+  "problem": "'Nonconvex' is never defined, and Levenberg--Marquardt belongs to Chapter 24, which is not assumed. The 'therefore' also does not follow from indefiniteness of T^(n) alone, and the paper does not give this as its reason for restarts.",
+  "fix": "Define the term in one sentence (the error as a function of c has several separate valleys, so a downhill search can end in different places depending on its start). Justify it by the quartic dependence on c and the c -> -c symmetry already shown. Say 'which is consistent with the paper's use of random restarts' and describe Levenberg--Marquardt as 'a damped downhill method explained in Chapter 24'."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Then $H\\psi=E\\psi$ becomes, after taking the inner product with $\\psi_n$, the matrix equation",
-  "problem": "For a complex wavefunction the inner product with real psi_n uses integral psi_n psi, which is fine, but the expansion in a complete set including truncation is not justified; the reader is not told the basis is infinite and later truncated.",
-  "fix": "Say that the exact matrix is infinite, and that truncation to K states is an approximation."
+  "quote": "(The continuity of eigenvalues in the amplitude is taken on trust, as in the `beyond' box of",
+  "problem": "The cited box asserts smoothness only for nondegenerate eigenvalues and says explicitly that it fails at degeneracies. The collision argument needs continuity of eigenvalues through the degeneracy, which is a different result (roots of a polynomial depend continuously on its coefficients).",
+  "fix": "Add a separate beyond statement: 'Taken on trust: the eigenvalues of a matrix, as roots of its characteristic polynomial, depend continuously on the matrix entries even where they coincide (though not smoothly there).' Refer to that instead."
  },
  {
   "category": "JUMP",
   "severity": "low",
-  "quote": "Sample 'Two levels: exact against second order'",
-  "problem": "The sample writes lambda_- - E_1 formula but the step to (Delta/2)(1-sqrt(1-x)) is not shown: sqrt(Delta^2-4a^2)=Delta sqrt(1-x).",
-  "fix": "Add the line sqrt(Delta^2-4a^2)=Delta sqrt(1-4a^2/Delta^2)."
+  "quote": "the same holds for the real differential operator $H_0$",
+  "problem": "The claim that eigenfunctions of H_0 can be chosen real is asserted by analogy, with no argument.",
+  "fix": "Add two lines: if H_0 psi = E psi with V and E real, conjugating gives H_0 psi^* = E psi^*, so Re psi and Im psi are each real solutions with the same E, and one of them is nonzero and can be used as the eigenfunction."
  },
  {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "This is the Jacobian an optimizer needs (Chapter~\\ref{ch:fitting}).",
-  "problem": "Jacobian is used before Chapter 24 defines it, though the paper section later uses it; also Gauss-Newton not defined here.",
-  "fix": "Define Jacobian as the matrix of partial derivatives of residuals w.r.t. coefficients in one sentence."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\Cref{fig:non-hermitian-locality} shows the weights.",
-  "problem": "Figure scripts are required for each included figure (locality, nullmode, twolevel, complexplane, exactvs2nd) but no FIGURES part is present in the response.",
-  "fix": "Add a FIGURES section with a script for each of the five figures."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\begin{sample}{Widths from a center-weighted absorber}",
-  "problem": "The mandatory anatomy lists the Problems section with at least 4 paper problems and 3 computational ones; fine, but answers are given only for some odd problems (e.g. 19, 21 given; 11 given; but problems 1, 5 shorter). Problem 5 is a one-line explanation without Problem answer for 7th and others; also answers for 'every odd-numbered problem' omit 33 and 35? Odd problems 33 (answer missing).",
-  "fix": "Provide answers for all odd-numbered problems (e.g. 33 and 35 are missing; check all) and all prob{1}."
- },
- {
-  "category": "RULE",
+  "category": "ERROR",
   "severity": "low",
-  "quote": "You prove the $3\\times3$ case by hand in Problem 27.",
-  "problem": "Hard-coded problem numbers in text can drift; also 'Problem 16' and 'Problem 17' references need to match: Problem 16 is the paper c_0 estimate (correct) but numbering counts the list order and should be verified.",
-  "fix": "Verify numbers against the list (Problem 17 is state 5, correct; Problem 28 is oscillator: it is 28th? check) or use labels."
+  "quote": "For middle levels the terms from above and below have opposite signs and $T^{(n)}$ has both positive and negative eigenvalues.",
+  "problem": "This is stated without proof and is false in general. In the chapter's own four-state sample, T^(2) and T^(3) are 1x1 and positive. Indefiniteness needs M>=2 and depends on the basis.",
+  "fix": "Rewrite: 'For middle levels the terms from above and below have opposite signs, so c^T T^(n) c can take either sign depending on c; with several basis functions T^(n) typically has eigenvalues of both signs.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Near $a=\\Delta/2$ it is off by 20\\%.",
+  "problem": "The 20% figure is for a=0.4. At a=Delta/2 itself the exact shift is Delta/2=0.5 and second order gives 0.25, a 50% error.",
+  "fix": "Replace with 'At a=0.4 it is already off by 20%, and at a=Delta/2 by 50%.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The whole series converges only for $|x|<1$",
+  "problem": "The binomial series of sqrt(1-x) also converges at |x|=1. The radius is 1, but 'only for |x|<1' is not exact.",
+  "fix": "Say 'The series has radius of convergence 1 in x (Chapter 3), so it diverges for |x|>1, that is, for a>Delta/2.'"
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "This was found numerically in \\cite{bender98} and later proved by others; the proof is far beyond this book.",
-  "problem": "Claim of proof given without a citation key for the proof; the cited paper itself is the numerical discovery.",
-  "fix": "Say 'later proved rigorously (see the literature following Bender and Boettcher)' without implying a cited source."
+  "quote": "which by Fact 3 means its $A$ was positive (gain) over large regions",
+  "problem": "Fact 3's contrapositive gives only that A(x)>0 somewhere. 'Over large regions' is not implied; what the first-order formula gives is that the |psi_n|^2-weighted average of A is positive for those states.",
+  "fix": "Replace with: 'which by Fact 3 means the fitted A was positive (gain) somewhere, and by Gamma_n = -2 A_nn that its average weighted by |psi_n|^2 was positive for more than half the states.'"
  },
  {
-  "category": "CLARITY",
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Every formula and every safeguard in those sections is explained here.",
+  "problem": "The chapter does not explain the moving-average (block-coherent) decomposition, the amplitude-ball calibration, or the fitting procedure itself (Chapter 24).",
+  "fix": "Soften to: 'The formulas and safeguards of those sections are explained here; the fitting machinery itself is in Chapter 24 and the full reading of Sec. V in Chapter 31.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "so cutting them off leaves the top levels with only downward pushes",
+  "problem": "Only the very top level loses all upward partners. Levels somewhat below a 500-state cutoff still have partners above them, just fewer.",
+  "fix": "Write: 'so cutting them off removes upward pushes from the levels near the cutoff and biases them downward (the topmost level keeps only downward pushes).'"
+ },
+ {
+  "category": "RULE",
   "severity": "medium",
-  "quote": "\\textbf{Exactly:} by Section~\\ref{sec:non-hermitian-decay}, $H_0+ic_0$ has eigenvalues $E_n+ic_0$",
-  "problem": "The earlier text used H_0 - i Gamma/2; sign consistent, but the null mode in the box needs the basis cos(0)=1 coefficient c_0 ; fine. However the section on 'many levels' claims a break near 0.679 c approx 1.5 and then says at c=1 all real, at c=4 a pair forms, c=2.5 shown: the estimate c~2.2 is not reconciled with the 60-state truncation numerically.",
-  "fix": "State that the estimate gives c about 2.2 and confirm numerically in CHECKS the first c with complex eigenvalues."
+  "quote": "at $c=4$ a complex-conjugate pair has formed near the bottom of the spectrum",
+  "problem": "CHECKS asserts only that some eigenvalue has |Im|>0.1 at c=4, not where it lies. The related claims that 'the lowest pair has merged' and that second order 'overstates the shifts of the low levels' at c=4 are also unchecked. The bible requires every number or claim from the author's own computation to be checked.",
+  "fix": "Add assertions to CHECKS: at c=4 the eigenvalues with |Im|>0.1 have real part below about 10, and for levels 1 and 2 the second-order shift 16*|T^(n)| exceeds the exact real shift in magnitude."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The total is zero to about $10^{-15}$ times the size of the shifts, rounding error.",
+  "problem": "Answer 19 quotes a numerical result that CHECKS never computes (two-function basis, 60 states, random coefficients).",
+  "fix": "Add a check that builds (sin_1) and (sin_2) elements for 60 states, forms the T^(n) for a random c, and asserts |sum_n c^T T^(n) c| < 1e-12 times the largest |delta E_n|."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/non-hermitian_complexplane.pdf}",
+  "problem": "The bible's figure template fixes width=0.85\\linewidth. Two figures (complexplane, exactvs2nd) use 0.95.",
+  "fix": "Change both to width=0.85\\linewidth."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "are computed from sampled eigenvectors (Chapter~\\ref{ch:finite-differences}), and rounding makes the off-diagonal ones small but not exactly zero",
+  "problem": "This is a forward reference to Chapter 23, which this chapter may not assume. The reader needs the discrete normalization sum psi^2 h = 1 and the tridiagonal matrix used in the listing.",
+  "fix": "Point to Chapter 8 (the second-derivative operator as a tridiagonal matrix) and state here in one sentence that on a grid of spacing h the integral is replaced by sum_j psi_n(x_j) psi_m(x_j) h, with eigenvectors scaled so that sum_j psi^2 h = 1; mention Chapter 23 only as 'treated in detail later'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "plays the role of an inner product between right and left eigenvectors",
+  "problem": "'Left eigenvectors' are never defined in this chapter or in an assumed one.",
+  "fix": "Either delete the clause, or add: 'a left eigenvector w satisfies w^T M = lambda w^T; for a symmetric M the left eigenvectors are the same vectors as the right ones, so the natural product is v^T w without conjugation.'"
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The ground state $n=1$ has every other level above it, so every term $-|A_{1m}|^2/(E_1-E_m)$ is nonnegative",
-  "problem": "Phrase 'any imaginary perturbation raises the ground level' ignores that the first-order term is imaginary and only the real part rises; also needs nondegeneracy/validity.",
-  "fix": "Say 'raises the real part of the ground level at second order'."
+  "quote": "\\subsection{Two general facts about eigenvalues}",
+  "problem": "The subsection presents three facts (Fact 1, 2, 3), and 'Fact 3' is cited repeatedly later.",
+  "fix": "Rename it 'Three general facts about eigenvalues'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the second-order shifts scale as $c^2$ and the couplings by $1/4$, so the coupling-to-spacing ratio falls fourfold",
+  "problem": "The sentence is garbled: it mixes the scaling of shifts (1/16) with that of couplings (1/4) and does not say why accuracy improves.",
+  "fix": "Rewrite: 'at quarter amplitude every coupling A_nm is 4 times smaller, so the coupling-to-spacing ratio falls fourfold, the second-order shifts fall 16-fold, and the relative error of second order, which is of order (coupling/spacing)^2, falls about 16-fold.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "since the Wu--Sprung potential is even, Section~\\ref{sec:non-hermitian-ptsym} shows that $A$ is odd",
+  "problem": "A is odd because the basis is sines, not because the potential is even. Evenness of V is what makes H+iA PT-symmetric and A_nn=0.",
+  "fix": "Reword: 'every such A is odd (a sum of sines); since the Wu--Sprung potential is even, Section 7 shows that H+iA is then PT-symmetric and A_nn=0'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "form the 60-state $T^{(n)}$ for $A=c\\sin(\\pi x/L)$ and two random coefficients (basis $\\sin(\\pi x/L)$, $\\sin(2\\pi x/L)$)",
+  "problem": "The problem is self-contradictory: it gives a one-term A and then a two-function basis.",
+  "fix": "Rewrite: 'form the 60-state tensors T^(n) for the two-function basis sin(pi x/L), sin(2 pi x/L) using the sine-element formula with j=1,2, draw a random c=(c_0,c_1), and verify that sum_n c^T T^(n) c = 0 to rounding.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Compare with $652$ times double-precision machine epsilon. Is the verification consistent with rounding?",
+  "problem": "Comparing an absolute residual with 652*eps ignores the size of the summed terms. The natural rounding scale is eps times sum|delta E_n|, which the paper does not report, so the answer's 'consistent with pure rounding' rests on an unstated assumption.",
+  "fix": "Add 'assuming the individual shifts are of order one in the paper's units' to the problem, and repeat that assumption in Answer 29."
  }
 ]
