@@ -1,0 +1,80 @@
+% Preamble for "Potentials, Primes and Prediction"
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+\graphicspath{{figs/}}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
+% ---------- figures: placeholder if a figure file is missing
+\let\origincludegraphics\includegraphics
+\renewcommand{\includegraphics}[2][]{%
+  \IfFileExists{#2}{\origincludegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][4cm][c]{0.8\linewidth}{\centering\small Figure in preparation:\\\texttt{\detokenize{#2}}}}}}
+
+% ---------- colors
+\definecolor{keyc}{RGB}{0,84,147}
+\definecolor{samc}{RGB}{0,110,70}
+\definecolor{chkc}{RGB}{150,90,0}
+\definecolor{pitc}{RGB}{170,30,30}
+\definecolor{beyc}{RGB}{90,60,140}
+\definecolor{papc}{RGB}{40,40,40}
+
+% ---------- boxes
+\newtcolorbox{chapterintro}{colback=keyc!4,colframe=keyc!60,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,fonttitle=\bfseries,title=What this chapter is about}
+\newtcolorbox{prerequisites}{colback=white,colframe=keyc!40,boxrule=0.4pt,arc=2pt,fonttitle=\bfseries\small,title=What you need,fontupper=\small}
+\newtcolorbox{keyideas}{colback=keyc!6,colframe=keyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Key Ideas,breakable}
+\newcounter{sample}[chapter]
+\renewcommand{\thesample}{\thechapter.\arabic{sample}}
+\newtcolorbox{sample}[1]{colback=samc!4,colframe=samc,boxrule=0.6pt,arc=2pt,breakable,fonttitle=\bfseries,
+  title={\refstepcounter{sample}Sample Problem \thesample: #1}}
+\newcounter{checkpt}[chapter]
+\newtcolorbox{checkpoint}{colback=chkc!6,colframe=chkc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,
+  title={\refstepcounter{checkpt}Checkpoint \thechapter.\arabic{checkpt}}}
+\newcommand{\checkanswer}[1]{\par\noindent{\small\textit{Answer:} #1}\par\medskip}
+\newtcolorbox{pitfall}{colback=pitc!5,colframe=pitc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Pitfall,breakable}
+\newtcolorbox{beyond}{colback=beyc!5,colframe=beyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Taken on trust,breakable}
+\newtcolorbox{paperbox}{colback=papc!4,colframe=papc!70,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=In the paper,breakable}
+
+% ---------- problems
+\newenvironment{problemlist}{\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=4pt]}{\end{enumerate}}
+\newcommand{\prob}[2]{\item {\color{keyc}\ifcase#1\or$\bullet$\or$\bullet\bullet$\or$\bullet\bullet\bullet$\fi}\ #2}
+
+% ---------- code
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{keyc}\bfseries,
+  commentstyle=\color{gray}\itshape,stringstyle=\color{samc},showstringspaces=false,
+  frame=single,rulecolor=\color{gray!40},backgroundcolor=\color{gray!4},breaklines=true,
+  columns=fullflexible,keepspaces=true,upquote=true,
+  literate={≈}{{$\approx$}}1 {≤}{{$\le$}}1 {≥}{{$\ge$}}1 {—}{{,}}1 {–}{{-}}1 {π}{{$\pi$}}1}
+\lstnewenvironment{pycode}{\lstset{style=py}}{}
+
+% ---------- math macros
+\newcommand{\Nsm}{N_{\mathrm{sm}}}
+\newcommand{\Nfl}{N_{\mathrm{fl}}}
+\newcommand{\gap}{\mathrm{gap}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\ee}{\mathrm{e}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\braket}[2]{\langle #1\,|\,#2\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\rms}{\mathrm{rms}}
+\newcommand{\corr}{\mathrm{corr}}
+\newcommand{\order}{\mathcal{O}}
