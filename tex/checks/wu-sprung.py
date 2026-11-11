@@ -44,7 +44,12 @@ for V in [50.0, 500.0]:
     num = quad(lambda uu: np.log((V-uu**2)/(2*np.pi)), 0, np.sqrt(V-V0))[0]/np.pi
     assert abs(num - xws(V)) < 1e-8
 
-# Sample: V0 root
+# Abel uniqueness: numerical instance, Phi_WS = pi(Nsm(E)-Nsm(V0)) at E=300
+E = 300.0
+PhiWS = 2*quad(lambda uu: xws(E-uu**2) if E-uu**2 > V0 else 0.0, 0, np.sqrt(E-V0), limit=200)[0]
+assert abs(PhiWS - np.pi*(Nsm(E)-Nsm(V0))) < 1e-5
+
+# Sample: V0 root; limits of f
 f = lambda y: y*np.log(y)-y+7/8
 assert f(1.5) < 0 and f(1.6) > 0
 assert abs(1.5*(np.log(1.5)-1)+0.8918) < 1e-4 and abs(1.6*(np.log(1.6)-1)+0.8480) < 1e-4
@@ -53,6 +58,7 @@ assert abs(y-1.54013) < 1e-5
 assert abs(2*y-3.0803) < 1e-3
 assert abs(Nsm(V0)-0.0045) < 1e-4
 yl = brentq(f, 0.05, 1.0); assert yl < 1
+yy = 1e-8; assert abs(yy*np.log(yy) - yy) < 1e-6   # f-7/8 -> 0 as y->0+
 
 # Sample: harmonic bottom
 lg = np.log(V0/(2*np.pi))
@@ -61,17 +67,31 @@ assert abs((np.pi/lg)**2-51.33) < 0.02
 Vt = V0+1e-4
 assert abs(xws(Vt) - np.sqrt(1e-4)/np.pi*lg) < 1e-6
 
-# Sample: box sizes
+# Sample: box sizes, with intermediates
 assert abs(V0-9.7412) < 1e-3
+assert abs((lg-2)+1.56151) < 1e-5
+a = np.sqrt(1000-V0); b = np.sqrt(1000)
+assert abs(1000-V0-990.259) < 1e-3
+assert abs(a-31.468) < 1e-3 and abs(b-31.623) < 1e-3
+assert abs(b+a-63.091) < 1e-3
+assert abs(V0/(b+a)-0.1544) < 1e-4 and abs((b-a)-0.1544) < 1e-4
+lr = np.log((b+a)/(b-a)); assert abs(lr-6.0128) < 1e-4
+assert abs(a*(lg-2)+49.14) < 0.01 and abs(b*lr-190.14) < 0.01
+assert abs(a*(lg-2)+b*lr-141.00) < 0.01
 assert abs(xws(1000.0)-44.883) < 1e-3
 assert abs(xws(1500.0)-59.957) < 1e-3
 asym = np.sqrt(1000)/np.pi*(np.log(2000/np.pi)-2)
-assert abs(asym-44.86) < 0.01
+assert abs(asym-44.855) < 1e-3
+rel = (xws(1000.0)-asym)/xws(1000.0)
+assert abs(rel-0.0006) < 5e-5
 try:
     import qmnt
     assert abs(qmnt.L_of(1000)-44.883) < 1e-3
+    assert abs(qmnt.L_of(1500)-59.957) < 1e-3
 except ImportError:
     pass
+# s_500 approx 811
+assert abs(sn(500)-811.5) < 0.6
 
 # Sample: turning points 201, 300 (and Problem 9, Paper connection)
 s201, s300 = sn(201), sn(300)
@@ -87,13 +107,13 @@ assert abs(s201-398) < 0.5 and abs(s300-543) < 0.6
 # Checkpoint: x_500 about 38.5
 assert abs(xws(sn(500))-38.5) < 0.1
 
-# Check 1 / Problem 13
+# Check 1 / Problem 13 (n = 1, 2, 10, 100, 250, 500 as stated in text)
 for n in [1, 2, 10, 100, 250, 500]:
     E = sn(n)
     Phi = 2*quad(lambda uu: xws(E-uu**2) if E-uu**2 > V0 else 0.0, 0, np.sqrt(E-V0), limit=200)[0]
     assert abs(Phi/np.pi-(n-0.5)+Nsm(V0)) < 1e-6
 
-# Check 2: Richardson FD levels vs smooth zeros
+# Check 2: Richardson FD levels vs smooth zeros (same as listing: table + interp)
 aa = np.linspace(0, np.sqrt(1200-V0), 400001); VV = V0+aa**2
 XX = np.concatenate([[0.0], xws(VV[1:])])
 L = xws(1000.0)
@@ -107,8 +127,10 @@ ns = np.arange(1, 501)
 s = np.array([sn(k) for k in ns])
 g = 2*np.pi/np.log(s/(2*np.pi))
 dev = (ER-s)/g
-print('mean dev, max |dev| =', np.mean(dev), np.max(np.abs(dev)))
-assert abs(np.mean(dev)) < 0.02 and np.max(np.abs(dev)) < 0.1
+print('mean dev, max |dev| =', np.mean(dev), np.max(np.abs(dev)), np.argmax(np.abs(dev)))
+assert abs(np.mean(dev)-0.004) < 0.0006          # signed mean 0.004
+assert abs(np.max(np.abs(dev))-0.05) < 0.005      # max 0.05
+assert np.argmax(np.abs(dev)) < 50                # attained at lowest levels
 
 # Problem 2
 assert abs(100/(2*np.pi)-15.9155) < 1e-4
@@ -119,6 +141,8 @@ assert abs((1*np.log(1)-1)+1) < 1e-12
 # Problem 14
 per = 2*np.pi/np.log(2); gp = 2*np.pi/np.log(500/(2*np.pi))
 assert abs(per-9.065) < 1e-3 and 6 <= per/gp <= 7
+assert abs(sn(400)-680) < 1.0
+g680 = 2*np.pi/np.log(680/(2*np.pi)); assert 6 <= per/g680 <= 7
 # Problem 17
 Vq = 3.0
 assert abs((2/np.pi)*quad(lambda E: np.sqrt(E)/np.sqrt(Vq-E), 0, Vq)[0]-Vq) < 1e-6

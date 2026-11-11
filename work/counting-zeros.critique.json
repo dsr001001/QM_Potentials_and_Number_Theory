@@ -2,71 +2,127 @@
  {
   "category": "ERROR",
   "severity": "high",
-  "quote": "Starting from $g=17.8$, $f(17.8)=-0.02411$ and $f'=0.52070$, so the first step gives $17.8463$",
-  "problem": "The check on this value failed. The quoted f(17.8) does not match the computed value of the asymptotic theta at 17.8, so the answer to Problem 19 is not verified. (Also, g_0 is not a root of f: theta(g_0)=0 has solution near 17.8456 only if the numbers are right; the quoted intermediate numbers are wrong.)",
-  "fix": "Recompute f(17.8) and f' with code, correct the quoted numbers, and make the assertion pass."
+  "quote": "\\textbf{Step 3:} Repeat at $14.527810$: now $\\Nsm=0.500874$ and $\\Nsm'=0.133415$ (we omit the routine arithmetic, which the listing below reproduces), giving a step of $-0.006551$ and $14.521259$.",
+  "problem": "The second Newton iterate is numerically wrong. At t=14.527810, Nsm=0.500862 (not 0.500874) and Nsm'=0.133402 (not 0.133415), so the step is -0.006462 and the iterate is 14.521348 (not 14.521259). The printed values would mean Newton overshoots by 9e-5, which contradicts quadratic convergence. Also, the 'listing below' uses Brent and Lambert W, not Newton, so it does not reproduce this arithmetic; and 'we omit the routine arithmetic' breaks the no-omitted-steps rule.",
+  "fix": "Replace with: 'now u=2.312173, log u=0.838188, Nsm=2.312173×(0.838188−1)+0.875=0.500862 and Nsm'=0.838188/6.283185=0.133402, giving a step of −0.000862/0.133402=−0.006462 and 14.521348.' In Step 4 say 'One more iteration changes the value only in the sixth decimal place, to 14.521346'. Remove the claim that the listing reproduces it, or add a Newton loop to the listing."
  },
  {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "The first three factors together contribute $\\pi+\\theta(T)$, and $\\zeta$ contributes $\\pi S(T)$.",
-  "problem": "Gamma and pi^{-s/2} give theta; the constant 1/2 gives 0 and s(s-1) gives pi. That is three factors (1/2, s(s-1), pi^{-s/2}) plus Gamma, so four factors contribute pi+theta; 'first three' is miscounted.",
-  "fix": "Say 'the factors 1/2, s(s-1), pi^{-s/2} and Gamma(s/2) together contribute pi+theta(T)'."
- },
- {
-  "category": "ERROR",
+  "category": "RULE",
   "severity": "medium",
-  "quote": "Write the circle as $z=a+re^{i\\phi}+b$... more simply, first suppose the circle is centered at $a$",
-  "problem": "Stray garbled text with an unfinished expression left in the exposition.",
-  "fix": "Delete it: 'First suppose the circle is centered at a: z=a+re^{i\\phi}.'"
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Differentiating Eq.~\\eqref{eq:counting-zeros-thetaasym} term by term",
-  "problem": "Differentiating an asymptotic expansion term by term, including the O(t^-3) remainder, is not justified.",
-  "fix": "Use the exact derivative theta'(t)=Im(1/2)psi(1/4+it/2)-(1/2)log pi, or flag the step as heuristic."
+  "quote": "so the step is $+0.050722/0.129036=0.393085$, giving $14.527810$",
+  "problem": "The intermediate Newton numbers of this Sample Problem (0.129036, 0.393085, 14.527810, and the Step 3 values) are not asserted in the CHECKS script; only the final s_1 is checked via Brent. This is how the wrong Step 3 values passed. The bible requires every numerical answer in Sample Problems to be recomputed.",
+  "fix": "Add to CHECKS an explicit Newton iteration from t_1 that asserts each iterate (14.527810, 14.521348, 14.521346) and each quoted Nsm and Nsm' value."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The ``null'' error $0.263$ against which every model in the paper is judged",
-  "problem": "Not every model is judged against 0.263; other holdouts have different nulls (0.274 etc.).",
-  "fix": "Say 'the principal null'."
+  "quote": "The paper's statement that $S(t)$ is ``the fluctuating part $N(t)-\\Nsm(t)$'' is our Eq.~\\eqref{eq:counting-zeros-split}",
+  "problem": "The paper never uses the symbol S(t) and contains no such statement. The quoted phrase comes from the book's own notation table, not from the paper. This is a misattributed quotation.",
+  "fix": "Replace with: 'The paper does not name the difference N(t)−Nsm(t); in this book's notation it is S(t), by Eq. (split), up to the O(1/t) term. The paper only approximates it by the prime sum N_fl of its Eq. (4).'"
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The product of positive numbers is positive.",
-  "problem": "The claim xi(sigma)>0 on 1<sigma<=2 omits the 1/2 factor in the list of positive factors (minor), but more seriously the proof for -1<=sigma<0 relies on xi(1-sigma) with 1-sigma in (1,2], fine; however sigma=1 case lists 'positive' via a limit not shown for 0<sigma<1 continuity.",
-  "fix": "Mention the factor 1/2 and that 2^{-sigma}<1 and the alternating-series bound uses decreasing terms."
+  "quote": "we adopt the convention that at exactly $T=t_n$ the staircase takes the midpoint value, $N(t_n)=n-\\tfrac12$",
+  "problem": "This contradicts the chapter's own definition of N(T) (zeros with 0<Im ρ ≤ T), which gives N(t_n)=n. The code listing also uses side=\"right\", giving n. A student will find two incompatible values of N(t_n).",
+  "fix": "Introduce a separate symbol for the midpoint value, e.g. 'the average of the left and right limits, ½[N(t_n^-)+N(t_n^+)]=n−½', and use that in Eq. (faces2) instead of redefining N(t_n)."
  },
  {
-  "category": "CLARITY",
-  "severity": "medium",
-  "quote": "Note that the local mean spacing $3.02$ at $n=10$ is smaller than the average $3.96$ over the first ten zeros",
-  "problem": "Comparison is confusing; also average spacing of the first ten zeros is dominated by the lower spacings, not a contradiction needing remark.",
-  "fix": "Clarify that the average spacing over n=1..10 is an average of gap values from 7.5 to 3.0."
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Split $\\partial R$ into four pieces:",
+  "problem": "Only three pieces are then listed (bottom edge, P, P'), and the later sum is over 'the three pieces'.",
+  "fix": "Change 'four' to 'three'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "and every interval quoted in Secs.~III--V, is an error measured as in Eq.~\\eqref{eq:counting-zeros-fluct}",
+  "problem": "Many intervals in Secs. III–V of the paper are correlation intervals (e.g. [−0.21, +0.08], [+0.95, +0.97]). These are dimensionless correlations, not errors in mean spacings.",
+  "fix": "Write 'and every rms interval quoted in Secs. III–V (the correlation intervals are pure numbers), is an error measured in units of gap_n as in Eq. (fluct)'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The nulls of Table~III, $0.23$--$0.26$, are the same statistic computed on lower and different subsets of zeros.",
+  "problem": "The null column of Table III runs up to 0.27 (0.26–0.27 and 0.266 at scale 2), so the range is 0.23–0.27. These are also operator nulls (unperturbed-potential levels against bias-corrected targets), which the paper calls conceptually distinct from the smooth-zero null; the paper reports their numerical coincidence only on zeros 401–500.",
+  "fix": "Write 'The nulls of Table III, 0.23–0.27, are the analogous baseline (the unperturbed potential's error) on other subsets of zeros; the paper reports that it coincides numerically with the rms of δ_n on the principal holdout 401–500.'"
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "Its status in this book: a theorem, proved above with the argument principle and the properties of $\\xi$ taken on trust.",
-  "problem": "Also depends on the Stirling-branch continuity and Gamma facts; fine, but the zero-free claim (e) on Re s=1 is deep.",
-  "fix": "State that the proof is complete modulo the cited theorems."
+  "quote": "The paper (and this book) puts that tiny term into the ``fluctuating part''",
+  "problem": "The paper makes no statement about the 1/(48πT) term or where it belongs. It simply defines N_sm by Eq. (1).",
+  "fix": "Write 'This book puts that tiny term into the fluctuating part; the paper simply uses Eq. (1) as its smooth part and never mentions the term.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "none of the factors in Eq.~\\eqref{eq:counting-zeros-xi} can vanish for $\\Re s\\ge1$",
+  "problem": "The factor s−1 does vanish at s=1, where ζ has its pole. The statement as written is false at that point; the product is finite and nonzero there only because zero and pole cancel.",
+  "fix": "Write 'none of the factors vanishes for Re s≥1 except s−1 at s=1, where it cancels the pole of ζ and leaves ξ(1)=½≠0 (shown below)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "For large $n$, $W(x)\\approx\\log x$, which gives the leading behavior $s_n\\approx2\\pi n/\\log n$",
+  "problem": "The asymptotic W(x)≈log x is asserted without derivation, and the bible only promises that Chapter 4 defines W briefly.",
+  "fix": "Add one line: 'Taking logs of we^w=x gives w+log w=log x; for large x, log w is much smaller than w, so w≈log x.' Then n−11/8≈n and log(n/e)≈log n give the stated leading form."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the vector $z-a$ from $a$ to the moving point still sweeps once all the way round, because $a$ is inside the loop",
+  "problem": "The off-center case is asserted with a circular justification ('because a is inside'). Case 2 (a outside) is likewise asserted without argument.",
+  "fix": "Add a short argument. For example: seen from an interior point a, the direction to a point on a circle increases monotonically through a full turn. Seen from an exterior point, the whole circle lies within the angle between the two tangent lines, which is less than π, so the direction returns to its start without a net turn. Label this as a geometric argument and refer to the left panel of the winding figure."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "near each zero, an analytic function behaves like a constant times $(z-a)^k$",
+  "problem": "'Analytic' is used here before its parenthetical definition (complex-differentiable) appears in the beyond box that follows. The local-factor claim is also unexplained.",
+  "fix": "Define on first use: 'an analytic function (one that has a complex derivative at every point of a region)'. State that the local form c(z−a)^k is part of what is taken on trust."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "See the chapter on complex variables in \\cite{rhb}, or \\cite{titchmarsh}.",
+  "problem": "The titchmarsh key is Titchmarsh's zeta-function monograph, which uses the argument principle but does not prove it. The same applies to citing it for the proof of Stirling's formula and of its term-by-term differentiation.",
+  "fix": "For the argument principle cite only \\cite{rhb}. For Stirling cite \\cite{rhb}, and describe any further source in words (e.g. 'any text on the gamma function')."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the oracle is this exact relation with the unknown $S$ replaced by an explicit approximation",
+  "problem": "The relation just displayed is written with ≈ (it drops 1/(48πt) and uses the midpoint convention), yet it is then called 'exact'.",
+  "fix": "Write 'the oracle is this relation (exact up to the 1/(48πt_n) term) with the unknown S replaced by …'."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "you can confirm this coefficient numerically in Problem~23.",
-  "problem": "Hard-coded problem number reference instead of a label; also Problem 25/14 references in answers.",
-  "fix": "Use labeled references or ensure numbering is stable."
+  "quote": "and $T$ also denotes the length of a training window in $t$ (Sec.~II~D and App.~A steps 20 and 23, ``$\\pi/T$'')",
+  "problem": "The bible asks that overloaded symbols be pointed out; T is also used in the paper for the tensors T^{(n)} and the Chebyshev polynomials T_k. Also, Sec. II D of the paper never writes the symbol T; it appears only in App. A steps 20 and 23.",
+  "fix": "Change to '(App. A steps 20 and 23, \"2π/T\", \"π/T\"); T also labels the second-order tensors T^{(n)} of Eq. (5) and the Chebyshev polynomials T_k of Sec. II C'."
  },
  {
-  "category": "RULE",
+  "category": "CLARITY",
   "severity": "low",
-  "quote": "The three values printed are $0.263$, $0.270$ and $0.279$, the first three entries of the ``null'' column",
-  "problem": "Answers section lacks answers to all odd-numbered problems (e.g., 3 given, but 25,27 given; 29? many odd problems like 31 absent as problem count is 28 yet some odd problems e.g. 5,7 given, 19 given; problem 9 ok). Only ~14 problems shown answered; odd ones such as 25 and 27 are present but problem list lacks 29+.",
-  "fix": "Verify every odd-numbered problem has an answer."
+  "quote": "Chapter~\\ref{ch:asymptotics} gave two routes: numerical root finding on a monotone function, and an exact inversion with the Lambert $W$ function.",
+  "problem": "The bible contract for Chapter 4 only promises a brief definition of W, not an inversion of N_sm with it. The sentence presumes content the other chapter may not contain.",
+  "fix": "Write 'There are two routes: numerical root finding (Chapter 4), and an exact inversion using the Lambert W function defined briefly there. We derive the second here.'"
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "t_1,\\dots,t_{10}=14.134725,\\ 21.022040,\\ 25.010858",
+  "problem": "Ten eight-digit numbers in a single equation line will overflow the text width (overfull hbox running into the equation number).",
+  "fix": "Break into two lines with \\begin{multline} or an aligned environment, five values per line."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Show that $\\xi(0)=\\xi(1)=\\frac12$, using $(s-1)\\zeta(s)\\to1$ as $s\\to1$",
+  "problem": "This grade-3 problem repeats, with the same hints, a computation done in full in the main text (item 3 of the proof that ξ>0 on [−1,2]).",
+  "fix": "Replace with a genuinely new task, e.g. 'Compute ξ(2) and ξ(−1) exactly using ζ(2)=π²/6 and verify ξ(2)=ξ(−1) numerically with mpmath', or downgrade it to grade 1."
  }
 ]

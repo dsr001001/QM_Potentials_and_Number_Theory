@@ -32,7 +32,6 @@ assert abs(float(np.asarray(qmnt.smooth_zeros(np.array([1])))[0]) - s1) < 1e-6
 g1 = float(gap(s1)); assert abs(g1 - 7.500) < 1e-3
 f1 = (t1 - s1)/g1; assert abs(f1 - (-0.0515)) < 5e-4
 assert abs(Nsm(14.0) - 0.432) < 1e-3 and abs(Nsm(15.0) - 0.565) < 1e-3   # bracket
-# Newton iterates (Step 3)
 assert abs(dNsm(14.0) - 0.1275) < 5e-5
 assert abs(Nsm(14.0) - 0.4320) < 5e-5
 x1 = 14.0 + (0.5 - Nsm(14.0))/dNsm(14.0)
@@ -53,14 +52,14 @@ assert abs(gap(811.1843588465) - 1.293) < 5e-4
 assert abs(0.263*gap(811.1843588465) - 0.340) < 1e-3
 assert abs(gap(1419.42248094599) - 1.159) < 5e-4
 
-# Nulls (text, pycode): smooth-zero nulls vs paper anchors
+# Nulls (text, pycode): smooth-zero nulls vs paper anchors (tolerances as stated in text)
 n_all = np.arange(1, 10001)
 s_all = smooth_zero(n_all); g_all = gap(s_all)
 f_all = (tz - s_all)/g_all
 def null(lo, hi): return rms(f_all[lo-1:hi])
 assert abs(null(1, 400) - 0.2438) < 0.004
 assert abs(null(401, 500) - 0.2631) < 0.002
-assert abs(null(801, 1000) - 0.2739) < 0.003
+assert abs(null(801, 1000) - 0.2739) < 0.004
 nq = np.arange(401, 501)
 assert abs(qmnt.rms(qmnt.fluct(tz[nq-1], nq)) - 0.2631) < 0.002
 
@@ -101,6 +100,18 @@ assert abs(qmnt.L_of(1500) - 59.957) < 1e-3
 assert abs(x_of_V(V0)) < 1e-12
 Vg = np.linspace(V0 + 1e-9, 1600, 5000); assert np.all(np.diff(x_of_V(Vg)) > 0)
 
+# Monotonicity derivation (eq. dxdv)
+assert abs(3.10073/2 - 1.550365) < 1e-6
+assert abs(V0/TWO_PI - 1.5504) < 1e-4
+assert abs(1 + lt/2 - 0.5*np.log(V0/TWO_PI)) < 1e-12
+def dxdV(V):
+    a = np.sqrt(V - V0); b = np.sqrt(V)
+    return (np.log((b + a)/np.sqrt(V0))/b + np.log(V0/TWO_PI)/(2*a))/np.pi
+for VV in [20.0, 500.0, 1000.0, 1500.0]:
+    num = (x_of_V(VV + 1e-5) - x_of_V(VV - 1e-5))/2e-5
+    assert abs(num - dxdV(VV)) < 1e-6
+    assert dxdV(VV) > 0
+
 # grid spacings
 L1 = 44.883
 assert abs(2*L1/6001 - 0.0150) < 1e-4 and abs(2*59.957/8001 - 0.0150) < 1e-4
@@ -122,6 +133,13 @@ Eh, Eh2, E2h = E + a*hh**2, E + a*(hh/2)**2, E + a*(2*hh)**2
 assert abs((4*Eh2 - Eh)/3 - 100.000) < 1e-9
 assert abs((4*E2h - Eh)/3 - 99.900) < 1e-9
 assert abs(qmnt.richardson(Eh, Eh2) - 100.0) < 1e-9
+# grid doubling halves h only approximately
+eta = 24002/24001 - 1
+assert abs(eta - 1/24001) < 1e-15 and abs(eta - 4.2e-5) < 1e-6
+assert abs((2*eta + eta**2)/3 - 2.8e-5) < 1e-6
+assert (32002/32001 - 1) < eta
+Eh2b = E + a*(hh*(1 + eta)/2)**2
+assert abs(((4*Eh2b - Eh)/3 - E) - (2*eta + eta**2)/3*a*hh**2) < 1e-12
 
 # Sample Problem: rms bound
 f = np.array([0.30, -0.20, 0.10, -0.40]); e = np.array([0.010, -0.020, 0.005, 0.015])
@@ -129,6 +147,7 @@ assert abs(rms(f) - 0.2739) < 1e-4 and abs(rms(f - e) - 0.2728) < 1e-4
 assert abs(abs(rms(f - e) - rms(f)) - 0.0010) < 1e-4
 assert abs(rms(e) - 0.0137) < 1e-4
 assert abs(rms(f-e)-rms(f)) <= rms(e) <= np.max(np.abs(e))
+assert abs((rms(f-e)**2 - rms(f)**2) - (np.mean(e**2) - 2*np.mean(f*e))) < 1e-15
 
 # Sample Problem: leakage numbers
 t_n, Eg, ER, Ef = 700.250, 698.300, 700.100, 698.600
@@ -136,6 +155,10 @@ D = Eg - ER; assert abs(D - (-1.800)) < 1e-9
 tt = t_n + D; assert abs(tt - 698.450) < 1e-9
 assert abs((tt - Ef) - (-0.150)) < 1e-9 and abs((t_n - (Ef - D)) - (-0.150)) < 1e-9
 assert abs((t_n - ER) - 0.150) < 1e-9
+assert abs((Ef - Eg) - 0.300) < 1e-9 and abs((tt - Eg) - 0.150) < 1e-9
+# protocol identities: fluctuations unchanged between descriptions
+assert abs(((Ef - D) - ER) - (Ef - Eg)) < 1e-9
+assert abs((t_n - ER) - (tt - Eg)) < 1e-9
 
 # Sample Problem: Table V entries via qmnt
 def oracle_score(nn, P):
@@ -176,6 +199,11 @@ e1 = Edisc(100, 1000) - Ek; assert abs(e1 - (-0.100)) < 1e-3
 eR = (4*Edisc(100, 2001) - Edisc(100, 1000))/3 - Ek
 assert -9e-5 < eR < -7.5e-5
 assert abs(Edisc(100, 1000) - 12.1481) < 1e-4
+h1000 = 2*L1/1001
+assert abs(2*L1/2002 - h1000/2) < 1e-15
+assert abs(eR - (-Ek**3*h1000**4/1440)) < 5e-6
+xs = 0.1; assert abs(np.sin(xs)**2 - (xs**2 - xs**4/3 + 2*xs**6/45)) < 1e-10
+assert abs((4/16 - 1)/3 - (-0.25)) < 1e-15
 Efd = np.sort(np.asarray(qmnt.fd_levels(np.zeros(1000), L1, k=100), float))
 assert abs(Efd[99] - Edisc(100, 1000)) < 1e-6
 
@@ -194,7 +222,7 @@ test = rng.choice(400, 80, replace=False) + 1
 assert 400 - len(test) == 320
 nr = rms(f_all[test - 1]); assert 0.20 < nr < 0.29
 
-# Problem 13: odd/even nulls
+# Problem 13: odd/even nulls (within 0.006 as stated)
 assert abs(rms(f_all[1:400:2]) - 0.238) < 0.006
 assert abs(rms(f_all[0:400:2]) - 0.250) < 0.006
 
@@ -214,16 +242,19 @@ Pg = quad(pg, 0, 0.2)[0]; assert abs(Pg - 0.0084) < 3e-4
 assert abs(1 - np.exp(-0.2) - 0.181) < 1e-3
 frac = np.mean(sp < 0.2); assert frac < 0.05
 
-# Problem 23: own oracle with brentq
+# Problem 23: own oracle with brentq; bracket never needs widening
 def Nfl(t, P):
     return -sum(np.sin(m*t*np.log(pp))/(m*pp**(m/2)) for pp in P for m in (1, 2, 3))/np.pi
 tp = []
+widen = 0
 for nn in nq:
     sn, gn = s_all[nn-1], g_all[nn-1]
     F = lambda t: Nsm(t) + Nfl(t, [2, 3, 5]) - (nn - 0.5)
     lo, hi = sn - 3*gn, sn + 3*gn
-    while F(lo)*F(hi) > 0: lo -= gn; hi += gn
+    while F(lo)*F(hi) > 0:
+        lo -= gn; hi += gn; widen += 1
     tp.append(brentq(F, lo, hi))
+assert widen == 0
 tp = np.array(tp)
 assert abs(rms((tp - tz[nq-1])/g_all[nq-1]) - 0.116) < 0.003
 assert abs(corr((tp - s_all[nq-1])/g_all[nq-1], f_all[nq-1]) - 0.90) < 0.01
@@ -233,5 +264,6 @@ t10k = tz[-1]; assert abs(t10k - 9877.78) < 0.01
 assert abs(gap(t10k) - 0.854) < 2e-3
 assert abs(5e-12/gap(t10k) - 6e-12) < 1e-12
 assert abs(0.018/(6e-12) - 3e9) < 1e8
+assert abs(1e-4/(5e-12/gap(t10k)) - 1.7e7) < 0.1e7
 
 print('all checks passed')

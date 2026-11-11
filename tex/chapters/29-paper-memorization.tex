@@ -50,7 +50,7 @@ A value $d_n=0.3$ means that zero $n$ sits three tenths of a typical spacing abo
 \end{equation}
 where the $\phi_k$ are basis functions ($\cos(k\pi x/L)$ by default), the $c_k$ are $M$ real coefficients, and $M$ is the basis size. The coefficients are chosen to make the eigenvalues $E_n$ of $H+\delta V$ match bias-corrected targets $\tilde t_n$ for the training indices, by iterated linearization with the first-order sensitivity $A_{nk}=\int|\psi_n|^2\phi_k\,\dd x$ and an SVD-damped Levenberg--Marquardt step that accepts only improvements (Chapter~\ref{ch:fitting}; paper Sec.~II~C and Appendix~A step~6).
 
-\paragraph{The score.} After fitting on zeros $1,\dots,n_{\rm fit}$, the paper performs one plain eigensolve of the fitted potential and compares its levels with the \emph{held-out} zeros, the ones the fit never saw. Write $p_n$ for the predicted fluctuation of level $n$ and $d_n$ for the true one, both in mean spacings and both measured relative to the unperturbed potential's levels. For a held-out index set $\mathcal H$ containing $|\mathcal H|$ indices, the two reported numbers are
+\paragraph{The score.} After fitting on zeros $1,\dots,n_{\rm fit}$, the paper performs one plain eigensolve of the fitted potential and compares its levels with the \emph{held-out} zeros, the ones the fit never saw. Write $p_n$ for the predicted fluctuation of level $n$ and $d_n$ for the true one, both in mean spacings and both measured relative to the unperturbed potential's levels. Strictly, the operator scores use $d_n=(\tilde t_n-E_n[\text{smooth}])/\gap_n$ (Appendix~A step~18). This differs from Eq.~\eqref{eq:paper-memorization-fluct} by the Richardson residual $E^{\rm Rich}_n-s_n$, which has mean $0.005$ spacings and is at most $0.063$ spacings (paper Sec.~II~B). That small difference is why the two nulls coincide, and we use the same symbol $d_n$ for both. For a held-out index set $\mathcal H$ containing $|\mathcal H|$ indices, the two reported numbers are
 \begin{equation}
 \rms=\sqrt{\frac{1}{|\mathcal H|}\sum_{n\in\mathcal H}(p_n-d_n)^2},
 \qquad
@@ -72,7 +72,7 @@ On RE5, the zeros 401--500, this is 0.263 (paper Sec.~II~C; Appendix~A gives 0.2
 \begin{enumerate}
 \item \textbf{Capacity.} The fitted family can drive the in-sample rms almost to zero.
 \item \textbf{No transfer.} Across twelve configurations, the OOS rms never beats the null and no reproducible positive OOS correlation appears.
-\item \textbf{Diagnosis.} Two robustness checks (other bases, within-height splits) and the three probes that, in the paper's words, ``complete the diagnosis'' (permutation and surrogate tests, the interpolation split, and the arithmetic-continuation probe, the last being the decisive one) show why: the family fits anything, so its in-sample success measures capacity, and it does not express the long-range oscillation that would let it continue.
+\item \textbf{Diagnosis.} Two robustness checks (other bases, within-height splits) and the three probes that, in the paper's words, ``complete the diagnosis'' (permutation and surrogate tests, the interpolation split, and the arithmetic-continuation probe, the last being the cleanest) show why: the family fits anything, so its in-sample success measures capacity, and it does not express the long-range oscillation that would let it continue.
 \end{enumerate}
 
 \begin{checkpoint}
@@ -92,7 +92,7 @@ A model predicts $p_n=d_n+0.263$ for every held-out $n$ (a perfect shape shifted
 
 The section opens: ``In-sample capacity is not the issue: on the full 500 zeros the fit reaches rms $0.186$ at $M = 300$ and reproduces all 500 zeros to rms $< 10^{-4}$ spacings by $M = 900$, consistent with a basis-coverage law (the cosine family becomes effectively complete for joint level shifts once $M\pi/L > 2\sqrt{E}$).''
 
-\paragraph{Plain words.} With 900 cosine coefficients, every one of the first 500 levels can be placed on its zero to within one ten-thousandth of a spacing. That is not a prediction; it is a demonstration that the family is flexible enough to realize essentially any pattern of shifts among these levels.
+\paragraph{Plain words.} With 900 cosine coefficients, the first 500 levels sit on their zeros with an rms error below one ten-thousandth of a spacing. That is not a prediction; it is a demonstration that the family is flexible enough to realize essentially any pattern of shifts among these levels.
 
 \paragraph{Tools.} The coverage law is the heuristic of Chapter~\ref{ch:fitting}. Recall the reasoning. Near the center of the well a level of energy $E$ has local wavenumber $\sqrt{E-V}\le\sqrt E$, so $|\psi_n|^2$ oscillates with wavenumber up to $2\sqrt E$. The shift $\delta E_n=\int|\psi_n|^2\delta V\,\dd x$ can respond differently to neighboring levels only if $\delta V$ contains structure on that scale. The highest cosine in the basis has wavenumber $(M-1)\pi/L\approx M\pi/L$. The heuristic condition for the basis to address levels up to energy $E$ independently is therefore
 \begin{equation}
@@ -119,7 +119,7 @@ At scale 1, $L=44.883$ and the highest scored level is near $t_{500}=811.1843588
 \textbf{Step 5:} For (d), $\sqrt{680}=26.08$, so $M>2\times44.883\times26.08/\pi\approx745$.
 
 \[
-\boxed{M\gtrsim814\ \text{for 500 levels};\quad M=900\Rightarrow E<992;\quad M=300\Rightarrow E<110\ (33\ \text{zeros});\quad M\gtrsim745\ \text{for 400 levels}}
+\boxed{\begin{aligned}&M\gtrsim814\ \text{for 500 levels};\quad M\gtrsim745\ \text{for 400 levels};\\ &M=900\Rightarrow E<992;\quad M=300\Rightarrow E<110\ (33\ \text{zeros})\end{aligned}}
 \]
 \emph{Interpretation.} The paper's two anchors bracket the law: at $M=900$ the law is satisfied for every level and the in-sample rms is below $10^{-4}$; at $M=300$ the law covers only the lowest few dozen levels, yet the rms has already fallen from the null to 0.186. Partial coverage still buys partial in-sample improvement. The law is a rough guide to where the fit becomes complete, not a sharp threshold.
 \end{sample}
@@ -127,7 +127,7 @@ At scale 1, $L=44.883$ and the highest scored level is near $t_{500}=811.1843588
 \paragraph{Figure 3 of the paper.} Paper Fig.~3 plots, at both scales, in-sample and held-out rms against $M$. In-sample error falls steadily as $M$ grows; held-out error stays at or above the dashed null line. That figure is the visual summary of the whole section: two curves that separate because one measures capacity and the other measures information.
 
 \begin{pitfall}
-A falling in-sample error is often read as ``the model is getting closer to the truth''. It means only that the model is getting closer to the \emph{training data}. When $M$ approaches the number of training levels, any reasonable family fits any reasonable data (Chapter~\ref{ch:least-squares}: an underdetermined linear system has infinitely many exact solutions). The in-sample curve of paper Fig.~3 would look the same for random targets; Section~\ref{sec:paper-memorization-surrogates} shows the paper checked exactly this.
+A falling in-sample error is often read as ``the model is getting closer to the truth''. It means only that the model is getting closer to the \emph{training data}. Suppose the basis is rich enough to address every training level independently. Here that means satisfying the coverage law of Eq.~\eqref{eq:paper-memorization-coverage}, which requires $M\gtrsim745$ for 400 levels; having $M$ merely equal to the number of levels is not enough. Once that holds, the family can fit essentially any targets (compare Chapter~\ref{ch:least-squares}: an underdetermined linear system has infinitely many exact solutions). At $M=400$ the paper shows that the in-sample error is the same for shuffled and phase-randomized targets as for the true zeros (Section~\ref{sec:paper-memorization-surrogates}). It is plausible, but not tested, that the whole in-sample curve of paper Fig.~3 would look the same for such targets.
 \end{pitfall}
 
 \begin{keyideas}
@@ -179,23 +179,25 @@ A compact way to put every row on one scale is a \emph{relative skill}
 S=1-\frac{\rms_{\rm model}}{\rms_{\rm null}} .
 \label{eq:paper-memorization-skill}
 \end{equation}
-This is our convenience, not a quantity the paper reports. $S>0$ means better than doing nothing, $S=0$ means no better, $S<0$ means harm, and $S=1$ means perfect prediction.
+This is our convenience, not a quantity the paper reports. (Notation warning: this $S$ is unrelated to the fluctuating part $S(t)$ of the counting function in Chapter~\ref{ch:counting-zeros}. Likewise, below, $\rho$ and $\rho_\ell$ denote correlations and are unrelated to the zeros $\rho_n=\tfrac12+it_n$.) $S>0$ means better than doing nothing, $S=0$ means no better, $S<0$ means harm, and $S=1$ means perfect prediction.
 
 \begin{sample}{Relative skill of the operator rows and the oracle}
-Compute $S$ for the four 1--400 rows of Table~I that use $M=400$ or $M=600$ without ridge or with $\mu=0.3$, and for the six-prime and one-prime oracles on the same holdout (paper Table~V: rms 0.074 and 0.198). Use the null 0.263.
+Compute $S$ for the four 1--400 rows of Table~I that use $M=400$ (with $\mu=0$, $0.03$ and $0.3$) or $M=600$ (no ridge), and for the six-prime and one-prime oracles on the same holdout (paper Table~V: rms 0.074 and 0.198). Use the null 0.263.
 
 \textbf{Step 1:} $M=400$: $S=1-0.369/0.263=1-1.403=-0.403$.
 
-\textbf{Step 2:} $M=400$, $\mu=0.3$: $S=1-0.265/0.263=1-1.0076=-0.0076$.
+\textbf{Step 2:} $M=400$, $\mu=0.03$: $S=1-0.271/0.263=1-1.0304=-0.030$.
 
-\textbf{Step 3:} $M=600$: $S=1-0.313/0.263=1-1.190=-0.190$.
+\textbf{Step 3:} $M=400$, $\mu=0.3$: $S=1-0.265/0.263=1-1.0076=-0.0076$.
 
-\textbf{Step 4:} Six-prime oracle: $S=1-0.074/0.263=1-0.281=+0.719$.
+\textbf{Step 4:} $M=600$: $S=1-0.313/0.263=1-1.190=-0.190$.
 
-\textbf{Step 5:} One-prime oracle: $S=1-0.198/0.263=1-0.753=+0.247$.
+\textbf{Step 5:} Six-prime oracle: $S=1-0.074/0.263=1-0.281=+0.719$.
+
+\textbf{Step 6:} One-prime oracle: $S=1-0.198/0.263=1-0.753=+0.247$.
 
 \[
-\boxed{S_{M=400}=-0.40,\quad S_{\mu=0.3}=-0.008,\quad S_{M=600}=-0.19,\quad S_{6\,\text{primes}}=+0.72,\quad S_{\{2\}}=+0.25}
+\boxed{\begin{aligned}&S_{M=400}=-0.40,\quad S_{\mu=0.03}=-0.03,\quad S_{\mu=0.3}=-0.008,\quad S_{M=600}=-0.19;\\ &S_{6\,\text{primes}}=+0.72,\quad S_{\{2\}}=+0.25\end{aligned}}
 \]
 The best operator row is essentially at zero skill; the explicit formula with a single prime and no fitted parameters already has positive skill. This is the comparison behind paper Fig.~1 and the statement in Sec.~IV that one prime beats every fitted operator's holdout performance by a factor of at least about 1.3 ($0.265/0.198=1.34$).
 \end{sample}
@@ -271,7 +273,7 @@ In Table~I, the row with the lowest in-sample error (0.064) does not have the lo
 
 \begin{keyideas}
 \item In all twelve rows of paper Table~I the OOS rms is at or above the null, and correlations scatter around zero ($-0.17$ to $+0.12$).
-\item By Eq.~\eqref{eq:paper-memorization-decomp}, an uncorrelated prediction with nonzero amplitude is always worse than the null; to beat the null a zero-mean prediction needs $\rho>a/2$.
+\item By Eq.~\eqref{eq:paper-memorization-decomp}, an uncorrelated zero-mean prediction with nonzero amplitude is always worse than the null; to beat the null a zero-mean prediction needs $\rho>a/2$.
 \item Ridge regularization moves the fit toward the null and stops there; restarts change little; errors are uniform across the holdout.
 \end{keyideas}
 
@@ -293,15 +295,15 @@ The paper's statements (Sec.~III, second paragraph):
 The percentile bootstrap gives approximately correct coverage when the resampled units are independent and identically distributed and the sample is not too small; the theory is in Efron and Tibshirani \cite{efron}. We take that result on trust. The fluctuations $d_n$ are \emph{not} independent: consecutive values are correlated (Section~\ref{sec:paper-memorization-within}). The block bootstrap, which resamples runs of consecutive indices, is the standard repair; its theory is also beyond this book.
 \end{beyond}
 
-The paper addresses the dependence directly in the ``Other bases'' paragraph: ``The intervals in Table~II resample held-out levels independently although the fluctuations are serially correlated; recomputed with a moving-block bootstrap (block lengths 3 to 20) they widen slightly and no conclusion changes (for the cosine row, at most $[0.30,0.44]$).'' Appendix~A step~22 records a circular block bootstrap with block lengths 3--20 on zeros 401--500. The Discussion repeats the general caveat: ``Bootstrap intervals resample held-out levels independently except where stated.''
+The paper addresses the dependence directly in the ``Other bases'' paragraph: ``The intervals in Table~II resample held-out levels independently although the fluctuations are serially correlated; recomputed with a moving-block bootstrap (block lengths 3 to 20) they widen slightly and no conclusion changes (for the cosine row, at most $[0.30,0.44]$).'' Appendix~A step~22 records a circular block bootstrap with block lengths 3--20 on zeros 401--500. The main text says moving-block and the appendix says circular block. The two schemes differ only in how blocks wrap around at the ends of the series, and the paper does not say which one produced the quoted interval. The Discussion repeats the general caveat: ``Bootstrap intervals resample held-out levels independently except where stated.''
 
 \begin{checkpoint}
-The block-bootstrap interval for the cosine row is at most $[0.30,0.44]$, wider than the independent interval. Why does serial correlation widen intervals?
+The block-bootstrap interval for the cosine row is at most $[0.30,0.44]$, slightly wider than the independent interval. Does serial correlation always widen bootstrap intervals?
 \end{checkpoint}
-\checkanswer{Correlated neighbors carry partly redundant information, so 100 correlated levels behave like fewer independent ones. Independent resampling ignores this redundancy and underestimates the variability; resampling blocks keeps neighbors together and recovers the larger spread (Chapter~\ref{ch:controls}).}
+\checkanswer{No. The effect depends on the sign of the dependence and on the statistic. For a sample mean, positive serial correlation enlarges the true sampling spread and negative correlation shrinks it, and the fluctuations here are negatively correlated at short lags. For the rms, the relevant dependence is that of the squared errors $e_n^2$: if errors of similar size cluster in runs, independent resampling understates the variability, even when the signed fluctuations alternate. The paper observes only a slight widening. The block bootstrap is the safer choice because it makes no independence assumption (Chapter~\ref{ch:controls}).}
 
 \begin{keyideas}
-\item The principal scale-1 rms interval $[0.33,0.43]$ excludes the null from below: significantly worse than doing nothing. The scale-2 interval contains its null.
+\item The principal scale-1 rms interval $[0.33,0.43]$ lies entirely above the null 0.263: significantly worse than doing nothing. The scale-2 interval contains its null.
 \item Correlation intervals of the fits contain zero; the oracle's is $[+0.95,+0.97]$.
 \item Block bootstrap (blocks 3--20) widens intervals slightly and changes no conclusion.
 \end{keyideas}
@@ -314,7 +316,27 @@ A natural objection is that cosines are a poor basis: they are global, so a chan
 \item \textbf{Chebyshev} polynomials $T_k(2|x|/L-1)$, $k=0,\dots,M-1$: global, with resolution concentrated near $x=0$ and $x=L$. (Notation warning: this $T_k$ is a polynomial, unrelated to the training-window length $T$ or the tensors $T^{(n)}$ of Sec.~V.)
 \item \textbf{Hat} functions: piecewise-linear tents on $M$ uniform nodes of $|x|/L$, with local support, ``the simplest stand-in for a wavelet-type basis''.
 \end{itemize}
-Only the basis changes. Paper Table~II gives the results for fit 1--400, holdout 401--500, null 0.263; \cref{fig:paper-memorization-bases} draws its intervals.
+Only the basis changes. Paper Table~II gives the results for fit 1--400, holdout 401--500, null 0.263. \Cref{tab:paper-memorization-tableII} reproduces it, and \cref{fig:paper-memorization-bases} draws its intervals.
+
+\begin{table}[htbp]\centering
+\caption{Paper Table~II (other bases, scale 1, fit 1--400, holdout 401--500, null 0.263), quoted exactly. Brackets: bootstrap 95\% intervals from independent resampling of the held-out levels. The cosine row is the Table~I configuration rerun through the code used for the other bases.}
+\label{tab:paper-memorization-tableII}
+\small
+\begin{tabular}{llccc}
+\toprule
+basis & $M$ & in-sample & OOS rms & OOS corr \\
+\midrule
+cosine & 400 & 0.137 & 0.369 [0.32, 0.42] & $-0.07$ [$-0.22$, $+0.07$] \\
+Chebyshev & 200 & 0.230 & 0.368 [0.32, 0.42] & $-0.05$ [$-0.25$, $+0.14$] \\
+Chebyshev & 400 & 0.162 & 0.291 [0.25, 0.33] & $+0.18$ [$-0.02$, $+0.37$] \\
+Chebyshev & 600 & 0.111 & 0.733 [0.64, 0.82] & $+0.01$ [$-0.20$, $+0.23$] \\
+Chebyshev, $\mu=0.3$ & 400 & 0.211 & 0.264 [0.24, 0.29] & $+0.03$ [$-0.21$, $+0.28$] \\
+hat & 200 & 0.221 & 0.342 [0.30, 0.38] & $-0.05$ [$-0.24$, $+0.14$] \\
+hat & 400 & 0.145 & 0.340 [0.29, 0.39] & $-0.19$ [$-0.37$, $-0.01$] \\
+hat & 600 & 0.066 & 0.330 [0.29, 0.37] & $+0.09$ [$-0.13$, $+0.30$] \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-memorization_bases.pdf}
@@ -326,7 +348,7 @@ Only the basis changes. Paper Table~II gives the results for fit 1--400, holdout
 
 \paragraph{The marginal row.} The paper is careful here, and we should be too. Chebyshev $M=400$ gives OOS rms 0.291 with correlation $+0.18$. The paper says: ``its rms interval contains the null and its correlation interval has its lower end at zero.'' The rms interval is $[0.25,0.33]$ and the correlation interval is $[-0.02,+0.37]$. The paper's verdict has two halves, and both should be kept: ``one such row among eight is not evidence of prediction, but a small positive correlation for this row is not excluded.'' The supporting observation is that the neighbors $M=200$ and $M=600$ show no trend (0.368 and 0.733, correlations $-0.05$ and $+0.01$). If $+0.18$ reflected real structure that Chebyshev polynomials capture, we would expect it not to vanish when the basis is enlarged.
 
-\paragraph{One interval below zero.} The hat $M=400$ row has correlation $-0.19$ with interval $[-0.37,-0.01]$, which excludes zero from below. The paper does not single this row out. Read at face value it indicates anti-skill, a prediction that tends to go the wrong way; Section~\ref{sec:paper-memorization-within} gives a mechanism by which fitted interpolants can be anticorrelated with the truth. Whatever its cause, a negative correlation is not predictive skill.
+\paragraph{One interval below zero.} The hat $M=400$ row has correlation $-0.19$ with interval $[-0.37,-0.01]$, which lies entirely below zero. The paper does not single this row out. Read at face value, it indicates anti-skill: a prediction that tends to go the wrong way. The neighbor-interpolation mechanism of Section~\ref{sec:paper-memorization-within} concerns interleaved splits and does not directly apply to this forward holdout. We have no explanation for this row, and one interval among eight excluding zero is not surprising by chance alone. Whatever its cause, a negative correlation is not predictive skill.
 
 \begin{checkpoint}
 Of the eight rows in Table~II, how many have an OOS rms interval lying entirely above the null 0.263?
@@ -347,16 +369,39 @@ Of the eight rows in Table~II, how many have an OOS rms interval lying entirely 
 \item odd/even splits: train on odd-indexed zeros and score on even-indexed ones, or the reverse.
 \end{itemize}
 
-\paragraph{Results (paper Table~III).} ``The random 80/20 splits are the principal evidence: every held-out error is above the null, by a factor $1.5$--$3.0$ at scale~1 and $1.8$--$1.9$ at scale~2, and no correlation is reliably positive.'' On the same held-out sets the six-prime oracle scores 0.062--0.063 with correlation $+0.97$. The table caption stresses that the seeds reuse the same zeros, so the ranges indicate robustness and are not standard errors.
+\paragraph{Results (paper Table~III).} ``The random 80/20 splits are the principal evidence: every held-out error is above the null, by a factor $1.5$--$3.0$ at scale~1 and $1.8$--$1.9$ at scale~2, and no correlation is reliably positive.'' On the same held-out sets the six-prime oracle scores 0.062--0.063 with correlation $+0.97$. The table caption stresses that the seeds reuse the same zeros, so the ranges indicate robustness and are not standard errors. \Cref{tab:paper-memorization-tableIII} reproduces paper Table~III.
 
-\paragraph{Saturation.} An odd/even split at scale 1 has 200 training levels. A model with $M\ge200$ coefficients can fit 200 numbers exactly (Chapter~\ref{ch:least-squares}), so those rows are \emph{saturated}: the in-sample rms of the $M=400$ odd and even rows is below $10^{-3}$. The paper calls these rows ``stress tests of memorization''. Saturation is a statement about the count of unknowns, not a guarantee that the optimizer finds an exact fit. The $M=200$ odd and even rows are nominally saturated ($200\ge200$), yet they reach in-sample rms only 0.176 and 0.171: the damped, accept-only-improvements iteration stops well before the residuals vanish, and a linearized problem with exactly as many unknowns as equations can be poorly conditioned. The informative odd/even rows are those with $M=100$, fewer coefficients than levels: held-out errors 0.312 and 0.311 against nulls 0.238 and 0.250, still above the null.
+\begin{table}[htbp]\centering
+\caption{Paper Table~III (within-height splits), quoted exactly. Training and held-out zeros come from the same range (zeros 1--400 at scale 1, 1--800 at scale 2). Random splits are 80/20; ranges are over ten seeds (scale 1) and two seeds (scale 2), and for random splits the corr column gives the minimum and maximum. ``odd'' means trained on odd-indexed zeros and scored on even-indexed ones. These splits have 200 training levels at scale 1 and 400 at scale 2, so rows with $M$ at or above that number are saturated.}
+\label{tab:paper-memorization-tableIII}
+\footnotesize
+\begin{tabular}{llcccc}
+\toprule
+scale, $M$ & split & in-sample & held-out & corr & null \\
+\midrule
+1, 100 & odd & 0.224 & 0.312 & $-0.32$ & 0.238 \\
+1, 100 & even & 0.212 & 0.311 & $-0.39$ & 0.250 \\
+1, 200 & random & 0.20--0.22 & 0.37--0.43 & $-0.40$, $-0.14$ & 0.23--0.26 \\
+1, 200 & odd & 0.176 & 0.391 & $-0.26$ & 0.238 \\
+1, 200 & even & 0.171 & 0.351 & $-0.31$ & 0.250 \\
+1, 400 & random & 0.10--0.11 & 0.50--0.71 & $-0.11$, $+0.09$ & 0.23--0.26 \\
+1, 400 & odd & $<10^{-3}$ & 0.351 & $-0.06$ & 0.238 \\
+1, 400 & even & $<10^{-3}$ & 0.368 & $-0.05$ & 0.250 \\
+2, 600 & random & 0.14--0.15 & 0.47--0.49 & $-0.07$, $-0.02$ & 0.26--0.27 \\
+2, 600 & odd & 0.078 & 0.377 & $+0.03$ & 0.245 \\
+2, 600 & even & 0.069 & 0.366 & $-0.06$ & 0.266 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Saturation.} An odd/even split at scale 1 has 200 training levels. A model with $M\ge200$ coefficients can fit 200 numbers exactly (Chapter~\ref{ch:least-squares}), so those rows are \emph{saturated}: the in-sample rms of the $M=400$ odd and even rows is below $10^{-3}$. The paper calls these rows ``stress tests of memorization''. Saturation is a statement about the count of unknowns, not a guarantee that the optimizer finds an exact fit. The $M=200$ odd and even rows are nominally saturated ($200\ge200$), yet they reach in-sample rms only 0.176 and 0.171. A likely reason (ours, not the paper's) comes from the coverage law, Eq.~\eqref{eq:paper-memorization-coverage}. Two hundred cosines satisfy it only for $E<(200\pi/2L)^2\approx49$, while the training levels reach heights near 680. The sensitivity matrix is therefore effectively rank-deficient, and the count of unknowns overstates what the basis can address independently. The damped, accept-only-improvements optimizer may also stop early. The informative odd/even rows are those with $M=100$, fewer coefficients than levels: held-out errors 0.312 and 0.311 against nulls 0.238 and 0.250, still above the null.
 
 \paragraph{Worse within height.} The paper notes: ``The failure is in fact worse within height than in forward extrapolation.'' Compare the random-split held-out errors at scale 1, $M=400$ (0.50--0.71) with the forward 1--400 row of Table~I (0.369). Section~\ref{sec:paper-memorization-gap} gives the mechanism: the fit does damage in the parts of the potential probed only by the held-out levels.
 
 \paragraph{Why the correlations are negative.} The odd/even rows at $M\le200$ have correlations $-0.26$ to $-0.39$. The paper explains: ``The negative correlations at $M\le200$ are mechanical: the fluctuation sequence has negative autocorrelation at lags 1--3, so any smooth interpolation between neighbouring training levels is anticorrelated with the truth (the mean of the two nearest training fluctuations gives $-0.26$ to $-0.41$).'' The next sample problem makes this mechanism quantitative.
 
 \begin{sample}{Mechanical anticorrelation of neighbor averages}
-Treat the fluctuations $d_n$ as a stationary sequence with mean zero, variance $\sigma^2$ and autocorrelations $\rho_1$, $\rho_2$ at lags 1 and 2. (a) Show that the prediction $q_n=\tfrac12(d_{n-1}+d_{n+1})$ has correlation $\rho_1/\sqrt{(1+\rho_2)/2}$ with $d_n$. (b) Estimate $\rho_1$ from the GUE spacing variance and the null $\sigma=0.263$. (c) Evaluate the correlation of (a) for the illustrative values $\rho_1=-0.29$, $\rho_2=-0.10$.
+Treat the fluctuations $d_n$ as a stationary sequence with mean zero, variance $\sigma^2$ and autocorrelations $\rho_1$, $\rho_2$ at lags 1 and 2. Stationary means that the variance $\sigma^2$ and the correlation $\rho_\ell$ between values $\ell$ steps apart do not depend on $n$, so $\mathrm{Cov}(d_n,d_{n+\ell})=\rho_\ell\sigma^2$. We also use $\mathrm{Var}(X+Y)=\mathrm{Var}\,X+\mathrm{Var}\,Y+2\,\mathrm{Cov}(X,Y)$ (Chapter~\ref{ch:probability}). (a) Show that the prediction $q_n=\tfrac12(d_{n-1}+d_{n+1})$ has correlation $\rho_1/\sqrt{(1+\rho_2)/2}$ with $d_n$. (b) Estimate $\rho_1$ from the GUE spacing variance and the null $\sigma=0.263$. (c) Evaluate the correlation of (a) for the illustrative values $\rho_1=-0.29$, $\rho_2=-0.10$.
 
 \textbf{Step 1:} Covariance of prediction and truth:
 \[
@@ -388,11 +433,15 @@ where $u_n$ is the unfolded spacing, of mean 1 (Chapter~\ref{ch:level-statistics
 \label{eq:paper-memorization-rho1}
 \end{equation}
 
-\textbf{Step 6:} For the GUE Wigner surmise $p(u)=\frac{32}{\pi^2}u^2e^{-4u^2/\pi}$, the second moment is $\langle u^2\rangle=\frac{32}{\pi^2}\int_0^\infty u^4e^{-4u^2/\pi}\dd u$. With the Gaussian moment $\int_0^\infty u^4e^{-\alpha u^2}\dd u=\frac38\sqrt\pi\,\alpha^{-5/2}$ and $\alpha=4/\pi$, we get $\alpha^{-5/2}=\pi^{5/2}/32$ and
+\textbf{Step 6:} For the GUE Wigner surmise $p(u)=\frac{32}{\pi^2}u^2e^{-4u^2/\pi}$, the second moment is $\langle u^2\rangle=\frac{32}{\pi^2}\int_0^\infty u^4e^{-4u^2/\pi}\dd u$. (The surmise is normalized to unit total probability and unit mean, Chapter~\ref{ch:level-statistics}.) The needed Gaussian moment follows from $I(\alpha)=\int_0^\infty e^{-\alpha u^2}\dd u=\tfrac12\sqrt\pi\,\alpha^{-1/2}$ by differentiating twice with respect to $\alpha$. Each derivative brings down a factor $-u^2$ under the integral, so
+\[
+\int_0^\infty u^4e^{-\alpha u^2}\dd u=\frac{\dd^2I}{\dd\alpha^2}=\tfrac12\sqrt\pi\cdot\left(-\tfrac12\right)\left(-\tfrac32\right)\alpha^{-5/2}=\frac38\sqrt\pi\,\alpha^{-5/2}.
+\]
+With $\alpha=4/\pi$, we get $\alpha^{-5/2}=\pi^{5/2}/32$ and
 \[
 \langle u^2\rangle=\frac{32}{\pi^2}\cdot\frac38\sqrt\pi\cdot\frac{\pi^{5/2}}{32}=\frac{3\pi^3}{8\pi^2}=\frac{3\pi}{8}=1.1781 .
 \]
-So $\mathrm{Var}(u)=1.1781-1=0.1781$.
+Since the mean of $u$ is 1, $\mathrm{Var}(u)=\langle u^2\rangle-1^2=1.1781-1=0.1781$.
 
 \textbf{Step 7:} With $\sigma=0.263$, $2\sigma^2=0.13834$, and Eq.~\eqref{eq:paper-memorization-rho1} gives $\rho_1\approx1-0.1781/0.13834=1-1.287=-0.287$.
 
@@ -401,7 +450,15 @@ So $\mathrm{Var}(u)=1.1781-1=0.1781$.
 \[
 \boxed{\corr(q,d)=\frac{\rho_1}{\sqrt{(1+\rho_2)/2}},\qquad \rho_1\approx-0.29,\qquad \corr\approx-0.43\ \text{for}\ \rho_2=-0.10}
 \]
-\emph{Status.} Step 7 is a heuristic estimate: it uses the Wigner surmise instead of the exact distribution of the zeros, assumes stationarity, and borrows $\sigma$ from the holdout. The value $\rho_2=-0.10$ is illustrative only. The point is the sign: because the spacing variance exceeds $2\sigma^2$, the lag-1 autocorrelation must be negative. Problem~15 asks you to measure the actual autocorrelations; the paper states only that they are negative at lags 1--3. The illustrative $-0.43$ happens to be of the same order as the paper's measured $-0.26$ to $-0.41$, but this is not a test: $\rho_2$ was chosen by hand, and the paper's values are measured on held-out subsets with training neighbors. Step 4 adds two further approximations: $\gap$ is treated as constant between neighbors, and $d_n$ is treated as stationary although its variance grows slowly with $n$. The real autocorrelations are measured in Problem~15.
+\emph{Status.} Steps 4--8 are a heuristic estimate resting on five approximations:
+\begin{itemize}
+\item the Wigner surmise replaces the exact spacing distribution of the zeros;
+\item $d_n$ is treated as stationary, although its variance grows slowly with $n$;
+\item $\gap$ is treated as constant between neighbors;
+\item $\sigma$ is borrowed from the holdout 401--500 (with the in-range value $0.2438$ for zeros 1--400, the same formula gives $\rho_1\approx-0.50$, so the magnitude is sensitive to this choice);
+\item $\rho_2=-0.10$ is chosen by hand.
+\end{itemize}
+The robust point is the sign: the spacing variance $0.178$ exceeds $2\sigma^2$ for either choice of $\sigma$, so the lag-1 autocorrelation must be negative. The illustrative $-0.43$ is of the same order as the paper's measured $-0.26$ to $-0.41$. This is not a test, because the paper's values are measured on held-out subsets with training neighbors. Problem~15 asks you to measure the actual autocorrelations; the paper states only that they are negative at lags 1--3.
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -410,12 +467,12 @@ So $\mathrm{Var}(u)=1.1781-1=0.1781$.
 \label{fig:paper-memorization-neighbors}
 \end{figure}
 
-\paragraph{The structure is usable, by the right predictor.} A negative $\rho_1$ is information, and a predictor that learns its sign can use it. Recall \emph{simple kriging} from Chapter~\ref{ch:generalization}: the best linear predictor of a held-out value from training values, built from the estimated autocovariance. For two neighbors, the best weight on their average has the sign of $\rho_1$, so kriging turns anticorrelation into positive correlation (Problem~13). The paper reports that within one height range, kriging from the training fluctuations predicts held-out true zeros at 0.117 with correlation $+0.87$ (Sec.~III, surrogate paragraph). Its construction is recorded honestly in Appendix~A step~19: autocovariance to lag 40, a $\cos^2$ taper, a positive-semidefinite projection and a nugget 0.05, with the projection and nugget ``added once, after a first version without them was numerically unstable, and not tuned''. The fitted potential, held out in the same way, does not achieve this.
+\paragraph{The structure is usable, by the right predictor.} A negative $\rho_1$ is information, and a predictor that learns its sign can use it. Recall \emph{simple kriging} from Chapter~\ref{ch:generalization}: the best linear predictor of a held-out value from training values, built from the estimated autocovariance. For two neighbors, the best weight on their average has the sign of $\rho_1$, so kriging turns anticorrelation into positive correlation (Problem~13). Two neighbors alone give a correlation of at most $|\rho_1|/\sqrt{(1+\rho_2)/2}$, about $0.43$ for the illustrative values above. The paper's kriging uses all training values, with an autocovariance estimated to lag 40, so its extra skill must come from that larger set of predictors and not from the sign flip alone. The paper reports that within one height range, kriging from the training fluctuations predicts held-out true zeros at 0.117 with correlation $+0.87$ (Sec.~III, surrogate paragraph). Its construction is recorded honestly in Appendix~A step~19: autocovariance to lag 40, a $\cos^2$ taper, a positive-semidefinite projection and a nugget 0.05, with the projection and nugget ``added once, after a first version without them was numerically unstable, and not tuned''. The fitted potential, held out in the same way, does not achieve this.
 
 \begin{checkpoint}
 Why are the odd/even rows with $M=400$ at scale 1 not counted as evidence against the operator family, even though their held-out errors (0.351, 0.368) are well above the nulls?
 \end{checkpoint}
-\checkanswer{With 200 training levels and 400 coefficients the fit is saturated: the system is underdetermined and has infinitely many exact solutions, so the held-out behavior is set by which solution the optimizer happens to pick. Any family would memorize there. The paper uses these rows as stress tests; the evidence comes from the random 80/20 splits and the $M=100$ odd/even rows.}
+\checkanswer{With 200 training levels and 400 coefficients the fit is saturated: the system is underdetermined and has infinitely many exact solutions, so the held-out behavior is set by which solution the optimizer happens to pick. A saturated fit can match its training levels whatever they are, so its held-out behavior tests the optimizer more than the family. The paper uses these rows as stress tests; the evidence comes from the random 80/20 splits and the $M=100$ odd/even rows.}
 
 \begin{keyideas}
 \item Within-height random 80/20 splits remove covariate shift; held-out errors remain 1.5--3.0 (scale 1) and 1.8--1.9 (scale 2) times the null, while the oracle scores 0.062--0.063 with correlation $+0.97$.
@@ -528,7 +585,7 @@ This avoids subtracting two nearly equal square roots.
 \[
 \boxed{x(1000)=44.883,\qquad x(500)=26.82\in[22.5,\,28.5]}
 \]
-The position of the largest fitted correction, where $V\approx500$, lies inside the band of turning points of the held-out levels 201--300. (Problem~11 repeats this for $t_{100}$, and the CHECKS script confirms that $x(t_{201})\approx22.5$ and $x(t_{300})\approx28.5$ from the actual zeros.)
+The position of the largest fitted correction, where $V\approx500$, lies inside the band of turning points of the held-out levels 201--300. (Problem~11 repeats this for $t_{100}$. The \texttt{qmnt} listing in Section~\ref{sec:paper-memorization-paper} evaluates $x(t_{201})\approx22.5$ and $x(t_{300})\approx28.5$ from the actual zeros.)
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -629,13 +686,13 @@ The training window contains more than seventy full periods of the oscillation. 
 
 \paragraph{Results.} ``It represents it almost perfectly in-sample (rms $0.056$, correlation $+0.95$) and continues it not at all (held-out correlation $+0.07$, rms worse than predicting zero fluctuation).'' Appendix~A gives the anchors: in-sample 0.0555, correlation $+0.95$; OOS 0.1958, correlation $+0.07$; probe-null 0.1708. The in-sample rms is about a third of the wave's own rms ($0.0555/0.1709=0.32$), while the OOS rms exceeds the probe-null by $0.1958/0.1708=1.146$, about 15\%.
 
-\paragraph{The contrast: a model that knows the frequency.} Consider instead the six-function model
+\paragraph{The contrast: a model that knows the frequency.} The following is our own illustration, not an experiment in the paper. Consider instead the six-function model
 \[
 F(t)=\sum_{m=1}^{3}\left[\beta_m\sin(mt\log2)+\gamma_m\cos(mt\log2)\right],
 \]
-fitted by least squares to the same 400 target values (Chapter~\ref{ch:sparse-frequency}, control~B). Collect the six functions evaluated at the 400 sample points into the columns of a $400\times6$ matrix $\mathsf F$, and write the target vector as $\mathbf g$. The target is \emph{exactly} in the span: $\mathbf g=\mathsf F\bm\beta_{\rm true}$ with $\beta_m=-1/(\pi m2^{m/2})$ and $\gamma_m=0$. If the six columns are linearly independent (which holds for distinct frequencies sampled at many points), $\mathsf F^\top\mathsf F$ is invertible, and the least-squares solution (Chapter~\ref{ch:least-squares}) is
+fitted by least squares to the same 400 target values (Chapter~\ref{ch:sparse-frequency}, control~B). Evaluate the six functions at the 400 sample points $s_1,\dots,s_{400}$ and collect them into the columns of a $400\times6$ matrix $\mathsf F$. Collect the six coefficients into the vector $\mathbf b=(\beta_1,\beta_2,\beta_3,\gamma_1,\gamma_2,\gamma_3)^\top$, and write the target vector as $\mathbf g$, with entries $-N^{p=2}_{\rm fl}(s_n)$. The target is \emph{exactly} in the span: $\mathbf g=\mathsf F\mathbf b_{\rm true}$ with $\beta_m=+1/(\pi m2^{m/2})$ and $\gamma_m=0$. (The minus sign in Eq.~\eqref{eq:paper-memorization-re2} cancels the minus sign of the target.) We need the six columns to be linearly independent, so that $\mathsf F^\top\mathsf F$ is invertible. We do not prove this; we checked it numerically. At these 400 points the $6\times6$ matrix $\mathsf F^\top\mathsf F$ has condition number below $10^3$, so it is safely invertible. The least-squares solution (Chapter~\ref{ch:least-squares}) is then
 \[
-\hat{\bm\beta}=(\mathsf F^\top\mathsf F)^{-1}\mathsf F^\top\mathbf g=(\mathsf F^\top\mathsf F)^{-1}(\mathsf F^\top\mathsf F)\bm\beta_{\rm true}=\bm\beta_{\rm true}.
+\hat{\mathbf b}=(\mathsf F^\top\mathsf F)^{-1}\mathsf F^\top\mathbf g=(\mathsf F^\top\mathsf F)^{-1}(\mathsf F^\top\mathsf F)\mathbf b_{\rm true}=\mathbf b_{\rm true}.
 \]
 The model recovers the exact coefficients, and its prediction at \emph{any} height, in or out of the training window, is the exact wave. Six parameters with the right functional form continue perfectly; a few hundred parameters in a potential do not continue at all.
 
@@ -645,7 +702,7 @@ The Discussion (Sec.~VI) states the scope more carefully: ``Under the fitting pr
 
 Why might a potential not ``speak'' in sinusoids of $t$? Heuristically (the paper's own word): a potential addresses levels through their turning points, locally in energy (Section~\ref{sec:paper-memorization-gap}), whereas the target is an almost-periodic function of $t$, sparse in frequency (Chapter~\ref{ch:fourier-series}). The correction a fit places at the turning points of levels 1--400 says nothing, by itself, about the region $33.8\lesssim x\lesssim38.5$ where levels 401--500 turn.
 
-\paragraph{A small-scale rerun: one linearized step.} The full fit takes minutes per configuration (\texttt{qmnt.fit\_potential}). You can see the shape of the phenomenon in seconds with a linear toy: compute the eigenvectors $\psi_n$ of the Wu--Sprung Hamiltonian once, form $A_{nk}=\int|\psi_n|^2\cos(k\pi x/L)\dd x$ for $n\le500$ and $k<400$, and take a single SVD-damped least-squares step from $c=0$ toward the probe target on levels 1--400. This is the first Gauss--Newton iteration of the paper's fit (Chapter~\ref{ch:fitting}) and nothing more: no iteration, no bias correction, a coarse grid. \Cref{fig:paper-memorization-toy} shows the result; Problem~18 asks you to quantify it and compare with the paper's held-out correlation $+0.07$. Here is the complete toy; the script for \cref{fig:paper-memorization-toy} is the same code plus plotting.
+\paragraph{A small-scale rerun: one linearized step.} The full fit takes minutes per configuration (\texttt{qmnt.fit\_potential}). You can explore in seconds whether a linear toy shows the same behavior: compute the eigenvectors $\psi_n$ of the Wu--Sprung Hamiltonian once, form $A_{nk}=\int|\psi_n|^2\cos(k\pi x/L)\dd x$ for $n\le500$ and $k<400$, and take a single SVD-damped least-squares step from $c=0$ toward the probe target on levels 1--400. This is the first Gauss--Newton iteration of the paper's fit (Chapter~\ref{ch:fitting}) and nothing more: no iteration, no bias correction, a coarse grid. \Cref{fig:paper-memorization-toy} shows its output. We do not quote scores for the toy, and you should not expect it to reproduce the paper's numbers. A single linear step without iteration or bias correction is a different procedure from the paper's iterated nonlinear fit, and it may behave quite differently. Problem~18 asks you to compute its scores and judge for yourself whether they resemble the paper's held-out correlation $+0.07$. Here is the complete toy; the script for \cref{fig:paper-memorization-toy} is the same code plus plotting.
 
 \begin{pycode}
 import numpy as np, qmnt
@@ -694,7 +751,7 @@ We now collect the strengths and limits of the section, claim by claim. Chapter~
 
 \paragraph{Established within the tested scope.}
 \begin{itemize}
-\item In-sample agreement with the zeros is achievable at essentially any accuracy by the tested families, and is achieved equally on surrogate targets. In-sample agreement alone is therefore not evidence of captured structure. This is the methodological core, and it is robust: it rests on direct refits, ten draws per surrogate type, and agreement across three surrogate constructions.
+\item The cosine family reaches in-sample rms below $10^{-4}$ at $M=900$ on 500 levels, and in-sample error falls with $M$ in all three bases. The cosine $M=400$ fit reaches the same in-sample accuracy on surrogate targets as on the true zeros. In-sample agreement alone is therefore not evidence of captured structure. This is the methodological core, and it is robust: it rests on direct refits, ten draws per surrogate type, and agreement across three surrogate constructions.
 \item Across the twelve configurations of Table~I, the eight rows of Table~II, and the within-height splits of Table~III, no row shows reproducible held-out skill relative to the null, while a zero-parameter arithmetic formula shows strong skill on the same holdouts.
 \item On a target whose continuation is known exactly (RE2), the tested family under the tested protocol does not continue it.
 \end{itemize}
@@ -762,7 +819,7 @@ print("probe-null", qmnt.rms(qmnt.Nfl(s, [2])))            # App. A: 0.1708
 print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 28.5
 \end{pycode}
 
-\paragraph{Reproducibility record.} Every number in Section~III is regenerated by the scripted pipeline archived on Zenodo \cite{zenodo}, which the author reports rerunning end to end (Appendix~A). The revision computations (steps 16--23) are included in the updated record, and Appendix~A notes that overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical, a direct check that no held-out zero entered the fit.
+\paragraph{Reproducibility record.} Every number in Section~III is regenerated by the scripted pipeline archived on Zenodo \cite{zenodo}, which the author reports rerunning end to end (Appendix~A). The revision computations (steps 16--23) are included in the updated record. For the sinusoidal controls of paper Sec.~IV, Appendix~A step~20 records that overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical. For the operator fits of Section~III the no-leakage argument is different. Paper Eq.~(3) shows that the bias correction carries no zero information, and the residuals are restricted to the training indices (stated explicitly for the within-height splits in step~17).
 
 %======================================================================
 \section{Summary}\label{sec:paper-memorization-summary}
@@ -795,7 +852,7 @@ print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 2
 
 \prob{2}{Use Eq.~\eqref{eq:paper-memorization-decomp} with zero means. (a) If the (scale 1, fit 1--400, $M=600$) row had correlation exactly zero, what amplitude ratio $a=\sigma_p/\sigma_d$ would reproduce OOS rms 0.313 with null 0.263? (b) Repeat with the reported correlation $-0.16$. Compare with the paper's range 0.16--0.62.}
 
-\prob{2}{Apply the coverage law Eq.~\eqref{eq:paper-memorization-coverage} at scale 2 ($L=59.957$) to all 1000 scored levels, using $t_{1000}=1419.42248$ (paper Sec.~II~A). Is $M=900$ above or below the requirement? Is that consistent with the in-sample rms 0.103 of the scale-2 $M=900$ row of Table~I?}
+\prob{2}{Apply the coverage law Eq.~\eqref{eq:paper-memorization-coverage} at scale 2 ($L=59.957$) to all 1000 scored levels, using $t_{1000}=1419.42248$ (paper Sec.~II~A). Is $M=900$ above or below the requirement? The in-sample rms 0.103 of the scale-2 $M=900$ row of Table~I refers to the training zeros 1--800, so repeat the estimate with $t_{800}$ (from \texttt{qmnt.zeros}). Is the in-sample rms consistent with your result?}
 
 \prob{2}{Using Eq.~\eqref{eq:paper-memorization-re2rms}, find the long-run rms of the $m=1$ term of RE2 alone, and the fraction of RE2's mean square carried by that term.}
 
@@ -809,7 +866,7 @@ print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 2
 
 \prob{2}{Within-height kriging scores 0.117 on held-out true zeros, and the operator scores 0.57--0.70 in the same held-out setting (paper Sec.~III). Taking 0.245 as a representative within-height null (the middle of the 0.23--0.26 range of Table~III), compute the relative skill Eq.~\eqref{eq:paper-memorization-skill} of kriging and the factor by which the operator exceeds the null.}
 
-\prob{3}{Best two-neighbor predictor. With the stationary model of the sample problem on neighbor averages, consider $q_n=w\,(d_{n-1}+d_{n+1})$. (a) Find the $w$ that minimizes $\langle(q_n-d_n)^2\rangle$. (b) Show that the resulting correlation with $d_n$ is $|\rho_1|/\sqrt{(1+\rho_2)/2}$, always nonnegative. (c) Evaluate $w$ and the correlation for $\rho_1=-0.29$, $\rho_2=-0.10$. Explain how this resolves the apparent paradox that neighbor averages are anticorrelated while kriging reaches $+0.87$.}
+\prob{3}{Best two-neighbor predictor (an extension of the sample problem; the paper does not compute it). With the stationary model of the sample problem on neighbor averages, consider $q_n=w\,(d_{n-1}+d_{n+1})$. (a) Find the $w$ that minimizes $\langle(q_n-d_n)^2\rangle$. (b) Show that the resulting correlation with $d_n$ is $|\rho_1|/\sqrt{(1+\rho_2)/2}$, always nonnegative. (c) Evaluate $w$ and the correlation for $\rho_1=-0.29$, $\rho_2=-0.10$. Explain why the best two-neighbor predictor is positively correlated with $d_n$ although the plain neighbor average is anticorrelated, and why two neighbors alone cannot account for the kriging value $+0.87$.}
 
 \prob{3}{Prove that phase randomization with the DC and Nyquist terms unchanged preserves the circular autocorrelation $C_\ell=\frac1N\sum_{j}d_jd_{(j+\ell)\bmod N}$ of a real sequence of even length $N$, for every lag $\ell$. (Use the discrete Wiener--Khinchin relation of Chapter~\ref{ch:fourier-transform}.) Does it preserve the ordinary (non-circular) autocorrelation exactly?}
 
@@ -835,7 +892,7 @@ print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 2
 
 \prob{1}{What is the ``probe-null'' of the continuation probe, and by what factor does the fitted operator's held-out rms (0.1958) exceed it? Why does this justify the paper's phrase ``rms worse than predicting zero fluctuation''?}
 
-\prob{3}{Using \texttt{numpy}, implement a within-height odd/even test on the true fluctuations $d_n$, $n\le400$: estimate $\rho_1$ and $\rho_2$ from the odd-indexed values only (use lag-2 pairs to get $\rho_2$, and explain why $\rho_1$ cannot be estimated from odd indices alone without extra assumptions), predict each even-indexed $d_n$ with the best two-neighbor predictor of Problem~13, and compute rms and correlation. Compare with the operator's odd-split rows in Table~III.}
+\prob{3}{Using \texttt{numpy}, implement a within-height odd/even test on the true fluctuations $d_n$, $n\le400$: estimate $\rho_1$ and $\rho_2$ from the odd-indexed values only (use lag-2 pairs among the odd-indexed values to get $\rho_2$; since no two odd indices are one step apart, take $\rho_1$ from the heuristic Eq.~\eqref{eq:paper-memorization-rho1} with $\sigma$ estimated from the odd-indexed values, and discuss what this assumption costs), predict each even-indexed $d_n$ with the best two-neighbor predictor of Problem~13, and compute rms and correlation. Compare with the operator's odd-split rows in Table~III.}
 \end{problemlist}
 
 %======================================================================
@@ -847,11 +904,11 @@ print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 2
 
 \paragraph{Problem 3.} No. An interval entirely below zero indicates that the predictions tend to move opposite to the truth: anti-skill. A useful predictor needs positive correlation and, by Eq.~\eqref{eq:paper-memorization-decomp}, $\rho>a/2$. Caveat: the interval resamples held-out levels independently although they are serially correlated; the block bootstrap would widen it (the paper reports this widening for the cosine row).
 
-\paragraph{Problem 4.} The scale-2 $M=600$ odd and even rows, since $600\ge400$. Saturated means the linearized least-squares problem has at least as many unknowns as equations, so (generically) the training residuals can be driven to zero and there are infinitely many exact solutions; the in-sample error says nothing, and held-out behavior is set by which solution the optimizer reaches.
+\paragraph{Problem 4.} The scale-2 $M=600$ odd and even rows, since $600\ge400$. Saturated means the linearized least-squares problem has at least as many unknowns as equations, so (generically) the training residuals can be driven to zero and there are infinitely many exact solutions; the in-sample error says nothing, and held-out behavior is set by which solution the optimizer reaches. In fact these rows reach only 0.078 and 0.069 in-sample (paper Table~III). Saturation counts unknowns; it does not guarantee that the nonlinear, damped fit reaches zero residual.
 
 \paragraph{Problem 5.} (a) With $\rho=0$ and zero means, $\rms^2=\sigma_d^2(1+a^2)$, so $a=\sqrt{(0.313/0.263)^2-1}=\sqrt{1.4164-1}=0.645$. (b) With $\rho=-0.16$: $(0.313/0.263)^2=1+a^2+0.32a$, so $a^2+0.32a-0.4164=0$ and $a=\tfrac12\left(-0.32+\sqrt{0.1024+1.6655}\right)=0.505$. The second value lies inside the paper's 0.16--0.62; the first is just above it. A negative correlation lets a smaller amplitude produce the same error.
 
-\paragraph{Problem 6.} $M>2L\sqrt E/\pi=2\times59.957\times37.675/\pi=1438$. $M=900$ is below the requirement, so the basis is not complete for all scored levels at scale 2, consistent with an in-sample rms of 0.103 rather than near zero.
+\paragraph{Problem 6.} For all 1000 scored levels, $M>2L\sqrt E/\pi=2\times59.957\times37.675/\pi=1438$. For the in-sample comparison the relevant energy is $t_{800}\approx1184$, with $\sqrt{1184}=34.41$, giving $M>2\times59.957\times34.41/\pi\approx1313$. $M=900$ is below both requirements, so the basis is not complete even for the training levels. That is consistent with an in-sample rms of 0.103 rather than near zero.
 
 \paragraph{Problem 7.} The $m=1$ term alone has rms $\frac1\pi\sqrt{a_1^2/2}=\frac1\pi\cdot\frac12=1/(2\pi)=0.159$. Its share of the mean square is $a_1^2/\sum a_m^2=0.5/0.57639=0.867$, about 87\%.
 
@@ -861,11 +918,11 @@ print("turning band", qmnt.wu_sprung_x(qmnt.zeros(300)[[200, 299]]))  # ~22.5, 2
 
 \paragraph{Problem 12.} Kriging: $S=1-0.117/0.245=+0.52$. Operator: $0.57/0.245=2.33$ to $0.70/0.245=2.86$ times the null. (These depend on taking 0.245 as the null, an assumption stated in the problem.)
 
-\paragraph{Problem 13.} (a) $\langle(q-d)^2\rangle=w^2\cdot2\sigma^2(1+\rho_2)-2w\cdot2\rho_1\sigma^2+\sigma^2$, using $\mathrm{Var}(d_{n-1}+d_{n+1})=2\sigma^2(1+\rho_2)$ and $\mathrm{Cov}(d_{n-1}+d_{n+1},d_n)=2\rho_1\sigma^2$. Setting the derivative in $w$ to zero: $4w\sigma^2(1+\rho_2)-4\rho_1\sigma^2=0$, so $w=\rho_1/(1+\rho_2)$. (b) Correlation of $w(d_{n-1}+d_{n+1})$ with $d_n$ is $\mathrm{sign}(w)\,\rho_1/\sqrt{(1+\rho_2)/2}$, by Eq.~\eqref{eq:paper-memorization-nbrcorr} (multiplying a variable by $w$ multiplies its correlation by the sign of $w$). Since $w$ has the sign of $\rho_1$ (as $1+\rho_2>0$), this equals $|\rho_1|/\sqrt{(1+\rho_2)/2}\ge0$. (c) $w=-0.29/0.90=-0.322$; correlation $0.29/0.6708=0.432$. The best predictor \emph{flips the sign} of the neighbor average. Smooth interpolation assumes neighbors resemble each other; kriging learns from the autocovariance that they do not, and uses that.
+\paragraph{Problem 13.} (a) $\langle(q-d)^2\rangle=w^2\cdot2\sigma^2(1+\rho_2)-2w\cdot2\rho_1\sigma^2+\sigma^2$, using $\mathrm{Var}(d_{n-1}+d_{n+1})=2\sigma^2(1+\rho_2)$ and $\mathrm{Cov}(d_{n-1}+d_{n+1},d_n)=2\rho_1\sigma^2$. Setting the derivative in $w$ to zero: $4w\sigma^2(1+\rho_2)-4\rho_1\sigma^2=0$, so $w=\rho_1/(1+\rho_2)$. (b) Correlation of $w(d_{n-1}+d_{n+1})$ with $d_n$ is $\mathrm{sign}(w)\,\rho_1/\sqrt{(1+\rho_2)/2}$, by Eq.~\eqref{eq:paper-memorization-nbrcorr} (multiplying a variable by $w$ multiplies its correlation by the sign of $w$). Since $w$ has the sign of $\rho_1$ (as $1+\rho_2>0$), this equals $|\rho_1|/\sqrt{(1+\rho_2)/2}\ge0$. (c) $w=-0.29/0.90=-0.322$; correlation $0.29/0.6708=0.432$. The best predictor \emph{flips the sign} of the neighbor average. Smooth interpolation assumes neighbors resemble each other; kriging learns from the autocovariance that they do not, and uses that. For these illustrative values, two neighbors alone give at most this $0.43$. The paper's kriging reaches $+0.87$ by using all training values, with autocovariance to lag 40 (Appendix~A step~19).
 
-\paragraph{Problem 15.} Compute $d_n$ with \texttt{qmnt.fluct}, subtract the mean, and form $\rho_\ell=\sum_n d_nd_{n+\ell}/\sum_nd_n^2$. You should find all three negative, as the paper states (Sec.~III); the CHECKS script verifies the signs. The heuristic Eq.~\eqref{eq:paper-memorization-rho1} gives $\rho_1\approx-0.29$; differences reflect the Wigner surmise approximation and the use of the holdout $\sigma$. Inserting your $\rho_1,\rho_2$ in Eq.~\eqref{eq:paper-memorization-nbrcorr} gives a negative correlation to compare with $-0.26$ to $-0.41$ (the paper's values are measured on held-out subsets with training neighbors, so they need not coincide exactly).
+\paragraph{Problem 15.} Compute $d_n$ with \texttt{qmnt.fluct}, subtract the mean, and form $\rho_\ell=\sum_n d_nd_{n+\ell}/\sum_nd_n^2$. Do this for $\ell=1,2,3$. All three come out negative, as the paper states (Sec.~III). The heuristic Eq.~\eqref{eq:paper-memorization-rho1} gives $\rho_1\approx-0.29$ with the holdout $\sigma=0.263$, and $\rho_1\approx-0.50$ with the in-range value $\sigma=0.2438$ appropriate to zeros 1--400. Your measured $\rho_1$ is the arbiter; its difference from these estimates reflects the Wigner-surmise and stationarity approximations. Because the measured $\rho_1$ is negative and $1+\rho_2>0$, Eq.~\eqref{eq:paper-memorization-nbrcorr} gives a negative neighbor-average correlation to compare with $-0.26$ to $-0.41$ (the paper's values are measured on held-out subsets with training neighbors, so they need not coincide exactly).
 
-\paragraph{Problem 17.} \texttt{qmnt.score(qmnt.oracle\_zeros(n, qmnt.first\_primes(6)), n)} with $n=401,\dots,500$ reproduces the six-prime entry of the 401--500 row of Table~V, 0.074 / $+0.96$; with primes $[2]$ you reproduce the $\{2\}$ entry, 0.198 / $+0.66$. The CHECKS script verifies the six-prime value with an independent implementation.
+\paragraph{Problem 17.} \texttt{qmnt.score(qmnt.oracle\_zeros(n, qmnt.first\_primes(6)), n)} with $n=401,\dots,500$ reproduces the six-prime entry of the 401--500 row of Table~V, 0.074 / $+0.96$; with primes $[2]$ you reproduce the $\{2\}$ entry, 0.198 / $+0.66$.
 
 \paragraph{Problem 19.} (a) Unregularized improvement $0.2438-0.137=0.1068$; at $\mu=0.3$ it is $0.2438-0.206=0.0378$; retained fraction $0.0378/0.1068=0.354$. (b) $0.265-0.263=0.002$ above the null. (c) As $\mu\to\infty$ the ridge filter $\sigma/(\sigma^2+\mu\sigma_1^2)\to0$ for every singular value, so each step vanishes and $c$ stays at 0: the model becomes the unperturbed potential, in-sample rms $\to0.2438$ and OOS rms $\to0.263$. Ridge interpolates between memorizing and doing nothing.
 

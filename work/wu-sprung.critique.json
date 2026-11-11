@@ -1,65 +1,177 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "$s_{201}\\approx400.4$, $s_{300}\\approx542.6$. (Quick check of the first: $\\Nsm(400)=63.66\\log63.66-63.66+0.875\\approx201.6$, close to $200.5$ and slightly high, so $s_{201}$ lies just below $400$",
-  "problem": "The check script fails for s_201 and s_300. The text is also self-contradictory: it says s_201 is about 400.4, then says it lies just below 400. Nsm(400) is about 201.6 versus the target 200.5, so s_201 is near 399 (below 400), not 400.4.",
-  "fix": "Recompute s_201 and s_300 with the script and replace 400.4 and 542.6 everywhere (sample, answer 9, Paper connection, Summary). Redo x(s_201) and the quoted band, and the V(x)≈400--540 remark."
- },
- {
-  "category": "ERROR",
   "severity": "medium",
-  "quote": "$x(s_{201})\\approx22.6$ and $x(s_{300})\\approx28.5$.",
-  "problem": "The check on x(s_201)=22.6 fails because s_201 is wrong. The value is probably nearer 22.5, which would agree with the paper's 22.5.",
-  "fix": "Use the computed value; if it rounds to 22.5, say it matches the paper and drop the 22.6 versus 22.5 discrepancy in the sample, Problem 9 answer and Summary."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "$100/2\\pi=15.915$, $\\log15.915=2.7674$, $\\gap=2\\pi/2.7674=2.270$.",
-  "problem": "The check fails. In fact 100/(2π)=15.9155 and log(15.9155)=2.7675, so one of the quoted digits is off.",
-  "fix": "Use the exact computed values (15.9155, 2.7675, gap about 2.270) and match the check tolerances."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "$t_1/2\\pi=2.24963$, $\\log2.24963=0.81077$; $\\Nsm=2.24963\\times0.81077-2.24963+0.875=0.449$.",
-  "problem": "The check fails on the quoted intermediate digits, so they are inaccurate.",
-  "fix": "Recompute the values to 5 digits with the script and correct them; Nsm(t_1)≈0.449 should be rechecked."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "the first zero lies $0.05$ of a spacing below $s_1$.",
-  "problem": "Nsm(t_1)=0.449 means t_1 is above s_1 by (0.5-0.449) times the local spacing, i.e. t_1 is greater than s_1 (Nsm is increasing). 'Below' is wrong.",
-  "fix": "Say the first zero lies about 0.05 spacings above s_1."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The paper takes $V_0=3.10073\\pi$ as given (it is the value of the Wu--Sprung construction in the literature) and does not derive it",
-  "problem": "This is an unsupported claim about provenance, and it conflicts with the bible's request to check numerically. It is also unclear whether 'WKB levels track s_n' is consistent with a 0.0045 shift. The paper does not say the value comes from the literature.",
-  "fix": "Say only that the paper gives V_0=3.10073π without derivation, and that we do not know its origin."
+  "quote": "then when $M$ approaches $n$ you can make the agreement as good as you like whether or not the potential",
+  "problem": "This contradicts the paper's own numbers. With M=400 coefficients on 400 zeros the in-sample rms is 0.137, and with M=600 on 400 zeros it is 0.064. Machine-level agreement on 500 zeros needs M=900, per the coverage law M*pi/L > 2*sqrt(E). The fit is also nonlinear, so the linear 'underdetermined' argument of the least-squares chapter does not transfer directly.",
+  "fix": "Replace with: 'when M is large enough the agreement can be made as good as you like whether or not the potential knows anything (the paper finds rms 0.137 at M=400 on 400 zeros and below 10^{-4} at M=900 on 500 zeros; the threshold is the coverage law of Chapter~\\ref{ch:fitting}, not simply M=n)'. Present the linear underdetermined result as an analogy only."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Check 2: the true quantum levels. Bohr--Sommerfeld is itself an approximation.",
-  "problem": "The text states that the exact levels track s_n and that the max deviation is below 0.1 (the paper's 0.063), but the chapter's own numerics are never reported. The student sees no actual numbers from the code.",
-  "fix": "Report the computed mean and max deviation from the CHECKS run, and note the comparison with the paper's 0.005/0.063."
+  "quote": "Run the Abel equation forward for the potential defined by",
+  "problem": "The claim that the well defined by Eq. (2) has phase integral pi[Nsm(E)-Nsm(V0)] is asserted, not derived. Steps A to G only show that a solution of the Abel equation must be given by the inversion formula. They do not show the converse, that the formula's x(V) reproduces a Phi with the prescribed derivative.",
+  "fix": "Add the argument. Let Phi_WS be the true phase integral of the well x(V). It satisfies Phi_WS(V0)=0, so Steps A to G give x(W)=(1/pi) int Phi_WS'(E)/sqrt(W-E) dE. By construction x(W)=(1/pi) int pi*Nsm'(E)/sqrt(W-E) dE. Subtracting, D(E)=Phi_WS'-pi*Nsm' satisfies int_{V0}^{W} D(E)/sqrt(W-E) dE=0 for all W. Applying Steps A to D to this equation gives int_{V0}^{W} D dE=0 for all W, hence D=0. Then integrate from V0."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "A correction $\\delta V$ near position $x$ affects mainly levels that turn near $x$",
+  "problem": "This overstates locality. The first-order shift is the integral of |psi_n|^2 delta V, and every level with turning point beyond x has non-negligible weight at x (WKB density proportional to 1/sqrt(E-V)). A correction in the band 22.5 to 28.5 therefore also shifts training levels 301 to 500. Only levels turning inside x are insensitive. The simplified picture makes the paper's interpolation-gap result look easier than it is.",
+  "fix": "Rewrite: 'A correction near x affects all levels whose turning points lie at or beyond x, most strongly those turning near x, and hardly at all the levels that turn well inside x (their wavefunctions are exponentially small there).' Adjust the following sentence and the corresponding key idea to match."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing",
+  "problem": "This is stated without qualification, but the paper reports a maximum deviation of 0.063 spacings and the chapter's own run gives 0.052. Only the mean, or the high levels such as 401 to 500, are at the level of thousandths. The answer to Problem 11 repeats the same statement.",
+  "fix": "Write 'to within a few thousandths of a spacing on average (and at the high levels 401--500 that matter for the holdout; the maximum, 0.063, occurs at the lowest levels)'. Make the same change in the answer to Problem 11."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "connected the fractal corrections to the primes and extended the fits",
+  "problem": "This goes beyond what the paper says about van Zyl and Hutchinson, which is only that they 'extended the fractal fits'. It is also not an accurate summary of that work, which built an analogous potential for the primes themselves. The next sentences claim 'We describe these works only to the extent the paper does', which this contradicts.",
+  "fix": "Replace with 'Van Zyl and Hutchinson \\cite{vanzyl} and Slater \\cite{slater} extended the fractal fits', as the paper's Sec. I A a does."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The corrections they found were very irregular, with structure on every scale they examined",
+  "problem": "This specific description of Wu and Sprung's findings is not in the paper and is not supported by any computation in the chapter. It conflicts with the stated policy of describing these works only as far as the paper does.",
+  "fix": "Soften to 'They described the fitted potential as fractal (hence their title)', or mark the sentence explicitly as a description taken from the original article \\cite{wusprung}."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "so evenness is the assumption that makes the inverse problem well posed, and it is kept for the corrections too",
+  "problem": "This attributes a motivation to the paper that the paper never states. The paper only says 'V even' and 'even correction delta V'. Evenness alone also does not make the fitted problem well posed: the corrected potential is non-monotone, and the paper's point is that many different delta V fit equally well.",
+  "fix": "Rephrase: 'The paper does not state why it restricts to even corrections; a natural reading, from Section~\\ref{sec:wu-sprung-inverse}, is that the semiclassical spectrum cannot distinguish left from right, so odd parts of delta V are not constrained by the levels. Evenness does not by itself make the fitted problem unique.'"
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "The CHECKS script confirms this for $n=1,\\dots,500$ to better than $10^{-6}$",
+  "problem": "The CHECKS script tests only n = 1, 2, 10, 100, 250 and 500, not all 500 levels. The text also refers the reader to a 'CHECKS script', a production artifact the reader of the book does not have.",
+  "fix": "Either loop over all n in CHECKS, or write 'a numerical evaluation at n=1, 2, 10, 100, 250, 500 confirms this to better than 10^{-6} (Problem 13 asks you to do all 500)'. Remove the words 'CHECKS script' from the reader-facing text."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "(You can check it numerically: in the CHECKS script the integral with $V=2$, $W=5$ returns $\\pi$ to ten digits.)",
-  "problem": "The reader cannot see the CHECKS script. The book should show a visible snippet or state the check in the text.",
-  "fix": "Replace it with an explicit numerical value or a pycode listing."
+  "quote": "Step 3: precise evaluation} (CHECKS script): $x(1000)=44.883$",
+  "problem": "Reader-facing text again cites the internal CHECKS script, which is not part of the book.",
+  "fix": "Replace '(CHECKS script)' with '(carrying more digits, or with \\texttt{qmnt.L\\_of})'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "$\\frac{b+a}{b-a}=\\frac{63.091}{0.1546}$, whose log is about $6.012$",
+  "problem": "The denominator is wrong. b-a = V0/(b+a) = 9.7412/63.091 = 0.1544 (to full precision 31.6228-31.4684). The value 0.1546 matches neither that nor the rounded difference 0.155. The log is then 6.0128, not 6.0115. These intermediate numbers are not asserted in CHECKS.",
+  "fix": "Use b-a=0.1544 and log=6.013, giving pi*x=-49.14+190.14=141.00 and x=44.88. Add assertions for a, b, b-a and the log to CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The run gives a mean deviation below $0.02$ spacings and a maximum deviation below $0.1$ spacings",
+  "problem": "The run actually gives mean 0.0044 and max 0.052. Quoting bounds four to five times looser hides how close the result is to the paper's 0.005/0.063, and that the mean essentially equals the WKB offset 0.0045. It is also not said whether 'mean' is signed (as computed) or mean absolute (as the paper's 0.005 may be).",
+  "fix": "Quote the values: 'our run gives a signed mean of 0.004 and a maximum |deviation| of 0.05 spacings (paper: 0.005 and 0.063; last digits depend on interpolation details)'. State explicitly which mean is meant, and tighten the CHECKS assertions accordingly."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The paper's value corresponds to $y=3.10073/2=1.550365$",
-  "problem": "There is no justification for preferring the paper's V_0 to the self-consistent root, and the chapter still calls the root 'where V_0 comes from'. It is also unclear why levels deviate by 0.0045 yet the paper reports mean 0.005.",
-  "fix": "State plainly that the paper's V_0 differs slightly from the consistent root and that the chapter derives only the approximate origin."
+  "quote": "We ran this computation with the potential taken from a fine table of",
+  "problem": "The printed listing computes V with qmnt.wu_sprung_V at each grid point, but the text says the reported run used an interpolated table. The reader running the listing is not running what was reported.",
+  "fix": "Make the listing and the description agree: either show the table and np.interp version, or state that both variants were run and agree to the digits quoted."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "We compute them with the finite-difference method of Chapter~\\ref{ch:finite-differences}",
+  "problem": "Chapter 23 comes after this chapter and is not in its 'Assumes' list (Ch. 11--12, 17, 21). The O(h^2) error and the Richardson formula are used without derivation. The prerequisites box also omits chapters that are actually used: schrodinger, series (log series), eigen (tridiagonal solver) and explicit-formula.",
+  "fix": "Mark this explicitly as a forward reference ('developed later in Chapter 23; here taken on trust') inside a beyond box that states what is assumed (second-difference matrix, O(h^2) error, Richardson formula). Add the missing chapters to the prerequisites list."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the second is differentiation under the integral sign, proved in",
+  "problem": "Leibniz's rule is stated with a partial derivative, which a reader with only single-variable calculus has not met. The continuity hypothesis on Phi' is stated but never checked for the Phi in use.",
+  "fix": "Add one sentence defining the partial derivative with respect to W (differentiate with respect to W holding u fixed). Note that Phi'(E)=(1/2)log(E/2pi) is continuous on [V0,W], so the hypothesis holds for the Riemann target, and place the appeal to \\cite{rhb} in a beyond box."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "$V_0$ is set by the consistency condition $\\Nsm(V_0)=0$: no levels below the floor.",
+  "problem": "The paper's value 3.10073*pi does not satisfy this condition (the root is 3.0803*pi, as the chapter itself shows). The key idea, the summary and the Paper connection ('explains what fixes V0') present the condition as what fixes the paper's constant, although the text admits its origin is unknown.",
+  "fix": "Say consistently: 'The natural consistency condition is Nsm(V0)=0, with root 3.0803*pi; the paper's 3.10073*pi is close to but not equal to this root, and its exact origin is not derived here.' Apply the same wording in the Summary and the Paper connection."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "yet predicts every zero to within about a quarter spacing",
+  "problem": "0.26 is an rms value, not a bound. Individual zeros can deviate from s_n by considerably more than a quarter spacing.",
+  "fix": "Write 'predicts the zeros with an rms error of about a quarter spacing'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "A change there costs nothing on levels 1--500.",
+  "problem": "The wavefunctions of levels just below 500 have exponentially small but nonzero tails in 40<x<44, so the cost is tiny rather than zero.",
+  "fix": "Write 'costs almost nothing (only through exponentially small tails) on levels 1--500'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Sec.~V states that the $p=2$ oscillation, period",
+  "problem": "The paragraph heading reads 'Sec. V A and ...', but the quoted sentence is in the main text of Sec. V (paragraph 'The proposed mechanism fails quantitatively'), not in Sec. V A. Problem 14 also uses t=500 without noting that the paper's 'these heights' refers to zeros 1 to 400.",
+  "fix": "Rename the heading 'Sec. V (p=2 period remark)'. In Problem 14 add a note that zeros 1--400 span t up to about 680."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "about $0.05\\%$ low",
+  "problem": "Several stated numbers are not asserted in CHECKS: this 0.05% figure, s_500 approx 811, and the intermediate values of the box-size sample (31.468, 31.623, 6.012, -49.14, 190.1). x(1500) is checked, but only through the local formula, not against qmnt.",
+  "fix": "Add assertions for each of these: the relative error (44.883-44.86)/44.883, sn(500) approx 811.5, the intermediates, and qmnt.L_of(1500)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "matching $2I_1E^{3/2}$ with $I_1=\\frac23$",
+  "problem": "Symbols are reused. I_1 is both I_alpha at alpha=1 (=2/3) and the integral of log(b+u) in the Abel evaluation. w is both the width function and the integration variable in 'w log w - w'. beta is both the lopsidedness parameter and the Leibniz upper limit. a is both the translation shift and sqrt(V-V0).",
+  "fix": "Rename the three log integrals to L_1, L_2, L_3. Use z log z - z for the antiderivative. Call the Leibniz upper limit g(W). Use x_0 for the translation shift."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "sample $V$ on a uniform grid of $N$ interior points",
+  "problem": "N here is the grid size, while N(E) and Nsm are counting functions in the same chapter. The bible asks that this overloading be pointed out where relevant.",
+  "fix": "Add a parenthesis: '(this grid size N is not the counting function N(E); the paper uses the same letter for both)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The Riemann target does not care about this detail",
+  "problem": "This is a non sequitur for a student. It is unclear what 'does not care' means or why WKB inaccuracy at low levels makes the harmonic bottom unimportant.",
+  "fix": "Replace with: 'This harmonic bottom is a by-product of the semiclassical construction. Only the lowest few levels are sensitive to it, and those are the levels for which Bohr--Sommerfeld, and hence the construction, is least accurate (the paper's maximum residual 0.063 occurs there).'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Bohr--Sommerfeld becomes exact only as $n\\to\\infty$",
+  "problem": "This is stated as fact without qualification. For the harmonic well Bohr--Sommerfeld is exact for all n, as the chapter itself showed. In general it is asymptotically accurate, a result quoted from the WKB chapter, not proved here.",
+  "fix": "Write 'Bohr--Sommerfeld is in general only asymptotically accurate, improving as n grows (Chapter~\\ref{ch:wkb}); the harmonic well is a special case where it is exact'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and $f\\to0$ as $y\\to0^+$ while",
+  "problem": "The limit of y log y as y tends to 0+ is used without justification, and the count of 'exactly two roots' depends on it.",
+  "fix": "Add: 'y log y tends to 0 as y tends to 0+ (put y=e^{-u}; then y log y = -u e^{-u}, which tends to 0 as u tends to infinity)'. Then state monotonicity on each side of y=1 to conclude there is exactly one root per side."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "just slower than harmonic, by a logarithm",
+  "problem": "V grows like (x/log x)^2, so it is slower than x^2 by the square of a logarithm. It is x(V) that exceeds the harmonic chord by a single logarithm. The same phrase recurs in the key ideas.",
+  "fix": "Write 'slower than harmonic by a factor (log x)^2 (equivalently, the chord x(V) is wider than the harmonic one by one logarithm)'."
  }
 ]

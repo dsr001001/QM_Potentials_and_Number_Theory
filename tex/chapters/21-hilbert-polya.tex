@@ -1,7 +1,7 @@
 \chapter{The Hilbert--P\'olya Dream}\label{ch:hilbert-polya}
 
 \begin{chapterintro}
-Suppose someone hands you the list $14.134725$, $21.022040$, $25.010858$, $30.424876,\dots$ and tells you two things. First, these numbers are the heights $t_n$ of the nontrivial zeros of the Riemann zeta function, a function built entirely out of the prime numbers. Second, the gaps between them repel one another statistically in exactly the way the energy levels of a chaotic quantum system do. As a physicist, you would ask at once: \emph{which} quantum system? What Hamiltonian has these numbers as its energy levels? The hope that such a Hamiltonian exists, and that it is self-adjoint, is called the Hilbert--P\'olya conjecture. If someone found it and proved that its spectrum is exactly the list of zeros, the Riemann hypothesis would follow in two lines. Nobody has found it. The conjecture is open, and so is the Riemann hypothesis.
+Suppose someone hands you the list $14.134725$, $21.022040$, $25.010858$, $30.424876,\dots$ and tells you two things. First, these numbers are the heights $t_n$ of the nontrivial zeros of the Riemann zeta function, a function built entirely out of the prime numbers. Second, the gaps between them are observed numerically to follow, very closely, the statistics of the energy levels of a chaotic quantum system without time-reversal symmetry (GUE statistics, Chapter~\ref{ch:level-statistics}). As a physicist, you would ask at once: \emph{which} quantum system? What Hamiltonian has these numbers as its energy levels? The hope that such a Hamiltonian exists, and that it is self-adjoint, is called the Hilbert--P\'olya conjecture. If someone found it and proved that its spectrum is exactly the list of zeros, the Riemann hypothesis would follow in two lines. Nobody has found it. The conjecture is open, and so is the Riemann hypothesis.
 
 This chapter explains what the conjecture says and why it would settle the Riemann hypothesis; why physicists find it plausible (the resemblance between the explicit formula of Chapter~\ref{ch:explicit-formula} and the trace formulas of quantum chaos, in which periodic orbits play the role of primes); the simplest concrete attempt, the Berry--Keating Hamiltonian $H=xp$, whose semiclassical level count reproduces the smooth counting function $\Nsm$ to leading order; and the more recent operator proposals. We end by separating two very different research programs: the \emph{analytic} one, which specifies an operator first and then predicts zeros, and the \emph{empirical} one, which fits an operator to zeros that are already known.
 
@@ -15,6 +15,7 @@ Where this shows up in the paper: the first sentence of Sec.~I of the paper \cit
 \item Chapter~\ref{ch:explicit-formula}: the truncated explicit formula $\Nfl(t)$ of paper Eq.~(4), its heuristic status, and the idea that prime powers act as frequencies $m\log p$ in $t$.
 \item Chapter~\ref{ch:level-statistics}: nearest-neighbor spacings, GUE statistics, and the link between real symmetric matrices (GOE) and complex Hermitian matrices (GUE).
 \item Through those chapters: complex numbers and $a^s=e^{s\log a}$ (Chapter~\ref{ch:complex}), Fourier series (Chapter~\ref{ch:fourier-series}), eigenvalues of $2\times2$ matrices (Chapter~\ref{ch:eigen}).
+\item Chapters~\ref{ch:bound-states} and \ref{ch:wkb} are referred to for context only. The few results quoted from them (harmonic-oscillator levels, the WKB phase at a turning point) are stated where they are used, and nothing here depends on their derivations.
 \item First-year physics: energy conservation, potential-energy curves and turning points, the period of an oscillation, standing waves on a string.
 \end{prerequisites}
 
@@ -72,11 +73,10 @@ For $\bar\rho=\sigma-i\tau$, Eq.~\eqref{eq:hilbert-polya-tcomplex} with $\tau\to
 
 \subsection{The conjecture}
 
-\begin{beyond}
-\textbf{Hilbert--P\'olya conjecture (open).} There exists a self-adjoint operator $H$, acting on some space of functions, whose eigenvalues are exactly the numbers $t$ of Eq.~\eqref{eq:hilbert-polya-tdef}, one for each nontrivial zero of $\zeta$, counted with multiplicity.
+\medskip\noindent\textbf{Conjecture (Hilbert--P\'olya; open).} There exists a self-adjoint operator $H$, acting on some space of functions, whose eigenvalues are exactly the numbers $t$ of Eq.~\eqref{eq:hilbert-polya-tdef}, one for each nontrivial zero of $\zeta$, counted with multiplicity.
 
 \emph{Status:} conjecture. No such operator is known. Neither Hilbert nor P\'olya published the idea; it is known through later recollections, and its history and the many attempts to realize it are reviewed in \cite{schumayer}. The statement is also deliberately vague about \emph{which} space of functions and \emph{which} operator: making it precise is part of the problem.
-\end{beyond}
+\medskip
 
 Why would such an operator prove RH? The argument has two links.
 
@@ -114,7 +114,7 @@ Chaining the links: if every $t$ is an eigenvalue of a self-adjoint $H$, every $
 \begin{checkpoint}
 Does a matrix need to be Hermitian in order to have only real eigenvalues? Think of the upper-triangular matrix $\begin{pmatrix}1&1\\0&2\end{pmatrix}$.
 \end{checkpoint}
-\checkanswer{No. That matrix is not Hermitian (its $(1,2)$ and $(2,1)$ entries are $1$ and $0$), yet its eigenvalues are its diagonal entries $1$ and $2$, both real. Hermiticity is sufficient for real eigenvalues, not necessary. This is why some operator proposals (Section~\ref{sec:hilbert-polya-proposals}) try non-Hermitian operators with other symmetries.}
+\checkanswer{No. That matrix is not Hermitian (its $(1,2)$ and $(2,1)$ entries are $1$ and $0$), yet its characteristic polynomial is $(1-\lambda)(2-\lambda)-1\cdot0=(1-\lambda)(2-\lambda)$, with roots $1$ and $2$, both real. Hermiticity is sufficient for real eigenvalues, not necessary. This is why some operator proposals (Section~\ref{sec:hilbert-polya-proposals}) try non-Hermitian operators with other symmetries.}
 
 \subsection{The infinite-dimensional subtlety}
 
@@ -152,10 +152,10 @@ Suppose you were designing the operator. Besides self-adjointness, the facts col
 \begin{enumerate}
 \item \textbf{The right average density.} The number of eigenvalues below $E$ must grow like $\Nsm(E)=\frac{E}{2\pi}\log\frac{E}{2\pi}-\frac{E}{2\pi}+\frac78$ (paper Eq.~(1), Chapter~\ref{ch:counting-zeros}). This is unusual: a particle in a box has $N(E)\propto\sqrt E$, an oscillator has $N(E)\propto E$; the zeros grow like $E\log E$.
 \item \textbf{The right fluctuations.} The deviation of the true count from $\Nsm$ must reproduce the prime-power oscillations of the explicit formula (Chapter~\ref{ch:explicit-formula}). Section~\ref{sec:hilbert-polya-trace} develops what this suggests.
-\item \textbf{The right statistics.} Unfolded spacings follow GUE statistics (Chapter~\ref{ch:level-statistics}; paper Fig.~2). In random-matrix theory, complex Hermitian matrices (GUE) model systems \emph{without} time-reversal symmetry, while real symmetric matrices (GOE) model systems \emph{with} it. If the zeros are the spectrum of a chaotic quantum system, the heuristic reading is that its Hamiltonian is not time-reversal invariant.
+\item \textbf{The right statistics.} Unfolded spacings are observed numerically to follow GUE statistics closely (a numerical observation, supported by Montgomery's partial theoretical result; Chapter~\ref{ch:level-statistics}; paper Fig.~2). In random-matrix theory, complex Hermitian matrices (GUE) model systems \emph{without} time-reversal symmetry, while real symmetric matrices (GOE) model systems \emph{with} it. If the zeros are the spectrum of a chaotic quantum system, the heuristic reading is that its Hamiltonian is not time-reversal invariant.
 \end{enumerate}
 
-\paragraph{Time reversal, concretely.} Run a film of a classical motion backward: each position is unchanged, each velocity (hence momentum) is reversed. So time reversal acts as $x\to x$, $p\to-p$. A classical Hamiltonian $H(x,p)$ is time-reversal invariant if $H(x,-p)=H(x,p)$. For $H=p^2+V(x)$ (our units, $2m=1$) this holds, because $(-p)^2=p^2$. In quantum mechanics, for a particle without spin, time reversal acts on wavefunctions by complex conjugation, $\psi\to\bar\psi$. If $V$ is real, then $H=-\dd^2/\dd x^2+V$ has real coefficients, and taking the complex conjugate of $H\psi=E\psi$ (with $E$ real) gives $H\bar\psi=E\bar\psi$: the conjugate of a solution is again a solution. In matrix form, a real potential on a grid gives a real symmetric matrix (Chapter~\ref{ch:eigen}), the GOE symmetry class.
+\paragraph{Time reversal, concretely.} Run a film of a classical motion backward: each position is unchanged, each velocity (hence momentum) is reversed. So time reversal acts as $x\to x$, $p\to-p$. A classical Hamiltonian $H(x,p)$ is time-reversal invariant if $H(x,-p)=H(x,p)$. For $H=p^2+V(x)$ (our units, $2m=1$) this holds, because $(-p)^2=p^2$. In quantum mechanics, for a particle without spin, time reversal acts on wavefunctions by complex conjugation, $\psi\to\bar\psi$. Here is why conjugation is the right operation. The plane wave $e^{ikx}$ has momentum $p=k$. Its conjugate $e^{-ikx}$ has momentum $-k$, so conjugation reverses the momentum. More generally, $\hat p=-i\,\dd/\dd x$ contains an explicit $i$. Therefore $\overline{\hat p\psi}=\overline{-i\psi'}=i\bar\psi'=-\hat p\bar\psi$, while multiplication by $x$ is unchanged by conjugation. Conjugation thus keeps $x$ and flips $p$, exactly as the backward film does. If $V$ is real, then $H=-\dd^2/\dd x^2+V$ has real coefficients, and taking the complex conjugate of $H\psi=E\psi$ (with $E$ real) gives $H\bar\psi=E\bar\psi$: the conjugate of a solution is again a solution. In matrix form, a real potential on a grid gives a real symmetric matrix (Chapter~\ref{ch:eigen}), the GOE symmetry class.
 
 \begin{pitfall}
 Do not conclude from item 3 that ``the zeros are not the spectrum of any real potential.'' The random-matrix heuristic is about \emph{generic chaotic} systems. A one-dimensional system $p^2+V(x)$ is not chaotic at all (Section~\ref{sec:hilbert-polya-trace}), so the heuristic simply does not apply to it, and, as the next Sample Problem shows, any finite list of real numbers can be the spectrum of a real symmetric matrix. Statistics constrain natural operators, not fitted ones.
@@ -242,7 +242,7 @@ N(E)\approx\frac{\text{area of }\{(x,p):H(x,p)\le E\}}{2\pi\hbar}.
 From now on $\hbar=1$, so each state occupies area $2\pi$. (The area rule needs only $\hbar=1$, which the paper's units $\hbar=2m=1$ include. The paper's second convention, $2m=1$, is a separate matter: it makes $H=p^2+V$, which changes the shape of the region $H\le E$ but not the rule ``area divided by $2\pi$.'')
 
 \begin{sample}{Counting states in the paper's box}
-Use RE3: an infinite well on $[-L,L]$ with $L=44.883$, in units $\hbar=2m=1$, so $E=p^2$. Estimate the number of states with $E\le1000$ by Eq.~\eqref{eq:hilbert-polya-weyl}, and compare with the exact count from $E_k=(k\pi/2L)^2$.
+Use RE3: an infinite well on $[-L,L]$ with $L=44.883$, in units $\hbar=2m=1$, so $E=p^2$. Estimate the number of states with $E\le1000$ by Eq.~\eqref{eq:hilbert-polya-weyl}, and compare with the exact count from $E_k=(k\pi/2L)^2$ (the squares of the allowed momenta $p_k=\pi k/\ell$ derived above, with $\ell=2L$ and $\hbar=1$).
 
 \textbf{Step 1:} With $E=p^2$, the bound $E\le1000$ means $\abs p\le P=\sqrt{1000}=31.6228$.
 
@@ -252,7 +252,7 @@ Use RE3: an infinite well on $[-L,L]$ with $L=44.883$, in units $\hbar=2m=1$, so
 \[
 \boxed{N_{\rm rule}\approx903.57,\qquad N_{\rm exact}=903}
 \]
-For comparison, when the Wu--Sprung potential is placed in this same box, it pushes the levels up and only about $650$ remain below $1000$: the paper reports 652 basis states with $E\le1000$ for its discretized smooth potential (Sec.~II~E). That potential was built so that its semiclassical count follows $\Nsm(E)$ (Chapter~\ref{ch:wu-sprung}); the value $\Nsm(1000)\approx648.62$ is computed in a Sample Problem of Section~\ref{sec:hilbert-polya-xp}. A difference of a few levels between 652 and $\Nsm(1000)$ is to be expected: the construction matches $\Nsm$ only semiclassically, which is a statement about the count to within order one level, not an exact one.
+For comparison, when the Wu--Sprung potential is placed in this same box, it pushes the levels up and only about $650$ remain below $1000$: the paper reports 652 basis states with $E\le1000$ for its discretized smooth potential (Sec.~II~E). That potential was built so that its semiclassical count follows $\Nsm(E)$ (Chapter~\ref{ch:wu-sprung}); the value $\Nsm(1000)\approx648.62$ is computed in a Sample Problem of Section~\ref{sec:hilbert-polya-xp}. The difference of about three levels between 652 and $\Nsm(1000)$ is plausibly mainly a discretization effect. The 652 states are eigenvalues of a finite-difference matrix, and finite-difference levels lie below the continuum ones by an amount that grows with level index (Chapter~\ref{ch:finite-differences}). The paper reports that on its working grid this dispersion already reaches about two mean spacings at levels 401--500 (Sec.~II~C). The paper's Richardson-extrapolated levels, by contrast, match the smooth zeros to within $0.063$ spacings (Sec.~II~B).
 \end{sample}
 
 \begin{checkpoint}
@@ -268,7 +268,18 @@ Two facts about closed orbits will be used repeatedly. Let $A(E)$ be the phase-s
 \begin{equation}
 A(E)=2\int_{x_1(E)}^{x_2(E)}\sqrt{E-V(x)}\,\dd x .
 \end{equation}
-Differentiate with respect to $E$. The limits depend on $E$, but the integrand vanishes at both limits ($V=E$ there), so the boundary contributions vanish and only the derivative of the integrand survives:
+Differentiate with respect to $E$. Both the limits and the integrand depend on $E$, so we need the rule for differentiating such an integral (the Leibniz rule):
+\begin{equation}
+\frac{\dd}{\dd E}\int_{a(E)}^{b(E)}g(x,E)\,\dd x=g(b,E)\,b'(E)-g(a,E)\,a'(E)+\int_{a}^{b}\frac{\partial g}{\partial E}\,\dd x .
+\label{eq:hilbert-polya-leibniz}
+\end{equation}
+Here is where it comes from. Write $F(a,b,E)=\int_a^b g(x,E)\,\dd x$.
+\begin{itemize}
+\item By the fundamental theorem of calculus, $\partial F/\partial b=g(b,E)$ and $\partial F/\partial a=-g(a,E)$.
+\item Differentiating under the integral sign gives $\partial F/\partial E=\int_a^b(\partial g/\partial E)\,\dd x$. We take this step on trust; it holds for the integrands met here and is stated in \cite{rhb}.
+\item The chain rule for $F(a(E),b(E),E)$ adds the three contributions, which gives Eq.~\eqref{eq:hilbert-polya-leibniz}.
+\end{itemize}
+Apply the rule with $g=\sqrt{E-V(x)}$, $a=x_1(E)$ and $b=x_2(E)$. The integrand vanishes at both limits ($V=E$ there), so the two boundary terms are zero and only the derivative of the integrand survives:
 \begin{equation}
 \frac{\dd A}{\dd E}=2\int_{x_1}^{x_2}\frac{1}{2\sqrt{E-V(x)}}\,\dd x=\int_{x_1}^{x_2}\frac{\dd x}{\sqrt{E-V(x)}} .
 \end{equation}
@@ -292,7 +303,7 @@ The most compelling reason physicists take the Hilbert--P\'olya idea seriously i
 
 \subsection{A trace formula you can verify: equally spaced levels}
 
-Take the equally spaced spectrum $E_k=k-\tfrac12$, $k=1,2,3,\dots$ This is the harmonic-oscillator spectrum $(k-\tfrac12)\hbar\omega$ in units where $\hbar\omega=1$ (Chapter~\ref{ch:bound-states}). Its counting function $N(E)$, the number of levels with $E_k\le E$, is a staircase that jumps by 1 at $E=\tfrac12,\tfrac32,\tfrac52,\dots$ For $E\ge0$, $N(E)=\lfloor E+\tfrac12\rfloor$, where $\lfloor y\rfloor$ is the integer part (``floor'') of $y$.
+Take the equally spaced spectrum $E_k=k-\tfrac12$, $k=1,2,3,\dots$ This is the harmonic-oscillator spectrum $(k-\tfrac12)\hbar\omega$ in units where $\hbar\omega=1$. We quote these levels; they are derived in Chapter~\ref{ch:bound-states}. Nothing below depends on that derivation, since the trace formula is worked out for the list $E_k=k-\tfrac12$ itself. Its counting function $N(E)$, the number of levels with $E_k\le E$, is a staircase that jumps by 1 at $E=\tfrac12,\tfrac32,\tfrac52,\dots$ For $E\ge0$, $N(E)=\lfloor E+\tfrac12\rfloor$, where $\lfloor y\rfloor$ is the integer part (``floor'') of $y$.
 
 We now write this staircase as ``smooth part plus oscillations,'' exactly as $N(t)=\Nsm(t)+S(t)$ in Chapter~\ref{ch:counting-zeros}. Write $\{y\}=y-\lfloor y\rfloor$ for the fractional part. Then $\lfloor y\rfloor=y-\{y\}=y-\tfrac12-\left(\{y\}-\tfrac12\right)$. The function $f(y)=\{y\}-\tfrac12$ is the sawtooth, periodic with period 1. Its Fourier series (Chapter~\ref{ch:fourier-series}) on $0<y<1$ has coefficients
 \begin{align}
@@ -302,8 +313,10 @@ for $r\ge1$ (the Fourier coefficients for a function of period 1, Chapter~\ref{c
 \begin{equation}
 \int_0^1 y\sin(2\pi ry)\,\dd y=\left[-\frac{y\cos(2\pi ry)}{2\pi r}\right]_0^1+\int_0^1\frac{\cos(2\pi ry)}{2\pi r}\,\dd y=-\frac{1}{2\pi r}+0,
 \end{equation}
-so $b_r=-1/(\pi r)$. For $a_r$, integration by parts gives $\left[(y-\tfrac12)\sin(2\pi ry)/(2\pi r)\right]_0^1-\int_0^1\sin(2\pi ry)\dd y/(2\pi r)=0-0$. \begin{beyond}
-The sawtooth jumps at every integer. We take on trust Dirichlet's theorem (proof in \cite{rhb}): the Fourier series of a piecewise-smooth periodic function converges to the function at every point where the function is continuous, and to the midpoint of the jump at a discontinuity, with the Gibbs overshoot nearby (Chapter~\ref{ch:fourier-series}).
+so $b_r=-1/(\pi r)$. For $a_r$, integration by parts gives $\left[(y-\tfrac12)\sin(2\pi ry)/(2\pi r)\right]_0^1-\int_0^1\sin(2\pi ry)\dd y/(2\pi r)=0-0$, so $a_r=0$ for all $r\ge1$.
+
+\begin{beyond}
+The sawtooth jumps at every integer. We take on trust Dirichlet's theorem (stated in \cite{rhb}; the proof is found in standard texts on Fourier analysis): the Fourier series of a piecewise-smooth periodic function converges to the function at every point where the function is continuous, and to the midpoint of the jump at a discontinuity, with the Gibbs overshoot nearby (Chapter~\ref{ch:fourier-series}).
 \end{beyond}
 Hence, at every non-integer $y$,
 \begin{equation}
@@ -346,7 +359,7 @@ Evaluate the oscillating sum of Eq.~\eqref{eq:hilbert-polya-osctrace} at $E=\tfr
 \]
 At $x=1$ the series becomes the Leibniz bracket, and $\arctan 1=\pi/4$.
 \begin{beyond}
-Two steps are taken on trust here: integrating a power series term by term inside its interval of convergence, and passing to the endpoint $x=1$, where the series still converges (Abel's theorem: if a power series converges at an endpoint of its interval, its sum there is the limit of the function). See \cite{rhb} and standard analysis texts. Numerically, two million terms of the Leibniz series agree with $\pi/4=0.785398$ to six decimal places.
+Two steps are taken on trust here: integrating a power series term by term inside its interval of convergence, and passing to the endpoint $x=1$, where the series still converges (Abel's theorem: if a power series converges at an endpoint of its interval, its sum there is the limit of the function). Abel's theorem and term-by-term integration are stated in \cite{rhb}; proofs are in standard real-analysis texts. Numerically, two million terms of the Leibniz series agree with $\pi/4=0.785398$ to six decimal places.
 \end{beyond}
 So
 \[
@@ -357,12 +370,12 @@ N\!\left(\tfrac94\right)=\tfrac94+\frac1\pi\left(-\frac\pi4\right)=\tfrac94-\tfr
 \[
 \boxed{N(9/4)=2;\quad \text{partial sums }1.931690,\ 2.037793,\ 1.974131}
 \]
-The partial sums oscillate around 2 and approach it slowly. Orbit sums of this kind converge only conditionally, if at all; this foreshadows the convergence issues of Chapter~\ref{ch:explicit-formula}.
+The partial sums oscillate around 2 and approach it slowly. Orbit sums of this kind converge only conditionally, if at all; this echoes the convergence issues you met in Chapter~\ref{ch:explicit-formula}.
 \end{sample}
 
 \subsection{Gutzwiller's trace formula}
 
-For a chaotic system there is no single orbit family; at each energy there are infinitely many isolated periodic orbits, each unstable. Gutzwiller found the generalization of Eq.~\eqref{eq:hilbert-polya-osctrace}.
+For a chaotic system there is no single orbit family; at each energy there are infinitely many isolated periodic orbits, each unstable. Gutzwiller found the analogous formula for chaotic systems. It has the same structure (a smooth term plus a sum over orbits and their repetitions), but it is asymptotic rather than exact. Each orbit also carries a stability factor that has no counterpart in Eq.~\eqref{eq:hilbert-polya-osctrace}.
 
 \begin{beyond}
 \textbf{Gutzwiller's trace formula} (an asymptotic approximation for small $\hbar$, derived by the stationary-phase method; derivation beyond this book, see \cite{gutzwiller}). For a quantum system with two degrees of freedom (for example a particle moving in a plane, so that phase space is four-dimensional) whose classical limit is chaotic with isolated unstable periodic orbits, the level count is approximately
@@ -370,14 +383,14 @@ For a chaotic system there is no single orbit family; at each energy there are i
 N(E)\approx\bar N(E)+\frac1\pi\sum_{\gamma}\sum_{r=1}^\infty\frac{1}{r}\,\frac{\sin\!\bigl(rS_\gamma(E)/\hbar-r\mu_\gamma\pi/2\bigr)}{\abs{\det\left(M_\gamma^r-I\right)}^{1/2}} .
 \label{eq:hilbert-polya-gutz}
 \end{equation}
-Here $\bar N$ is the smooth phase-space count; $\gamma$ runs over \emph{primitive} periodic orbits (orbits traversed once), $r$ over repetitions; $S_\gamma$ is the action; $\mu_\gamma$ is an integer (the Maslov index) counting turning-point-like phase losses; and $M_\gamma$ is the \emph{stability matrix}, the $2\times2$ matrix (for a two-dimensional system) that maps a small displacement away from the orbit, measured across the orbit, to its value one period later. The formula is usually written for the level density $\dd N/\dd E$, whose oscillating terms are $\frac{1}{\pi\hbar}\,T_\gamma\cos\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)/\abs{\det(M_\gamma^r-I)}^{1/2}$. To pass to the count, integrate in $E$. By the chain rule and $\dd S_\gamma/\dd E=T_\gamma$, $\frac{\dd}{\dd E}\sin\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)=\frac{rT_\gamma}{\hbar}\cos\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)$. Treating $T_\gamma$ and the determinant as constant over one oscillation (this is the approximation: their slow energy dependence is neglected), $\int T_\gamma\cos(\cdots)\,\dd E\approx\frac{\hbar}{r}\sin(\cdots)$, so the prefactor becomes $\frac{1}{\pi\hbar}\cdot\frac{\hbar}{r}=\frac{1}{\pi r}$, which is the form above. For chaotic systems the orbit sum does not converge absolutely; it is meaningful as an asymptotic statement and after smoothing.
+Here $\bar N$ is the smooth phase-space count; $\gamma$ runs over \emph{primitive} periodic orbits (orbits traversed once), $r$ over repetitions; $S_\gamma$ is the action; $\mu_\gamma$ is an integer (the Maslov index) counting turning-point-like phase losses; and $M_\gamma$ is the \emph{stability matrix}, the $2\times2$ matrix (for a two-dimensional system) that maps a small displacement away from the orbit, measured across the orbit, to its value one period later. The formula is usually written for the level density $\dd N/\dd E$, whose oscillating terms are $\frac{1}{\pi\hbar}\,T_\gamma\cos\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)/\abs{\det(M_\gamma^r-I)}^{1/2}$. To pass to the count, integrate in $E$. By the chain rule and $\dd S_\gamma/\dd E=T_\gamma$ (we derived this relation only for one-dimensional motion; it holds for periodic orbits in general, which we take on trust, see \cite{gutzwiller}), $\frac{\dd}{\dd E}\sin\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)=\frac{rT_\gamma}{\hbar}\cos\bigl(rS_\gamma/\hbar-r\mu_\gamma\pi/2\bigr)$. Treating $T_\gamma$ and the determinant as constant over one oscillation (this is the approximation: their slow energy dependence is neglected), $\int T_\gamma\cos(\cdots)\,\dd E\approx\frac{\hbar}{r}\sin(\cdots)$, so the prefactor becomes $\frac{1}{\pi\hbar}\cdot\frac{\hbar}{r}=\frac{1}{\pi r}$, which is the form above. For chaotic systems the orbit sum does not converge absolutely; it is meaningful as an asymptotic statement and after smoothing.
 \end{beyond}
 
-\paragraph{The stability factor of an unstable orbit.} For an unstable (hyperbolic) orbit, a small displacement grows by a factor $\Lambda=e^{\lambda T_\gamma}>1$ per period along one direction and shrinks by $1/\Lambda$ along another; $\lambda$ is the Lyapunov exponent (the growth rate). The stability matrix then has eigenvalues $\Lambda$ and $1/\Lambda$. (This $\Lambda$ is a growth factor; it has nothing to do with the von Mangoldt function $\Lambda(k)$ of Chapter~\ref{ch:primes}.)
+\paragraph{The stability factor of an unstable orbit.} For an unstable (hyperbolic) orbit, a small displacement grows by a factor $\Lambda=e^{\lambda T_\gamma}>1$ per period along one direction and shrinks by $1/\Lambda$ along another; $\lambda$ is the Lyapunov exponent (the growth rate). This $\lambda$ is neither the eigenvalue $\lambda$ of Section~\ref{sec:hilbert-polya-conjecture} nor the wavelength $\lambda$ of the box count in Section~\ref{sec:hilbert-polya-phase}. The stability matrix then has eigenvalues $\Lambda$ and $1/\Lambda$. (This $\Lambda$ is a growth factor; it has nothing to do with the von Mangoldt function $\Lambda(k)$ of Chapter~\ref{ch:primes}.)
 \begin{beyond}
 That the two eigenvalues multiply to 1, i.e. $\det M_\gamma=1$, follows from the fact that Hamiltonian motion preserves phase-space area (Liouville's theorem). We take this on trust; see \cite{gutzwiller}.
 \end{beyond}
-After $r$ traversals the eigenvalues of $M^r_\gamma$ are $\Lambda^r$ and $\Lambda^{-r}$. For any $2\times2$ matrix $B$ with eigenvalues $\mu_1,\mu_2$, the characteristic polynomial is $\det(B-\mu I)=(\mu_1-\mu)(\mu_2-\mu)$; putting $\mu=1$,
+After $r$ traversals the eigenvalues of $M^r_\gamma$ are $\Lambda^r$ and $\Lambda^{-r}$. For any $2\times2$ matrix $B$ with eigenvalues $\beta_1,\beta_2$, the characteristic polynomial is $\det(B-zI)=(\beta_1-z)(\beta_2-z)$. Both sides are quadratics in $z$ with leading coefficient $1$ and roots $\beta_1,\beta_2$, so they are equal. Putting $z=1$,
 \begin{align}
 \det\left(M_\gamma^r-I\right)&=(\Lambda^r-1)(\Lambda^{-r}-1)\notag\\
 &=\Lambda^r\Lambda^{-r}-\Lambda^r-\Lambda^{-r}+1\notag\\
@@ -395,13 +408,13 @@ Unstable orbits are exponentially suppressed in the sum: the more unstable, the 
 Now put the zeros' version next to it. From Chapter~\ref{ch:explicit-formula}, the fluctuating part of $N(t)$ is approximated (heuristically; the series does not converge on the critical line, and the truncation is an approximation whose accuracy is measured numerically) by paper Eq.~(4):
 \begin{equation}
 N(t)\approx\Nsm(t)+\Nfl(t),\qquad
-\Nfl(t)=-\frac1\pi\sum_{p}\sum_{m=1}^{\infty}\frac{\sin(mt\log p)}{m\,p^{m/2}} ,
+\Nfl(t)=-\frac1\pi\sum_{p\in P}\sum_{m=1}^{3}\frac{\sin(mt\log p)}{m\,p^{m/2}} ,
 \label{eq:hilbert-polya-nfl}
 \end{equation}
-with the sums truncated in practice (the paper keeps $m\le3$ and a finite prime set). Read Eqs.~\eqref{eq:hilbert-polya-gutz} and \eqref{eq:hilbert-polya-nfl} side by side, with energy $E\leftrightarrow$ height $t$ and $\hbar=1$. (The comparison is with Gutzwiller's formula for a hypothetical chaotic system with two degrees of freedom, whose stability matrices are $2\times2$; each prime is treated as a primitive orbit of such a system. It is not a comparison with a one-dimensional potential, which is not chaotic.)
+with $P$ a finite set of primes. The comparison with Gutzwiller's formula below concerns the untruncated formal sum $-\frac1\pi\sum_{p}\sum_{m=1}^{\infty}\sin(mt\log p)/(m\,p^{m/2})$, taken over all primes and all $m$. Eq.~\eqref{eq:hilbert-polya-nfl} is a truncation of that sum. Term by term the two are the same, so the dictionary can be read off from either. Read Eqs.~\eqref{eq:hilbert-polya-gutz} and \eqref{eq:hilbert-polya-nfl} side by side, with energy $E\leftrightarrow$ height $t$ and $\hbar=1$. (The comparison is with Gutzwiller's formula for a hypothetical chaotic system with two degrees of freedom, whose stability matrices are $2\times2$; each prime is treated as a primitive orbit of such a system. It is not a comparison with a one-dimensional potential, which is not chaotic.)
 \begin{itemize}
 \item Both have the form ``smooth part $+\frac1\pi\sum_{\text{primitive}}\sum_{\text{repetitions}}\frac1{\text{rep.}}\times\frac{\text{oscillation}}{\text{stability}}$.''
-\item The phase $mt\log p$ matches $rS_\gamma(E)$ if each prime $p$ is a primitive orbit with $S_p(E)=E\log p$, and $m$ is the repetition number. By the consequence of Fact 1 in Section~\ref{sec:hilbert-polya-phase}, $S=ET$ means an energy-independent period: $T_p=\log p$.
+\item The phase $mt\log p$ matches $rS_\gamma(E)$ if each prime $p$ is a primitive orbit with $S_p(E)=E\log p$, and $m$ is the repetition number. By Fact 1 of Section~\ref{sec:hilbert-polya-phase} ($T=\dd S/\dd E$), $S_p(E)=E\log p$ gives $T_p=\log p$, a period independent of energy.
 \item The amplitude $p^{-m/2}$ matches $e^{-r\lambda T_\gamma/2}$ (the large-$r\lambda T$ form of Eq.~\eqref{eq:hilbert-polya-stab}) if $T_\gamma=\log p$ and $\lambda=1$: then $e^{m\log p/2}=p^{m/2}$. Every ``prime orbit'' would have the same Lyapunov exponent, 1.
 \item The smooth part $\Nsm$ would be the phase-space count $\bar N$.
 \end{itemize}
@@ -451,7 +464,7 @@ In the dictionary, find the period, the frequency in $t$, the period in $t$, and
 
 An honest dictionary records its failures. Three stand out.
 
-\textbf{The sign.} Eq.~\eqref{eq:hilbert-polya-nfl} has an overall minus sign for \emph{every} $p$ and $m$. In Eq.~\eqref{eq:hilbert-polya-gutz} the corresponding factor is a phase $e^{-ir\mu\pi/2}$ applied inside the sine. A constant sign $-1$ for all $r$ would need $\mu\pi/2\equiv\pi$ for $r=1$ (so $\mu\equiv2 \pmod 4$) and $2\mu\pi/2\equiv\pi$ for $r=2$ (so $\mu$ odd), which contradict each other (Problem~10). This mismatch is discussed in the literature; Connes interprets the zeros as an \emph{absorption} spectrum (lines missing from a continuum) rather than as emitted eigenvalues \cite{connes}.
+\textbf{The sign.} Eq.~\eqref{eq:hilbert-polya-nfl} has an overall minus sign for \emph{every} $p$ and $m$. In Eq.~\eqref{eq:hilbert-polya-gutz} the corresponding quantity is the phase shift $-r\mu_\gamma\pi/2$ inside the sine. Since $\sin(\theta-\phi)=\sin\theta\cos\phi-\cos\theta\sin\phi$ equals $-\sin\theta$ for all $\theta$ exactly when $\cos\phi=-1$ and $\sin\phi=0$, that is, when $\phi\equiv\pi\pmod{2\pi}$, a constant sign $-1$ needs $r\mu\pi/2\equiv\pi\pmod{2\pi}$ for every $r$. For $r=1$ this means $\mu\pi/2\equiv\pi$, so $\mu\equiv2\pmod4$. For $r=2$ it means $\mu\pi\equiv\pi$, so $\mu$ is odd. These two conditions contradict each other (Problem~10). This mismatch is discussed in the literature; Connes interprets the zeros as an \emph{absorption} spectrum (lines missing from a continuum) rather than as emitted eigenvalues \cite{connes}.
 
 \textbf{The stability factor.} As the Sample Problem showed, $p^{m/2}$ is only the large-$p^m$ limit of the hyperbolic factor; for $p=2$, $m=1$ they differ by a factor 2. The naive dictionary works asymptotically, not exactly.
 
@@ -470,7 +483,7 @@ In the dictionary, which ``orbit'' does the term $\sin(2t\log 3)/(2\cdot3)$ of $
 
 \subsection{A heuristic consequence for one-dimensional potentials}
 
-Here is an observation, \emph{heuristic} and clearly labeled, that becomes important in the paper. A one-dimensional potential $p^2+V(x)$ has, at each energy, exactly one periodic orbit: the back-and-forth motion between the two turning points. Its trace formula is therefore of the oscillator type, Eq.~\eqref{eq:hilbert-polya-osctrace}, with $2\pi E$ replaced by the action $S(E)=A(E)$: a single orbit and its repetitions. Those terms produce the steps of the staircase; they do not produce independent oscillations at frequencies $\log2,\log3,\dots$ in $E$. So a one-dimensional potential can only reproduce the zeros' fluctuations by building them into the \emph{shape} of $V$, so that the phase-space area $A(E)/2\pi$ itself contains $\Nsm(E)+\Nfl(E)$. This is exactly what Wu and Sprung did (Chapter~\ref{ch:wu-sprung}), and it makes the potential encode the arithmetic as ever-finer wiggles rather than generate it dynamically. The fluctuation at energy $E$ is then controlled by the potential near the turning points of that energy, that is, locally in energy. We will meet this picture again in the paper's Sec.~VI.
+Here is an observation, \emph{heuristic} and clearly labeled, that becomes important in the paper. A one-dimensional potential $p^2+V(x)$ has, at each energy, exactly one periodic orbit: the back-and-forth motion between the two turning points. Its trace formula is therefore of the oscillator type, Eq.~\eqref{eq:hilbert-polya-osctrace}, with $2\pi E$ replaced by the action $S(E)=A(E)$: a single orbit and its repetitions. Those terms produce the steps of the staircase; they do not produce independent oscillations at frequencies $\log2,\log3,\dots$ in $E$. So a one-dimensional potential can only reproduce the zeros' fluctuations by building them into the \emph{shape} of $V$, so that the phase-space area $A(E)/2\pi$ itself contains $\Nsm(E)+\Nfl(E)$. This is the spirit of what Wu and Sprung did (Chapter~\ref{ch:wu-sprung}): a smooth potential from $\Nsm$, plus fitted fluctuating corrections that make the levels reproduce the low zeros. In such a construction the fluctuations sit in the shape of the potential as fine wiggles; they are not generated dynamically. The fluctuation at energy $E$ is then controlled by the potential near the turning points of that energy, that is, locally in energy. We will meet this picture again in the paper's Sec.~VI.
 
 \begin{keyideas}
 \item A trace formula writes the level count as a smooth phase-space term plus a sum over periodic orbits and their repetitions; Eq.~\eqref{eq:hilbert-polya-osctrace} is an exact, checkable example.
@@ -481,7 +494,7 @@ Here is an observation, \emph{heuristic} and clearly labeled, that becomes impor
 \end{keyideas}
 
 %======================================================================
-\section{The Berry--Keating Hamiltonian $H=xp$}\label{sec:hilbert-polya-xp}
+\section{The Berry--Keating Hamiltonian \texorpdfstring{$H=xp$}{H = xp}}\label{sec:hilbert-polya-xp}
 %======================================================================
 
 The dictionary asks for unstable orbits, all with Lyapunov exponent 1, and no time-reversal symmetry. Berry and Keating \cite{berrykeating99} noticed that the simplest conceivable Hamiltonian has all three features:
@@ -557,7 +570,7 @@ for E in [100.0, 500.0, 1000.0]:
 
 \subsection{The orbit time and the level density}
 
-Fact 2 of Section~\ref{sec:hilbert-polya-phase} says the mean level density is (orbit time)$/2\pi$. Does it hold for the regularized $xp$? The orbit enters the counted region at $x=\ell_x$ and leaves at $x=E/\ell_p$. Since $x=x_0e^\tau$, the time spent inside is $T(E)$ with $e^{T}=(E/\ell_p)/\ell_x$:
+Fact 2 of Section~\ref{sec:hilbert-polya-phase} says the mean level density is (orbit time)$/2\pi$. Does it hold for the regularized $xp$? The orbit enters the counted region at $x=\ell_x$ and leaves at $x=E/\ell_p$. Since $x=x_0e^\tau$, the time spent inside is $T(E)$ (a transit time; again not the paper's training window $T$) with $e^{T}=(E/\ell_p)/\ell_x$:
 \begin{equation}
 T(E)=\log\frac{E}{\ell_x\ell_p}=\log\frac{E}{2\pi}.
 \end{equation}
@@ -587,7 +600,7 @@ Near height 1000, consecutive zeros are about $1.24$ apart on average, compared 
 
 \subsection{The quantum $xp$ operator}
 
-To make $xp$ a quantum operator we replace $p$ by $\hat p=-i\,\dd/\dd x$ (with $\hbar=1$). Because $\hat x\hat p\ne\hat p\hat x$, one symmetrizes:
+To make $xp$ a quantum operator we replace $p$ by $\hat p=-i\,\dd/\dd x$ (with $\hbar=1$). The classical product $xp$ does not fix the order of the quantum operators, and the order matters. From the lines below, $\hat p\hat x\psi-\hat x\hat p\psi=-i(\psi+x\psi')+ix\psi'=-i\psi$. Moreover, neither ordering alone is Hermitian. Formally, $(\hat x\hat p)^\dagger=\hat p^\dagger\hat x^\dagger=\hat p\hat x$, using $(AB)^\dagger=B^\dagger A^\dagger$ and the fact that $\hat x$ and $\hat p$ are each formally Hermitian; this differs from $\hat x\hat p$. Their average is formally Hermitian, because taking $\dagger$ just swaps its two terms. So one symmetrizes:
 \begin{equation}
 \hat H=\tfrac12\left(\hat x\hat p+\hat p\hat x\right).
 \end{equation}
@@ -655,8 +668,7 @@ Berry--Keating $xp$ \cite{berrykeating99} & classical model & leading count $\Ns
 Connes \cite{connes} & primes (ad\`eles) & RH equivalent to a trace formula\\
 Connes 2026 \cite{connes26} & primes $p\le13$ & first 50 zeros, accuracies to $2.6\times10^{-55}$\\
 Connes--Consani--Moscovici \cite{zetatriples} & Euler products & numerically observed spectral convergence\\
-Bender--Brody--M\"uller \cite{bbm} & $xp$ and shift & eigenvalues tied to zeros; reality argued\\
-Bellissard comment \cite{bellissard} & none & comment disputing aspects of the argument\\
+Bender--Brody--M\"uller \cite{bbm} & $xp$ and shift & eigenvalues tied to zeros; reality argued; disputed in \cite{bellissard}\\
 Sierra \cite{sierra} & modified $xp$ & review and modified models\\
 Yakaboylu \cite{recenthp1}; Tamburini \cite{recenthp2} & models & recent proposals\\
 \bottomrule
@@ -669,7 +681,7 @@ Which of the constructions in \cref{tab:hilbert-polya-proposals} use zero data a
 \checkanswer{None. They are all specified from other principles (classical dynamics, primes, Euler products, symmetry), which is what makes their output a prediction rather than a fit. This is the defining feature of the analytic program.}
 
 \begin{keyideas}
-\item Connes recasts the explicit formula as a trace formula; RH becomes a positivity statement. A 2026 construction from primes $p\le13$ reproduces the first 50 zeros to very high accuracy (as reported in paper Sec.~I~A~b).
+\item Connes gives a spectral (absorption) interpretation in which RH is equivalent to the validity of a trace formula. By Weil's earlier criterion, RH is also equivalent to the positivity of a quadratic form built from the explicit formula. A 2026 construction from primes $p\le13$ reproduces the first 50 zeros to very high accuracy (as reported in paper Sec.~I~A~b).
 \item Bender--Brody--M\"uller propose a non-Hermitian, PT-type operator linked to the Hurwitz zeta function; Bellissard published a comment disputing aspects of the argument.
 \item Sierra and others refine $xp$; new proposals continue to appear.
 \item No operator is known whose spectrum is proved to be the zeros and that is proved self-adjoint (or proved to have real spectrum). RH and the Hilbert--P\'olya conjecture remain open.
@@ -739,7 +751,7 @@ The ``prime orbits'' $2,3,5,7,11,13$, the shortest periods in \cref{fig:hilbert-
 
 \paragraph{Sec.~VI, first and second paragraphs.} ``Nothing here touches the analytic Hilbert--P\'olya program \cite{berrykeating99,connes,bbm,zetatriples,connes26}. What is constrained is a shortcut.'' Read with this chapter, the sentence is precise: the analytic program's hard problems (self-adjointness on a domain, a proof that the spectrum is all the zeros) are untouched by any numerical fit. The second paragraph offers a \emph{heuristic} reading of why the fits fail: the fitted quantity ``is, by the explicit formula, an almost-periodic function of $t$ that is sparse in frequency, whereas a potential addresses the levels through their turning points, locally in energy.'' That is the picture of the end of Section~\ref{sec:hilbert-polya-trace} and of Section~\ref{sec:hilbert-polya-programs}: one orbit per energy in 1D, versus fixed prime-orbit frequencies in $t$. The paper is careful to call this a heuristic, to say it is ``evidence about the tested parametrizations and optimizer together, not a statement about what a potential can represent,'' and to list as open ``whether the memorization result can be derived rather than measured.'' Keep those hedges when you retell the result.
 
-\paragraph{The falsifiability standard.} Finally, the paper's proposal (Sec.~VI, items (i)--(iv)) applies to ``any future claim that a constructed or learned operator `captures' the Riemann zeros.'' For an analytically specified operator, item (i) (held-out rms and correlation against its own smooth part) is automatic in spirit: every zero is held out. For a fitted operator it is the whole question. Chapters~\ref{ch:paper-setup}--\ref{ch:paper-critique} read these items in detail.
+\paragraph{The falsifiability standard.} Finally, the paper's proposal (Sec.~VI, items (i)--(iv)) applies to ``any future claim that a constructed or learned operator `captures' the Riemann zeros.'' In our reading (the paper does not say this), an analytically specified operator meets the spirit of item (i) (held-out rms and correlation against its own smooth part) once its spectrum is actually computed and scored, since no zero was used to build it. The paper's list makes no exemption. For a fitted operator, item (i) is the whole question. Chapters~\ref{ch:paper-setup}--\ref{ch:paper-critique} read these items in detail.
 
 %======================================================================
 \section{Summary}
@@ -778,7 +790,7 @@ The ``prime orbits'' $2,3,5,7,11,13$, the shortest periods in \cref{fig:hilbert-
 
 \prob{2}{Compute the ratio $1/(1-p^{-m})$ between the explicit formula's stability factor $p^{m/2}$ and the exact hyperbolic factor $p^{m/2}-p^{-m/2}$ for (a) $p=2$, $m=3$ and (b) $p=13$, $m=1$. Which terms of the explicit formula are best described by the hyperbolic-orbit dictionary?}
 
-\prob{2}{Show that no integer Maslov index $\mu$ makes $e^{-ir\mu\pi/2}=-1$ for both $r=1$ and $r=2$. Conclude that the explicit formula's overall sign cannot be produced by the phase term of Eq.~\eqref{eq:hilbert-polya-gutz}.}
+\prob{2}{Show that no integer Maslov index $\mu$ makes the phase shift $r\mu\pi/2$ congruent to $\pi$ modulo $2\pi$ (equivalently $e^{-ir\mu\pi/2}=-1$) for both $r=1$ and $r=2$. Conclude that the explicit formula's overall sign cannot be produced by the phase term of Eq.~\eqref{eq:hilbert-polya-gutz}.}
 
 \prob{2}{(a) Verify by direct differentiation that $\psi_E(x)=x^{-1/2+iE}$ satisfies $-i(x\psi'+\psi/2)=E\psi$. (b) Compute $\int_1^{X}\abs{\psi_E}^2\dd x$ and its limit as $X\to\infty$. (c) In the variable $u=\log x$, what kind of function is $\sqrt x\,\psi_E$?}
 
@@ -839,7 +851,7 @@ The ``prime orbits'' $2,3,5,7,11,13$, the shortest periods in \cref{fig:hilbert-
 
 \textbf{Problem 17.} The average of $D_1$ over the grid is close to zero (magnitude below $0.05$), because $N-\Nsm$ is the fluctuating part $S(t)$ (up to a tiny $\order(1/t)$ term), which oscillates about zero. The average of $D_2$ is close to $-\tfrac18$, because $D_2=D_1-\tfrac18$ exactly by Eq.~\eqref{eq:hilbert-polya-eighth}. The data cannot distinguish the two smooth counts by eye (\cref{fig:hilbert-polya-bk}), but averaging over many zeros does.
 
-\textbf{Problem 19.} (a) $p^2+\omega^2x^2/4=E$ is an ellipse with semi-axes $\sqrt E$ in $p$ and $2\sqrt E/\omega$ in $x$; the area of an ellipse is $\pi\times$(product of semi-axes), so $A=\pi\sqrt E\cdot2\sqrt E/\omega=2\pi E/\omega$. (b) $\dd A/\dd E=2\pi/\omega$. Hamilton's equations give $\dot x=2p$, $\dot p=-\omega^2x/2$, hence $\ddot x=-\omega^2x$: simple harmonic motion with period $2\pi/\omega$, equal to $\dd A/\dd E$. (c) $N(E)\approx A/2\pi=E/\omega$, so consecutive levels differ by $\omega$ (restoring $\hbar$: $\hbar\omega$).
+\textbf{Problem 19.} (a) $p^2+\omega^2x^2/4=E$ is an ellipse with semi-axes $\sqrt E$ in $p$ and $2\sqrt E/\omega$ in $x$; the area of an ellipse is $\pi\times$(product of semi-axes), so $A=\pi\sqrt E\cdot2\sqrt E/\omega=2\pi E/\omega$. (b) $\dd A/\dd E=2\pi/\omega$. Hamilton's equations give $\dd x/\dd\tau=2p$ and $\dd p/\dd\tau=-\omega^2x/2$. Differentiating the first and substituting the second, $\dd^2x/\dd\tau^2=2\,\dd p/\dd\tau=-\omega^2x$: simple harmonic motion with period $2\pi/\omega$, equal to $\dd A/\dd E$. (c) $N(E)\approx A/2\pi=E/\omega$, so consecutive levels differ by $\omega$ (restoring $\hbar$: $\hbar\omega$).
 
 \textbf{Problem 21.} Take the $2\times2$ block of the Sample Problem ``An operator for two zeros'' and add $t_3$ on the diagonal:
 \[

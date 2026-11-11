@@ -1,79 +1,205 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "Periods in training: $(680-14.13)/9.0647=665.9/9.0647=73.4$.",
-  "problem": "The check script failed on this assertion. 665.87/9.0647 = 73.46, so the value is not 73.4 within the tolerance used. The \"about 73 periods\" claim is fine, but the quoted figure and the check disagree.",
-  "fix": "Recompute: 665.87/9.0647 = 73.46. State 73.5 in the sample and boxed answer, and update the check to match."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/paper-memorization_tableI.pdf}",
-  "problem": "The slug is 'paper-memorization', so figure files should be figs/paper-memorization_<name>.pdf. The chapter output contains no FIGURES section, so no figure script exists for the five figures used (tableI, bases, neighbors, turning, probe, toy).",
-  "fix": "Add a ### FIG script for every figure, with filenames matching exactly what the chapter includes."
- },
- {
-  "category": "RULE",
   "severity": "medium",
-  "quote": "\\label{fig:paper-memorization-toy}",
-  "problem": "The toy figure is described as computed from a script and the problems refer to 'the script of Fig.', but no script is given in the chapter. A reader cannot rerun it.",
-  "fix": "Include the script as a pycode listing or point to the FIG script, and verify the numbers."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "Section~III's claim has three parts: capacity, no transfer, diagnosis.",
-  "problem": "The sections label 'Four probes' and then list five paper paragraphs, so the counts are inconsistent. The chapter also states 'twelve cosine configurations, eight alternative-basis rows' as if the 8 rows were configurations in the paper's count.",
-  "fix": "Make the counts consistent: say 'twelve configurations of Table I, plus the eight rows of Table II'."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Training levels with turning points below 22.5 are confined inside the band's inner edge and feel the band only through the exponentially small tails",
-  "problem": "The explanation that levels 301--500 'integrate the correction with nearly uniform weight' so a large delta V leaves them unchanged is asserted without support. A correction of rms 40 does not average out unless it is oscillatory or compensated; this is speculation presented as mechanism.",
-  "fix": "Mark clearly as the author's heuristic and not the paper's, or remove the claim about compensation."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "the in-sample rms of the $M=400$ odd and even rows is below $10^{-3}$",
-  "problem": "Fine for the paper, but the sample lists M=200 odd/even rows as saturated: with 200 training levels M=200 rows give in-sample 0.17, not near zero, which shows saturation is not sufficient in practice.",
-  "fix": "Add a note that M=200 rows are nominally saturated but the optimizer does not reach exact fits (0.176, 0.171)."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "which is at most $\\frac1{2T_w}\\left(\\frac1{|\\omega-\\omega'|}+\\frac1{\\omega+\\omega'}\\right)$ in magnitude",
-  "problem": "The integral of the sine product from 0 to T_w was stated without showing the antiderivative step; also the sampling at irregular levels s_n is not equivalent to continuous t averaging, used later as 'good approximation'.",
-  "fix": "Show the integration of cos((w-w')t) and cos((w+w')t) explicitly."
+  "quote": "overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical, a direct check that no held-out zero entered the fit",
+  "problem": "In the paper this sentence sits inside Appendix A step (20), the sinusoidal controls of Sec. IV. It is not reported for the operator fits of Sec. III. The chapter presents it as a leakage check for the Section III fits, which misattributes it.",
+  "fix": "Say that the noise-overwrite check is recorded for the sinusoidal controls (App. A step 20, Sec. IV). For the operator fits, the no-leakage argument is paper Eq. (3) plus the fact that residuals are restricted to training indices (step 17)."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The robust lesson of Section~III is methodological: in-sample spectral agreement demonstrates capacity, and only held-out tests and surrogate refits can show more.",
-  "problem": "'Only' held-out tests can show more is stronger than the paper claims.",
-  "fix": "Say 'held-out tests and surrogate refits are ways to show more'."
+  "quote": "You can see the shape of the phenomenon in seconds with a linear toy",
+  "problem": "The chapter never states what the toy gives (in-sample and held-out rms and correlation), and the CHECKS script does not run it. The claim that the toy shows the phenomenon is unverified. A one-step linear fit may behave quite differently from the paper's nonlinear fit, and the figure caption only says 'compare'.",
+  "fix": "Run the toy in CHECKS, quote its in-sample and held-out rms/corr and the null in the text and caption, and assert them. Alternatively reword to 'you can explore whether a linear toy shows the same behavior' and state the outcome honestly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Correlated neighbors carry partly redundant information, so 100 correlated levels behave like fewer independent ones.",
+  "problem": "This is the argument for positive serial correlation. The chapter itself shows the fluctuations are negatively autocorrelated at short lags, which for a mean would narrow the interval, not widen it. The width of an rms interval depends on the serial dependence of the squared errors, which the explanation does not address.",
+  "fix": "Rewrite: dependence can widen or narrow an interval depending on its sign and on the statistic. For the rms, what matters is the serial dependence of the squared errors e_n^2 (errors of similar size cluster). The paper observes only a slight widening; the block bootstrap is the safe choice because it makes no independence assumption."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "In-sample agreement with the zeros is achievable at essentially any accuracy by the tested families, and is achieved equally on surrogate targets.",
+  "problem": "The paper shows rms below 1e-4 only for the cosine basis at M=900 on 500 zeros. Chebyshev and hat fits reach only 0.111 and 0.066 at M=600. The surrogate refits were done only for cosine, M=400, scale 1.",
+  "fix": "Replace with: 'The cosine family reaches in-sample rms below 1e-4 at M=900, in-sample error falls with M in all three bases, and the cosine M=400 fit reaches the same in-sample accuracy on surrogate targets as on the true zeros.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The in-sample curve of paper Fig.~3 would look the same for random targets",
+  "problem": "The paper tested surrogates at a single configuration (scale 1, M=400, zeros 1--400), not along the whole in-sample-versus-M curve. 'Checked exactly this' overstates it.",
+  "fix": "Write: 'At M=400 the paper shows the in-sample error is the same for shuffled and phase-randomized targets (Section ...); it is plausible, but not tested, that the whole curve would look the same.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "any reasonable family fits any reasonable data",
+  "problem": "This contradicts the chapter's own numbers and coverage law. M=400 on 400 zeros gives rms 0.137, M=200 on 200 levels gives 0.17, and the coverage law requires M of about 745 for 400 levels. Having M close to the number of training levels is not sufficient here, because the problem is nonlinear and the sensitivity matrix is rank-limited.",
+  "fix": "Replace with: 'Once the basis is rich enough to address every training level independently (here the coverage law, M of about 745 for 400 levels, not merely M equal to the number of levels), the family can fit essentially any targets.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "the damped, accept-only-improvements iteration stops well before the residuals vanish",
+  "problem": "This is presented as the fact explaining why the M=200 odd/even rows reach only 0.176/0.171. The paper gives no such explanation. A more consistent reason is available in the chapter itself: by the coverage law, 200 cosines cannot independently address levels up to about E=680, so the count of unknowns overstates the effective rank.",
+  "fix": "Label it as the book's conjecture and lead with the coverage-law explanation: 'A likely reason (ours, not the paper's) is that 200 cosines cover only E < (200 pi/2L)^2, about 49, so the sensitivity matrix is effectively rank-deficient; the damped optimizer may also stop early.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "explain why $\\rho_1$ cannot be estimated from odd indices alone without extra assumptions",
+  "problem": "The problem is ill-posed. It tells the reader that rho_1 cannot be estimated from the training data, then asks them to apply the Problem 13 predictor w = rho_1/(1+rho_2), which needs rho_1. No way of obtaining rho_1 is specified.",
+  "fix": "State how rho_1 is to be obtained, for example 'take rho_1 from the heuristic Eq. (rho1) with sigma estimated from the odd-indexed values', or 'fit a smooth autocovariance model to the even lags and interpolate to lag 1'. Ask the reader to discuss the assumption."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Explain how this resolves the apparent paradox that neighbor averages are anticorrelated while kriging reaches $+0.87$.",
+  "problem": "The two-neighbor optimum gives only +0.43 (the chapter's own number). It explains the sign flip but not how kriging reaches +0.87. Neither the text nor the answer says that the remaining gain comes from using many training neighbors (lags up to 40) and the long-range rigidity of the sequence.",
+  "fix": "Add to the kriging paragraph and to the Problem 13 answer: 'Two neighbors give at most |rho_1|/sqrt((1+rho_2)/2), about 0.43 here; the paper's kriging uses all training values with autocovariance to lag 40, which is how it reaches +0.87.' Rephrase the problem to ask only about the sign."
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "Step 7 is a heuristic estimate: it uses the Wigner surmise instead of the exact distribution of the zeros",
-  "problem": "The sample uses sigma=0.263 (a holdout null at 401--500) as the stationary variance and approximates d_{n+1}-d_n by u_n-1 treating gap as constant; Var(d) is not stationary in n. Result -0.287 compared to paper's -0.26 to -0.41 is presented as consistent, which is loose.",
-  "fix": "State the comparison cautiously and note that the real autocorrelation is measured in Problem 15."
+  "quote": "Compute $S$ for the four 1--400 rows of Table~I that use $M=400$ or $M=600$",
+  "problem": "The description selects three rows (M=400; M=400 with mu=0.3; M=600), and the sample computes three operator values, not four.",
+  "fix": "Change 'four' to 'three', or add the mu=0.03 row: S = 1 - 0.271/0.263 = -0.030, with a matching assert in CHECKS."
  },
  {
-  "category": "CLARITY",
+  "category": "ERROR",
   "severity": "low",
-  "quote": "The correction in the band is about $40/15=2.7$ and $40/13=3.1$ times its size on either side",
-  "problem": "The paper's 15 and 13 refer to rms inside the band? The paper text says 'rms delta V = 40 in that band against 15 inside it and 13 outside it', which is ambiguous; the chapter's parenthetical reinterpretation (x<22.5, x>28.5) conflicts with 'inside it'.",
-  "fix": "Quote the paper's wording and flag that its 'inside it' is ambiguous, rather than asserting an interpretation."
+  "quote": "an uncorrelated prediction with nonzero amplitude is always worse than the null",
+  "problem": "By the chapter's own decomposition this holds only if the prediction mean is zero (or no closer to the truth's mean than zero is). With rho=0 and a prediction mean equal to the truth's mean, the error sigma_p^2+sigma_d^2 can be below the null dbar^2+sigma_d^2.",
+  "fix": "Insert 'zero-mean': 'an uncorrelated zero-mean prediction with nonzero amplitude is always worse than the null'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "every one of the first 500 levels can be placed on its zero to within one ten-thousandth of a spacing",
+  "problem": "The paper states an rms below 1e-4 over the 500 levels. An rms bound does not bound each individual error.",
+  "fix": "Write 'the first 500 levels sit on their zeros with an rms error below one ten-thousandth of a spacing'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "gives a mechanism by which fitted interpolants can be anticorrelated with the truth",
+  "problem": "The mechanism of that section (smooth interpolation between neighboring training levels) applies to within-height splits. The hat M=400 row is a forward split (holdout 401--500) with no training neighbors, so the mechanism does not obviously apply. The pointer suggests an explanation the chapter does not have.",
+  "fix": "Remove the pointer, or state: 'That mechanism concerns interleaved splits and does not directly apply to this forward holdout; we have no explanation for this row, and one interval among eight excluding zero is unsurprising by chance.'"
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\prob{1}{In plain words, explain why the unregularized interpolation fit can put a correction of rms 40",
-  "problem": "Problem numbering/answers: answers given for P22 and P25 labelled as selected, but answers to every odd-numbered problem are required; odd problems such as 7? present; P17, P19, P21, P23, P25 present, but P2, P4 etc. fine; P1-level problem 25 answered. Several odd ones (e.g. 9 present, 11 present, 13, 15, 17, 19, 21, 23, 25) present; 27? none exist. Problem count 25 is within range but fewer than 15 are computational-with-qmnt only about 6.",
-  "fix": "Verify all odd and difficulty-1 problems have answers; Problem 3 and 22 are present, ok."
+  "quote": "You should find all three negative, as the paper states (Sec.~III); the CHECKS script verifies the signs.",
+  "problem": "The answer to an odd-numbered computational problem gives no numerical values. The bible requires short solutions with every numerical answer recomputed in CHECKS. It also sends the reader to a build artifact (the CHECKS script) they cannot see.",
+  "fix": "Compute the lag-1, 2, 3 autocorrelations of d_n for n up to 400 and the resulting Eq. (nbrcorr) value. Quote them in the answer, assert them in CHECKS, and delete the reference to the CHECKS script."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "and the CHECKS script confirms that",
+  "problem": "Reader-facing text refers to the internal CHECKS script, which is not part of the book. The same occurs in the answers to Problems 15 and 17.",
+  "fix": "Replace with 'the qmnt listing in Section (Paper connection) confirms that x(t_201) is about 22.5 and x(t_300) about 28.5'. In the Problem 17 answer simply give the numbers."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "excludes the null from below: significantly worse than doing nothing",
+  "problem": "The directional wording is inconsistent. Here 'excludes the null from below' means the interval lies above the null. Later 'excludes zero from below' is used for an interval lying below zero.",
+  "fix": "Write 'lies entirely above the null 0.263' here, and 'lies entirely below zero' for the hat row."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "both in mean spacings and both measured relative to the unperturbed potential's levels",
+  "problem": "d_n was just defined as (t_n - s_n)/gap_n, relative to the smooth zeros. Here it is silently redefined relative to E_n[smooth], and later as (t~_n - E_n[smooth])/gap_n per App. A step 18. The two differ by the Richardson residual (mean 0.005, max 0.063 spacings) and the difference is never mentioned.",
+  "fix": "Add a sentence: 'Strictly, the operator scores use d_n = (t~_n - E_n[smooth])/gap_n; this differs from Eq. (fluct) by at most 0.063 spacings (mean 0.005, paper Sec. II B), which is why the two nulls coincide. We use the same symbol for both.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "consistent with an in-sample rms of 0.103 rather than near zero",
+  "problem": "The 0.103 is in-sample on training zeros 1--800, whereas the requirement M>1438 was computed for all 1000 scored levels (t_1000). The relevant energy for the in-sample comparison is t_800.",
+  "fix": "Have the problem and answer also evaluate the law at t_800 (take it from qmnt.zeros), show that M=900 is still below that requirement, and add the corresponding assert to CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "so (generically) the training residuals can be driven to zero and there are infinitely many exact solutions",
+  "problem": "The scale-2 M=600 odd/even rows named in this answer have in-sample rms 0.078 and 0.069 (paper Table III), not zero. The answer leaves the impression that they were fitted exactly.",
+  "fix": "Add: 'In fact these rows reach only 0.078 and 0.069 in-sample: saturation counts unknowns, it does not guarantee that the nonlinear, damped fit reaches zero residual.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "For the GUE Wigner surmise",
+  "problem": "The Gaussian moment integral of u^4 exp(-alpha u^2) = (3/8) sqrt(pi) alpha^(-5/2) is used without derivation or a pointer, and the surmise's unit mean is assumed. The bible forbids unreferenced results.",
+  "fix": "Cite where it is derived ('the Gaussian moments computed when normalizing the Wigner surmise in Chapter level-statistics'), or derive it in two lines by differentiating the integral of exp(-alpha u^2) = (1/2) sqrt(pi/alpha) twice with respect to alpha."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Treat the fluctuations $d_n$ as a stationary sequence with mean zero",
+  "problem": "'Stationary' is not defined in this chapter. The steps then use Var(X+Y) = Var X + Var Y + 2 Cov(X,Y) and Cov(d_{n-1},d_n) = rho_1 sigma^2 without stating them.",
+  "fix": "Add one sentence: 'Stationary means the variance sigma^2 and the correlation rho_l between values l steps apart do not depend on n, so Cov(d_n,d_{n+l}) = rho_l sigma^2; we also use Var(X+Y) = Var X + Var Y + 2Cov(X,Y) (Chapter probability).'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The real autocorrelations are measured in Problem~15.",
+  "problem": "The Status paragraph says twice that Problem 15 measures the autocorrelations and lists approximations in two separate passes. The bible forbids length from repetition.",
+  "fix": "Merge the Status paragraph into a single list of approximations (Wigner surmise, stationarity, constant gap between neighbors, sigma borrowed from the holdout, rho_2 chosen by hand) with one pointer to Problem 15."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A compact way to put every row on one scale is a \\emph{relative skill}",
+  "problem": "S is already the fluctuating part S(t) of the counting function in the book's notation. Likewise rho is used for the Pearson correlation and rho_1, rho_2 for autocorrelations, while rho_n = 1/2 + i t_n denotes the zeros in this same chapter. Neither collision is flagged.",
+  "fix": "Rename the skill (for example 'SS' or 'skill'), or add a notation warning. Also note that rho and rho_l here are correlations, unrelated to the zeros rho_n."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "the last being the decisive one",
+  "problem": "The paper does not call the continuation probe decisive. It says three probes 'complete the diagnosis'. The bible asks for it to be foregrounded as the 'cleanest' experiment, which is a weaker word.",
+  "fix": "Replace with 'the last being the cleanest'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "which holds for distinct frequencies sampled at many points",
+  "problem": "Linear independence of the six sampled columns is asserted without argument. The six-function comparison is the book's own thought experiment, not something the paper ran, and is not labelled as such. The vector beta_true is also used for a list that includes the gamma coefficients.",
+  "fix": "Label the paragraph 'our own illustration (not a paper experiment)'. Define the six-component coefficient vector explicitly as (beta_1..3, gamma_1..3). Justify independence (for example a numerical check in CHECKS that F^T F is well conditioned at the 400 points s_n), or state it as an assumption."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Paper Table~II gives the results for fit 1--400, holdout 401--500, null 0.263",
+  "problem": "Tables II and III are never reproduced, unlike Table I. Yet a checkpoint ('of the eight rows in Table II') and several problems (3, 4, 10, 26) require their entries. A reader without the paper cannot follow.",
+  "fix": "Add book tables reproducing paper Tables II and III exactly, with labels tab:paper-memorization-tableII and tab:paper-memorization-tableIII, and refer to them."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Appendix~A step~22 records a circular block bootstrap with block lengths 3--20 on zeros 401--500.",
+  "problem": "The quoted main text says 'moving-block bootstrap' while Appendix A step 22 says 'circular block bootstrap'. The chapter places both side by side without noting that these are different schemes and that the paper is inconsistent.",
+  "fix": "Add: 'The main text says moving-block and the appendix says circular block; the two differ only in how blocks wrap at the ends, and the paper does not say which was used for the quoted interval.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Any family would memorize there.",
+  "problem": "This is a general assertion not made by the paper, which only calls these rows 'stress tests of memorization'. It also sits oddly with the nominally saturated M=200 rows, which do not fit exactly.",
+  "fix": "Replace with 'A saturated fit can match its training levels whatever they are, so its held-out behavior tests the optimizer more than the family.'"
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "M=300\\Rightarrow E<110\\ (33\\ \\text{zeros})",
+  "problem": "The single boxed display with four results and three \\quad separators is wider than the text line and will give an overfull hbox running into the margin.",
+  "fix": "Split the box into two lines with \\boxed{\\begin{aligned} ... \\end{aligned}}, or use two boxed displays."
  }
 ]

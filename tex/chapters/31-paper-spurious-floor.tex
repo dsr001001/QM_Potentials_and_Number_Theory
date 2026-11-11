@@ -1,9 +1,9 @@
 \chapter{Reading the Paper IV: Anatomy of a Spurious Floor}\label{ch:paper-spurious-floor}
 
 \begin{chapterintro}
-Suppose two lab groups time two quite different pendulums, one with a brass bob on a steel wire and one with a wooden bob on a string. One group reports a period of 2.321 s, the other 2.322 s. Two different systems agreeing to four digits is exciting: it suggests a hidden common cause, maybe a law. Then someone notices that both groups used the same stopwatch, and that the stopwatch had a fault that pushed every reading toward the same value. The "law" was a property of the instrument.
+Suppose two lab groups time two quite different pendulums, one with a brass bob on a steel wire and one with a wooden bob on a string. One group reports a period of 2.321 s, the other 2.322 s. Two different systems agreeing to four digits is exciting: it suggests a hidden common cause, maybe a law. Then someone notices that both groups used the same stopwatch, and that the stopwatch had a fault that pushed every reading toward the same value. The ``law'' was a property of the instrument.
 
-Section V of the paper \cite{soniR1} tells a story with exactly this shape. Two different non-Hermitian model classes, fitted to the Riemann zeros, stalled at in-sample error floors of 0.2321 and 0.2322 mean spacings. The near-identity invited a physical interpretation. The paper then takes the result apart, piece by piece: a dead parameter that fed on single-precision rounding noise, a plausible mechanism that fails by a factor of 2 to 7, an approximation used far outside its range of validity, and finally a fair refit that captures almost nothing. Nothing in this chapter is new mathematics. You already have every tool (second-order perturbation theory with an imaginary perturbation, the sum rule, PT symmetry and the null mode from Chapter~\ref{ch:non-hermitian}, floating-point precision from Chapter~\ref{ch:asymptotics}, least squares from Chapter~\ref{ch:least-squares}, Levenberg--Marquardt from Chapter~\ref{ch:fitting}). What is new is watching these tools used as a forensic kit.
+Section V of the paper \cite{soniR1} tells a story with exactly this shape. Two different non-Hermitian model classes, fitted to the Riemann zeros, stalled at in-sample error floors of 0.2321 and 0.2322 mean spacings. The near-identity invited a physical interpretation. The paper then takes the result apart, piece by piece: a dead parameter that fed on single-precision rounding noise, a plausible mechanism that fails by a factor of 2 to 7, an approximation used far outside its range of validity, and finally a fair refit that captures almost nothing. Almost nothing in this chapter is new mathematics. The few short extra arguments (evenness of real parts in the amplitude, the exceptional point of a $2\times2$ matrix, the moving-average bound) are derived in full where they are used. Every other tool you already have (second-order perturbation theory with an imaginary perturbation, the sum rule, PT symmetry and the null mode from Chapter~\ref{ch:non-hermitian}, floating-point precision from Chapter~\ref{ch:asymptotics}, least squares from Chapter~\ref{ch:least-squares}, Levenberg--Marquardt from Chapter~\ref{ch:fitting}). What is new is watching these tools used as a forensic kit.
 
 Where this shows up in the paper: the method is in Sec.~II~E and Eq.~(5); the dissection is Sec.~V and its subsection V~A, with Fig.~5; the recipe is Appendix~A, steps 9--11, plus several "key anchors"; the abstract summarizes it in one sentence; and Sec.~VI records that this part was not rerun for the revision.
 \end{chapterintro}
@@ -11,7 +11,7 @@ Where this shows up in the paper: the method is in Sec.~II~E and Eq.~(5); the di
 \begin{prerequisites}
 \item Chapter~\ref{ch:non-hermitian}: the operator $H+iA$, imaginary first-order shifts, the second-order real shift, the quadratic form $-c^\top T^{(n)}c$, the sum rule $\sum_n\delta E_n=0$, PT symmetry, the null mode, exact diagonalization of complex matrices and matching by overlap.
 \item Chapter~\ref{ch:perturbation}: Rayleigh--Schr\"odinger perturbation theory and its validity condition (matrix elements small compared with level spacings).
-\item Chapter~\ref{ch:asymptotics}: machine epsilon ($2.2\times10^{-16}$ in double precision, $1.2\times10^{-7}$ in single precision, "float32") and how analytic zeros become rounding noise.
+\item Chapter~\ref{ch:asymptotics}: machine epsilon ($2.2\times10^{-16}$ in double precision, $1.2\times10^{-7}$ in single precision, ``float32'') and how analytic zeros become rounding noise.
 \item Chapters~\ref{ch:least-squares} and \ref{ch:fitting}: least squares as projection, the Jacobian, Levenberg--Marquardt damping, random restarts.
 \item Chapters~\ref{ch:generalization} and \ref{ch:controls}: in-sample versus out-of-sample (OOS) error, the null model, exploratory versus confirmatory statements.
 \item Chapters~\ref{ch:finite-differences}, \ref{ch:eigen} and \ref{ch:bound-states}: the finite-difference Hamiltonian, eigenvectors normalized by $\sum\psi^2h=1$, parity of states in an even potential, the infinite well.
@@ -40,7 +40,7 @@ and the Discussion (Sec.~VI) adds that ``the non-Hermitian analysis of Sec.~V is
 
 \subsection{The story in five sentences}
 
-(1) The paper fits a non-Hermitian correction $iA$ to the Wu--Sprung Hamiltonian, using the second-order formula Eq.~(5) for the real level shifts as a cheap stand-in (a \emph{surrogate}) for the exact spectrum. (2) Unconstrained fits on zeros 1--400 stall at in-sample rms floors 0.2321 (PT-odd class) and 0.2322 (absorptive-even class), against a null of 0.2438. (3) The second number turns out to be an artifact: a coefficient that should have no effect at all grew to $c_0\approx2.2\times10^6$ and harvested a small improvement from float32 rounding noise; after repair the even floor is 0.2358 and the coincidence disappears. (4) A natural mechanism for "why a floor at 0.232" fails quantitatively, and exact diagonalization of the fitted operators shows that the surrogate no longer describes them: their exact in-sample scores, 0.2523 and 0.2477, are worse than the null. (5) Fits redone inside amplitude limits where the surrogate is verified accurate capture only 1.9\% and 0.6\% over the null in exact spectra, so these model classes, treated fairly, are "empirically inert on this problem."
+(1) The paper fits a non-Hermitian correction $iA$ to the Wu--Sprung Hamiltonian, using the second-order formula Eq.~(5) for the real level shifts as a cheap stand-in (a \emph{surrogate}) for the exact spectrum. (2) Unconstrained fits on zeros 1--400 stall at in-sample rms floors 0.2321 (PT-odd class) and 0.2322 (absorptive-even class), against a null of 0.2438. (3) The second number turns out to be an artifact: a coefficient that should have no effect at all grew to $c_0\approx2.2\times10^6$ and harvested a small improvement from float32 rounding noise; after repair the even floor is 0.2358 and the coincidence disappears. (4) A natural mechanism for "why a floor at 0.232" fails quantitatively, and exact diagonalization of the fitted operators shows that the surrogate no longer describes them: their exact in-sample scores, 0.2523 and 0.2477, are worse than the null. (5) Fits redone inside amplitude limits where the surrogate is verified accurate capture only 1.9\% and 0.6\% over the null in exact spectra, so these model classes, treated fairly, are ``empirically inert on this problem.''
 
 \Cref{tab:paper-spurious-floor-map} maps each claim to the section of this chapter that dissects it and to the earlier chapters that supply the tools.
 
@@ -62,7 +62,7 @@ Generic lessons & Sec.~V, last para. & \cref{sec:paper-spurious-floor-lessons} &
 \end{tabular}
 \end{table}
 
-\subsection{Two words you need: "floor" and "null"}
+\subsection{Two words you need: ``floor'' and ``null''}
 
 Throughout Sec.~V the score is an \emph{in-sample} rms, measured on the training zeros 1--400, in units of the local mean spacing $\gap_n$ (recall from Chapter~\ref{ch:counting-zeros} that $\gap_n=ds_n/dn$, with $s_n$ the smooth zeros). The quantity to be explained is the target fluctuation
 \begin{equation}
@@ -93,7 +93,7 @@ Sec.~II~E of the paper perturbs
 \begin{equation}
 H\;\to\;H+iA,\qquad A(x)=\sum_{k=0}^{M-1}c_k\,\phi_k(x),\label{eq:paper-spurious-floor-HiA}
 \end{equation}
-where $A(x)$ is a \emph{real} function of position, the $c_k$ are real coefficients to be fitted and the $\phi_k$ are basis functions. "Multiplication operator" means that $A$ acts on a wavefunction by multiplying it pointwise: $(A\psi)(x)=A(x)\psi(x)$. Because of the factor $i$, the operator $H+iA$ is not Hermitian, and its eigenvalues are in general complex (Chapter~\ref{ch:non-hermitian}).
+where $A(x)$ is a \emph{real} function of position, the $c_k$ are real coefficients to be fitted and the $\phi_k$ are basis functions. ``Multiplication operator'' means that $A$ acts on a wavefunction by multiplying it pointwise: $(A\psi)(x)=A(x)\psi(x)$. Because of the factor $i$, the operator $H+iA$ is not Hermitian, and its eigenvalues are in general complex (Chapter~\ref{ch:non-hermitian}).
 
 The matrix elements of $A$ in the unperturbed basis are
 \begin{equation}
@@ -117,9 +117,9 @@ Recall from Chapter~\ref{ch:bound-states} that in an even potential every eigenf
 \begin{equation}
 A_{nn}=\int_{-L}^{L}\underbrace{\psi_n(x)^2}_{\text{even}}\underbrace{A(x)}_{\text{odd}}\,\dd x=0,\label{eq:paper-spurious-floor-Ann0}
 \end{equation}
-because the integral of an odd function over a symmetric interval vanishes. This is the paper's "$A_{nn}=0$". More generally $A_{nm}\neq0$ only if $\psi_n\psi_m A$ is even, which for odd $A$ requires $\psi_n$ and $\psi_m$ of \emph{opposite} parity.
+because the integral of an odd function over a symmetric interval vanishes. This is the paper's ``$A_{nn}=0$''. More generally $A_{nm}\neq0$ only if $\psi_n\psi_m A$ is even, which for odd $A$ requires $\psi_n$ and $\psi_m$ of \emph{opposite} parity.
 
-Why "PT"? Recall from Chapter~\ref{ch:non-hermitian}: parity P sends $x\to-x$ and time reversal T sends $i\to-i$ (complex conjugation). Applying P to $iA(x)$ gives $iA(-x)=-iA(x)$; applying T then gives $+iA(x)$. So $H+iA$ is unchanged by the combined operation PT when $A$ is odd. Its first-order shifts $iA_{nn}$ vanish, so its spectrum is real to leading order (the paper's words). We will see in \cref{sec:paper-spurious-floor-exact} that the spectrum stays exactly real for small enough amplitude and can turn complex beyond a threshold.
+Why ``PT''? Recall from Chapter~\ref{ch:non-hermitian}: parity P sends $x\to-x$ and time reversal T sends $i\to-i$ (complex conjugation). Applying P to $iA(x)$ gives $iA(-x)=-iA(x)$; applying T then gives $+iA(x)$. So $H+iA$ is unchanged by the combined operation PT when $A$ is odd. Its first-order shifts $iA_{nn}$ vanish, so its spectrum is real to leading order (the paper's words). We will see in \cref{sec:paper-spurious-floor-exact} that the spectrum stays exactly real for small enough amplitude and can turn complex beyond a threshold.
 
 \subsection{The absorptive-even class}
 
@@ -133,17 +133,17 @@ and the paper says it models $-i\Gamma/2$. Here is what that means. A complex po
 &=\int\Big(\Psi^*\frac{\partial\Psi}{\partial\tau}+\Psi\frac{\partial\Psi^*}{\partial\tau}\Big)\dd x
 \quad\text{(product rule)}\nonumber\\
 &=\int\Big(\Psi^*(-iH\Psi-\tfrac{\Gamma}{2}\Psi)+\Psi(iH\Psi^*-\tfrac{\Gamma}{2}\Psi^*)\Big)\dd x
-\quad\text{(insert }\partial_\tau\Psi=-i\mathcal H\Psi)\nonumber\\
+\nonumber\\
+&\qquad\text{(insert }\partial_\tau\Psi=-i\mathcal H\Psi\text{ and its complex conjugate)}\nonumber\\
 &=-i\int\big(\Psi^*H\Psi-\Psi H\Psi^*\big)\dd x-\int\Gamma|\Psi|^2\dd x
 \quad\text{(collect terms)}\nonumber\\
-&=-\int\Gamma(x)|\Psi|^2\dd x\;\le\;0.
-\quad\text{($H$ Hermitian, real: first integral is 0)}\label{eq:paper-spurious-floor-decay}
+&=-\int\Gamma(x)|\Psi|^2\dd x\;\le\;0.\label{eq:paper-spurious-floor-decay}
 \end{align}
 The first integral vanishes because $H$ is real and Hermitian, so $\int\Psi^*H\Psi\,\dd x=\int\Psi H\Psi^*\dd x$ (Chapter~\ref{ch:schrodinger}). Comparing $V-i\Gamma/2$ with $V+iA$ gives
 \begin{equation}
 A(x)=-\tfrac12\Gamma(x),\qquad\Gamma\ge0\iff A\le0\ \text{pointwise}.\label{eq:paper-spurious-floor-GammaA}
 \end{equation}
-That is the "physical constraint $\Gamma\ge0$ (i.e.\ $A\le0$ pointwise)" of Sec.~II~E.
+That is the ``physical constraint $\Gamma\ge0$ (i.e.\ $A\le0$ pointwise)'' of Sec.~II~E.
 
 For a single level, the eigenvalue $E_n-i\Gamma_n/2$ gives $\Psi\propto e^{-iE_n\tau}e^{-\Gamma_n\tau/2}$, so the \emph{width} $\Gamma_n=-2\,\Im(\text{eigenvalue})$ is the decay rate of $|\Psi|^2$. To first order the eigenvalue is $E_n+iA_{nn}$, so
 \begin{equation}
@@ -197,7 +197,7 @@ In the PT-odd class, can level 1 and level 3 of an even potential couple through
 
 Chapter~\ref{ch:non-hermitian} derived Eq.~(5). Because everything in this chapter hinges on what that formula neglects, we re-derive it here in a form that works for any perturbation $W$, Hermitian or not.
 
-Let $H_0$ have real eigenvalues $E_n$ (nondegenerate) and real orthonormal eigenvectors $|n\rangle$. Seek an eigenvalue $E$ of $H_0+W$ near $E_n$ with eigenvector written as $|\psi\rangle=|n\rangle+\sum_{m\ne n}a_m|m\rangle$ (we fix the coefficient of $|n\rangle$ to be 1; this is allowed because an eigenvector can be rescaled). Write $W_{km}=\langle k|W|m\rangle$.
+We write $H_0$ for the unperturbed Hamiltonian, called $H$ in the paper and so far in this chapter, to distinguish it from the perturbed operators below. Let $H_0$ have real eigenvalues $E_n$ (nondegenerate) and real orthonormal eigenvectors $|n\rangle$. Seek an eigenvalue $E$ of $H_0+W$ near $E_n$ with eigenvector written as $|\psi\rangle=|n\rangle+\sum_{m\ne n}a_m|m\rangle$ (we fix the coefficient of $|n\rangle$ to be 1; this is allowed because an eigenvector can be rescaled). Write $W_{km}=\langle k|W|m\rangle$.
 
 \emph{Project onto $\langle n|$.} Using $\langle n|H_0=E_n\langle n|$ and $\langle n|m\rangle=\delta_{nm}$,
 \begin{equation}
@@ -230,7 +230,7 @@ which is Eq.~(5) of the paper (there written $|A_{nm}|^2$; for real $A_{nm}$ the
 
 \subsection{What the surrogate neglects: only even orders}
 
-How large is the first neglected real term? Here is a short argument that it is fourth order, not third. Write $H(a)=H_0+iaA$, where $a$ scales the whole perturbation. In the unperturbed basis $H_0$ and $A$ are real matrices, so taking the complex conjugate of every entry gives
+How large is the first neglected real term? Here is a short argument that it is fourth order, not third. Write $H(a)=H_0+iaA$, where $a$ scales the whole perturbation. (This $a$ is a new symbol, unrelated to the eigenvector coefficients $a_m$ above.) In the unperturbed basis $H_0$ and $A$ are real matrices, so taking the complex conjugate of every entry gives
 \begin{equation}
 H(a)^*=H_0-iaA=H(-a).\label{eq:paper-spurious-floor-conj}
 \end{equation}
@@ -244,13 +244,17 @@ The real part is an even function of $a$; the imaginary part is odd. A power ser
 \begin{equation}
 \Re E_n(a)=E_n+a^2\,\delta E_n^{(2)}+a^4\,\delta E_n^{(4)}+\dots,\label{eq:paper-spurious-floor-series}
 \end{equation}
-and the relative error of the surrogate is of order $a^2$ times (coupling/spacing)$^2$. Halving the amplitude cuts the relative error by about four; quartering it, by about sixteen. Remember this when you read "at quarter amplitude the surrogate is accurate."
+and the relative error of the surrogate is of order $a^2$ times (coupling/spacing)$^2$. Halving the amplitude cuts the relative error by about four; quartering it, by about sixteen. This scaling holds provided the amplitude is small enough that the $a^4$ term dominates the error. Once some levels have passed an exceptional point (\cref{sec:paper-spurious-floor-exact}), the series no longer converges for them and the rule is only a rough guide. Remember this when you read ``at quarter amplitude the surrogate is accurate.''
 
 \begin{beyond}
-We used that a nondegenerate eigenvalue $E_n(a)$ of $H_0+iaA$ is a smooth (indeed analytic, i.e.\ given by a convergent power series) function of $a$ near $a=0$, so that "follow the branch" is meaningful and the series \cref{eq:paper-spurious-floor-series} exists. This is a theorem of analytic perturbation theory, due to Rellich and Kato; its proof needs complex analysis beyond this book. We take it on trust. The series converges only up to the nearest point (possibly complex) where two eigenvalues collide; \cref{sec:paper-spurious-floor-exact} shows such a collision explicitly.
+We used that a nondegenerate eigenvalue $E_n(a)$ of $H_0+iaA$ is a smooth (indeed analytic, i.e.\ given by a convergent power series) function of $a$ near $a=0$, so that ``follow the branch'' is meaningful and the series \cref{eq:paper-spurious-floor-series} exists. This is a theorem of analytic perturbation theory, due to Rellich and Kato; its proof needs complex analysis beyond this book. We take it on trust. The series converges only up to the nearest point (possibly complex) where two eigenvalues collide; \cref{sec:paper-spurious-floor-exact} shows such a collision explicitly.
 \end{beyond}
 
-For the PT-odd class there is more. Parity $P$ maps $x\to-x$; since $H_0$ is even and $A$ is odd, $PH(-a)P=H_0-iaA(-x)=H_0+iaA(x)=H(a)$. Since $P^2=1$, $P^{-1}=P$, so this says $H(a)=PH(-a)P^{-1}$. Two matrices related this way are called \emph{similar}, and they have the same eigenvalues: if $H(-a)v=Ev$, then $H(a)(Pv)=PH(-a)P^{-1}Pv=P(Ev)=E\,(Pv)$. So $E_n(-a)$ is an eigenvalue of $H(a)$ lying near $E_n$; by the same uniqueness argument as above, the only such eigenvalue for small $|a|$ is $E_n(a)$, hence $E_n(-a)=E_n(a)$. Combined with \cref{eq:paper-spurious-floor-even-odd}, $E_n(a)^*=E_n(a)$: the eigenvalues of the PT-odd class are \emph{exactly real} for every amplitude below the first collision. Beyond it they may pair off into complex conjugates (PT symmetry breaking, Chapter~\ref{ch:non-hermitian}).
+For the PT-odd class there is more. Parity $P$ maps $x\to-x$; since $H_0$ is even and $A$ is odd, $PH(-a)P=H_0-iaA(-x)=H_0+iaA(x)=H(a)$. Since $P^2=1$, $P^{-1}=P$, so this says $H(a)=PH(-a)P^{-1}$. Two matrices related this way are called \emph{similar}, and they have the same eigenvalues: if $H(-a)v=Ev$, then $H(a)(Pv)=PH(-a)P^{-1}Pv=P(Ev)=E\,(Pv)$. So $E_n(-a)$ is an eigenvalue of $H(a)$ lying near $E_n$; by the same uniqueness argument as above, the only such eigenvalue for small $|a|$ is $E_n(a)$, hence $E_n(-a)=E_n(a)$. Combined with \cref{eq:paper-spurious-floor-even-odd}, $E_n(a)^*=E_n(a)$: for small enough $|a|$ the eigenvalues of the PT-odd class are \emph{exactly real}.
+
+The reality persists to larger amplitudes, up to the first collision, by a continuation argument. Take any real $a$. If $E$ is an eigenvalue of $H(a)$, then $E^*$ is an eigenvalue of $H(-a)$ (conjugation, \cref{eq:paper-spurious-floor-conj}). Also $H(-a)$ has the same eigenvalues as $H(a)$ (similarity, just shown). So the spectrum of $H(a)$ is closed under complex conjugation: non-real eigenvalues come in conjugate pairs $E,E^*$.
+
+Now follow a simple real eigenvalue as $a$ grows; it moves continuously. Suppose it first leaves the real axis at an amplitude $a_*$, at the real point $E_*$. Just beyond $a_*$ it is a non-real $E$ close to $E_*$, and its partner $E^*$ is a distinct eigenvalue, also close to $E_*$. As $a\to a_*$ both tend to $E_*$, so at $a_*$ two eigenvalues coincide: a collision. A real eigenvalue can therefore become complex only at a collision. Hence the PT-odd spectrum stays exactly real for every amplitude below the first collision on the real $a$-axis. Beyond it, eigenvalues may pair off into complex conjugates (PT symmetry breaking, Chapter~\ref{ch:non-hermitian}).
 
 \subsection{The quadratic form and the tensors $T^{(n)}$}
 
@@ -355,7 +359,7 @@ Read it as $(\mathrm{fluc}_n-\delta E_n)/\gap_n$ with $\delta E_n=-c^\top T^{(n)
 \begin{equation}
 \frac{\partial}{\partial c_k}\sum_{i,l}c_iT_{il}c_l=\sum_lT_{kl}c_l+\sum_ic_iT_{ik}=2\,(T c)_k\quad\text{(using }T_{ik}=T_{ki}),\label{eq:paper-spurious-floor-grad}
 \end{equation}
-so $J_{nk}=\partial r_n/\partial c_k=2(T^{(n)}c)_k/\gap_n$, as the paper states. The update is Levenberg--Marquardt with "diag scaling" (Marquardt's form, Chapter~\ref{ch:fitting}): solve $(J^\top J+\lambda\,\mathrm{diag}(J^\top J))\,\delta c=-J^\top r$, trying damping values $(0.3\lambda,\lambda,10\lambda)$. Because the model is quadratic in $c$, the problem has many local minima, so the paper uses 6 random restarts with $c\sim\mathcal N(0,0.3^2)$ in each component, seed 0, at most 200 iterations.
+so $J_{nk}=\partial r_n/\partial c_k=2(T^{(n)}c)_k/\gap_n$, as the paper states. The update is Levenberg--Marquardt with ``diag scaling'' (Marquardt's form, Chapter~\ref{ch:fitting}): solve $(J^\top J+\lambda\,\mathrm{diag}(J^\top J))\,\delta c=-J^\top r$, trying damping values $(0.3\lambda,\lambda,10\lambda)$. Plain damping adds $\lambda$ times the identity matrix. Replacing the identity by $\mathrm{diag}(J^\top J)$ damps each coefficient in proportion to its own sensitivity, so the step does not change if one coefficient is rescaled (say, measured in different units). Because the model is quadratic in $c$, the least-squares problem is non-convex (for instance, $c$ and $-c$ give identical shifts) and can have several local minima. The paper uses 6 random restarts with $c\sim\mathcal N(0,0.3^2)$ in each component, seed 0, at most 200 iterations.
 
 \begin{sample}{One residual and its Jacobian}
 Suppose for one level $\mathrm{fluc}_n=-0.6$, $\gap_n=1.5$, $M=2$, $T^{(n)}=\begin{pmatrix}2&1\\1&3\end{pmatrix}$ and $c=(1,-1)$. Find $r_n$ and the Jacobian row.
@@ -433,15 +437,15 @@ Using the paper's numbers, express each floor as a percentage improvement over t
 These sit inside the paper's later statement that the floor is ``the null minus a small capture (3--7\% across splits).'' For contrast, the Hermitian fit with $M=400$ on the same zeros reaches in-sample 0.137 (Table~I of the paper), a capture of more than 40\%.
 \end{sample}
 
-\textbf{Why OOS can blow up.} In-sample, the data constrain the 400 numbers $c^\top T^{(n)}c$ for $n\le400$, not the vector $c$ itself. Directions of $c$ that barely affect these 400 quadratic forms can grow without penalty. A held-out level has its own tensor $T^{(n)}$, which can weight those directions strongly; since the shift is quadratic, a coefficient ten times too large gives a shift a hundred times too large. With 450 training zeros the paper reports held-out rms up to 167 mean spacings: far beyond any physical fluctuation, which is typically a fraction of a spacing. This is a heuristic explanation, consistent with the paper's phrase "extrapolated quadratic shifts blow up"; the paper does not give a detailed decomposition.
+\textbf{Why OOS can blow up.} In-sample, the data constrain the 400 numbers $c^\top T^{(n)}c$ for $n\le400$, not the vector $c$ itself. Directions of $c$ that barely affect these 400 quadratic forms can grow without penalty. A held-out level has its own tensor $T^{(n)}$, which can weight those directions strongly; since the shift is quadratic, a coefficient ten times too large gives a shift a hundred times too large. With 450 training zeros the paper reports held-out rms up to 167 mean spacings: far beyond any physical fluctuation, which is typically a fraction of a spacing. This is a heuristic explanation, consistent with the paper's phrase ``extrapolated quadratic shifts blow up''; the paper does not give a detailed decomposition.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-spurious-floor_floors.pdf}
-\caption{The paper's in-sample scores (rms in mean spacings, zeros 1--400) for the two non-Hermitian classes, redrawn from the numbers in Sec.~V and the key anchors of Appendix~A. "Surrogate" means scored with the second-order formula Eq.~(5); "exact" means scored with the exact eigenvalues of the fitted operator. The open marker is the even-class floor before the null-mode repair. Dashed line: null 0.2438. Lower is better.}
+\caption{The paper's in-sample scores (rms in mean spacings, zeros 1--400) for the two non-Hermitian classes, redrawn from the numbers in Sec.~V and the key anchors of Appendix~A. ``Surrogate'' means scored with the second-order formula Eq.~(5); ``exact'' means scored with the exact eigenvalues of the fitted operator. The open marker is the even-class floor before the null-mode repair. Dashed line: null 0.2438. Lower is better.}
 \label{fig:paper-spurious-floor-floors}
 \end{figure}
 
-\textbf{Strength and limits.} The floor values are reported to four digits and are anchored in App.~A, which makes them checkable against the Zenodo record \cite{zenodo}. The paper does not list $M$ for these fits in the main text (App.~A gives only the restart distribution $\mathcal N(0,0.3^2)^M$), so do not assume a particular value when reasoning about these fits; and the computation was not rerun in revision. The OOS figures (1.4, 167) are given as maxima ("up to"), not as a table.
+\textbf{Strength and limits.} The floor values are reported to four digits and are anchored in App.~A, which makes them checkable against the Zenodo record \cite{zenodo}. The paper does not list $M$ for these fits in the main text (App.~A gives only the restart distribution $\mathcal N(0,0.3^2)^M$), so do not assume a particular value when reasoning about these fits; and the computation was not rerun in revision. The OOS figures (1.4, 167) are given as maxima (``up to''), not as a table.
 
 \begin{keyideas}
 \item Unconstrained floors: 0.2321 (odd), 0.2358 (even, repaired) against null 0.2438, captures of 4.8\% and 3.3\%.
@@ -479,13 +483,13 @@ and by symmetry $T^{(n)}_{l0}=0$. The coefficient $c_0$ appears nowhere in $c^\t
 
 \subsection{Why it was not dead in practice}
 
-On a computer, $(\phi_0)_{nm}$ is computed as a sum $\sum_j\psi_n(x_j)\psi_m(x_j)h$ over grid points. In exact arithmetic, for exactly orthonormal eigenvectors, this is $\delta_{nm}$. In floating point it is $\delta_{nm}+\eta_{nm}$, where $\eta_{nm}$ is rounding noise. Recall from Chapter~\ref{ch:asymptotics} that the unit roundoff of single precision (float32) is about $1.2\times10^{-7}$, against $2.2\times10^{-16}$ in double precision. The paper's tensors were stored in float32 (Sec.~II~E: ``zeroed exactly rather than left as float32 noise''); the paper does not state why, and a common reason is memory, since float32 halves storage.
+On a computer, $(\phi_0)_{nm}$ is computed as a sum $\sum_j\psi_n(x_j)\psi_m(x_j)h$ over grid points. In exact arithmetic, for exactly orthonormal eigenvectors, this is $\delta_{nm}$. In floating point it is $\delta_{nm}+\eta_{nm}$, where $\eta_{nm}$ is rounding noise. Recall from Chapter~\ref{ch:asymptotics} that the unit roundoff of single precision (float32) is about $1.2\times10^{-7}$, against $2.2\times10^{-16}$ in double precision. The paper's wording implies that the tensors were held in float32 (Sec.~II~E: ``zeroed exactly rather than left as float32 noise''). The paper does not state why; a common reason for such a choice is memory, since float32 halves storage.
 
-\Cref{fig:paper-spurious-floor-float32} shows the effect on a small example: the overlaps of 60 finite-difference eigenvectors of the infinite well, computed in float32 and in float64. The analytically-zero off-diagonal overlaps come out at the $10^{-8}$ level in float32 and many orders of magnitude smaller in float64.
+\Cref{fig:paper-spurious-floor-float32} shows the effect on a small example: the overlaps of 60 finite-difference eigenvectors of the infinite well, computed in float32 and in float64. The analytically-zero off-diagonal overlaps come out many orders of magnitude larger in float32 than in float64. In this example their median magnitude lies between $10^{-10}$ and $10^{-6}$ in float32 and below $10^{-12}$ in float64, with a ratio of more than a thousand.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-spurious-floor_float32.pdf}
-\caption{Histogram of $\log_{10}|\langle n|m\rangle|$ for $n\neq m$, the analytically zero overlaps of the first 60 finite-difference eigenvectors of the infinite well ($L=\pi/2$, $N=800$ interior points), each normalized so that $\sum\psi^2h=1$. Overlaps computed in float32 (right group) sit near $10^{-8}$; the same overlaps in float64 (left group) are near rounding level of double precision. A dead parameter multiplying such numbers is no longer dead.}
+\caption{Histogram of $\log_{10}|\langle n|m\rangle|$ for $n\neq m$, the analytically zero overlaps of the first 60 finite-difference eigenvectors of the infinite well ($L=\pi/2$, $N=800$ interior points), each normalized so that $\sum\psi^2h=1$. Overlaps computed in float32 (right group) lie many orders of magnitude above the same overlaps computed in float64 (left group), which are at the rounding level of double precision. A dead parameter multiplying such numbers is no longer dead.}
 \label{fig:paper-spurious-floor-float32}
 \end{figure}
 
@@ -506,14 +510,16 @@ print("float64 median |offdiag|:", np.median(abs(G64[off])))
 print("float32 median |offdiag|:", np.median(abs(G32[off])))
 \end{pycode}
 
-Once $(\phi_0)_{nm}=\eta_{nm}\ne0$ off the diagonal, the operator matrix becomes $A_{nm}=c_0\eta_{nm}+\sum_{l\ge1}c_l(\phi_l)_{nm}$. The constant mode now contributes a \emph{pseudo-random matrix} $c_0\eta_{nm}$. With entries $\eta\sim10^{-9}$ to $10^{-7}$, a coefficient $c_0=2.2\times10^6$ makes $c_0\eta$ of order $2.2\times10^{-3}$ to $0.26$ in energy units, comparable with level spacings of order 1. (This order-of-magnitude reading is ours; the paper states the mechanism, not this estimate.) A random matrix of the right size is a new, arbitrary set of features, and an unconstrained least-squares fit will use any feature that reduces the residual, however meaningless.
+What follows is one possible route by which such noise can act, and the reconstruction is ours. The paper says only that the noise sat in the stored float32 tensor entries $T^{(n)}_{0l}$. That noise may have arisen from rounding of the overlaps, of the state sums, or of both. Suppose, for illustration, that the overlaps carry noise, $(\phi_0)_{nm}=\eta_{nm}\ne0$ off the diagonal. Then the operator matrix becomes $A_{nm}=c_0\eta_{nm}+\sum_{l\ge1}c_l(\phi_l)_{nm}$, and the constant mode contributes a \emph{pseudo-random matrix} $c_0\eta_{nm}$. Take entries $\eta$ of size $10^{-9}$ to $10^{-7}$ (an assumed range covering float32 rounding levels). A coefficient $c_0=2.2\times10^6$ then makes $c_0\eta$ of order $2\times10^{-3}$ to $0.2$ in energy units, up to a sizeable fraction of a level spacing (spacings here are of order 1).
+
+Whatever the route, the effect on the fit is the same. The tensor rows $T^{(n)}_{0l}$ stop being zero, and $c_0$ multiplies a set of meaningless, pseudo-random numbers. Such numbers form a new, arbitrary set of features, and an unconstrained least-squares fit will use any feature that reduces the residual, however meaningless.
 
 \subsection{Harvesting noise: a least-squares picture}
 
 The essence can be seen in plain linear least squares (Chapter~\ref{ch:least-squares}).
 
 \begin{sample}{Harvesting a noise column}
-Fit $y=(0.3,-0.1,0.2,-0.4)$ with two columns: a genuine feature $g=(1,1,1,1)$ and a "noise" column $z_\varepsilon=\varepsilon\,(1,-1,-1,1)$ with $\varepsilon=10^{-7}$. Find the least-squares coefficients and the rms residual with and without the noise column.
+Fit $y=(0.3,-0.1,0.2,-0.4)$ with two columns: a genuine feature $g=(1,1,1,1)$ and a ``noise'' column $z_\varepsilon=\varepsilon\,(1,-1,-1,1)$ with $\varepsilon=10^{-7}$. Find the least-squares coefficients and the rms residual with and without the noise column.
 
 \textbf{Step 1: orthogonality.} $g\cdot z_\varepsilon=\varepsilon(1-1-1+1)=0$, so the two coefficients decouple (projection onto orthogonal directions, Chapter~\ref{ch:least-squares}).
 
@@ -541,12 +547,12 @@ The improvement does not depend on $\varepsilon$ at all; only the coefficient do
 
 \subsection{The repair and what it revealed}
 
-App.~A step 9: ``even-class rows $T^{(n)}_{0l}$ zeroed analytically.'' Setting those entries to their exact value, zero, makes $c_0$ truly dead again. After repair the even floor rose from 0.2322 to 0.2358, while the odd floor stayed at 0.2321 (the odd basis has no constant mode). The near coincidence 0.2321 versus 0.2322, which had suggested a parity-independent "floor" with physical meaning, was an artifact: it vanished when one input bug was fixed.
+App.~A step 9: ``even-class rows $T^{(n)}_{0l}$ zeroed analytically.'' Setting those entries to their exact value, zero, makes $c_0$ truly dead again. After repair the even floor rose from 0.2322 to 0.2358, while the odd floor stayed at 0.2321 (the odd basis has no constant mode). The near coincidence 0.2321 versus 0.2322, which had suggested a parity-independent ``floor'' with physical meaning, was an artifact: it vanished when one input bug was fixed.
 
 \begin{checkpoint}
 Why does the constant mode have zero second-order real shift but a nonzero effect on the imaginary parts?
 \end{checkpoint}
-\checkanswer{Its matrix is the identity, $(\phi_0)_{nm}=\delta_{nm}$. The off-diagonal elements, which drive the second-order real shift, are zero; the diagonal elements, which give the first-order imaginary shift $ic_0$, are 1. Exactly, $H+ic_0$ has eigenvalues $E_n+ic_0$: all imaginary, no real change.}
+\checkanswer{Its matrix is the identity, $(\phi_0)_{nm}=\delta_{nm}$. The off-diagonal elements, which drive the second-order real shift, are zero; the diagonal elements, which give the first-order imaginary shift $ic_0$, are 1. Exactly, $H+ic_0$ has eigenvalues $E_n+ic_0$: the shift is purely imaginary, and the real parts do not change.}
 
 \begin{checkpoint}
 Two variants of a model report floors 0.2321 and 0.2322. List two checks you would make before attributing the agreement to physics.
@@ -557,9 +563,9 @@ Two variants of a model report floors 0.2321 and 0.2322. List two checks you wou
 
 \begin{keyideas}
 \item The constant mode $\phi_0=1$ is a null mode: exactly, $H+ic_0$ only shifts eigenvalues by $ic_0$; in the surrogate, $T^{(n)}_{0l}=0$.
-\item In float32 the analytic zeros become noise near $10^{-8}$--$10^{-7}$; multiplied by $c_0\approx2.2\times10^6$ they act as a random operator of physical size.
+\item In float32 the analytic zeros become rounding noise, many orders of magnitude above the double-precision level. Multiplied by $c_0\approx2.2\times10^6$, noise in the range $10^{-9}$--$10^{-7}$ would give pseudo-random entries of up to a sizeable fraction of a spacing.
 \item Least squares harvests a fixed improvement from any noise column, with a coefficient scaling as $1/(\text{noise size})$.
-\item After repair the even floor is 0.2358; the "identical floors across parity" dissolve.
+\item After repair the even floor is 0.2358; the ``identical floors across parity'' dissolve.
 \end{keyideas}
 
 %======================================================================
@@ -575,13 +581,13 @@ Recall the sum rule from Chapter~\ref{ch:non-hermitian}. If $n$ and $m$ both run
 \quad\text{(group each pair once; }A_{mn}^2=A_{nm}^2)\nonumber\\
 &=0 .\label{eq:paper-spurious-floor-sumrule}
 \end{align}
-Each pair contributes equal and opposite amounts to its two members. The paper verifies this numerically at the fitted coefficients: $3.6\times10^{-15}$ (odd) and $1.4\times10^{-14}$ (even) in Sec.~V~A, summarized as "verified to $4\times10^{-15}$" in the main text. Numbers at this level are rounding of double-precision sums; they confirm both the identity and the code.
+Each pair contributes equal and opposite amounts to its two members. The paper verifies this numerically at the fitted coefficients: $3.6\times10^{-15}$ (odd) and $1.4\times10^{-14}$ (even) in Sec.~V~A, summarized as ``verified to $4\times10^{-15}$'' in the main text. Numbers at this level are rounding of double-precision sums; they confirm both the identity and the code.
 
 \emph{Locality}: with weights $w_{nm}=|A_{nm}|^2/|E_n-E_m|$, the paper finds that half the total weight lies within $|n-m|\le5$ (odd class) and $\le10$ (even), and 90\% within about 60 levels. So the surrogate mostly moves levels by trading shifts between near neighbors.
 
 \subsection{The hypothesis}
 
-Put the two facts together. If shifts sum to zero and are traded only locally, then the model output averaged over a block of $w$ consecutive levels should be close to zero. Such a model cannot produce a slowly varying, block-averaged pattern. So the part of the target that is block-averaged (the "block-coherent" part) should be unreachable, and perhaps the floor \emph{is} that part. This is the hypothesis Sec.~V tests: that the floor equals the rms of the locally averaged part of the target fluctuation.
+Put the two facts together. If shifts sum to zero and are traded only locally, then the model output averaged over a block of $w$ consecutive levels should be close to zero. Such a model cannot produce a slowly varying, block-averaged pattern. So the part of the target that is block-averaged (the ``block-coherent'' part) should be unreachable, and perhaps the floor \emph{is} that part. This is the hypothesis Sec.~V tests: that the floor equals the rms of the locally averaged part of the target fluctuation.
 
 To make it precise, write $d_n=\mathrm{fluc}_n/\gap_n$ and, for an odd window $w=2q+1$, define the centred moving average and its complement:
 \begin{equation}
@@ -595,7 +601,11 @@ Here is what the hypothesis can and cannot claim. Suppose an ideal local model p
 \begin{equation}
 \Big(\frac1w\sum_{i=-q}^{q}x_{n+i}\Big)^2\le\frac1w\sum_{i=-q}^{q}x_{n+i}^2 ,\label{eq:paper-spurious-floor-CS}
 \end{equation}
-and summing over all full windows, each $x_j^2$ appears in at most $w$ windows, each time with weight $1/w$, so $\sum_n B_w(x)_n^2\le\sum_jx_j^2$. Applied to $x=d-m$, the rms of the residual is at least the rms of $B_w(d)$, up to an edge factor $\sqrt{N/(N-w+1)}$ that is negligible for $N=400$. So the block-coherent rms is a \emph{lower bound} on what a perfectly local, sum-preserving model could achieve. The hypothesis was that the observed floor sits at this bound.
+and we sum over all $n_{\rm fit}-w+1$ full windows. Here $n_{\rm fit}=400$ is the number of scored levels; we avoid the letter $N$, which in this chapter is a grid size. Each $x_j^2$ appears in at most $w$ windows, each time with weight $1/w$, so $\sum_n B_w(x)_n^2\le\sum_jx_j^2$. To form mean squares, divide the left side by the number of full windows and the right side by $n_{\rm fit}$:
+\begin{equation}
+\mathrm{rms}(x)\;\ge\;\sqrt{\frac{n_{\rm fit}-w+1}{n_{\rm fit}}}\;\mathrm{rms}\big(B_w(x)\big).\label{eq:paper-spurious-floor-edge}
+\end{equation}
+Apply this to $x=d-m$, using $B_w(d-m)=B_w(d)$. The rms of the residual is at least the rms of $B_w(d)$ times the edge factor $\sqrt{(n_{\rm fit}-w+1)/n_{\rm fit}}$, which exceeds $0.98$ for $w\le13$ and $n_{\rm fit}=400$. So the block-coherent rms is a \emph{lower bound} on what a perfectly local, sum-preserving model could achieve. The hypothesis was that the observed floor sits at this bound.
 
 \subsection{The test}
 
@@ -607,7 +617,7 @@ All are far below 0.232. The main text summarizes: ``that component has rms only
 
 The lower bound is nowhere near binding. The floor is not explained by what the model cannot do; it must be explained by what the model, as fitted, does not do.
 
-\Cref{fig:paper-spurious-floor-blocks} repeats the decomposition at small scale with qmnt, using $d_n=(t_n-s_n)/\gap_n$ for zeros 1--400. This is the smooth-zero version of the target, not the paper's Richardson-corrected one, so it is close to but not identical with the paper's $d_n$. Its block-coherent rms stays below 0.15 for every window (the CHECKS script asserts this bound; the individual values are plotted), so it lies at least a factor 1.5 below the floor 0.232. We quote only the bound because this smooth-zero version is a stand-in for the paper's targets, not a reproduction of them.
+\Cref{fig:paper-spurious-floor-blocks} repeats the decomposition at small scale with qmnt, using $d_n=(t_n-s_n)/\gap_n$ for zeros 1--400. This is the smooth-zero version of the target, not the paper's Richardson-corrected one, so it is close to but not identical with the paper's $d_n$. Its block-coherent rms stays below 0.15 for every window, so it lies at least a factor 1.5 below the floor 0.232. The individual values are plotted, and Problem 11 asks you to compute them. We quote only this bound in the text because the smooth-zero version is a stand-in for the paper's targets, not a reproduction of them.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-spurious-floor_blocks.pdf}
@@ -616,15 +626,15 @@ The lower bound is nowhere near binding. The floor is not explained by what the 
 \end{figure}
 
 \begin{sample}{Why negatively correlated sequences have small block averages}
-Let $d_n=(-1)^na$, the extreme of negative lag-1 correlation. Compute $B_w(d)$ and its rms for odd $w=2q+1$.
+Let $d_n=(-1)^nd_0$ with a constant amplitude $d_0>0$, the extreme of negative lag-1 correlation. Compute $B_w(d)$ and its rms for odd $w=2q+1$.
 
-\textbf{Step 1: one window.} $B_w(d)_n=\frac aw\sum_{i=-q}^{q}(-1)^{n+i}=\frac{(-1)^na}{w}\sum_{i=-q}^{q}(-1)^i$.
+\textbf{Step 1: one window.} $B_w(d)_n=\frac{d_0}{w}\sum_{i=-q}^{q}(-1)^{n+i}=\frac{(-1)^nd_0}{w}\sum_{i=-q}^{q}(-1)^i$.
 
 \textbf{Step 2: the alternating sum.} The terms for $i$ and $-i$ are equal, so $\sum_{i=-q}^{q}(-1)^i=1+2\sum_{i=1}^{q}(-1)^i$. For $q$ odd the inner sum is $-1$, giving $-1$; for $q$ even it is $0$, giving $+1$. So the sum is $(-1)^q$.
 
-\textbf{Step 3: rms.} $B_w(d)_n=(-1)^{n+q}a/w$, so $|B_w|=a/w$ for every $n$:
+\textbf{Step 3: rms.} $B_w(d)_n=(-1)^{n+q}d_0/w$, so $|B_w|=d_0/w$ for every $n$:
 \[
-\boxed{\mathrm{rms}\,B_w(d)=\frac{a}{w}}
+\boxed{\mathrm{rms}\,B_w(d)=\frac{d_0}{w}}
 \]
 For $w=3$ the block part is one third of the signal. Recall from Chapter~\ref{ch:level-statistics} and the paper's Sec.~III that the zero fluctuations have negative autocorrelation at lags 1--3; that is why their block averages are small.
 \end{sample}
@@ -644,7 +654,7 @@ Model the target as $d=B+F$ with $B$ and $F$ uncorrelated, $\mathrm{rms}(d)=0.24
 
 \textbf{Step 2: residual variance.} $\sigma_r^2=\mathrm{var}(d-m)=\sigma_d^2-2\,\mathrm{cov}(d,m)+\sigma_m^2$, and $\mathrm{cov}(d,m)=\mathrm{cov}(F,m)+\mathrm{cov}(B,m)=\rho\sigma_F\sigma_m+0$.
 
-\textbf{Step 3: numbers.} For $\sigma_m=0.07$: $\sigma_r^2=0.059438-2(0.3)(0.2416)(0.07)+0.0049=0.054193$, $\sigma_r=0.2328$. For $\sigma_m=0.06$: $\sigma_r=0.2331$.
+\textbf{Step 3: numbers.} For $\sigma_m=0.07$: $\sigma_r^2=0.059438-2(0.3)(0.2416)(0.07)+0.0049=0.054191$, $\sigma_r=0.2328$. For $\sigma_m=0.06$: $\sigma_r=0.2331$.
 
 \textbf{Step 4: optimum.} $d\sigma_r^2/d\sigma_m=-2\rho\sigma_F+2\sigma_m=0$ gives $\sigma_m=\rho\sigma_F=0.0725$ and $\sigma_r^2=\sigma_d^2-\rho^2\sigma_F^2$, $\sigma_r=0.2328$.
 \[
@@ -658,7 +668,7 @@ Does the sum rule $\sum_n\delta E_n=0$ restrict the in-sample target the model c
 \end{checkpoint}
 \checkanswer{Yes, in the surrogate: the model's 400 shifts (if the scored levels formed the whole basis) would have mean zero, so any nonzero mean of the target is unreachable. In the paper the sum runs over 652 states while 400 are scored, so the constraint on the scored window is only approximate; together with locality, the constraint is the one behind the block-coherence hypothesis.}
 
-\textbf{Strength and limits.} The refutation is decisive in direction: a lower bound three to twelve times below the observed floor cannot be the floor. The positive explanation ("small capture") is descriptive; the paper does not explain \emph{why} the capture is small for these classes, and we should not either.
+\textbf{Strength and limits.} The refutation is decisive in direction: a lower bound two to twelve times below the observed floor cannot be the floor. The positive explanation (``small capture'') is descriptive; the paper does not explain \emph{why} the capture is small for these classes, and we should not either.
 
 \begin{keyideas}
 \item Sum rule and locality imply that a perfect surrogate model can only redistribute shifts locally; the block-coherent rms is then a lower bound on its residual.
@@ -680,7 +690,7 @@ Does the sum rule $\sum_n\delta E_n=0$ restrict the in-sample target the model c
 
 \subsection{A two-level model that shows everything}
 
-All three symptoms (poor correlation, overstated magnitude, failed matching) appear in the simplest possible case. Take two levels with spacing $\Delta>0$ and an imaginary coupling $ia$ with zero diagonal (a PT-odd pair):
+Two of the three symptoms (wrong magnitude, failed matching) appear already in the simplest possible case. The loss of correlation across levels needs many levels and is shown in the box example below. Take two levels with spacing $\Delta>0$ and an imaginary coupling $ia$ with zero diagonal (a PT-odd pair):
 \begin{equation}
 H(a)=\begin{pmatrix}E_1&ia\\ia&E_1+\Delta\end{pmatrix}.\label{eq:paper-spurious-floor-2x2}
 \end{equation}
@@ -688,25 +698,25 @@ The characteristic equation (Chapter~\ref{ch:eigen}) is $(E_1-\lambda)(E_1+\Delt
 \begin{equation}
 \lambda_\pm=E_1+\frac\Delta2\pm\sqrt{\frac{\Delta^2}{4}-a^2}.\label{eq:paper-spurious-floor-2x2eig}
 \end{equation}
-Write $x=a/\Delta$. For $x<\tfrac12$ both eigenvalues are real. The exact shift of the lower level is
+Write $x=a/\Delta$. In this subsection $x$ is a dimensionless coupling, not a position, and $a$ is the coupling strength. For $x<\tfrac12$ both eigenvalues are real. The exact shift of the lower level is
 \begin{equation}
 \delta E_1^{\rm exact}=\frac\Delta2\Big(1-\sqrt{1-4x^2}\Big),\qquad
 \delta E_1^{(2)}=-\frac{a^2}{E_1-(E_1+\Delta)}=x^2\Delta .\label{eq:paper-spurious-floor-2x2shift}
 \end{equation}
 Expanding the square root, $\sqrt{1-4x^2}=1-2x^2-2x^4-\dots$, gives $\delta E_1^{\rm exact}=\Delta(x^2+x^4+\dots)$: second order agrees, and the first correction is fourth order, as \cref{eq:paper-spurious-floor-series} promised.
 
-At $x=\tfrac12$ the two eigenvalues collide at $E_1+\Delta/2$: an \emph{exceptional point}. For $x>\tfrac12$ the square root becomes imaginary, $\lambda_\pm=E_1+\Delta/2\pm i\sqrt{a^2-\Delta^2/4}$: PT symmetry is broken, and both real parts are stuck at $E_1+\Delta/2$. The exact real shift saturates at $\Delta/2$, while the surrogate keeps growing as $x^2\Delta$.
+At $x=\tfrac12$ the two eigenvalues collide at $E_1+\Delta/2$: an \emph{exceptional point}. For $x>\tfrac12$ the square root becomes imaginary, $\lambda_\pm=E_1+\Delta/2\pm i\sqrt{a^2-\Delta^2/4}$: PT symmetry is broken, and both real parts are stuck at $E_1+\Delta/2$. The exact real shift saturates at $\Delta/2$, while the surrogate keeps growing as $x^2\Delta$. Beyond the exceptional point the ratio is surrogate/exact $=x^2\Delta/(\Delta/2)=2x^2$. So the surrogate still understates for $\tfrac12<x<1/\sqrt2\approx0.707$, agrees at $x=1/\sqrt2$, and overstates for larger $x$ (twofold at $x=1$). Below the exceptional point it always understates, because every term $x^4,x^6,\dots$ in the expansion of the exact shift has a positive coefficient.
 
-The eigenvectors tell the matching story. For eigenvalue $\lambda$, the first row of $(H-\lambda)v=0$ gives $(E_1-\lambda)u+iav'=0$, so $|v'/u|=|\lambda-E_1|/a$. Below the exceptional point the lower eigenvector has $|v'/u|<1$: it is mostly state 1 and is matched to it. At and beyond the exceptional point, $|\lambda-E_1|^2=\Delta^2/4+(a^2-\Delta^2/4)=a^2$, so $|v'/u|=1$: \emph{both} eigenvectors overlap equally with both unperturbed states. Matching by overlap (Chapter~\ref{ch:non-hermitian}) has no answer. \Cref{fig:paper-spurious-floor-twolevel} plots both effects.
+The eigenvectors tell the matching story. Write an eigenvector with eigenvalue $\lambda$ as $v=(v_1,v_2)$, its components along unperturbed states 1 and 2. The first row of $(H-\lambda)v=0$ gives $(E_1-\lambda)v_1+iav_2=0$, so $|v_2/v_1|=|\lambda-E_1|/a$. Below the exceptional point the lower eigenvector has $|v_2/v_1|<1$: it is mostly state 1 and is matched to it. At and beyond the exceptional point, $|\lambda-E_1|^2=\Delta^2/4+(a^2-\Delta^2/4)=a^2$, so $|v_2/v_1|=1$: \emph{both} eigenvectors overlap equally with both unperturbed states. Matching by overlap (Chapter~\ref{ch:non-hermitian}) has no answer. \Cref{fig:paper-spurious-floor-twolevel} plots both effects.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/paper-spurious-floor_twolevel.pdf}
-\caption{The two-level model \cref{eq:paper-spurious-floor-2x2}. Left: real shift of the lower level, exact (solid) and second order (dashed), in units of the spacing $\Delta$, against coupling $x=a/\Delta$. The exceptional point at $x=1/2$ is marked; beyond it the exact real shift saturates at $\Delta/2$ while the surrogate keeps growing, overstating the shift twofold at $x=1$. Right: weight of unperturbed state 1 in the lower-branch eigenvector, $|u|^2/(|u|^2+|v'|^2)$; it falls to $1/2$ at the exceptional point and stays there, so the eigenstate can no longer be assigned to a single unperturbed level.}
+\caption{The two-level model \cref{eq:paper-spurious-floor-2x2}. Left: real shift of the lower level, exact (solid) and second order (dashed), in units of the spacing $\Delta$, against coupling $x=a/\Delta$. The exceptional point at $x=1/2$ is marked; beyond it the exact real shift saturates at $\Delta/2$ while the surrogate keeps growing, overstating the shift twofold at $x=1$. Here $x$ is the dimensionless coupling, not a position. Right: weight of unperturbed state 1 in the lower-branch eigenvector $(v_1,v_2)$, $|v_1|^2/(|v_1|^2+|v_2|^2)$; it falls to $1/2$ at the exceptional point and stays there, so the eigenstate can no longer be assigned to a single unperturbed level.}
 \label{fig:paper-spurious-floor-twolevel}
 \end{figure}
 
 \begin{sample}{Exact versus surrogate in the two-level model}
-For \cref{eq:paper-spurious-floor-2x2}, compute the exact and second-order real shifts of the lower level, in units of $\Delta$, at $x=\tfrac14,\tfrac12,1$. Also give $|v'/u|$ for the lower state at $x=\tfrac14$.
+For \cref{eq:paper-spurious-floor-2x2}, compute the exact and second-order real shifts of the lower level, in units of $\Delta$, at $x=\tfrac14,\tfrac12,1$. Also give $|v_2/v_1|$ for the lower state at $x=\tfrac14$.
 
 \textbf{Step 1: $x=\tfrac14$.} $\sqrt{1-4/16}=\sqrt{0.75}=0.8660$, so $\delta E^{\rm exact}=\tfrac12(1-0.8660)=0.0670$; surrogate $x^2=0.0625$. The surrogate is low by 7\%.
 
@@ -714,11 +724,11 @@ For \cref{eq:paper-spurious-floor-2x2}, compute the exact and second-order real 
 
 \textbf{Step 3: $x=1$.} Exact real part stuck at $0.5$; surrogate $1$. The surrogate now overstates by a factor two.
 
-\textbf{Step 4: overlap.} At $x=\tfrac14$, $|v'/u|=\delta E^{\rm exact}/x=0.0670/0.25=0.268$, so the lower state is clearly state 1.
+\textbf{Step 4: overlap.} At $x=\tfrac14$, $|v_2/v_1|=|\lambda-E_1|/a=(\delta E^{\rm exact}/\Delta)/x=0.0670/0.25=0.268$, so the lower state is clearly state 1.
 \[
-\boxed{(0.0670,\,0.0625),\ (0.5,\,0.25),\ (0.5,\,1);\quad |v'/u|=0.268}
+\boxed{(0.0670,\,0.0625),\ (0.5,\,0.25),\ (0.5,\,1);\quad |v_2/v_1|=0.268}
 \]
-The model does not prove the paper's "twofold" overstatement; it shows that an overstatement of this size is exactly what happens when a quadratic surrogate is pushed past an exceptional point.
+The model does not prove the paper's ``twofold'' overstatement. It shows only that overstatements of order one (for example, twofold at $x=1$) arise naturally once a coupling exceeds the spacing; just past the exceptional point the surrogate can even understate.
 \end{sample}
 
 \begin{sample}{Why quarter amplitude restores agreement}
@@ -735,15 +745,15 @@ In the two-level model at $x=0.4$ (below the exceptional point), compute the rel
 The ratio is near 16 (the leading $x^2$ scaling), somewhat larger because at $x=0.4$ the higher terms of the series also matter. Quartering the amplitude is a powerful test: if the code were wrong, agreement would not improve like this.
 \end{sample}
 
-This is exactly the logic of the paper's next sentence: ``At quarter amplitude the surrogate is accurate (corr $+0.88$/$+0.94$), confirming the machinery and isolating amplitude as the culprit.'' The same tensors, the same code, the same coefficient \emph{direction}: only the size changed. Agreement returned. This is strong evidence that the tensors were computed correctly and that amplitude is the main cause of the disagreement at full amplitude, although by itself it does not exclude every other cause.
+This is exactly the logic of the paper's next sentence: ``At quarter amplitude the surrogate is accurate (corr $+0.88$/$+0.94$), confirming the machinery and isolating amplitude as the culprit.'' The same tensors and the same code were used, and presumably the fitted coefficients scaled by $\tfrac14$, that is, the same coefficient \emph{direction} (the paper does not spell out the construction). Only the size changed, and agreement returned. This supports the correctness of the machinery and points to amplitude as the main cause of the disagreement at full amplitude, although by itself it does not exclude every other cause. Note also that the clean sixteenfold rule of \cref{eq:paper-spurious-floor-series} applies only when both amplitudes are inside the radius of convergence. At the paper's full amplitude some pairs had already left it (3\% of states unmatched), so the improvement need not follow that rule.
 
 \subsection{The same thing in a many-level box}
 
-\Cref{fig:paper-spurious-floor-boxexact} is a small-scale analogue of the paper's Fig.~5 (left): six random cosine modes in the infinite well, with all 80 basis states, scored on the lowest 40 levels. At small amplitude the exact real shifts (obtained by full complex diagonalization and matched by overlap) lie on the diagonal: their relative rms disagreement with the surrogate is below 5\%. At large amplitude the points leave the diagonal, with relative disagreement above 10\%, because the strongest couplings of the low levels exceed the exceptional-point threshold.
+\Cref{fig:paper-spurious-floor-boxexact} is a small-scale analogue of the paper's Fig.~5 (left): six random cosine modes in the infinite well, with all 80 basis states, scored on the lowest 40 levels. At small amplitude the exact real shifts (obtained by full complex diagonalization and matched by overlap) lie on the diagonal: their relative rms disagreement with the surrogate is below 5\%. At large amplitude the points leave the diagonal, with relative disagreement above 10\%. This is consistent with the strongest couplings of the low levels approaching the two-level exceptional-point threshold (a coupling of half the corresponding level difference).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/paper-spurious-floor_boxexact.pdf}
-\caption{Exact versus second-order real shifts for $H_0+iA$ in the infinite well ($L=\pi/2$, levels $E_k=k^2$, 80 states), with $A=\sum_{j=1}^{6}c_j\cos(j\pi x/L)$ and random $c_j$ (\texttt{default\_rng(1)}). Exact shifts from dense complex diagonalization, each unperturbed level matched to the eigenvector with largest weight on it; the lowest 40 levels shown. Left: coefficients $0.5c_j$; points on the diagonal. Right: coefficients $15c_j$; the surrogate no longer describes the operator. Energies in units where $E_k=k^2$.}
+\caption{Exact versus second-order real shifts for $H_0+iA$ in the infinite well ($L=\pi/2$, levels $E_k=k^2$, 80 states), with $A=\sum_{j=1}^{6}c_j\cos(j\pi x/L)$ and random $c_j$ (\texttt{default\_rng(1)}). Exact shifts from dense complex diagonalization, each unperturbed level matched to the eigenvector with largest weight on it; the lowest 40 levels shown. Left: coefficients $0.5c_j$; points on the diagonal. Right: coefficients $15c_j$; the points leave the diagonal (relative rms disagreement above 10\%). Energies in units where $E_k=k^2$.}
 \label{fig:paper-spurious-floor-boxexact}
 \end{figure}
 
@@ -765,7 +775,7 @@ Shifts of only about a twentieth of a spacing, uncorrelated with the target, are
 
 \subsection{Wrong-sign widths}
 
-``The fitted absorptive-even solution also violates its physical premise: 58\% of its widths have the wrong sign.'' The even class was meant to model absorption, $\Gamma(x)\ge0$. By \cref{eq:paper-spurious-floor-width}, if $\Gamma\ge0$ everywhere then every first-order width is non-negative; so a negative width proves that $\Gamma(x)<0$ somewhere, i.e.\ the fitted "absorber" amplifies. The paper does not specify whether "widths" means the level widths $\Gamma_n$ or the values of $\Gamma(x)$ on the grid; either reading shows that the unconstrained optimizer ignored the physics the class was designed to represent. That is why the fair version (next section) enforces $\Gamma\ge0$.
+``The fitted absorptive-even solution also violates its physical premise: 58\% of its widths have the wrong sign.'' The even class was meant to model absorption, $\Gamma(x)\ge0$. By \cref{eq:paper-spurious-floor-width}, if $\Gamma\ge0$ everywhere then every first-order width is non-negative; so a negative width proves that $\Gamma(x)<0$ somewhere, i.e.\ the fitted ``absorber'' amplifies. The paper does not specify whether "widths" means the level widths $\Gamma_n$ or the values of $\Gamma(x)$ on the grid; either reading shows that the unconstrained optimizer ignored the physics the class was designed to represent. That is why the fair version (next section) enforces $\Gamma\ge0$.
 
 \subsection{The cost of exactness}
 
@@ -781,11 +791,11 @@ In the one-cosine laboratory above ($A=c\cos(j\pi x/L)$ in the box, every coupli
 \end{checkpoint}
 \checkanswer{The validity condition compares each coupling with the energy difference to its partner. All couplings have magnitude $c/2$, but the differences are $4\kappa j(n+j)$ and $4\kappa j|n-j|$ for a generic level, $8\kappa j^2$ for $n=j$ and $12\kappa j^2$ for $n=2j$. They are smallest near $n=j$ (for $j=1$ the smallest, $8\kappa$, joins levels 1 and 3; for $j\ge2$ it is $4\kappa j$, at $n=j\pm1$) and grow with $n$ beyond that, so in this example the lowest levels fail first. In another potential, with different spacings and matrix elements, nothing guarantees the same ordering: the condition has to be checked level by level.}
 
-\textbf{Strength and limits.} This is the strongest part of the dissection: a direct, exact computation contradicts the surrogate, and a quarter-amplitude control shows the code is right. Limits: the exact check used $N=2500$ rather than the working grid, and, like the rest of Sec.~V, it was not rerun in revision.
+\textbf{Strength and limits.} This is the strongest part of the dissection: a direct, exact computation contradicts the surrogate, and a quarter-amplitude control supports the correctness of the machinery. Limits: the exact check used $N=2500$ rather than the working grid, and, like the rest of Sec.~V, it was not rerun in revision.
 
 \begin{keyideas}
-\item The two-level model shows the three symptoms: the surrogate understates at the exceptional point, overstates beyond it (twofold at $a=\Delta$), and eigenvectors become unmatchable.
-\item Because real parts are even in amplitude, quartering the amplitude cuts the relative error about sixteenfold; agreement returning at quarter amplitude confirms the code and blames amplitude.
+\item The two-level model shows two of the three symptoms. First, the surrogate is wrong in magnitude: it understates up to and somewhat past the exceptional point (beyond it the ratio surrogate/exact is $2x^2$) and overstates for $x>1/\sqrt2$ (twofold at $a=\Delta$). Second, the eigenvectors become unmatchable. The loss of correlation needs many levels (box figure).
+\item Because real parts are even in amplitude, quartering a small amplitude cuts the relative error about sixteenfold. Agreement returning at quarter amplitude supports the correctness of the machinery and points to amplitude.
 \item Exact in-sample scores 0.2523 and 0.2477 are worse than the null; under the idealized assumption of zero correlation with the target (an illustration, not a finding of the paper), shifts of rms 0.065 and 0.044 spacings would do this.
 \item 58\% wrong-sign widths show the absorptive premise was violated.
 \end{keyideas}
@@ -799,13 +809,13 @@ In the one-cosine laboratory above ($A=c\cos(j\pi x/L)$ in the box, every coupli
 ``Refitting inside amplitude balls where perturbation theory is verified valid, and with $\Gamma\ge0$ enforced, gives floors within 0.4--4.8\% of the null (Fig.~5, right); the $R=4$ solutions pass exact verification (corr $+0.93$/$+0.995$, all states matched) and their exact-spectrum in-sample gains over the null are 1.9\% (odd) and 0.6\% (even). We conclude that these second-order non-Hermitian families, treated fairly, are empirically inert on this problem.''
 \end{quote}
 
-\subsection{The machinery (App.~A step 10, "fair variant")}
+\subsection{The machinery (App.~A step 10, ``fair variant'')}
 
 \emph{Amplitude ball.} After every LM step, the coefficient vector is projected onto the ball $\norm{c}\le R$:
 \begin{equation}
 c\;\to\;c\cdot\min\Big(1,\frac{R}{\norm{c}}\Big).\label{eq:paper-spurious-floor-proj}
 \end{equation}
-This is the closest point of the ball to $c$ (Chapter~\ref{ch:linear-algebra}: for a point outside a sphere, the nearest point of the sphere lies on the line to the center). Restarts are drawn from $\mathcal N(0,(R/20)^2)$, small compared with $R$ so that they start inside the ball. $R$ is "calibrated so that second-order perturbation theory is verified accurate", that is, chosen by checking the surrogate against exact diagonalization.
+This is the closest point of the ball to $c$ (Chapter~\ref{ch:linear-algebra}: for a point outside a sphere, the nearest point of the sphere lies on the line to the center). Restarts are drawn from $\mathcal N(0,(R/20)^2)$ in each of the $M$ components. The squared norm is a sum of $M$ squares, each of mean $(R/20)^2$, so the typical starting norm is about $(R/20)\sqrt M$. That lies inside the ball provided $M<400$. The paper does not state $M$, so we can only say that the spread of the restarts is scaled with $R$. $R$ is ``calibrated so that second-order perturbation theory is verified accurate'', that is, chosen by checking the surrogate against exact diagonalization.
 
 \emph{Sign penalty} for the absorptive class: the objective gets an extra term $10^4\int\max(A,0)^2\,\dd x$, which is zero when $A\le0$ everywhere (i.e.\ $\Gamma\ge0$) and grows quadratically with any positive excursion.
 
@@ -827,21 +837,21 @@ This is the closest point of the ball to $c$ (Chapter~\ref{ch:linear-algebra}: f
 \[
 \boxed{c\to(0.923,1.231,3.692);\qquad\text{penalty}\approx1.55\times10^5}
 \]
-A penalty this large dwarfs an rms objective of order $0.06$ (squared), so the optimizer is pushed hard toward $A\le0$.
+A penalty this large dwarfs the least-squares objective (a mean-square residual of about $0.2438^2\approx0.059$, or about 24 when summed over 400 levels), so the optimizer is pushed hard toward $A\le0$.
 \end{sample}
 
 \subsection{The results}
 
-From the key anchors of App.~A: fair $R=4$ surrogate floors $0.2335$ (odd) and $0.2422$ (even); exact-verified in-sample scores $0.2391$ and $0.2423$. As percentages of the null 0.2438 (an exercise in the Problems section), the surrogate floors capture 4.2\% and 0.66\% and the exact spectra 1.9\% and 0.6\%. These sit inside the paper's quoted range "within 0.4--4.8\% of the null" for the surrogate floors over the ball sizes tried. And at $R=4$ the surrogate is trustworthy: correlation with exact shifts $+0.93$ and $+0.995$, every eigenstate matched.
+From the key anchors of App.~A: fair $R=4$ surrogate floors $0.2335$ (odd) and $0.2422$ (even); exact-verified in-sample scores $0.2391$ and $0.2423$. As percentages of the null 0.2438 (an exercise in the Problems section), the surrogate floors capture 4.2\% and 0.66\% and the exact spectra 1.9\% and 0.6\%. These sit inside the paper's quoted range ``within 0.4--4.8\% of the null'' for the surrogate floors over the ball sizes tried. At $R=4$ the surrogate tracks the exact shifts level by level (correlation $+0.93$/$+0.995$, every eigenstate matched). Yet for the odd class it still overstates the in-sample gain: 4.2\% from the surrogate against 1.9\% exact. This is why the exact-spectrum gains, not the surrogate floors, are the final numbers to quote.
 
-\textbf{In plain words.} When the model is kept in the regime where its own formula is correct, and when the absorber is forced to absorb, it improves on doing nothing by about one or two percent. That is what "empirically inert" means.
+\textbf{In plain words.} When the model is kept in the regime where its own formula is correct, and when the absorber is forced to absorb, it improves on doing nothing by about one or two percent. That is what ``empirically inert'' means.
 
-\textbf{Strength and limits.} The fair refit is the right control: it gives the model class every chance consistent with its own validity. But it tests two classes, one background, one optimizer and one set of ball sizes; the word "inert" is the paper's summary for these, "on this problem," and should not be stretched to non-Hermitian operators in general. The paper itself scopes it: ``these second-order non-Hermitian families, treated fairly.''
+\textbf{Strength and limits.} The fair refit is the right control: it gives the model class every chance consistent with its own validity. But it tests two classes, one background, one optimizer and one set of ball sizes; the word ``inert'' is the paper's summary for these, ``on this problem,'' and should not be stretched to non-Hermitian operators in general. The paper itself scopes it: ``these second-order non-Hermitian families, treated fairly.''
 
 \begin{checkpoint}
 Why restart from $\mathcal N(0,(R/20)^2)$ rather than from $\mathcal N(0,0.3^2)$ as in the unconstrained fits?
 \end{checkpoint}
-\checkanswer{To start inside the region where the surrogate is valid. A start far outside the ball would immediately be projected onto its surface, and the restarts would no longer sample the interior; scaling the spread with $R$ keeps the restarts meaningful for every ball size.}
+\checkanswer{To start well inside the region where the surrogate is valid. A spread of $0.3$ per component could put starts far outside a small ball, where each would immediately be projected onto the surface, and the restarts would no longer sample the interior. Scaling the spread with $R$ keeps the restarts comparable for every ball size. Whether every start actually lies inside the ball depends on $M$: the typical starting norm is $(R/20)\sqrt M$, inside the ball if $M<400$, and the paper does not state $M$.}
 
 \begin{keyideas}
 \item The fair version projects $c$ onto $\norm c\le R$ after every step, penalizes $A>0$ with weight $10^4$, and restarts inside the ball.
@@ -861,7 +871,7 @@ The paper closes Sec.~V with a general statement:
 Each ingredient has a cheap detector, and you have now seen all of them work.
 
 \begin{enumerate}
-\item \textbf{Surrogate outside its validity region.} Detector: score the exact model at the fitted parameters, and repeat at reduced amplitude. If agreement returns at reduced amplitude, the code is right and the amplitude is wrong. (\Cref{sec:paper-spurious-floor-exact}.)
+\item \textbf{Surrogate outside its validity region.} Detector: score the exact model at the fitted parameters, and repeat at reduced amplitude. If agreement returns at reduced amplitude, that supports the correctness of the machinery and points to the amplitude. (\Cref{sec:paper-spurious-floor-exact}.)
 \item \textbf{Dead parameters coupling to noise.} Detector: list every parameter that should have no effect, check analytically that its derivatives vanish, set them to exact zeros, and look at fitted coefficient magnitudes; a coefficient of $2.2\times10^6$ is a symptom, not a result. Recompute in higher precision. (\Cref{sec:paper-spurious-floor-nullmode}.)
 \item \textbf{Shared constants mistaken for physics.} Detector: when two variants agree suspiciously well, ask what they share (code, optimizer, data type, defaults) and break the shared part. (\Cref{sec:paper-spurious-floor-nullmode}.)
 \item \textbf{A plausible mechanism.} Detector: make the mechanism quantitative before believing it. The block-coherence idea was natural and wrong by a factor of 2 to 7. (\Cref{sec:paper-spurious-floor-blocks}.)
@@ -871,7 +881,7 @@ Each ingredient has a cheap detector, and you have now seen all of them work.
 Item 1 reappears as point (ii) of the paper's falsifiability standard in Sec.~VI: ``scoring of the actual operator spectrum, not a surrogate.'' Section~V is the paper's own evidence for why that point belongs on the list.
 
 \begin{pitfall}
-"Exact" here means exact for the discretized operator: dense diagonalization of the finite-difference matrix. It does not remove discretization error. That is a separate issue, handled in the Hermitian part of the paper by bias-corrected targets (Chapter~\ref{ch:finite-differences}).
+``Exact'' here means exact for the discretized operator: dense diagonalization of the finite-difference matrix. It does not remove discretization error. That is a separate issue, handled in the Hermitian part of the paper by bias-corrected targets (Chapter~\ref{ch:finite-differences}).
 \end{pitfall}
 
 \begin{keyideas}
@@ -885,23 +895,23 @@ Item 1 reappears as point (ii) of the paper's falsifiability standard in Sec.~VI
 
 This section lists, in paper order, every place the material of this chapter appears in R1 \cite{soniR1}.
 
-\textbf{Abstract.} One sentence: ``A subsidiary dissection of second-order non-Hermitian perturbations shows how surrogate optimization outside its validity range can manufacture an apparently meaningful in-sample floor; exact diagonalization dissolves it.'' Every word is now unpacked: "subsidiary" (\cref{sec:paper-spurious-floor-scope}), "surrogate" (\cref{sec:paper-spurious-floor-surrogate}), "outside its validity range" (\cref{sec:paper-spurious-floor-exact}), "apparently meaningful floor" (\cref{sec:paper-spurious-floor-floors,sec:paper-spurious-floor-nullmode}).
+\textbf{Abstract.} One sentence: ``A subsidiary dissection of second-order non-Hermitian perturbations shows how surrogate optimization outside its validity range can manufacture an apparently meaningful in-sample floor; exact diagonalization dissolves it.'' Every word is now unpacked: ``subsidiary'' (\cref{sec:paper-spurious-floor-scope}), ``surrogate'' (\cref{sec:paper-spurious-floor-surrogate}), ``outside its validity range'' (\cref{sec:paper-spurious-floor-exact}), ``apparently meaningful floor'' (\cref{sec:paper-spurious-floor-floors,sec:paper-spurious-floor-nullmode}).
 
-\textbf{Sec.~II~E, "Second-order non-Hermitian classes, amplitude control, and exact diagonalization."} Defines $H\to H+iA$, the PT-odd class $\phi_k=\sin((k+1)\pi x/L)$ with $A_{nn}=0$, and the absorptive-even class $\phi_k=\cos(k\pi x/L)$ modeling $-i\Gamma/2$ (our \cref{eq:paper-spurious-floor-odd,eq:paper-spurious-floor-even,eq:paper-spurious-floor-GammaA}). Eq.~(5) is our \cref{eq:paper-spurious-floor-eq5,eq:paper-spurious-floor-T}; the state sum over 652 states and the 500-state bias are \cref{fig:paper-spurious-floor-truncation}. Safeguards (i) null mode (\cref{sec:paper-spurious-floor-nullmode}), (ii) amplitude balls and $\Gamma\ge0$ (\cref{sec:paper-spurious-floor-fair}), (iii) exact diagonalization with overlap matching (\cref{sec:paper-spurious-floor-exact}). Notation overloads: $A$ (operator) versus $A_{nk}$ of Sec.~II~C; $T^{(n)}$ versus the window $T$ of Sec.~II~D and $T_k$ of the Chebyshev basis.
+\textbf{Sec.~II~E, ``Second-order non-Hermitian classes, amplitude control, and exact diagonalization.''} Defines $H\to H+iA$, the PT-odd class $\phi_k=\sin((k+1)\pi x/L)$ with $A_{nn}=0$, and the absorptive-even class $\phi_k=\cos(k\pi x/L)$ modeling $-i\Gamma/2$ (our \cref{eq:paper-spurious-floor-odd,eq:paper-spurious-floor-even,eq:paper-spurious-floor-GammaA}). Eq.~(5) is our \cref{eq:paper-spurious-floor-eq5,eq:paper-spurious-floor-T}; the state sum over 652 states and the 500-state bias are \cref{fig:paper-spurious-floor-truncation}. Safeguards (i) null mode (\cref{sec:paper-spurious-floor-nullmode}), (ii) amplitude balls and $\Gamma\ge0$ (\cref{sec:paper-spurious-floor-fair}), (iii) exact diagonalization with overlap matching (\cref{sec:paper-spurious-floor-exact}). Notation overloads: $A$ (operator) versus $A_{nk}$ of Sec.~II~C; $T^{(n)}$ versus the window $T$ of Sec.~II~D and $T_k$ of the Chebyshev basis.
 
 \textbf{Sec.~V, first paragraph.} Floors 0.2321, 0.2358 (repaired), 0.2322 (artifact), null 0.2438, OOS rms up to 1.4 and 167, $c_0\approx2.2\times10^6$: \cref{sec:paper-spurious-floor-floors,sec:paper-spurious-floor-nullmode}, \cref{fig:paper-spurious-floor-floors}.
 
-\textbf{Sec.~V, "The proposed mechanism fails quantitatively."} Sum rule to $4\times10^{-15}$, locality, block-coherent rms 0.03--0.11 for windows 3--13, factor 2--7, $p=2$ period $\approx9$ in $t$ and 6--7 levels, capture 3--7\%: \cref{sec:paper-spurious-floor-blocks}, \cref{fig:paper-spurious-floor-blocks}.
+\textbf{Sec.~V, ``The proposed mechanism fails quantitatively.''} Sum rule to $4\times10^{-15}$, locality, block-coherent rms 0.03--0.11 for windows 3--13, factor 2--7, $p=2$ period $\approx9$ in $t$ and 6--7 levels, capture 3--7\%: \cref{sec:paper-spurious-floor-blocks}, \cref{fig:paper-spurious-floor-blocks}.
 
-\textbf{Sec.~V, "The optimizer left the perturbative regime."} Correlations $+0.14$/$+0.18$, twofold overstatement, 3\% unmatched, exact scores 0.2523/0.2477, quarter-amplitude correlations $+0.88$/$+0.94$, 58\% wrong-sign widths: \cref{sec:paper-spurious-floor-exact}, \cref{fig:paper-spurious-floor-twolevel,fig:paper-spurious-floor-boxexact}.
+\textbf{Sec.~V, ``The optimizer left the perturbative regime.''} Correlations $+0.14$/$+0.18$, twofold overstatement, 3\% unmatched, exact scores 0.2523/0.2477, quarter-amplitude correlations $+0.88$/$+0.94$, 58\% wrong-sign widths: \cref{sec:paper-spurious-floor-exact}, \cref{fig:paper-spurious-floor-twolevel,fig:paper-spurious-floor-boxexact}.
 
-\textbf{Sec.~V, "The fair version captures almost nothing."} Floors within 0.4--4.8\% of the null, $R=4$ correlations $+0.93$/$+0.995$, exact gains 1.9\%/0.6\%: \cref{sec:paper-spurious-floor-fair}.
+\textbf{Sec.~V, ``The fair version captures almost nothing.''} Floors within 0.4--4.8\% of the null, $R=4$ correlations $+0.93$/$+0.995$, exact gains 1.9\%/0.6\%: \cref{sec:paper-spurious-floor-fair}.
 
 \textbf{Sec.~V, closing paragraph.} The three generic ingredients: \cref{sec:paper-spurious-floor-lessons}.
 
-\textbf{Sec.~V~A, "Sum rule and locality details."} Sum-rule values $3.6\times10^{-15}$ and $1.4\times10^{-14}$; weights $w_{nm}=|A_{nm}|^2/|E_n-E_m|$ with half within $|n-m|\le5$ (odd) and $\le10$ (even), 90\% within about 60 levels; block-coherent rms 0.108, 0.049, 0.033, 0.035, 0.019 for $w=3,5,7,9,13$; output correlation $\approx+0.3$ with rms 0.06--0.075: \cref{sec:paper-spurious-floor-blocks}.
+\textbf{Sec.~V~A, ``Sum rule and locality details.''} Sum-rule values $3.6\times10^{-15}$ and $1.4\times10^{-14}$; weights $w_{nm}=|A_{nm}|^2/|E_n-E_m|$ with half within $|n-m|\le5$ (odd) and $\le10$ (even), 90\% within about 60 levels; block-coherent rms 0.108, 0.049, 0.033, 0.035, 0.019 for $w=3,5,7,9,13$; output correlation $\approx+0.3$ with rms 0.06--0.075: \cref{sec:paper-spurious-floor-blocks}.
 
-\textbf{Fig.~5.} Left panel (exact versus second-order shifts, unconstrained PT-odd fit) is reproduced in spirit by our \cref{fig:paper-spurious-floor-boxexact}; right panel (in-sample floors under amplitude control, "$R=4$ exact") corresponds to the right half of our \cref{fig:paper-spurious-floor-floors}.
+\textbf{Fig.~5.} Left panel (exact versus second-order shifts, unconstrained PT-odd fit) is reproduced in spirit by our \cref{fig:paper-spurious-floor-boxexact}; right panel (in-sample floors under amplitude control, ``$R=4$ exact'') corresponds to the right half of our \cref{fig:paper-spurious-floor-floors}.
 
 \textbf{Appendix~A, step 9.} Tensors with $\psi$ normalized by $\sum\psi^2\dd x=1$; $T^{(n)}$ over 652 states; even-class rows $T^{(n)}_{0l}$ zeroed analytically. \textbf{Step 10.} LM on $r_n=(\mathrm{fluc}_n+c^\top T^{(n)}c)/\gap_n$, Jacobian $2(T^{(n)}c)_k/\gap_n$, try-list $(0.3\lambda,\lambda,10\lambda)$ with diag scaling, 6 restarts $c\sim\mathcal N(0,0.3^2)^M$, seed 0, at most 200 iterations; fair variant with projection onto $\norm c\le R$, restarts $\mathcal N(0,(R/20)^2)$, sign penalty $10^4\int\max(A,0)^2\dd x$. \textbf{Step 11.} Dense complex \texttt{eig} on $N=2500$, matching by overlap. \textbf{Step 4} supplies the 652 states (eigenvalue range $[0,1000]$ for tensors).
 
@@ -934,7 +944,7 @@ This section lists, in paper order, every place the material of this chapter app
 \begin{problemlist}
 \prob{1}{Using the paper's numbers (Sec.~V), compute by what percentage the exact-spectrum in-sample scores of the unconstrained fits, 0.2523 (odd) and 0.2477 (even), exceed the null 0.2438.}
 
-\prob{1}{In two or three sentences, explain why the paper calls Eq.~(5) a "surrogate" and an "optimization device", and what object a physical claim must be about.}
+\prob{1}{In two or three sentences, explain why the paper calls Eq.~(5) a ``surrogate'' and an ``optimization device'', and what object a physical claim must be about.}
 
 \prob{1}{Starting from $V(x)-i\Gamma(x)/2=V(x)+iA(x)$, show that the physical requirement $\Gamma\ge0$ is equivalent to $A\le0$ pointwise.}
 
@@ -944,17 +954,17 @@ This section lists, in paper order, every place the material of this chapter app
 
 \prob{2}{Suppose the computed overlaps $(\phi_0)_{nm}$ carry noise of typical size $\eta$. Estimate the size of $c_0$ needed for the effective matrix $c_0\eta_{nm}$ to reach $0.1$ in energy units, for $\eta=10^{-8}$ and for $\eta=10^{-16}$. What does the second answer tell you about float64?}
 
-\prob{2}{Using qmnt, compute $\gap_n$ at $n=100$, $300$ and $400$ and the number of levels spanned by one period $2\pi/\log2$ of the $p=2$ oscillation at each height. Is the paper's "6--7 levels at these heights" consistent with your numbers for zeros 1--400?}
+\prob{2}{Using qmnt, compute $\gap_n$ at $n=100$, $300$ and $400$ and the number of levels spanned by one period $2\pi/\log2$ of the $p=2$ oscillation at each height. Is the paper's ``6--7 levels at these heights'' consistent with your numbers for zeros 1--400?}
 
 \prob{2}{For the two-level model \cref{eq:paper-spurious-floor-2x2} at $x=a/\Delta=0.3$, compute the exact and second-order real shifts of the lower level in units of $\Delta$, and the relative error of the surrogate.}
 
 \prob{2}{Three levels $E=(0,1,3)$ are coupled by a real symmetric $A$ with $A_{12}=0.1$, $A_{23}=0.2$, $A_{13}=0.05$ and zero diagonal. Compute the three second-order real shifts under $H\to H+iA$ and verify the sum rule.}
 
-\prob{2}{For $d_n=(-1)^na$ with $a=0.24$, compute the block-coherent rms for $w=3$ and $w=5$ using the result of the sample problem on negatively correlated sequences. Compare with the paper's $w=3$ value 0.108 and comment.}
+\prob{2}{For $d_n=(-1)^nd_0$ with $d_0=0.24$, compute the block-coherent rms for $w=3$ and $w=5$ using the result of the sample problem on negatively correlated sequences. Compare with the paper's $w=3$ value 0.108 and comment.}
 
 \prob{2}{Using qmnt, compute $d_n=(t_n-s_n)/\gap_n$ for $n=1,\dots,400$ and the rms of its centred $w$-level moving average (full windows only) for $w=3,5,7,9,13$. Compare with the paper's Sec.~V~A values and with the floor 0.232.}
 
-\prob{2}{Using numpy, repeat the "harvesting a noise column" sample with $\varepsilon=10^{-3}$ and $\varepsilon=10^{-9}$. Report the coefficient $\beta_z$ and the rms residual in each case, and explain why the rms does not change.}
+\prob{2}{Using numpy, repeat the ``harvesting a noise column'' sample with $\varepsilon=10^{-3}$ and $\varepsilon=10^{-9}$. Report the coefficient $\beta_z$ and the rms residual in each case, and explain why the rms does not change.}
 
 \prob{1}{Using the key anchors of App.~A, express the fair $R=4$ surrogate floors (0.2335 odd, 0.2422 even) and the exact-verified scores (0.2391, 0.2423) as percentage improvements over the null 0.2438.}
 
@@ -962,13 +972,13 @@ This section lists, in paper order, every place the material of this chapter app
 
 \prob{3}{Expand the exact two-level shift \cref{eq:paper-spurious-floor-2x2shift} to sixth order in $x$. Confirm that no odd powers appear and give the coefficients of $x^4$ and $x^6$.}
 
-\prob{2}{Using numpy, build $H_0+iA$ for the box ($E_k=k^2$, 80 states) with $A=c\cos(\pi x/L)$, and compare exact and second-order real shifts of the lowest 10 levels at $c=8$ and at $c=2$ (quarter amplitude). By roughly what factor does the relative error drop?}
+\prob{2}{Using numpy, build $H_0+iA$ for the box ($E_k=k^2$, 80 states) with $A=c\cos(\pi x/L)$, and compare exact and second-order real shifts of the lowest 10 levels at $c=4$ and at $c=1$ (quarter amplitude). (At $c=4$ the strongest coupling, between levels 1 and 3, is a quarter of their spacing, safely below the two-level exceptional-point threshold of one half.) By roughly what factor does the relative error drop?}
 
 \prob{3}{Generalize the argument of \cref{eq:paper-spurious-floor-conj,eq:paper-spurious-floor-even-odd}: show that for any real symmetric $H_0$ and real symmetric $A$, the characteristic polynomial $\det(H_0+iaA-\lambda)$ has real coefficients when $a$ is replaced by $ia'$ with $a'$ real, and use this to explain once more why only even powers of $a$ appear in the real parts.}
 
 \prob{2}{Redo the weak-capture sample problem with correlation $\rho=0.2$ instead of $0.3$. What is the optimal output rms and the resulting residual rms? Does this still land near the paper's floors?}
 
-\prob{2}{From the paper's Sec.~V~A block-coherent values (0.108, 0.049, 0.033, 0.035, 0.019 for $w=3,5,7,9,13$), compute the ratio $0.232/\mathrm{rms}(B_w)$ for each window. Which windows give the paper's quoted range "2--7"?}
+\prob{2}{From the paper's Sec.~V~A block-coherent values (0.108, 0.049, 0.033, 0.035, 0.019 for $w=3,5,7,9,13$), compute the ratio $0.232/\mathrm{rms}(B_w)$ for each window. Which windows give the paper's quoted range ``2--7''?}
 
 \prob{3}{Design, in words, a test that would have caught the null-mode artifact even if nobody had noticed $c_0\approx2.2\times10^6$. Your test must use only the fitted model and the data, and should be cheap.}
 
@@ -992,9 +1002,9 @@ This section lists, in paper order, every place the material of this chapter app
 
 \textbf{9.} $\delta E_1=-[A_{12}^2/(0-1)+A_{13}^2/(0-3)]=0.01+0.000833=0.010833$; $\delta E_2=-[A_{12}^2/(1-0)+A_{23}^2/(1-3)]=-0.01+0.02=0.01$; $\delta E_3=-[A_{13}^2/(3-0)+A_{23}^2/(3-1)]=-0.000833-0.02=-0.020833$. Sum $=0$, as the pairwise antisymmetry requires.
 
-\textbf{10.} $w=3$: $q=1$, rms $a/3=0.080$; $w=5$: $a/5=0.048$. The paper's 0.108 at $w=3$ is somewhat larger than for a perfectly alternating sequence of the same amplitude: the zeros are negatively correlated but not perfectly alternating, so some slow component survives. Both are far below 0.232.
+\textbf{10.} $w=3$: $q=1$, rms $d_0/3=0.080$; $w=5$: $d_0/5=0.048$. The paper's 0.108 at $w=3$ is somewhat larger than for a perfectly alternating sequence of the same amplitude: the zeros are negatively correlated but not perfectly alternating, so some slow component survives. Both are far below 0.232.
 
-\textbf{11.} Every value stays below 0.15 (the CHECKS script asserts this for all five windows), hence at least a factor 1.5 below 0.232; plot them against the paper's values as in the block-coherence figure. Small differences come from using $s_n$ rather than the paper's Richardson-corrected targets.
+\textbf{11.} Compute \texttt{d = qmnt.fluct(qmnt.zeros(400), np.arange(1, 401))}. Then, for each $w$, form the full-window moving average \texttt{np.convolve(d, np.ones(w)/w, 'valid')} and take its rms. All five values come out below 0.15, hence at least a factor $0.232/0.15\approx1.5$ below the floor. They are therefore far below 0.232, like the paper's values (0.108 down to 0.019), and the block-coherence explanation fails for this version of the targets too. Plot them against the paper's values as in the block-coherence figure. Differences from the paper's numbers come from using $s_n$ rather than the paper's Richardson-corrected targets.
 
 \textbf{13.} Surrogate: $(0.2438-0.2335)/0.2438=4.22\%$, $(0.2438-0.2422)/0.2438=0.66\%$. Exact: $1.93\%$ and $0.62\%$, matching the paper's 1.9\% and 0.6\%.
 
@@ -1002,6 +1012,6 @@ This section lists, in paper order, every place the material of this chapter app
 
 \textbf{17.} Sketch: in the real basis, $(H_0+iaA)^*=H_0-iaA$, so the polynomial $p_a(\lambda)=\det(H_0+iaA-\lambda)$ satisfies $\overline{p_a(\bar\lambda)}=p_{-a}(\lambda)$. Setting $a=ia'$ makes the matrix $H_0-a'A$ real, so its coefficients are real. The roots continuing $E_n$ are therefore real-analytic in $a'$; in terms of $a$, $a'=-ia$, so terms odd in $a$ carry a factor $i$ and contribute only to imaginary parts, even terms only to real parts. Same conclusion as \cref{eq:paper-spurious-floor-series}.
 
-\textbf{19.} $0.232/0.108=2.15$, $/0.049=4.73$, $/0.033=7.03$, $/0.035=6.63$, $/0.019=12.21$. Windows 3--9 give 2.1--7.0, the quoted "2--7"; $w=13$ gives about 12, outside the quoted range but strengthening the conclusion.
+\textbf{19.} $0.232/0.108=2.15$, $/0.049=4.73$, $/0.033=7.03$, $/0.035=6.63$, $/0.019=12.21$. Windows 3--9 give 2.1--7.0, the quoted ``2--7''; $w=13$ gives about 12, outside the quoted range but strengthening the conclusion.
 
-\textbf{21.} In the two-level model the lower eigenvector has weight $|u|^2/(|u|^2+|v'|^2)>\tfrac12$ on state 1 below the exceptional point, so overlap matching assigns it uniquely. At and beyond the exceptional point $|v'/u|=1$: both eigenvectors have weight exactly $\tfrac12$ on both states and no one-to-one assignment exists. So an eigenstate that cannot be matched is one that is (nearly) an equal mixture of two unperturbed states, the signature of a pair at or near an exceptional point. For such a pair the exact real parts have saturated at the midpoint (shift $\Delta/2$) while the surrogate keeps growing as $a^2/\Delta$; the series behind Eq.~(5) has passed its radius of convergence, so the surrogate shift for that pair has no meaning.
+\textbf{21.} In the two-level model the lower eigenvector $(v_1,v_2)$ has weight $|v_1|^2/(|v_1|^2+|v_2|^2)>\tfrac12$ on state 1 below the exceptional point, so overlap matching assigns it uniquely. At and beyond the exceptional point $|v_2/v_1|=1$: both eigenvectors have weight exactly $\tfrac12$ on both states and no one-to-one assignment exists. So an eigenstate that cannot be matched is one that is (nearly) an equal mixture of two unperturbed states, the signature of a pair at or near an exceptional point. For such a pair the exact real parts have saturated at the midpoint (shift $\Delta/2$) while the surrogate keeps growing as $a^2/\Delta$; the series behind Eq.~(5) has passed its radius of convergence, so the surrogate shift for that pair has no meaning.

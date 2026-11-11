@@ -13,9 +13,14 @@ Where this shows up in the paper \cite{soniR1}: the formula we derive is the pap
 \item Chapter~\ref{ch:wkb}: the local wavenumber $\sqrt{E-V(x)}$, classical turning points, Bohr--Sommerfeld quantization with the $(n-\tfrac12)\pi$ rule, the semiclassical counting function, the idea of inverting a counting function by an Abel integral equation.
 \item Chapter~\ref{ch:counting-zeros}: the smooth counting function $\Nsm(t)$, the smooth zeros $s_n$, the mean spacing $\gap_n$, and fluctuations measured in mean spacings.
 \item Chapter~\ref{ch:hilbert-polya}: the Hilbert--P\'olya conjecture (open), and the distinction between analytic operator proposals and empirical fits.
-\item Chapter~\ref{ch:asymptotics}: big-$\mathcal O$ notation, root finding (Brent), floating-point round-off and machine epsilon.
+\item Chapter~\ref{ch:asymptotics}: big-$\mathcal O$ notation, root finding (Brent), floating-point round-off and machine epsilon; an exponential grows faster than any power.
+\item Chapter~\ref{ch:schrodinger}: the Hamiltonian $H=-d^2/dx^2+V$ in units $\hbar=2m=1$ and the meaning of an energy level.
+\item Chapter~\ref{ch:series}: the Taylor series of $\log(1\pm r)$.
+\item Chapter~\ref{ch:eigen}: tridiagonal matrices and numerical eigensolvers used as black boxes.
+\item Chapter~\ref{ch:explicit-formula}: the explicit formula, as background for the fluctuations discussed in Section~\ref{sec:wu-sprung-empirical}.
+\item Chapter~\ref{ch:finite-differences} (a later chapter): its results are used once, in Section~\ref{sec:wu-sprung-check}, and are stated there explicitly as taken on trust.
 \item First-year physics: potential-energy curves, turning points, energy conservation $\tfrac12 mv^2+V=E$.
-\item Calculus: substitution, integration by parts, the antiderivative $w\log w-w$ of $\log w$, the fundamental theorem of calculus.
+\item Calculus: substitution, integration by parts, the antiderivative $z\log z-z$ of $\log z$, the fundamental theorem of calculus.
 \end{prerequisites}
 
 %======================================================================
@@ -36,11 +41,11 @@ For us the ``drum'' is a one-dimensional well and the ``frequencies'' are the le
 
 \subsection{Three ways to get the same spectrum}
 
-\textbf{Translation.} On the whole line, shift the potential sideways: $\tilde V(x)=V(x-a)$ for a constant $a$. If $\psi$ solves $-\psi''(x)+V(x)\psi(x)=E\psi(x)$ for all $x$, define $\varphi(x)=\psi(x-a)$. By the chain rule $\varphi''(x)=\psi''(x-a)$, so evaluating the original equation at the point $x-a$ gives
+\textbf{Translation.} On the whole line, shift the potential sideways: $\tilde V(x)=V(x-x_0)$ for a constant $x_0$. If $\psi$ solves $-\psi''(x)+V(x)\psi(x)=E\psi(x)$ for all $x$, define $\varphi(x)=\psi(x-x_0)$. By the chain rule $\varphi''(x)=\psi''(x-x_0)$, so evaluating the original equation at the point $x-x_0$ gives
 \[
--\varphi''(x)+V(x-a)\varphi(x)=E\varphi(x).
+-\varphi''(x)+V(x-x_0)\varphi(x)=E\varphi(x).
 \]
-So $\tilde V$ has the same level $E$, with the same normalization (shifting does not change $\int|\varphi|^2\dd x$). Every level of $V$ is a level of $\tilde V$ and, running the argument backwards with $-a$, vice versa.
+So $\tilde V$ has the same level $E$, with the same normalization (shifting does not change $\int|\varphi|^2\dd x$). Every level of $V$ is a level of $\tilde V$ and, running the argument backwards with $-x_0$, vice versa.
 
 \textbf{Reflection.} Let $\tilde V(x)=V(-x)$ and $\varphi(x)=\psi(-x)$. Then $\varphi'(x)=-\psi'(-x)$ and $\varphi''(x)=\psi''(-x)$, so again $-\varphi''+\tilde V\varphi=E\varphi$. A well and its mirror image have the same spectrum.
 
@@ -311,11 +316,15 @@ x(W)=\frac1\pi\,\frac{\dd J}{\dd W}.
 \[
 J(W)=\int_{u=\sqrt{W-V_0}}^{0}\frac{\Phi(W-u^2)}{u}(-2u)\,\dd u=\int_0^{\sqrt{W-V_0}}2\,\Phi(W-u^2)\,\dd u .
 \]
-Now the integrand is smooth. Use Leibniz's rule for a variable upper limit: if $f(u,W)$ and $\partial f/\partial W$ are continuous, then
+Now the integrand is smooth. We need one piece of notation from multivariable calculus. For a function $f(u,W)$ of two variables, the \emph{partial derivative} $\partial f/\partial W$ is the ordinary derivative with respect to $W$ while $u$ is held fixed. For example, if $f(u,W)=2\Phi(W-u^2)$, then holding $u$ fixed and using the chain rule gives $\partial f/\partial W=2\Phi'(W-u^2)$. Leibniz's rule for a variable upper limit $g(W)$ says: if $f$ and $\partial f/\partial W$ are continuous, then
 \[
-\frac{\dd}{\dd W}\int_0^{\beta(W)}f(u,W)\,\dd u=f\bigl(\beta(W),W\bigr)\,\beta'(W)+\int_0^{\beta(W)}\frac{\partial f}{\partial W}\,\dd u
+\frac{\dd}{\dd W}\int_0^{g(W)}f(u,W)\,\dd u=f\bigl(g(W),W\bigr)\,g'(W)+\int_0^{g(W)}\frac{\partial f}{\partial W}\,\dd u .
 \]
-(the first term is the fundamental theorem plus the chain rule; the second is differentiation under the integral sign, proved in \cite{rhb}). Here $f=2\Phi(W-u^2)$, $\beta=\sqrt{W-V_0}$, $\beta'=1/(2\sqrt{W-V_0})$, and $f(\beta,W)=2\Phi(V_0)$. Hence
+The first term is the fundamental theorem of calculus combined with the chain rule: it accounts for moving the upper limit. The second term accounts for the change of the integrand with the limits held fixed.
+\begin{beyond}
+\textbf{Differentiation under the integral sign.} That the change of the integrand at fixed limits contributes $\int\partial f/\partial W\,\dd u$ (that is, that one may differentiate inside the integral) is a theorem of analysis that needs the continuity hypotheses just stated. A proof is in Riley, Hobson and Bence \cite{rhb}. We take it on trust.
+\end{beyond}
+Are the hypotheses met? For the harmonic test below, $\Phi'$ is a constant. For the Riemann target, $\Phi'(E)=\tfrac12\log(E/2\pi)$ (Eq.~\eqref{eq:wu-sprung-phiprime} in the next subsection) is continuous for every $E>0$, hence on the whole interval $[V_0,W]$ because $V_0>0$; and $\Phi$ itself is continuous there. So the rule applies. Here $f=2\Phi(W-u^2)$, $g(W)=\sqrt{W-V_0}$, $g'(W)=1/(2\sqrt{W-V_0})$, and $f\bigl(g(W),W\bigr)=2\Phi\bigl(W-(W-V_0)\bigr)=2\Phi(V_0)$. Hence
 \begin{equation}
 \frac{\dd J}{\dd W}=\frac{\Phi(V_0)}{\sqrt{W-V_0}}+\int_0^{\sqrt{W-V_0}}2\,\Phi'(W-u^2)\,\dd u .
 \label{eq:wu-sprung-dJ}
@@ -374,27 +383,27 @@ x(V)=\frac{1}{2\pi}\int_{a}^{0}\log\frac{V-u^2}{2\pi}\,\frac{-2u\,\dd u}{u}=\fra
 \[
 \log\frac{V-u^2}{2\pi}=\log(b+u)+\log(b-u)-\log 2\pi .
 \]
-So $x(V)=\frac1\pi\,(I_1+I_2-I_3)$ with
+So $x(V)=\frac1\pi\,(Q_1+Q_2-Q_3)$ with
 \[
-I_1=\int_0^a\log(b+u)\,\dd u,\qquad I_2=\int_0^a\log(b-u)\,\dd u,\qquad I_3=\int_0^a\log2\pi\,\dd u .
+Q_1=\int_0^a\log(b+u)\,\dd u,\qquad Q_2=\int_0^a\log(b-u)\,\dd u,\qquad Q_3=\int_0^a\log2\pi\,\dd u .
 \]
 
-\textbf{Step 3: $I_1$.} With $w=b+u$ and the antiderivative $w\log w-w$ of $\log w$ (check: its derivative is $\log w+1-1$):
+\textbf{Step 3: $Q_1$.} With $z=b+u$ and the antiderivative $z\log z-z$ of $\log z$ (check: its derivative is $\log z+1-1$):
 \[
-I_1=\bigl[(b+u)\log(b+u)-(b+u)\bigr]_0^a=(b+a)\log(b+a)-(b+a)-b\log b+b=(b+a)\log(b+a)-b\log b-a .
+Q_1=\bigl[(b+u)\log(b+u)-(b+u)\bigr]_0^a=(b+a)\log(b+a)-(b+a)-b\log b+b=(b+a)\log(b+a)-b\log b-a .
 \]
 
-\textbf{Step 4: $I_2$.} With $w=b-u$, $\dd w=-\dd u$, the limits $u=0$ and $u=a$ become $w=b$ and $w=b-a$:
+\textbf{Step 4: $Q_2$.} With $z=b-u$, $\dd z=-\dd u$, the limits $u=0$ and $u=a$ become $z=b$ and $z=b-a$:
 \[
-I_2=\int_{b}^{b-a}\log w\,(-\dd w)=\int_{b-a}^{b}\log w\,\dd w=\bigl[w\log w-w\bigr]_{b-a}^{b}=b\log b-(b-a)\log(b-a)-a .
+Q_2=\int_{b}^{b-a}\log z\,(-\dd z)=\int_{b-a}^{b}\log z\,\dd z=\bigl[z\log z-z\bigr]_{b-a}^{b}=b\log b-(b-a)\log(b-a)-a .
 \]
 (The two linear terms combine as $-b+(b-a)=-a$.)
 
-\textbf{Step 5: $I_3$.} The integrand is constant, so $I_3=a\log2\pi$.
+\textbf{Step 5: $Q_3$.} The integrand is constant, so $Q_3=a\log2\pi$.
 
-\textbf{Step 6: add.} In $I_1+I_2$ the terms $\pm b\log b$ cancel:
+\textbf{Step 6: add.} In $Q_1+Q_2$ the terms $\pm b\log b$ cancel:
 \[
-I_1+I_2-I_3=(b+a)\log(b+a)-(b-a)\log(b-a)-2a-a\log2\pi .
+Q_1+Q_2-Q_3=(b+a)\log(b+a)-(b-a)\log(b-a)-2a-a\log2\pi .
 \]
 
 \textbf{Step 7: regroup by $b$ and by $a$.} Expand the two products:
@@ -444,7 +453,7 @@ Write $y=V_0/2\pi$. Then \eqref{eq:wu-sprung-nsm} turns \eqref{eq:wu-sprung-v0co
 f(y)\equiv y\log y-y=-\tfrac78 .
 \label{eq:wu-sprung-fy}
 \end{equation}
-The function $f$ has $f'(y)=\log y$, so it decreases for $y<1$, increases for $y>1$, and has its minimum $f(1)=-1$. Since $-1<-\tfrac78<0$, and $f\to0$ as $y\to0^+$ while $f\to\infty$ as $y\to\infty$, there are exactly two roots, one on each side of $y=1$ (\cref{fig:wu-sprung-v0func}).
+The function $f$ has $f'(y)=\log y$, so it decreases for $y<1$, increases for $y>1$, and has its minimum $f(1)=-1$. Two limits complete the picture. As $y\to0^+$, put $y=e^{-u}$, so that $u\to\infty$; then $y\log y=-ue^{-u}\to0$, because an exponential grows faster than any power (Chapter~\ref{ch:asymptotics}), and also $y\to0$, so $f(y)\to0$. As $y\to\infty$, $f(y)=y(\log y-1)$ is a product of two factors that both grow without bound, so $f\to\infty$. Now count roots. On $(0,1]$ the continuous function $f$ decreases strictly from values arbitrarily close to $0$ down to $f(1)=-1$; since $-1<-\tfrac78<0$, it takes the value $-\tfrac78$ exactly once there. On $[1,\infty)$ it increases strictly from $-1$ without bound, so it takes the value $-\tfrac78$ exactly once more. There are exactly two roots, one on each side of $y=1$ (\cref{fig:wu-sprung-v0func}).
 
 \subsection{Which root?}
 
@@ -475,12 +484,30 @@ Find the root of \eqref{eq:wu-sprung-fy} with $y>1$ and compare with the paper's
 \]
 \end{sample}
 
-How should we read the small difference? The paper states $V_0=3.10073\pi$ without derivation, and we do not know how that value was obtained. It differs slightly from the root of the consistency condition. So be clear about what this section does and does not do. It derives the condition that fixes $V_0$ approximately. It does not reproduce the last digits of the paper's value, and we will not guess at their origin. What we can say precisely is what any $V_0$ near the root does. Formula \eqref{eq:wu-sprung-ws} came from \eqref{eq:wu-sprung-abel-inv}, which drops the boundary term. Run the Abel equation forward for the potential defined by \eqref{eq:wu-sprung-ws}: Step D gives back $\Phi$ with $\Phi'=\pi\Nsm'$ and $\Phi(V_0)=0$, so
+How should we read the small difference? The paper states $V_0=3.10073\pi$ without derivation, and we do not know how that value was obtained. It differs slightly from the root of the consistency condition. So be clear about what this section does and does not do. It derives the condition that fixes $V_0$ approximately. It does not reproduce the last digits of the paper's value, and we will not guess at their origin. What we can say precisely is what any $V_0$ near the root does. Formula \eqref{eq:wu-sprung-ws} came from \eqref{eq:wu-sprung-abel-inv}, which drops the boundary term. What, then, is the actual phase integral of the well defined by \eqref{eq:wu-sprung-ws}? Call it $\Phi_{\rm WS}(E)$. Steps A--G showed only one direction: \emph{if} a well has a phase integral $\Phi$ with $\Phi(V_0)=0$, \emph{then} its $x(V)$ is given by \eqref{eq:wu-sprung-abel-inv}. We now need the converse for our particular $x(V)$.
+
+Because this well is even and monotone (Problem~5), Eq.~\eqref{eq:wu-sprung-layer} applies: $\Phi_{\rm WS}(E)=\int_{V_0}^{E}x(V)\,\dd V/\sqrt{E-V}$. At $E=V_0$ this is an integral over an interval of zero length, so $\Phi_{\rm WS}(V_0)=0$ and the proviso of Step~F holds automatically. We take $\Phi_{\rm WS}'$ to be continuous, as Step~E requires; this is plausible because $x(V)$ is smooth for $V>V_0$, but we do not prove it here. Steps A--G applied to $\Phi_{\rm WS}$ then give
+\[
+\text{(i)}\quad x(W)=\frac1\pi\int_{V_0}^{W}\frac{\Phi_{\rm WS}'(E)}{\sqrt{W-E}}\,\dd E .
+\]
+On the other hand, our $x(V)$ was constructed from Eqs.~\eqref{eq:wu-sprung-xint} and \eqref{eq:wu-sprung-phiprime}, which say
+\[
+\text{(ii)}\quad x(W)=\frac1\pi\int_{V_0}^{W}\frac{\pi\Nsm'(E)}{\sqrt{W-E}}\,\dd E .
+\]
+Subtract (ii) from (i), multiply by $\pi$, and write $D(E)=\Phi_{\rm WS}'(E)-\pi\Nsm'(E)$:
+\[
+\int_{V_0}^{W}\frac{D(E)}{\sqrt{W-E}}\,\dd E=0\qquad\text{for every }W>V_0 .
+\]
+This is an Abel equation of the form \eqref{eq:wu-sprung-abel}, with the unknown $D$ in place of $x$ and zero on the right. Apply Steps A--D to it: multiply by $1/\sqrt{Y-W}$ and integrate over $W$ from $V_0$ to $Y$, swap the order of integration, and use the kernel integral $K=\pi$. (The swap in Step B was justified for a positive weight; for a weight of either sign, the same theorem in the form known as Fubini's theorem requires only that the integral of the absolute value be finite. That holds here because $D$ is continuous and the only singularities are inverse square roots, which are integrable.) The result is
+\[
+\pi\int_{V_0}^{Y}D(E)\,\dd E=0\qquad\text{for every }Y>V_0 .
+\]
+Differentiating with respect to $Y$ (fundamental theorem of calculus) gives $D(Y)=0$. So $\Phi_{\rm WS}'=\pi\Nsm'$ everywhere above $V_0$. Integrating from $V_0$ and using $\Phi_{\rm WS}(V_0)=0$ gives
 \begin{equation}
 \Phi_{\rm WS}(E)=\int_{V_0}^{E}\pi\Nsm'(E')\,\dd E'=\pi\bigl[\Nsm(E)-\Nsm(V_0)\bigr].
 \label{eq:wu-sprung-phiws}
 \end{equation}
-Its Bohr--Sommerfeld levels therefore satisfy $\Nsm(E_n)=n-\tfrac12+\Nsm(V_0)$: every level is pushed up by $\Nsm(V_0)$ mean spacings (to first order, since $\Nsm$ increases by $1$ per spacing). With the paper's $V_0$ this is a uniform shift of about $0.0045$ spacings. Compare the paper's own statement (Sec.~II~B) that its extrapolated levels miss the smooth zeros by $0.005$ spacings on average: a shift of this size is at the level at which the paper itself says the construction reproduces $s_n$. In short, $V_0$ is fixed, up to such tiny shifts, by the requirement that the well have no levels below its floor.
+Its Bohr--Sommerfeld levels therefore satisfy $\Nsm(E_n)=n-\tfrac12+\Nsm(V_0)$: every level is pushed up by $\Nsm(V_0)$ mean spacings (to first order, since $\Nsm$ increases by $1$ per spacing). With the paper's $V_0$ this is a uniform shift of about $0.0045$ spacings. Compare the paper's own statement (Sec.~II~B) that its extrapolated levels miss the smooth zeros by $0.005$ spacings on average: a shift of this size is at the level at which the paper itself says the construction reproduces $s_n$. In short, the requirement that the well have no levels below its floor fixes $V_0$ up to such tiny shifts; it does not by itself single out the last digits of the paper's value.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/wu-sprung_v0func.pdf}
@@ -500,7 +527,7 @@ Find the shape of the Wu--Sprung potential near $x=0$, with $V_0=3.10073\pi$.
 \[
 \boxed{V(x)\approx V_0+51.3\,x^2\quad\text{near }x=0}
 \]
-The bottom is a harmonic well. The Riemann target does not care about this detail: the low-lying levels are exactly where WKB is least accurate.
+The bottom is a harmonic well. This harmonic bottom is a by-product of the semiclassical construction. Only the lowest few levels are sensitive to it, and those are the levels for which Bohr--Sommerfeld, and hence the construction, is least accurate (the paper's maximum residual, $0.063$ spacings, occurs there).
 \end{sample}
 
 \begin{checkpoint}
@@ -509,8 +536,8 @@ Suppose the constant $\tfrac78$ in $\Nsm$ were replaced by $1$. What would happe
 \checkanswer{It would become $f(y)=-1$, whose only solution is $y=1$, i.e.\ $V_0=2\pi$, the minimum of $f$. Then $\log(V_0/2\pi)=0$, the linear term of \eqref{eq:wu-sprung-bottom} vanishes and the bottom is no longer harmonic (Problem~7). The constant $\frac78$ genuinely shapes the well's floor.}
 
 \begin{keyideas}
-\item $V_0$ is set by the consistency condition $\Nsm(V_0)=0$: no levels below the floor. Of its two roots, only the one with $V_0>2\pi$ gives a well with its minimum at $x=0$.
-\item The root is $V_0\approx3.0803\pi$; the paper's $3.10073\pi$ gives $\Nsm(V_0)\approx0.0045$, a uniform level shift of $0.0045$ spacings, Eq.~\eqref{eq:wu-sprung-phiws}.
+\item The natural consistency condition for $V_0$ is $\Nsm(V_0)=0$: no levels below the floor. Of its two roots, only the one with $V_0>2\pi$ gives a well with its minimum at $x=0$.
+\item The root is $V_0\approx3.0803\pi$. The paper's $3.10073\pi$ is close to this root but not equal to it, and its exact origin is not derived here; it gives $\Nsm(V_0)\approx0.0045$, a uniform level shift of $0.0045$ spacings, Eq.~\eqref{eq:wu-sprung-phiws}.
 \item Near the origin the well is harmonic, $V\approx V_0+51.3\,x^2$.
 \end{keyideas}
 
@@ -534,7 +561,7 @@ So $x\sim\sqrt V\log V$: the chord grows a little faster than for the harmonic w
 \[
 V(x)\approx\left(\frac{\pi x}{2\log x}\right)^2\qquad(x\ \text{large, leading order}),
 \]
-so $V$ grows roughly like $(x/\log x)^2$: just slower than harmonic, by a logarithm. That matches the expectation of Section~\ref{sec:wu-sprung-target}: a density growing like $\log E$ needs a well ``softer than harmonic by a logarithm''.
+so $V$ grows roughly like $(x/\log x)^2$: slower than harmonic by a factor $(\log x)^2$ (equivalently, the chord $x(V)$ is wider than the harmonic chord $\sqrt V$ by one logarithm). That matches the expectation of Section~\ref{sec:wu-sprung-target}: a density growing like $\log E$ needs a well that is softer than harmonic, but only logarithmically so.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/wu-sprung_potential.pdf}
@@ -551,11 +578,11 @@ Compute $L=x(1000)$ and $L=x(1500)$ from Eq.~\eqref{eq:wu-sprung-ws} with $V_0=3
 
 \textbf{Step 1: constants.} $V_0=9.7412$, $\log\frac{V_0}{2\pi e^2}=0.43849-2=-1.56151$.
 
-\textbf{Step 2: $V=1000$.} $a=\sqrt{990.259}=31.468$, $b=31.623$; $\frac{b+a}{b-a}=\frac{63.091}{0.1546}$, whose log is about $6.012$. Then $\pi x=31.468(-1.5615)+31.623(6.012)=-49.14+190.1$, and $x\approx44.88$.
+\textbf{Step 2: $V=1000$.} $a=\sqrt{990.259}=31.468$ and $b=31.623$. Their difference suffers from cancellation (Chapter~\ref{ch:asymptotics}), so compute it as $b-a=(b^2-a^2)/(b+a)=V_0/(b+a)=9.7412/63.091=0.1544$. Then $\frac{b+a}{b-a}=\frac{63.091}{0.1544}$, whose log is $6.0128$. So $\pi x=31.468(-1.5615)+31.623(6.0128)=-49.14+190.14=141.00$, and $x=141.00/\pi\approx44.88$.
 
-\textbf{Step 3: precise evaluation} (CHECKS script): $x(1000)=44.883$, and in the same way $x(1500)=59.957$.
+\textbf{Step 3: precise evaluation} (carrying more digits, or with \texttt{qmnt.L\_of}): $x(1000)=44.883$, and in the same way $x(1500)=59.957$.
 
-\textbf{Step 4: compare} with the asymptotic form \eqref{eq:wu-sprung-asym}: $\frac{\sqrt{1000}}{\pi}(\log\frac{2000}{\pi}-2)=44.86$, about $0.05\%$ low.
+\textbf{Step 4: compare} with the asymptotic form \eqref{eq:wu-sprung-asym}: $\frac{\sqrt{1000}}{\pi}(\log\frac{2000}{\pi}-2)=44.855$, about $0.06\%$ low.
 
 \[
 \boxed{L_{\text{scale 1}}=44.883,\qquad L_{\text{scale 2}}=59.957}
@@ -572,7 +599,7 @@ The turning point of level $n$ is the point where $V(x)=E_n$; since $E_n\approx 
 x_n=x(s_n).
 \label{eq:wu-sprung-xn}
 \end{equation}
-In WKB the wavefunction amplitude is proportional to $(E-V)^{-1/4}$ (Chapter~\ref{ch:wkb}): large where the particle moves slowly, which is near the turning points. So $|\psi_n|^2$ is largest near $\pm x_n$, and a small change $\delta V$ near $x_n$ shifts level $n$ more than the same change elsewhere. In this sense \emph{each level probes the potential most strongly near its turning points}, and the map $n\mapsto x_n$ converts level indices into positions.
+In WKB the wavefunction amplitude is proportional to $(E-V)^{-1/4}$ (Chapter~\ref{ch:wkb}): large where the particle moves slowly, which is near the turning points. So $|\psi_n|^2$ is largest near $\pm x_n$, and a small change $\delta V$ near $x_n$ shifts level $n$ more than the same change elsewhere. In this sense \emph{each level probes the potential most strongly near its turning points}, and the map $n\mapsto x_n$ converts level indices into positions. This does not mean that level $n$ ignores the rest of the well: $|\psi_n|^2$ is spread over the whole allowed region $|x|<x_n$, so level $n$ feels a change anywhere inside its turning points, only less strongly. What level $n$ hardly feels is a change beyond $x_n$, where its wavefunction is exponentially small.
 
 \begin{sample}{Where levels 201--300 turn}
 Find the turning points of levels $201$ and $300$ of the Wu--Sprung well.
@@ -596,10 +623,10 @@ This agrees with the band $x=22.5$--$28.5$ that the paper's interpolation split 
 \begin{checkpoint}
 A fitting algorithm changes $V$ only in the region $40<x<44$. Which levels of the scale-1 problem does this affect most?
 \end{checkpoint}
-\checkanswer{Those whose turning points $x_n$ lie in $40<x<44$. Since $x_n$ increases with $n$ and $x_{500}$ is about $38.5$ (Problem~10), these are levels above 500, which scale 1 does not score at all. A change there costs nothing on levels 1--500.}
+\checkanswer{Those whose turning points $x_n$ lie in $40<x<44$. Since $x_n$ increases with $n$ and $x_{500}$ is about $38.5$ (Problem~10), these are levels above 500, which scale 1 does not score at all. A change there costs almost nothing on levels 1--500 (only through the exponentially small tails of their wavefunctions).}
 
 \begin{keyideas}
-\item For large $V$, $x(V)\approx\frac{\sqrt V}{\pi}(\log\frac{2V}{\pi}-2)$, Eq.~\eqref{eq:wu-sprung-asym}, so $V$ grows roughly like $(x/\log x)^2$: softer than harmonic by a logarithm.
+\item For large $V$, $x(V)\approx\frac{\sqrt V}{\pi}(\log\frac{2V}{\pi}-2)$, Eq.~\eqref{eq:wu-sprung-asym}, so $V$ grows roughly like $(x/\log x)^2$: softer than harmonic by a factor $(\log x)^2$.
 \item The box half-width is $L=x(V_{\max})$: $44.883$ for $V_{\max}=1000$, $59.957$ for $1500$.
 \item Level $n$ turns at $x_n=x(s_n)$, where its wavefunction is largest; the monotone map $n\mapsto x_n$ links level index and position.
 \end{keyideas}
@@ -609,17 +636,27 @@ A fitting algorithm changes $V$ only in the region $40<x<44$. Which levels of th
 
 We have made two approximations: Bohr--Sommerfeld, and the choice of $V_0$. Let us check them separately.
 
-\textbf{Check 1: the semiclassical levels.} Using only the formula \eqref{eq:wu-sprung-ws}, compute the phase integral numerically, $\Phi(E)=2\int_0^{\sqrt{E-V_0}}x(E-u^2)\,\dd u$ (Eq.~\eqref{eq:wu-sprung-layer} after the substitution of Step E), and evaluate $\Phi(s_n)/\pi-(n-\tfrac12)$. Equation \eqref{eq:wu-sprung-phiws} predicts the constant $-\Nsm(V_0)\approx-0.0045$ for every $n$. The CHECKS script confirms this for $n=1,\dots,500$ to better than $10^{-6}$: by construction, the WKB levels of the Wu--Sprung well are the smooth zeros, shifted by $0.0045$ spacings.
+\textbf{Check 1: the semiclassical levels.} Using only the formula \eqref{eq:wu-sprung-ws}, compute the phase integral numerically, $\Phi(E)=2\int_0^{\sqrt{E-V_0}}x(E-u^2)\,\dd u$ (Eq.~\eqref{eq:wu-sprung-layer} after the substitution of Step E), and evaluate $\Phi(s_n)/\pi-(n-\tfrac12)$. Equation \eqref{eq:wu-sprung-phiws} predicts the constant $-\Nsm(V_0)\approx-0.0045$ for every $n$. A numerical evaluation with adaptive quadrature at $n=1,2,10,100,250,500$ confirms this to better than $10^{-6}$ (Problem~13 asks you to do all 500): by construction, the WKB levels of the Wu--Sprung well are the smooth zeros, shifted by $0.0045$ spacings.
 
-\textbf{Check 2: the true quantum levels.} Bohr--Sommerfeld is itself an approximation. To test it we need the exact eigenvalues of $H$ in the box. We compute them with the finite-difference method of Chapter~\ref{ch:finite-differences} (treated there in full; here it is a black box): sample $V$ on a uniform grid of $N$ interior points, build a symmetric tridiagonal matrix, and find its lowest eigenvalues with \texttt{scipy.linalg.eigh\_tridiagonal} (Chapter~\ref{ch:eigen}). The grid introduces an error of order $h^2$, which we remove by Richardson extrapolation over a grid doubling, $E^{\rm Rich}=(4E_{h/2}-E_h)/3$.
+\textbf{Check 2: the true quantum levels.} Bohr--Sommerfeld is itself an approximation. To test it we need the exact eigenvalues of $H$ in the box. We compute them with a method that is developed only later, in Chapter~\ref{ch:finite-differences}; here we use it as a black box and state exactly what we take on trust.
+\begin{beyond}
+\textbf{Finite differences, taken on trust (forward reference to Chapter~\ref{ch:finite-differences}).} We assume three facts proved there. (1) Sampling $V$ at $N$ equally spaced interior points $x_j$ of $(-L,L)$, with spacing $h=2L/(N+1)$ and $\psi=0$ at the walls, turns $H$ into a symmetric tridiagonal matrix with diagonal entries $2/h^2+V(x_j)$ and off-diagonal entries $-1/h^2$. Its lowest eigenvalues, found with \texttt{scipy.linalg.eigh\_tridiagonal} (Chapter~\ref{ch:eigen}), approximate the lowest levels of $H$ in the box. (2) For a fixed level, the error of the corresponding eigenvalue is of order $h^2$. (3) Hence the Richardson combination $E^{\rm Rich}=(4E_{h/2}-E_h)/3$ of results on grids of spacing $h$ and $h/2$ cancels the $h^2$ term. Note that this grid size $N$ is not the counting function $N(E)$ of Chapter~\ref{ch:wkb}; the paper uses the same letter for both.
+\end{beyond}
 
 \begin{pycode}
 import numpy as np, qmnt
 from scipy.linalg import eigh_tridiagonal
+V0 = qmnt.V0
+def xws(V):                                   # Eq. (2)
+    a, b = np.sqrt(V - V0), np.sqrt(V)
+    return (a*np.log(V0/(2*np.pi*np.e**2)) + b*np.log((b+a)/(b-a)))/np.pi
+aa = np.linspace(0, np.sqrt(1200 - V0), 400001)
+VV = V0 + aa**2                               # fine table of heights V
+XX = np.concatenate([[0.0], xws(VV[1:])])     # and their x(V)
 L = qmnt.L_of(1000)                   # 44.883
 def levels(N, k=500):
     x = qmnt.grid(L, N); h = 2*L/(N+1)
-    V = np.array([qmnt.wu_sprung_V(xi) for xi in x])
+    V = np.interp(np.abs(x), XX, VV)   # table lookup of V(x)
     d = 2/h**2 + V; e = -np.ones(N-1)/h**2
     return eigh_tridiagonal(d, e, select='i',
                             select_range=(0, k-1), eigvals_only=True)
@@ -631,7 +668,7 @@ dev = (ER - s)/g
 print(np.mean(dev), np.max(np.abs(dev)))
 \end{pycode}
 
-\Cref{fig:wu-sprung-levels} shows the result. The exact levels track $s_n$ to a small fraction of a spacing over all 500 levels; the largest deviations are at the lowest $n$. That pattern is expected: Bohr--Sommerfeld becomes exact only as $n\to\infty$. The paper reports the same comparison at scale 1 (Sec.~II~B): mean residual $0.005$ spacings, maximum $0.063$, ``worst at low $n$, the known semiclassical weakness of the construction''. We ran this computation with the potential taken from a fine table of Eq.~\eqref{eq:wu-sprung-ws}, interpolated onto the grid. The run gives a mean deviation below $0.02$ spacings and a maximum deviation below $0.1$ spacings, consistent with the paper's $0.005$ and $0.063$. We quote bounds rather than more digits because the last digits depend on details we do not fix here, such as how $V$ is interpolated between table points. The listing prints the actual values for your run.
+\Cref{fig:wu-sprung-levels} shows the result. The exact levels track $s_n$ to a small fraction of a spacing over all 500 levels; the largest deviations are at the lowest $n$. That pattern is expected: Bohr--Sommerfeld is in general only asymptotically accurate, improving as $n$ grows (Chapter~\ref{ch:wkb}); the harmonic well is a special case where it is exact for every $n$. The paper reports the same comparison at scale 1 (Sec.~II~B): mean residual $0.005$ spacings, maximum $0.063$, ``worst at low $n$, the known semiclassical weakness of the construction''. We ran exactly the listing above, in which the potential is taken from a fine table of Eq.~\eqref{eq:wu-sprung-ws} and interpolated linearly onto the grid. Our run gives a signed mean deviation (the average of $(E_n-s_n)/\gap_n$, keeping its sign) of $0.004$ spacings and a maximum of $|E_n-s_n|/\gap_n$ of $0.05$ spacings, attained at the lowest levels. These are close to the paper's $0.005$ and $0.063$. The paper does not say whether its mean is signed or a mean of absolute values, and the last digits depend on details such as the interpolation between table points, so we compare only to the digits shown. Our signed mean is numerically close to the WKB offset $0.0045$ of Check~1.
 
 The paper's mean of $0.005$ is not the same quantity as the WKB offset of $0.0045$ found in Check~1. The quantum deviation contains that uniform offset, but it also contains the genuine departures of the exact levels from Bohr--Sommerfeld, which are largest at low $n$. The two numbers are of similar size, but we do not claim that one explains the other.
 
@@ -656,49 +693,49 @@ The paper's mean of $0.005$ is not the same quantity as the WKB offset of $0.004
 
 \subsection{What Wu and Sprung did next}
 
-Having built the smooth well, Wu and Sprung \cite{wusprung} asked for more: a potential whose levels are the actual zeros $t_n$. They added a correction to the smooth potential and adjusted it until the low zeros were reproduced. The corrections they found were very irregular, with structure on every scale they examined, and they described the resulting potential as \emph{fractal}, hence the title of their paper ``Riemann zeros and a fractal potential''. It is plausible on general grounds: by the explicit formula (Chapter~\ref{ch:explicit-formula}) the fluctuations $t_n-s_n$ contain oscillations at every frequency $m\log p$ with slowly decaying amplitudes, and a potential that reproduces all of them must carry structure at many scales.
+Having built the smooth well, Wu and Sprung \cite{wusprung} asked for more: a potential whose levels are the actual zeros $t_n$. They added a correction to the smooth potential and adjusted it until the low zeros were reproduced. They described the fitted potential as \emph{fractal}, hence the title of their paper ``Riemann zeros and a fractal potential''. That a potential reproducing the zeros must be irregular is plausible on general grounds: by the explicit formula (Chapter~\ref{ch:explicit-formula}) the fluctuations $t_n-s_n$ contain oscillations at every frequency $m\log p$ with slowly decaying amplitudes, and a potential that reproduces all of them must carry structure at many scales.
 
-Later work continued the program. Van~Zyl and Hutchinson \cite{vanzyl} connected the fractal corrections to the primes and extended the fits; Slater \cite{slater} extended the fractal fits further; and Jaksch \cite{jaksch} generated successive zeros from a Wu--Sprung-type potential and traced the fractal corrections to the error of the Riemann--von Mangoldt approximation. Schumayer and Hutchinson \cite{schumayer} review this tradition. We describe these works only to the extent the paper does (its Sec.~I~A~a).
+Later work continued the program. Van~Zyl and Hutchinson \cite{vanzyl} and Slater \cite{slater} extended the fractal fits; and Jaksch \cite{jaksch} generated successive zeros from a Wu--Sprung-type potential and traced the fractal corrections to the error of the Riemann--von Mangoldt approximation. Schumayer and Hutchinson \cite{schumayer} review this tradition. We describe these works only to the extent the paper does (its Sec.~I~A~a).
 
 \subsection{The implicit logic and why it needs a test}
 
 The paper states the implicit logic of this empirical program (Sec.~I): ``a potential reproducing many zeros accurately has captured something about the putative zeta operator.'' Recall from Chapter~\ref{ch:hilbert-polya} that the Hilbert--P\'olya conjecture (open) asks for a self-adjoint operator whose spectrum is the zeros. A fitted potential is a self-adjoint operator. If it reproduces 500 zeros, is it a candidate?
 
-Count the ingredients. The smooth part is fixed by $\Nsm$ alone; we built it in this chapter from one formula and one constant. The fluctuating correction is adjusted to the data. If the correction has $M$ adjustable numbers and you fit $n$ levels, then when $M$ approaches $n$ you can make the agreement as good as you like whether or not the potential ``knows'' anything; Chapter~\ref{ch:least-squares} showed that underdetermined fits have infinitely many exact solutions, and Chapter~\ref{ch:generalization} develops the memorizing polynomial (RE4) in full. Agreement on the zeros used to build a model is therefore not evidence of structure. The test that can separate structure from capacity is to predict zeros the model was \emph{not} shown. This is exactly the question the paper puts to this program.
+Count the ingredients. The smooth part is fixed by $\Nsm$ alone; we built it in this chapter from one formula and one constant. The fluctuating correction is adjusted to the data. If the correction has $M$ adjustable numbers and you fit $n$ levels, then when $M$ is large enough you can make the agreement as good as you like whether or not the potential ``knows'' anything. The paper finds in-sample rms $0.137$ spacings with $M=400$ on 400 zeros (Table~I) and below $10^{-4}$ spacings with $M=900$ on all 500 zeros (Sec.~III); the threshold is set by the coverage law of Chapter~\ref{ch:fitting}, not simply by $M=n$. A useful analogy, but only an analogy because fitting a potential is a nonlinear problem, is the linear result of Chapter~\ref{ch:least-squares}: an underdetermined linear fit has infinitely many exact solutions. Chapter~\ref{ch:generalization} develops the memorizing polynomial (RE4) in full. Agreement on the zeros used to build a model is therefore not evidence of structure. The test that can separate structure from capacity is to predict zeros the model was \emph{not} shown. This is exactly the question the paper puts to this program.
 
 Two lessons of this chapter prepare that test.
 \begin{enumerate}
 \item \textbf{The null.} Before any fit, the Wu--Sprung well already predicts every level to within the fluctuations: its levels are $s_n$. Any fitted correction must beat ``predict $s_n$'', and the size of that target is the typical fluctuation (about $0.26$ spacings on zeros 401--500).
-\item \textbf{Locality.} A correction $\delta V$ near position $x$ affects mainly levels that turn near $x$ (Section~\ref{sec:wu-sprung-shape}). Information about levels 1--400 constrains $\delta V$ mostly inside $|x|<x_{400}$ and says comparatively little about the region where levels 401--500 turn.
+\item \textbf{Locality.} A correction $\delta V$ near position $x$ affects all levels whose turning points lie at or beyond $x$, most strongly those turning near $x$, and hardly at all the levels that turn well inside $x$, whose wavefunctions are exponentially small there (Section~\ref{sec:wu-sprung-shape}). Levels 1--400 all turn inside $|x|<x_{400}$, so they say almost nothing about $\delta V$ in the region $x_{400}<|x|<x_{500}$, which only higher levels reach. Conversely, a correction placed in a band of positions also shifts every level turning beyond that band, not only the levels turning inside it; this is why the paper's interpolation-split result (Sec.~III) is not as simple as ``each level controls its own patch''.
 \end{enumerate}
 
 \begin{checkpoint}
-Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted parameters at all (only $V_0$, fixed by consistency), yet predicts every zero to within about a quarter spacing?
+Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted parameters at all (only $V_0$, fixed approximately by consistency), yet predicts the zeros with an rms error of about a quarter spacing?
 \end{checkpoint}
 \checkanswer{Because the information is in the target $\Nsm$, which was derived from the zeta function (Chapter~\ref{ch:counting-zeros}), not from fitting. The potential merely re-encodes $\Nsm$ as a well; it contains exactly the average behavior of the zeros, and the remaining quarter spacing is the fluctuation that $\Nsm$ does not describe.}
 
 \begin{keyideas}
 \item Wu and Sprung added fitted corrections to the smooth well and found fractal-looking structure; van Zyl--Hutchinson, Slater and Jaksch continued the program.
 \item Fitting many zeros with many parameters shows capacity, not structure; the test is out-of-sample prediction against the null ``levels at $s_n$''.
-\item The turning-point map tells you which part of the potential each level constrains.
+\item The turning-point map tells you which part of the potential each level constrains: level $n$ feels changes anywhere inside its turning points, most strongly near them, and hardly any change beyond them.
 \end{keyideas}
 
 %======================================================================
 \section{Paper connection}\label{sec:wu-sprung-paper}
 
-\textbf{Eq.~(2), Sec.~II~B.} Our Eq.~\eqref{eq:wu-sprung-ws} is the paper's Eq.~(2), term for term, including the constant $V_0=3.10073\pi$ and the condition $V\ge V_0$. The paper's phrase ``defined implicitly'' means that Eq.~(2) gives $x$ as a function of $V$, and ``inverted pointwise by bracketed root finding'' (App.~A step 3: ``potential by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated'') is the inversion we discussed. Our Section~\ref{sec:wu-sprung-v0} explains what fixes $V_0$; the paper does not discuss it.
+\textbf{Eq.~(2), Sec.~II~B.} Our Eq.~\eqref{eq:wu-sprung-ws} is the paper's Eq.~(2), term for term, including the constant $V_0=3.10073\pi$ and the condition $V\ge V_0$. The paper's phrase ``defined implicitly'' means that Eq.~(2) gives $x$ as a function of $V$, and ``inverted pointwise by bracketed root finding'' (App.~A step 3: ``potential by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated'') is the inversion we discussed. The paper does not say how $V_0$ was obtained. Our Section~\ref{sec:wu-sprung-v0} gives the natural consistency condition $\Nsm(V_0)=0$, whose root is $3.0803\pi$; the paper's $3.10073\pi$ is close to but not equal to this root, and its exact origin is not derived here.
 
 \textbf{The box, Sec.~II~B and App.~A step 3.} ``Scale 1 uses the domain $[-L,L]$ with $L=x(V{=}1000)=44.883$ and the first 500 levels scored; scale 2 extends to $L=x(V{=}1500)=59.957$ with 1000 levels.'' Sample Problem ``The paper's two box sizes'' reproduces both $L$ values from Eq.~(2). App.~A step 3 quotes them to more digits as $44.8827$ and $59.9572$.
 
 \textbf{Accuracy of the construction, Sec.~II~B and App.~A key anchors.} The paper's statement that the Richardson levels match the smooth zeros to ``$0.005$ spacings mean, $0.063$ max (worst at low $n$, the known semiclassical weakness of the construction)'' is the comparison of \cref{fig:wu-sprung-levels}. The anchors give the same $0.005/0.063$ at scale 2. Our analysis adds one detail. With the paper's $V_0$, the WKB levels of the potential are offset uniformly by $\Nsm(V_0)\approx0.0045$ spacings. The published numbers do not let us separate how this offset combines with the non-WKB deviations in the paper's quoted mean.
 
-\textbf{The null model, Sec.~II~C.} ``The null model is the unperturbed potential itself; numerically its holdout error coincides with that of the smooth zeros used as the oracle's null (both $0.2631$ on zeros 401--500).'' This chapter is why: the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing, so ``predict the Wu--Sprung levels'' and ``predict $s_n$'' have the same error. The paper correctly stresses that the two nulls are conceptually distinct (an eigenvalue spectrum versus the solution of the mean counting function); their numerical coincidence is a consequence of the construction derived here.
+\textbf{The null model, Sec.~II~C.} ``The null model is the unperturbed potential itself; numerically its holdout error coincides with that of the smooth zeros used as the oracle's null (both $0.2631$ on zeros 401--500).'' This chapter is why: the unperturbed Wu--Sprung levels are the smooth zeros to within a few thousandths of a spacing on average (the maximum deviation, $0.063$ in the paper and $0.05$ in our run, occurs at the lowest levels, far from the holdout 401--500), so ``predict the Wu--Sprung levels'' and ``predict $s_n$'' have the same error to the digits quoted. The paper correctly stresses that the two nulls are conceptually distinct (an eigenvalue spectrum versus the solution of the mean counting function); their numerical coincidence is a consequence of the construction derived here.
 
-\textbf{Evenness of $\delta V$, Sec.~II~C ``Other bases''.} The paper fits only even corrections (cosine $\cos(k\pi x/L)$, Chebyshev $T_k(2|x|/L-1)$, hat functions in $|x|/L$). Section~\ref{sec:wu-sprung-inverse} explains the motivation: semiclassically the spectrum fixes only the width function, so evenness is the assumption that makes the inverse problem well posed, and it is kept for the corrections too.
+\textbf{Evenness of $\delta V$, Sec.~II~C ``Other bases''.} The paper fits only even corrections (cosine $\cos(k\pi x/L)$, Chebyshev $T_k(2|x|/L-1)$, hat functions in $|x|/L$). The paper does not state why it restricts to even corrections. A natural reading, from Section~\ref{sec:wu-sprung-inverse}, is that the semiclassical spectrum cannot distinguish left from right, so odd parts of $\delta V$ are not constrained by the levels. Evenness does not by itself make the fitted problem unique: the corrected potential need not be monotone, and the paper's point is precisely that many different $\delta V$ fit equally well.
 
 \textbf{Turning points, Sec.~III interpolation split and Fig.~4.} ``Position maps to level index through the classical turning point, and levels 201--300 turn at $x=22.5$--$28.5$.'' This is our map \eqref{eq:wu-sprung-xn}. The Sample Problem ``Where levels 201--300 turn'' gives $22.5$--$28.5$, in agreement with the paper. Fig.~4(a),(b) of the paper shades exactly this band and shows that the fitted correction is largest there (rms $\delta V=40$ in the band, maximum $|\delta V|=199$ ``where the smooth potential is about $500$''). You can check the last remark with our formula. Across the band, $V(x)$ runs from about $398$ to about $543$, because the band lies between the turning points of $s_{201}\approx398.3$ and $s_{300}\approx542.5$.
 
-\textbf{Sec.~V A and ``$p=2$ period'' remarks.} Sec.~V states that the $p=2$ oscillation, period $2\pi/\log2\approx9$ in $t$, is ``only $\sim$6--7 levels at these heights''; that conversion uses the mean spacing \eqref{eq:wu-sprung-gap} (Problem~14).
+\textbf{Sec.~V ($p=2$ period remark).} Sec.~V (paragraph ``The proposed mechanism fails quantitatively'') states that the $p=2$ oscillation, period $2\pi/\log2\approx9$ in $t$, is ``only $\sim$6--7 levels at these heights''; that conversion uses the mean spacing \eqref{eq:wu-sprung-gap} (Problem~14).
 
 \textbf{Sec.~I and Sec.~I~A~a.} The paper's description of the empirical program (``Wu and Sprung showed that a smooth one-dimensional potential, fixed by the mean counting function, reproduces the low zeros after fitted fluctuating corrections; successors refined the reconstructions'') and its literature strand (a) are the subject of Section~\ref{sec:wu-sprung-empirical}. The paper's scope statement matters here: it tests only fluctuation potentials \emph{on the Wu--Sprung background} in three bases, and ``other backgrounds and other parametrizations \dots are not tested''. Its title says ``on the Wu--Sprung background'' for this reason.
 
@@ -709,7 +746,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 \item The target $\Phi(E)=\pi\Nsm(E)$, Eq.~\eqref{eq:wu-sprung-match}, puts Bohr--Sommerfeld levels on the smooth zeros.
 \item Abel inversion: $x(V)=\frac1\pi\int_{V_0}^{V}\Phi'(E)\,\dd E/\sqrt{V-E}$ if $\Phi(V_0)=0$, Eq.~\eqref{eq:wu-sprung-abel-inv}; the kernel integral is $\pi$, Eq.~\eqref{eq:wu-sprung-Kpi}.
 \item The Wu--Sprung potential, Eq.~\eqref{eq:wu-sprung-ws} (paper Eq.~(2)), follows by exact integration.
-\item $V_0$ is fixed by $\Nsm(V_0)=0$ with $V_0>2\pi$: root $\approx3.0803\pi$; the paper's $3.10073\pi$ shifts levels uniformly by $\approx0.0045$ spacings, Eq.~\eqref{eq:wu-sprung-phiws}.
+\item The natural consistency condition for $V_0$ is $\Nsm(V_0)=0$ with $V_0>2\pi$: root $\approx3.0803\pi$. The paper's $3.10073\pi$ is close to but not equal to this root (its exact origin is not derived here) and shifts levels uniformly by $\approx0.0045$ spacings, Eq.~\eqref{eq:wu-sprung-phiws}.
 \item Shape: harmonic bottom $V\approx V_0+51.3x^2$; $x\approx\frac{\sqrt V}\pi(\log\frac{2V}\pi-2)$ at large $V$, Eq.~\eqref{eq:wu-sprung-asym}; $L=44.883$ and $59.957$.
 \item Turning-point map $x_n=x(s_n)$, Eq.~\eqref{eq:wu-sprung-xn}: levels 201--300 turn at $x\approx22.5$--$28.5$.
 \item The well reproduces $s_n$, not $t_n$; fitted fluctuation corrections must be judged by held-out prediction against this null.
@@ -731,7 +768,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 \prob{2}{(Paper, Sec.~II~C.) Explain why the paper can say that the null of the operator fits and the null of the arithmetic oracle coincide numerically ($0.2631$ on zeros 401--500), and why it still calls them conceptually distinct.}
 \prob{3}{Derive Eq.~\eqref{eq:wu-sprung-asym} including the next correction: show that $x(V)=\frac{\sqrt V}{\pi}\bigl(\log\frac{2V}\pi-2\bigr)+\order\bigl(V^{-1/2}\log V\bigr)$.}
 \prob{3}{Using scipy's \texttt{quad}, compute $\Phi(s_n)=2\int_0^{\sqrt{s_n-V_0}}x(s_n-u^2)\,\dd u$ for $n=1,\dots,500$ and show that $\Phi(s_n)/\pi-(n-\tfrac12)$ is the same constant for all $n$. Identify the constant.}
-\prob{2}{(Paper, Sec.~V.) Show that one period $2\pi/\log2$ of the $p=2$ wave (RE2) corresponds to about 6--7 levels near $t=500$, as stated in the paper.}
+\prob{2}{(Paper, Sec.~V.) Show that one period $2\pi/\log2$ of the $p=2$ wave (RE2) corresponds to about 6--7 levels near $t=500$, as stated in the paper. (The paper's ``these heights'' refers to the training zeros 1--400, which span $t$ up to about $680$; check that the count stays between 6 and 7 there too.)}
 \prob{2}{Construct a non-even potential with exactly the same Bohr--Sommerfeld levels as the Wu--Sprung well.}
 \prob{3}{Show that for $\Phi(E)=cE^{\gamma}$ ($\gamma>0$, $V_0=0$) the Abel inversion gives $x(V)\propto V^{\gamma-1/2}$, and find the proportionality constant in terms of $\int_0^{\pi/2}\sin^{2\gamma-1}\varphi\,\dd\varphi$.}
 \prob{3}{Use the Abel inversion to recover the linear well from $\Phi(E)=\frac43E^{3/2}$.}
@@ -756,7 +793,7 @@ Why is it not a contradiction that the smooth Wu--Sprung potential has no fitted
 
 \textbf{9.} $s_{201}\approx398.3$ and $s_{300}\approx542.5$ give $x(s_{201})\approx22.5$ and $x(s_{300})\approx28.5$. This agrees with the paper's $22.5$--$28.5$.
 
-\textbf{11.} The unperturbed Wu--Sprung levels equal $s_n$ to within a few thousandths of a spacing (Sec.~\ref{sec:wu-sprung-check}), so the error of predicting them for $t_n$ equals the error of predicting $s_n$, to the digits shown. Conceptually one is an eigenvalue list of a particular operator, the other the solution of $\Nsm(s)=n-\frac12$; they coincide only because the Wu--Sprung construction was designed to make them coincide, and the coincidence is approximate.
+\textbf{11.} The unperturbed Wu--Sprung levels equal $s_n$ to within a few thousandths of a spacing on average (Sec.~\ref{sec:wu-sprung-check}; the largest deviations, a few hundredths, occur at the lowest levels, not in the holdout), so the error of predicting them for $t_n$ equals the error of predicting $s_n$, to the digits shown. Conceptually one is an eigenvalue list of a particular operator, the other the solution of $\Nsm(s)=n-\frac12$; they coincide only because the Wu--Sprung construction was designed to make them coincide, and the coincidence is approximate.
 
 \textbf{13.} The constant is $-\Nsm(V_0)\approx-0.0045$ for $V_0=3.10073\pi$, by Eq.~\eqref{eq:wu-sprung-phiws}; numerically it is the same for all $n$ to quadrature accuracy.
 

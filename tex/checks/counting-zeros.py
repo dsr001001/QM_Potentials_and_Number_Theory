@@ -56,6 +56,29 @@ assert abs(lambertw(-0.375 / np.e).real - (-0.16226)) < 1e-4
 assert abs(t[0] - s1 - (-0.386621)) < 1e-5
 assert abs(gap(s1) - 7.5001) < 1e-3
 assert abs((t[0] - s1) / gap(s1) - (-0.0515)) < 1e-3
+# Newton sample, every iterate (Steps 1-4)
+x0 = 14.134725
+u0 = x0 / (2 * np.pi)
+assert abs(u0 - 2.249611) < 1e-6 and abs(np.log(u0) - 0.810757) < 1e-6
+d0 = np.log(u0) / (2 * np.pi)
+assert abs(d0 - 0.129036) < 1e-6
+step0 = (0.5 - Nsm(x0)) / d0
+assert abs(0.5 - Nsm(x0) - 0.050722) < 1e-6
+assert abs(step0 - 0.393085) < 1e-5
+x1 = x0 + step0
+assert abs(x1 - 14.527810) < 1e-5
+u1 = x1 / (2 * np.pi)
+assert abs(u1 - 2.312173) < 2e-6 and abs(np.log(u1) - 0.838188) < 2e-6
+assert abs(u1 * (np.log(u1) - 1) - (-0.374138)) < 3e-6
+assert abs(Nsm(x1) - 0.500862) < 2e-6
+d1 = np.log(u1) / (2 * np.pi)
+assert abs(d1 - 0.133402) < 1e-6
+step1 = (0.5 - Nsm(x1)) / d1
+assert abs(step1 - (-0.006462)) < 3e-6
+x2 = x1 + step1
+assert abs(x2 - 14.521348) < 2e-6
+x3 = x2 + (0.5 - Nsm(x2)) / (np.log(x2 / (2 * np.pi)) / (2 * np.pi))
+assert abs(x3 - 14.521346) < 2e-6
 # Lambert s10 sample
 assert abs(lambertw(8.625 / np.e).real - 1.078808) < 1e-5
 s10 = s_lam(10)
@@ -118,6 +141,13 @@ for tv in [50, 200]:
     tt = mp.mpf(tv)
     r = tt**3 * (mp.siegeltheta(tt) - tt / 2 * mp.log(tt / (2 * mp.pi)) + tt / 2 + mp.pi / 8 - 1 / (48 * tt))
     assert abs(float(r) - 7 / 5760) < 2e-6
+# Problem 26 (new): xi(-1) = xi(2) = pi/6
+def xi(s):
+    s = mp.mpf(s)
+    return s * (s - 1) / 2 * mp.pi**(-s / 2) * mp.gamma(s / 2) * mp.zeta(s)
+assert abs(float(xi(2)) - np.pi / 6) < 1e-12
+assert abs(float(xi(-1)) - np.pi / 6) < 1e-12
+assert float(mp.gamma(-0.5)) < 0 and float(mp.zeta(-1)) < 0
 # Problem 27
 sq = np.asarray(qmnt.smooth_zeros(np.arange(1, 1001)))
 assert np.max(np.abs(sq - ss)) < 1e-6

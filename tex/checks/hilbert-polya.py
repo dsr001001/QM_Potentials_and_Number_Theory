@@ -121,6 +121,8 @@ assert abs(NBK(1000) - 648.7412) < 1e-3 and abs(NBK(1000) - 648.74) < 0.005
 assert round(Nsm(1000.0), 3) == 648.616 and round(NBK(1000.0), 3) == 648.741
 assert abs(NBK(1000) - Nsm(1000) - 0.125) < 1e-12
 assert abs(qmnt.Nsm(1000.0) - Nsm(1000.0)) < 1e-9
+# Box sample: 652 states (paper) vs Nsm(1000): about three levels
+assert abs((652 - Nsm(1000)) - 3.4) < 0.1
 z700 = qmnt.zeros(700)
 assert np.sum(z700 <= 1000) == 649
 assert abs((649 - Nsm(1000)) - 0.38) < 0.005

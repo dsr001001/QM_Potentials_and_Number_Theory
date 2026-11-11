@@ -1,12 +1,13 @@
 import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(6, 4))
-boxes = {'I': (0.5, 0.9, 'I  Mathematical\nfoundations'), 'II': (0.2, 0.65, 'II  Quantum\nmechanics'), 'III': (0.8, 0.65, 'III  Primes and\nzeta'), 'IV': (0.5, 0.42, 'IV  Spectra, randomness,\noperators'), 'V': (0.5, 0.22, 'V  Computation, fitting,\ngeneralization'), 'VI': (0.5, 0.04, 'VI  The paper')}
-for k, (xb, yb, s) in boxes.items():
-    ax.text(xb, yb, s, ha='center', va='center', fontsize=9, bbox=dict(boxstyle='round', fc='white', ec='k'))
-def arr(a, b):
-    xa, ya, _ = boxes[a]; xb, yb, _ = boxes[b]
-    ax.annotate('', xy=(xb, yb + 0.06), xytext=(xa, ya - 0.06), arrowprops=dict(arrowstyle='->'))
-for a, b in [('I', 'II'), ('I', 'III'), ('II', 'IV'), ('III', 'IV'), ('IV', 'V'), ('V', 'VI')]:
-    arr(a, b)
-ax.set_xlim(0, 1); ax.set_ylim(-0.05, 1.0); ax.axis('off')
+ax.axis('off')
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+pos = {'I': (0.5, 0.92), 'II': (0.22, 0.70), 'III': (0.78, 0.70), 'IV': (0.5, 0.48), 'V': (0.5, 0.27), 'VI': (0.5, 0.06)}
+lab = {'I': 'Part I: mathematical foundations', 'II': 'Part II: quantum mechanics', 'III': 'Part III: primes and zeta', 'IV': 'Part IV: spectra, randomness, operators', 'V': 'Part V: computation, fitting, generalization', 'VI': 'Part VI: the paper (uses Parts I-V)'}
+for k, (xp, yp) in pos.items():
+    ax.text(xp, yp, lab[k], ha='center', va='center', fontsize=8, bbox=dict(boxstyle='round', fc='w'))
+edges = [('I', 'II'), ('I', 'III'), ('II', 'IV'), ('III', 'IV'), ('II', 'V'), ('IV', 'V'), ('V', 'VI')]
+for a, b in edges:
+    ax.annotate('', xy=pos[b], xytext=pos[a], arrowprops=dict(arrowstyle='->', shrinkA=12, shrinkB=12))
 plt.savefig('intro_roadmap.pdf', bbox_inches='tight')

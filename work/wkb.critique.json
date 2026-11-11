@@ -2,127 +2,183 @@
  {
   "category": "ERROR",
   "severity": "high",
-  "quote": "$\\mathcal A=2\\Phi=\\frac83\\cdot8^{3/2}=60.34$; $\\Phi/\\pi=4.80$.",
-  "problem": "The check script fails. Φ(8)=(4/3)·8^{3/2}=30.17, so A=2Φ=(8/3)·8^{3/2}=60.34 (this part is fine), but Φ/π=9.60, not 4.80. Moreover 'Level 5 has Φ/π=4.5' is also wrong for this potential.",
-  "fix": "Φ/π=(4/(3π))·8^{3/2}=9.60. Level 10 has Φ/π=9.5, so E=8 lies between levels 10 and 11. Fix the answer, the check, and the problem's intended results."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "The relative error falls from $9.5\\%$ at $n=1$ to below $0.1\\%$ by $n=6$.",
-  "problem": "For n=1 the relative error is 0.0967/1.0188=9.5% (relative to exact) or 8.7% (relative to WKB). The check divides by Ew, giving 8.7%. For n=6, 0.0034/5.52=0.06%, fine, but the n=1 figure is inconsistent with the check.",
-  "fix": "State which denominator is used (exact) and make the check use the exact level, or quote 8.7%."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "Level $n$ is therefore most sensitive to $\\delta V$ near its own turning points. It is completely insensitive to $\\delta V$ beyond them, apart from the exponentially small tails.",
-  "problem": "The WKB density is only locally enhanced near turning points (the 1/k divergence is integrable). Level n is sensitive to δV across the entire allowed region. 'Most sensitive' is overstated, and the paper's mapping is heuristic.",
-  "fix": "Say the density is weighted toward the turning points, but the level responds to δV everywhere inside [a,b]. Label the claim heuristic."
+  "quote": "$5/96^{3/2}=0.00532$: WKB is excellent there.",
+  "problem": "Problem 23 has V=x^2, E=101, x=5, so E-V=101-25=76, not 96 (96 would be V=|x|). With |V'|=10 the parameter is 10/(2·76^{3/2})=5/76^{3/2}≈0.00755. The CHECKS script asserts the same wrong arithmetic, so it passes without catching this.",
+  "fix": "Replace with \"$\\abs{V'}=10$, $E-V=76$, so the parameter is $10/(2\\cdot76^{3/2})=5/76^{3/2}=0.00755$: WKB is excellent there.\" Update the CHECKS assertion to 5/76**1.5≈0.00755."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Dividing by $k^2$, the condition becomes\n\\begin{equation}\n\\frac34\\Bigl(\\frac{k'}{k^2}\\Bigr)^2\\ll1",
-  "problem": "Dividing (A''/A) by k^2 gives (3/4)(k'/k^2)^2 - (1/2) k''/k^3. The first term is (3/4)k'^2/k^4, which equals (3/4)(k'/k^2)^2, so this is fine. However, 'the condition on k'' is of the same type and we will not track it' is a jump.",
-  "fix": "Show k''/k^3 in terms of V'' and V' or state explicitly it is dropped as a smoothness assumption."
+  "quote": "An error of $0.01$ in energy means little at $E=1000$ but a great deal near the ground state.",
+  "problem": "This holds for the box, where spacings grow with n, but not in general. For the Riemann zeros and the Wu--Sprung levels the spacing shrinks with height (about 7 near t_1, about 1.24 near t=1000), so a fixed error of 0.01 matters more at E=1000. Placed right after the sentence about the paper, it gives the wrong picture.",
+  "fix": "Replace with: \"For example, in the box of RE3 an error of $0.01$ is negligible at $E=1000$ (spacing $2.2$) but is several spacings near the ground state (spacing $0.004$); for the zeros the spacing instead shrinks slowly with height, from about $7$ near $t_1$ to about $1.2$ near $t=1000$.\""
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Finally, $\\sin(\\theta+\\pi/4)=\\cos(\\theta-\\pi/4)$, because $\\cos(\\theta-\\pi/4)=\\cos(\\pi/4-\\theta)=\\sin(\\pi/2-(\\pi/4-\\theta))$.",
-  "problem": "The identity is correct but the justification is convoluted. Also the sign: the argument is θ=(2/3)w^{3/2}, and the earlier chain should be stated cleanly.",
-  "fix": "Use cos(a)=sin(π/2−a) directly: sin(θ+π/4)=cos(π/2−θ−π/4)=cos(π/4−θ)=cos(θ−π/4)."
+  "quote": "Shifting the right half of a well sideways changes the shape without changing $\\Phi$",
+  "problem": "Taken literally, shifting only the right half sideways widens (or narrows) the allowed region by the shift at every height, and so does change Φ. The transformation that leaves Φ unchanged is a shear: slide each horizontal slice sideways by a height-dependent amount, keeping its width b(E)-a(E).",
+  "fix": "Replace with: \"Sliding each horizontal slice of the well sideways by an amount that depends on height (a shear, which keeps the width $b(E)-a(E)$ at every height) changes the shape without changing $\\Phi$\". Give an example: $V=\\abs{x}$ and the lopsided well with slope $2$ on the left and $2/3$ on the right have the same widths $2E$."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Comparing the two prefactors, the oscillating side carries twice the amplitude of the decaying side.",
-  "problem": "The prefactors are F^{1/6}/√π and F^{1/6}/(2√π), but the connection formula is then written with 'D' as a free constant. The phrase 'letting D be any constant' is fine, but the formula was derived with equality only in the sense of asymptotic matching.",
-  "fix": "State that the equality is an asymptotic matching of the same exact Airy function and then rescale."
+  "quote": "is the only even monotone potential with $V(0)=0$ whose classical period is independent of energy",
+  "problem": "Every oscillator V=cx^2 (c>0) has an energy-independent period, so V=x^2 is not the only one. V=x^2 is singled out only once the period is fixed at π.",
+  "fix": "Rephrase Problem 22: \"Show, using \\cref{eq:wkb-period} and \\cref{eq:wkb-abelinv}, that the only even monotone potentials with $V(0)=0$ whose classical period is independent of energy are $V=cx^2$, and that period $\\pi$ selects $V=x^2$.\""
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Exact function is $\\mathrm{Ai}(x-E)$ with $E$ the fifth zero of $\\mathrm{Ai}$ (sign reversed).",
-  "problem": "Level n=10 is the fifth odd state, i.e. the fifth zero of Ai, so this is correct only if levels alternate starting with even. Ok, but the figure caption claims n=10 is 'odd', consistent. No numeric check or figure script is supplied for the wkb figures.",
-  "fix": "Provide FIGURES scripts for all six figures (wkb_turning, wkb_compare, wkb_phasespace, wkb_staircase, wkb_turnmap, wkb_abel)."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/wkb_turning.pdf}",
-  "problem": "The response has no FIGURES part, so none of the six referenced figures has a script.",
-  "fix": "Add '### FIG wkb_<name>' scripts for each figure."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "Recall from Chapter~\\ref{ch:perturbation} that a small change $\\delta V$ shifts the $n$-th level",
-  "problem": "Chapter 13 (perturbation) comes after Chapter 12 and is not in this chapter's assumed list, so the dependence is backwards.",
-  "fix": "Derive δE_n=∫|ψ_n|²δV dx in one line (first-order perturbation) or mark it as a forward reference and explain."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "The paper always computes the levels by exact diagonalization (Chapter~\\ref{ch:finite-differences}), never by WKB.",
-  "problem": "Chapter 23 is a later chapter; fine as forward reference, but the claim 'never' is unsupported (smooth potential built from WKB). Also the chapter lacks checks for several quoted numbers (P14 only printed, 903 levels, 1.74804 ok).",
-  "fix": "Soften to 'the paper computes levels by finite differences'; add an assert for Problem 14 and the 0.065/0.005 values."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "\\item[1.] $k(0)=4$, $\\lambda=1.571$; $k(2)=\\sqrt{12}=3.464$, $\\lambda=1.814$.",
-  "problem": "Answers are provided for odd problems and all prob 1, but several are missing (e.g. 17 present, 19, 21 present; problem 1-level ones 20, 26 present; problem 5 present). Answer 8 (a prob-2 even) absent, fine; but answers to 3 and 4 are for prob 1, ok. Problem 25 answer is only a statement.",
-  "fix": "Check coverage; add short solutions for problems 25 and 27 beyond one-liners."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "Evaluate the coverage threshold $2L\\sqrt E/\\pi$ at scale~2 for $E=t_{1000}=1419.42$ and $L=59.957$.",
-  "problem": "The answer is never given (problem 14 is even), and the check only prints 1438.06. Fine, but problem 14's value is not asserted.",
-  "fix": "Assert 1438.06 in checks and optionally give the answer."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The sign alternates between even and odd states. This happens because the exact even states feel the kink at $x=0$ differently from the odd states, which vanish there.",
-  "problem": "The explanation is asserted without justification; the WKB hard-wall/odd-state argument (odd states are exactly the half-well with a wall, phase 3/4) is the real reason, as Answer 7 hints.",
-  "fix": "Explain: odd states use the (n−1/4)π rule for the half-well; even states use the Neumann condition, which WKB treats with a different phase."
+  "quote": "Any complex solution can be written as a real amplitude $A(x)>0$ times a phase factor",
+  "problem": "This is false for solutions with nodes. A real solution such as cos(kx) vanishes at points, so A>0 fails there and S jumps by π. The bound states the chapter cares about are exactly such real solutions. The form is an ansatz for nowhere-vanishing (travelling-wave) solutions.",
+  "fix": "Replace with: \"We look for solutions of the form\" and add after the equation: \"Such solutions never vanish (they are travelling waves); real standing-wave solutions, which have nodes, will be built below by adding two of them.\""
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Over a full back-and-forth orbit the integral doubles: $\\oint p\\,\\dd x=2\\pi\\hbar\\,(n-\\tfrac12)$.",
-  "problem": "This ignores that in ordinary units Φ=∫p dx/ħ and the quantization (n−1/2)π gives ∮p dx=2π ħ(n−1/2), which is correct; but the justification of the doubling of the integral (upper and lower halves) was not shown here.",
-  "fix": "Add one line: the return path has p→−p and dx→−dx, so contributions add."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The result still holds there, but the proof needs a more careful limit argument that we do not give.",
-  "problem": "Leibniz rule is applied to Φ(E) where F=√(E−V) has a derivative singular at the endpoint; the endpoint-term argument 'integrand vanishes' is not justified in the chapter.",
-  "fix": "Verify with the linear well: Φ'=2√E from both sides, to build confidence."
+  "quote": "In our units the probability current of Chapter~\\ref{ch:schrodinger} is $j=2\\Im(\\psi^*\\psi')$.",
+  "problem": "The bible's contract for Chapter 10 does not include the probability current, and it is not in this chapter's prerequisites. The reader also cannot follow the unshown step that j equals 2A^2S' for ψ=Ae^{iS}.",
+  "fix": "Either drop the current remark, or define it here: state that j=(\\hbar/m)\\Im(\\psi^*\\psi') measures the flow of probability, that it becomes 2\\Im(\\psi^*\\psi') for \\hbar=1, m=1/2, and show \\psi^*\\psi'=Ae^{-iS}(A'+iAS')e^{iS}=AA'+iA^2S', whose imaginary part is A^2S'."
  },
  {
   "category": "CLARITY",
+  "severity": "medium",
+  "quote": "level shifts are orbit time averages of $\\delta V$ concentrated near turning points",
+  "problem": "The Summary contradicts the main text, which says explicitly \"But the weight is not concentrated there\" and that the outer tenth carries only about a third of the weight. The Key Ideas wording \"weighted toward\" is the correct one.",
+  "fix": "Change to \"level shifts are orbit time averages of $\\delta V$, with weight $1/v$ enhanced (but not concentrated) near the turning points and negligible beyond them\"."
+ },
+ {
+  "category": "ERROR",
   "severity": "low",
-  "quote": "For a general smooth well, measuring the error in units of the spacing is the natural choice.",
-  "problem": "The sentence follows 'Two exceptions' but is not an exception or explained; confusing flow.",
-  "fix": "Start a new paragraph on why errors are measured in spacings."
+  "quote": "For the smooth wells of this chapter it holds wherever \\cref{eq:wkb-cond} holds",
+  "problem": "This is not true as stated. For V=x^2 at x=0 the parameter in the validity condition is exactly zero, yet |V''|≪4(E-V)^2 requires 2≪4E^2, which fails for low E. The chapter's main example V=|x| is also not smooth: V'' is infinite at the kink.",
+  "fix": "Replace with: \"For smooth wells at high energy it holds wherever \\cref{eq:wkb-cond} holds comfortably; at low energy it can fail even where $V'=0$ (for $V=x^2$ at $x=0$ it requires $E^2\\gg\\tfrac12$).\" Mention that the kink of $\\abs{x}$ is a separate issue."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "the kink at the origin is discussed in Problem~6",
+  "problem": "V=|x| is the chapter's main worked example, but its kink violates the smoothness assumed in the validity and connection arguments. The only discussion is deferred to an even-numbered problem that has no answer, so the student never sees the issue resolved.",
+  "fix": "Add two or three sentences in the text (or an answer to Problem 6). Say that at the kink V' jumps, V'' is a delta function and the WKB form is not accurate to higher order there; that the Bohr--Sommerfeld rule still works because by symmetry the problem reduces to a half-well with ψ(0)=0 or ψ'(0)=0; and that the even states pick up an extra error, as discussed in the accuracy section."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The oscillator is special: WKB happens to be exact there.",
+  "problem": "Only the Bohr--Sommerfeld energies are exact for the oscillator. The WKB wavefunctions still diverge at the turning points and are not exact. The same loose wording recurs in the Key Ideas (\"WKB is exact for the box and for the oscillator\").",
+  "fix": "Write \"The oscillator is special: the Bohr--Sommerfeld energies happen to be exact there (the WKB wavefunctions are still only approximate).\" Adjust the Key Ideas and the accuracy section in the same way."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The mean spacing is itself the WKB density of states",
+  "problem": "The mean spacing is the reciprocal of the density of states, not the density itself.",
+  "fix": "Write \"The mean spacing is itself the reciprocal of the WKB density of states\"."
  },
  {
   "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "The Wu--Sprung potential, as we will see, grows a little more slowly than $x^2$. Its levels therefore crowd together slowly",
-  "problem": "Per the bible, V grows roughly like (x/log x)^2, so it is slower than x^2, but the claim that levels crowd 'just as the Riemann zeros do' is stated loosely; the chapter does not derive it.",
-  "fix": "Say this is shown in Chapter 22 and that the spacing matches 2π/log(t/2π) by construction."
+  "severity": "low",
+  "quote": "so a few extra levels fall below $1000$",
+  "problem": "The explanation of 652 versus 649 by finite-difference dispersion is asserted as fact but is not verified in CHECKS. It also ignores that the Dirichlet wall at L=x(1000) pushes levels near E=1000 upward, and that WKB itself is not exact.",
+  "fix": "Either add a qmnt check (count fd_levels below 1000 at N=6000 and on a finer grid), or hedge: \"The main effect is expected to be finite-difference dispersion, which lowers high levels on the grid (Chapter 23); the wall at $L=x(1000)$ and the WKB error also contribute a level or so.\""
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "Sec.~V notes that the $p=2$ oscillation, of period $2\\pi/\\log2\\approx9$ in $t$ (RE2), spans ``only $\\sim$6--7 levels at these heights''.",
-  "problem": "Dividing by the mean gap at n=200 gives 6.0 only if gap≈1.5; the claim relies on a check not shown in text, and the paper statement is about 'at these heights'.",
-  "fix": "Show the gap values (≈1.5 and 1.33) explicitly."
+  "quote": "Let $I(\\lambda)=\\int_{a(\\lambda)}^{b(\\lambda)}F(\\lambda,u)\\,\\dd u$.",
+  "problem": "λ was defined earlier in this chapter as the local wavelength, and F as the slope V'(b) at the turning point. Reusing both for the Leibniz parameter and integrand, with a and b also being the turning points, invites confusion.",
+  "fix": "Rename the parameter and integrand, e.g. $I(s)=\\int_{a(s)}^{b(s)}G(s,u)\\,\\dd u$, throughout the Leibniz subsection, Problem 9 and its answer."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "with $A$ and $S$ real functions",
+  "problem": "A and S clash with the book-wide notation fixed in the bible: A is the sensitivity matrix and the non-Hermitian operator, and S(t) is the fluctuating part of the zero count. The chapter warns only about its script N.",
+  "fix": "Add one sentence: \"In this chapter only, $A(x)$ and $S(x)$ denote the WKB amplitude and phase; they are unrelated to the matrix $A_{nk}$ and to the fluctuation $S(t)$ used elsewhere in the book.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Adding the two solutions in \\cref{eq:wkb-psi} with suitable complex coefficients gives the general real WKB solution",
+  "problem": "The coefficients are not shown, and neither is the use of linearity or of cos θ=(e^{iθ}+e^{-iθ})/2. The bible asks that every step be shown.",
+  "fix": "Insert: \"Because the equation is linear, $\\tfrac12e^{i\\varphi}\\psi_++\\tfrac12e^{-i\\varphi}\\psi_-$ is also a solution; with $\\theta=\\int^xk\\,\\dd x'$ it equals $\\frac{C}{\\sqrt k}\\cdot\\tfrac12\\bigl(e^{i(\\theta+\\varphi)}+e^{-i(\\theta+\\varphi)}\\bigr)=\\frac{C}{\\sqrt k}\\cos(\\theta+\\varphi)$ (Chapter 2).\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Repeating Steps 1--4 with the phases $\\varphi_a$ and $\\varphi_b$ at the two ends gives",
+  "problem": "The generalization is asserted, not shown. The student has to redo the proportionality argument with general phases unaided.",
+  "fix": "Show the lines: the two forms are $\\cos(\\Phi-\\theta-\\varphi_b)$ and $\\cos(\\theta-\\varphi_a)$; with $\\alpha=\\theta-\\varphi_a$ and $\\beta=\\Phi-\\varphi_a-\\varphi_b$ the first is $\\cos(\\alpha-\\beta)$, so $\\sin\\beta=0$ and $\\beta=(n-1)\\pi$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "It has one solution, called $\\mathrm{Ai}(z)$, that decays as $z\\to+\\infty$",
+  "problem": "That a decaying solution exists, is unique up to a multiple, and that the other independent solution grows are all taken on trust. This is stated outside the beyond box, which covers only the asymptotic forms.",
+  "fix": "Move the statement into the beyond box, or add: \"(a second-order equation has two independent solutions; we take on trust that one, Ai, decays and the other, Bi, grows as $z\\to+\\infty$, see the box below)\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the wavelength changes by much less than itself over one wavelength",
+  "problem": "The change over one wavelength is about |λ'|λ, so \"much less than itself\" means |λ'|≪1, not the |λ'|≪2π written just before. The factor of 2π is glossed over.",
+  "fix": "Write: \"this is $\\abs{\\lambda'}\\ll2\\pi$; up to the factor $2\\pi$, it says that the change $\\abs{\\lambda'}\\lambda$ of the wavelength over one wavelength is small compared with $\\lambda$ itself.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "both use the WKB density of states",
+  "problem": "The coverage law rests on the local wavenumber √E (wavelength), not on the density of states, and the paper invokes WKB for neither statement. The chapter's own Paper connection section explains the coverage law through the local wavenumber.",
+  "fix": "Write \"are both read in this book through WKB ideas: the local wavenumber for the coverage law and the mean level spacing for the prime-2 period\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and at $E=1000$ it is $M>903.6$. These are consistent with the paper's report",
+  "problem": "M=900 lies below 903.6, so the E=1000 threshold is not consistent with M=900 as written. Only the threshold at the highest fitted level, t_500 (813.8), is relevant.",
+  "fix": "Say: \"The relevant energy is that of the highest fitted level, $t_{500}$, for which the threshold $813.8$ lies below $M=900$, consistent with the paper's report; at the box top $E=1000$ the threshold would be $903.6$.\""
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\paragraph{``The known semiclassical weakness at low $n$''.}",
+  "problem": "The heading is set in quotation marks as if it were a verbatim quote from the paper. The paper's wording is \"worst at low $n$, the known semiclassical weakness of the construction\". The chapter intro has the same pseudo-quote.",
+  "fix": "Remove the quotation marks from the heading, or quote exactly: ``worst at low $n$, the known semiclassical weakness of the construction''."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\paragraph{The amplitude--phase form.}",
+  "problem": "The bible allows en dashes only for numeric ranges and paired names. \"amplitude--phase\" is neither.",
+  "fix": "Write \"The amplitude and phase form.\" or \"The amplitude-phase form.\""
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "It is defined only implicitly, through Eq.~(2) of the paper",
+  "problem": "The chapter refers to the paper many times but never cites it with the mandated key \\cite{soniR1}.",
+  "fix": "Add \\cite{soniR1} at first mention: \"through Eq.~(2) of the paper \\cite{soniR1}\"."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The error is largest at $n=1$ and falls off within a few levels.",
+  "problem": "Answer 19 makes a numerical claim (location of the maximum error, rapid fall-off) that is not computed in CHECKS and carries no numbers. The bible requires every numerical answer to be checked.",
+  "fix": "Add a CHECKS block that computes fd_levels with Richardson for the Wu--Sprung potential against qmnt.smooth_zeros for n≤20, and quote the resulting values (e.g. the error at n=1 and at n=10 in mean spacings) in the answer."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "This is a heuristic expectation. It is exact for the box and the oscillator",
+  "problem": "The pronoun is ambiguous: \"It\" reads as \"the heuristic expectation is exact\". What is meant is that the Bohr--Sommerfeld levels are exact in those two cases.",
+  "fix": "Write \"This is a heuristic expectation. The Bohr--Sommerfeld levels are exact for the box and the oscillator, and the approximation fails for sharply varying potentials.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Near a turning point the Schr\\\"odinger equation becomes the Airy equation $\\psi_{zz}=z\\psi$",
+  "problem": "The subscript notation ψ_zz for a second derivative is never defined; the text uses d^2ψ/dz^2. It also appears in Answer 25.",
+  "fix": "Write $\\dd^2\\psi/\\dd z^2=z\\psi$ in both places."
  }
 ]

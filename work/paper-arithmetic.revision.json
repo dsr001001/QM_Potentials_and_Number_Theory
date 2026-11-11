@@ -1,75 +1,527 @@
 {
  "patches": [
   {
-   "old": "F = lambda tt: float(X(np.atleast_1d(tt)) @ theta)",
-   "new": "F = lambda tt: float(np.ravel(X(np.atleast_1d(tt)) @ theta)[0])"
+   "old": "are no better than the \"no fluctuation\" null.",
+   "new": "are no better than the ``no fluctuation'' null."
   },
   {
-   "old": "IV.5 & Control A: with 900 terms and still zero fitted parameters, the oracle improves monotonically, to $0.018$. &",
-   "new": "IV.5 & Control A (the oracle at a larger prime budget): going from 25 primes ($0.043$) to 300 primes, i.e.\\ 900 terms, still with zero fitted parameters, the oracle improves monotonically, to $0.018$. &"
+   "old": "Four controls (A, B, C1, C2 of Table~IV) settle this.",
+   "new": "Four controls (A, B, C1, C2 of Table~IV) separate the two explanations for the model families tested."
   },
   {
-   "old": "We take this on trust; its proof is beyond this book.",
-   "new": "We take this on trust; its proof is beyond this book. A note on units: $S(t)$ is measured in counts, while the paper's fluctuations are measured in mean spacings. To leading order these are the same: by Eqs.~\\eqref{eq:paper-arithmetic-predfluct} and \\eqref{eq:paper-arithmetic-yn}, a count offset $y_n$ at a zero corresponds to a height offset of about $y_n\\gap_n$, which is $y_n$ mean spacings, because the local density of zeros is $1/\\gap_n$. So the variance of $S$ applies directly to the fluctuations in mean spacings, up to the small curvature and slope corrections neglected in those equations."
+   "old": "\\textbf{The \"no information\" story.}",
+   "new": "\\textbf{The ``no information'' story.}"
   },
   {
-   "old": "A quarter-resolution step guarantees that no peak (width about $2\\pi/T$) falls between grid points.",
-   "new": "With four grid points per resolution width, every peak (width about $2\\pi/T$) is sampled several times, so the coarse maximum is unlikely to miss a peak; the refinement step then locates it precisely. (This makes a miss unlikely; it does not strictly guarantee against one, for example when two peaks of nearly equal height compete.)"
+   "old": "\\textbf{The \"wrong vocabulary\" story.}",
+   "new": "\\textbf{The ``wrong vocabulary'' story.}"
   },
   {
-   "old": "Why does it still beat the null by a wide margin? Because every column has a correct frequency. Whatever mixture the fit chooses, it is built entirely of the right sinusoids, and these continue correctly; only their weights are partly wrong.",
-   "new": "Why does it still beat the null by a wide margin? The paper does not say. Our heuristic reading: every column has a correct arithmetic frequency, so whatever mixture the fit chooses is built from sinusoids that would continue correctly if their weights were right. The weights are partly wrong, and wrong weights spread over many columns can still continue poorly, which is presumably part of why the score is $0.180$ rather than $0.028$; but no column introduces a frequency foreign to the target. This is a plausible explanation, not a demonstrated one."
+   "old": "Its title states the verdict: \"The arithmetic information generalizes.\"",
+   "new": "Its title states the verdict: ``The arithmetic information generalizes.''"
   },
   {
-   "old": "\\textbf{(d) Strength and limits.} Control A defeats one specific objection: that the operators lose only because they have fewer \"terms\". The oracle with 900 terms is better than with 75, so a large term count is not, in itself, harmful when the terms have the right form. Notice too that A involves no fitting, so it cannot overfit: more terms of the right form can only add correct information (or, on the critical line where the full series does not converge, add terms that the evidence of Table~V shows to be helpful at these heights).",
-   "new": "\\textbf{(d) Strength and limits.} Control A addresses one specific objection: that the operators lose only because they have fewer \"terms\". At these heights the oracle with 900 terms is better than with 75 terms (25 primes), so a large term count is not, in itself, harmful when the terms have the right form. Notice too that A involves no fitting, so it cannot overfit in the statistical sense: no parameter is tuned to the training zeros. That does not make more terms automatically better. On the critical line the full series does not converge (Chapter~\\ref{ch:explicit-formula}), so whether adding terms helps is an empirical question, answered affirmatively at these heights by Tables~IV and V; it is not a theorem."
+   "old": "read in this chapter. \"Where\" gives the R1 location.",
+   "new": "read in this chapter. ``Where'' gives the R1 location."
   },
   {
-   "old": "(Problem~\\ref{prob:paper-arithmetic-dephase-small} uses the same averaging idea)",
-   "new": "(Problem~\\ref{prob:paper-arithmetic-rmsslope} asks you to derive this formula)"
+   "old": "In this chapter, \"control A\" means the oracle",
+   "new": "In this chapter, ``control A'' means the oracle"
   },
   {
-   "old": "Replacing \\texttt{range(401,501)} by \\texttt{range(1001,2001)} reproduces the third row",
-   "new": "Setting \\texttt{n = np.arange(1001, 2001)} and \\texttt{t\\_true = qmnt.zeros(2000)[1000:2000]} reproduces the third row"
+   "old": "mentally replace \"A\" by \"control A\" and $T$ by \"window length\".",
+   "new": "mentally replace ``A'' by ``control A'' and $T$ by ``window length''."
   },
   {
-   "old": "the two-prime oracle's root is guaranteed unique.}\\label{prob:paper-arithmetic-two}",
-   "new": "the two-prime oracle's root is guaranteed unique.}"
+   "old": "\\item Section~IV distinguishes \"the information does not exist\" from \"the operators cannot express it\".\n\\item It does so with one zero-parameter predictor (the oracle, Table~V) and four controls of increasing ignorance about arithmetic (A, B, C1, C2, Table~IV).\n\\item Every claim is measured against the same null as the operators: $0.263$ on zeros 401--500 and $0.274$ on 801--1000.",
+   "new": "\\item Section~IV distinguishes ``the information does not exist'' from ``the operators cannot express it''.\n\\item It does so with one zero-parameter predictor (the oracle, Table~V) and four controls that differ in how much of the answer's form they are given (A and B with the arithmetic frequencies, then C2 with only a sparsity prior, then C1 with a generic grid; Table~IV).\n\\item Each claim is measured against the null of its own holdout, the same null the operators face: $0.263$ on zeros 401--500, $0.274$ on 801--1000, and $0.270$--$0.296$ on the other holdouts of Table~V."
   },
   {
-   "old": "at distance $|t-t_c|=1000$.}\\label{prob:paper-arithmetic-dephase-small}",
-   "new": "at distance $|t-t_c|=1000$.}"
+   "old": "the oracle has \"zero fitted parameters\" and why",
+   "new": "the oracle has ``zero fitted parameters'' and why"
   },
   {
-   "old": "\\prob{2}{Using Selberg's variance",
-   "new": "\\prob{2}{\\label{prob:paper-arithmetic-selberg}Using Selberg's variance"
+   "old": "is the \"rms\"; the Pearson correlation between the two sequences is the \"corr\".",
+   "new": "is the ``rms''; the Pearson correlation between the two sequences is the ``corr''."
   },
   {
-   "old": "say what the asymptotic formula neglects.}\\label{prob:paper-arithmetic-selberg}",
-   "new": "say what the asymptotic formula neglects.}"
+   "old": "Write the predicted zero as $t=s_n+\\delta$. Taylor's theorem with remainder (Chapter~\\ref{ch:asymptotics}) applied to $\\Nsm$ gives",
+   "new": "Write the predicted zero as $t=s_n+\\delta$. We use Taylor's theorem with the Lagrange form of the remainder: if $f$ is twice differentiable, then $f(s+\\delta)=f(s)+\\delta f'(s)+\\tfrac12\\delta^2f''(\\xi)$ for some $\\xi$ between $s$ and $s+\\delta$. (This sharpens the Taylor approximations of Chapter~\\ref{ch:asymptotics} by saying exactly what the neglected term is; its proof, by Rolle's theorem applied to a suitable auxiliary function, is in \\cite{rhb}.) Applied to $\\Nsm$ it gives"
   },
   {
-   "old": "would Claim IV.10 survive?}\n\\end{problemlist}",
-   "new": "would Claim IV.10 survive?}\n\n\\prob{2}{\\label{prob:paper-arithmetic-rmsslope}Starting from Eq.~\\eqref{eq:paper-arithmetic-dnfl}, show that the mean square of $\\Nfl'(t)$ over a long range of $t$ is $\\frac{1}{\\pi^2}\\sum_{p\\in P}(\\log p)^2\\sum_{m=1}^3\\frac{1}{2p^m}$. (Hint: the frequencies $m\\log p$ are all distinct, so the cross terms average to zero, and each $\\cos^2$ averages to $\\tfrac12$.) Evaluate the rms for $P=\\{2\\}$ and for the six primes $p\\le13$, and compare both with $\\Nsm'(680)$.}\n\\end{problemlist}"
+   "old": "Brent's method on $[680-3\\gap,\\,680+3\\gap]$ (see CHECKS) gives",
+   "new": "Brent's method on $[680-3\\gap,\\,680+3\\gap]$ (one call to \\texttt{scipy.optimize.brentq}) gives"
   },
   {
-   "old": "The reported $0.180$ is above this bound, as it must be; the excess reflects an amplitude that is not optimally scaled and a nonzero mean error.",
-   "new": "The reported $0.180$ is above this bound, as it must be (to the extent that the null approximates $\\sigma_Y$). The excess is consistent with an amplitude that is not optimally scaled, a nonzero mean error, or both; the paper does not say which, and the bound alone cannot tell them apart."
+   "old": "That is why the paper solves the level equation by root finding instead of stepping once from $s_n$.",
+   "new": "This shows why solving the level equation, as the paper does, matters: a single linearized step from $s_n$ would be badly off."
   },
   {
-   "old": "For $A=0.3$, $G'$ is negative on part of every period and positive on the rest, so $G$ changes direction twice per period (one local maximum and one local minimum). Each such down-and-up excursion can add two extra roots if the target level lies within it, which is what the $A=0.3$ curve of \\cref{fig:paper-arithmetic-rootambig} shows.",
-   "new": "For $A=0.3$, $A\\omega=1.5>0.7455$, so $G'(t)=0.7455+1.5\\cos(5t)$ is negative exactly when $\\cos(5t)<-0.7455/1.5=-0.497$, which happens on one interval of each period, and positive on the rest. Hence $G'$ changes sign exactly twice per period: $G$ has one local maximum $G_{\\max}$ (where $G'$ goes from positive to negative) and one local minimum $G_{\\min}<G_{\\max}$ (where it goes back). So $G$ changes direction twice per period. Extra roots: around one such excursion, $G=0$ has three roots (one on the rising stretch before the maximum, one on the falling stretch, one on the rising stretch after the minimum) if and only if $G_{\\min}<0<G_{\\max}$; otherwise it has at most one. Each excursion whose range straddles zero therefore adds exactly two extra roots, which is what the $A=0.3$ curve of \\cref{fig:paper-arithmetic-rootambig} shows."
+   "old": "(Problem~\\ref{prob:paper-arithmetic-rmsslope} asks you to derive this formula). That is well below $\\Nsm'\\approx0.75$ at the heights of the paper. So failure of monotonicity is possible but rare for the oracle; the paper reports root ambiguity only for one fitted row of Table~IV, which we meet in \\cref{sec:paper-arithmetic-B}.",
+   "new": "(Problem 28 asks you to derive this formula). That is below $\\Nsm'\\approx0.75$ at the heights of the paper, but only by a factor of about $1.8$: for six primes, stretches where $G$ decreases are uncommon, not negligible. For larger budgets they are common. The same formula gives an rms slope of about $0.7$ for the 25 primes of Table~V, comparable with $\\Nsm'$, and about $1.2$ for the 300 primes of control A (\\cref{sec:paper-arithmetic-A}), larger than $\\Nsm'$.\n\nA decreasing stretch of $G$ does not by itself produce several roots in the bracket. Several roots require a decreasing excursion that straddles the level $n-\\tfrac12$. A heuristic reason why this is much rarer than non-monotonicity: $\\Nsm+\\Nfl$ approximates the true staircase $N(t)$, which rises steeply through $n-\\tfrac12$ near the zero and is flat near the integer values $n-1$ and $n$ on either side, so the wiggles of a good approximation tend to sit near integer values, away from the half-integer levels. The paper reports root ambiguity only for one fitted row of Table~IV (control B with 900 coefficients), which we meet in \\cref{sec:paper-arithmetic-B}."
   },
   {
-   "old": "\\textbf{Problem 27.} The prime powers",
-   "new": "\\textbf{Problem 26.} The prime powers"
+   "old": "twenty-five primes $0.043/+0.99$ (all verified in CHECKS).",
+   "new": "twenty-five primes $0.043/+0.99$."
   },
   {
-   "old": "\\textbf{Problem 28 (not odd, brief).}",
-   "new": "\\textbf{Problem 27.}"
+   "old": "Each cell is \"rms / corr\" on the stated holdout.",
+   "new": "Each cell is ``rms / corr'' on the stated holdout."
+  },
+  {
+   "old": "which the paper rounds to \"$0.04$--$0.07$\", with",
+   "new": "which the paper rounds to ``$0.04$--$0.07$'', with"
+  },
+  {
+   "old": "Claim IV.1 says the formula predicts \"essentially as well at $n=10^4$ as at $n=400$\". To weigh the word \"essentially\",",
+   "new": "Claim IV.1 says the formula predicts ``essentially as well at $n=10^4$ as at $n=400$''. To weigh the word ``essentially'',"
+  },
+  {
+   "old": "(our arithmetic, checked in CHECKS)",
+   "new": "(our arithmetic)"
+  },
+  {
+   "old": "gives the reason for the drift: \"The mild growth at fixed prime budget mirrors the growth of the null and the increasing number of arithmetically relevant primes at height; relative skill is nearly constant.\" Dividing",
+   "new": "gives the reason for the drift: ``The mild growth at fixed prime budget mirrors the growth of the null and the increasing number of arithmetically relevant primes at height; relative skill is nearly constant.'' Dividing"
+  },
+  {
+   "old": "\"Nearly constant\" is the paper's wording, and it is a fair summary of a ratio that changes by about a factor $1.4$ over a factor $25$ in height.",
+   "new": "``Nearly constant'' is the paper's wording, and it is a fair summary of a ratio that changes by a factor of $1.1$ to $1.4$, depending on the prime budget, over a factor of $25$ in zero index (about $15$ in height $t$, from $t_{400}\\approx680$ to $t_{10000}\\approx9878.7$)."
+  },
+  {
+   "old": "Problem~\\ref{prob:paper-arithmetic-selberg} compares",
+   "new": "Problem 20 compares"
+  },
+  {
+   "old": "\\subsection{\"One prime beats every fitted operator\"}",
+   "new": "\\subsection{``One prime beats every fitted operator''}"
+  },
+  {
+   "old": "Check the paper's \"factor $\\gtrsim1.3$\".",
+   "new": "Check the paper's ``factor $\\gtrsim1.3$''."
+  },
+  {
+   "old": "so the comparison holds whichever row you use.",
+   "new": "so one prime still beats each of them whichever row is used (worst case $0.273/0.242=1.13$). The factor of about $1.3$ applies to matched or neighboring holdouts, for example $0.273/0.198=1.38$ for the 1--350 fit against the 401--500 row."
+  },
+  {
+   "old": "They nearly do, so we use the null as an approximation to $\\sigma_Y$.",
+   "new": "They nearly do: on zeros 401--500 the mean of the true fluctuations (computed with \\texttt{qmnt.fluct}) is below $0.05$ in magnitude, so its square is under $4\\%$ of the mean square $0.263^2$, and we use the null as an approximation to $\\sigma_Y$."
+  },
+  {
+   "old": "\\textbf{Step 2: compare.} C1 scores $0.258$, close to this best case. C1's predictions are shrunk to small amplitude, near the optimal $\\sigma_P=\\rho\\sigma_Y$, so its rms is near the null even though its correlation is not zero.",
+   "new": "\\textbf{Step 2: compare.} C1 scores $0.258$, close to this best case. This is consistent with predictions of small amplitude (our inference from the two reported numbers; the paper does not report the amplitude). Indeed, if the mean error is negligible, Eq.~\\eqref{eq:paper-arithmetic-mse} holds with equality, and setting $0.258^2=\\sigma_P^2+0.263^2-2(0.28)(0.263)\\sigma_P$ gives a quadratic in $\\sigma_P$ with roots $\\sigma_P\\approx0.02$ and $0.13$, both at most about half of $\\sigma_Y$."
+  },
+  {
+   "old": "Part (b) explains why Table~IV prints \"$+0.99$\" next to $0.028$ and \"$+1.00$\" next to $0.018$:",
+   "new": "Part (b) explains why Table~IV prints ``$+0.99$'' next to $0.028$ and ``$+1.00$'' next to $0.018$:"
+  },
+  {
+   "old": "The paper is explicit that the oracle \"is not a fair ML competitor (it encodes the known functional form); its role is informational\" (Sec.~II~D), and again in Sec.~IV: \"it is given the functional form, so this comparison shows only that transferable structure exists and is arithmetic.\"",
+   "new": "The paper is explicit that the oracle ``is not a fair ML competitor (it encodes the known functional form); its role is informational'' (Sec.~II~D), and again in Sec.~IV: ``it is given the functional form, so this comparison shows only that transferable structure exists and is arithmetic.''"
+  },
+  {
+   "old": "The paper organizes all models \"by the information supplied, at three levels\":",
+   "new": "The paper organizes all models ``by the information supplied, at three levels'':"
+  },
+  {
+   "old": "\"trained by least squares on $y_n=n-\\tfrac12-\\Nsm(t_n)$ at the training zeros only, and scored exactly as the oracle.\"",
+   "new": "``trained by least squares on $y_n=n-\\tfrac12-\\Nsm(t_n)$ at the training zeros only, and scored exactly as the oracle.''"
+  },
+  {
+   "old": "The grid of strengths is \"$\\lambda=10^{-8},\\dots,10^{3}$ in half decades\":",
+   "new": "The grid of strengths is ``$\\lambda=10^{-8},\\dots,10^{3}$ in half decades'':"
+  },
+  {
+   "old": "\\item \\emph{Selection.} \"Ridge strength and $K$ are chosen by a forward split inside the training window (first 75\\% fit, last 25\\% validate), after which the model is refitted on the whole training window; held-out zeros are not used before scoring.\"",
+   "new": "\\item \\emph{Selection.} ``Ridge strength and $K$ are chosen by a forward split inside the training window (first 75\\% fit, last 25\\% validate), after which the model is refitted on the whole training window; held-out zeros are not used before scoring.''"
+  },
+  {
+   "old": "\\item \\emph{Leakage test.} Appendix~A step 20 adds: \"Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.\"",
+   "new": "\\item \\emph{Leakage test.} Appendix~A step 20 adds: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.''"
+  },
+  {
+   "old": "These are the \"72, 129\" of Table~IV.",
+   "new": "These are the ``72, 129'' of Table~IV."
+  },
+  {
+   "old": "Answer (Sec.~IV): \"the oracle improves monotonically, to $0.018$ on zeros 401--500.\"",
+   "new": "Answer (Sec.~IV): ``the oracle improves monotonically, to $0.018$ on zeros 401--500.''"
+  },
+  {
+   "old": "they have fewer \"terms\".",
+   "new": "they have fewer ``terms''."
+  },
+  {
+   "old": "The word \"monotonically\" refers to",
+   "new": "The word ``monotonically'' refers to"
+  },
+  {
+   "old": "as \"900 parameters generalize\".",
+   "new": "as ``900 parameters generalize''."
+  },
+  {
+   "old": "at $0.028/+0.99$, \"better than the unfitted 25-prime oracle\" ($0.043$).",
+   "new": "at $0.028/+0.99$, ``better than the unfitted 25-prime oracle'' ($0.043$)."
+  },
+  {
+   "old": "For simplicity it validates $\\lambda$ on the residual of $y$ in the validation block rather than on solved zeros; that is our simplification, not the paper's procedure.",
+   "new": "It validates $\\lambda$ by the rms residual of $y$ in the validation block. The paper's text does not specify the validation metric (the reconstruction record \\cite{zenodo} does), so this choice is ours."
+  },
+  {
+   "old": "Your result will not match $0.028$ to three decimals unless you reproduce the paper's validation scoring exactly, but it should beat the six-prime oracle ($0.074$) comfortably and have correlation above $0.95$ (CHECKS verifies both). It should also return a fitted sine amplitude for $\\log 2$ close to the oracle value $-1/(\\pi\\sqrt2)=-0.225$, with a small cosine amplitude.",
+   "new": "Running the listing gives a held-out rms below the six-prime oracle's $0.074$ and a correlation above $0.95$. It need not reproduce $0.028$ to three decimals, because our validation metric may differ from the paper's. It also returns a fitted sine amplitude for $\\log 2$ within $0.05$ of the oracle value $-1/(\\pi\\sqrt2)=-0.225$, and a cosine amplitude within $0.05$ of zero."
+  },
+  {
+   "old": "Control B shows that amplitudes, unlike frequencies, are easy to learn from 400 zeros:",
+   "new": "Control B shows that, once the frequencies are given, the amplitudes are easy to learn from 400 zeros:"
+  },
+  {
+   "old": "The paper: \"the least-squares problem is underdetermined",
+   "new": "The paper: ``the least-squares problem is underdetermined"
+  },
+  {
+   "old": "$0.100$/$+0.94$.\" The bootstrap interval",
+   "new": "$0.100$/$+0.94$.'' The bootstrap interval"
+  },
+  {
+   "old": "The dagger on this row in Table~IV reads: \"Root-ambiguous (see text); not a clean predictive score.\" The text explains: \"the level equation has several roots for about a third of the held-out levels; the score varies by at most $0.012$ with the choice of root.\"",
+   "new": "The dagger on this row in Table~IV reads: ``Root-ambiguous (see text); not a clean predictive score.'' The text explains: ``the level equation has several roots for about a third of the held-out levels; the score varies by at most $0.012$ with the choice of root.''"
+  },
+  {
+   "old": "but the \"prediction of zero $n$\" is no longer well defined.",
+   "new": "but the ``prediction of zero $n$'' is no longer well defined."
+  },
+  {
+   "old": "(Sample Problem \"One oracle step by hand\", Step 2).",
+   "new": "(Sample Problem ``One oracle step by hand'', Step 2)."
+  },
+  {
+   "old": "Even at the worst choice of root the score would be at most $0.192$, still far below the null $0.263$.",
+   "new": "Reading ``varies by at most $0.012$'' in the most pessimistic way, as $\\pm0.012$ around the reported value, the worst choice of root would give at most $0.192$, still far below the null $0.263$."
+  },
+  {
+   "old": "\\checkanswer{Both pick, among infinitely many exact fits, one regularized combination of their columns. In B every column is a correct arithmetic frequency, so any combination continues in roughly the right way beyond the window. In C1 the columns are a uniform grid that does not contain the arithmetic frequencies exactly; combinations that fit the window do not continue correctly. Same count, same underdetermination, different vocabulary.}",
+   "new": "\\checkanswer{Both pick, among infinitely many exact fits, one regularized combination of their columns. A plausible reading (ours, not the paper's, which gives no mechanism for this row): B's columns all carry frequencies present in the target, so a regularized combination has a chance of continuing beyond the window, although wrong weights can still continue poorly; C1's grid columns do not contain those frequencies exactly, so combinations tuned to the window have no reason to continue correctly. Same count, same underdetermination, different vocabulary.}"
+  },
+  {
+   "old": "\\item Root ambiguity arises when $|F'|$ exceeds $\\Nsm'$; for this row it changes the score by at most $0.012$.",
+   "new": "\\item Root ambiguity can arise only where $F'<-\\Nsm'$, so that $G$ decreases; several roots then occur if such a decreasing excursion straddles the level $n-\\tfrac12$. For this row it changes the score by at most $0.012$."
+  },
+  {
+   "old": "The paper: it \"stays within $0.005$",
+   "new": "The paper: it ``stays within $0.005$"
+  },
+  {
+   "old": "the operator family is not special.\" On 801--1000",
+   "new": "the operator family is not special.'' On 801--1000"
+  },
+  {
+   "old": "The paper's own statement is more general: \"capacity without a suitable prior does not generalize.\"",
+   "new": "The paper's own statement is more general: ``capacity without a suitable prior does not generalize.''"
+  },
+  {
+   "old": "Sample Problem \"Reading a correlation off an rms\" showed that C1's $0.258$ is close to the best rms ($0.252$) compatible with its correlation of $+0.28$: a weak, heavily shrunk prediction.",
+   "new": "Sample Problem ``Reading a correlation off an rms'' showed that C1's $0.258$ is close to the best rms ($0.252$) compatible with its correlation of $+0.28$, which is consistent with a weak prediction of small amplitude (our inference; the paper does not report the amplitude or the selected $\\lambda$)."
+  },
+  {
+   "old": "a basis that is even \"Fourier\" in name, and no skill to speak of. In Sec.~VI the paper summarizes: \"a dense 900-coefficient Fourier model gains almost nothing over the null.\" Note the word \"almost\".",
+   "new": "a basis that is even ``Fourier'' in name, and no skill to speak of. In Sec.~VI the paper summarizes: ``a dense 900-coefficient Fourier model gains almost nothing over the null.'' Note the word ``almost''."
+  },
+  {
+   "old": "The paper's statement that \"in this respect the operator family is not special\" refers to",
+   "new": "The paper's statement that ``in this respect the operator family is not special'' refers to"
+  },
+  {
+   "old": "Suppose a reader says: \"C1 failed because 450 frequencies are too few to cover $[0,8]$.\" Using",
+   "new": "Suppose a reader says: ``C1 failed because 450 frequencies are too few to cover $[0,8]$.'' Using"
+  },
+  {
+   "old": "Sec.~II~D describes C2 as \"a sparse model",
+   "new": "Sec.~II~D describes C2 as ``a sparse model"
+  },
+  {
+   "old": "after each addition ($3K$ parameters).\" Appendix~A step 20 adds the details: \"sparse search",
+   "new": "after each addition ($3K$ parameters).'' Appendix~A step 20 adds the details: ``sparse search"
+  },
+  {
+   "old": "$K\\le\\min(300,n_{\\rm fit}/3)$.\" Unpacked:",
+   "new": "$K\\le\\min(300,n_{\\rm fit}/3)$.'' Unpacked:"
+  },
+  {
+   "old": "of the logarithm of a prime power (CHECKS).",
+   "new": "of the logarithm of a prime power."
+  },
+  {
+   "old": "C2 \"selects 24 frequencies",
+   "new": "C2 ``selects 24 frequencies"
+  },
+  {
+   "old": "$0.034$/$+0.99$ on 801--1000.\" The bootstrap interval",
+   "new": "$0.034$/$+0.99$ on 801--1000.'' The bootstrap interval"
+  },
+  {
+   "old": "Then: \"Every selected frequency",
+   "new": "Then: ``Every selected frequency"
+  },
+  {
+   "old": "between 131 and 211).\"",
+   "new": "between 131 and 211).''"
+  },
+  {
+   "old": "\"Half the Fourier resolution\" is",
+   "new": "``Half the Fourier resolution'' is"
+  },
+  {
+   "old": "(a) Verify that \"prime powers up to 113 except 32, 64, 81, plus six primes\" makes 43.",
+   "new": "(a) Verify that ``prime powers up to 113 except 32, 64, 81, plus six primes'' makes 43."
+  },
+  {
+   "old": "\\textbf{Step 5: weights of the faintest included ones.} $w(16)=1/(4\\cdot4)=0.0625$; $w(211)=1/\\sqrt{211}=0.0688$; $w(113)=0.0941$.",
+   "new": "\\textbf{Step 5: weights of the faintest included ones.} $w(16)=1/(4\\cdot4)=0.0625$; $w(27)=1/(3\\cdot27^{1/2})=0.0642$; $w(211)=1/\\sqrt{211}=0.0688$; $w(49)=1/(2\\cdot7)=0.0714$."
+  },
+  {
+   "old": "\\item Its frequencies match $\\log p^m$; which prime powers it finds is explained partly by their weights $1/(mp^{m/2})$ and partly by resolution.",
+   "new": "\\item Its frequencies match $\\log p^m$; which prime powers it finds is consistent with (our heuristic) their weights $1/(mp^{m/2})$ and the window's resolution."
+  },
+  {
+   "old": "\"Every selected frequency lies near $\\log p^m$\" sounds decisive.",
+   "new": "``Every selected frequency lies near $\\log p^m$'' sounds decisive."
+  },
+  {
+   "old": "Estimate the expected number $\\lambda(\\omega)$ of prime powers",
+   "new": "Estimate the expected number $\\nu(\\omega)$ of prime powers"
+  },
+  {
+   "old": "so $\\lambda(\\omega)\\approx(2\\pi/T)\\,e^\\omega/\\omega$.",
+   "new": "so $\\nu(\\omega)\\approx(2\\pi/T)\\,e^\\omega/\\omega$. (We write $\\nu$ rather than $\\lambda$, which in this chapter is the ridge strength.)"
+  },
+  {
+   "old": "\\textbf{Step 4: probability of at least one match.} Treating the $\\log q$ as scattered at random (a heuristic), $\\Pr\\approx1-e^{-\\lambda}$: $0.034$, $0.20$, $0.97$.",
+   "new": "\\textbf{Step 4: probability of at least one match.} Treat the $\\log q$ as points scattered independently at random with mean count $\\nu$ per matching window (a heuristic). For such a Poisson process (Chapter~\\ref{ch:probability}) the probability that a window is empty is $e^{-\\nu}$, so the probability of at least one match is $\\Pr\\approx1-e^{-\\nu}$: $0.034$, $0.20$, $0.97$."
+  },
+  {
+   "old": "Near $\\omega=8$ almost any frequency \"matches a prime power\" ($e^8\\approx2981$, which is why the matching uses $q\\le3000$).",
+   "new": "Near $\\omega=8$ almost any frequency ``matches a prime power'' ($e^8\\approx2981$, which is presumably why the matching uses $q\\le3000$: the search range ends at $\\omega=8$)."
+  },
+  {
+   "old": "The paper: \"Because the frequencies are the output",
+   "new": "The paper: ``Because the frequencies are the output"
+  },
+  {
+   "old": "alignment of the real zeros.\" Appendix~A step 23",
+   "new": "alignment of the real zeros.'' Appendix~A step 23"
+  },
+  {
+   "old": "same power spectrum as the real fluctuation sequence, phases scrambled, no arithmetic content in the phases; \"sorted\" so that the surrogate zeros form an increasing sequence.",
+   "new": "phase-randomized copies of the real fluctuation sequence, which preserve its power spectrum before sorting and carry no arithmetic content in their phases. They are then sorted, presumably so that the surrogate zeros form an increasing sequence; sorting changes the sequence, so the spectrum is no longer preserved exactly. The paper's text gives no further detail (see the reconstruction record \\cite{zenodo})."
+  },
+  {
+   "old": "they look like the real signal in every respect except arithmetic.",
+   "new": "they share the sparse, harmonic structure of the explicit formula but not its arithmetic frequencies (details in the reconstruction record)."
+  },
+  {
+   "old": "reported as a \"cutoff-maximized binomial score",
+   "new": "reported as a ``cutoff-maximized binomial score"
+  },
+  {
+   "old": "(score defined after the data were seen).\" The construction",
+   "new": "(score defined after the data were seen).'' The construction"
+  },
+  {
+   "old": "\\item \"The statistic was defined after the data were seen, so the check is exploratory.\"",
+   "new": "\\item ``The statistic was defined after the data were seen, so the check is exploratory.''"
+  },
+  {
+   "old": "\\item \"No significance claim is made here beyond the size of the ensembles.\"",
+   "new": "\\item ``No significance claim is made here beyond the size of the ensembles.''"
+  },
+  {
+   "old": "Do not describe C2 as \"discovering the primes in the zeros\". The paper is explicit: \"That the Fourier transform",
+   "new": "Do not describe C2 as ``discovering the primes in the zeros''. The paper is explicit: ``That the Fourier transform"
+  },
+  {
+   "old": "well-chosen prior.\" C2's role",
+   "new": "well-chosen prior.'' C2's role"
+  },
+  {
+   "old": "Suppose, on the \"displaced prime frequency\" surrogates,",
+   "new": "Suppose, on the ``displaced prime frequency'' surrogates,"
+  },
+  {
+   "old": "The paper: \"Its skill also decays",
+   "new": "The paper: ``Its skill also decays"
+  },
+  {
+   "old": "which the exact frequencies of the oracle do not.\" Compare",
+   "new": "which the exact frequencies of the oracle do not.'' Compare"
+  },
+  {
+   "old": "Least squares pins the phase where the data are, roughly at the window center $t_c$, so write the learned term as",
+   "new": "The learned phase then differs from the true one by $\\delta\\omega\\,t+\\hat\\phi$. Where does least squares put $\\hat\\phi$? A phase error $\\varphi$ costs a mean square error $2a^2\\sin^2(\\varphi/2)\\approx a^2\\varphi^2/2$ for small $\\varphi$ (we derive this in Eq.~\\eqref{eq:paper-arithmetic-deprms} below; that derivation does not use the choice of $\\hat\\phi$). So, with the frequency fixed, the fit makes the average of $(\\hat\\phi+\\delta\\omega\\,t_n)^2$ over the training zeros as small as possible. The derivative of that average with respect to $\\hat\\phi$ is $2(\\hat\\phi+\\delta\\omega\\,\\bar t)$, where $\\bar t$ is the mean height of the training zeros; setting it to zero gives $\\hat\\phi=-\\delta\\omega\\,\\bar t$, so the phase error vanishes at $\\bar t$. Call this point $t_c$. Because zeros are slightly denser higher up, $t_c$ lies somewhat above the midpoint of the window; for round numbers below we use the midpoint, which does not change the order of magnitude. (We also assume the amplitude is learned exactly; an amplitude error adds a separate error that does not grow with distance.) So write the learned term as"
+  },
+  {
+   "old": "$\\varphi\\approx0.0047\\times1600\\approx7.6$ rad",
+   "new": "$\\varphi\\approx0.0047\\times1600\\approx7.5$ rad"
+  },
+  {
+   "old": "Sec.~VI notes that \"the fitted sinusoidal controls were scored only below zero 2000.\"",
+   "new": "Sec.~VI notes that ``the fitted sinusoidal controls were scored only below zero 2000.''"
+  },
+  {
+   "old": "Claim IV.10 appears in the abstract (\"the obstacle is the parametrization, not the parameter count\"), in",
+   "new": "Claim IV.10 appears in the abstract (``the obstacle is the parametrization, not the parameter count''), in"
+  },
+  {
+   "old": "\\item \\emph{Many fitted parameters with a generic prior do not generalize, whatever the basis.} C1",
+   "new": "\\item \\emph{Many fitted parameters with a generic prior did not generalize in any of the generic parametrizations tested} (cosine, Chebyshev and hat bases for the potential; the uniform Fourier grid C1). C1"
+  },
+  {
+   "old": "\\subsection{\"What fails is a potential $V(x)$ as the parametrization\"}",
+   "new": "\\subsection{``What fails is a potential $V(x)$ as the parametrization''}"
+  },
+  {
+   "old": "The paper closes Sec.~IV: \"The form is learnable",
+   "new": "The paper closes Sec.~IV: ``The form is learnable"
+  },
+  {
+   "old": "shows from the other side.\" Recall the probe",
+   "new": "shows from the other side.'' Recall the probe"
+  },
+  {
+   "old": "labels it as heuristic: \"the quantity being fitted",
+   "new": "labels it as heuristic: ``the quantity being fitted"
+  },
+  {
+   "old": "locally in energy.\" In the language",
+   "new": "locally in energy.'' In the language"
+  },
+  {
+   "old": "a local effect in level index; an almost-periodic function like $\\sin(t\\log2)+\\sin(t\\log3)$ never repeats (Chapter~\\ref{ch:fourier-series}) and has no local description that implies its own continuation. A family that addresses levels locally can match a window but has no reason to extend it.",
+   "new": "a local effect in level index. An almost-periodic function like $\\sin(t\\log2)+\\sin(t\\log3)$ never repeats (Chapter~\\ref{ch:fourier-series}); continuing it requires identifying its frequencies, which is exactly what C2 does from a finite window. A family that addresses levels locally through their turning points has no mechanism, under the protocol tested, that encodes those frequencies, so it can match a window without extending it (a heuristic reading, like the paper's)."
+  },
+  {
+   "old": "\\item \"The obstacle is the parametrization\" is supported for the parametrizations tested (one background, three bases, one optimizer protocol); Sec.~VI is explicit that \"this is evidence about the tested parametrizations and optimizer together, not a statement about what a potential can represent,\" and that whether the memorization result can be derived \"is an open problem.\"",
+   "new": "\\item ``The obstacle is the parametrization'' is supported for the parametrizations tested (one background, three bases, one optimizer protocol); Sec.~VI is explicit that ``this is evidence about the tested parametrizations and optimizer together, not a statement about what a potential can represent,'' and that whether the memorization result can be derived ``is an open problem.''"
+  },
+  {
+   "old": "the paper calls it \"strong and well-chosen\".",
+   "new": "the paper calls it ``strong and well-chosen''."
+  },
+  {
+   "old": "(Sec.~VI: \"except where stated\").",
+   "new": "(Sec.~VI: ``except where stated'')."
+  },
+  {
+   "old": "A reader argues: \"C2 only works because sparsity in frequency is secretly arithmetic knowledge, so the comparison with the operators is unfair.\" Is this",
+   "new": "A reader argues: ``C2 only works because sparsity in frequency is secretly arithmetic knowledge, so the comparison with the operators is unfair.'' Is this"
+  },
+  {
+   "old": "The sentences \"By contrast, a truncation",
+   "new": "The sentences ``By contrast, a truncation"
+  },
+  {
+   "old": "through zero $10^4$\" and \"Controls with fitted sinusoidal models show that the obstacle is the parametrization, not the parameter count\" are Claims",
+   "new": "through zero $10^4$'' and ``Controls with fitted sinusoidal models show that the obstacle is the parametrization, not the parameter count'' are Claims"
+  },
+  {
+   "old": "\\textbf{Sec.~I.} \"The information needed",
+   "new": "\\textbf{Sec.~I.} ``The information needed"
+  },
+  {
+   "old": "non-arithmetic sparsity prior does (Sec.~IV).\" Fig.~1",
+   "new": "non-arithmetic sparsity prior does (Sec.~IV).'' Fig.~1"
+  },
+  {
+   "old": "paragraph \"Explicit formul\\ae{} for the $n$-th zero\".} The oracle is an \"information-existence baseline\" with no claimed novelty \\cite{francaleclair,leclair}; Connes' prime-only construction \\cite{connes26} is \"on the arithmetic side of our comparison\".",
+   "new": "paragraph ``Explicit formul\\ae{} for the $n$-th zero''.} The oracle is an ``information-existence baseline'' with no claimed novelty \\cite{francaleclair,leclair}; Connes' prime-only construction \\cite{connes26} is ``on the arithmetic side of our comparison''."
+  },
+  {
+   "old": "paragraph \"Fitted sinusoidal controls\" defines A",
+   "new": "paragraph ``Fitted sinusoidal controls'' defines A"
+  },
+  {
+   "old": "and \"all errors below are quoted in units of the local mean spacing\", the scoring",
+   "new": "and ``all errors below are quoted in units of the local mean spacing'', the scoring"
+  },
+  {
+   "old": "\\textbf{Sec.~IV, paragraph \"Comparable budgets and fitted controls\".}",
+   "new": "\\textbf{Sec.~IV, paragraph ``Comparable budgets and fitted controls''.}"
+  },
+  {
+   "old": "the closing \"what fails is a potential $V(x)$ as the parametrization\" (",
+   "new": "the closing ``what fails is a potential $V(x)$ as the parametrization'' ("
+  },
+  {
+   "old": "\\textbf{Sec.~II~C, \"Within-height splits\".} \"the null grows from $0.263$ to $0.296$ over Table~V\", the first column",
+   "new": "\\textbf{Sec.~II~C, ``Within-height splits''.} ``the null grows from $0.263$ to $0.296$ over Table~V'', the first column"
+  },
+  {
+   "old": "\\textbf{Sec.~III, \"Arithmetic-continuation probe\".}",
+   "new": "\\textbf{Sec.~III, ``Arithmetic-continuation probe''.}"
+  },
+  {
+   "old": "\\textbf{Sec.~VI.} \"It is not the parameter count \\dots\\ It is not that the arithmetic frequencies must be supplied\";",
+   "new": "\\textbf{Sec.~VI.} ``It is not the parameter count \\dots\\ It is not that the arithmetic frequencies must be supplied'';"
+  },
+  {
+   "old": "\"score defined after the data were seen\"; key anchors $K=24$ and $K=43$.",
+   "new": "``score defined after the data were seen''.\n\\item \\textbf{Appendix~A, Key anchors.} Sparse model $K=24$ and $K=43$ (also stated in Sec.~IV)."
+  },
+  {
+   "old": "\\item \\textbf{References used in Sec.~IV.} \\cite{landau,gonek} for the classical concentration of the zeros' Fourier transform at $\\log p^m$; \\cite{theiler,schreiber} for surrogates; \\cite{zenodo} for the reconstruction record.",
+   "new": "\\item \\textbf{References used in Sec.~IV.} Sec.~IV cites \\cite{landau,gonek}, for the classical concentration of the zeros' Fourier transform at $\\log p^m$, and \\cite{zenodo}, for the reconstruction record. The surrogate methods \\cite{theiler,schreiber} are cited in Sec.~III (permutation and surrogate tests) and underlie step 23."
+  },
+  {
+   "old": "Then compute the six-prime oracle on zeros 1--400. Does a zero-parameter predictor have an \"in-sample\" score?",
+   "new": "Then compute the six-prime oracle on zeros 101--400, inside the operators' training window. Does a zero-parameter predictor have an ``in-sample'' score?"
+  },
+  {
+   "old": "Appendix~A step 20 states: \"Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.\" Explain",
+   "new": "Appendix~A step 20 states: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.'' Explain"
+  },
+  {
+   "old": "and \"the score varies by at most $0.012$ with the choice of root.\" Give",
+   "new": "and ``the score varies by at most $0.012$ with the choice of root.'' Give"
+  },
+  {
+   "old": "\\prob{2}{\\label{prob:paper-arithmetic-selberg}Using Selberg's",
+   "new": "\\prob{2}{Using Selberg's"
+  },
+  {
+   "old": "\\prob{2}{\\label{prob:paper-arithmetic-rmsslope}Starting from",
+   "new": "\\prob{2}{Starting from"
+  },
+  {
+   "old": "Sample Problem \"One oracle step by hand\" shows that this condition",
+   "new": "Sample Problem ``One oracle step by hand'' shows that this condition"
+  },
+  {
+   "old": "\\textbf{Problem 9.} $\\lambda\\approx0.0054\\times211/\\log211=0.0054\\times39.4\\approx0.21$.",
+   "new": "\\textbf{Problem 9.} $\\nu\\approx0.0054\\times211/\\log211=0.0054\\times39.4\\approx0.21$."
+  },
+  {
+   "old": "The oracle is not fitted, so a score on zeros 1--400 is not \"in-sample\" in the sense of training; it is simply another holdout. It tells you how well the truncated formula works at lower heights, where it also performs well.",
+   "new": "The oracle is not fitted, so a score on zeros 101--400 is not ``in-sample'' in the sense of training; it is simply another holdout. You should find an rms below $0.1$ and a correlation above $0.9$: the truncated formula works about as well at these lower heights as on 401--500."
+  },
+  {
+   "old": "For the permuted sequence the peaks at $\\log q$ disappear: permutation keeps the values but destroys the ordering in $t$, and with it every coherent oscillation; the periodogram becomes an irregular, roughly flat noise floor.",
+   "new": "For the permuted sequence (\\texttt{np.random.default\\_rng(1).permutation(y)}) the peaks at $\\log q$ disappear: permutation keeps the values but destroys their ordering in $t$, and with it every coherent oscillation. A convenient number to compare is the ratio of the tallest peak to the median of the periodogram on the coarse grid: it drops by more than a factor of 3 after permutation, and what remains is an irregular noise floor with no preferred frequencies."
+  },
+  {
+   "old": "\\textbf{Problem 19.} The score lies in $[0.168,0.192]$, entirely below the null $0.263$.",
+   "new": "\\textbf{Problem 19.} Reading ``varies by at most $0.012$'' in the most pessimistic way, as $\\pm0.012$ around the reported value, the score lies in $[0.168,0.192]$, entirely below the null $0.263$. (If the phrase means a total spread of $0.012$, the range is narrower still.)"
+  },
+  {
+   "old": "For C1 the minimum-norm exact fit extrapolates poorly; the forward split detects this in the validation block and selects a large $\\lambda$, which pushes the held-out predictions toward the $\\lambda\\to\\infty$ limit, the null.",
+   "new": "For C1, if (as is plausible) the minimum-norm exact fit extrapolates poorly, the forward split would detect this in the validation block and select a large $\\lambda$, pushing the held-out predictions toward the $\\lambda\\to\\infty$ limit, the null. The paper does not report the selected value, so this is a consistent explanation, not a demonstrated one."
+  },
+  {
+   "old": "It would contradict \"A dense 900-coefficient Fourier model also stays near the null\" (abstract) and \"a dense 900-coefficient Fourier model gains almost nothing over the null\" (Sec.~VI).",
+   "new": "It would contradict ``a dense 900-coefficient Fourier model also stays near the null'' (abstract) and ``a dense 900-coefficient Fourier model gains almost nothing over the null'' (Sec.~VI)."
   }
  ],
- "new_checks": "import numpy as np, qmnt\nfrom scipy.optimize import brentq\n\n# Sample \"One oracle step by hand\"\ns = 680.0; l2 = np.log(2)\nnfl = lambda t: -sum(np.sin(m*t*l2)/(m*2**(m/2)) for m in (1, 2, 3))/np.pi\ndnfl = lambda t: -sum(l2*np.cos(m*t*l2)/2**(m/2) for m in (1, 2, 3))/np.pi\nassert abs(nfl(s) + 0.0499) < 2e-4\nsl = np.log(s/(2*np.pi))/(2*np.pi)\nassert abs(sl - 0.7455) < 2e-4 and abs(1/sl - 1.3414) < 2e-4\nda = -nfl(s)/sl; assert abs(da - 0.0670) < 1e-3\nassert abs(dnfl(s) + 0.3377) < 1e-3\ndb = -nfl(s)/(sl + dnfl(s)); assert abs(db - 0.122) < 2e-3\ng = 1/sl\nG = lambda t: qmnt.Nsm(t) - qmnt.Nsm(s) + nfl(t)\ndc = brentq(G, s - 3*g, s + 3*g) - s\nassert abs(dc - 0.120) < 3e-3 and abs(dc/g - 0.090) < 3e-3\nassert abs(0.5*g**2/(2*np.pi*680) - 2e-4) < 5e-5\n\n# Sample \"unique root\"\ndef B(P): return sum(np.log(p)*(p**-0.5 + p**-1 + p**-1.5) for p in P)/np.pi\nassert abs(B([2]) - 0.3443) < 1e-3\nassert abs(2*np.pi*np.exp(2*np.pi*B([2])) - 54.7) < 0.3\nP6 = [2, 3, 5, 7, 11, 13]\nassert abs(B(P6) - 2.09) < 0.01\nassert abs(2*np.pi*np.exp(2*np.pi*B(P6))/3.2e6 - 1) < 0.1\nr6 = np.sqrt(sum(np.log(p)**2*sum(1/(2*p**m) for m in (1, 2, 3)) for p in P6))/np.pi\nassert abs(r6 - 0.415) < 0.01\n# numerical check of rms formula (new problem on rms of Nfl')\ntg = np.linspace(1000, 200000, 400001)\nd6 = -sum(np.log(p)*np.cos(m*tg*np.log(p))/p**(m/2) for p in P6 for m in (1, 2, 3))/np.pi\nassert abs(np.sqrt(np.mean(d6**2)) - r6) < 0.01\n# Problem 6\nassert B([2, 3]) > 0\n\n# Table V row 1 rerun\nn = np.arange(401, 501); tt = np.asarray(qmnt.zeros(500))[400:500]\nassert abs(qmnt.rms(qmnt.fluct(tt, n)) - 0.263) < 1e-3\nfor k, (r0, c0) in {1: (0.198, 0.66), 3: (0.116, 0.90), 6: (0.074, 0.96), 25: (0.043, 0.99)}.items():\n    r, c = qmnt.score(qmnt.oracle_zeros(n, qmnt.first_primes(k), mmax=3), n)\n    assert abs(r - r0) < 1.5e-3 and abs(c - c0) < 0.01\nn2 = np.arange(1001, 2001)\nr, c = qmnt.score(qmnt.oracle_zeros(n2, qmnt.first_primes(6), mmax=3), n2)\nassert abs(r - 0.091) < 1.5e-3\n\n# Table ratios and problem 3\nnulls = [0.263, 0.270, 0.279, 0.288, 0.296]\ncols = {1: [0.198, 0.208, 0.219, 0.232, 0.242], 3: [0.116, 0.127, 0.139, 0.156, 0.169],\n        6: [0.074, 0.083, 0.091, 0.107, 0.119], 25: [0.043, 0.050, 0.054, 0.060, 0.067]}\nratio = {1: [0.75, 0.77, 0.78, 0.81, 0.82], 3: [0.44, 0.47, 0.50, 0.54, 0.57],\n         6: [0.28, 0.31, 0.33, 0.37, 0.40], 25: [0.16, 0.19, 0.19, 0.21, 0.23]}\nfor k in cols:\n    for v, nl, rr in zip(cols[k], nulls, ratio[k]):\n        assert abs(v/nl - rr) < 0.006\nfor v, nl, a in zip(cols[1], nulls, [0.247, 0.230, 0.215, 0.194, 0.182]):\n    assert abs(1 - v/nl - a) < 1.5e-3\n\n# factor 1.3\nassert abs(0.265/0.198 - 1.34) < 0.01 and abs(0.279/0.208 - 1.34) < 0.01\n\n# rms bound sample, problem 7\nassert abs(0.263*np.sqrt(1 - 0.28**2) - 0.252) < 1e-3\nassert abs(np.sqrt(1 - (0.028/0.263)**2) - 0.994) < 1e-3\nassert abs(0.263*np.sqrt(1 - 0.78**2) - 0.165) < 1e-3\n\n# parameter counts\npr = qmnt.first_primes(300)\nassert pr[299] == 1987 and abs(3*np.log(1987) - 22.78) < 0.01\nassert qmnt.first_primes(25)[24] == 97 and qmnt.first_primes(150)[149] == 863\nassert abs(3*np.log(863) - 20.3) < 0.05\n\n# C1 grid sample\nz = np.asarray(qmnt.zeros(800)); T = z[399] - z[0]\nassert abs(T - 666) < 2 and abs(2*np.pi/T - 0.0094) < 1e-4\nT8 = z[799] - z[0]\nassert abs(T8 - 1170) < 3 and abs(2*np.pi/T8 - 0.0054) < 1e-4 and abs(np.pi/T8 - 0.0027) < 1e-4\nfor q, j0, dr in ((2, 39, 0.12), (3, 62, 2.4), (5, 91, 5.6)):\n    j = round(np.log(q)*450/8); assert j == j0\n    assert abs(abs(8*j/450 - np.log(q))*666 - dr) < 0.06*max(1, dr)\nassert abs(8/450 - 0.0178) < 1e-4\nassert abs(np.pi/(2*T) - 0.00236) < 2e-5\nassert abs((8 - 0.05)/(np.pi/(2*T)) - 3370) < 20\nassert 133 == 400//3 and 266 == 800//3\n\n# 43 prime powers and weights\nps = list(qmnt.primes_upto(113)); assert len(ps) == 30\nhp = [q for q in range(2, 114) if any(q == p**m for p in ps for m in range(2, 8))]\nassert len(hp) == 10 and 30 + 10 - 3 + 6 == 43\nassert abs(1/(5*2**2.5) - 0.0354) < 1e-4 and abs(1/48 - 0.0208) < 1e-4\nassert abs(1/36 - 0.0278) < 1e-4 and abs(1/np.sqrt(211) - 0.0688) < 1e-4\nassert abs(1/np.sqrt(113) - 0.0941) < 1e-4 and abs(1/16 - 0.0625) < 1e-9\nassert len([p for p in qmnt.primes_upto(211) if p >= 127]) == 17\nassert abs(np.log(139/137) - 0.0145) < 1e-4 and abs(np.log(128/127) - 0.0078) < 1e-4\nassert abs(0.0145/0.0054 - 2.7) < 0.05 and abs(0.0078/0.0054 - 1.5) < 0.06\n\n# chance match sample, problem 9\nfor w, lam, pp in ((2, 0.035, 0.034), (np.log(113), 0.23, 0.20), (8, 3.5, 0.97)):\n    L = 0.0094*np.exp(w)/w\n    assert abs(L - lam) < 0.05*lam + 1e-3 and abs(1 - np.exp(-L) - pp) < 0.02\nassert abs(0.0054*211/np.log(211) - 0.21) < 0.01\nassert abs(1/201 - 0.005) < 1e-3\n\n# dephasing\nassert abs(1/(np.pi*np.sqrt(2)) - 0.225) < 1e-3\nassert abs(np.sin(0.02)/np.pi - 0.0064) < 1e-4 and abs(np.sin(0.08)/np.pi - 0.025) < 5e-4\nassert abs(z[399]/2 + z[0]/2 - 347) < 1\nassert abs(0.0047*1600 - 7.6) < 0.1\nassert abs(2e-3*(2000 - 347) - 3.3) < 0.05\nassert abs(np.asarray(qmnt.zeros(2000))[1999] - 2515) < 3\n\n# root ambiguity, problem 21\nassert abs(0.7455/5 - 0.149) < 1e-3\nassert abs(-0.7455/1.5 + 0.497) < 1e-3\n\n# problem 26: prime powers below e^2\npp2 = [q for q in range(2, 8) if any(q == p**m for p in (2, 3, 5, 7) for m in range(1, 4))]\nassert pp2 == [2, 3, 4, 5, 7] and abs(np.exp(2) - 7.39) < 0.01\n\n# C2 first five frequencies match prime powers\nt4 = z[:400]; y = np.arange(1, 401) - 0.5 - qmnt.Nsm(t4)\nd = 0.25*2*np.pi/T; coarse = np.arange(0.05, 8.0, d)\npk = lambda r, gr: gr[np.argmax(np.abs(np.exp(-1j*np.outer(gr, t4)) @ r)**2)]\nlq = np.array(sorted({m*np.log(p) for p in qmnt.primes_upto(3000) for m in range(1, 12) if p**m <= 3000}))\nfr, r = [], y.copy()\nfor _ in range(5):\n    w0 = pk(r, coarse); fr.append(pk(r, np.linspace(w0 - d, w0 + d, 201)))\n    X = np.hstack([np.sin(np.outer(t4, fr)), np.cos(np.outer(t4, fr))])\n    cf, *_ = np.linalg.lstsq(X, y, rcond=None); r = y - X @ cf\nassert abs(fr[0] - np.log(2)) < np.pi/T\nfor w in fr:\n    assert np.min(np.abs(lq - w)) < np.pi/T\n\n# Control B 25 primes (simplified validation)\nP = qmnt.first_primes(25)\nw = np.array([m*np.log(p) for p in P for m in (1, 2, 3)])\nt5 = np.asarray(qmnt.zeros(500)); y5 = np.arange(1, 501) - 0.5 - qmnt.Nsm(t5)\nXf = lambda tt: np.hstack([np.sin(np.outer(tt, w)), np.cos(np.outer(tt, w))])\ndef ridge(Xm, yv, lam):\n    U, sv, Vt = np.linalg.svd(Xm, full_matrices=False)\n    return Vt.T @ ((sv/(sv**2 + lam*sv[0]**2))*(U.T @ yv))\nlams = 10.0**np.arange(-8, 3.01, 0.5); assert len(lams) == 23\nval = [np.sqrt(np.mean((Xf(t5[300:400]) @ ridge(Xf(t5[:300]), y5[:300], L) - y5[300:400])**2)) for L in lams]\nth = ridge(Xf(t5[:400]), y5[:400], lams[int(np.argmin(val))])\nFf = lambda tt: float(np.ravel(Xf(np.atleast_1d(tt)) @ th)[0])\nsa, ga = np.ravel(qmnt.smooth_zeros(n)), np.ravel(qmnt.mean_gap(n))\ndef pred(k, s0, g0):\n    Gk = lambda tt: float(np.ravel(qmnt.Nsm(tt))[0]) + Ff(tt) - (k - 0.5)\n    a, b = s0 - 3*g0, s0 + 3*g0\n    while Gk(a)*Gk(b) > 0: a, b = a - g0, b + g0\n    return brentq(Gk, a, b)\ntp = np.array([pred(int(k), float(s0), float(g0)) for k, s0, g0 in zip(n, sa, ga)])\nrB, cB = qmnt.score(tp, n)\nassert rB < 0.074 and cB > 0.95\nassert abs(th[0] + 0.225) < 0.05 and abs(th[75]) < 0.05\n\n# misc\nassert abs(0.180 - 0.012 - 0.168) < 1e-9 and 0.192 < 0.263\nassert abs(1170/666 - 1.76) < 0.01\nprint(\"all checks passed\")\n",
+ "new_checks": "import numpy as np, qmnt\nfrom scipy.optimize import brentq\n\n# Sample \"One oracle step by hand\"\ns = 680.0; l2 = np.log(2)\nnfl = lambda t: -sum(np.sin(m*t*l2)/(m*2**(m/2)) for m in (1, 2, 3))/np.pi\ndnfl = lambda t: -sum(l2*np.cos(m*t*l2)/2**(m/2) for m in (1, 2, 3))/np.pi\nassert abs(nfl(s) + 0.0499) < 2e-4\nsl = np.log(s/(2*np.pi))/(2*np.pi)\nassert abs(sl - 0.7455) < 2e-4 and abs(1/sl - 1.3414) < 2e-4\nda = -nfl(s)/sl; assert abs(da - 0.0670) < 1e-3\nassert abs(dnfl(s) + 0.3377) < 1e-3\ndb = -nfl(s)/(sl + dnfl(s)); assert abs(db - 0.122) < 2e-3\ng = 1/sl\nG = lambda t: qmnt.Nsm(t) - qmnt.Nsm(s) + nfl(t)\ndc = brentq(G, s - 3*g, s + 3*g) - s\nassert abs(dc - 0.120) < 3e-3 and abs(dc/g - 0.090) < 3e-3\nassert abs(0.5*g**2/(2*np.pi*680) - 2e-4) < 5e-5\n\n# Sample \"unique root\"\ndef B(P): return sum(np.log(p)*(p**-0.5 + p**-1 + p**-1.5) for p in P)/np.pi\nassert abs(B([2]) - 0.3443) < 1e-3\nassert abs(2*np.pi*np.exp(2*np.pi*B([2])) - 54.7) < 0.3\nP6 = [2, 3, 5, 7, 11, 13]\nassert abs(B(P6) - 2.09) < 0.01\nassert abs(2*np.pi*np.exp(2*np.pi*B(P6))/3.2e6 - 1) < 0.1\ndef rslope(P): return np.sqrt(sum(np.log(p)**2*sum(1/(2*p**m) for m in (1, 2, 3)) for p in P))/np.pi\nr6 = rslope(P6)\nassert abs(r6 - 0.415) < 0.01\ntg = np.linspace(1000, 200000, 400001)\nd6 = -sum(np.log(p)*np.cos(m*tg*np.log(p))/p**(m/2) for p in P6 for m in (1, 2, 3))/np.pi\nassert abs(np.sqrt(np.mean(d6**2)) - r6) < 0.01\nassert abs(0.7455/r6 - 1.8) < 0.05\nassert abs(rslope(qmnt.first_primes(25)) - 0.7) < 0.06\nassert abs(rslope(qmnt.first_primes(300)) - 1.2) < 0.08\nassert B([2, 3]) > 0\n\n# Table V row 1 rerun\nn = np.arange(401, 501); tt = np.asarray(qmnt.zeros(500))[400:500]\nassert abs(qmnt.rms(qmnt.fluct(tt, n)) - 0.263) < 1e-3\nfl = np.asarray(qmnt.fluct(tt, n)); assert abs(np.mean(fl)) < 0.05\nassert 0.05**2/0.263**2 < 0.04\nfor k, (r0, c0) in {1: (0.198, 0.66), 3: (0.116, 0.90), 6: (0.074, 0.96), 25: (0.043, 0.99)}.items():\n    r, c = qmnt.score(qmnt.oracle_zeros(n, qmnt.first_primes(k), mmax=3), n)\n    assert abs(r - r0) < 1.5e-3 and abs(c - c0) < 0.01\nn2 = np.arange(1001, 2001)\nr, c = qmnt.score(qmnt.oracle_zeros(n2, qmnt.first_primes(6), mmax=3), n2)\nassert abs(r - 0.091) < 1.5e-3\n# Problem 11: six primes on zeros 101-400\nn3 = np.arange(101, 401)\nr3, c3 = qmnt.score(qmnt.oracle_zeros(n3, qmnt.first_primes(6), mmax=3), n3)\nassert r3 < 0.1 and c3 > 0.9\n\n# Table ratios and problem 3\nnulls = [0.263, 0.270, 0.279, 0.288, 0.296]\ncols = {1: [0.198, 0.208, 0.219, 0.232, 0.242], 3: [0.116, 0.127, 0.139, 0.156, 0.169],\n        6: [0.074, 0.083, 0.091, 0.107, 0.119], 25: [0.043, 0.050, 0.054, 0.060, 0.067]}\nratio = {1: [0.75, 0.77, 0.78, 0.81, 0.82], 3: [0.44, 0.47, 0.50, 0.54, 0.57],\n         6: [0.28, 0.31, 0.33, 0.37, 0.40], 25: [0.16, 0.19, 0.19, 0.21, 0.23]}\nfor k in cols:\n    for v, nl, rr in zip(cols[k], nulls, ratio[k]):\n        assert abs(v/nl - rr) < 0.006\nfor v, nl, a in zip(cols[1], nulls, [0.247, 0.230, 0.215, 0.194, 0.182]):\n    assert abs(1 - v/nl - a) < 1.5e-3\n# ratio drift factors 1.1 to 1.4\nfor k, (lo, hi) in {1: (1.05, 1.15), 3: (1.25, 1.35), 6: (1.38, 1.45), 25: (1.35, 1.45)}.items():\n    f = (cols[k][-1]/nulls[-1])/(cols[k][0]/nulls[0]); assert lo < f < hi\nz10 = np.asarray(qmnt.zeros(10000)); assert abs(z10[-1] - 9878.7) < 0.2\nassert abs(z10[399] - 680) < 0.5 and 14 < z10[-1]/z10[399] < 15\n\n# factor 1.3\nassert abs(0.265/0.198 - 1.34) < 0.01 and abs(0.279/0.208 - 1.34) < 0.01\nassert abs(0.273/0.198 - 1.38) < 0.005 and abs(0.273/0.242 - 1.13) < 0.005\n\n# rms bound sample, problem 7\nassert abs(0.263*np.sqrt(1 - 0.28**2) - 0.252) < 1e-3\nassert abs(np.sqrt(1 - (0.028/0.263)**2) - 0.994) < 1e-3\nassert abs(0.263*np.sqrt(1 - 0.78**2) - 0.165) < 1e-3\nrts = np.roots([1, -2*0.28*0.263, 0.263**2 - 0.258**2]).real\nassert abs(min(rts) - 0.02) < 0.005 and abs(max(rts) - 0.13) < 0.005 and max(rts) <= 0.5*0.263\n\n# parameter counts\npr = qmnt.first_primes(300)\nassert pr[299] == 1987 and abs(3*np.log(1987) - 22.78) < 0.01\nassert qmnt.first_primes(25)[24] == 97 and qmnt.first_primes(150)[149] == 863\nassert abs(3*np.log(863) - 20.3) < 0.05\n\n# C1 grid sample\nz = np.asarray(qmnt.zeros(800)); T = z[399] - z[0]\nassert abs(T - 666) < 2 and abs(2*np.pi/T - 0.0094) < 1e-4\nT8 = z[799] - z[0]\nassert abs(T8 - 1170) < 3 and abs(2*np.pi/T8 - 0.0054) < 1e-4 and abs(np.pi/T8 - 0.0027) < 1e-4\nfor q, j0, dr in ((2, 39, 0.12), (3, 62, 2.4), (5, 91, 5.6)):\n    j = round(np.log(q)*450/8); assert j == j0\n    assert abs(abs(8*j/450 - np.log(q))*666 - dr) < 0.06*max(1, dr)\nassert abs(8/450 - 0.0178) < 1e-4\nassert abs(np.pi/(2*T) - 0.00236) < 2e-5\nassert abs((8 - 0.05)/(np.pi/(2*T)) - 3370) < 20\nassert 133 == 400//3 and 266 == 800//3\n\n# 43 prime powers and weights\nps = list(qmnt.primes_upto(113)); assert len(ps) == 30\nhp = [q for q in range(2, 114) if any(q == p**m for p in ps for m in range(2, 8))]\nassert len(hp) == 10 and 30 + 10 - 3 + 6 == 43\nassert abs(1/(5*2**2.5) - 0.0354) < 1e-4 and abs(1/48 - 0.0208) < 1e-4\nassert abs(1/36 - 0.0278) < 1e-4 and abs(1/np.sqrt(211) - 0.0688) < 1e-4\nassert abs(1/np.sqrt(113) - 0.0941) < 1e-4 and abs(1/16 - 0.0625) < 1e-9\nassert abs(1/(3*np.sqrt(27)) - 0.0642) < 1e-4 and abs(1/14 - 0.0714) < 1e-4\nassert len([p for p in qmnt.primes_upto(211) if p >= 127]) == 17\nassert abs(np.log(139/137) - 0.0145) < 1e-4 and abs(np.log(128/127) - 0.0078) < 1e-4\nassert abs(0.0145/0.0054 - 2.7) < 0.05 and abs(0.0078/0.0054 - 1.5) < 0.06\n\n# chance match sample, problem 9\nfor w, lam, pp in ((2, 0.035, 0.034), (np.log(113), 0.23, 0.20), (8, 3.5, 0.97)):\n    L = 0.0094*np.exp(w)/w\n    assert abs(L - lam) < 0.05*lam + 1e-3 and abs(1 - np.exp(-L) - pp) < 0.02\nassert abs(0.0054*211/np.log(211) - 0.21) < 0.01\nassert abs(1/201 - 0.005) < 1e-3\n\n# dephasing\nassert abs(1/(np.pi*np.sqrt(2)) - 0.225) < 1e-3\nassert abs(np.sin(0.02)/np.pi - 0.0064) < 1e-4 and abs(np.sin(0.08)/np.pi - 0.025) < 5e-4\nassert abs(z[399]/2 + z[0]/2 - 347) < 1\nassert abs(0.0047*1600 - 7.5) < 0.05\nassert abs(2e-3*(2000 - 347) - 3.3) < 0.05\nassert abs(np.asarray(qmnt.zeros(2000))[1999] - 2515) < 3\n\n# root ambiguity, problem 21\nassert abs(0.7455/5 - 0.149) < 1e-3\nassert abs(-0.7455/1.5 + 0.497) < 1e-3\n\n# problem 26: prime powers below e^2\npp2 = [q for q in range(2, 8) if any(q == p**m for p in (2, 3, 5, 7) for m in range(1, 4))]\nassert pp2 == [2, 3, 4, 5, 7] and abs(np.exp(2) - 7.39) < 0.01\n\n# C2 first five frequencies match prime powers\nt4 = z[:400]; y = np.arange(1, 401) - 0.5 - qmnt.Nsm(t4)\nd = 0.25*2*np.pi/T; coarse = np.arange(0.05, 8.0, d)\npk = lambda r, gr: gr[np.argmax(np.abs(np.exp(-1j*np.outer(gr, t4)) @ r)**2)]\nlq = np.array(sorted({m*np.log(p) for p in qmnt.primes_upto(3000) for m in range(1, 12) if p**m <= 3000}))\nfr, r = [], y.copy()\nfor _ in range(5):\n    w0 = pk(r, coarse); fr.append(pk(r, np.linspace(w0 - d, w0 + d, 201)))\n    X = np.hstack([np.sin(np.outer(t4, fr)), np.cos(np.outer(t4, fr))])\n    cf, *_ = np.linalg.lstsq(X, y, rcond=None); r = y - X @ cf\nassert abs(fr[0] - np.log(2)) < np.pi/T\nfor w in fr:\n    assert np.min(np.abs(lq - w)) < np.pi/T\n\n# Problem 15: periodogram peak-to-median ratio, real vs permuted (seed 1)\nEm = np.exp(-1j*np.outer(coarse, t4))\nPw = np.abs(Em @ y)**2\nyp = np.random.default_rng(1).permutation(y)\nPp = np.abs(Em @ yp)**2\nassert Pw.max()/np.median(Pw) > 3*Pp.max()/np.median(Pp)\n\n# Control B 25 primes (simplified validation)\nP = qmnt.first_primes(25)\nw = np.array([m*np.log(p) for p in P for m in (1, 2, 3)])\nt5 = np.asarray(qmnt.zeros(500)); y5 = np.arange(1, 501) - 0.5 - qmnt.Nsm(t5)\nXf = lambda tt_: np.hstack([np.sin(np.outer(tt_, w)), np.cos(np.outer(tt_, w))])\ndef ridge(Xm, yv, lam):\n    U, sv, Vt = np.linalg.svd(Xm, full_matrices=False)\n    return Vt.T @ ((sv/(sv**2 + lam*sv[0]**2))*(U.T @ yv))\nlams = 10.0**np.arange(-8, 3.01, 0.5); assert len(lams) == 23\nval = [np.sqrt(np.mean((Xf(t5[300:400]) @ ridge(Xf(t5[:300]), y5[:300], L) - y5[300:400])**2)) for L in lams]\nth = ridge(Xf(t5[:400]), y5[:400], lams[int(np.argmin(val))])\nFf = lambda tt_: float(np.ravel(Xf(np.atleast_1d(tt_)) @ th)[0])\nsa, ga = np.ravel(qmnt.smooth_zeros(n)), np.ravel(qmnt.mean_gap(n))\ndef pred(k, s0, g0):\n    Gk = lambda tt_: float(np.ravel(qmnt.Nsm(tt_))[0]) + Ff(tt_) - (k - 0.5)\n    a, b = s0 - 3*g0, s0 + 3*g0\n    while Gk(a)*Gk(b) > 0: a, b = a - g0, b + g0\n    return brentq(Gk, a, b)\ntp = np.array([pred(int(k), float(s0), float(g0)) for k, s0, g0 in zip(n, sa, ga)])\nrB, cB = qmnt.score(tp, n)\nassert rB < 0.074 and cB > 0.95\nassert abs(th[0] + 0.225) < 0.05 and abs(th[75]) < 0.05\n\n# misc\nassert abs(0.180 - 0.012 - 0.168) < 1e-9 and 0.192 < 0.263\nassert abs(1170/666 - 1.76) < 0.01\nprint(\"all checks passed\")\n",
  "new_figures": {},
- "notes": "Issue 1 (float of length-1 array): fixed in the listing and in CHECKS with np.ravel(...)[0]; the CHECKS also coerce Nsm and loop variables to scalars so the control-B assertions actually execute. Issue 2: Problem 21 answer now derives the two sign changes of G' per period and states the exact extra-root condition G_min<0<G_max. Issue 3: Problem 7 answer softened; it now says the paper does not say which cause produces the excess. Issue 4: 'guarantees' replaced by 'unlikely to miss'. Issue 5: the B-150 explanation is now labeled as the book's heuristic reading, with the caveat about wrong weights. Issue 6: control A paragraph softened ('addresses'); non-convergence is stated as making the improvement empirical. Issue 7: claim IV.5 now names the 25-prime and 300-prime A rows explicitly. Issue 8: added the counts-to-mean-spacings conversion in the Selberg box. Issue 9: the answers section mislabeled the last two answers. They are renumbered 26 and 27, so every prob{1} and every odd-numbered problem (1 to 27) has an answer. Issue 10/13: labels moved inside the prob argument, and the unused labels were removed. The unique-root sample now points to a new Problem 28, which asks the reader to derive the rms of Nfl'; CHECKS verifies that formula numerically. Issue 11: added checks for the 3370 grid points, the 10 higher prime powers, the 43 count, the resolution ratios 2.7 and 1.5, the 0.497 threshold, and the Problem 26 prime-power list. The answers to Problems 13 and 15 are qualitative; Problem 13's claims are covered by the control-B asserts. Issue 12: the listing instruction now gives the exact replacement lines. The label prefix 'prob:' was kept because the bible does not forbid it and it is chapter-scoped."
+ "notes": "All issues addressed. Two partial deviations. (1) RULE issue on the control B listing: the chapter now states what running the listing gives as verified bounds (rms below 0.074, correlation above 0.95, log 2 amplitudes within 0.05 of the oracle values). It does not quote three-decimal values, because no run output was available to quote and the bible forbids inventing numbers; the bounds are asserted in the checks. (2) Problem 11 answer: the window was changed to zeros 101--400 (problem text updated to match). The +-3-gap bracket around s_1 extends below t = 0, so the oracle is not robustly defined at n = 1. The answer gives checked bounds (rms below 0.1, corr above 0.9) rather than exact digits, for the same reason. The new numbers (rms slopes of about 0.7 and 1.2, the ratio drift factors of 1.1 to 1.4, t_10000, the 1.38 and 1.13 ratios, the mean fluctuation bound, the sigma_P roots, w(27) and w(49), 7.5, and the periodogram ratio) are all asserted in new_checks. Straight quotes were converted to ``...'' throughout the running text; code listings are unchanged. Problem references now use explicit numbers (Problem 20, Problem 28), and the prob: labels are removed."
 }

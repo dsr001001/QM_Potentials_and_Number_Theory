@@ -2,106 +2,176 @@
  {
   "category": "ERROR",
   "severity": "high",
-  "quote": "Setting $E_k=700$ gives $k=2L\\sqrt{700}/\\pi=755.97$; take $k=756$",
-  "problem": "The check run fails on this value. Since 2L = 89.766, 2L*sqrt(700)/pi is about 755.99, not 755.97, and the quoted 755.97 does not match. The downstream figures E_756 = 700.03 and the 6.8-spacing shortfall must be rechecked against the corrected value.",
-  "fix": "Recompute k with qmnt or numpy, state it to the correct digits, and make the checks assert the corrected number."
+  "quote": "In this illustration the fit has the right magnitude of fluctuation but the wrong sign",
+  "problem": "With the sample's numbers the predicted fluctuation relative to the smooth level is E_fit - E^g = 698.600 - 698.300 = +0.300, and the true one is t~ - E^g = 698.450 - 698.300 = +0.150. The fit has the right sign and twice the magnitude. The text confuses the error (-0.150) with the predicted fluctuation. The link to Table III is also unsupported: the paper reports negative correlations there, not sign-flipped predictions of matched amplitude.",
+  "fix": "Replace with: 'In this illustration the fit predicts a fluctuation of +0.300 where the true one is +0.150: right sign, twice the size, so its error (0.150 in magnitude) is no smaller than the null's.' Delete the reference to Table III, or change the numbers (e.g. E_n[fit]=698.150) so the prediction really has the opposite sign and recompute Steps 3--5 and the checks."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "$E^{\\rm disc}_{100}=12.1479$",
-  "problem": "The check run fails on E_disc(100, N=1000) = 12.1479, so the quoted answer to Problem 8 does not match the computation. The error -0.100 and the Richardson error may also be off.",
-  "fix": "Recompute E_disc(100,1000) and the Richardson error, and correct the answer text (or the check)."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "\\texttt{qmnt} gives $t_{10000}\\approx9879$",
-  "problem": "The check run fails: t_10000 is not within 1 of 9879. The spacing 0.854 and the ratio of about 3e9 inherit the error.",
-  "fix": "Use the actual t_10000 from qmnt (about 9877.78) and recompute the spacing, the uncertainty and the ratio."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Repeating at the new point (where $\\Nsm=0.5015$ and $\\Nsm'=0.1335$) gives $s_1\\approx14.521$.",
-  "problem": "The Newton step from 14.53 using these numbers gives about 14.53 - 0.0015/0.1335 = 14.519, not 14.521. The second iterate is also not shown clearly. The final value is right but the arithmetic as written is not.",
-  "fix": "Show the second Newton iterate explicitly and either keep one more step or say 'converging to 14.521'."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Table~III marks rows with $M\\ge200$ as ``saturated''.",
-  "problem": "The paper says odd/even rows with M at or above the number of training levels (200 at scale 1) are saturated, and the 'random' rows are not labelled that way. Table III does not mark rows with a 'saturated' label, and the M=200 row is at the boundary.",
-  "fix": "Say that the paper's caption describes rows with M at or above the number of training levels as saturated."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "With at least as many coefficients as training levels, the linearized fit is (at least) square, and generically underdetermined when $M>200$",
-  "problem": "The sentence is muddled: 'at least square' and 'underdetermined' are used for the same case, and an M=200 fit is square, not overdetermined.",
-  "fix": "Say: with M = 200 the linearized system is square (exactly solvable), and with M > 200 it is underdetermined."
- },
- {
-  "category": "ERROR",
-  "severity": "low",
-  "quote": "the mean unfolded spacing of the first $10^4$ zeros is 1 to better than one part in a thousand",
-  "problem": "This is a claim quoted from a computation that the checks do not confirm to this precision. The telescoping mean is (Nsm(t_10000)-Nsm(t_1))/9999, and the check only asserts 1e-3.",
-  "fix": "State the value computed in the checks, or soften the claim to 'about 1'."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "The paper does not spell out the reason, so here is our reading",
-  "problem": "The reading is labelled as ours, which is fine, but the statement 'every scored level has its turning points inside the box' is presented as a firm check, and the margin is not quantified.",
-  "fix": "Add 'heuristic' and compute V at the level of each scored top level."
+  "quote": "so the 200 training residuals can generically be matched exactly",
+  "problem": "Table III contradicts this. At scale 1, M=200, the odd/even in-sample rms is 0.176 and 0.171, not about zero; only M=400 reaches <10^-3. A square linearized system does not give an exact fit here, because the sensitivity matrix is effectively rank-deficient (coverage law) and the problem is nonlinear. 'Saturated' in the paper means M is at or above the number of levels, not that the fit is exact.",
+  "fix": "Rewrite the answer: 'With M at or above the number of training levels the model has at least as many adjustable numbers as data, so counting alone no longer prevents an exact fit. In practice exactness also requires the basis to cover the levels (Chapter 24): Table III shows in-sample 0.17 at M=200 but <10^-3 at M=400. Either way, a small in-sample error in these rows says nothing about predictive skill.'"
  },
  {
   "category": "RULE",
   "severity": "medium",
-  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/paper-setup_unfolding.pdf}",
-  "problem": "The figure file names use the slug with a hyphen (paper-setup_...), and no FIGURES scripts appear in the response for unfolding, gue, wusprung, splits, oracle and pipeline. The bible requires one script per figure.",
-  "fix": "Provide ### FIG scripts for all six figures, with names consistent with the slug."
+  "quote": "\\begin{sample}{Unfolding the first zero}\\label{sp:paper-setup-first}",
+  "problem": "The bible allows only label prefixes sec:, eq:, fig:, tab: plus the chapter slug; 'sp:' is not permitted (all eight samples use it). The sample environment is also not known to carry a referable counter, so 'Sample Problems~\\ref{sp:...}' may print the enclosing section number or '??'.",
+  "fix": "Remove the sp: labels and refer to samples by title in words (e.g. 'the Sample Problem \"Unfolding the first zero\"'), or relabel as sec:paper-setup-... only if the preamble's sample environment is confirmed to be numbered."
  },
  {
-  "category": "RULE",
+  "category": "ERROR",
   "severity": "medium",
-  "quote": "\\section{Paper connection}\\label{sec:paper-setup-paper}",
-  "problem": "The mandatory anatomy puts Paper connection after the teaching sections, which is done, but the chapter has more than 25 problems whose answers are only partly given; the bible requires answers to all \\prob{1} and every odd-numbered problem. Problems 1, 2, 3, 4, 9, 17 are covered, but odd problems such as 25 are the only answer at the end, and 27 and others are not.",
-  "fix": "Add answers for every odd-numbered problem (for example 5, 7, 9, 15, 17, 19, 21, 23, 25) and all \\prob{1} problems, including problem 18."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "Chapter~\\ref{ch:paper-critique} lists the audit among the points a referee could press.",
-  "problem": "Abstract and other references to ch:paper-critique and other Part VI chapters are allowed, but the Problems refer to 'Problem~25' and 'Problem~19' by number, which are internal and fragile; also the problem numbering depends on the list order.",
-  "fix": "Use \\ref labels for problem cross-references or confirm the numbering."
- },
- {
-  "category": "CLARITY",
-  "severity": "medium",
-  "quote": "Wu--Sprung and van Zyl--Hutchinson \\cite{vanzyl} indexed by Semantic Scholar (accessed August 2026; 28 and 29 works respectively)",
-  "problem": "The sentence assigns the counts to the two works in the order given, but the chapter's own order is Wu--Sprung then van Zyl--Hutchinson, so this is consistent; however, the 'Key anchors' argument that the operator null equals the smooth-zero null is stated as if exact, while the paper only says they coincide numerically on 401--500.",
-  "fix": "Add a sentence saying that the coincidence on 401--500 is numerical, not exact."
+  "quote": "the smallest error the paper reports is a few hundredths of a mean spacing",
+  "problem": "The paper reports far smaller errors: in-sample rms < 10^-4 spacings at M=900 (Sec. III, App. A anchors) and < 10^-3 in Table III. The 0.018 of Table IV is only the smallest held-out rms.",
+  "fix": "Say 'the smallest held-out error the paper reports is about 0.02 mean spacings, and its tightest in-sample statement is rms < 10^-4 spacings; 15 significant digits ... roughly 10^-11 in t, at least seven orders below either'. Adjust Problem 25 and its answer to mention both comparisons."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Montgomery's result is a theorem proved under the assumption of RH and for a restricted class of test functions; the full pair-correlation statement is a conjecture",
-  "problem": "The paper calls it a 'pair-correlation theorem'; the chapter's status statement is correct but the first-year reader has no way to see the restriction, and the refinement is not tied to a chapter result.",
-  "fix": "Point to the specific statement in Chapter 20 and say that the test-function restriction concerns the Fourier transform of the test function."
+  "quote": "expand $\\Nsm$ about $s_n$ with the Lagrange remainder (Chapter~\\ref{ch:asymptotics})",
+  "problem": "The bible's contract for Chapter 4 does not include Taylor's theorem with Lagrange remainder, so the reader cannot be assumed to know it. The prerequisites list also claims 'Taylor expansion with remainder' from Chapters 2--4 without basis.",
+  "fix": "State the result in place: 'Taylor's theorem with remainder says that for a twice-differentiable g, g(s+δ)=g(s)+g'(s)δ+½g''(ξ)δ² for some ξ between s and s+δ', with a one-line justification or a beyond box. Alternatively use the second-order Taylor approximation and say the neglected term is O(δ³)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "which tells you that $\\varepsilon_n$ is much smaller there than its worst value",
+  "problem": "This does not follow. rms(f-ε)² - rms(f)² = mean(ε²) - 2 mean(fε), so four-digit agreement of the two rms values can occur with a non-small ε that is nearly orthogonal to f. The chapter's own sample shows the rms difference is far below rms(ε).",
+  "fix": "Replace with: 'On zeros 401--500 they agree to four digits. This is consistent with ε_n being much smaller there than its worst value (the paper says the worst residuals occur at low n), although agreement of the rms values alone does not prove it, since a small ε uncorrelated with f changes the rms only at second order.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "which is what Appendix~A step~3 confirms by listing the Richardson pairs",
+  "problem": "Listing the pairs 12000/24000 does not settle which grid the subscript '2h' denotes; only the algebra of Step 2 does. Also, with h=2L/(N+1), going from N=12000 to 24000 changes h by the factor 12001/24001, so the spacing is not exactly halved. The chapter's own Problem 8 uses N=1000 and 2001 for exactly this reason.",
+  "fix": "Say: 'Appendix A step 3 lists the pairs 12000/24000 and 16000/32000; for the formula to cancel the h² error the weight 4 must multiply the finer-grid eigenvalue, so \"2h\" must denote the grid with twice the points.' Add a remark that doubling N halves h only up to a relative 4×10^-5, which leaves a negligible residual h² term."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "explains why these agree with the smooth-zero values to the precision shown",
+  "problem": "The nulls section only proves a bound of 0.063 on the difference and then notes a numerical coincidence on 401--500. It does not explain three-digit agreement for the windows 1--400 (which includes the low-n levels where ε is worst) or 801--1000.",
+  "fix": "Rephrase: 'the nulls section bounds the difference by 0.063 and discusses why it is in practice much smaller; that the values agree to three digits here is a numerical observation.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "it was caught only because exact verification was possible",
+  "problem": "The paper does not say how the null-mode artifact (c_0 ≈ 2.2×10^6 feeding on float32 noise) was detected. It was repaired by zeroing the analytically vanishing tensor rows. Exact diagonalization is what dissolved the 0.232 floor, which is a separate finding.",
+  "fix": "Replace with: 'the artifact was removed by zeroing the analytically vanishing entries, and the remaining floor was shown to be a property of the surrogate only when the exact spectrum was computed.'"
  },
  {
   "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Let $H$ be the set of held-out indices, with $K$ members.",
+  "problem": "This introduces symbol clashes inside one chapter: H is the Hamiltonian; K is the bible's (and this chapter's, in control C2) number of selected frequencies; P_n clashes with the prime set P; and p_n, q_n clash with the prime p and with the GUE density p(s).",
+  "fix": "Rename: held-out set \\mathcal{T} (or 'hold') with n_test members, predictions \\hat t_n, predicted and true fluctuations \\hat f_n and f_n^{\\rm ref}. Update eqs. (pq), (score), (null), Problem 19 and the answers accordingly."
+ },
+ {
+  "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "The paper's Eq.~(1) is the smooth part,",
-  "problem": "The chapter sets u = t/2\\pi but never uses it in the derivative that follows.",
-  "fix": "Remove the unused substitution or use it in the derivative."
+  "quote": "the histogram would not have unit mean or would not vanish at $s=0$",
+  "problem": "Too strong. Many data or unfolding errors (a slightly wrong constant in N_sm, a few perturbed zeros) would leave both features intact. The check is necessary, not sufficient.",
+  "fix": "Write 'gross errors, such as missed zeros or a wrong density in the unfolding, would typically show up as a non-unit mean or as weight near s=0; the check cannot detect every error.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "which you can see in \\cref{fig:paper-setup-wusprung} over the whole range used",
+  "problem": "The monotonicity of x(V), needed for bracketing, is justified only by looking at a plot. The no-jumps rule asks for an argument or an explicit statement of status.",
+  "fix": "Add a short argument (differentiate Eq. (2) using the stable form, or cite the Chapter 22 result that dx/dV>0 for V>V_0), or say explicitly 'we verified numerically that x(V) is strictly increasing on V_0<V≤1600'. The checks script already does this."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "because only the kinetic part $E-V(x)$ of the energy feels the discretized derivative",
+  "problem": "A heuristic claim is stated as fact with no derivation or status label. The student has only the empty-box dispersion formula.",
+  "fix": "Label it: 'Heuristically, the leading error is proportional to h² times the average of k(x)^4=(E-V(x))² over the state, which is smaller than E² in a well; we do not derive this here.'"
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Running this listing prints null values of about 0.244, 0.263 and 0.274",
+  "problem": "The checks assert these only within 0.004, 0.002 and 0.003 of the paper's anchors, so the three-digit values stated (and the claim of 'matching' the anchors) are not actually verified. The same applies to the odd/even nulls in Answer 13 (tolerance 0.006).",
+  "fix": "Tighten the checks to assert the rounded printed values (e.g. abs(null(1,400)-0.244)<5e-4), or quote the computed values to the digits obtained and state the actual difference from the paper's anchors."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The fraction from the first $10^4$ zeros is a few percent at most",
+  "problem": "The answer gives no computed number, and the check only asserts frac<0.05. The bible requires numerical answers to be computed and checked.",
+  "fix": "Compute the fraction, state it to two significant figures, and assert it in the checks."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "every root is found without widening at these heights",
+  "problem": "This claim from the answer to Problem 23 is not verified: the check script contains the widening loop but never asserts it is not entered.",
+  "fix": "Add a counter in the checks asserting zero widenings, or soften the sentence to 'the bracket rarely or never needs widening'."
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "At $n=1$ it returns $s_2-s_1\\approx6.13$ instead of the analytic $\\gap_1\\approx7.50$",
-  "problem": "np.gradient at the first point gives the one-sided difference s_2-s_1; the value 6.13 is checked, but the claim that the null over zeros 1--400 changes by less than 1e-4 depends on the array length and is only checked for that window.",
-  "fix": "State that the claim is for the window 1--400 and that the check was done."
+  "quote": "``the null grows from 0.263 to 0.296 over Table~V''",
+  "problem": "Presented as a verbatim quotation but altered: the paper's sentence is parenthetical and refers to the table by reference ('over Table V' is the rendered form), and the quote drops the opening words of that parenthesis.",
+  "fix": "Paraphrase without quotation marks (the paper notes that the null grows from 0.263 to 0.296 over Table V), or quote the full parenthetical exactly."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "accept a step only if the rms improves by the factor $0.999$",
+  "problem": "The account of App. A step 6 omits its recorded exception: the scale-2 M=300 row used the acceptance factor 1-10^-5, and Table I's caption flags it as a sensitivity result. The wording 'improves by the factor' is also unclear.",
+  "fix": "Write 'accept a step only if the new rms is below 0.999 times the old one (the scale-2, M=300 row of Table I used 1-10^-5 instead, as its caption notes)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the paper sits in the empty cell",
+  "problem": "The table has four rows and three yes/no columns, and no 'empty cell'. The combination yes/yes/yes simply does not appear as a row.",
+  "fix": "Say 'the paper's own work is the combination missing from the table: operator yes, fitted to zeros yes, held-out test yes', or add a fifth row 'this paper'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "spread over a uniform grid of frequencies and does no better than the null",
+  "problem": "C1 scores 0.258 against the null 0.263, with correlation +0.28 and interval [+0.08, +0.46]. The paper says it 'stays near the null' / 'within 0.005 of the null', not that it shows no improvement.",
+  "fix": "Replace with 'and stays within 0.005 of the null'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "(c) machine learning & no & yes & yes (train/test splits) \\\\",
+  "problem": "'Fitted to zeros: yes' is right only for the zero-regression work [sdsu]. The He--Lee--Oliver and murmurations works in the same strand learn from arithmetic data, not zeros. The paper's sentence is specifically about 'ML papers that predict zero sequences'.",
+  "fix": "Change the entry to 'yes (zero-regression work); others fit arithmetic data', or add a note in the caption."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "\\cref{sec:paper-setup-nulls} shows this is the same as using the corrected prediction",
+  "problem": "The nulls section derives the null error and Eq. (3), but never shows that the predicted fluctuation relative to E^g equals the corrected prediction relative to E^Rich.",
+  "fix": "Add the one-line algebra here: (E_fit - Δ_n) - E^Rich_n = E_fit - E^g_n and t_n - E^Rich_n = t~_n - E^g_n, so both p_n and q_n are unchanged."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The triangle inequality $\\norm{a+b}\\le\\norm a+\\norm b$ gives",
+  "problem": "The triangle inequality for n-component vectors is not in the bible's contract for Chapter 7, and it is used without proof. The prerequisites list attributes it to Chapters 7--9.",
+  "fix": "Add a two-line proof from Cauchy--Schwarz (which Chapter 19 derives): ||a+b||² = ||a||² + 2a·b + ||b||² ≤ (||a||+||b||)². Or mark it explicitly as a recalled result with its source."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "then cubic-spline interpolation onto the working grid",
+  "problem": "Cubic-spline interpolation is not taught in any assumed chapter and is not explained here.",
+  "fix": "Add a gloss: '(a smooth piecewise-cubic curve through the reference points, used to evaluate V between them)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "matching the next-order estimate $-E^3h^4/1440$",
+  "problem": "The estimate appears with no derivation. The student cannot see where 1440 comes from.",
+  "fix": "Add: 'expanding sin²x = x² - x⁴/3 + 2x⁶/45 with x=√E h/2 gives E_disc = E - E²h²/12 + E³h⁴/360; the Richardson combination multiplies the h⁴ term by (4/16-1)/3 = -1/4, giving -E³h⁴/1440.'"
  }
 ]

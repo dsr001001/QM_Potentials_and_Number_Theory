@@ -43,9 +43,21 @@ zs = tz[(tz >= 8) & (tz <= 100)]
 dev = [abs(0 - Nsm(8.0)), abs(29 - Nsm(100.0))]
 for k, z in enumerate(zs):
     nbelow = np.sum(tz < z)
-    dev.append(abs(nbelow - Nsm(z)))        # just before the step
-    dev.append(abs(nbelow + 1 - Nsm(z)))    # just after the step
+    dev.append(abs(nbelow - Nsm(z)))
+    dev.append(abs(nbelow + 1 - Nsm(z)))
 assert max(dev) < 1.0
+
+# Mean-spacing derivation: slope of Nsm equals 1/gap (numerical instance)
+hh = 1e-5
+for tt in (50.0, 500.0, 811.0):
+    slope_num = (Nsm(tt + hh) - Nsm(tt - hh)) / (2 * hh)
+    assert abs(slope_num - 1.0 / gap(tt)) < 1e-8
+
+# Pitfall and checkpoint: spacings near t=30 and t=800
+assert abs(gap(30.0) - 4.02) < 0.01
+assert abs(0.5 / gap(30.0) - 0.125) < 0.005
+assert abs(gap(800.0) - 1.3) < 0.01
+assert abs(gap(30.0) / gap(800.0) - 3.1) < 0.05
 
 # Sample Problem 3: gap near zero 500
 t500 = 811.1843588465
@@ -57,31 +69,34 @@ assert abs(g500 - 1.292672) < 1e-5
 assert abs(0.5 / g500 - 0.3868) < 1e-4
 assert abs(3.959901 / g500 - 3.063) < 1e-3
 
-# Sample Problem 4 (new): smooth zeros and fluctuations of zeros 1 and 2
+# Sample Problem 4: smooth zeros and fluctuations of zeros 1 and 2
 f = lambda u: u * np.log(u) - u
 assert abs(np.log(2.30) - 0.832909) < 1e-6
 assert abs(np.log(2.32) - 0.841567) < 1e-6
-assert abs(np.log(2.311) - 0.837680) < 1e-6
+assert abs(np.log(2.311) - 0.8376803) < 2e-7
 assert abs(f(2.30) - (-0.3843)) < 1e-4
 assert abs(f(2.32) - (-0.3676)) < 1e-4
-assert abs(f(2.311) - (-0.3751)) < 1e-4
-assert abs((-0.375 - f(2.311)) - 0.00012) < 1e-5
-assert abs(0.00012 / 0.838 - 0.00015) < 1e-5
+assert abs(f(2.311) - (-0.375121)) < 1e-6
+assert abs((-0.375 - f(2.311)) - 0.000121) < 1e-6
+assert abs(0.000121 / 0.838 - 0.000144) < 1e-6
 u1 = brentq(lambda u: f(u) + 0.375, 2.0, 3.0)
-assert abs(u1 - 2.31115) < 1e-5
+assert abs(u1 - 2.311144) < 1e-6
 s1 = twopi * u1
-assert abs(s1 - 14.5214) < 2e-4
-assert abs(np.log(u1) - 0.83775) < 1e-5
+assert abs(s1 - 14.5213) < 1e-4
+assert abs(np.log(u1) - 0.837743) < 1e-6
 assert abs(gap(s1) - 7.500) < 1e-3
 fl1 = (tz[0] - s1) / gap(s1)
-assert abs((tz[0] - s1) - (-0.3867)) < 2e-4
-assert abs(fl1 - (-0.0516)) < 3e-4 and abs(fl1 - (-0.052)) < 1e-3
+assert abs((tz[0] - s1) - (-0.3866)) < 1e-4
+assert abs(fl1 - (-0.0515)) < 1e-4 and abs(fl1 - (-0.052)) < 1e-3
 assert abs(np.log(3.28) - 1.187843) < 1e-6
 assert abs(np.log(3.29) - 1.190887) < 1e-6
 assert abs(f(3.28) - 0.6161) < 1e-4
 assert abs(f(3.29) - 0.6280) < 1e-4
-assert abs(f(3.2875) - 0.6250) < 1e-4
+assert abs(np.log(3.2875) - 1.1901274) < 2e-7
+assert abs(f(3.2875) - 0.625044) < 1e-6
+assert abs(0.000044 / 1.190 - 0.000037) < 1e-6
 u2 = brentq(lambda u: f(u) - 0.625, 3.0, 4.0)
+assert abs(u2 - 3.287463) < 1e-6
 assert abs(u2 - 3.28746) < 1e-5
 s2 = twopi * u2
 assert abs(s2 - 20.6557) < 2e-4
@@ -107,6 +122,10 @@ assert abs(0.6 / g50 - 0.198) < 1e-3
 assert abs(0.5 / g50 - 0.165) < 1e-3
 assert abs(0.5 / g500 - 0.387) < 1e-3
 
+# Scale definitions (Wu--Sprung L values)
+assert abs(qmnt.L_of(1000) - 44.883) < 1e-3
+assert abs(qmnt.L_of(1500) - 59.957) < 1e-3
+
 # Sample Problem 6: ruler
 x = np.array([0, 1, 2, 3, 4], float)
 y = np.array([1.0, 2.9, 5.2, 6.9, 9.1])
@@ -121,6 +140,12 @@ assert abs(r - 0.11726) < 1e-5
 assert abs((1.0 + slope * 5) - 11.125) < 1e-12
 
 # Sample Problem 7 and Problem 23: memorizing polynomial and difference table
+xs = np.arange(0, 10.0)
+assert np.allclose(xs[:5]**4, [0, 1, 16, 81, 256])
+assert np.allclose(np.diff(xs[:5]**4, 1), [1, 15, 65, 175])
+assert np.allclose(np.diff(xs[:5]**4, 2), [14, 50, 110])
+assert np.allclose(np.diff(xs[:5]**4, 3), [36, 60])
+assert np.allclose(np.diff(xs**4, 4), 24)
 assert np.allclose(np.diff(y, 1), [1.9, 2.3, 1.7, 2.2], atol=1e-12)
 assert np.allclose(np.diff(y, 2), [0.4, -0.6, 0.5], atol=1e-12)
 assert np.allclose(np.diff(y, 3), [-1.0, 1.1], atol=1e-12)
@@ -138,7 +163,7 @@ assert abs(np.polyval(p4, 6.0) - 29.9) < 1e-7
 assert abs((15.0 - 11.0) / 0.125 - 32) < 1e-12
 assert abs((1.0 + slope * 6) - 13.15) < 1e-12
 
-# Sample Problem 8 and Problem 8: exams
+# Sample Problem 8 and Problem 8: exams (including the clean, leak-free case)
 assert abs((4 + 16 * 0.25) / 20 - 0.40) < 1e-12
 assert abs(0.85 * 20 - 17) < 1e-12
 assert abs(20 * 0.25 - 5) < 1e-12
@@ -188,6 +213,7 @@ for a, val in [(0, 0.263), (0.5, 0.1315), (2, 0.263), (-1, 0.526)]:
 t100 = tz[99]
 assert abs(t100 - 236.524230) < 1e-5
 assert abs((t100 - tz[0]) / 99 - 2.246359) < 1e-5
+assert abs((tz[9] - tz[0]) / 9 - 3.959901) < 1e-5
 
 # Problem 15: null and six-prime oracle on zeros 401-500 (paper Table V)
 n = np.arange(401, 501)

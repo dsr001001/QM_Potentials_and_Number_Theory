@@ -1,95 +1,327 @@
 {
  "patches": [
   {
-   "old": "\\item Chapter~\\ref{ch:probability}: rms, Pearson correlation, covariance.",
-   "new": "\\item Chapter~\\ref{ch:probability}: rms, Pearson correlation, covariance.\n\\item Chapter~\\ref{ch:level-statistics}: the negative short-range correlation of consecutive zero fluctuations."
+   "old": "The \"law\" was a property of the instrument.",
+   "new": "The ``law'' was a property of the instrument."
   },
   {
-   "old": "Follow the eigenvalue $E_n(a)$ that starts at the real, nondegenerate $E_n$ when $a=0$. Its conjugate $E_n(a)^*$ also starts at $E_n$ and is an eigenvalue of $H(-a)$, so it is the branch $E_n(-a)$:",
-   "new": "Follow the eigenvalue $E_n(a)$ that starts at the real, nondegenerate $E_n$ when $a=0$. Its conjugate $E_n(a)^*$ also starts at $E_n$ (as $a\\to0$, $E_n(a)^*\\to E_n^*=E_n$) and is an eigenvalue of $H(-a)$. Because $E_n$ is nondegenerate, for small enough $|a|$ the eigenvalues of $H(-a)$ stay close to those of $H_0$ (continuity, taken on trust in the box below), so exactly one of them lies near $E_n$, and that one is by definition $E_n(-a)$. Hence $E_n(a)^*$ is the branch $E_n(-a)$:"
+   "old": "Nothing in this chapter is new mathematics. You already have every tool (second-order",
+   "new": "Almost nothing in this chapter is new mathematics. The few short extra arguments (evenness of real parts in the amplitude, the exceptional point of a $2\\times2$ matrix, the moving-average bound) are derived in full where they are used. Every other tool you already have (second-order"
   },
   {
-   "old": "Similar matrices have the same eigenvalues, and parity maps the branch labelled $n$ to itself, so $E_n(-a)=E_n(a)$.",
-   "new": "Since $P^2=1$, $P^{-1}=P$, so this says $H(a)=PH(-a)P^{-1}$. Two matrices related this way are called \\emph{similar}, and they have the same eigenvalues: if $H(-a)v=Ev$, then $H(a)(Pv)=PH(-a)P^{-1}Pv=P(Ev)=E\\,(Pv)$. So $E_n(-a)$ is an eigenvalue of $H(a)$ lying near $E_n$; by the same uniqueness argument as above, the only such eigenvalue for small $|a|$ is $E_n(a)$, hence $E_n(-a)=E_n(a)$."
+   "old": "so these model classes, treated fairly, are \"empirically inert on this problem.\"",
+   "new": "so these model classes, treated fairly, are ``empirically inert on this problem.''"
   },
   {
-   "old": "a partner below pulls it down. Levels attract.",
-   "new": "a partner below pulls it down. For an imaginary coupling, levels attract."
+   "old": "in single precision, \"float32\")",
+   "new": "in single precision, ``float32'')"
   },
   {
-   "old": "For them $\\delta E_j=c^2/(32\\kappa j^2)$ and $\\delta E_{2j}=c^2/(48\\kappa j^2)$.",
-   "new": "For them we redo the sum. Level $n=j$: the first Kronecker delta in \\cref{eq:paper-spurious-floor-boxcos} needs $|j-l|=2j$, i.e.\\ $l=3j$ (since $l=-j$ is not a level); the second needs $j+l=2j$, i.e.\\ $l=j$, the diagonal, which gives the first-order imaginary shift and is excluded from the $m\\ne n$ sum. With $E_j-E_{3j}=\\kappa(j^2-9j^2)=-8\\kappa j^2$,\n\\[\n\\delta E_j=-\\frac{c^2/4}{-8\\kappa j^2}=\\frac{c^2}{32\\kappa j^2}.\n\\]\nLevel $n=2j$: $|2j-l|=2j$ gives $l=4j$ ($l=0$ is not a level) and $2j+l=2j$ gives $l=0$, again not a level. With $E_{2j}-E_{4j}=\\kappa(4j^2-16j^2)=-12\\kappa j^2$,\n\\[\n\\delta E_{2j}=-\\frac{c^2/4}{-12\\kappa j^2}=\\frac{c^2}{48\\kappa j^2}.\n\\]"
+   "old": "\\subsection{Two words you need: \"floor\" and \"null\"}",
+   "new": "\\subsection{Two words you need: ``floor'' and ``null''}"
   },
   {
-   "old": "(the top level by a factor larger than fifteen)",
-   "new": "(level 30 couples only to level 28 in the truncated basis, so $\\delta E_{30}=-\\tfrac14/(900-784)=-1/464$, against the full-basis value $-1/(8\\cdot899)=-1/7192$ from \\cref{eq:paper-spurious-floor-onemode}: a factor of 15.5)"
+   "old": "\"Multiplication operator\" means",
+   "new": "``Multiplication operator'' means"
   },
   {
-   "old": "The paper does not list $M$ for these fits in the main text, and the computation was not rerun in revision.",
-   "new": "The paper does not list $M$ for these fits in the main text (App.~A gives only the restart distribution $\\mathcal N(0,0.3^2)^M$), so do not assume a particular value when reasoning about these fits; and the computation was not rerun in revision."
+   "old": "This is the paper's \"$A_{nn}=0$\".",
+   "new": "This is the paper's ``$A_{nn}=0$''."
   },
   {
-   "old": "Its block-coherent rms stays below 0.15 for every window, far below the floor.",
-   "new": "Its block-coherent rms stays below 0.15 for every window (the CHECKS script asserts this bound; the individual values are plotted), so it lies at least a factor 1.5 below the floor 0.232. We quote only the bound because this smooth-zero version is a stand-in for the paper's targets, not a reproduction of them."
+   "old": "Why \"PT\"?",
+   "new": "Why ``PT''?"
   },
   {
-   "old": "Moving averages use only full windows. The block-coherent part is several times smaller than the floor for every window.}",
-   "new": "Moving averages use only full windows. The paper's values lie a factor 2 to 12 below the floor; the qmnt values all lie below 0.15.}"
+   "old": "\\quad\\text{(insert }\\partial_\\tau\\Psi=-i\\mathcal H\\Psi)\\nonumber\\\\",
+   "new": "\\nonumber\\\\\n&\\qquad\\text{(insert }\\partial_\\tau\\Psi=-i\\mathcal H\\Psi\\text{ and its complex conjugate)}\\nonumber\\\\"
   },
   {
-   "old": "\\item That bound (0.03--0.11 for $w=3$--9, 0.019 at $w=13$) is far below the floor 0.232: the hypothesis fails by a factor 2--7.",
-   "new": "\\item That bound is far below the floor 0.232. The paper's main text quotes 0.03--0.11 for windows 3--13 and a failure by a factor 2--7; its own Sec.~V~A list gives 0.019 at $w=13$ (factor about 12), a small inconsistency in the paper that only strengthens the refutation."
+   "old": "&=-\\int\\Gamma(x)|\\Psi|^2\\dd x\\;\\le\\;0.\n\\quad\\text{($H$ Hermitian, real: first integral is 0)}\\label{eq:paper-spurious-floor-decay}",
+   "new": "&=-\\int\\Gamma(x)|\\Psi|^2\\dd x\\;\\le\\;0.\\label{eq:paper-spurious-floor-decay}"
   },
   {
-   "old": "So the tensors were computed correctly, and the disagreement at full amplitude is due to amplitude alone.",
-   "new": "This is strong evidence that the tensors were computed correctly and that amplitude is the main cause of the disagreement at full amplitude, although by itself it does not exclude every other cause."
+   "old": "That is the \"physical constraint $\\Gamma\\ge0$ (i.e.\\ $A\\le0$ pointwise)\" of Sec.~II~E.",
+   "new": "That is the ``physical constraint $\\Gamma\\ge0$ (i.e.\\ $A\\le0$ pointwise)'' of Sec.~II~E."
   },
   {
-   "old": "Why does the PT-odd surrogate's validity break down first at the \\emph{lowest} levels in a potential like the box?",
-   "new": "In the one-cosine laboratory above ($A=c\\cos(j\\pi x/L)$ in the box, every coupling of magnitude $c/2$), which levels leave the perturbative regime first as $c$ grows?"
+   "old": "Let $H_0$ have real eigenvalues",
+   "new": "We write $H_0$ for the unperturbed Hamiltonian, called $H$ in the paper and so far in this chapter, to distinguish it from the perturbed operators below. Let $H_0$ have real eigenvalues"
   },
   {
-   "old": "\\checkanswer{The validity condition compares couplings with spacings. In the box $E_k=\\kappa k^2$, so spacings grow with $k$; the low levels have the smallest spacings and reach the exceptional-point condition (coupling about half the spacing) first. In the Wu--Sprung potential the spacings shrink slowly with height instead, so there the high levels are the more fragile; in either case the condition must be checked level by level.}",
-   "new": "\\checkanswer{The validity condition compares each coupling with the energy difference to its partner. All couplings have magnitude $c/2$, but the differences are $4\\kappa j(n+j)$ and $4\\kappa j|n-j|$ for a generic level, $8\\kappa j^2$ for $n=j$ and $12\\kappa j^2$ for $n=2j$. They are smallest near $n=j$ (for $j=1$ the smallest, $8\\kappa$, joins levels 1 and 3; for $j\\ge2$ it is $4\\kappa j$, at $n=j\\pm1$) and grow with $n$ beyond that, so in this example the lowest levels fail first. In another potential, with different spacings and matrix elements, nothing guarantees the same ordering: the condition has to be checked level by level.}"
+   "old": "Write $H(a)=H_0+iaA$, where $a$ scales the whole perturbation.",
+   "new": "Write $H(a)=H_0+iaA$, where $a$ scales the whole perturbation. (This $a$ is a new symbol, unrelated to the eigenvector coefficients $a_m$ above.)"
   },
   {
-   "old": "\\item Exact in-sample scores 0.2523 and 0.2477 are worse than the null; uncorrelated shifts of rms 0.065 and 0.044 spacings would do this.",
-   "new": "\\item Exact in-sample scores 0.2523 and 0.2477 are worse than the null; under the idealized assumption of zero correlation with the target (an illustration, not a finding of the paper), shifts of rms 0.065 and 0.044 spacings would do this."
+   "old": "Halving the amplitude cuts the relative error by about four; quartering it, by about sixteen. Remember this when you read \"at quarter amplitude the surrogate is accurate.\"",
+   "new": "Halving the amplitude cuts the relative error by about four; quartering it, by about sixteen. This scaling holds provided the amplitude is small enough that the $a^4$ term dominates the error. Once some levels have passed an exceptional point (\\cref{sec:paper-spurious-floor-exact}), the series no longer converges for them and the rule is only a rough guide. Remember this when you read ``at quarter amplitude the surrogate is accurate.''"
   },
   {
-   "old": "As percentages of the null 0.2438 (Problem~13),",
-   "new": "As percentages of the null 0.2438 (an exercise in the Problems section),"
+   "old": "so that \"follow the branch\" is meaningful",
+   "new": "so that ``follow the branch'' is meaningful"
   },
   {
-   "old": "idx = np.argmax(abs(v), axis=1)      # exact state with largest weight on n",
-   "new": "# columns of v are eigenvectors; row n holds the weight of unperturbed\n# state n in each of them, so argmax along row n picks its eigenvector\nidx = np.argmax(abs(v), axis=1)"
+   "old": "Combined with \\cref{eq:paper-spurious-floor-even-odd}, $E_n(a)^*=E_n(a)$: the eigenvalues of the PT-odd class are \\emph{exactly real} for every amplitude below the first collision. Beyond it they may pair off into complex conjugates (PT symmetry breaking, Chapter~\\ref{ch:non-hermitian}).",
+   "new": "Combined with \\cref{eq:paper-spurious-floor-even-odd}, $E_n(a)^*=E_n(a)$: for small enough $|a|$ the eigenvalues of the PT-odd class are \\emph{exactly real}.\n\nThe reality persists to larger amplitudes, up to the first collision, by a continuation argument. Take any real $a$. If $E$ is an eigenvalue of $H(a)$, then $E^*$ is an eigenvalue of $H(-a)$ (conjugation, \\cref{eq:paper-spurious-floor-conj}). Also $H(-a)$ has the same eigenvalues as $H(a)$ (similarity, just shown). So the spectrum of $H(a)$ is closed under complex conjugation: non-real eigenvalues come in conjugate pairs $E,E^*$.\n\nNow follow a simple real eigenvalue as $a$ grows; it moves continuously. Suppose it first leaves the real axis at an amplitude $a_*$, at the real point $E_*$. Just beyond $a_*$ it is a non-real $E$ close to $E_*$, and its partner $E^*$ is a distinct eigenvalue, also close to $E_*$. As $a\\to a_*$ both tend to $E_*$, so at $a_*$ two eigenvalues coincide: a collision. A real eigenvalue can therefore become complex only at a collision. Hence the PT-odd spectrum stays exactly real for every amplitude below the first collision on the real $a$-axis. Beyond it, eigenvalues may pair off into complex conjugates (PT symmetry breaking, Chapter~\\ref{ch:non-hermitian})."
   },
   {
-   "old": "\\textbf{7.} $\\sqrt{1-0.36}=0.8$, exact $=0.1\\Delta$; surrogate $=0.09\\Delta$; relative error $-10\\%$.",
-   "new": "\\textbf{7.} qmnt gives $\\gap_{100}\\approx1.73$, $\\gap_{300}\\approx1.41$, $\\gap_{400}\\approx1.34$. Dividing $2\\pi/\\log2=9.065$ by these gives about 5.2, 6.4 and 6.8 levels per period. The paper's ``6--7 levels'' describes the upper part of the training range well (from about $n=200$ up); near $n=100$ a period spans only about 5 levels, which is even more local.\n\n\\textbf{8.} $\\sqrt{1-0.36}=0.8$, exact $=0.1\\Delta$; surrogate $=0.09\\Delta$; relative error $-10\\%$.\n\n\\textbf{9.} $\\delta E_1=-[A_{12}^2/(0-1)+A_{13}^2/(0-3)]=0.01+0.000833=0.010833$; $\\delta E_2=-[A_{12}^2/(1-0)+A_{23}^2/(1-3)]=-0.01+0.02=0.01$; $\\delta E_3=-[A_{13}^2/(3-0)+A_{23}^2/(3-1)]=-0.000833-0.02=-0.020833$. Sum $=0$, as the pairwise antisymmetry requires."
+   "old": "The update is Levenberg--Marquardt with \"diag scaling\" (Marquardt's form, Chapter~\\ref{ch:fitting}): solve $(J^\\top J+\\lambda\\,\\mathrm{diag}(J^\\top J))\\,\\delta c=-J^\\top r$, trying damping values $(0.3\\lambda,\\lambda,10\\lambda)$. Because the model is quadratic in $c$, the problem has many local minima, so the paper uses 6 random restarts",
+   "new": "The update is Levenberg--Marquardt with ``diag scaling'' (Marquardt's form, Chapter~\\ref{ch:fitting}): solve $(J^\\top J+\\lambda\\,\\mathrm{diag}(J^\\top J))\\,\\delta c=-J^\\top r$, trying damping values $(0.3\\lambda,\\lambda,10\\lambda)$. Plain damping adds $\\lambda$ times the identity matrix. Replacing the identity by $\\mathrm{diag}(J^\\top J)$ damps each coefficient in proportion to its own sensitivity, so the step does not change if one coefficient is rescaled (say, measured in different units). Because the model is quadratic in $c$, the least-squares problem is non-convex (for instance, $c$ and $-c$ give identical shifts) and can have several local minima. The paper uses 6 random restarts"
   },
   {
-   "old": "\\textbf{9.} $w=3$: $q=1$, rms $a/3=0.080$;",
-   "new": "\\textbf{10.} $w=3$: $q=1$, rms $a/3=0.080$;"
+   "old": "a genuine feature $g=(1,1,1,1)$ and a \"noise\" column",
+   "new": "a genuine feature $g=(1,1,1,1)$ and a ``noise'' column"
   },
   {
-   "old": "\\textbf{11.} Every value stays below 0.15 (the CHECKS script asserts this for $w\\ge3$), decreasing broadly with $w$, comparable to the paper's values and several times below 0.232.",
-   "new": "\\textbf{11.} Every value stays below 0.15 (the CHECKS script asserts this for all five windows), hence at least a factor 1.5 below 0.232; plot them against the paper's values as in the block-coherence figure."
+   "old": "The paper's tensors were stored in float32 (Sec.~II~E: ``zeroed exactly rather than left as float32 noise''); the paper does not state why, and a common reason is memory, since float32 halves storage.",
+   "new": "The paper's wording implies that the tensors were held in float32 (Sec.~II~E: ``zeroed exactly rather than left as float32 noise''). The paper does not state why; a common reason for such a choice is memory, since float32 halves storage."
   },
   {
-   "old": "$/0.019=12.2$. Windows 3--9 give 2.1--7.0, the quoted \"2--7\"; $w=13$ gives about 12, outside the quoted range but strengthening the conclusion.",
-   "new": "$/0.019=12.21$. Windows 3--9 give 2.1--7.0, the quoted \"2--7\"; $w=13$ gives about 12, outside the quoted range but strengthening the conclusion.\n\n\\textbf{21.} In the two-level model the lower eigenvector has weight $|u|^2/(|u|^2+|v'|^2)>\\tfrac12$ on state 1 below the exceptional point, so overlap matching assigns it uniquely. At and beyond the exceptional point $|v'/u|=1$: both eigenvectors have weight exactly $\\tfrac12$ on both states and no one-to-one assignment exists. So an eigenstate that cannot be matched is one that is (nearly) an equal mixture of two unperturbed states, the signature of a pair at or near an exceptional point. For such a pair the exact real parts have saturated at the midpoint (shift $\\Delta/2$) while the surrogate keeps growing as $a^2/\\Delta$; the series behind Eq.~(5) has passed its radius of convergence, so the surrogate shift for that pair has no meaning."
+   "old": "The analytically-zero off-diagonal overlaps come out at the $10^{-8}$ level in float32 and many orders of magnitude smaller in float64.",
+   "new": "The analytically-zero off-diagonal overlaps come out many orders of magnitude larger in float32 than in float64. In this example their median magnitude lies between $10^{-10}$ and $10^{-6}$ in float32 and below $10^{-12}$ in float64, with a ratio of more than a thousand."
+  },
+  {
+   "old": "Overlaps computed in float32 (right group) sit near $10^{-8}$; the same overlaps in float64 (left group) are near rounding level of double precision.",
+   "new": "Overlaps computed in float32 (right group) lie many orders of magnitude above the same overlaps computed in float64 (left group), which are at the rounding level of double precision."
+  },
+  {
+   "old": "Once $(\\phi_0)_{nm}=\\eta_{nm}\\ne0$ off the diagonal, the operator matrix becomes $A_{nm}=c_0\\eta_{nm}+\\sum_{l\\ge1}c_l(\\phi_l)_{nm}$. The constant mode now contributes a \\emph{pseudo-random matrix} $c_0\\eta_{nm}$. With entries $\\eta\\sim10^{-9}$ to $10^{-7}$, a coefficient $c_0=2.2\\times10^6$ makes $c_0\\eta$ of order $2.2\\times10^{-3}$ to $0.26$ in energy units, comparable with level spacings of order 1. (This order-of-magnitude reading is ours; the paper states the mechanism, not this estimate.) A random matrix of the right size is a new, arbitrary set of features, and an unconstrained least-squares fit will use any feature that reduces the residual, however meaningless.",
+   "new": "What follows is one possible route by which such noise can act, and the reconstruction is ours. The paper says only that the noise sat in the stored float32 tensor entries $T^{(n)}_{0l}$. That noise may have arisen from rounding of the overlaps, of the state sums, or of both. Suppose, for illustration, that the overlaps carry noise, $(\\phi_0)_{nm}=\\eta_{nm}\\ne0$ off the diagonal. Then the operator matrix becomes $A_{nm}=c_0\\eta_{nm}+\\sum_{l\\ge1}c_l(\\phi_l)_{nm}$, and the constant mode contributes a \\emph{pseudo-random matrix} $c_0\\eta_{nm}$. Take entries $\\eta$ of size $10^{-9}$ to $10^{-7}$ (an assumed range covering float32 rounding levels). A coefficient $c_0=2.2\\times10^6$ then makes $c_0\\eta$ of order $2\\times10^{-3}$ to $0.2$ in energy units, up to a sizeable fraction of a level spacing (spacings here are of order 1).\n\nWhatever the route, the effect on the fit is the same. The tensor rows $T^{(n)}_{0l}$ stop being zero, and $c_0$ multiplies a set of meaningless, pseudo-random numbers. Such numbers form a new, arbitrary set of features, and an unconstrained least-squares fit will use any feature that reduces the residual, however meaningless."
+  },
+  {
+   "old": "suggested a parity-independent \"floor\" with physical meaning",
+   "new": "suggested a parity-independent ``floor'' with physical meaning"
+  },
+  {
+   "old": "Exactly, $H+ic_0$ has eigenvalues $E_n+ic_0$: all imaginary, no real change.}",
+   "new": "Exactly, $H+ic_0$ has eigenvalues $E_n+ic_0$: the shift is purely imaginary, and the real parts do not change.}"
+  },
+  {
+   "old": "\\item In float32 the analytic zeros become noise near $10^{-8}$--$10^{-7}$; multiplied by $c_0\\approx2.2\\times10^6$ they act as a random operator of physical size.",
+   "new": "\\item In float32 the analytic zeros become rounding noise, many orders of magnitude above the double-precision level. Multiplied by $c_0\\approx2.2\\times10^6$, noise in the range $10^{-9}$--$10^{-7}$ would give pseudo-random entries of up to a sizeable fraction of a spacing."
+  },
+  {
+   "old": "the \"identical floors across parity\" dissolve.",
+   "new": "the ``identical floors across parity'' dissolve."
+  },
+  {
+   "old": "consistent with the paper's phrase \"extrapolated quadratic shifts blow up\"",
+   "new": "consistent with the paper's phrase ``extrapolated quadratic shifts blow up''"
+  },
+  {
+   "old": "\"Surrogate\" means scored with the second-order formula Eq.~(5); \"exact\" means",
+   "new": "``Surrogate'' means scored with the second-order formula Eq.~(5); ``exact'' means"
+  },
+  {
+   "old": "are given as maxima (\"up to\"), not as a table.",
+   "new": "are given as maxima (``up to''), not as a table."
+  },
+  {
+   "old": "summarized as \"verified to $4\\times10^{-15}$\" in the main text",
+   "new": "summarized as ``verified to $4\\times10^{-15}$'' in the main text"
+  },
+  {
+   "old": "(the \"block-coherent\" part)",
+   "new": "(the ``block-coherent'' part)"
+  },
+  {
+   "old": "and summing over all full windows, each $x_j^2$ appears in at most $w$ windows, each time with weight $1/w$, so $\\sum_n B_w(x)_n^2\\le\\sum_jx_j^2$. Applied to $x=d-m$, the rms of the residual is at least the rms of $B_w(d)$, up to an edge factor $\\sqrt{N/(N-w+1)}$ that is negligible for $N=400$.",
+   "new": "and we sum over all $n_{\\rm fit}-w+1$ full windows. Here $n_{\\rm fit}=400$ is the number of scored levels; we avoid the letter $N$, which in this chapter is a grid size. Each $x_j^2$ appears in at most $w$ windows, each time with weight $1/w$, so $\\sum_n B_w(x)_n^2\\le\\sum_jx_j^2$. To form mean squares, divide the left side by the number of full windows and the right side by $n_{\\rm fit}$:\n\\begin{equation}\n\\mathrm{rms}(x)\\;\\ge\\;\\sqrt{\\frac{n_{\\rm fit}-w+1}{n_{\\rm fit}}}\\;\\mathrm{rms}\\big(B_w(x)\\big).\\label{eq:paper-spurious-floor-edge}\n\\end{equation}\nApply this to $x=d-m$, using $B_w(d-m)=B_w(d)$. The rms of the residual is at least the rms of $B_w(d)$ times the edge factor $\\sqrt{(n_{\\rm fit}-w+1)/n_{\\rm fit}}$, which exceeds $0.98$ for $w\\le13$ and $n_{\\rm fit}=400$."
+  },
+  {
+   "old": "Its block-coherent rms stays below 0.15 for every window (the CHECKS script asserts this bound; the individual values are plotted), so it lies at least a factor 1.5 below the floor 0.232. We quote only the bound because this smooth-zero version is a stand-in for the paper's targets, not a reproduction of them.",
+   "new": "Its block-coherent rms stays below 0.15 for every window, so it lies at least a factor 1.5 below the floor 0.232. The individual values are plotted, and Problem 11 asks you to compute them. We quote only this bound in the text because the smooth-zero version is a stand-in for the paper's targets, not a reproduction of them."
+  },
+  {
+   "old": "Let $d_n=(-1)^na$, the extreme of negative lag-1 correlation. Compute $B_w(d)$ and its rms for odd $w=2q+1$.\n\n\\textbf{Step 1: one window.} $B_w(d)_n=\\frac aw\\sum_{i=-q}^{q}(-1)^{n+i}=\\frac{(-1)^na}{w}\\sum_{i=-q}^{q}(-1)^i$.",
+   "new": "Let $d_n=(-1)^nd_0$ with a constant amplitude $d_0>0$, the extreme of negative lag-1 correlation. Compute $B_w(d)$ and its rms for odd $w=2q+1$.\n\n\\textbf{Step 1: one window.} $B_w(d)_n=\\frac{d_0}{w}\\sum_{i=-q}^{q}(-1)^{n+i}=\\frac{(-1)^nd_0}{w}\\sum_{i=-q}^{q}(-1)^i$."
+  },
+  {
+   "old": "\\textbf{Step 3: rms.} $B_w(d)_n=(-1)^{n+q}a/w$, so $|B_w|=a/w$ for every $n$:\n\\[\n\\boxed{\\mathrm{rms}\\,B_w(d)=\\frac{a}{w}}\n\\]",
+   "new": "\\textbf{Step 3: rms.} $B_w(d)_n=(-1)^{n+q}d_0/w$, so $|B_w|=d_0/w$ for every $n$:\n\\[\n\\boxed{\\mathrm{rms}\\,B_w(d)=\\frac{d_0}{w}}\n\\]"
+  },
+  {
+   "old": "$\\sigma_r^2=0.059438-2(0.3)(0.2416)(0.07)+0.0049=0.054193$",
+   "new": "$\\sigma_r^2=0.059438-2(0.3)(0.2416)(0.07)+0.0049=0.054191$"
+  },
+  {
+   "old": "The refutation is decisive in direction: a lower bound three to twelve times below the observed floor cannot be the floor. The positive explanation (\"small capture\") is descriptive;",
+   "new": "The refutation is decisive in direction: a lower bound two to twelve times below the observed floor cannot be the floor. The positive explanation (``small capture'') is descriptive;"
+  },
+  {
+   "old": "All three symptoms (poor correlation, overstated magnitude, failed matching) appear in the simplest possible case.",
+   "new": "Two of the three symptoms (wrong magnitude, failed matching) appear already in the simplest possible case. The loss of correlation across levels needs many levels and is shown in the box example below."
+  },
+  {
+   "old": "Write $x=a/\\Delta$. For $x<\\tfrac12$ both eigenvalues are real.",
+   "new": "Write $x=a/\\Delta$. In this subsection $x$ is a dimensionless coupling, not a position, and $a$ is the coupling strength. For $x<\\tfrac12$ both eigenvalues are real."
+  },
+  {
+   "old": "The exact real shift saturates at $\\Delta/2$, while the surrogate keeps growing as $x^2\\Delta$.",
+   "new": "The exact real shift saturates at $\\Delta/2$, while the surrogate keeps growing as $x^2\\Delta$. Beyond the exceptional point the ratio is surrogate/exact $=x^2\\Delta/(\\Delta/2)=2x^2$. So the surrogate still understates for $\\tfrac12<x<1/\\sqrt2\\approx0.707$, agrees at $x=1/\\sqrt2$, and overstates for larger $x$ (twofold at $x=1$). Below the exceptional point it always understates, because every term $x^4,x^6,\\dots$ in the expansion of the exact shift has a positive coefficient."
+  },
+  {
+   "old": "For eigenvalue $\\lambda$, the first row of $(H-\\lambda)v=0$ gives $(E_1-\\lambda)u+iav'=0$, so $|v'/u|=|\\lambda-E_1|/a$. Below the exceptional point the lower eigenvector has $|v'/u|<1$: it is mostly state 1 and is matched to it. At and beyond the exceptional point, $|\\lambda-E_1|^2=\\Delta^2/4+(a^2-\\Delta^2/4)=a^2$, so $|v'/u|=1$:",
+   "new": "Write an eigenvector with eigenvalue $\\lambda$ as $v=(v_1,v_2)$, its components along unperturbed states 1 and 2. The first row of $(H-\\lambda)v=0$ gives $(E_1-\\lambda)v_1+iav_2=0$, so $|v_2/v_1|=|\\lambda-E_1|/a$. Below the exceptional point the lower eigenvector has $|v_2/v_1|<1$: it is mostly state 1 and is matched to it. At and beyond the exceptional point, $|\\lambda-E_1|^2=\\Delta^2/4+(a^2-\\Delta^2/4)=a^2$, so $|v_2/v_1|=1$:"
+  },
+  {
+   "old": "Right: weight of unperturbed state 1 in the lower-branch eigenvector, $|u|^2/(|u|^2+|v'|^2)$;",
+   "new": "Here $x$ is the dimensionless coupling, not a position. Right: weight of unperturbed state 1 in the lower-branch eigenvector $(v_1,v_2)$, $|v_1|^2/(|v_1|^2+|v_2|^2)$;"
+  },
+  {
+   "old": "Also give $|v'/u|$ for the lower state at $x=\\tfrac14$.",
+   "new": "Also give $|v_2/v_1|$ for the lower state at $x=\\tfrac14$."
+  },
+  {
+   "old": "\\textbf{Step 4: overlap.} At $x=\\tfrac14$, $|v'/u|=\\delta E^{\\rm exact}/x=0.0670/0.25=0.268$, so the lower state is clearly state 1.",
+   "new": "\\textbf{Step 4: overlap.} At $x=\\tfrac14$, $|v_2/v_1|=|\\lambda-E_1|/a=(\\delta E^{\\rm exact}/\\Delta)/x=0.0670/0.25=0.268$, so the lower state is clearly state 1."
+  },
+  {
+   "old": "|v'/u|=0.268}",
+   "new": "|v_2/v_1|=0.268}"
+  },
+  {
+   "old": "The model does not prove the paper's \"twofold\" overstatement; it shows that an overstatement of this size is exactly what happens when a quadratic surrogate is pushed past an exceptional point.",
+   "new": "The model does not prove the paper's ``twofold'' overstatement. It shows only that overstatements of order one (for example, twofold at $x=1$) arise naturally once a coupling exceeds the spacing; just past the exceptional point the surrogate can even understate."
+  },
+  {
+   "old": "The same tensors, the same code, the same coefficient \\emph{direction}: only the size changed. Agreement returned. This is strong evidence that the tensors were computed correctly and that amplitude is the main cause of the disagreement at full amplitude, although by itself it does not exclude every other cause.",
+   "new": "The same tensors and the same code were used, and presumably the fitted coefficients scaled by $\\tfrac14$, that is, the same coefficient \\emph{direction} (the paper does not spell out the construction). Only the size changed, and agreement returned. This supports the correctness of the machinery and points to amplitude as the main cause of the disagreement at full amplitude, although by itself it does not exclude every other cause. Note also that the clean sixteenfold rule of \\cref{eq:paper-spurious-floor-series} applies only when both amplitudes are inside the radius of convergence. At the paper's full amplitude some pairs had already left it (3\\% of states unmatched), so the improvement need not follow that rule."
+  },
+  {
+   "old": "At large amplitude the points leave the diagonal, with relative disagreement above 10\\%, because the strongest couplings of the low levels exceed the exceptional-point threshold.",
+   "new": "At large amplitude the points leave the diagonal, with relative disagreement above 10\\%. This is consistent with the strongest couplings of the low levels approaching the two-level exceptional-point threshold (a coupling of half the corresponding level difference)."
+  },
+  {
+   "old": "Right: coefficients $15c_j$; the surrogate no longer describes the operator.",
+   "new": "Right: coefficients $15c_j$; the points leave the diagonal (relative rms disagreement above 10\\%)."
+  },
+  {
+   "old": "the paper does not specify whether \"widths\" means",
+   "new": "the paper does not specify whether ``widths'' means"
+  },
+  {
+   "old": "i.e.\\ the fitted \"absorber\" amplifies",
+   "new": "i.e.\\ the fitted ``absorber'' amplifies"
+  },
+  {
+   "old": "a direct, exact computation contradicts the surrogate, and a quarter-amplitude control shows the code is right.",
+   "new": "a direct, exact computation contradicts the surrogate, and a quarter-amplitude control supports the correctness of the machinery."
+  },
+  {
+   "old": "\\item The two-level model shows the three symptoms: the surrogate understates at the exceptional point, overstates beyond it (twofold at $a=\\Delta$), and eigenvectors become unmatchable.\n\\item Because real parts are even in amplitude, quartering the amplitude cuts the relative error about sixteenfold; agreement returning at quarter amplitude confirms the code and blames amplitude.",
+   "new": "\\item The two-level model shows two of the three symptoms. First, the surrogate is wrong in magnitude: it understates up to and somewhat past the exceptional point (beyond it the ratio surrogate/exact is $2x^2$) and overstates for $x>1/\\sqrt2$ (twofold at $a=\\Delta$). Second, the eigenvectors become unmatchable. The loss of correlation needs many levels (box figure).\n\\item Because real parts are even in amplitude, quartering a small amplitude cuts the relative error about sixteenfold. Agreement returning at quarter amplitude supports the correctness of the machinery and points to amplitude."
+  },
+  {
+   "old": "\\subsection{The machinery (App.~A step 10, \"fair variant\")}",
+   "new": "\\subsection{The machinery (App.~A step 10, ``fair variant'')}"
+  },
+  {
+   "old": "Restarts are drawn from $\\mathcal N(0,(R/20)^2)$, small compared with $R$ so that they start inside the ball. $R$ is \"calibrated so that second-order perturbation theory is verified accurate\", that is,",
+   "new": "Restarts are drawn from $\\mathcal N(0,(R/20)^2)$ in each of the $M$ components. The squared norm is a sum of $M$ squares, each of mean $(R/20)^2$, so the typical starting norm is about $(R/20)\\sqrt M$. That lies inside the ball provided $M<400$. The paper does not state $M$, so we can only say that the spread of the restarts is scaled with $R$. $R$ is ``calibrated so that second-order perturbation theory is verified accurate'', that is,"
+  },
+  {
+   "old": "A penalty this large dwarfs an rms objective of order $0.06$ (squared), so the optimizer",
+   "new": "A penalty this large dwarfs the least-squares objective (a mean-square residual of about $0.2438^2\\approx0.059$, or about 24 when summed over 400 levels), so the optimizer"
+  },
+  {
+   "old": "These sit inside the paper's quoted range \"within 0.4--4.8\\% of the null\" for the surrogate floors over the ball sizes tried. And at $R=4$ the surrogate is trustworthy: correlation with exact shifts $+0.93$ and $+0.995$, every eigenstate matched.",
+   "new": "These sit inside the paper's quoted range ``within 0.4--4.8\\% of the null'' for the surrogate floors over the ball sizes tried. At $R=4$ the surrogate tracks the exact shifts level by level (correlation $+0.93$/$+0.995$, every eigenstate matched). Yet for the odd class it still overstates the in-sample gain: 4.2\\% from the surrogate against 1.9\\% exact. This is why the exact-spectrum gains, not the surrogate floors, are the final numbers to quote."
+  },
+  {
+   "old": "That is what \"empirically inert\" means.",
+   "new": "That is what ``empirically inert'' means."
+  },
+  {
+   "old": "the word \"inert\" is the paper's summary for these, \"on this problem,\"",
+   "new": "the word ``inert'' is the paper's summary for these, ``on this problem,''"
+  },
+  {
+   "old": "\\checkanswer{To start inside the region where the surrogate is valid. A start far outside the ball would immediately be projected onto its surface, and the restarts would no longer sample the interior; scaling the spread with $R$ keeps the restarts meaningful for every ball size.}",
+   "new": "\\checkanswer{To start well inside the region where the surrogate is valid. A spread of $0.3$ per component could put starts far outside a small ball, where each would immediately be projected onto the surface, and the restarts would no longer sample the interior. Scaling the spread with $R$ keeps the restarts comparable for every ball size. Whether every start actually lies inside the ball depends on $M$: the typical starting norm is $(R/20)\\sqrt M$, inside the ball if $M<400$, and the paper does not state $M$.}"
+  },
+  {
+   "old": "If agreement returns at reduced amplitude, the code is right and the amplitude is wrong.",
+   "new": "If agreement returns at reduced amplitude, that supports the correctness of the machinery and points to the amplitude."
+  },
+  {
+   "old": "\"Exact\" here means exact for the discretized operator",
+   "new": "``Exact'' here means exact for the discretized operator"
+  },
+  {
+   "old": "Every word is now unpacked: \"subsidiary\" (\\cref{sec:paper-spurious-floor-scope}), \"surrogate\" (\\cref{sec:paper-spurious-floor-surrogate}), \"outside its validity range\" (\\cref{sec:paper-spurious-floor-exact}), \"apparently meaningful floor\" (",
+   "new": "Every word is now unpacked: ``subsidiary'' (\\cref{sec:paper-spurious-floor-scope}), ``surrogate'' (\\cref{sec:paper-spurious-floor-surrogate}), ``outside its validity range'' (\\cref{sec:paper-spurious-floor-exact}), ``apparently meaningful floor'' ("
+  },
+  {
+   "old": "\\textbf{Sec.~II~E, \"Second-order non-Hermitian classes, amplitude control, and exact diagonalization.\"}",
+   "new": "\\textbf{Sec.~II~E, ``Second-order non-Hermitian classes, amplitude control, and exact diagonalization.''}"
+  },
+  {
+   "old": "\\textbf{Sec.~V, \"The proposed mechanism fails quantitatively.\"}",
+   "new": "\\textbf{Sec.~V, ``The proposed mechanism fails quantitatively.''}"
+  },
+  {
+   "old": "\\textbf{Sec.~V, \"The optimizer left the perturbative regime.\"}",
+   "new": "\\textbf{Sec.~V, ``The optimizer left the perturbative regime.''}"
+  },
+  {
+   "old": "\\textbf{Sec.~V, \"The fair version captures almost nothing.\"}",
+   "new": "\\textbf{Sec.~V, ``The fair version captures almost nothing.''}"
+  },
+  {
+   "old": "\\textbf{Sec.~V~A, \"Sum rule and locality details.\"}",
+   "new": "\\textbf{Sec.~V~A, ``Sum rule and locality details.''}"
+  },
+  {
+   "old": "(in-sample floors under amplitude control, \"$R=4$ exact\")",
+   "new": "(in-sample floors under amplitude control, ``$R=4$ exact'')"
+  },
+  {
+   "old": "explain why the paper calls Eq.~(5) a \"surrogate\" and an \"optimization device\"",
+   "new": "explain why the paper calls Eq.~(5) a ``surrogate'' and an ``optimization device''"
+  },
+  {
+   "old": "Is the paper's \"6--7 levels at these heights\" consistent",
+   "new": "Is the paper's ``6--7 levels at these heights'' consistent"
+  },
+  {
+   "old": "For $d_n=(-1)^na$ with $a=0.24$, compute",
+   "new": "For $d_n=(-1)^nd_0$ with $d_0=0.24$, compute"
+  },
+  {
+   "old": "repeat the \"harvesting a noise column\" sample",
+   "new": "repeat the ``harvesting a noise column'' sample"
+  },
+  {
+   "old": "compare exact and second-order real shifts of the lowest 10 levels at $c=8$ and at $c=2$ (quarter amplitude).",
+   "new": "compare exact and second-order real shifts of the lowest 10 levels at $c=4$ and at $c=1$ (quarter amplitude). (At $c=4$ the strongest coupling, between levels 1 and 3, is a quarter of their spacing, safely below the two-level exceptional-point threshold of one half.)"
+  },
+  {
+   "old": "Which windows give the paper's quoted range \"2--7\"?",
+   "new": "Which windows give the paper's quoted range ``2--7''?"
+  },
+  {
+   "old": "\\textbf{10.} $w=3$: $q=1$, rms $a/3=0.080$; $w=5$: $a/5=0.048$.",
+   "new": "\\textbf{10.} $w=3$: $q=1$, rms $d_0/3=0.080$; $w=5$: $d_0/5=0.048$."
+  },
+  {
+   "old": "\\textbf{11.} Every value stays below 0.15 (the CHECKS script asserts this for all five windows), hence at least a factor 1.5 below 0.232; plot them against the paper's values as in the block-coherence figure. Small differences come from using $s_n$ rather than the paper's Richardson-corrected targets.",
+   "new": "\\textbf{11.} Compute \\texttt{d = qmnt.fluct(qmnt.zeros(400), np.arange(1, 401))}. Then, for each $w$, form the full-window moving average \\texttt{np.convolve(d, np.ones(w)/w, 'valid')} and take its rms. All five values come out below 0.15, hence at least a factor $0.232/0.15\\approx1.5$ below the floor. They are therefore far below 0.232, like the paper's values (0.108 down to 0.019), and the block-coherence explanation fails for this version of the targets too. Plot them against the paper's values as in the block-coherence figure. Differences from the paper's numbers come from using $s_n$ rather than the paper's Richardson-corrected targets."
+  },
+  {
+   "old": "Windows 3--9 give 2.1--7.0, the quoted \"2--7\";",
+   "new": "Windows 3--9 give 2.1--7.0, the quoted ``2--7'';"
+  },
+  {
+   "old": "In the two-level model the lower eigenvector has weight $|u|^2/(|u|^2+|v'|^2)>\\tfrac12$ on state 1",
+   "new": "In the two-level model the lower eigenvector $(v_1,v_2)$ has weight $|v_1|^2/(|v_1|^2+|v_2|^2)>\\tfrac12$ on state 1"
+  },
+  {
+   "old": "At and beyond the exceptional point $|v'/u|=1$:",
+   "new": "At and beyond the exceptional point $|v_2/v_1|=1$:"
   }
  ],
- "new_checks": "import numpy as np\nfrom scipy.integrate import quad\nfrom scipy.linalg import eigh_tridiagonal\nimport qmnt\n\n# Sample: parity / A12\nI = quad(lambda u: np.sin(np.pi*u)*np.sin(2*np.pi*u)**2, 0, 1)[0]\nA12 = -2*I\nassert abs(I-16/(15*np.pi)) < 1e-10 and abs(A12+0.6791) < 1e-4\nassert abs(A12**2/3-0.1537) < 1e-4\n\ndef boxA(K, coeffs):\n    k = np.arange(1, K+1); kk, ll = np.meshgrid(k, k, indexing='ij')\n    A = np.zeros((K, K))\n    for j, c in coeffs.items():\n        A += c*(-1)**j/2*((abs(kk-ll)==2*j).astype(float)-(kk+ll==2*j).astype(float))\n    return k**2.0, A\ndef d2(E, A):\n    D = E[:,None]-E[None,:]; np.fill_diagonal(D, np.inf)\n    return -(A**2/D).sum(axis=1)\nL = np.pi/2\npsi = lambda k, x: np.sin(k*np.pi*(x+L)/(2*L))/np.sqrt(L)\nnum = quad(lambda x: psi(5,x)*np.cos(np.pi*x/L)*psi(3,x), -L, L)[0]\nassert abs(num-(-0.5)) < 1e-10\n\n# Sample: level 5\nE, A = boxA(200, {1:1.0}); s = d2(E, A)\nassert abs(s[4]+1/192) < 1e-12\n# Sample: truncated 5 states\nE5, A5 = boxA(5, {1:1.0}); s5 = d2(E5, A5)\nassert np.allclose(s5, [1/32, 1/48, -1/64, -1/48, -1/64]) and abs(s5.sum()) < 1e-15\nassert abs(s[3]+1/120) < 1e-12\n# special levels n=j, n=2j (derivation in text, Problem 4)\nfor j in [1, 2, 3]:\n    Ej, Aj = boxA(300, {j:1.0}); sj = d2(Ej, Aj)\n    assert abs(sj[j-1]-1/(32*j**2)) < 1e-12 and abs(sj[2*j-1]-1/(48*j**2)) < 1e-12\n# truncation: level 30 of 30-state basis\nE30, A30 = boxA(30, {1:1.0}); s30 = d2(E30, A30)\nassert abs(s30[-1]+1/464) < 1e-12 and abs(7192/464-15.5) < 1e-9\nassert abs(s[29]+1/7192) < 1e-12\n\n# residual & Jacobian\nT = np.array([[2,1],[1,3.]]); c = np.array([1,-1.])\nassert abs((-0.6+c@T@c)/1.5-1.6) < 1e-12 and np.allclose(2*T@c/1.5, [1.3333,-2.6667], atol=1e-4)\nT = np.array([[1,0.5],[0.5,2]]); c = np.array([2,1.])\nassert abs((0.3+c@T@c)/1.2-6.9167) < 1e-4 and np.allclose(2*T@c/1.2, [4.1667,5.0], atol=1e-4)\n\nnull = 0.2438\nfor f, p in [(0.2321,4.80),(0.2358,3.28),(0.2322,4.76)]:\n    assert abs(100*(null-f)/null-p) < 0.01\nassert abs(100*(0.2358-0.2322)/0.2358-1.53) < 0.01\nassert abs(100*(0.2523/null-1)-3.49) < 0.01 and abs(100*(0.2477/null-1)-1.60) < 0.01\nfor f, p in [(0.2335,4.22),(0.2422,0.66),(0.2391,1.93),(0.2423,0.62)]:\n    assert abs(100*(null-f)/null-p) < 0.01\n\n# float32 overlaps\nN = 800; h = 2*L/(N+1)\nEv, ps = eigh_tridiagonal(2/h**2*np.ones(N), -1/h**2*np.ones(N-1), select='i', select_range=(0,59))\nps /= np.sqrt((ps**2).sum(axis=0)*h)\noff = ~np.eye(60, dtype=bool)\np32 = ps.astype(np.float32); G32 = (p32.T@p32)*np.float32(h)\nm32 = np.median(abs(G32[off])); m64 = np.median(abs((ps.T@ps*h)[off]))\nassert 1e-10 < m32 < 1e-6 and m64 < 1e-12\nassert abs(2.2e6*1e-9-2.2e-3) < 1e-12 and abs(2.2e6*1.2e-7-0.264) < 1e-3\n\n# Harvest sample, Problem 12\ny = np.array([0.3,-0.1,0.2,-0.4])\nfor eps in [1e-7, 1e-3, 1e-9]:\n    g = np.ones(4); z = eps*np.array([1,-1,-1,1.])\n    X = np.vstack([g, z]).T\n    b, *_ = np.linalg.lstsq(X, y, rcond=None)\n    res = y-X@b\n    assert abs(b[1]*eps+0.05) < 1e-6 and abs(np.sqrt(np.mean(res**2))-0.2693) < 1e-4\nassert abs(np.sqrt(0.075)-0.2739) < 1e-4\nrng = np.random.default_rng(2); n = 400; yy = 0.24*rng.standard_normal(n)\nxx = np.linspace(0,1,n); G = np.array([np.cos(k*np.pi*xx) for k in range(20)]).T\nZ = 1e-7*rng.standard_normal((n,200)); X = np.hstack([G,Z[:,:100]])\nb, *_ = np.linalg.lstsq(X, yy, rcond=None)\nassert 1e4 < np.median(abs(b[20:])) < 1e7\n\n# alternating block averages, ratios (Problems 10, 19)\nfor a, w in [(0.24,3),(0.24,5)]:\n    dd = a*(-1.0)**np.arange(100)\n    assert abs(np.sqrt(np.mean(np.convolve(dd,np.ones(w)/w,'valid')**2))-a/w) < 1e-12\nfor v, rr in zip([0.108,0.049,0.033,0.035,0.019],[2.15,4.73,7.03,6.63,12.21]):\n    assert abs(0.232/v-rr) < 0.01\nassert abs(0.232/0.108-2.1) < 0.05 and abs(0.232/0.033-7.0) < 0.05\nassert 0.232/0.15 > 1.5\n# qmnt block rms (figure, Problem 11)\nnn = np.arange(1, 401); dz = qmnt.fluct(qmnt.zeros(400), nn)\nfor w in [3,5,7,9,13]:\n    assert np.sqrt(np.mean(np.convolve(dz,np.ones(w)/w,'valid')**2)) < 0.15\n# p=2 period in levels (text and Problem 7)\nP = 2*np.pi/np.log(2); assert abs(P-9.065) < 1e-3\ng = qmnt.mean_gap(np.array([200, 400]))\nassert abs(g[0]-1.516) < 2e-3 and abs(g[1]-1.341) < 2e-3\nassert abs(P/g[0]-6.0) < 0.05 and abs(P/g[1]-6.8) < 0.05\ng7 = qmnt.mean_gap(np.array([100, 300, 400]))\nassert np.all(abs(g7-np.array([1.73,1.41,1.34])) < 0.01)\nassert np.all(abs(P/g7-np.array([5.2,6.4,6.8])) < 0.06)\n\n# Problem 9\nE3 = np.array([0,1,3.]); A3 = np.array([[0,0.1,0.05],[0.1,0,0.2],[0.05,0.2,0]])\ns3 = d2(E3, A3)\nassert np.allclose(s3, [0.010833,0.01,-0.020833], atol=1e-6) and abs(s3.sum()) < 1e-15\n\n# Weak capture\nsF = np.sqrt(0.2438**2-0.033**2); assert abs(sF-0.2416) < 1e-4\nsr = lambda sm, rho=0.3: np.sqrt(0.2438**2-2*rho*sF*sm+sm**2)\nassert abs(sr(0.07)-0.2328) < 1e-4 and abs(sr(0.06)-0.2331) < 1e-4\nassert abs(0.3*sF-0.0725) < 1e-4 and abs(sr(0.3*sF)-0.2328) < 1e-4\n\n# Two-level\nex = lambda x: 0.5*(1-np.sqrt(1-4*x**2))\nassert abs(ex(0.25)-0.0670) < 1e-4 and abs(ex(0.25)/0.25-0.268) < 1e-3\nassert abs(ex(0.3)-0.1) < 1e-12\nw = np.linalg.eigvals(np.array([[0,1j],[1j,1.]])); assert np.allclose(w.real, 0.5)\nr4 = (0.16-ex(0.4))/ex(0.4); r1 = (0.01-ex(0.1))/ex(0.1)\nassert abs(r4+0.200) < 1e-3 and abs(r1+0.0101) < 1e-4 and abs(r4/r1-19.8) < 0.1\nxs = 0.05; assert abs(ex(xs)-(xs**2+xs**4+2*xs**6)) < 1e-9\n\nassert abs(np.sqrt(0.2523**2-null**2)-0.0649) < 1e-4\nassert abs(np.sqrt(0.2477**2-null**2)-0.0438) < 1e-4\n\n# Projection and penalty\nc = np.array([3,4,12.]); cp = c*min(1,4/np.linalg.norm(c))\nassert np.allclose(cp, [0.923,1.231,3.692], atol=1e-3)\nLb = 44.883\nassert abs(2*np.pi-3*np.sqrt(3)-1.0870) < 1e-4 and abs(Lb/np.pi-14.287) < 1e-3\npen = quad(lambda x: max(-1+2*np.cos(np.pi*x/Lb),0)**2, -Lb, Lb, points=[-Lb/3,Lb/3])[0]\nassert abs(pen-15.53) < 0.01 and abs(1e4*pen-1.553e5) < 200\n\n# Box exact vs surrogate figure claims\nK = 80; Eb, _ = boxA(K, {})\ncr = np.random.default_rng(1).standard_normal(6)\ndef rel(sc):\n    _, A = boxA(K, {j: sc*cr[j-1] for j in range(1,7)})\n    sec = d2(Eb, A); w, v = np.linalg.eig(np.diag(Eb)+1j*A)\n    exs = w[np.argmax(abs(v),axis=1)].real-Eb\n    return np.sqrt(np.mean((exs[:40]-sec[:40])**2)/np.mean(sec[:40]**2))\nassert rel(0.5) < 0.05 and rel(15) > 0.10\nprint('all checks passed')\n",
- "new_figures": {
-  "paper-spurious-floor_truncation": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\ndef shifts(K):\n    k = np.arange(1, K+1); kk, ll = np.meshgrid(k, k, indexing='ij')\n    A = -0.5*((abs(kk-ll)==2).astype(float)-(kk+ll==2).astype(float))\n    E = k**2.0; D = E[:,None]-E[None,:]; np.fill_diagonal(D, np.inf)\n    return k, -(A**2/D).sum(axis=1)\nk4, s4 = shifts(400); k3, s3 = shifts(30)\nfig, ax = plt.subplots(figsize=(6,4))\nax.plot(k4[:30], k4[:30]**2*s4[:30], 'o', mfc='none', label='400-state basis')\nax.plot(k3, k3**2*s3, 's', ms=4, label='30-state basis')\nax.axhline(0, color='gray', lw=0.5)\nax.set_xlabel('level index $n$')\nax.set_ylabel(r'$n^2\\,\\delta E_n$ (units where $E_k=k^2$)')\nax.legend()\nplt.savefig('paper-spurious-floor_truncation.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_floors": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nfig, axs = plt.subplots(1, 2, figsize=(6.5,3), sharey=True)\nax = axs[0]\nax.plot([0], [0.2321], 'o', color='C0', label='surrogate')\nax.plot([0], [0.2523], 's', color='C1', label='exact')\nax.plot([1], [0.2358], 'o', color='C0')\nax.plot([1], [0.2322], 'o', mfc='none', color='C0', label='before repair')\nax.plot([1], [0.2477], 's', color='C1')\nax.set_title('unconstrained')\naxs[1].plot([0, 1], [0.2335, 0.2422], 'o', color='C0')\naxs[1].plot([0, 1], [0.2391, 0.2423], 's', color='C1')\naxs[1].set_title('fair, $R=4$')\nfor a in axs:\n    a.axhline(0.2438, ls='--', color='k', lw=1)\n    a.set_xticks([0, 1]); a.set_xticklabels(['PT-odd', 'abs.-even'])\n    a.set_xlim(-0.5, 1.5)\naxs[0].set_ylabel('in-sample rms (mean spacings)')\naxs[0].legend(fontsize=7, loc='upper left')\nplt.savefig('paper-spurious-floor_floors.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_float32": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nfrom scipy.linalg import eigh_tridiagonal\nL, N = np.pi/2, 800\nh = 2*L/(N+1)\nE, psi = eigh_tridiagonal(2/h**2*np.ones(N), -1/h**2*np.ones(N-1), select='i', select_range=(0,59))\npsi /= np.sqrt((psi**2).sum(axis=0)*h)\noff = ~np.eye(60, dtype=bool)\nG64 = abs((psi.T@psi*h)[off])\np32 = psi.astype(np.float32)\nG32 = abs(((p32.T@p32)*np.float32(h))[off]).astype(float)\nfig, ax = plt.subplots(figsize=(6,4))\nax.hist(np.log10(G64[G64>0]), bins=40, alpha=0.7, label='float64')\nax.hist(np.log10(G32[G32>0]), bins=40, alpha=0.7, label='float32')\nax.set_xlabel(r'$\\log_{10}|\\langle n|m\\rangle|$, $n\\neq m$ (dimensionless)')\nax.set_ylabel('count')\nax.legend()\nplt.savefig('paper-spurious-floor_float32.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_harvest": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nrng = np.random.default_rng(2); n = 400\ny = 0.24*rng.standard_normal(n)\nx = np.linspace(0, 1, n)\nG = np.array([np.cos(k*np.pi*x) for k in range(20)]).T\nZ = 1e-7*rng.standard_normal((n, 200))\nks = np.arange(0, 201, 10); rms = []; med = []\nfor k in ks:\n    X = np.hstack([G, Z[:, :k]])\n    b, *_ = np.linalg.lstsq(X, y, rcond=None)\n    rms.append(np.sqrt(np.mean((y-X@b)**2)))\n    med.append(np.median(abs(b[20:])) if k > 0 else np.nan)\nfig, axs = plt.subplots(1, 2, figsize=(6.5,3))\naxs[0].plot(ks, rms, 'o-', ms=3)\naxs[0].set_xlabel('number of noise columns $k$'); axs[0].set_ylabel('in-sample rms (target units)')\naxs[1].semilogy(ks[1:], med[1:], 'o-', ms=3)\naxs[1].set_xlabel('number of noise columns $k$'); axs[1].set_ylabel('median |noise coefficient|')\nplt.tight_layout()\nplt.savefig('paper-spurious-floor_harvest.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_blocks": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nimport qmnt\nn = np.arange(1, 401)\nd = qmnt.fluct(qmnt.zeros(400), n)\nws = [3, 5, 7, 9, 13]\nb = [np.sqrt(np.mean(np.convolve(d, np.ones(w)/w, 'valid')**2)) for w in ws]\nfig, ax = plt.subplots(figsize=(6,4))\nax.plot(ws, b, 'o', label='qmnt, $(t_n-s_n)/\\\\mathrm{gap}_n$')\nax.plot(ws, [0.108, 0.049, 0.033, 0.035, 0.019], 'x', ms=8, label='paper Sec. V A')\nax.axhline(0.232, ls='--', color='k', label='floor 0.232')\nax.axhline(np.sqrt(np.mean(d**2)), ls=':', color='gray', label='rms of $d_n$')\nax.set_xlabel('window $w$ (levels)')\nax.set_ylabel('block-coherent rms (mean spacings)')\nax.set_ylim(0, 0.3)\nax.legend(fontsize=8)\nplt.savefig('paper-spurious-floor_blocks.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_twolevel": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nx = np.linspace(0, 1, 401)\nexact = np.where(x < 0.5, 0.5*(1-np.sqrt(np.clip(1-4*x**2, 0, None))), 0.5)\nratio = np.where(x < 0.5, exact/np.where(x > 0, x, 1), 1.0)\nratio[0] = 0.0\nweight = 1/(1+ratio**2)\nfig, axs = plt.subplots(1, 2, figsize=(6.5,3))\naxs[0].plot(x, exact, '-', label='exact')\naxs[0].plot(x, x**2, '--', label='second order')\naxs[0].axvline(0.5, color='gray', lw=0.8)\naxs[0].set_xlabel(r'$x=a/\\Delta$'); axs[0].set_ylabel(r'real shift of lower level ($\\Delta$)')\naxs[0].legend(fontsize=8)\naxs[1].plot(x, weight, '-')\naxs[1].axvline(0.5, color='gray', lw=0.8)\naxs[1].set_xlabel(r'$x=a/\\Delta$'); axs[1].set_ylabel('weight of state 1')\naxs[1].set_ylim(0.4, 1.02)\nplt.tight_layout()\nplt.savefig('paper-spurious-floor_twolevel.pdf', bbox_inches='tight')\n",
-  "paper-spurious-floor_boxexact": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nK = 80\nk = np.arange(1, K+1); kk, ll = np.meshgrid(k, k, indexing='ij'); E = k**2.0\ndef boxA(coeffs):\n    A = np.zeros((K, K))\n    for j, c in coeffs.items():\n        A += c*(-1)**j/2*((abs(kk-ll)==2*j).astype(float)-(kk+ll==2*j).astype(float))\n    return A\ncr = np.random.default_rng(1).standard_normal(6)\nfig, axs = plt.subplots(1, 2, figsize=(6.5,3))\nfor ax, sc in zip(axs, [0.5, 15]):\n    A = boxA({j: sc*cr[j-1] for j in range(1, 7)})\n    D = E[:,None]-E[None,:]; np.fill_diagonal(D, np.inf)\n    sec = -(A**2/D).sum(axis=1)\n    w, v = np.linalg.eig(np.diag(E)+1j*A)\n    ex = w[np.argmax(abs(v), axis=1)].real-E\n    ax.plot(sec[:40], ex[:40], 'o', ms=3)\n    lim = max(abs(sec[:40]).max(), abs(ex[:40]).max())\n    ax.plot([-lim, lim], [-lim, lim], 'k--', lw=0.8)\n    ax.set_xlabel('second-order shift (units $E_1$)')\n    ax.set_ylabel('exact real shift (units $E_1$)')\n    ax.set_title('coefficients x %g' % sc)\nplt.tight_layout()\nplt.savefig('paper-spurious-floor_boxexact.pdf', bbox_inches='tight')\n"
- },
- "notes": "Skipped: the placeholder issue (marked 'Ignore'). For the request to quote individual qmnt block-coherent values: I cannot verify their exact values here, so instead of inventing numbers I kept the asserted bound (<0.15), quantified the gap to the floor as a factor of at least 1.5 (checked), softened 'far below' and the figure caption accordingly, and pointed to the plotted values. The CHECKS failure came from the ratio 0.232/0.019=12.21 being quoted as 12.2; the answer now quotes 12.21 and the assertion passes. While fixing answers I found that answers labelled 7 and 9 actually solved Problems 8 and 10; they are relabelled, and genuine answers to Problems 7 and 9 (and 21) are added, all checked. The Wu--Sprung spacing claim is removed and the checkpoint is rebuilt on the explicit one-cosine box result. All seven figure scripts are now supplied."
+ "new_checks": "import numpy as np\nfrom scipy.integrate import quad\nfrom scipy.linalg import eigh_tridiagonal\nimport qmnt\n\n# Sample: parity / A12\nI = quad(lambda u: np.sin(np.pi*u)*np.sin(2*np.pi*u)**2, 0, 1)[0]\nA12 = -2*I\nassert abs(I-16/(15*np.pi)) < 1e-10 and abs(A12+0.6791) < 1e-4\nassert abs(A12**2/3-0.1537) < 1e-4\n\ndef boxA(K, coeffs):\n    k = np.arange(1, K+1); kk, ll = np.meshgrid(k, k, indexing='ij')\n    A = np.zeros((K, K))\n    for j, c in coeffs.items():\n        A += c*(-1)**j/2*((abs(kk-ll)==2*j).astype(float)-(kk+ll==2*j).astype(float))\n    return k**2.0, A\ndef d2(E, A):\n    D = E[:,None]-E[None,:]; np.fill_diagonal(D, np.inf)\n    return -(A**2/D).sum(axis=1)\nL = np.pi/2\npsi = lambda k, x: np.sin(k*np.pi*(x+L)/(2*L))/np.sqrt(L)\nnum = quad(lambda x: psi(5,x)*np.cos(np.pi*x/L)*psi(3,x), -L, L)[0]\nassert abs(num-(-0.5)) < 1e-10\n\n# Sample: level 5\nE, A = boxA(200, {1:1.0}); s = d2(E, A)\nassert abs(s[4]+1/192) < 1e-12\n# Sample: truncated 5 states\nE5, A5 = boxA(5, {1:1.0}); s5 = d2(E5, A5)\nassert np.allclose(s5, [1/32, 1/48, -1/64, -1/48, -1/64]) and abs(s5.sum()) < 1e-15\nassert abs(s[3]+1/120) < 1e-12\nfor j in [1, 2, 3]:\n    Ej, Aj = boxA(300, {j:1.0}); sj = d2(Ej, Aj)\n    assert abs(sj[j-1]-1/(32*j**2)) < 1e-12 and abs(sj[2*j-1]-1/(48*j**2)) < 1e-12\nE30, A30 = boxA(30, {1:1.0}); s30 = d2(E30, A30)\nassert abs(s30[-1]+1/464) < 1e-12 and abs(7192/464-15.5) < 1e-9\nassert abs(s[29]+1/7192) < 1e-12\n\n# residual & Jacobian\nT = np.array([[2,1],[1,3.]]); c = np.array([1,-1.])\nassert abs((-0.6+c@T@c)/1.5-1.6) < 1e-12 and np.allclose(2*T@c/1.5, [1.3333,-2.6667], atol=1e-4)\nT = np.array([[1,0.5],[0.5,2]]); c = np.array([2,1.])\nassert abs((0.3+c@T@c)/1.2-6.9167) < 1e-4 and np.allclose(2*T@c/1.2, [4.1667,5.0], atol=1e-4)\n\nnull = 0.2438\nfor f, p in [(0.2321,4.80),(0.2358,3.28),(0.2322,4.76)]:\n    assert abs(100*(null-f)/null-p) < 0.01\nassert abs(100*(0.2358-0.2322)/0.2358-1.53) < 0.01\nassert (null-0.137)/null > 0.40   # Hermitian capture > 40%\nassert abs(100*(0.2523/null-1)-3.49) < 0.01 and abs(100*(0.2477/null-1)-1.60) < 0.01\nfor f, p in [(0.2335,4.22),(0.2422,0.66),(0.2391,1.93),(0.2423,0.62)]:\n    assert abs(100*(null-f)/null-p) < 0.01\n\n# float32 overlaps (text and figure)\nN = 800; h = 2*L/(N+1)\nEv, ps = eigh_tridiagonal(2/h**2*np.ones(N), -1/h**2*np.ones(N-1), select='i', select_range=(0,59))\nps /= np.sqrt((ps**2).sum(axis=0)*h)\noff = ~np.eye(60, dtype=bool)\np32 = ps.astype(np.float32); G32 = (p32.T@p32)*np.float32(h)\nm32 = np.median(abs(G32[off])); m64 = np.median(abs((ps.T@ps*h)[off]))\nassert 1e-10 < m32 < 1e-6 and m64 < 1e-12 and m32 > 1e3*m64\nassert abs(2.2e6*1e-9-2.2e-3) < 1e-12 and abs(2.2e6*1e-7-0.22) < 1e-9\n\n# Harvest sample, Problem 12\ny = np.array([0.3,-0.1,0.2,-0.4])\nfor eps in [1e-7, 1e-3, 1e-9]:\n    g = np.ones(4); z = eps*np.array([1,-1,-1,1.])\n    X = np.vstack([g, z]).T\n    b, *_ = np.linalg.lstsq(X, y, rcond=None)\n    res = y-X@b\n    assert abs(b[1]*eps+0.05) < 1e-6 and abs(np.sqrt(np.mean(res**2))-0.2693) < 1e-4\nassert abs(np.sqrt(0.075)-0.2739) < 1e-4\nrng = np.random.default_rng(2); n = 400; yy = 0.24*rng.standard_normal(n)\nxx = np.linspace(0,1,n); G = np.array([np.cos(k*np.pi*xx) for k in range(20)]).T\nZ = 1e-7*rng.standard_normal((n,200)); X = np.hstack([G,Z[:,:100]])\nb, *_ = np.linalg.lstsq(X, yy, rcond=None)\nassert 1e4 < np.median(abs(b[20:])) < 1e7\nrr = []\nfor kz in range(0, 201, 10):\n    Xk = np.hstack([G, Z[:,:kz]]); bk, *_ = np.linalg.lstsq(Xk, yy, rcond=None)\n    rr.append(np.sqrt(np.mean((yy-Xk@bk)**2)))\nassert np.all(np.diff(rr) < 0)   # rms falls with every added block of columns\n\n# alternating block averages, ratios (Problems 10, 19)\nfor a, w in [(0.24,3),(0.24,5)]:\n    dd = a*(-1.0)**np.arange(100)\n    assert abs(np.sqrt(np.mean(np.convolve(dd,np.ones(w)/w,'valid')**2))-a/w) < 1e-12\nfor v, rr_ in zip([0.108,0.049,0.033,0.035,0.019],[2.15,4.73,7.03,6.63,12.21]):\n    assert abs(0.232/v-rr_) < 0.01\nassert abs(0.232/0.108-2.1) < 0.05 and abs(0.232/0.033-7.0) < 0.05\nassert 0.232/0.15 > 1.5\n# edge factor\nassert np.sqrt((400-13+1)/400) > 0.98\n# qmnt block rms (figure, Problem 11)\nnn = np.arange(1, 401); dz = qmnt.fluct(qmnt.zeros(400), nn)\nfor w in [3,5,7,9,13]:\n    assert np.sqrt(np.mean(np.convolve(dz,np.ones(w)/w,'valid')**2)) < 0.15\n# p=2 period in levels\nP = 2*np.pi/np.log(2); assert abs(P-9.065) < 1e-3\ng = qmnt.mean_gap(np.array([200, 400]))\nassert abs(g[0]-1.516) < 2e-3 and abs(g[1]-1.341) < 2e-3\nassert abs(P/g[0]-6.0) < 0.05 and abs(P/g[1]-6.8) < 0.05\ng7 = qmnt.mean_gap(np.array([100, 300, 400]))\nassert np.all(abs(g7-np.array([1.73,1.41,1.34])) < 0.01)\nassert np.all(abs(P/g7-np.array([5.2,6.4,6.8])) < 0.06)\n\n# Problem 9\nE3 = np.array([0,1,3.]); A3 = np.array([[0,0.1,0.05],[0.1,0,0.2],[0.05,0.2,0]])\ns3 = d2(E3, A3)\nassert np.allclose(s3, [0.010833,0.01,-0.020833], atol=1e-6) and abs(s3.sum()) < 1e-15\n\n# Weak capture\nsF = np.sqrt(0.2438**2-0.033**2); assert abs(sF-0.2416) < 1e-4\nassert abs(0.059438-2*0.3*0.2416*0.07+0.0049-0.054191) < 1e-6\nsr = lambda sm, rho=0.3: np.sqrt(0.2438**2-2*rho*sF*sm+sm**2)\nassert abs(sr(0.07)-0.2328) < 1e-4 and abs(sr(0.06)-0.2331) < 1e-4\nassert abs(0.3*sF-0.0725) < 1e-4 and abs(sr(0.3*sF)-0.2328) < 1e-4\n\n# Two-level\nex = lambda x: 0.5*(1-np.sqrt(1-4*x**2))\nassert abs(ex(0.25)-0.0670) < 1e-4 and abs(ex(0.25)/0.25-0.268) < 1e-3\nassert abs((ex(0.25)-0.0625)/ex(0.25)-0.07) < 0.005\nassert abs(ex(0.3)-0.1) < 1e-12\nw = np.linalg.eigvals(np.array([[0,1j],[1j,1.]])); assert np.allclose(w.real, 0.5)\nassert abs(1.0**2/0.5-2) < 1e-12 and abs(np.sqrt(0.5)**2/0.5-1) < 1e-12 and abs(1/np.sqrt(2)-0.707) < 1e-3\nr4 = (0.16-ex(0.4))/ex(0.4); r1 = (0.01-ex(0.1))/ex(0.1)\nassert abs(r4+0.200) < 1e-3 and abs(r1+0.0101) < 1e-4 and abs(r4/r1-19.8) < 0.1\nxs = 0.05; assert abs(ex(xs)-(xs**2+xs**4+2*xs**6)) < 1e-9\n\nassert abs(np.sqrt(0.2523**2-null**2)-0.0649) < 1e-4\nassert abs(np.sqrt(0.2477**2-null**2)-0.0438) < 1e-4\nassert abs(2500**3/1e10-1.5625) < 1e-12\n\n# Projection, restarts, penalty\nc = np.array([3,4,12.]); cp = c*min(1,4/np.linalg.norm(c))\nassert np.allclose(cp, [0.923,1.231,3.692], atol=1e-3)\nR = 4.0; rgs = np.random.default_rng(0)\nfor Mr in [100, 300]:\n    nr = np.mean([np.linalg.norm(rgs.normal(0, R/20, Mr)) for _ in range(200)])\n    assert abs(nr-(R/20)*np.sqrt(Mr)) < 0.05*(R/20)*np.sqrt(Mr) and nr < R\nassert abs((R/20)*np.sqrt(400)-R) < 1e-12\nLb = 44.883\nassert abs(2*np.pi-3*np.sqrt(3)-1.0870) < 1e-4 and abs(Lb/np.pi-14.287) < 1e-3\npen = quad(lambda x: max(-1+2*np.cos(np.pi*x/Lb),0)**2, -Lb, Lb, points=[-Lb/3,Lb/3])[0]\nassert abs(pen-15.53) < 0.01 and abs(1e4*pen-1.553e5) < 200\nassert abs(0.2438**2-0.059) < 5e-4 and abs(400*0.2438**2-24) < 0.5\n\n# Box exact vs surrogate figure claims\nK = 80; Eb, _ = boxA(K, {})\ncr = np.random.default_rng(1).standard_normal(6)\ndef rel(sc):\n    _, A = boxA(K, {j: sc*cr[j-1] for j in range(1,7)})\n    sec = d2(Eb, A); w, v = np.linalg.eig(np.diag(Eb)+1j*A)\n    exs = w[np.argmax(abs(v),axis=1)].real-Eb\n    return np.sqrt(np.mean((exs[:40]-sec[:40])**2)/np.mean(sec[:40]**2))\nassert rel(0.5) < 0.05 and rel(15) > 0.10\n# Problem 16 setting: c=4, coupling/spacing between levels 1 and 3\nassert abs((4/2)/(9-1)-0.25) < 1e-12\nprint('all checks passed')\n",
+ "new_figures": {},
+ "notes": "Issues 3 and 4 are fixed only in part. All references to the internal CHECKS script are removed. Answer 11 now gives a concrete procedure, the verified bound (every value below 0.15, a factor of at least 1.5 below 0.232) and the comparison with the paper's values. I did not quote the five individual qmnt block-coherent values. I could not run the computation in this revision, so I could not quote them without inventing digits, which the bible forbids. A later pass can add them once computed. Issue 17 is handled the same way. The float32 noise level is now quoted only through bounds that CHECKS verifies (median between 1e-10 and 1e-6 in float32, below 1e-12 in float64, ratio above 1e3), not to one significant figure. Issue 22 is handled with lighter changes than suggested to avoid figure/label mismatches. The eigenvector components are renamed (v_1, v_2), and the alternating amplitude is renamed d_0. A note is added where a is reused as the amplitude. The two-level dimensionless coupling x is kept, with an explicit statement that it is not a position. Renaming it would also require rewriting the unseen twolevel figure script, whose axis labels use x. Issue 21 is resolved by a one-sentence explanation of diag(J^T J) scaling. Issue 20 is resolved by rewording the intro sentence rather than removing the short derivations, which the no-jumps rule requires. All other issues are fixed as suggested. This includes replacing every straight double quote in the prose with ``...'' (Python strings inside listings are left alone)."
 }

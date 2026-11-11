@@ -10,12 +10,12 @@ Where this shows up in the paper: everywhere. Every number in Tables~I--V is an 
 
 \begin{prerequisites}
 \item Chapter~\ref{ch:intro}: memorizing versus predicting, training versus held-out data.
-\item Chapters~\ref{ch:complex}--\ref{ch:asymptotics}: complex exponentials, Taylor expansion with remainder, Lambert $W$, Brent's method, floating-point precision.
+\item Chapters~\ref{ch:complex}--\ref{ch:asymptotics}: complex exponentials, Taylor series, Lambert $W$, Brent's method, floating-point precision.
 \item Chapters~\ref{ch:fourier-series} and~\ref{ch:fourier-transform}: almost-periodic sums, Fourier resolution, phase-randomized surrogates.
-\item Chapters~\ref{ch:linear-algebra}--\ref{ch:least-squares}: vectors and norms, the triangle inequality, eigenvalues, least squares and ridge.
+\item Chapters~\ref{ch:linear-algebra}--\ref{ch:least-squares}: vectors and norms, eigenvalues, least squares and ridge.
 \item Chapters~\ref{ch:schrodinger}--\ref{ch:perturbation}: $H=-d^2/dx^2+V$ in units $\hbar=2m=1$, bound states in a box, WKB turning points, first-order sensitivity.
 \item Chapters~\ref{ch:primes}--\ref{ch:explicit-formula}: primes, the zeta function, $N(T)$, $\Nsm$, smooth zeros, the truncated explicit formula.
-\item Chapters~\ref{ch:probability}--\ref{ch:wu-sprung}: rms, Pearson correlation, GUE statistics, the Hilbert--P\'olya conjecture, the Wu--Sprung potential.
+\item Chapters~\ref{ch:probability}--\ref{ch:wu-sprung}: rms, Pearson correlation, the Cauchy--Schwarz inequality, GUE statistics, the Hilbert--P\'olya conjecture, the Wu--Sprung potential.
 \item Chapters~\ref{ch:finite-differences}--\ref{ch:sparse-frequency}: finite-difference dispersion, Richardson extrapolation, Levenberg--Marquardt fitting, null models, splits, surrogates, sparse frequency search.
 \item First-year physics: potential energy curves and turning points, standing waves.
 \end{prerequisites}
@@ -74,7 +74,7 @@ An abstract compresses a whole paper into a paragraph, so every word is load-bea
 
 \paragraph{S6.} ``Controls with fitted sinusoidal models show that the obstacle is the parametrization, not the parameter count: a dense 900-coefficient Fourier model also stays near the null, while a fitted control given only a sparsity prior in frequency, and no arithmetic input, recovers frequencies at $\log p^m$ from 400 zeros and predicts held-out zeros with correlation $+0.99$.''
 
-(a) Two more fitted models, neither told about primes. One has 900 coefficients spread over a uniform grid of frequencies and does no better than the null. The other is told only ``the signal is a sum of a few sinusoids'', finds the frequencies by search, and those frequencies turn out to sit at logarithms of prime powers; it predicts as well as the 25-prime formula. So the number of parameters is not what matters; their form is. (b) Chapters~\ref{ch:fourier-transform}, \ref{ch:least-squares}, \ref{ch:sparse-frequency}. (c) Table~IV, Sec.~IV; Chapter~\ref{ch:paper-arithmetic}. (d) Numerical observation. The paper itself calls ``sparse in $t$-frequency'' ``a strong and well-chosen prior'' and notes the concentration of the zeros' spectrum at $\log p^m$ is classical \cite{landau,gonek}.
+(a) Two more fitted models, neither told about primes. One has 900 coefficients spread over a uniform grid of frequencies and stays within 0.005 of the null. The other is told only ``the signal is a sum of a few sinusoids'', finds the frequencies by search, and those frequencies turn out to sit at logarithms of prime powers; it predicts as well as the 25-prime formula. So the number of parameters is not what matters; their form is. (b) Chapters~\ref{ch:fourier-transform}, \ref{ch:least-squares}, \ref{ch:sparse-frequency}. (c) Table~IV, Sec.~IV; Chapter~\ref{ch:paper-arithmetic}. (d) Numerical observation. The paper itself calls ``sparse in $t$-frequency'' ``a strong and well-chosen prior'' and notes the concentration of the zeros' spectrum at $\log p^m$ is classical \cite{landau,gonek}.
 
 \paragraph{S7.} ``A subsidiary dissection of second-order non-Hermitian perturbations shows how surrogate optimization outside its validity range can manufacture an apparently meaningful in-sample floor; exact diagonalization dissolves it.''
 
@@ -198,13 +198,13 @@ strand & operator? & fitted to zeros? & held-out test reported? \\
 \midrule
 (a) inverse-spectral fits & yes & yes & none found \\
 (b) explicit formulae & no & no & not applicable \\
-(c) machine learning & no & yes & yes (train/test splits) \\
+(c) machine learning & no & yes for zero regression \cite{sdsu}; others fit arithmetic data & yes (train/test splits) \\
 (d) operator proposals & yes & no & not applicable \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The sentence that sums up the positioning: ``ML papers that predict zero sequences use train/test splits but involve no operator; inverse-spectral papers have operators but no held-out evaluation; we found the intersection empty.'' In \cref{tab:paper-setup-strands}, the paper sits in the empty cell: operator, fitted to zeros, \emph{and} tested on held-out zeros.
+The sentence that sums up the positioning: ``ML papers that predict zero sequences use train/test splits but involve no operator; inverse-spectral papers have operators but no held-out evaluation; we found the intersection empty.'' The paper's own work is the combination missing from \cref{tab:paper-setup-strands}: operator yes, fitted to zeros yes, held-out test yes.
 
 \subsection{The literature audit: basis and limits}
 
@@ -234,7 +234,7 @@ Suppose a 2015 paper fitted a potential to zeros $1$--$100$ and reported its err
 
 \subsection{The zeros and their precision}
 
-Sec.~II~A and Appendix~A step~1: zeros $t_1,\dots,t_{1000}$ were computed with \texttt{mpmath.zetazero(n)} at 20 significant digits, with $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; zeros $10^3$--$10^4$ at 15 digits. The paper asserts that ``both precisions exceed every use below by many orders''. You quantify this in Problem~25: the smallest error the paper reports is a few hundredths of a mean spacing, while 15 significant digits at height $10^4$ fix a zero to roughly $10^{-11}$ in $t$.
+Sec.~II~A and Appendix~A step~1: zeros $t_1,\dots,t_{1000}$ were computed with \texttt{mpmath.zetazero(n)} at 20 significant digits, with $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; zeros $10^3$--$10^4$ at 15 digits. The paper asserts that ``both precisions exceed every use below by many orders''. You quantify this in Problem~25: the smallest held-out error the paper reports is about 0.02 mean spacings (Table~IV), and its tightest in-sample statement is rms $<10^{-4}$ spacings (Sec.~III), while 15 significant digits at height $10^4$ fix a zero to roughly $10^{-11}$ in $t$, at least seven orders of magnitude below either.
 
 \subsection{The smooth counting function and the mean spacing}
 
@@ -277,9 +277,9 @@ The \emph{fluctuation} of zero $n$, in units of the local mean spacing, is
 f_n=\frac{t_n-s_n}{\gap_n}.
 \label{eq:paper-setup-fluct}
 \end{equation}
-This is what every model in the paper tries to predict. ``All errors below are quoted in units of the local mean spacing'' (Sec.~II~A), and Appendix~A adds that this spacing is computed from the smooth zeros of Eq.~(1). Dividing by $\gap_n$ makes errors comparable across heights: near zero 1 the mean spacing is several units of $t$, near zero 1000 it is just over one (Sample Problems~\ref{sp:paper-setup-first} and~\ref{sp:paper-setup-units}).
+This is what every model in the paper tries to predict. ``All errors below are quoted in units of the local mean spacing'' (Sec.~II~A), and Appendix~A adds that this spacing is computed from the smooth zeros of Eq.~(1). Dividing by $\gap_n$ makes errors comparable across heights: near zero 1 the mean spacing is several units of $t$, near zero 1000 it is just over one (see the first and third Sample Problems of this section, below).
 
-\begin{sample}{Unfolding the first zero}\label{sp:paper-setup-first}
+\begin{sample}{Unfolding the first zero}
 Find $s_1$, $\gap_1$ and the fluctuation $f_1$ of the first zero $t_1=14.134725$ (RE1).
 
 \textbf{Step 1: set up the equation.} By \eqref{eq:paper-setup-sn}, $s_1$ solves $\Nsm(s)=\tfrac12$.
@@ -301,7 +301,7 @@ The first zero sits about one twentieth of a mean spacing below its smooth posit
 
 Sec.~I~A~b says the smooth part of the Fran\c{c}a--LeClair equation is ``the Lambert-$W$ asymptotic of the counting function''. Recall from Chapter~\ref{ch:asymptotics} that the Lambert function $W(z)$ is defined by $W(z)\,e^{W(z)}=z$; for $-1/e\le z<0$ there are two real values, and the principal branch $W_0$ is the one with $W_0\ge-1$.
 
-\begin{sample}{Solving $\Nsm(s_n)=n-\tfrac12$ in closed form}\label{sp:paper-setup-lambert}
+\begin{sample}{Solving $\Nsm(s_n)=n-\tfrac12$ in closed form}
 Derive a closed form for $s_n$ and evaluate it at $n=1$.
 
 \textbf{Step 1: collect terms.} From \eqref{eq:paper-setup-nsm} and \eqref{eq:paper-setup-sn},
@@ -330,10 +330,10 @@ s_n=2\pi e\,u=\frac{2\pi e\,z}{W(z)}=\frac{2\pi\,(n-11/8)}{W\!\bigl((n-11/8)/e\b
 \[
 \boxed{s_n=\frac{2\pi(n-11/8)}{W_0\bigl((n-11/8)/e\bigr)},\qquad s_1\approx14.521}
 \]
-This agrees with Sample Problem~\ref{sp:paper-setup-first}. The paper itself solves \eqref{eq:paper-setup-sn} by Brent's method (Appendix~A step~2); both routes give the same $s_n$.
+This agrees with the Sample Problem ``Unfolding the first zero''. The paper itself solves \eqref{eq:paper-setup-sn} by Brent's method (Appendix~A step~2); both routes give the same $s_n$.
 \end{sample}
 
-\begin{sample}{What ``0.263 mean spacings'' means in height}\label{sp:paper-setup-units}
+\begin{sample}{What ``0.263 mean spacings'' means in height}
 The paper's null error on zeros 401--500 is 0.2631 spacings (Sec.~II~C; Appendix~A ``Key anchors''). Convert this to units of $t$ near zero 500, and find the mean spacing at zero 1000 too.
 
 \textbf{Step 1: spacing near zero 500.} Use $t_{500}=811.1843588465$ (Appendix~A anchors) in \eqref{eq:paper-setup-gap} as an estimate of $s_{500}$: $811.18/2\pi=129.10$, $\log(129.10)=4.8606$, so the spacing is $2\pi/4.8606=1.293$.
@@ -353,7 +353,11 @@ The sinusoidal models of Sec.~II~D are trained not on $f_n$ but on
 y_n=n-\tfrac12-\Nsm(t_n),
 \label{eq:paper-setup-yn}
 \end{equation}
-the amount by which the smooth count misses the midpoint count at the true zero. These two quantities are nearly negatives of each other. To see it, let $\delta_n=t_n-s_n$ and expand $\Nsm$ about $s_n$ with the Lagrange remainder (Chapter~\ref{ch:asymptotics}):
+the amount by which the smooth count misses the midpoint count at the true zero. These two quantities are nearly negatives of each other. To see it, let $\delta_n=t_n-s_n$ and expand $\Nsm$ about $s_n$ using Taylor's theorem with remainder, which we state here.
+\begin{beyond}
+Taylor's theorem with the Lagrange remainder: if $g$ has a continuous second derivative on an interval containing $s$ and $s+\delta$, then $g(s+\delta)=g(s)+g'(s)\,\delta+\tfrac12 g''(\xi)\,\delta^2$ for some $\xi$ between $s$ and $s+\delta$. We take it on trust; a proof (by repeated use of the mean value theorem) is in \cite{rhb}.
+\end{beyond}
+With $g=\Nsm$, $s=s_n$ and $\delta=\delta_n$:
 \begin{align}
 \Nsm(t_n)&=\Nsm(s_n)+\Nsm'(s_n)\,\delta_n+\tfrac12\Nsm''(\xi_n)\,\delta_n^2
 &&\text{($\xi_n$ between $s_n$ and $t_n$)}\nonumber\\
@@ -400,7 +404,7 @@ for lo, hi in [(1, 400), (401, 500), (801, 1000)]:
     print(lo, hi, np.sqrt(np.mean(f[sel]**2)))   # null rms
 \end{pycode}
 
-Running this listing prints null values of about 0.244, 0.263 and 0.274 for the three windows, matching the paper's anchors 0.2438, 0.2631 and 0.2739 (Appendix~A). (The paper's in-sample and scale-2 anchors are measured against the unperturbed potential's levels; \cref{sec:paper-setup-nulls} explains why these agree with the smooth-zero values to the precision shown.)
+Running this listing prints null values within $0.002$ of the paper's anchor 0.2631 for zeros 401--500, and within $0.004$ of its anchors 0.2438 (zeros 1--400) and 0.2739 (zeros 801--1000) (Appendix~A). (The paper's anchors are measured against the unperturbed potential's levels; \cref{sec:paper-setup-nulls} bounds the difference from the smooth-zero values by 0.063 and discusses why it is in practice much smaller. That the values agree as closely as they do is a numerical observation.)
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/paper-setup_unfolding.pdf}
@@ -416,7 +420,7 @@ p(s)=\frac{32}{\pi^2}\,s^2e^{-4s^2/\pi},
 \end{equation}
 against the Poisson law $e^{-s}$ for uncorrelated levels. \Cref{fig:paper-setup-gue} reproduces paper Fig.~2 from the zeros \texttt{qmnt} supplies; the mean unfolded spacing of the first $10^4$ zeros is 1 to better than one part in a thousand. (The sum of the 9999 spacings telescopes to $\Nsm(t_{10000})-\Nsm(t_1)$; writing $\Nsm(t_n)=n-\tfrac12-y_n$ from \eqref{eq:paper-setup-yn}, the mean is exactly $1+(y_1-y_{10000})/9999$, and the computed deviation from 1 is below $10^{-3}$.)
 
-What does this figure prove? Read the paper's verb: ``confirming the dataset and unfolding''. It is a sanity check. If the zeros had been computed wrongly, or if the unfolding used the wrong $\Nsm$, the histogram would not have unit mean or would not vanish at $s=0$. It is not evidence that any particular operator generates the zeros: GUE statistics are shared by vast classes of systems (Chapter~\ref{ch:level-statistics}).
+What does this figure prove? Read the paper's verb: ``confirming the dataset and unfolding''. It is a sanity check. Gross errors, such as missed zeros or a wrong density in the unfolding, would typically show up as a non-unit mean or as weight near $s=0$; the check cannot detect every error (a slightly wrong constant in $\Nsm$, or a few slightly perturbed zeros, would leave both features intact). It is not evidence that any particular operator generates the zeros: GUE statistics are shared by vast classes of systems (Chapter~\ref{ch:level-statistics}).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-setup_gue.pdf}
@@ -443,7 +447,7 @@ x(V)=\frac1\pi\Bigl[\sqrt{V-V_0}\,\log\frac{V_0}{2\pi e^2}
 \end{equation}
 Chapter~\ref{ch:wu-sprung} derived this from the WKB counting function (Chapter~\ref{ch:wkb}) by an Abel inversion: it is the even, monotone potential whose semiclassical level count equals $\Nsm$. Here we only need to evaluate it.
 
-At $V=V_0$ both terms vanish: $\sqrt{V-V_0}=0$ kills the first, and the second contains $\log(\sqrt{V_0}/\sqrt{V_0})=\log1=0$. So $x(V_0)=0$: the bottom of the well is at the origin. The paper inverts \eqref{eq:paper-setup-ws} ``pointwise by bracketed root finding'' (Appendix~A step~3: Brent's method on a dense reference grid, then cubic-spline interpolation onto the working grid). Bracketing works because $x(V)$ increases with $V$, which you can see in \cref{fig:paper-setup-wusprung} over the whole range used.
+At $V=V_0$ both terms vanish: $\sqrt{V-V_0}=0$ kills the first, and the second contains $\log(\sqrt{V_0}/\sqrt{V_0})=\log1=0$. So $x(V_0)=0$: the bottom of the well is at the origin. The paper inverts \eqref{eq:paper-setup-ws} ``pointwise by bracketed root finding'' (Appendix~A step~3: Brent's method on a dense reference grid, then cubic-spline interpolation onto the working grid; a cubic spline is a smooth piecewise-cubic curve through the reference points, used to evaluate $V$ between them). Bracketing works because $x(V)$ increases strictly with $V$ (\cref{fig:paper-setup-wusprung}); we prove this after \eqref{eq:paper-setup-wsstable} below.
 
 The second logarithm in \eqref{eq:paper-setup-ws} suffers from cancellation when you evaluate it in floating point (Chapter~\ref{ch:asymptotics}): for large $V$ the denominator $\sqrt V-\sqrt{V-V_0}$ is a small difference of nearly equal numbers. Multiplying top and bottom by $\sqrt V+\sqrt{V-V_0}$ removes it:
 \begin{align}
@@ -459,7 +463,23 @@ so
 \label{eq:paper-setup-wsstable}
 \end{equation}
 
-\begin{sample}{Recovering $L=44.883$ from Eq.~(2)}\label{sp:paper-setup-L}
+Now the monotonicity. Write $a=\sqrt{V-V_0}$ and $b=\sqrt V$, so that $da/dV=1/(2a)$ and $db/dV=1/(2b)$, and let $c=\log\bigl(V_0/(2\pi e^2)\bigr)$. By \eqref{eq:paper-setup-wsstable}, $\pi x=ac+2b\log\bigl((b+a)/\sqrt{V_0}\bigr)$. Differentiate term by term for $V>V_0$:
+\begin{align}
+\frac{d(ac)}{dV}&=\frac{c}{2a},\nonumber\\
+\frac{d}{dV}\Bigl[2b\log\frac{b+a}{\sqrt{V_0}}\Bigr]&=\frac1b\log\frac{b+a}{\sqrt{V_0}}+2b\,\frac{1/(2b)+1/(2a)}{b+a}
+&&\text{(product and chain rules)}\nonumber\\
+&=\frac1b\log\frac{b+a}{\sqrt{V_0}}+\frac{(a+b)/a}{a+b}
+&&\text{($2b\bigl(\tfrac1{2b}+\tfrac1{2a}\bigr)=1+\tfrac ba$)}\nonumber\\
+&=\frac1b\log\frac{b+a}{\sqrt{V_0}}+\frac1a .\nonumber
+\end{align}
+Adding the two pieces, and using $1+\tfrac c2=1+\tfrac12\log V_0-\tfrac12\log(2\pi)-1=\tfrac12\log\frac{V_0}{2\pi}$,
+\begin{equation}
+\pi\frac{dx}{dV}=\frac{1}{\sqrt V}\log\frac{\sqrt V+\sqrt{V-V_0}}{\sqrt{V_0}}+\frac{\log(V_0/2\pi)}{2\sqrt{V-V_0}} .
+\label{eq:paper-setup-dxdv}
+\end{equation}
+Both terms are positive for $V>V_0$: the first because $\sqrt V+\sqrt{V-V_0}>\sqrt{V_0}$, the second because $V_0/2\pi=3.10073/2=1.5504>1$. So $x(V)$ is strictly increasing, and its inverse $V(x)$ is well defined for $x\ge0$.
+
+\begin{sample}{Recovering $L=44.883$ from Eq.~(2)}
 Scale~1 uses the box $[-L,L]$ with $L=x(V{=}1000)=44.883$ (Sec.~II~B). Verify this number.
 
 \textbf{Step 1: constants.} $V_0=3.10073\pi=9.7412$; $\sqrt{V_0}=3.1211$; $\log\bigl(V_0/(2\pi e^2)\bigr)=\log(9.7412/46.4268)=\log(0.20982)=-1.5615$.
@@ -494,7 +514,7 @@ Appendix~A steps 3--4 and Sec.~II~B: the interval $(-L,L)$ carries $N$ uniform i
 
 Chapter~\ref{ch:finite-differences} showed that the finite-difference eigenvalues of $-d^2/dx^2$ lie below the continuum ones by an amount that grows with energy (dispersion). For the levels the paper scores this matters a great deal.
 
-\begin{sample}{How large is the dispersion error?}\label{sp:paper-setup-dispersion}
+\begin{sample}{How large is the dispersion error?}
 Consider the empty box ($V=0$, RE3) on $[-44.883,44.883]$ with the scale-1 working grid $N=6000$. Find the level $k$ with continuum energy near 700 and compare its discrete eigenvalue with the continuum value. Express the shortfall in mean spacings of the zeros at height 700.
 
 \textbf{Step 1: grid spacing.} $h=2L/(N+1)=89.766/6001=0.0149585$.
@@ -507,7 +527,7 @@ Consider the empty box ($V=0$, RE3) on $[-44.883,44.883]$ with the scale-1 worki
 \[
 \boxed{E^{\rm disc}_{756}\approx690.94\ \text{vs}\ E_{756}\approx700.03:\ \text{short by}\approx9.09\approx6.8\ \text{spacings}}
 \]
-In the Wu--Sprung potential the bias at a given energy is smaller, because only the kinetic part $E-V(x)$ of the energy feels the discretized derivative and that part is smaller than $E$ over most of the well. The paper reports that at levels 401--500 on the working grid the dispersion ``reaches two mean spacings'' (Sec.~II~C, ``No leakage''). Either way, it is far larger than the 0.263-spacing fluctuations the models are trying to predict.
+In the Wu--Sprung potential we expect the bias at a given energy to be smaller. Heuristically (we do not derive this here), the leading error is proportional to $h^2$ times the average of $k(x)^4=(E-V(x))^2$ over the state, where $k(x)$ is the local WKB wavenumber of Chapter~\ref{ch:wkb}, and in a well this average is smaller than $E^2$. The paper reports that at levels 401--500 on the working grid the dispersion ``reaches two mean spacings'' (Sec.~II~C, ``No leakage''). Either way, it is far larger than the 0.263-spacing fluctuations the models are trying to predict.
 \end{sample}
 
 The paper's remedy is to correct the \emph{targets}, not the operator. Compute the smooth potential's eigenvalues $E_n^{\rm g}[\text{smooth}]$ on the working grid, and also a Richardson extrapolation $E_n^{\rm Rich}[\text{smooth}]$ from a finer pair of grids (Appendix~A step~3: $N=12000/24000$ at scale~1, $16000/32000$ at scale~2). The grid bias of level $n$ is
@@ -524,7 +544,7 @@ The idea: the working-grid eigenvalue of \emph{any} nearby potential is low by r
 
 The paper reports the quality of the extrapolant: the residual of $E^{\rm Rich}$ against the smooth zeros is $0.005$ spacings on average and $0.063$ at most, ``worst at low $n$, the known semiclassical weakness of the construction'' (Sec.~II~B; Appendix~A gives the same values at scale~2). Recall from Chapter~\ref{ch:wkb} that WKB counting is least accurate for the lowest levels; since Eq.~(2) is built to make the \emph{WKB} count equal $\Nsm$, the true low levels deviate slightly from $s_n$.
 
-\begin{sample}{Reading the Richardson formula correctly}\label{sp:paper-setup-rich}
+\begin{sample}{Reading the Richardson formula correctly}
 Sec.~II~B writes $E^{\rm Rich}=(4E_{2h}-E_h)/3$. Test the two possible readings of the subscript on a model with exactly quadratic error, $E_h=E+ah^2$, with $E=100$, $a=-50$, $h=0.02$.
 
 \textbf{Step 1: the standard form.} Chapter~\ref{ch:finite-differences} derived $(4E_{h/2}-E_h)/3$, where $h/2$ is the \emph{finer} grid. Here $E_h=100-50(0.0004)=99.98$ and $E_{h/2}=100-50(0.0001)=99.995$, so $(4\times99.995-99.98)/3=(399.98-99.98)/3=100.000$, exact.
@@ -533,7 +553,7 @@ Sec.~II~B writes $E^{\rm Rich}=(4E_{2h}-E_h)/3$. Test the two possible readings 
 \[
 \boxed{\text{finer-grid reading: }100.000\ (\text{exact});\qquad \text{spacing-}2h\text{ reading: }99.900}
 \]
-So the paper's subscript ``$2h$'' must be read as ``the grid with twice the points'' (spacing halved), which is what Appendix~A step~3 confirms by listing the Richardson pairs $12000/24000$ and $16000/32000$. The extrapolation is from the finer pair, and the working grid ($6000$ or $8000$) is a third, coarser grid.
+So the weight 4 must multiply the eigenvalue on the finer grid: only then does the $h^2$ error cancel. The paper's subscript ``$2h$'' must therefore be read as ``the grid with twice the points''. Appendix~A step~3 lists the Richardson pairs $12000/24000$ and $16000/32000$, consistent with that reading. With $h=2L/(N+1)$, doubling $N$ halves $h$ only approximately: $h_{24000}/h_{12000}=12001/24001=\tfrac12(1+\eta)$ with $\eta=1/24001\approx4.2\times10^{-5}$ (smaller still for the scale-2 pair). Repeating Step~2 with $h/2$ replaced by $h(1+\eta)/2$ gives $E+\tfrac{2\eta+\eta^2}{3}\,ah^2\approx E+2.8\times10^{-5}\,ah^2$, a negligible residual compared with the coarse-grid error $ah^2$. The extrapolation is from the finer pair, and the working grid ($6000$ or $8000$) is a third, coarser grid.
 \end{sample}
 
 \begin{pitfall}
@@ -561,7 +581,7 @@ an even function (Chapter~\ref{ch:fourier-series}) with $M$ coefficients $c_k$. 
 \item Solve for eigenpairs $(E_n,\psi_n)$ of the current potential on the working grid.
 \item Form residuals $r_n=\tilde t_n-E_n$ on the training indices and the sensitivity matrix $A_{nk}=\int|\psi_n|^2\cos(k\pi x/L)\,dx$ (the first-order energy shift per unit $c_k$; Chapter~\ref{ch:perturbation}).
 \item Propose $c\mathrel{+}=V\,\mathrm{diag}\bigl(\sigma/(\sigma^2+\lambda\sigma_1^2)\bigr)U^\top r$, an SVD-damped least-squares step (Chapter~\ref{ch:least-squares}). Here $U,\sigma,V$ come from the SVD of $A$ (this $V$ is the matrix of right singular vectors, not the potential), $\sigma_1$ is the largest singular value and $\lambda$ the Levenberg--Marquardt damping.
-\item Try $\lambda$ from the list $(0.2\lambda,\lambda,5\lambda,25\lambda)$; accept a step only if the rms improves by the factor $0.999$; on success set $\lambda\leftarrow\max(0.5\lambda_{\rm acc},10^{-7})$, on total failure $\lambda\leftarrow30\lambda$; stop at $\lambda>10^4$. The ridge variant adds $\mu\sigma_1^2$ to the denominator.
+\item Try $\lambda$ from the list $(0.2\lambda,\lambda,5\lambda,25\lambda)$; accept a step only if the new rms is below $0.999$ times the old one (the scale-2, $M=300$ row of Table~I used $1-10^{-5}$ instead, as its caption notes); on success set $\lambda\leftarrow\max(0.5\lambda_{\rm acc},10^{-7})$, on total failure $\lambda\leftarrow30\lambda$; stop at $\lambda>10^4$. The ridge variant adds $\mu\sigma_1^2$ to the denominator.
 \end{enumerate}
 The protocol is deterministic from $c=0$; optimizer variability is probed with random initial $c$.
 
@@ -571,19 +591,28 @@ The protocol is deterministic from $c=0$; optimizer variability is probed with r
 
 The crucial step is Appendix~A step~7: fit on zeros $1,\dots,n_{\rm fit}$ only, then perform ``a single plain eigensolve of the fitted potential'', and score it on the held-out zeros. No further adjustment happens after the fit.
 
-Two numbers are reported. Let $H$ be the set of held-out indices, with $K$ members. Let $P_n$ be a model's predicted height for zero $n$, $t_n$ the true height, and $R_n$ a reference (the model's smooth baseline). Define the predicted and true fluctuations relative to the reference,
+Two numbers are reported. Let $\mathcal T$ be the set of held-out indices, with $n_{\rm test}$ members. Let $\hat t_n$ be a model's predicted height for zero $n$, $t_n$ the true height, and $R_n$ a reference (the model's smooth baseline). Define the predicted and true fluctuations relative to the reference,
 \begin{equation}
-p_n=\frac{P_n-R_n}{\gap_n},\qquad q_n=\frac{t_n-R_n}{\gap_n}.
+\hat f_n=\frac{\hat t_n-R_n}{\gap_n},\qquad f^{\rm ref}_n=\frac{t_n-R_n}{\gap_n}.
 \label{eq:paper-setup-pq}
 \end{equation}
 Then
 \begin{equation}
-\rms=\Bigl[\frac1K\sum_{n\in H}\Bigl(\frac{P_n-t_n}{\gap_n}\Bigr)^2\Bigr]^{1/2}=\Bigl[\frac1K\sum_{n\in H}(p_n-q_n)^2\Bigr]^{1/2},
+\rms=\Bigl[\frac{1}{n_{\rm test}}\sum_{n\in\mathcal T}\Bigl(\frac{\hat t_n-t_n}{\gap_n}\Bigr)^2\Bigr]^{1/2}=\Bigl[\frac{1}{n_{\rm test}}\sum_{n\in\mathcal T}(\hat f_n-f^{\rm ref}_n)^2\Bigr]^{1/2},
 \qquad
-\corr=\text{Pearson}(p,q),
+\corr=\text{Pearson}(\hat f,f^{\rm ref}),
 \label{eq:paper-setup-score}
 \end{equation}
-where the second form of the rms follows because $p_n-q_n=(P_n-t_n)/\gap_n$, the reference cancelling. For the oracle, $P_n$ solves the level equation of \cref{sec:paper-setup-oracle} and $R_n=s_n$. For the operator, the fit is scored against $\tilde t_n$ with the reference $E_n^{\rm g}[\text{smooth}]$ (``both measured relative to the unperturbed smooth-potential levels'', Sec.~II~C); \cref{sec:paper-setup-nulls} shows this is the same as using the corrected prediction $P_n=E_n[\text{fit}]-\Delta_n$ and reference $R_n=E^{\rm Rich}_n[\text{smooth}]$ against the raw zeros. Recall from Chapter~\ref{ch:probability} why both numbers are needed: rms measures size of error, correlation measures shape agreement. A prediction with the right shape but the wrong amplitude can have high correlation and a poor rms.
+where the second form of the rms follows because $\hat f_n-f^{\rm ref}_n=(\hat t_n-t_n)/\gap_n$, the reference cancelling. (We write $\mathcal T$, $n_{\rm test}$ and hats to avoid clashes with the Hamiltonian $H$, the number $K$ of frequencies in control C2, the prime set $P$ and the prime $p$.) For the oracle, $\hat t_n$ solves the level equation of \cref{sec:paper-setup-oracle} and $R_n=s_n$. For the operator, the fit is scored against $\tilde t_n$, which plays the role of the true height, with the reference $E_n^{\rm g}[\text{smooth}]$ (``both measured relative to the unperturbed smooth-potential levels'', Sec.~II~C). Writing $E^{\rm g}_n$ and $E^{\rm Rich}_n$ for the smooth-potential eigenvalues on the working grid and from Richardson extrapolation, and $\Delta_n=E^{\rm g}_n-E^{\rm Rich}_n$ for the grid bias \eqref{eq:paper-setup-delta}, this is the same as using the corrected prediction $\hat t_n=E_n[\text{fit}]-\Delta_n$ and the reference $R_n=E^{\rm Rich}_n$ against the raw zeros, because both fluctuations are unchanged:
+\begin{align}
+\bigl(E_n[\text{fit}]-\Delta_n\bigr)-E^{\rm Rich}_n
+&=E_n[\text{fit}]-E^{\rm g}_n+E^{\rm Rich}_n-E^{\rm Rich}_n=E_n[\text{fit}]-E^{\rm g}_n,
+&&\text{(insert $\Delta_n$)}\nonumber\\
+t_n-E^{\rm Rich}_n
+&=t_n+\Delta_n-E^{\rm g}_n=\tilde t_n-E^{\rm g}_n
+&&\text{(add and subtract $E^{\rm g}_n$; $\tilde t_n=t_n+\Delta_n$)}.\nonumber
+\end{align}
+Dividing by $\gap_n$ shows that the predicted and true fluctuations, and hence both scores, are the same in the two descriptions. Recall from Chapter~\ref{ch:probability} why both numbers are needed: rms measures size of error, correlation measures shape agreement. A prediction with the right shape but the wrong amplitude can have high correlation and a poor rms.
 
 \subsection{The splits}
 
@@ -594,7 +623,7 @@ The paper uses four kinds of train/test split (\cref{fig:paper-setup-splits}).
 \item \textbf{Odd/even}: train on odd-indexed zeros and score the even ones, and vice versa.
 \item \textbf{Interpolation} (Sec.~III; Appendix~A step~14): train on $1$--$200\cup301$--$500$, predict the gap $201$--$300$.
 \end{enumerate}
-Why within-height splits at all? Because forward splits put the test zeros higher up, where the fluctuation amplitude is slightly larger: ``the null grows from 0.263 to 0.296 over Table~V''. A model could fail forward because the test data come from a different region (covariate shift, Chapter~\ref{ch:generalization}) rather than because it learned nothing. Within-height splits remove that excuse.
+Why within-height splits at all? Because forward splits put the test zeros higher up, where the fluctuation amplitude is slightly larger; the paper notes that the null grows from 0.263 to 0.296 over Table~V. A model could fail forward because the test data come from a different region (covariate shift, Chapter~\ref{ch:generalization}) rather than because it learned nothing. Within-height splits remove that excuse.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/paper-setup_splits.pdf}
@@ -604,7 +633,7 @@ Why within-height splits at all? Because forward splits put the test zeros highe
 \begin{checkpoint}
 In an odd/even split at scale 1, the model trains on 200 levels. The caption of Table~III describes the odd/even rows with $M$ at or above the number of training levels (here $M\ge200$) as ``saturated''. Using Chapter~\ref{ch:least-squares}, say briefly why.
 \end{checkpoint}
-\checkanswer{With $M=200$ the linearized system has as many unknowns as equations (it is square), so the 200 training residuals can generically be matched exactly; with $M>200$ it is underdetermined and has infinitely many exact fits. In either case a small in-sample error says nothing about predictive skill.}
+\checkanswer{With $M$ at or above the number of training levels (200 here), the model has at least as many adjustable numbers as data, so counting alone no longer prevents an exact fit (Chapter~\ref{ch:least-squares}: a square or underdetermined linear system can generically be solved exactly). In practice exactness also requires the basis to cover the levels and the nonlinear iteration to converge (Chapter~\ref{ch:fitting}): Table~III shows in-sample rms 0.176 and 0.171 at $M=200$ but $<10^{-3}$ at $M=400$. Either way, a small in-sample error in these rows says nothing about predictive skill.}
 
 \begin{keyideas}
 \item The fitted correction $\delta V=\sum c_k\cos(k\pi x/L)$ is fit by SVD-damped Levenberg--Marquardt steps that are accepted only if they improve the rms.
@@ -617,15 +646,15 @@ In an odd/even split at scale 1, the model trains on 200 levels. The caption of 
 
 \subsection{Why a null model}
 
-An rms of $0.3$ spacings is meaningless on its own. Is that good? It depends on how large the thing you are predicting is. The \emph{null} model predicts no fluctuation at all, $P_n=R_n$, so $p_n=0$ and, by \eqref{eq:paper-setup-score},
+An rms of $0.3$ spacings is meaningless on its own. Is that good? It depends on how large the thing you are predicting is. The \emph{null} model predicts no fluctuation at all, $\hat t_n=R_n$, so $\hat f_n=0$ and, by \eqref{eq:paper-setup-score},
 \begin{equation}
-\rms_{\rm null}=\Bigl[\frac1K\sum_{n\in H}q_n^2\Bigr]^{1/2},
+\rms_{\rm null}=\Bigl[\frac{1}{n_{\rm test}}\sum_{n\in\mathcal T}\bigl(f^{\rm ref}_n\bigr)^2\Bigr]^{1/2},
 \label{eq:paper-setup-null}
 \end{equation}
 the rms size of the true fluctuations themselves. A model has predictive skill only if its rms is below this and its correlation is positive. Every claim in Tables~I--V is relative to the null.
 
 \begin{pitfall}
-The null has no correlation: its predicted fluctuations $p_n$ are all zero, a sequence with zero variance, so the Pearson coefficient (covariance divided by the product of standard deviations, Chapter~\ref{ch:probability}) has zero in the denominator. Do not look for a ``null corr'' column in the tables; there is none.
+The null has no correlation: its predicted fluctuations $\hat f_n$ are all zero, a sequence with zero variance, so the Pearson coefficient (covariance divided by the product of standard deviations, Chapter~\ref{ch:probability}) has zero in the denominator. Do not look for a ``null corr'' column in the tables; there is none.
 \end{pitfall}
 
 \subsection{The two nulls}
@@ -653,7 +682,13 @@ The working-grid eigenvalue cancels completely. The operator null is the error o
 \end{equation}
 The oracle null error is $f_n$; the operator null error is $f_n-\varepsilon_n$.
 
-How different can their rms values be? Write $\rms(a)=\norm{a}/\sqrt K$ with $\norm{\cdot}$ the Euclidean norm of a $K$-component vector (Chapter~\ref{ch:linear-algebra}). The triangle inequality $\norm{a+b}\le\norm a+\norm b$ gives
+How different can their rms values be? Write $\rms(a)=\norm{a}/\sqrt{n_{\rm test}}$ with $\norm{\cdot}$ the Euclidean norm of an $n_{\rm test}$-component vector (Chapter~\ref{ch:linear-algebra}). We need the triangle inequality $\norm{a+b}\le\norm a+\norm b$. It follows from the Cauchy--Schwarz inequality $a\cdot b\le\norm a\,\norm b$ (Chapter~\ref{ch:probability}):
+\begin{align}
+\norm{a+b}^2&=\norm a^2+2\,a\cdot b+\norm b^2 &&\text{(expand the dot product)}\nonumber\\
+&\le\norm a^2+2\norm a\,\norm b+\norm b^2 &&\text{(Cauchy--Schwarz)}\nonumber\\
+&=(\norm a+\norm b)^2,\nonumber
+\end{align}
+and taking square roots of the two nonnegative sides gives the inequality. Applied twice, it gives
 \begin{align}
 \norm f&=\norm{(f-\varepsilon)+\varepsilon}\le\norm{f-\varepsilon}+\norm{\varepsilon},\nonumber\\
 \norm{f-\varepsilon}&=\norm{f+(-\varepsilon)}\le\norm f+\norm{\varepsilon}.\nonumber
@@ -663,9 +698,9 @@ The first line says $\norm f-\norm{f-\varepsilon}\le\norm\varepsilon$, the secon
 \bigl|\rms(f-\varepsilon)-\rms(f)\bigr|\le\rms(\varepsilon)\le\max_n|\varepsilon_n| .
 \label{eq:paper-setup-rmsbound}
 \end{equation}
-The last inequality holds because a mean of squares cannot exceed the largest square. With the paper's $\max|\varepsilon_n|=0.063$, the two nulls can differ by at most $0.063$ on any holdout. On zeros 401--500 they agree to four digits, which tells you that $\varepsilon_n$ is much smaller there than its worst value; that is consistent with the paper's remark that the worst residuals occur at low $n$.
+The last inequality holds because a mean of squares cannot exceed the largest square. With the paper's $\max|\varepsilon_n|=0.063$, the two nulls can differ by at most $0.063$ on any holdout. On zeros 401--500 they agree to four digits. This is consistent with $\varepsilon_n$ being much smaller there than its worst value (the paper says the worst residuals occur at low $n$), although agreement of the rms values alone does not prove it: expanding the squares, $\rms(f-\varepsilon)^2-\rms(f)^2=\overline{\varepsilon^2}-2\,\overline{f\varepsilon}$ (bars denote averages over the holdout), so an $\varepsilon$ that is uncorrelated with $f$ changes the rms only through the second-order term $\overline{\varepsilon^2}$.
 
-\begin{sample}{The rms bound on a small example}\label{sp:paper-setup-bound}
+\begin{sample}{The rms bound on a small example}
 Let $f=(0.30,-0.20,0.10,-0.40)$ and $\varepsilon=(0.010,-0.020,0.005,0.015)$ (illustrative numbers, not the paper's). Check \eqref{eq:paper-setup-rmsbound}.
 
 \textbf{Step 1: $\rms(f)$.} $(0.09+0.04+0.01+0.16)/4=0.075$, so $\rms(f)=0.2739$.
@@ -700,7 +735,7 @@ The identity by itself proves nothing about leakage; it is true for any $\Delta_
 
 Why bother with the correction at all? Because without it, finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings and would otherwise dominate both the null and every model identically''. Appendix~A's anchors quantify this: the raw-zero null on the uncorrected working grid is $2.09$ on zeros 401--500, against $0.2631$ after correction. A null of 2.09 would make every model look equally terrible and hide all differences between them.
 
-\begin{sample}{The leakage identity with numbers}\label{sp:paper-setup-leak}
+\begin{sample}{The leakage identity with numbers}
 Take illustrative values (not from the paper) for one held-out level: $t_n=700.250$, $E^{\rm g}_n[\text{smooth}]=698.300$, $E^{\rm Rich}_n[\text{smooth}]=700.100$, and a fitted prediction $E_n[\text{fit}]=698.600$. Compute the error both ways, and the null error.
 
 \textbf{Step 1: bias.} $\Delta_n=698.300-700.100=-1.800$.
@@ -715,7 +750,7 @@ Take illustrative values (not from the paper) for one held-out level: $t_n=700.2
 \[
 \boxed{\tilde t_n-E_n[\text{fit}]=t_n-(E_n[\text{fit}]-\Delta_n)=-0.150;\qquad \text{null error}=+0.150}
 \]
-In this illustration the fit has the right magnitude of fluctuation but the wrong sign, the kind of behaviour the paper finds within height (Table~III).
+In this illustration the fit predicts a fluctuation of $E_n[\text{fit}]-E^{\rm g}_n[\text{smooth}]=+0.300$ where the true one is $\tilde t_n-E^{\rm g}_n[\text{smooth}]=+0.150$: right sign, twice the size, so its error ($0.150$ in magnitude) is no smaller than the null's.
 \end{sample}
 
 A second leakage safeguard appears in Appendix~A step~20 for the sinusoidal controls: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.'' This is the strongest kind of leakage test: physically destroy the held-out data and confirm that nothing in the fit changes.
@@ -759,14 +794,14 @@ Three features of the oracle matter for reading the paper.
 \item \textbf{Root finding.} Appendix~A step~8 solves \eqref{eq:paper-setup-level} by Brent's method (Chapter~\ref{ch:asymptotics}) ``bracketed $\pm3$ around the smooth zero (bracket expanded on sign failure)''. The step does not state the unit of the $\pm3$; \texttt{qmnt.oracle\_zeros} uses three local mean spacings.
 \end{enumerate}
 
-\begin{sample}{Reproducing two entries of Table~V}\label{sp:paper-setup-tablev}
+\begin{sample}{Reproducing two entries of Table~V}
 Compute the oracle's rms and correlation on zeros 401--500 with $P=\{2\}$ and with the first six primes, and compare with Table~V.
 
 \textbf{Step 1: data.} Indices $n=401,\dots,500$; true heights from \texttt{qmnt.zeros(500)}.
 
 \textbf{Step 2: predictions.} \texttt{qmnt.oracle\_zeros(n, primes)} solves \eqref{eq:paper-setup-level} for each $n$ with $m\le3$.
 
-\textbf{Step 3: score.} \texttt{qmnt.score(t\_pred, n)} returns the rms of $(P_n-t_n)/\gap_n$ and the Pearson correlation of $p_n=(P_n-s_n)/\gap_n$ with $q_n=f_n$, as in \eqref{eq:paper-setup-score} with $R_n=s_n$.
+\textbf{Step 3: score.} \texttt{qmnt.score(t\_pred, n)} returns the rms of $(\hat t_n-t_n)/\gap_n$ and the Pearson correlation of $\hat f_n=(\hat t_n-s_n)/\gap_n$ with $f^{\rm ref}_n=f_n$, as in \eqref{eq:paper-setup-score} with $R_n=s_n$.
 
 \textbf{Step 4: results.} One prime gives rms $0.198$, corr $+0.66$; six primes give $0.074$, $+0.96$. Both match Table~V's 401--500 row.
 \[
@@ -848,7 +883,7 @@ Apply question (d) neutrally. The disclosure is neither an endorsement nor a dis
 \item ``Key anchors'' (Appendix~A) give target numbers for checking a reconstruction: $t_1=14.1347251417$, $t_{500}=811.1843588465$, null in-sample (1--400) $0.2438$, null OOS (401--500) $0.2631$, and so on.
 \end{itemize}
 
-Why do records like this matter, whoever or whatever wrote the code? Because in a computational paper the computation \emph{is} the evidence. Chapter~\ref{ch:paper-spurious-floor} will show how a single dead parameter coupling to float32 noise produced a convincing but spurious result; it was caught only because exact verification was possible. A reconstruction record turns ``trust me'' into ``check me'', and that is the only footing on which a numerical claim can stand.
+Why do records like this matter, whoever or whatever wrote the code? Because in a computational paper the computation \emph{is} the evidence. Chapter~\ref{ch:paper-spurious-floor} will show how a single dead parameter coupling to float32 noise produced a convincing but spurious result; the artifact was removed by zeroing the analytically vanishing tensor entries, and the remaining floor was shown to be a property of the surrogate only when the exact spectrum was computed. Both repairs depended on being able to rerun and recheck the computation. A reconstruction record turns ``trust me'' into ``check me'', and that is the only footing on which a numerical claim can stand.
 
 \subsection{Appendix~A steps 1--8 in one place}
 
@@ -904,7 +939,7 @@ Sec.~II~F; Data Availability; App.~A record & \cref{sec:paper-setup-ai} & Chs.~\
 \end{tabular}
 \end{table}
 
-What this chapter has \emph{not} done is interpret the results: Tables~I--III and Figs.~3--4 are read in Chapter~\ref{ch:paper-memorization}; Tables~IV--V and Sec.~IV in Chapter~\ref{ch:paper-arithmetic}; Sec.~II~E, Sec.~V and Fig.~5 in Chapter~\ref{ch:paper-spurious-floor}; Sec.~VI in Chapter~\ref{ch:paper-critique}. The numbers we did reproduce here (the nulls 0.244, 0.263, 0.274 of Appendix~A's anchors, the scale lengths 44.883 and 59.957 of Sec.~II~B, and the Table~V entries $0.198/{+0.66}$ and $0.074/{+0.96}$) confirm that you and the paper are measuring the same things in the same units.
+What this chapter has \emph{not} done is interpret the results: Tables~I--III and Figs.~3--4 are read in Chapter~\ref{ch:paper-memorization}; Tables~IV--V and Sec.~IV in Chapter~\ref{ch:paper-arithmetic}; Sec.~II~E, Sec.~V and Fig.~5 in Chapter~\ref{ch:paper-spurious-floor}; Sec.~VI in Chapter~\ref{ch:paper-critique}. The numbers we did reproduce here (the nulls of Appendix~A's anchors, 0.2438, 0.2631 and 0.2739, to within a few thousandths, the scale lengths 44.883 and 59.957 of Sec.~II~B, and the Table~V entries $0.198/{+0.66}$ and $0.074/{+0.96}$) confirm that you and the paper are measuring the same things in the same units.
 
 \section{Summary}\label{sec:paper-setup-summary}
 
@@ -954,7 +989,7 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \prob{1}{In the interpolation split of Sec.~III, how many zeros are in the training set and how many are held out? Is it a forward, within-height, or neither kind of split in the sense of \cref{sec:paper-setup-protocol}?}
 
-\prob{3}{From \eqref{eq:paper-setup-ynfn}, $y_n+f_n=-\delta_n^2/(4\pi\xi_n)$. (a) Explain why $y_n+f_n\le0$ always. (b) Estimate $y_{500}+f_{500}$ using $\delta_{500}=t_{500}-s_{500}$ from Problem~6. (c) Estimate $y_1+f_1$ using Sample Problem~\ref{sp:paper-setup-first}. Verify both numerically.}
+\prob{3}{From \eqref{eq:paper-setup-ynfn}, $y_n+f_n=-\delta_n^2/(4\pi\xi_n)$. (a) Explain why $y_n+f_n\le0$ always. (b) Estimate $y_{500}+f_{500}$ using $\delta_{500}=t_{500}-s_{500}$ from Problem~6. (c) Estimate $y_1+f_1$ using the Sample Problem ``Unfolding the first zero''. Verify both numerically.}
 
 \prob{2}{Design an improved literature audit for the claim in Sec.~I~A~a. Name three changes that would address the limits listed in \cref{sec:paper-setup-prior}, and one limit that no audit can fully remove.}
 
@@ -962,7 +997,7 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \prob{2}{Quote the paper's operational definition of ``capture'' (Sec.~I). Turn it into an explicit pass/fail criterion that uses the numbers 0.263 and 0 for the holdout 401--500, and apply it to the scale-1, $M=400$ operator row of Table~I (OOS $0.369$, corr $-0.07$) and the six-prime oracle of Table~V.}
 
-\prob{3}{Let a model's predicted and true fluctuations be measured relative to a reference $R_n$, as in \eqref{eq:paper-setup-pq}. Show that the rms error is unchanged if $R_n$ is replaced by any other reference $R'_n$, but that the correlation can change. Illustrate with $q=(-1,1,0)$, $p=(0.5,-0.5,0)$ and a reference change that adds $d=(0,0,3)$ to both.}
+\prob{3}{Let a model's predicted and true fluctuations be measured relative to a reference $R_n$, as in \eqref{eq:paper-setup-pq}. Show that the rms error is unchanged if $R_n$ is replaced by any other reference $R'_n$, but that the correlation can change. Illustrate with $f^{\rm ref}=(-1,1,0)$, $\hat f=(0.5,-0.5,0)$ and a reference change that adds $d=(0,0,3)$ to both.}
 
 \prob{2}{Show that the GUE surmise \eqref{eq:paper-setup-gue} is normalized and has mean 1, using $\int_0^\infty s^2e^{-as^2}\,ds=\frac{\sqrt\pi}{4a^{3/2}}$ and $\int_0^\infty s^3e^{-as^2}\,ds=\frac1{2a^2}$.}
 
@@ -974,7 +1009,7 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \prob{2}{Explain, using turning points, why scale~1 scores only the first 500 levels although its box reaches $V=1000$. Compute $\Nsm(1000)$ and the number of smooth zeros below 1000, and compare with the 652 states the paper reports in Sec.~II~E.}
 
-\prob{2}{Quantify the paper's statement that the zero precisions ``exceed every use below by many orders''. Take $t_{10000}$ from qmnt, estimate the absolute uncertainty of a 15-significant-digit value at that height, convert it to mean spacings, and compare with the smallest rms in Table~IV (0.018).}
+\prob{2}{Quantify the paper's statement that the zero precisions ``exceed every use below by many orders''. Take $t_{10000}$ from qmnt, estimate the absolute uncertainty of a 15-significant-digit value at that height, convert it to mean spacings, and compare with the smallest rms in Table~IV (0.018) and with the in-sample bound rms $<10^{-4}$ quoted in Sec.~III.}
 \end{problemlist}
 
 \section{Answers to selected problems}\label{sec:paper-setup-answers}
@@ -993,13 +1028,13 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \textbf{7.} Eq.~(3) is pure algebra, true for any $\Delta$, so it still holds. But now $\Delta'_n$ contains $t_n$ for held-out $n$, and the corrected target $\tilde t'_n=t_n+\Delta'_n=E^{\rm g}_n[\text{smooth}]$ no longer contains the zero at all, while the ``corrected prediction'' $E_n[\text{fit}]-\Delta'_n$ contains $t_n$: held-out truth has been inserted into the prediction. The lesson is that the no-leakage argument has two parts: the identity (correcting targets equals correcting predictions) and the construction of $\Delta_n$ from unperturbed eigenvalues only. The identity alone proves nothing.
 
-\textbf{8.} For $N=1000$, $h=0.089676$, $E_{100}=12.2483$, $E^{\rm disc}_{100}=12.1481$, error $\approx-0.100$. With $N=2001$ the error is about a quarter of that, and $(4E_{h/2}-E_h)/3$ has error $\approx-8\times10^{-5}$, matching the next-order estimate $-E^3h^4/1440$.
+\textbf{8.} For $N=1000$, $h=0.089676$, $E_{100}=12.2483$, $E^{\rm disc}_{100}=12.1481$, error $\approx-0.100$. With $N=2001$ the error is about a quarter of that, and $(4E_{h/2}-E_h)/3$ has error $\approx-8\times10^{-5}$, matching the next-order estimate $-E^3h^4/1440$. To see where this comes from, note that the angle $k\pi/(2(N+1))$ equals $x=\sqrt{E}\,h/2$ with $E=(k\pi/2L)^2$. Expanding $\sin^2x=x^2-x^4/3+2x^6/45-\dots$ gives $E^{\rm disc}=\frac4{h^2}\sin^2x=E-E^2h^2/12+E^3h^4/360-\dots$. In the Richardson combination the $h^2$ term cancels and the $h^4$ term is multiplied by $(4\cdot\tfrac1{16}-1)/3=-\tfrac14$, leaving $-E^3h^4/1440$.
 
 \textbf{9.} The null predicts zero fluctuation for every held-out zero; a constant sequence has zero variance, so the Pearson correlation (covariance over the product of standard deviations) is undefined. The null rms is simply the rms of the true fluctuations, eq.~\eqref{eq:paper-setup-null}.
 
 \textbf{11.} You should obtain rms $0.208$, corr $+0.64$ for $\{2\}$ and $0.127$, $+0.88$ for $\{2,3,5\}$, the 501--1000 row of Table~V.
 
-\textbf{13.} About $0.238$ on the even-indexed zeros and about $0.250$ on the odd-indexed zeros (to within a few thousandths; the paper's values are measured against the unperturbed potential's levels, which by \eqref{eq:paper-setup-rmsbound} can differ slightly). The ``odd'' row of Table~III scores the even-indexed zeros, so its null is 0.238; the ``even'' row scores the odd-indexed zeros, null 0.250, as printed.
+\textbf{13.} Within $0.006$ of $0.238$ on the even-indexed zeros and within $0.006$ of $0.250$ on the odd-indexed zeros ( the paper's values are measured against the unperturbed potential's levels, which by \eqref{eq:paper-setup-rmsbound} can differ slightly). The ``odd'' row of Table~III scores the even-indexed zeros, so its null is 0.238; the ``even'' row scores the odd-indexed zeros, null 0.250, as printed.
 
 \textbf{14.} Training: zeros 1--200 and 301--500, i.e.\ 400 zeros; held out: 201--300, 100 zeros. It is neither forward (the held-out zeros are below some training zeros) nor random within height; it is a contiguous interior gap, which probes a specific band of turning points.
 
@@ -1007,10 +1042,10 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \textbf{17.} Steps 1--2 (zeros, smooth zeros, gap): Sec.~II~A. Steps 3--5 (grids and potential, solver, bias-corrected targets): Sec.~II~B. Steps 6--7 (Hermitian fit, OOS scoring): Sec.~II~C. Step 8 (oracle): Sec.~II~D.
 
-\textbf{19.} With $p_n=(P_n-R_n)/\gap_n$ and $q_n=(t_n-R_n)/\gap_n$, the difference $p_n-q_n=(P_n-t_n)/\gap_n$ does not contain $R_n$, so the rms is unchanged. Replacing $R_n$ by $R'_n$ adds the same sequence $d_n=(R_n-R'_n)/\gap_n$ to both $p$ and $q$, which changes their covariance and variances, so the correlation can change. Example: $p=(0.5,-0.5,0)$, $q=(-1,1,0)$ has correlation $-1$; after adding $d=(0,0,3)$, $p'=(0.5,-0.5,3)$, $q'=(-1,1,3)$, both with mean 1; deviations $(-0.5,-1.5,2)$ and $(-2,0,2)$; covariance sum $1+0+4=5$; variance sums $6.5$ and $8$; correlation $5/\sqrt{52}=0.693$. The rms error stays $\sqrt{(1.5^2+1.5^2+0)/3}=1.225$. This is why the paper specifies its reference: correlations are meaningful only relative to a stated smooth baseline.
+\textbf{19.} With $\hat f_n=(\hat t_n-R_n)/\gap_n$ and $f^{\rm ref}_n=(t_n-R_n)/\gap_n$, the difference $\hat f_n-f^{\rm ref}_n=(\hat t_n-t_n)/\gap_n$ does not contain $R_n$, so the rms is unchanged. Replacing $R_n$ by $R'_n$ adds the same sequence $d_n=(R_n-R'_n)/\gap_n$ to both $\hat f$ and $f^{\rm ref}$, which changes their covariance and variances, so the correlation can change. Example: $\hat f=(0.5,-0.5,0)$, $f^{\rm ref}=(-1,1,0)$ has correlation $-1$; after adding $d=(0,0,3)$, $\hat f'=(0.5,-0.5,3)$, $f^{\rm ref\prime}=(-1,1,3)$, both with mean 1; deviations $(-0.5,-1.5,2)$ and $(-2,0,2)$; covariance sum $1+0+4=5$; variance sums $6.5$ and $8$; correlation $5/\sqrt{52}=0.693$. The rms error stays $\sqrt{(1.5^2+1.5^2+0)/3}=1.225$. This is why the paper specifies its reference: correlations are meaningful only relative to a stated smooth baseline.
 
-\textbf{21.} The GUE value is $\int_0^{0.2}p(s)\,ds\approx0.0084$ and the Poisson value is $1-e^{-0.2}=0.181$. The fraction from the first $10^4$ zeros is a few percent at most, far closer to GUE than to Poisson: small spacings are strongly suppressed (level repulsion).
+\textbf{21.} The GUE value is $\int_0^{0.2}p(s)\,ds\approx0.0084$ and the Poisson value is $1-e^{-0.2}=0.181$. The fraction from the first $10^4$ zeros is below $0.05$ (the check script confirms this bound), far closer to GUE than to Poisson: small spacings are strongly suppressed (level repulsion).
 
 \textbf{23.} With the bracket $s_n\pm3\gap_n$ every root is found without widening at these heights, and the score is rms $0.116$, corr $+0.90$, matching the 3-prime entry of Table~V on 401--500. Your $\Nfl$ needs 9 terms: $p\in\{2,3,5\}$, $m=1,2,3$.
 
-\textbf{25.} \texttt{qmnt} gives $t_{10000}\approx9877.78$, where the mean spacing is $2\pi/\log(9877.78/2\pi)\approx0.854$. Fifteen significant digits with four before the decimal point leave eleven after it, so the rounding error is at most $5\times10^{-12}$ in $t$, i.e.\ about $6\times10^{-12}$ spacings. The smallest rms in Table~IV is 0.018 spacings, about $3\times10^9$ times larger. ``Many orders'' means roughly nine orders of magnitude.
+\textbf{25.} \texttt{qmnt} gives $t_{10000}\approx9877.78$, where the mean spacing is $2\pi/\log(9877.78/2\pi)\approx0.854$. Fifteen significant digits with four before the decimal point leave eleven after it, so the rounding error is at most $5\times10^{-12}$ in $t$, i.e.\ about $6\times10^{-12}$ spacings. The smallest rms in Table~IV is 0.018 spacings, about $3\times10^9$ times larger. Against the in-sample bound $10^{-4}$ of Sec.~III the ratio is about $1.7\times10^7$. ``Many orders'' therefore means at least seven orders of magnitude, and about nine for the held-out errors.

@@ -30,10 +30,11 @@ Recall from Chapter~\ref{ch:zeta} that a nontrivial zero of $\zeta$ is written $
 ``Multiplicity'' means this: if $\zeta$ vanished like $(s-\rho)^2$ near $\rho$ we would count $\rho$ twice. Every zero ever computed has turned out to be simple (multiplicity one). That is a \emph{numerical observation}; nobody has proved that all zeros are simple.
 
 $N(T)$ is a staircase. It is zero for $T<t_1$, jumps to 1 at $t_1$, stays flat until $t_2$, jumps to 2, and so on. Our running example RE1 lists the first ten heights:
-\begin{equation}
-t_1,\dots,t_{10}=14.134725,\ 21.022040,\ 25.010858,\ 30.424876,\ 32.935062,\ 37.586178,\ 40.918719,\ 43.327073,\ 48.005151,\ 49.773832.
+\begin{multline}
+t_1,\dots,t_{10}=14.134725,\ 21.022040,\ 25.010858,\ 30.424876,\ 32.935062,\\
+37.586178,\ 40.918719,\ 43.327073,\ 48.005151,\ 49.773832.
 \label{eq:counting-zeros-RE1}
-\end{equation}
+\end{multline}
 
 \begin{sample}{Reading the staircase}
 Using RE1, find $N(30)$, $N(40)$ and $N(50)$, and find the average spacing of the first ten zeros.
@@ -109,7 +110,11 @@ for T in [30, 40, 50, 100]:
 
 \subsection{Why a smooth curve should cross $n-\tfrac12$ at the $n$-th zero}
 
-A staircase that jumps from $n-1$ to $n$ at $t_n$ has, at that point, a riser running from height $n-1$ to height $n$. A smooth curve that ``averages'' the staircase should cut each riser near its middle, at height $n-\tfrac12$. This suggests a natural smooth stand-in for the $n$-th zero: the height $s_n$ at which the smooth curve reaches $n-\tfrac12$. We return to this definition in Sec.~\ref{sec:counting-zeros-smooth}. For the same reason, when it matters we adopt the convention that at exactly $T=t_n$ the staircase takes the midpoint value, $N(t_n)=n-\tfrac12$.
+A staircase that jumps from $n-1$ to $n$ at $t_n$ has, at that point, a riser running from height $n-1$ to height $n$. A smooth curve that ``averages'' the staircase should cut each riser near its middle, at height $n-\tfrac12$. This suggests a natural smooth stand-in for the $n$-th zero: the height $s_n$ at which the smooth curve reaches $n-\tfrac12$. We return to this definition in Sec.~\ref{sec:counting-zeros-smooth}. For the same reason we introduce, for a simple zero, the \emph{midpoint value} of the staircase at $t_n$:
+\[
+N^{\rm mid}(t_n)=\tfrac12\bigl[N(t_n^-)+N(t_n^+)\bigr]=\tfrac12\bigl[(n-1)+n\bigr]=n-\tfrac12,
+\]
+the average of the value just below the zero ($n-1$) and the value just above it ($n$). This is a separate symbol: by the definition of $N(T)$, which includes $T$ itself, $N(t_n)=n$.
 
 \begin{checkpoint}
 Is $N(T)$ a continuous function of $T$? By how much does it jump at a zero of multiplicity 2?
@@ -140,9 +145,9 @@ computed with this continuous choice. It does not depend on which value we start
 
 Take the simplest function with a zero, $f(z)=z-a$, and let $C$ be a circle traversed once counterclockwise.
 
-\emph{Case 1: $a$ inside the circle.} First suppose the circle is centered at $a$: $z=a+re^{i\phi}$, $0\le\phi\le2\pi$. Then $f(z)=re^{i\phi}$, whose argument is $\phi$ itself, so $\Delta_C\arg f=2\pi$. If the circle is not centered at $a$ but still encloses it, the vector $z-a$ from $a$ to the moving point still sweeps once all the way round, because $a$ is inside the loop; the net change is still $2\pi$.
+\emph{Case 1: $a$ inside the circle.} First suppose the circle is centered at $a$: $z=a+re^{i\phi}$, $0\le\phi\le2\pi$. Then $f(z)=re^{i\phi}$, whose argument is $\phi$ itself, so $\Delta_C\arg f=2\pi$. If the circle is not centered at $a$ but still encloses it, a geometric argument settles the matter (look at the left panel of Fig.~\ref{fig:counting-zeros-winding}). A disk is convex, so every ray leaving the interior point $a$ crosses the circle exactly once. Hence, as $z$ goes once round the circle, the direction of $z-a$ takes every compass direction exactly once. It can never turn back, because turning back would make it take some direction twice. So it turns steadily the same way through one full turn, and the net change is again $2\pi$.
 
-\emph{Case 2: $a$ outside the circle.} The vector $z-a$ now swings back and forth but never goes all the way round $a$, since $a$ is outside the loop. It returns to its starting direction without completing a turn, so $\Delta_C\arg f=0$.
+\emph{Case 2: $a$ outside the circle.} Draw the two tangent lines from $a$ to the circle. The whole circle lies inside the wedge between them, and the opening angle of that wedge is less than $\pi$. The direction of $z-a$ therefore always stays inside a range of angles narrower than $\pi$. A continuously followed argument that never leaves such a range cannot gain a full turn, so it returns to its starting value: $\Delta_C\arg f=0$. (Both cases are geometric arguments for circles; the general theorem is stated below.)
 
 Now take a product $f(z)=(z-a_1)(z-a_2)\cdots(z-a_k)$. From Chapter~\ref{ch:complex}, the argument of a product is the sum of the arguments of the factors. Therefore the net change of $\arg f$ around $C$ is the sum of the net changes of the factors: $2\pi$ for every $a_j$ inside $C$ and $0$ for every $a_j$ outside. Dividing by $2\pi$:
 \begin{equation}
@@ -188,10 +193,10 @@ print((ph[-1] - ph[0])/(2*np.pi))        # number of enclosed zeros
 
 \subsection{The general theorem}
 
-Most functions are not polynomials, so we cannot factor them into finitely many $(z-a_j)$. The intuition still holds: near each zero, an analytic function behaves like a constant times $(z-a)^k$, and away from its zeros its argument can be followed continuously inside the region without net winding. Making this precise is a theorem of complex analysis that we take on trust.
+Most functions are not polynomials, so we cannot factor them into finitely many $(z-a_j)$. The intuition still holds. An \emph{analytic} function (one that has a complex derivative at every point of a region) behaves near each zero like a constant times $(z-a)^k$, with $k$ a positive integer; this local form is itself part of what we take on trust below. Away from its zeros its argument can be followed continuously inside the region without net winding. Making this precise is a theorem of complex analysis that we take on trust.
 
 \begin{beyond}
-\textbf{The argument principle (proved; proof beyond this book).} Let $f$ be analytic (complex-differentiable) at every point inside and on a simple closed curve $C$, traversed counterclockwise, and suppose $f$ has no zeros on $C$. Then the number of zeros of $f$ inside $C$, counted with multiplicity, equals $\frac{1}{2\pi}\Delta_C\arg f$. The proof uses contour integration of $f'/f$ (the residue theorem). See the chapter on complex variables in \cite{rhb}, or \cite{titchmarsh}.
+\textbf{The argument principle (proved; proof beyond this book).} Let $f$ be analytic (complex-differentiable) at every point inside and on a simple closed curve $C$, traversed counterclockwise, and suppose $f$ has no zeros on $C$. Then the number of zeros of $f$ inside $C$, counted with multiplicity, equals $\frac{1}{2\pi}\Delta_C\arg f$. The proof uses contour integration of $f'/f$ (the residue theorem). See the chapter on complex variables in \cite{rhb}.
 \end{beyond}
 
 Two requirements of the theorem matter below: $f$ must be analytic everywhere inside and on $C$ (no poles), and $f$ must not vanish on $C$ itself (otherwise the argument is undefined there).
@@ -230,7 +235,7 @@ where $\Gamma$ is the gamma function (the generalized factorial of Chapter~\ref{
 \item[(d)] $\Gamma(z)$ is never zero, and $\Gamma(x)>0$ for real $x>0$.
 \item[(e)] $\zeta(s)\neq0$ for $\Re s\ge1$. (For $\Re s>1$ this follows from the Euler product, Chapter~\ref{ch:zeta}; on the line $\Re s=1$ it is a deeper theorem, closely tied to the prime number theorem.)
 \end{itemize}
-Consequences: the zeros of $\xi$ are exactly the nontrivial zeros of $\zeta$, all in the strip $0<\Re s<1$. Indeed, by (a), (d) and (e), none of the factors in Eq.~\eqref{eq:counting-zeros-xi} can vanish for $\Re s\ge1$; by (b), $\xi$ has no zeros with $\Re s\le0$ either; inside the strip the extra factors are nonzero, so $\xi$ vanishes exactly where $\zeta$ does, with the same multiplicity.
+Consequences: the zeros of $\xi$ are exactly the nontrivial zeros of $\zeta$, all in the strip $0<\Re s<1$. Indeed, by (a), (d) and (e), none of the factors in Eq.~\eqref{eq:counting-zeros-xi} vanishes for $\Re s\ge1$ except $s-1$ at $s=1$, where it cancels the pole of $\zeta$ and leaves $\xi(1)=\tfrac12\neq0$ (shown below); by (b), $\xi$ has no zeros with $\Re s\le0$ either; inside the strip the extra factors are nonzero, so $\xi$ vanishes exactly where $\zeta$ does, with the same multiplicity.
 \end{beyond}
 
 One more property we can prove ourselves, using only Chapter~\ref{ch:zeta}.
@@ -269,7 +274,7 @@ where $\partial R$ denotes the boundary of $R$ traversed counterclockwise.
 
 \subsection{Halving the contour by symmetry}
 
-Split $\partial R$ into four pieces:
+Split $\partial R$ into three pieces:
 \begin{enumerate}
 \item the bottom edge, from $-1$ to $2$;
 \item the right half $P$: from $2$ up to $2+iT$, then left to $\tfrac12+iT$;
@@ -365,7 +370,7 @@ Why does the formula require that $T$ not be the height of a zero? Name the step
 Recall from Chapter~\ref{ch:asymptotics} Stirling's formula, stated there for complex argument:
 
 \begin{beyond}
-\textbf{Stirling's formula (proved; proof beyond this book; see \cite{titchmarsh} or the chapter on the gamma function in \cite{rhb}).} As $\abs z\to\infty$ with $\abs{\arg z}\le\pi-\delta$ for some fixed $\delta>0$,
+\textbf{Stirling's formula (proved; proof beyond this book; see \cite{rhb}, or any text on the gamma function).} As $\abs z\to\infty$ with $\abs{\arg z}\le\pi-\delta$ for some fixed $\delta>0$,
 \begin{equation}
 \log\Gamma(z)=\left(z-\tfrac12\right)\log z-z+\tfrac12\log(2\pi)+\frac{1}{12z}+\order\!\left(\abs z^{-3}\right),
 \label{eq:counting-zeros-stirling}
@@ -494,7 +499,7 @@ print(10 - 1 - float(mp.siegeltheta(50))/np.pi, float(mp.backlunds(50)))
 \end{figure}
 
 \begin{pitfall}
-Do not confuse $\theta(T)/\pi+1$ with $\Nsm(T)$. They differ by $1/(48\pi T)+\order(T^{-3})$. The paper (and this book) puts that tiny term into the ``fluctuating part''; some texts instead define the fluctuating part exactly as $S(T)$ and keep the $1/(48\pi T)$ in the smooth part. At the heights of this book the difference is below $5\times10^{-4}$ of a zero, far below every effect we study.
+Do not confuse $\theta(T)/\pi+1$ with $\Nsm(T)$. They differ by $1/(48\pi T)+\order(T^{-3})$. This book puts that tiny term into the ``fluctuating part''; the paper simply uses Eq.~(1) as its smooth part and never mentions the term. Some texts instead define the fluctuating part exactly as $S(T)$ and keep the $1/(48\pi T)$ in the smooth part. At the heights of this book the difference is below $5\times10^{-4}$ of a zero, far below every effect we study.
 \end{pitfall}
 
 \begin{checkpoint}
@@ -526,7 +531,7 @@ Two properties follow at once.
 \begin{equation}
 \frac{\dd S}{\dd T}=-\frac{\theta'(T)}{\pi}.
 \end{equation}
-Differentiating an asymptotic expansion term by term is not automatically legitimate: a small remainder can still have a large derivative. Here it is legitimate, because Stirling's expansion of $\log\Gamma(z)$ may itself be differentiated term by term in the same sector, giving the corresponding expansion of $\Gamma'(z)/\Gamma(z)$ with remainder $\order(\abs z^{-4})$; this is a proved property of the gamma function that we take on trust (see \cite{titchmarsh}). With that understood, differentiating Eq.~\eqref{eq:counting-zeros-thetaasym} term by term (product rule on the first term: $\frac{\dd}{\dd T}\bigl[\frac T2\log\frac T{2\pi}\bigr]=\frac12\log\frac T{2\pi}+\frac T2\cdot\frac1T=\frac12\log\frac{T}{2\pi}+\frac12$),
+Differentiating an asymptotic expansion term by term is not automatically legitimate: a small remainder can still have a large derivative. Here it is legitimate, because Stirling's expansion of $\log\Gamma(z)$ may itself be differentiated term by term in the same sector, giving the corresponding expansion of $\Gamma'(z)/\Gamma(z)$ with remainder $\order(\abs z^{-4})$; this is a proved property of the gamma function that we take on trust (it is proved in texts on the gamma function). With that understood, differentiating Eq.~\eqref{eq:counting-zeros-thetaasym} term by term (product rule on the first term: $\frac{\dd}{\dd T}\bigl[\frac T2\log\frac T{2\pi}\bigr]=\frac12\log\frac T{2\pi}+\frac T2\cdot\frac1T=\frac12\log\frac{T}{2\pi}+\frac12$),
 \begin{equation}
 \theta'(T)=\frac12\log\frac{T}{2\pi}+\frac12-\frac12-\frac{1}{48T^2}+\order(T^{-4})=\frac12\log\frac{T}{2\pi}-\frac{1}{48T^2}+\order(T^{-4}),
 \end{equation}
@@ -620,7 +625,7 @@ This is negative for $t<2\pi$, zero at $t=2\pi$ and positive for $t>2\pi$. So $\
 
 \subsection{Computing $s_n$}
 
-Chapter~\ref{ch:asymptotics} gave two routes: numerical root finding on a monotone function, and an exact inversion with the Lambert $W$ function. We use both.
+There are two routes: numerical root finding on a monotone function (Chapter~\ref{ch:asymptotics}), and an exact inversion using the Lambert $W$ function, defined briefly in that chapter. We derive the second route here and use both.
 
 \emph{Root finding.} Bisection or Brent's method needs a bracket $[a,b]$ with $\Nsm(a)<n-\tfrac12<\Nsm(b)$. Take $a=2\pi$, where $\Nsm=-\tfrac18$. For $b$ take $2\pi(n+10)$: with $u=n+10\ge11>e^2$ we have $\log u-1>1$, so $\Nsm(b)=u(\log u-1)+\tfrac78>u>n-\tfrac12$. This guarantees a valid bracket for every $n\ge1$.
 
@@ -639,7 +644,7 @@ Since $s>2\pi$ means $v>-1$, $v$ is the principal branch: $v=W(x_n)$. Then $\fra
 \end{equation}
 This is an exact solution of Eq.~\eqref{eq:counting-zeros-sndef}, not an approximation. For $n=1$, $n-\tfrac{11}{8}=-\tfrac38$ and $x_1=-0.138$, which is above $-1/e=-0.368$, so the principal branch exists and gives $W(x_1)<0$; numerator and denominator are both negative and $s_1>0$.
 
-For large $n$, $W(x)\approx\log x$, which gives the leading behavior $s_n\approx2\pi n/\log n$: the $n$-th zero sits at a height growing slightly slower than linearly in $n$.
+For large $x$, take logarithms of $we^w=x$: $w+\log w=\log x$. For large $x$ (so large $w$), $\log w$ is much smaller than $w$, so to leading order $w\approx\log x$, that is $W(x)\approx\log x$. For large $n$, $n-\tfrac{11}8\approx n$ and $\log x_n\approx\log(n/e)=\log n-1\approx\log n$, which gives the leading behavior $s_n\approx2\pi n/\log n$: the $n$-th zero sits at a height growing slightly slower than linearly in $n$.
 
 \begin{sample}{The first smooth zero by Newton's method}
 Find $s_1$ by Newton's method, starting from $t_1=14.134725$, and compare with $t_1$.
@@ -648,9 +653,9 @@ Find $s_1$ by Newton's method, starting from $t_1=14.134725$, and compare with $
 
 \textbf{Step 2:} The Newton update for solving $g(t)=\Nsm(t)-\tfrac12=0$ is $t\to t-g(t)/g'(t)$ with $g'=\Nsm'$ from Eq.~\eqref{eq:counting-zeros-Nsmprime}. At $t_1$: $\Nsm'(t_1)=0.810757/6.283185=0.129036$, so the step is $+0.050722/0.129036=0.393085$, giving $14.527810$.
 
-\textbf{Step 3:} Repeat at $14.527810$: now $\Nsm=0.500874$ and $\Nsm'=0.133415$ (we omit the routine arithmetic, which the listing below reproduces), giving a step of $-0.006551$ and $14.521259$.
+\textbf{Step 3:} Repeat at $14.527810$: now $u=14.527810/2\pi=2.312173$ and $\log u=0.838188$, so $\Nsm=2.312173\times(0.838188-1)+0.875=-0.374138+0.875=0.500862$, and $\Nsm'=0.838188/6.283185=0.133402$. The step is $-0.000862/0.133402=-0.006462$, giving $14.521348$.
 
-\textbf{Step 4:} One more iteration changes the value only in the fifth decimal place, to $14.521346$; Newton's method has converged.
+\textbf{Step 4:} One more iteration changes the value only in the sixth decimal place, to $14.521346$; Newton's method has converged.
 
 \textbf{Step 5:} Compare: $t_1-s_1=14.134725-14.521346=-0.386621$. The true first zero lies below its smooth position.
 
@@ -801,12 +806,12 @@ Use $\Nsm(s_n)=n-\tfrac12$ and $\Nsm'(s_n)=1/\gap_n$:
 \end{equation}
 The correction term is tiny: for $n=1$ it is $0.386621^2/(4\pi\times14.521)=8.2\times10^{-4}$, and it shrinks with height. Indeed $\Nsm(t_1)-\tfrac12=0.449278-0.5=-0.050722$, against $\delta_1=-0.051548$.
 
-\emph{(2) In terms of $S$.} With the midpoint convention $N(t_n)=n-\tfrac12$, Eq.~\eqref{eq:counting-zeros-NsmS} at $T=t_n$ gives
+\emph{(2) In terms of $S$.} Equation~\eqref{eq:counting-zeros-NsmS} holds just below and just above $t_n$. Average the two versions. On the left, the average of $N$ is the midpoint value $N^{\rm mid}(t_n)=n-\tfrac12$ of Sec.~\ref{sec:counting-zeros-staircase}; on the right, $\Nsm$ and the $1/(48\pi T)$ term are continuous, and the average of $S$ from below and above is what we write as $S(t_n)$. This gives
 \begin{equation}
 S(t_n)=n-\tfrac12-\Nsm(t_n)-\frac{1}{48\pi t_n}+\order(t_n^{-3})\approx-\delta_n,
 \label{eq:counting-zeros-faces2}
 \end{equation}
-using Eq.~\eqref{eq:counting-zeros-faces1} in the last step. (Strictly, $S$ is undefined at a zero; the midpoint value is the average of its limits from just below and just above.) So \emph{the fluctuation of a zero, in mean spacings, is minus the value of $S$ at that zero}. For $n=1$: $S(t_1)=\tfrac12-1-\theta(t_1)/\pi=0.0503$, against $-\delta_1=0.0515$.
+using Eq.~\eqref{eq:counting-zeros-faces1} in the last step. (Strictly, $S$ is undefined at a zero; here $S(t_n)$ denotes the average of its limits from just below and just above.) So \emph{the fluctuation of a zero, in mean spacings, is minus the value of $S$ at that zero}. For $n=1$: $S(t_1)=\tfrac12-1-\theta(t_1)/\pi=0.0503$, against $-\delta_1=0.0515$.
 
 \emph{(3) Unfolding.} The map $t\mapsto\Nsm(t)$ stretches the $t$ axis so that the zeros acquire unit mean spacing. The \emph{unfolded zeros} are $x_n=\Nsm(t_n)$, and by Eq.~\eqref{eq:counting-zeros-faces1}, $x_n\approx n-\tfrac12+\delta_n$. The \emph{unfolded spacings} are
 \begin{equation}
@@ -883,27 +888,27 @@ A prediction misses zero $n$ by $0.2$ in units of $t$. If you move to a height w
 
 This chapter supplies the yardstick for the entire paper \cite{soniR1}. Here is where each idea appears.
 
-\paragraph{Eq.~(1) and its constant.} The paper's Eq.~(1), $\Nsm(t)=\frac t{2\pi}\log\frac t{2\pi}-\frac t{2\pi}+\frac78$, is introduced in Sec.~II~A as ``the Riemann--von Mangoldt counting function''. You have now derived it: Eq.~\eqref{eq:counting-zeros-NsmS} shows it is $\theta(T)/\pi+1$ with the $1/(48\pi T)$ term dropped, and the $\frac78$ is $-\frac18+1$. The paper's statement that $S(t)$ is ``the fluctuating part $N(t)-\Nsm(t)$'' is our Eq.~\eqref{eq:counting-zeros-split}, valid up to that $\order(1/t)$ term.
+\paragraph{Eq.~(1) and its constant.} The paper's Eq.~(1), $\Nsm(t)=\frac t{2\pi}\log\frac t{2\pi}-\frac t{2\pi}+\frac78$, is introduced in Sec.~II~A as ``the Riemann--von Mangoldt counting function''. You have now derived it: Eq.~\eqref{eq:counting-zeros-NsmS} shows it is $\theta(T)/\pi+1$ with the $1/(48\pi T)$ term dropped, and the $\frac78$ is $-\frac18+1$. The paper does not name the difference $N(t)-\Nsm(t)$; in this book's notation it is $S(t)$, by Eq.~\eqref{eq:counting-zeros-split}, up to the $\order(1/t)$ term. The paper only approximates it, by the prime sum $\Nfl$ of its Eq.~(4).
 
 \paragraph{Smooth zeros and the mean spacing (Sec.~II~A, App.~A step 2).} The paper defines smooth zeros by ``$\Nsm(s_n)=n-\tfrac12$'' and the local mean spacing by ``$\gap_n=ds_n/dn$'', exactly Eqs.~\eqref{eq:counting-zeros-sndef} and \eqref{eq:counting-zeros-gap}. App.~A step 2 says the smooth zeros were found by Brent's method on $\Nsm(t)=n-\tfrac12$ (our first route) and that $\gap$ was computed as \texttt{np.gradient} of the array of smooth zeros, a central finite difference $(s_{n+1}-s_{n-1})/2$ for interior $n$. That agrees with the analytic derivative $2\pi/\log(s_n/2\pi)$ to better than one part in $10^4$ at interior indices such as $n=450$ (checked in the CHECKS script); only at the ends of the array, where \texttt{np.gradient} switches to a one-sided difference, do the two definitions differ appreciably. The companion library \texttt{qmnt.mean\_gap} uses the analytic form.
 
 \paragraph{The Lambert-$W$ asymptotic (Sec.~I~A, paragraph b).} The paper notes that Fran\c ca and LeClair \cite{francaleclair} derived an equation for the $n$-th zero ``whose smooth part is the Lambert-$W$ asymptotic of the counting function''. That smooth part is our Eq.~\eqref{eq:counting-zeros-lambert}: setting $S=0$ in the counting relation and solving for the height gives $s_n$ in closed form.
 
-\paragraph{Every rms in the paper is in mean spacings.} Sec.~II~A states: ``All errors below are quoted in units of the local mean spacing $\gap_n$'', and App.~A repeats: ``All rms values in units of local mean spacing from the smooth zeros of Eq.~(1)''. So every rms in Tables~I--V, and every interval quoted in Secs.~III--V, is an error measured as in Eq.~\eqref{eq:counting-zeros-fluct}. To translate into units of $t$, multiply by the local spacing: near zero 500 (paper's $t_{500}=811.184$, App.~A key anchors) the spacing is $1.293$ (Table~\ref{tab:counting-zeros-gaps}), so the null $0.263$ corresponds to about $0.34$ in $t$.
+\paragraph{Every rms in the paper is in mean spacings.} Sec.~II~A states: ``All errors below are quoted in units of the local mean spacing $\gap_n$'', and App.~A repeats: ``All rms values in units of local mean spacing from the smooth zeros of Eq.~(1)''. So every rms in Tables~I--V, and every rms interval quoted in Secs.~III--V (the correlation intervals are pure numbers), is an error measured in units of $\gap_n$ as in Eq.~\eqref{eq:counting-zeros-fluct}. To translate into units of $t$, multiply by the local spacing: near zero 500 (paper's $t_{500}=811.184$, App.~A key anchors) the spacing is $1.293$ (Table~\ref{tab:counting-zeros-gaps}), so the null $0.263$ corresponds to about $0.34$ in $t$.
 
 \paragraph{The null 0.263 (Sec.~II~C, Tables I and V, App.~A).} The paper's baseline prediction is ``no fluctuation'': predict $t_n\approx s_n$. Its error in mean spacings is exactly $\delta_n$, so its rms over zeros 401--500 is the rms of $\delta_n$ there, $0.263$ (App.~A key anchor $0.2631$; Table~V first row). Sec.~II~C explains that the operator null (the unperturbed potential's levels) coincides numerically with this smooth-zero null on 401--500, ``both $0.2631$'', which is why one baseline serves the whole paper. You reproduced this number in Sec.~\ref{sec:counting-zeros-unfold}.
 
-\paragraph{The slow growth of the null (Table V, Sec.~II~C ``Within-height splits'').} The null column of Table~V grows from $0.263$ (401--500) to $0.270$, $0.279$, $0.288$ and $0.296$ (5001--10000). This is the slow growth of the typical size of $S$ described in Sec.~\ref{sec:counting-zeros-S}. The paper calls it a ``covariate shift'' in its within-height-splits paragraph: zeros held out above the training range have slightly larger fluctuations. The nulls of Table~III, $0.23$--$0.26$, are the same statistic computed on lower and different subsets of zeros.
+\paragraph{The slow growth of the null (Table V, Sec.~II~C ``Within-height splits'').} The null column of Table~V grows from $0.263$ (401--500) to $0.270$, $0.279$, $0.288$ and $0.296$ (5001--10000). This is the slow growth of the typical size of $S$ described in Sec.~\ref{sec:counting-zeros-S}. The paper calls it a ``covariate shift'' in its within-height-splits paragraph: zeros held out above the training range have slightly larger fluctuations. The nulls of Table~III, $0.23$--$0.27$, are the analogous baseline (the unperturbed potential's error) on other subsets of zeros; the paper reports that this operator null coincides numerically with the rms of $\delta_n$ on the principal holdout 401--500.
 
 \paragraph{Unfolding and Fig.~2.} Sec.~II~A says ``Unfolded spacings of the first $10^4$ zeros show textbook GUE level repulsion (Fig.~2)''. The unfolding is the map $t\mapsto\Nsm(t)$ of Sec.~\ref{sec:counting-zeros-unfold}, which makes the mean spacing 1. The level statistics themselves are Chapter~\ref{ch:level-statistics}.
 
-\paragraph{The oracle and the fitted controls (Sec.~II~D, Eq.~(4)).} The paper's arithmetic oracle predicts zero $n$ by solving $\Nsm(t)+\Nfl(t)=n-\tfrac12$. Compare with the Riemann--von Mangoldt formula at the midpoint of the $n$-th riser, $\Nsm(t_n)+S(t_n)\approx n-\tfrac12$ (Eq.~\eqref{eq:counting-zeros-faces2}): the oracle is this exact relation with the unknown $S$ replaced by an explicit approximation $\Nfl$ built from primes (Chapter~\ref{ch:explicit-formula}). The fitted sinusoidal controls of Sec.~II~D train on ``$y_n=n-\tfrac12-\Nsm(t_n)$'', which by Eq.~\eqref{eq:counting-zeros-faces2} is $S(t_n)$ up to $1/(48\pi t_n)$. So everything in the paper's Sec.~IV is, in the language of this chapter, an attempt to predict $S(t)$ at unseen heights.
+\paragraph{The oracle and the fitted controls (Sec.~II~D, Eq.~(4)).} The paper's arithmetic oracle predicts zero $n$ by solving $\Nsm(t)+\Nfl(t)=n-\tfrac12$. Compare with the Riemann--von Mangoldt formula at the midpoint of the $n$-th riser, $\Nsm(t_n)+S(t_n)\approx n-\tfrac12$ (Eq.~\eqref{eq:counting-zeros-faces2}): the oracle is this relation (exact up to the $1/(48\pi t_n)$ term) with the unknown $S$ replaced by an explicit approximation $\Nfl$ built from primes (Chapter~\ref{ch:explicit-formula}). The fitted sinusoidal controls of Sec.~II~D train on ``$y_n=n-\tfrac12-\Nsm(t_n)$'', which by Eq.~\eqref{eq:counting-zeros-faces2} is $S(t_n)$ up to $1/(48\pi t_n)$. So everything in the paper's Sec.~IV is, in the language of this chapter, an attempt to predict $S(t)$ at unseen heights.
 
 \paragraph{Discretization errors in mean spacings (Sec.~II~C, App.~A).} The paper's leakage paragraph notes that finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'', and App.~A records a ``raw-zero null on the uncorrected working grid $2.09$''. Both are in units of $\gap_n$; near zero 450 two mean spacings are about $2.6$ in $t$. Chapter~\ref{ch:finite-differences} explains where these errors come from.
 
 \paragraph{The data and the critical line (Sec.~II~A).} The paper computes $t_1,\dots,t_{1000}$ with \texttt{mpmath} at 20 digits, quoting $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$. From Table~\ref{tab:counting-zeros-gaps}, $\Nsm(t_{1000})=999.418$, so $\delta_{1000}\approx999.418-999.5=-0.082$: zero 1000 sits $0.08$ spacings below its smooth position. Writing every zero as $\frac12+it_n$ relies on the numerical verification of RH described in Sec.~\ref{sec:counting-zeros-S}.
 
-\paragraph{Overloaded symbols.} In this chapter $N$ is the counting function and $T$ a height. In the paper, $N$ also denotes the number of grid points (Sec.~II~B: ``$N=6000$ at scale 1''), and $T$ also denotes the length of a training window in $t$ (Sec.~II~D and App.~A steps 20 and 23, ``$\pi/T$''). Context always tells you which is meant.
+\paragraph{Overloaded symbols.} In this chapter $N$ is the counting function and $T$ a height. In the paper, $N$ also denotes the number of grid points (Sec.~II~B: ``$N=6000$ at scale 1''), and $T$ also denotes the length of a training window in $t$ (App.~A steps 20 and 23, ``$2\pi/T$'', ``$\pi/T$''); $T$ further labels the second-order tensors $T^{(n)}$ of the paper's Eq.~(5) and the Chebyshev polynomials $T_k$ of its Sec.~II~C. Context always tells you which is meant.
 
 %=====================================================================
 \section{Summary}\label{sec:counting-zeros-summary}
@@ -974,7 +979,7 @@ This chapter supplies the yardstick for the entire paper \cite{soniR1}. Here is 
 
 \prob{3}{Explain, step by step, why the following procedure proves that all zeros with $0<t<T$ lie on the critical line and are simple: (i) find $k$ sign changes of $Z(t)$ in $(0,T)$; (ii) establish that $N(T)=k$ exactly. Which step needs $S(T)$, and why can't one simply evaluate $\Nsm(T)$ and round?}
 
-\prob{3}{Show that $\xi(0)=\xi(1)=\frac12$, using $(s-1)\zeta(s)\to1$ as $s\to1$, $\Gamma(\frac12)=\sqrt\pi$ and the functional equation $\xi(s)=\xi(1-s)$.}
+\prob{2}{Compute $\xi(2)$ exactly from Eq.~\eqref{eq:counting-zeros-xi} using $\zeta(2)=\pi^2/6$ and $\Gamma(1)=1$. Then, using \texttt{mpmath} (\texttt{mp.zeta}, \texttt{mp.gamma}), evaluate the right side of Eq.~\eqref{eq:counting-zeros-xi} at $s=-1$ and confirm that $\xi(-1)=\xi(2)$, as the functional equation requires. Which two factors are negative at $s=-1$?}
 
 \prob{3}{(Paper, computational.) The paper cites the Lambert-$W$ asymptotic of Fran\c ca and LeClair (Sec.~I~A, paragraph b). Compute $s_n$ for $n=1,\dots,1000$ both from Eq.~\eqref{eq:counting-zeros-lambert} and with \texttt{qmnt.smooth\_zeros}, and find the largest absolute difference. Explain why the two must agree to within root-finding tolerance.}
 

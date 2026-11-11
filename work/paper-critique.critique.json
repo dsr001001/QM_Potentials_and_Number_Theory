@@ -1,100 +1,184 @@
 [
  {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/paper-critique_scoreboard.pdf}",
-  "problem": "The chapter includes figures (scoreboard, checklist, dephase, block, turning, height) but the supplied response contains no FIGURES part, so no figure scripts exist. File names with a hyphen in the slug also may not match the required pattern.",
-  "fix": "Add a FIGURES section with a '### FIG paper-critique_<name>' script for each of the six figures, and make sure the filenames match the includegraphics paths."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\label{prob:paper-critique-audit}% Problem 23\n\\label{prob:paper-critique-factor}% Problem 25",
-  "problem": "Labels are placed after the problemlist, outside any numbered item, so \\ref{prob:...} will not give the problem numbers. Also the 'prob:' prefix is not among the allowed label prefixes (sec/eq/fig/tab). The problems are referred to as 'Problem~\\ref{...}'.",
-  "fix": "Remove these labels and refer to the problems by number in words (e.g. 'Problem 23'), or use a label with an allowed prefix attached to the item."
- },
- {
   "category": "ERROR",
   "severity": "high",
-  "quote": "Sec.~IV says one prime beats every fitted operator's holdout performance by a factor $\\gtrsim1.3$.",
-  "problem": "The paper's claim concerns the held-out performance of fitted operators in general. The chapter checks it only against one Table I row (0.265, ridge mu=0.3). The last problem and the answer 'consistent' are weak, since the other rows, including 0.265 versus 0.198, give 1.34, which only just clears 1.3, and a row scored on a different holdout would need its own null.",
-  "fix": "State that the comparison is restricted to rows scored on 401--500 and note that Table II rows (Chebyshev mu=0.3, 0.264) give 1.33. Do not claim the comparison covers all operators."
+  "quote": "of the paper has six paragraphs. We take them in order.",
+  "problem": "Sec. VI of the paper has five paragraphs, not six. The sentences 'The truncated explicit formula supplies...' and 'At the scales accessible to direct numerics...' are the end of the paragraph that begins 'We propose that any future claim...'. The heading 'Paragraphs 3 to 6' and the sentence 'Paragraph 6 concludes that...' are therefore wrong.",
+  "fix": "Write 'has five paragraphs'. Retitle the subsection 'Paragraphs 3 to 5'. Replace 'Paragraph 6 concludes that' with 'Paragraph 5 proposes the falsifiability standard (read in the next section) and closes by concluding that'."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The paper also states that the Hermitian conclusions of Secs.~III and IV ``do not depend on'' Sec.~V.",
-  "problem": "The paper says 'the Hermitian conclusions of Secs. III and IV do not depend on it' about Sec. V (in Sec. V's intro); this is fine, but 'Sec.~V's numbers ... rest on the original computation, whose code is in the original Zenodo version' is the chapter's own inference, not in the paper (the paper says the record includes the revision scripts and the original reconstruction).",
-  "fix": "Remove the claim about which Zenodo version holds the code, or mark it as an inference."
+  "quote": "so scale 2 tests a less saturated regime than scale 1",
+  "problem": "The comparison is not like for like. The scale-1 threshold of about 814 was computed for all 500 levels (the in-sample coverage run). The scale-1 held-out fits train on 1--400, where the threshold is 2*sqrt(s_400)*L/pi, about 745, and use M=200--600, also below threshold. M/threshold is about 0.27--0.81 at scale 1 and 0.23--0.69 at scale 2, so the claimed difference in saturation is not supported.",
+  "fix": "Compute the threshold for the scale-1 training range (about 745 for level 400, added to CHECKS) and state that the held-out fits at both scales are below the heuristic coverage threshold. Delete the claim that scale 2 is less saturated and the sentence that the two scales are not 'the same experiment, bigger', or rephrase them in terms of the M/threshold ratios."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The best operator OOS rms in Table~I on 401--500 is $0.265$ (ridge $\\mu=0.3$)",
-  "problem": "Table I scale-1 1--350 row has OOS 0.273 and 1--300 rows are scored on 301--400 etc.; the 1--400 ridge mu=0.3 row is 0.265, but 1--400 M=200 is 0.274 and others are above. Fine, but the Chebyshev mu=0.3 row (0.264, Table II) is lower, so 'best operator' is not the best on this holdout.",
-  "fix": "Say 'best Table I row' and mention Table II's Chebyshev mu=0.3 row at 0.264."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "the null rises from $0.263$ on 401--500 to $0.296$ on 5001--10000, Table~V",
-  "problem": "Fine numerically, but the text says item (i) 'within-height ... held-out errors $1.5$--$3.0$ times the null at scale 1'; the paper says this for the random splits only, and the chapter applies it generally.",
-  "fix": "Say 'for the random 80/20 splits'."
+  "quote": "showed that independent resampling understates uncertainty when neighboring values are correlated",
+  "problem": "This is true for positive serial correlation only. The zeros' fluctuations have negative autocorrelation at lags 1--3, as the same sentence says, and for negatively correlated data independent resampling can overstate the uncertainty of a mean. The direction for rms and corr is not obvious; the paper only reports an empirical result ('widen slightly').",
+  "fix": "Replace with: 'showed that independent resampling can misestimate uncertainty when neighboring values are correlated (understating it for positive correlation, possibly overstating it for negative correlation); for these statistics the paper finds empirically that block resampling widens the intervals slightly'."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The exact sum rule ... The real shifts sum to zero \\emph{exactly}, at every order, over the full truncated basis.",
-  "problem": "The trace argument requires the matrix to be exactly the truncated matrix of H+iA in the basis, i.e. the truncated problem, not the exact spectrum of the full operator. Also the claim that the Sec. V A check 'is a check that the code is consistent, not evidence about the zeros' is the chapter's interpretation.",
-  "fix": "State that the identity holds for the finite matrix in the truncated basis, and label the interpretation as the chapter's own."
+  "quote": "which is exactly why the paper built a surrogate ensemble and why its statistic is cutoff-maximized",
+  "problem": "This attributes a motive the paper does not state. The paper's stated reason for the surrogate check is 'Because the frequencies are the output of a search'. It describes the statistic only as one 'that does not depend on a chosen frequency cutoff'. High-frequency crowding of prime powers is this chapter's own analysis.",
+  "fix": "Replace with: 'which is consistent with the paper's decision to check the alignment against a surrogate ensemble (its stated reason: the frequencies are the output of a search) and to use a statistic that does not depend on a chosen frequency cutoff'."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "has its own zeros and its own explicit formula, in which each prime term is weighted by $\\chi_4(p)^m$.",
-  "problem": "The statement is acceptable, but the claim that mpmath.dirichlet evaluates L-functions is given without a hint that the smooth counting function for L(s,chi_4) differs (log(t/pi) type); the text says 'look up'. Minor. Bigger issue: 'bound' on identity of W1 sample treats the citing sets as independent draws though they overlap, which is heuristic.",
-  "fix": "Flag the independence assumption in the W1 sample as rough."
+  "quote": "the oracle's error grows in proportion, so its relative skill is nearly constant",
+  "problem": "By the chapter's own definition of relative skill, Table V does not show proportional growth. For 6 primes rms/null goes from 0.074/0.263=0.28 to 0.119/0.296=0.40, so S falls from 0.72 to 0.60. For 25 primes S falls from 0.84 to 0.77.",
+  "fix": "Write: 'the oracle's error grows somewhat faster than the null (six primes: S falls from 0.72 to 0.60 between the first and last holdout), which the Table V caption describes as nearly constant relative skill'. Add these S values to CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Suppose the training window is zeros 1--500",
+  "problem": "The paper never fits a sinusoidal control on zeros 1--500 (C2 uses 1--400 and 1--800), yet the sample's conclusion is tied to the 400-zero C2 result (+0.96 on 1001--2000). Also, an error of pi/T implies a drift of pi across the training window itself, which contradicts 'learned from the window'. Phase matching at the window end is not the worst case, and 'usually estimated much better' is asserted without support.",
+  "fix": "Redo the sample with the paper's window, zeros 1--400 (T about 666), and evaluate at t_1001 and t_2000 so it connects to the reported 0.078/+0.96. State that delta-omega=pi/T is the matching tolerance and an upper bound that a good fit would not reach (it would dephase by pi inside the window). Cite the 1/T scaling from the sparse-frequency chapter for the typical error. Update the figure, key idea, summary and CHECKS."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Treat the $\\log q$ near $\\omega$ as a Poisson process (Chapter~\\ref{ch:level-statistics}): the probability of no point in a window with expected count $\\bar m$ is $e^{-\\bar m}$",
-  "problem": "Primes are not Poisson in the log scale at this window width in a rigorous sense; the window width 2pi/T is also used as full width while the matching tolerance is half-width on each side, fine. But a student has not been shown why the Poisson law applies.",
-  "fix": "State that this is a heuristic assumption (primes treated as random), and name the neglected correlations."
+  "quote": "For that finite matrix the real shifts sum to zero",
+  "problem": "The step from the trace identity (sum of exact real shifts is zero) to 'the second-order shifts alone sum to zero' is not shown. A student cannot see why each order vanishes separately.",
+  "fix": "Add: 'Replace A by epsilon*A and expand each eigenvalue as lambda_n = E_n + epsilon*a_n + epsilon^2*b_n + ... . The trace identity gives sum_n lambda_n = sum_n E_n + i*epsilon*sum_n A_nn for every epsilon. Comparing coefficients of epsilon^2 gives sum_n b_n = 0; with b_n = -delta E_n this is the second-order sum rule of paper Eq. (5).' State that this assumes the perturbation series exists (non-degenerate levels)."
  },
  {
   "category": "ERROR",
+  "severity": "low",
+  "quote": "or taken from Odlyzko's published tables",
+  "problem": "The key odlyzko87 is the paper 'On the distribution of spacings between zeros of the zeta function', not a table of zeros. Citing it as the source of downloadable tables is a miscitation.",
+  "fix": "Write 'or taken from the tables of zeros that Odlyzko has made publicly available (described in words; see also his study of spacings~\\cite{odlyzko87})'."
+ },
+ {
+  "category": "CLARITY",
   "severity": "medium",
-  "quote": "The paper's matching tolerance, App.~A step 23",
-  "problem": "The paper's tolerance is pi/T for matching, but pi/T as the frequency error bound for the dephasing sample is the chapter's worst-case assumption; calling it 'the paper's matching tolerance' as justification for the actual error bound is mixed. Also the window in step 23 is T of the training zeros, fine.",
-  "fix": "Say 'taken as the matching tolerance' and note that it is an upper bound used only for a worst case."
+  "quote": "a different even confining potential whose WKB levels also track",
+  "problem": "The sentence 'whose WKB levels also track s_n less well' is garbled ('also ... less well'). The reader cannot tell whether the new background should or should not reproduce the smooth zeros.",
+  "fix": "Replace with: 'a different even confining potential (for example one whose WKB levels track s_n only approximately, to test sensitivity to the background), or add Wu and Sprung's fractal corrections to the background.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "It says explicitly that this ``is not a statement about what a potential can represent''",
+  "problem": "The words in quotation marks are not verbatim. The paper reads 'This is evidence about the tested parametrizations and optimizer together, not a statement about what a potential can represent.'",
+  "fix": "Move 'is' outside the quotation: this is ``not a statement about what a potential can represent''."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "every model that uses the arithmetic structure, given or learned, sits far below it",
+  "problem": "The root-ambiguous control B row with 900 coefficients uses the arithmetic frequencies and scores 0.180 against the null 0.263. That is below the null but not 'far below', and the caption colors it gray, not blue.",
+  "fix": "Write: 'every model that uses the arithmetic structure sits below it, and all but the underdetermined, root-ambiguous B row (0.180) sit far below it'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The coverage law is itself heuristic (Chapter~\\ref{ch:fitting}), so these thresholds are estimates, not sharp lines.",
-  "problem": "The sample applies the coverage law at scale 2 using s_800 rather than a scored level; the paper's in-sample 0.103 at M=900 is cited as 'fits the observation' without showing coverage at that M.",
-  "fix": "Also give the maximum energy covered by M=900 at scale 2, E = (M pi/(2L))^2 = about 556."
+  "quote": "already equals its best-rescaled value: its amplitudes are right",
+  "problem": "The agreement 0.0736 against 0.074 rests on r=0.96 rounded to two digits. sqrt(1-r^2) is very sensitive near r=1: r=0.955 gives 0.078 and r=0.965 gives 0.069. 'Equals' overstates what two-digit inputs can show, and the mean-zero assumption is not checked.",
+  "fix": "Write 'is consistent, within the rounding of r (0.069 to 0.078 for r between 0.965 and 0.955), with its best-rescaled value'. Add a CHECKS line computing the mean of the true fluctuations on 401--500 and the unrounded r from qmnt."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "probably well under one work in ten",
+  "problem": "For n=29 the computed bound is f95=0.098, which is just under one in ten, not 'well under'. Only the no-overlap case n=57 gives about one in twenty.",
+  "fix": "Write '(probably under one work in ten, and under about one in twenty if the two citing lists do not overlap)'."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\begin{verbatim}\ns = qmnt.smooth_zeros(np.array([201, 300]))\nx = qmnt.wu_sprung_x(s)\n\\end{verbatim}",
-  "problem": "Uses verbatim inside a sample rather than the pycode environment. The sample also says 'done in the CHECKS script', a reference to a machine part the reader never sees.",
-  "fix": "Use pycode and state the computed values in the text."
+  "quote": "and a correlation of $+0.02$, which is indistinguishable from zero for 100 levels",
+  "problem": "The value S = 1-0.262/0.263, quoted as about 0.004 just before this phrase, is the chapter's own computed number and is not asserted in CHECKS. The '100 levels' statement is also not quantified.",
+  "fix": "Add 'assert abs((1-0.262/0.263)-0.004)<5e-4' to CHECKS. Optionally add that the standard error of a correlation near zero with 100 points is about 1/sqrt(100)=0.1."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "the bibliography entry \\cite{strang}",
-  "problem": "Citing strang for the trace identity in a beyond box with no location; also the beyond box says 'You checked the 2x2 case in Chapter eigen', which is an unverifiable assumption.",
-  "fix": "Say 'recall the 2x2 case' and cite the relevant chapter of strang."
+  "quote": "Explain why the paper calls it a ``sensitivity result'', and why including it does not change the qualitative conclusion.",
+  "problem": "Problems must be graded easy to hard. Problems 24 (difficulty 2) and 25 (difficulty 1) come after the difficulty-3 block.",
+  "fix": "Move Problem 25 into the difficulty-1 group and Problem 24 into the difficulty-2 group. Renumber, and update the references 'Problem 23' and 'Problem 25' in the text and the Answers section (keep answers for all difficulty-1 and all odd-numbered problems)."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Worst-case dephasing of the prime-2 wave (RE2)",
+  "problem": "This figure is included with width=0.95\\linewidth. The bible's figure template prescribes width=0.85\\linewidth.",
+  "fix": "Change the \\includegraphics width to 0.85\\linewidth, using the two-panel figsize (6.5,3) in the script."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and the absorptive-even fit (null mode repaired) reaches",
+  "problem": "'PT-odd', 'absorptive-even', 'null mode' and later 'c_0' are used with no one-line reminder in this chapter. The bible requires every symbol or term to be re-defined on first appearance in a chapter.",
+  "fix": "Add a reminder before the sample: 'Recall (Chapter non-hermitian) that the paper perturbs H to H+iA with A odd in x (PT-odd class, sine basis) or even in x (absorptive-even class, cosine basis). The constant basis function, coefficient c_0, is the null mode: it has zero second-order real shift.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "App.~A step 23: cutoff-maximized binomial scores",
+  "problem": "The term 'cutoff-maximized binomial score' is quoted with no explanation of what is counted, what the binomial model is, or what is maximized. A student cannot interpret 24.7 against 4.7.",
+  "fix": "Add one or two sentences: the score compares the number of selected frequencies that match a prime power (within pi/T, q up to a cutoff) with the number expected by chance under a binomial model, and is maximized over the cutoff. Say that the exact definition is in the Zenodo record and refer to the chapter where it is discussed."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Replace $\\cos(k\\pi x/L)$ by even Hermite functions",
+  "problem": "The symbol H_{2k} (Hermite polynomial) is used without definition. The bound-states chapter is only guaranteed to give the oscillator levels, not this notation.",
+  "fix": "Add: 'where H_j is the Hermite polynomial of degree j (H_0=1, H_2(u)=4u^2-2, generated by H_{j+1}=2uH_j-2jH_{j-1}), available as scipy.special.eval_hermite'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "W8 points are already stated in captions.",
+  "problem": "This is inaccurate. Of the W8 items, the 'factor 1.3' point is this chapter's own check, and the 'two nulls' and 'oracle not a fair competitor' points are in the paper's body text (Secs. II C, II D, IV), not in captions.",
+  "fix": "Replace with: 'W8 collects small points, most of which the paper states itself in captions or text; the factor-1.3 check is ours and concerns how widely one sentence applies.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "A local-in-energy vocabulary has no word for",
+  "problem": "This is stated flatly, although the paper hedges that the evidence concerns 'the tested parametrizations and optimizer together, not a statement about what a potential can represent'. As written it reads as a representational impossibility.",
+  "fix": "Prefix with 'On this heuristic reading, and for the parametrizations and optimizer tested,' and change 'has no word' to 'did not produce'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The paper does not define such a number; it reports rms and null side by side.",
-  "problem": "Introduced relative skill is also used in the Summary and answers as if standard; the sign convention in the ESS sample 'Step 1' of item (ii) text ('-4.80%' better) is confusing.",
-  "fix": "Keep the sign convention uniform: report improvements as positive percentages."
+  "quote": "before fitting leaves all fitted coefficients bit-identical'', App.~A step 20)",
+  "problem": "The overwrite test is recorded in step 20, which concerns the fitted sinusoidal controls. Listing it as a general strength next to the Eq. (3) leakage argument may suggest it was also run for the operator fits, which the paper does not state.",
+  "fix": "Add 'for the sinusoidal controls' after 'a leakage test', and note that for the operator fits the paper relies on the algebraic argument of Eq. (3)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "nothing tested so far suggests it would",
+  "problem": "This is slightly stronger than the paper, which reports one marginal Chebyshev row for which 'a small positive correlation ... is not excluded'.",
+  "fix": "Write: 'nothing tested so far gives reproducible evidence that it would (one Chebyshev row is marginal; see Limit 2)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "What is the probability that at least one of the $k=8$ rows looks like the Chebyshev row or better?",
+  "problem": "The discussion omits that Table II also has a row whose correlation interval lies entirely below zero (hat, M=400: [-0.37, -0.01]). By the same one-tail logic that row is a 'significant' negative, and it supports the multiple-comparisons reading.",
+  "fix": "Add a sentence after the sample: 'Table II also has one row (hat, M=400) whose interval lies entirely below zero; two-sidedly, with alpha=0.05 per row, the chance of at least one excluded-zero row among eight is 1-0.95^8=0.34. Excursions of either sign are what a null table produces.' Add 1-0.95**8 to CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "They agree with the anchors to every digit printed.",
+  "problem": "CHECKS verifies the three zeros only to 1e-8, while the text claims agreement to every printed digit (10 decimals for t_1 and t_500, 11 for t_1000). Also t_1000 is quoted in Sec. II A, not in the App. A key anchors as the sample statement implies.",
+  "fix": "Tighten the CHECKS tolerances to 5e-11 (5e-12 for t_1000) if qmnt supports that precision, or say 'to at least eight decimal places'. Add '(t_1000 from Sec. II A)' to the sample statement."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The complete pipeline is driven by",
+  "problem": "The bible asks this chapter to show how to reproduce from the Zenodo record. The section describes the record's contents but gives no concrete procedure, and does not say which stages are slow or how to compare outputs with the anchors.",
+  "fix": "Add a short numbered procedure using only what the paper states: download version R1 from the DOI; create a Python 3 environment with numpy, scipy and mpmath (versions as named); run run_all.sh; compare the outputs with the key anchors and the audit file; expect the operator fits to dominate the run time. State explicitly that file names beyond run_all.sh are not given in the paper."
  }
 ]

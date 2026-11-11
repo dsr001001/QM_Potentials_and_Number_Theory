@@ -70,6 +70,7 @@ assert abs(2*L2*np.sqrt(1419.42248)/PI - 1438) < 0.5
 
 # --- Sample: relative skill ---
 assert abs((1 - 0.369/0.263) - (-0.403)) < 1e-3
+assert abs((1 - 0.271/0.263) - (-0.0304)) < 1e-3   # mu = 0.03 row
 assert abs((1 - 0.265/0.263) - (-0.0076)) < 1e-4
 assert abs((1 - 0.313/0.263) - (-0.190)) < 1e-3
 assert abs((1 - 0.074/0.263) - 0.719) < 1e-3
@@ -88,11 +89,22 @@ assert abs(lhs - rhs) < 1e-12
 # --- Sample: halves ---
 assert abs(np.sqrt((0.321**2 + 0.304**2)/2) - 0.3126) < 1e-4
 
+# --- M=200 coverage (saturation paragraph) ---
+assert abs((200*PI/(2*L1))**2 - 49.0) < 0.1
+
 # --- Sample: neighbor anticorrelation ---
 s2, _ = quad(lambda u: u**2*32/PI**2*u**2*np.exp(-4*u**2/PI), 0, np.inf)
 assert abs(s2 - 3*PI/8) < 1e-9 and abs(s2 - 1.1781) < 1e-4
+m1, _ = quad(lambda u: u*32/PI**2*u**2*np.exp(-4*u**2/PI), 0, np.inf)
+assert abs(m1 - 1) < 1e-9                          # unit mean of surmise
+alpha = 4/PI
+g4, _ = quad(lambda u: u**4*np.exp(-alpha*u**2), 0, np.inf)
+assert abs(g4 - 3/8*np.sqrt(PI)*alpha**-2.5) < 1e-10
 rho1 = 1 - (s2 - 1)/(2*0.263**2)
 assert abs(rho1 - (-0.287)) < 1e-3
+assert abs((1 - (s2 - 1)/(2*0.2438**2)) - (-0.498)) < 1e-3   # in-range sigma
+assert (s2 - 1) > 2*0.263**2 and (s2 - 1) > 2*0.2438**2
+assert abs((s2 - 1) - 0.178) < 5e-4
 assert abs(-0.29/np.sqrt(0.45) - (-0.432)) < 1e-3
 z = rng.normal(size=200000)
 seq = z - 0.4*np.roll(z, 1)
@@ -131,6 +143,8 @@ assert abs(corr(pf2, d_out) - 0.66) < 0.02
 assert ac(d_in, 1) < -0.1
 assert ac(d_in, 2) < 0
 assert ac(d_in, 3) < 0
+r1m, r2m = ac(d_in, 1), ac(d_in, 2)
+assert r2m > -1 and r1m/np.sqrt((1 + r2m)/2) < 0
 
 # --- Sample: surrogates ---
 assert abs(abs(0.137 - 0.134)/0.010 - 0.30) < 1e-9
@@ -159,6 +173,17 @@ assert abs(rms(Nfl(s_out, [2])) - 0.1708) < 0.002
 assert abs(0.0555/0.1709 - 0.32) < 0.01
 assert abs(0.1958/0.1708 - 1.146) < 1e-3          # Problem 25
 
+# --- six-function model (our illustration) ---
+w3 = np.log(2)*np.array([1, 2, 3])
+F = np.column_stack([np.sin(np.outer(s_in, w3)), np.cos(np.outer(s_in, w3))])
+assert np.linalg.cond(F.T @ F) < 1e3
+gvec = -Nfl(s_in, [2])
+mm = np.array([1, 2, 3])
+btrue = np.concatenate([1/(PI*mm*2**(mm/2)), np.zeros(3)])
+assert np.allclose(F @ btrue, gvec, atol=1e-12)
+bhat = np.linalg.lstsq(F, gvec, rcond=None)[0]
+assert np.allclose(bhat, btrue, atol=1e-9)
+
 # --- Sample: levels per period ---
 per = 2*PI/np.log(2)
 assert abs(per - 9.0647) < 1e-4
@@ -177,6 +202,12 @@ aa = np.sqrt((0.313/0.263)**2 - 1)                 # P5a
 assert abs(aa - 0.645) < 1e-3
 ab = 0.5*(-0.32 + np.sqrt(0.32**2 + 4*((0.313/0.263)**2 - 1)))   # P5b
 assert abs(ab - 0.505) < 1e-3
+# P6: t_800 requirement
+assert abs(t[799] - 1184) < 1.5
+M800 = 2*L2*np.sqrt(t[799])/PI
+assert abs(M800 - 1313) < 2
+assert abs(np.sqrt(1184) - 34.41) < 0.005
+assert abs(2*L2*34.41/PI - 1313) < 1
 assert abs(1/(2*PI) - 0.159) < 5e-4                # P7
 assert abs(0.5/np.sum(a**2) - 0.867) < 1e-3
 assert abs(np.log(680/(2*PI))/np.log(3) - 4.264) < 1e-3     # P8
