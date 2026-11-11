@@ -76,13 +76,14 @@ def system_blocks(*texts):
     return blocks
 
 
-def params(model, system, user, max_tokens=100000, effort="high"):
+def params(model, system, user, max_tokens=128000, effort="medium"):
+    msgs = user if isinstance(user, list) else [{"role": "user", "content": user}]
     return dict(model=model, max_tokens=max_tokens, system=system,
                 thinking={"type": "adaptive"}, output_config={"effort": effort},
-                messages=[{"role": "user", "content": user}])
+                messages=msgs)
 
 
-def call(tag, model, system, user, max_tokens=100000, effort="high"):
+def call(tag, model, system, user, max_tokens=128000, effort="medium"):
     """Streaming synchronous call; returns final text."""
     guard()
     with client().messages.stream(**params(model, system, user, max_tokens, effort)) as s:

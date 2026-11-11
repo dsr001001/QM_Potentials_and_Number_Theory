@@ -1,0 +1,17 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+fig, axs = plt.subplots(1, 2, figsize=(6.5, 3))
+s = np.logspace(-4, 0, 400)
+for lam in [1e-6, 1e-4, 1e-2, 1]:
+    axs[0].loglog(s, s/(s**2 + lam), label=r"$\lambda=$%g" % lam)
+axs[0].loglog(s, 1/s, "k--", label="pseudo-inverse")
+axs[0].set_xlabel(r"$\sigma/\sigma_1$"); axs[0].set_ylabel(r"$\sigma_1 f$"); axs[0].legend(fontsize=6)
+A = np.array([[1.0, 0.9], [0.9, 1.0], [0.2, -0.1]]); r = np.array([1.0, 0.5, 0.3])
+g1, g2 = np.meshgrid(np.linspace(-1.5, 3, 200), np.linspace(-3, 1.5, 200))
+Q = 0.5*sum((r[i] - A[i, 0]*g1 - A[i, 1]*g2)**2 for i in range(3))
+axs[1].contour(g1, g2, Q, levels=15, colors="gray", linewidths=0.6)
+path = np.array([np.linalg.solve(A.T@A + l*np.eye(2), A.T@r) for l in np.logspace(2, -4, 200)])
+axs[1].plot(path[:, 0], path[:, 1], "C3-")
+gn = np.linalg.lstsq(A, r, rcond=None)[0]; axs[1].plot(*gn, "k*", ms=10)
+g = A.T@r; axs[1].arrow(0, 0, 0.5*g[0], 0.5*g[1], head_width=0.08, color="C0")
+axs[1].set_xlabel(r"$\delta c_1$"); axs[1].set_ylabel(r"$\delta c_2$")
+plt.tight_layout(); plt.savefig("fitting_lmpath.pdf", bbox_inches="tight")

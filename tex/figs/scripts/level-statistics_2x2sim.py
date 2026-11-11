@@ -1,0 +1,13 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+rng = np.random.default_rng(0)
+x, y, z = rng.normal(size=(3, 200000))
+s1 = np.hypot(x, y); s1 /= s1.mean()
+s2 = np.sqrt(x**2 + y**2 + z**2); s2 /= s2.mean()
+s = np.linspace(0, 3.5, 400); bins = np.linspace(0, 3.5, 50)
+fig, (a, b) = plt.subplots(1, 2, figsize=(6.5, 3))
+a.hist(s1, bins=bins, density=True, alpha=0.5); a.plot(s, np.pi/2*s*np.exp(-np.pi*s**2/4))
+a.set_title("(a) real symmetric"); a.set_xlabel("s (mean spacings)"); a.set_ylabel("p(s)")
+b.hist(s2, bins=bins, density=True, alpha=0.5); b.plot(s, 32/np.pi**2*s**2*np.exp(-4*s**2/np.pi))
+b.set_title("(b) complex Hermitian"); b.set_xlabel("s (mean spacings)")
+plt.tight_layout()
+plt.savefig("level-statistics_2x2sim.pdf", bbox_inches="tight")

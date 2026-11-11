@@ -1,0 +1,16 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+
+sig = np.linspace(-1.5, 2.5, 401)
+t = np.linspace(-25, 25, 801)
+S, T = np.meshgrid(sig, t)
+f = 1 - np.exp(-(S + 1j * T) * np.log(2))
+fig, ax = plt.subplots(figsize=(6, 4))
+cs = ax.contourf(S, T, np.log10(np.abs(f) + 1e-12), levels=30, cmap="viridis")
+plt.colorbar(cs, ax=ax, label=r"$\log_{10}|1-2^{-s}|$")
+k = np.arange(-2, 3)
+ax.plot(0 * k, 2 * np.pi * k / np.log(2), "r*", ms=11, label="zeros")
+ax.axvline(0.5, color="w", ls="--", lw=1.2, label=r"line $\sigma=1/2$")
+ax.set_xlabel(r"$\sigma=\mathrm{Re}\,s$ (dimensionless)")
+ax.set_ylabel(r"$t=\mathrm{Im}\,s$ (dimensionless)")
+ax.legend(loc="upper right", fontsize=8)
+plt.savefig("complex_zeros_1m2s.pdf", bbox_inches="tight")

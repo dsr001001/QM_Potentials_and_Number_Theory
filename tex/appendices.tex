@@ -1,0 +1,243 @@
+\chapter{Python for This Book}\label{ch:ap-python}
+
+\begin{chapterintro}
+Every chapter contains short Python listings, and every figure and every worked number in this book is produced by a Python script that you can run. This appendix teaches exactly the Python you need to read those listings and to modify them. If you have never programmed, read it once before Chapter~\ref{ch:complex} and come back to it whenever a listing puzzles you.
+\end{chapterintro}
+
+\section{Getting started}
+
+Install Python 3 (version 3.10 or later) from \texttt{python.org} or through the Anaconda distribution. Then install the four libraries the book uses, from a terminal:
+\begin{pycode}
+pip install numpy scipy matplotlib mpmath
+\end{pycode}
+Download the book's source repository; the companion library \texttt{qmnt} lives in its folder \texttt{code/}. To use it, either run your scripts from inside \texttt{code/}, or tell Python where it is:
+\begin{pycode}
+import sys
+sys.path.insert(0, "path/to/repository/code")
+import qmnt
+\end{pycode}
+You can type Python line by line in an interactive session (run \texttt{python} in a terminal, or use a Jupyter notebook), or save lines in a file \texttt{myscript.py} and run \texttt{python myscript.py}.
+
+\section{Numbers, variables and arithmetic}
+
+A \emph{variable} is a name attached to a value. The equals sign assigns; it does not state an equation.
+\begin{pycode}
+L = 44.883          # a floating-point number (a "float")
+n = 400             # an integer
+h = 2 * L / (n + 1) # arithmetic: + - * /
+E = h ** 2          # ** is "to the power"
+print(h, E)         # prints 0.2238553615960100 0.05011122...
+\end{pycode}
+Everything after \texttt{\#} on a line is a comment, ignored by Python. Integer division is \texttt{//} (so \texttt{7 // 2} is \texttt{3}) and the remainder is \texttt{\%} (so \texttt{7 \% 2} is \texttt{1}). Complex numbers are written with \texttt{j} for $i$: \texttt{z = 3 + 4j}, and \texttt{abs(z)} gives $5.0$.
+
+Floats carry about 16 significant digits. Chapter~\ref{ch:asymptotics} explains why \texttt{0.1 + 0.2 == 0.3} is \texttt{False} in Python, and why you should compare floats with a tolerance: \texttt{abs(a - b) < 1e-12}. (\texttt{1e-12} means $10^{-12}$.)
+
+\section{Lists, loops and functions}
+
+A \emph{list} holds several values in order; positions are counted from $0$.
+\begin{pycode}
+t = [14.134725, 21.022040, 25.010858]   # the first three zeta zeros
+print(t[0])        # 14.134725 (first element: index 0)
+print(t[-1])       # 25.010858 (last element)
+print(len(t))      # 3
+for x in t:        # a loop: the indented block runs once per element
+    print(x / 2)
+\end{pycode}
+Indentation (four spaces) is how Python knows which lines belong to the loop. \texttt{range(1, 6)} produces $1,2,3,4,5$ (it stops \emph{before} the second number).
+
+A \emph{function} packages a calculation so that it can be reused:
+\begin{pycode}
+import math
+def Nsm(t):
+    """Smooth zero-counting function, Eq. (1) of the paper."""
+    u = t / (2 * math.pi)
+    return u * math.log(u) - u + 7 / 8
+
+print(Nsm(14.134725))   # about 0.4997: the first zero sits where Nsm is near 1/2
+\end{pycode}
+\texttt{def} names the function and its inputs; \texttt{return} gives back the result. The text in triple quotes is a description for human readers. \texttt{import math} makes the standard mathematical functions available as \texttt{math.log}, \texttt{math.sin}, \texttt{math.pi}, and so on. Note that \texttt{log} is the natural logarithm, as everywhere in this book.
+
+\texttt{if} chooses between alternatives:
+\begin{pycode}
+def is_prime(k):
+    if k < 2:
+        return False
+    for d in range(2, int(k ** 0.5) + 1):
+        if k % d == 0:      # d divides k exactly
+            return False
+    return True
+print([k for k in range(30) if is_prime(k)])   # [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+\end{pycode}
+The last line is a \emph{list comprehension}: it builds the list of all $k$ in the range for which the condition holds.
+
+\section{NumPy: arrays and vectorized arithmetic}
+
+NumPy provides \emph{arrays}: lists of numbers on which arithmetic acts element by element, fast.
+\begin{pycode}
+import numpy as np
+n = np.arange(1, 11)          # array([1, 2, ..., 10])
+x = np.linspace(0, 1, 5)      # 5 equally spaced points: 0, 0.25, 0.5, 0.75, 1
+y = np.sin(2 * np.pi * x)     # sin applied to every element
+print(y.round(3))             # [ 0.  1.  0. -1. -0.]
+print(n.sum(), n.mean(), n.max())   # 55 5.5 10
+print(n[2:5])                 # elements at positions 2, 3, 4: [3 4 5]
+print(n[n % 2 == 0])          # the even ones: [ 2  4  6  8 10]
+\end{pycode}
+The \emph{slice} \texttt{a[i:j]} takes positions $i$ up to but not including $j$. A two-dimensional array is a matrix: \texttt{A = np.array([[1, 2], [3, 4]])}; \texttt{A @ v} multiplies matrix by vector, \texttt{A.T} is the transpose, \texttt{A[0, 1]} is the entry in row 0, column 1. The root mean square and the correlation used throughout the book are one line each:
+\begin{pycode}
+err = np.array([0.1, -0.3, 0.2])
+rms = np.sqrt(np.mean(err ** 2))          # 0.2160
+a, b = np.array([1., 2, 3, 4]), np.array([2., 4, 5, 9])
+r = np.corrcoef(a, b)[0, 1]               # Pearson correlation, 0.9649
+\end{pycode}
+
+\section{SciPy and mpmath}
+
+SciPy supplies standard numerical algorithms. The two used most in this book are root finding and eigenvalues.
+\begin{pycode}
+from scipy.optimize import brentq
+from scipy.linalg import eigh_tridiagonal
+root = brentq(lambda t: Nsm(t) - 0.5, 10, 20)   # solve Nsm(t) = 1/2 between 10 and 20
+print(root)                                     # 14.5213...: the first smooth zero s_1
+
+N, L = 1000, 1.0
+h = 2 * L / (N + 1)
+d = np.full(N, 2 / h**2)                        # diagonal of -d2/dx2 on a grid
+e = np.full(N - 1, -1 / h**2)                   # off-diagonal
+E = eigh_tridiagonal(d, e, eigvals_only=True)[:3]
+print(E, (np.arange(1, 4) * np.pi / (2 * L))**2)  # numerical vs exact box levels
+\end{pycode}
+\texttt{lambda t: ...} defines a small unnamed function on the spot. \texttt{brentq(f, a, b)} finds a root of $f$ between $a$ and $b$, provided $f(a)$ and $f(b)$ have opposite signs (Chapter~\ref{ch:asymptotics}).
+
+mpmath does arithmetic with as many digits as you ask for, and knows the zeta function:
+\begin{pycode}
+import mpmath
+mpmath.mp.dps = 20                 # work with 20 significant digits
+print(mpmath.zeta(2))              # 1.6449340668482264365 = pi^2/6
+print(mpmath.zetazero(1))          # (0.5 + 14.134725141734693790j)
+\end{pycode}
+
+\section{Plotting with Matplotlib}
+
+\begin{pycode}
+import matplotlib.pyplot as plt
+t = np.linspace(0, 40, 2000)
+plt.figure(figsize=(6, 4))
+plt.plot(t, np.sin(t * np.log(2)), label="sin(t log 2)")
+plt.xlabel("t"); plt.ylabel("amplitude"); plt.legend()
+plt.savefig("wave.pdf", bbox_inches="tight")   # or plt.show() on screen
+\end{pycode}
+
+\section{The companion library \texttt{qmnt}}
+
+\texttt{qmnt} collects, in one short and readable file (\texttt{code/qmnt/\_\_init\_\_.py}), every computation the book needs. Its functions are listed below; each is explained in the chapter shown. Indices of zeros start at $1$, as in the paper, and all energies are in the units $\hbar=2m=1$.
+
+\begin{center}\small
+\begin{tabular}{p{0.42\linewidth}p{0.36\linewidth}l}
+\toprule
+Function & What it returns & Chapter\\
+\midrule
+\texttt{zeros(nmax)} & $t_1,\dots,t_{n_{\max}}$, up to $10^4$ & \ref{ch:zeta}\\
+\texttt{Nsm(t)}, \texttt{smooth\_zeros(n)}, \texttt{mean\_gap(n)}, \texttt{fluct(t, n)} & smooth counting function, $s_n$, $\gap_n$, fluctuations & \ref{ch:counting-zeros}\\
+\texttt{primes\_upto(x)}, \texttt{first\_primes(k)} & primes & \ref{ch:primes}\\
+\texttt{Nfl(t, primes)}, \texttt{oracle\_zeros(n, primes)} & explicit-formula prediction, paper Eq.~(4) & \ref{ch:explicit-formula}\\
+\texttt{rms(a)}, \texttt{corr(a, b)}, \texttt{score(t\_pred, n)} & the paper's scores & \ref{ch:probability}\\
+\texttt{V0}, \texttt{wu\_sprung\_x(V)}, \texttt{wu\_sprung\_V(x)}, \texttt{L\_of(Vmax)} & Wu--Sprung potential, paper Eq.~(2) & \ref{ch:wu-sprung}\\
+\texttt{grid(L, N)}, \texttt{fd\_levels(V, L, k)}, \texttt{richardson} & finite-difference solver & \ref{ch:finite-differences}\\
+\texttt{basis(x, L, M, kind)}, \texttt{fit\_potential(nfit, M, ...)} & the paper's Hermitian fit & \ref{ch:fitting}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A complete small session, which reproduces the first entry of the paper's Table~V (the one-prime oracle on zeros 401--500):
+\begin{pycode}
+import numpy as np, qmnt
+n = np.arange(401, 501)
+null = qmnt.score(qmnt.smooth_zeros(n), n)       # predict t_n = s_n
+one = qmnt.score(qmnt.oracle_zeros(n, [2]), n)   # one prime
+print(null, one)    # rms 0.263 (corr undefined for the null), then rms 0.198, corr +0.66
+\end{pycode}
+
+\section{Reproducibility habits}
+
+Three habits make computational results trustworthy, and the paper follows all three. (1) Fix random seeds: \texttt{rng = np.random.default\_rng(1)} then \texttt{rng.normal(size=10)} gives the same numbers on every run. (2) Record versions: \texttt{np.\_\_version\_\_}, \texttt{scipy.\_\_version\_\_}. (3) Keep the script that made every number, and rerun it from a clean start before trusting the number.
+
+%======================================================================
+\chapter{Notation}\label{ch:ap-notation}
+
+Symbols are listed with their meaning and the chapter where they are introduced. The notation follows the paper \cite{soniR1}.
+
+\begin{center}\small
+\begin{tabular}{p{0.27\linewidth}p{0.55\linewidth}l}
+\toprule
+Symbol & Meaning & Ch.\\
+\midrule
+$i$ & imaginary unit, $i^2=-1$ & \ref{ch:complex}\\
+$s=\sigma+it$ & complex variable of the zeta function & \ref{ch:zeta}\\
+$\zeta(s)$ & Riemann zeta function & \ref{ch:zeta}\\
+$\rho_n=\tfrac12+it_n$ & $n$-th nontrivial zero; $t_n>0$ its height & \ref{ch:zeta}\\
+$p$, $p^m$, $\Lambda(k)$ & prime, prime power, von Mangoldt function & \ref{ch:primes}\\
+$\log$ & natural logarithm & \ref{ch:complex}\\
+$N(T)$ & number of zeros with $0<t\le T$ & \ref{ch:counting-zeros}\\
+$\Nsm(t)$ & smooth counting function, paper Eq.~(1) & \ref{ch:counting-zeros}\\
+$S(t)$ & fluctuating part of the count & \ref{ch:counting-zeros}\\
+$s_n$ & smooth zeros, $\Nsm(s_n)=n-\tfrac12$ & \ref{ch:counting-zeros}\\
+$\gap_n$ & local mean spacing $ds_n/dn$ & \ref{ch:counting-zeros}\\
+$\Nfl(t)$ & truncated explicit formula, paper Eq.~(4) & \ref{ch:explicit-formula}\\
+$P$ & a finite set of primes & \ref{ch:explicit-formula}\\
+$H=-d^2/dx^2+V(x)$ & Hamiltonian in units $\hbar=2m=1$ & \ref{ch:schrodinger}\\
+$E_n,\ \psi_n$ & energy levels and normalized eigenfunctions & \ref{ch:bound-states}\\
+$V_0=3.10073\pi$ & bottom of the Wu--Sprung potential & \ref{ch:wu-sprung}\\
+$x(V)$ & Wu--Sprung potential in implicit form, paper Eq.~(2) & \ref{ch:wu-sprung}\\
+$L$ & half-width of the box $[-L,L]$ & \ref{ch:bound-states}\\
+$N$ (grid), $h$ & number of interior grid points, grid spacing $2L/(N+1)$ & \ref{ch:finite-differences}\\
+$E^{\mathrm{Rich}}$ & Richardson extrapolant $(4E_{h/2}-E_h)/3$ & \ref{ch:finite-differences}\\
+$\tilde t_n,\ \Delta_n$ & bias-corrected targets, grid bias & \ref{ch:finite-differences}\\
+$\delta V,\ c_k,\ \phi_k,\ M$ & fitted correction, its coefficients, basis functions, basis size & \ref{ch:fitting}\\
+$A_{nk}$ & sensitivity $\int|\psi_n|^2\phi_k\,dx$ & \ref{ch:perturbation}\\
+$r_n$ & residual $\tilde t_n-E_n$ & \ref{ch:fitting}\\
+$\lambda,\ \mu$ & Levenberg--Marquardt damping, ridge strength & \ref{ch:least-squares}, \ref{ch:fitting}\\
+$\sigma_k$ & singular values ($\sigma_1$ the largest) & \ref{ch:least-squares}\\
+$iA$, $A_{nm}$ & non-Hermitian perturbation, its matrix elements & \ref{ch:non-hermitian}\\
+$T^{(n)}$ & second-order tensor, $\delta E_n=-c^\top T^{(n)}c$ & \ref{ch:non-hermitian}\\
+$\Gamma$, $R$ & decay widths; amplitude-ball radius & \ref{ch:non-hermitian}\\
+$\omega$, $T$, $K$ & angular frequency in $t$, training-window length, number of selected frequencies & \ref{ch:sparse-frequency}\\
+rms, corr & root-mean-square error in mean spacings; Pearson correlation & \ref{ch:probability}\\
+null & the prediction ``no fluctuation'' & \ref{ch:generalization}\\
+OOS & out-of-sample (held-out) & \ref{ch:generalization}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Overloaded symbols in the paper.} The paper uses $A$ both for the sensitivity matrix $A_{nk}$ and for the non-Hermitian operator $A$; $T$ for the training window, the tensors $T^{(n)}$ and the Chebyshev polynomials $T_k$; and $N$ both for the number of grid points and for the counting function $N(T)$. The context always decides.
+
+%======================================================================
+\chapter{Key Numbers of the Paper}\label{ch:ap-numbers}
+
+These are the anchors that the paper's Appendix~A lists for checking a reconstruction, with the chapters that explain them. All rms values are in units of the local mean spacing.
+
+\begin{center}\small
+\begin{tabular}{p{0.52\linewidth}p{0.25\linewidth}l}
+\toprule
+Quantity & Value & Ch.\\
+\midrule
+$t_1$, $t_{500}$, $t_{1000}$ & 14.1347251417, 811.1843588465, 1419.42248094599 & \ref{ch:zeta}\\
+Box half-widths $L=x(1000)$, $x(1500)$ & 44.883, 59.957 & \ref{ch:wu-sprung}\\
+Richardson vs smooth residual & mean 0.005, max 0.063 & \ref{ch:finite-differences}\\
+Null, in-sample 1--400 / OOS 401--500 & 0.2438 / 0.2631 & \ref{ch:generalization}\\
+Null, scale 2: 1--800 / 801--1000 & 0.2554 / 0.2739 & \ref{ch:generalization}\\
+Raw-zero null on uncorrected grid, 401--500 & 2.09 & \ref{ch:finite-differences}\\
+Hermitian coverage on 500 zeros, $M=300$ / $900$ & 0.186 / $<10^{-4}$ & \ref{ch:fitting}\\
+Principal operator fit ($M=400$, fit 1--400): in / OOS / corr & 0.137 / 0.369 / $-0.07$ & \ref{ch:paper-memorization}\\
+Six-prime oracle on 401--500, corr interval & $[+0.95,+0.97]$ & \ref{ch:paper-arithmetic}\\
+One-prime oracle on 401--500 & 0.198 / $+0.66$ & \ref{ch:explicit-formula}\\
+25-prime oracle on 401--500 & 0.043 / $+0.99$ & \ref{ch:explicit-formula}\\
+Continuation probe: in-sample / OOS / probe-null & 0.0555 ($+0.95$) / 0.1958 ($+0.07$) / 0.1708 & \ref{ch:paper-memorization}\\
+Interpolation split: in-sample / gap rms / corr & 0.1361 / 2.6434 / $-0.02$ & \ref{ch:paper-memorization}\\
+Sparse model (C2): selected frequencies & $K=24$ (fit 1--400), $K=43$ (fit 1--800) & \ref{ch:paper-arithmetic}\\
+Non-Hermitian unconstrained floors (odd / even) & 0.2321 / 0.2358 (0.2322 with artifact) & \ref{ch:paper-spurious-floor}\\
+Exact-spectrum in-sample rms of those fits & 0.2523 / 0.2477 & \ref{ch:paper-spurious-floor}\\
+Fair $R=4$ floors, exact-verified & 0.2391 / 0.2423 & \ref{ch:paper-spurious-floor}\\
+\bottomrule
+\end{tabular}
+\end{center}

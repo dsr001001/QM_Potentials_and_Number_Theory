@@ -1,0 +1,26 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+
+phi = np.linspace(0, 2 * np.pi, 4001)
+z = 2.5 * np.exp(1j * phi)
+f = (z - 1) * (z - 2) * (z + 3)
+ph = np.unwrap(np.angle(f))
+ph = (ph - ph[0]) / (2 * np.pi)
+
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))
+a1.plot(z.real, z.imag, "C0", lw=1.5)
+a1.annotate("", xy=(0.0, 2.5), xytext=(0.3, 2.48),
+            arrowprops=dict(arrowstyle="->", color="C0"))
+a1.plot([1, 2], [0, 0], "ko", ms=6, label="zeros inside")
+a1.plot([-3], [0], "kx", ms=8, mew=2, label="zero outside")
+a1.set_aspect("equal")
+a1.set_xlim(-3.6, 3.0); a1.set_ylim(-3.0, 3.0)
+a1.set_xlabel(r"Re $z$"); a1.set_ylabel(r"Im $z$")
+a1.legend(fontsize=7, loc="lower left")
+a1.grid(alpha=0.3)
+a2.plot(phi, ph, "C1", lw=1.5)
+a2.axhline(2, color="gray", ls=":")
+a2.set_xlabel(r"angle $\phi$ around circle (rad)")
+a2.set_ylabel(r"continuous $\arg f\,/\,2\pi$")
+a2.grid(alpha=0.3)
+plt.tight_layout()
+plt.savefig("counting-zeros_winding.pdf", bbox_inches="tight")

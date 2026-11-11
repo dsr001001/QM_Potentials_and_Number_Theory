@@ -24,7 +24,7 @@ for d in (CH_DIR, FIG_DIR, CHK_DIR, WORK):
     os.makedirs(d, exist_ok=True)
 
 DRAFT_MODEL = "claude-opus-5-5"
-CRITIC_MODEL = "claude-fable-5-2"
+CRITIC_MODEL = "claude-sonnet-5-5"
 REVISE_MODEL = "claude-opus-5-5"
 
 CHAPTERS = [(int(m.group(1)), m.group(2), m.group(3).strip())
@@ -54,7 +54,24 @@ Remember:
 - Every number you state must be verified in the CHECKS script or quoted from the paper with its location.
 - Never use an em dash.
 
+Plan briefly (a short outline is enough); spend your effort on the written chapter itself, which is long.
+
 Respond with exactly the three parts: =====CHAPTER=====, =====FIGURES=====, =====CHECKS=====."""
+
+CONTINUE = "Your previous message was cut off by the output limit. Continue exactly where it stopped, with no repetition and no preamble: the next character you write follows the last character of your previous message. Keep the same three-part format (the remaining marker lines still to come)."
+
+
+def draft_with_continuation(slug, max_rounds=3):
+    msgs = [{"role": "user", "content": draft_prompt(slug)}]
+    text, total = "", 0.0
+    for r in range(max_rounds):
+        t, usage, c, stop = llm.call(f"draft:{slug}:r{r}", DRAFT_MODEL, SYSTEM, msgs)
+        text += t; total += c
+        print(f"  round {r}: stop {stop}, out {usage.output_tokens}, thinking {usage.output_tokens_details.thinking_tokens}, usd {c:.3f}", flush=True)
+        if stop != "max_tokens":
+            break
+        msgs = [msgs[0], {"role": "assistant", "content": text.rstrip()}, {"role": "user", "content": CONTINUE}]
+    return text, total
 
 
 CRITIQUE_INSTR = """You are the critical reviewer for one chapter of the textbook. Read it as (1) a meticulous mathematical physicist checking every equation and number, (2) a first-year physics student who knows only what the bible says this chapter may assume, and (3) the book editor enforcing the bible.
@@ -132,13 +149,27 @@ Chapter {n} `{slug}` "{title}":
 
 
 # ------------------------------------------------------------ parsing
+def normalize(ch):
+    """Strip a redundant itemize directly inside keyideas/prerequisites; replace em dashes."""
+    for env in ("keyideas", "prerequisites"):
+        ch = re.sub(r"(\\begin\{%s\}\s*)\\begin\{itemize\}(.*?)\\end\{itemize\}(\s*\\end\{%s\})" % (env, env),
+                    r"\1\2\3", ch, flags=re.S)
+    ch = ch.replace("\u2014", ", ").replace("---", ", ")
+    # floats are not allowed inside boxes: pin them with [H]
+    boxes = "sample|checkpoint|keyideas|pitfall|beyond|chapterintro|prerequisites"
+    def pin(m):
+        return re.sub(r"\\begin\{(table|figure)\}(\[[^\]]*\])?", r"\\begin{\1}[H]", m.group(0))
+    ch = re.sub(r"\\begin\{(%s)\}.*?\\end\{\1\}" % boxes, pin, ch, flags=re.S)
+    return ch
+
+
 def save_draft(slug, text):
     open(os.path.join(WORK, f"{slug}.draft.raw.txt"), "w").write(text)
     parts = re.split(r"^=====(CHAPTER|FIGURES|CHECKS)=====\s*$", text, flags=re.M)
     d = {parts[i]: parts[i + 1] for i in range(1, len(parts) - 1, 2)}
     ch = d.get("CHAPTER", "").strip()
     ch = re.sub(r"^```(?:latex|tex)?\s*\n|\n```\s*$", "", ch)
-    open(chfile(slug), "w").write(ch + "\n")
+    open(chfile(slug), "w").write(normalize(ch) + "\n")
     figs = re.findall(r"^### FIG (\S+)\s*\n```python\s*\n(.*?)\n```", d.get("FIGURES", ""), re.M | re.S)
     for name, code in figs:
         open(os.path.join(FIG_DIR, f"{name}.py"), "w").write(code + "\n")
@@ -166,7 +197,7 @@ def save_revision(slug, text):
             ch = ch.replace(p["old"], p["new"]); ok += 1
         else:
             bad.append(p)
-    open(chfile(slug), "w").write(ch)
+    open(chfile(slug), "w").write(normalize(ch))
     if obj.get("new_checks"):
         open(os.path.join(CHK_DIR, f"{slug}.py"), "w").write(obj["new_checks"].strip() + "\n")
     for name, code in (obj.get("new_figures") or {}).items():
@@ -184,16 +215,16 @@ def main():
     cmd = sys.argv[1]
     if cmd == "draft" and "--sync" in sys.argv:
         slug = sys.argv[2]
-        text, usage, c, stop = llm.call(f"draft:{slug}", DRAFT_MODEL, SYSTEM, draft_prompt(slug))
-        print(slug, "stop", stop, "usd %.3f" % c, usage.output_tokens, "out", save_draft(slug, text))
+        text, c = draft_with_continuation(slug)
+        print(slug, "usd %.3f" % c, "words/figs/checklines", save_draft(slug, text))
     elif cmd == "critique" and "--sync" in sys.argv:
         slug = sys.argv[2]
-        text, usage, c, stop = llm.call(f"critique:{slug}", CRITIC_MODEL, SYSTEM, critique_prompt(slug), max_tokens=64000)
+        text, usage, c, stop = llm.call(f"critique:{slug}", CRITIC_MODEL, SYSTEM, critique_prompt(slug), max_tokens=64000, effort="medium")
         open(os.path.join(WORK, f"{slug}.critique.raw.txt"), "w").write(text)
         print(slug, "stop", stop, "usd %.3f" % c, "issues", save_critique(slug, text))
     elif cmd == "revise" and "--sync" in sys.argv:
         slug = sys.argv[2]
-        text, usage, c, stop = llm.call(f"revise:{slug}", REVISE_MODEL, SYSTEM, revise_prompt(slug), max_tokens=100000)
+        text, usage, c, stop = llm.call(f"revise:{slug}", REVISE_MODEL, SYSTEM, revise_prompt(slug))
         open(os.path.join(WORK, f"{slug}.revise.raw.txt"), "w").write(text)
         print(slug, "stop", stop, "usd %.3f" % c, "patches ok/failed", save_revision(slug, text))
     elif cmd.endswith("-batch"):
@@ -203,9 +234,14 @@ def main():
             if kind == "draft":
                 reqs.append((f"draft__{s}", DRAFT_MODEL, SYSTEM, draft_prompt(s), 100000, "high"))
             elif kind == "critique":
-                reqs.append((f"critique__{s}", CRITIC_MODEL, SYSTEM, critique_prompt(s), 64000, "high"))
+                reqs.append((f"critique__{s}", CRITIC_MODEL, SYSTEM, critique_prompt(s), 64000, "medium"))
+            elif kind == "cont":
+                raw = open(os.path.join(WORK, f"{s}.draft.raw.txt")).read().rstrip()
+                msgs = [{"role": "user", "content": draft_prompt(s)}, {"role": "assistant", "content": raw},
+                        {"role": "user", "content": CONTINUE}]
+                reqs.append((f"cont__{s}", DRAFT_MODEL, SYSTEM, msgs, 128000, "low"))
             elif kind == "revise":
-                reqs.append((f"revise__{s}", REVISE_MODEL, SYSTEM, revise_prompt(s), 100000, "high"))
+                reqs.append((f"revise__{s}", REVISE_MODEL, SYSTEM, revise_prompt(s), 128000, "medium"))
         print("submitted", llm.submit_batch(reqs, f"{kind}:{sys.argv[2]}"), len(reqs))
     elif cmd == "collect":
         bid = sys.argv[2]
@@ -215,6 +251,10 @@ def main():
             kind, s = cid.split("__")
             if text is None:
                 print(cid, "FAILED", stop); continue
+            if kind == "cont":
+                prev = open(os.path.join(WORK, f"{s}.draft.raw.txt")).read().rstrip()
+                text = prev + text
+                kind = "draft"
             open(os.path.join(WORK, f"{s}.{kind}.raw.txt"), "w").write(text)
             try:
                 out = {"draft": save_draft, "critique": save_critique, "revise": save_revision}[kind](s, text)

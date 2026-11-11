@@ -1,0 +1,20 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+import qmnt
+z = qmnt.zeros(700)
+def Nsm(E): return E/(2*np.pi)*np.log(E/(2*np.pi)) - E/(2*np.pi) + 7/8
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))
+t = np.linspace(7.0, 80.0, 3000)
+a1.plot(t, np.searchsorted(z, t, side="right"), "k", lw=1.2, label="$N(t)$")
+a1.plot(t, Nsm(t), "C0--", lw=1, label=r"$N_{\rm sm}$")
+a1.plot(t, Nsm(t) + 1/8, "C3", lw=1, label=r"$N_{\rm BK}$")
+a1.set_xlabel("height $t$ (dimensionless)"); a1.set_ylabel("count")
+a1.legend(fontsize=7)
+t2 = np.linspace(20.0, 1000.0, 20000)
+N2 = np.searchsorted(z, t2, side="right")
+a2.plot(t2, N2 - Nsm(t2), color="C0", lw=0.4, label=r"$N-N_{\rm sm}$")
+a2.plot(t2, N2 - Nsm(t2) - 1/8, color="C3", lw=0.4, alpha=0.6, label=r"$N-N_{\rm BK}$")
+a2.axhline(0, color="k", lw=0.8); a2.axhline(-1/8, color="k", ls="--", lw=0.8)
+a2.set_xlabel("height $t$ (dimensionless)"); a2.set_ylabel("difference (zeros)")
+a2.legend(fontsize=7, loc="lower right")
+plt.tight_layout()
+plt.savefig("hilbert-polya_bk.pdf", bbox_inches="tight")

@@ -7,6 +7,7 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools,bm}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{float}
 \usepackage{siunitx}
 \usepackage{xcolor}
 \usepackage{listings}
@@ -35,8 +36,8 @@
 
 % ---------- boxes
 \newtcolorbox{chapterintro}{colback=keyc!4,colframe=keyc!60,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,fonttitle=\bfseries,title=What this chapter is about}
-\newtcolorbox{prerequisites}{colback=white,colframe=keyc!40,boxrule=0.4pt,arc=2pt,fonttitle=\bfseries\small,title=What you need,fontupper=\small}
-\newtcolorbox{keyideas}{colback=keyc!6,colframe=keyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Key Ideas,breakable}
+\newtcolorbox{prerequisites}{colback=white,colframe=keyc!40,boxrule=0.4pt,arc=2pt,fonttitle=\bfseries\small,title=What you need,fontupper=\small,before upper={\begin{itemize}[leftmargin=*,itemsep=1pt]},after upper={\end{itemize}}}
+\newtcolorbox{keyideas}{colback=keyc!6,colframe=keyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Key Ideas,breakable,before upper={\begin{itemize}[leftmargin=*,itemsep=2pt]},after upper={\end{itemize}}}
 \newcounter{sample}[chapter]
 \renewcommand{\thesample}{\thechapter.\arabic{sample}}
 \newtcolorbox{sample}[1]{colback=samc!4,colframe=samc,boxrule=0.6pt,arc=2pt,breakable,fonttitle=\bfseries,
@@ -78,3 +79,19 @@
 \newcommand{\rms}{\mathrm{rms}}
 \newcommand{\corr}{\mathrm{corr}}
 \newcommand{\order}{\mathcal{O}}
+
+% ---------- stray Unicode in model output
+\DeclareUnicodeCharacter{03C0}{\ensuremath{\pi}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{2026}{\ldots}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03C9}{\ensuremath{\omega}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{221A}{\ensuremath{\surd}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}

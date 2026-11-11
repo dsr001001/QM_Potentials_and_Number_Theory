@@ -1,0 +1,8 @@
+exit code 1
+all checks passed
+passed assertions: 90; failures: 3
+EXCEPTION in statement at line 138: TypeError: only 0-dimensional arrays can be converted to Python scalars | tp = np.array([pred(k, s0, g0) for k, s0, g0 in zip(n, sa, ga)])
+EXCEPTION in statement at line 139: NameError: name 'tp' is not defined | rB, cB = qmnt.score(tp, n)
+EXCEPTION in statement at line 140: NameError: name 'rB' is not defined | assert rB < 0.074 and cB > 0.95
+
+STDERR (tail):

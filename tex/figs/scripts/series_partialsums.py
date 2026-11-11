@@ -1,0 +1,20 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+n = np.arange(1, 41)
+geo = np.cumsum(0.5**(n - 1))
+harm = np.cumsum(1.0 / n)
+z2 = np.cumsum(1.0 / n**2)
+alt = np.cumsum((-1.0)**(n + 1) / n)
+gamma = 0.5772156649
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.plot(n, harm, "o-", ms=3, label=r"harmonic $\sum 1/k$")
+ax.plot(n, np.log(n) + gamma, "--", color="C0", lw=1, label=r"$\log n+\gamma$")
+ax.plot(n, geo, "s-", ms=3, color="C1", label=r"geometric $\sum 2^{-(k-1)}$")
+ax.plot(n, z2, "^-", ms=3, color="C2", label=r"$\sum 1/k^2$")
+ax.plot(n, alt, "d-", ms=3, color="C3", label=r"alternating $\sum (-1)^{k+1}/k$")
+for y in [2.0, np.pi**2 / 6, np.log(2)]:
+    ax.axhline(y, color="gray", lw=0.8)
+ax.set_xlabel(r"number of terms $n$ (dimensionless)")
+ax.set_ylabel(r"partial sum $S_n$ (dimensionless)")
+ax.legend(fontsize=8, loc="upper left")
+ax.set_xlim(0, 41)
+plt.savefig("series_partialsums.pdf", bbox_inches="tight")

@@ -1,0 +1,21 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+
+r1 = np.linspace(-0.7, 0.7, 281)
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))
+a1.plot(r1, np.sqrt(2)*r1, label="neighbor mean")
+a1.plot(r1, np.sqrt(2)*np.abs(r1), "--", label="two-neighbor kriging")
+a1.axhline(0, color="k", lw=0.5)
+a1.axvline(-0.287, color="0.4", ls=":", lw=1)
+a1.set_xlabel(r"lag-1 correlation $\rho_1$")
+a1.set_ylabel("correlation with truth")
+a1.legend(fontsize=7)
+
+a2.plot(r1, np.sqrt(1.5 - 2*r1), label="neighbor mean")
+a2.plot(r1, np.sqrt(1 - 2*r1**2), "--", label="two-neighbor kriging")
+a2.axhline(1, color="k", ls=":", lw=1, label="null")
+a2.axvline(-0.287, color="0.4", ls=":", lw=1)
+a2.set_xlabel(r"lag-1 correlation $\rho_1$")
+a2.set_ylabel("rms / null rms")
+a2.legend(fontsize=7)
+plt.tight_layout()
+plt.savefig("generalization_kriging.pdf", bbox_inches="tight")

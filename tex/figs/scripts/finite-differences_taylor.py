@@ -1,0 +1,15 @@
+import numpy as np, matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+x0 = 1.0
+hs = np.logspace(-5.5, np.log10(0.5), 70)
+err = np.abs((np.sin(x0 + hs) - 2*np.sin(x0) + np.sin(x0 - hs))/hs**2 + np.sin(x0))
+pred = hs**2/12*np.sin(x0)
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.loglog(hs, err, 'o', ms=3, label='actual error (double precision)')
+ax.loglog(hs, pred, '-', label=r'truncation estimate $h^2\sin(1)/12$')
+ax.loglog(hs, 2.2e-16/hs**2, ':', label=r'roundoff scale $\epsilon/h^2$')
+ax.set_xlabel(r'step $h$ (dimensionless)')
+ax.set_ylabel(r'$|D_h^2\sin(1)-\sin''(1)|$')
+ax.set_ylim(1e-12, 1e-1)
+ax.legend(fontsize=8)
+ax.grid(True, which='both', alpha=0.3)
+plt.savefig("finite-differences_taylor.pdf", bbox_inches="tight")
