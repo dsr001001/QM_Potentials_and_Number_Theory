@@ -1,74 +1,462 @@
 {
  "patches": [
   {
-   "old": "\\begin{prerequisites}\n\\item Chapter~\\ref{ch:fourier-transform}:",
-   "new": "\\begin{prerequisites}\n\\begin{itemize}\n\\item Chapter~\\ref{ch:fourier-transform}:"
+   "old": "told only that it was made by \"a few tuning forks\", you can recover",
+   "new": "told only that it was made by ``a few tuning forks'', you can recover"
   },
   {
-   "old": "\\item First-year physics: sinusoids, superposition, beats.\n\\end{prerequisites}",
-   "new": "\\item First-year physics: sinusoids, superposition, beats.\n\\end{itemize}\n\\end{prerequisites}"
+   "old": "We derive why the first and third generalize to unseen zeros and the second does not, how precisely a frequency can be learned",
+   "new": "We explain, with exact structural facts where available and labelled heuristics elsewhere, why the first and third are observed to generalize to unseen zeros and the second is not, how precisely a frequency can be learned"
   },
   {
-   "old": "Why does an underdetermined fit still predict something? Because every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies. Whatever it does in the window, it keeps doing at the right frequencies outside the window.",
-   "new": "Why does an underdetermined fit still predict something? The paper reports the numbers but does not offer an explanation; what follows is our heuristic reading. Every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies, so whatever pattern it fits in the window is continued at the right frequencies outside it. This is not a guarantee: large, partly cancelling amplitudes that cancel only inside the window can extrapolate badly, and the degradation of this row from $0.028$ to $0.180$ shows that some such damage does occur."
+   "old": "how to decide whether a learned frequency \"is\" the logarithm",
+   "new": "how to decide whether a learned frequency ``is'' the logarithm"
   },
   {
-   "old": "(both exist for $\\mu>0$, since $X^\\top X$ and $XX^\\top$ have no negative eigenvalues):",
-   "new": "(both exist for $\\mu>0$. To see this for the first, take any nonzero vector $\\bm v$; then $\\bm v^\\top(X^\\top X+\\mu I)\\bm v=\\norm{X\\bm v}^2+\\mu\\norm{\\bm v}^2>0$, so $(X^\\top X+\\mu I)\\bm v\\ne\\bm 0$. No nonzero vector is sent to zero, so zero is not an eigenvalue and the square matrix is invertible (Chapter~\\ref{ch:eigen}). The same argument with $X^\\top$ in place of $X$ covers $XX^\\top+\\mu I$):"
+   "old": "these are the \"fitted sinusoidal controls\" of Sec.~II~D of the paper",
+   "new": "these are the ``fitted sinusoidal controls'' of Sec.~II~D of the paper"
   },
   {
-   "old": "a narrow central peak of height 450 and half-width about $0.39$ in $t$.",
-   "new": "a narrow central peak of height 450 whose first zero lies at $\\tau\\approx0.39$ in $t$."
+   "old": "the paragraph \"Comparable budgets and fitted controls\" of Sec.~IV;",
+   "new": "the paragraph ``Comparable budgets and fitted controls'' of Sec.~IV;"
   },
   {
-   "old": "C1 is, in effect, a \\emph{local interpolator plus a periodic copying rule}.",
-   "new": "Our interpretation of the kernel form (it is not an analysis given in the paper) is that C1 acts, in effect, as a \\emph{local interpolator plus a periodic copying rule}; how strongly each part acts depends on the weights $\\alpha_n$, which the ridge strength shrinks."
+   "old": "They are what lets the paper say that \"the obstacle is the parametrization, not the parameter count\".",
+   "new": "They are what lets the paper say that ``the obstacle is the parametrization, not the parameter count''."
   },
   {
-   "old": "The second is a sum of unit-size phasors rotating at frequency $2\\omega_0$; over many periods they largely cancel, leaving something of order 1, not of order $n_{\\rm fit}$. Neglecting it,",
-   "new": "The second is a sum of unit-size phasors rotating at frequency $2\\omega_0$. To see that it stays small, assume, as an idealization (the zeros are in fact denser at greater height), that the samples are equally spaced, $t_n=t_1+(n-1)\\Delta$. Then, apart from the constant factor $e^{-2\\ii\\omega_0t_1}$ of modulus 1, the second sum is a geometric series with ratio $z=e^{-2\\ii\\omega_0\\Delta}$, and\n$$\\Bigl|\\sum_{n=1}^{n_{\\rm fit}}z^{n-1}\\Bigr|=\\frac{\\abs{1-z^{n_{\\rm fit}}}}{\\abs{1-z}}\\le\\frac{2}{2\\abs{\\sin(\\omega_0\\Delta)}}=\\frac{1}{\\abs{\\sin(\\omega_0\\Delta)}},$$\nusing $\\abs{1-z^{n_{\\rm fit}}}\\le2$ and $\\abs{1-e^{\\ii\\theta}}=2\\abs{\\sin(\\theta/2)}$ with $\\theta=-2\\omega_0\\Delta$. The bound does not grow with $n_{\\rm fit}$ (unless $\\omega_0\\Delta$ is close to a multiple of $\\pi$), while the first term grows like $n_{\\rm fit}$. For the irregular zeros we carry the same conclusion over as a heuristic. Neglecting the second term,"
+   "old": "(Angular frequency \"in $t$\" means",
+   "new": "(Angular frequency ``in $t$'' means"
   },
   {
-   "old": "Replacing the sum by $(n_{\\rm fit}/T)$ times the integral over the window, as in \\eqref{eq:sparse-frequency-orth}, its magnitude is $\\tfrac A2n_{\\rm fit}\\abs{\\sin(\\delta T/2)/(\\delta T/2)}$, so",
-   "new": "Replace the sum by $(n_{\\rm fit}/T)$ times the integral over the window, as in \\eqref{eq:sparse-frequency-orth}. With $u=t-t_c$,\n$$\\frac1T\\int_{t_c-T/2}^{t_c+T/2}e^{-\\ii\\delta t}\\,\\dd t=\\frac{e^{-\\ii\\delta t_c}}{T}\\int_{-T/2}^{T/2}e^{-\\ii\\delta u}\\,\\dd u=\\frac{e^{-\\ii\\delta t_c}}{T}\\,\\frac{e^{-\\ii\\delta T/2}-e^{\\ii\\delta T/2}}{-\\ii\\delta}=e^{-\\ii\\delta t_c}\\,\\frac{\\sin(\\delta T/2)}{\\delta T/2},$$\nwhere the last step uses $e^{-\\ii a}-e^{\\ii a}=-2\\ii\\sin a$ with $a=\\delta T/2$. Since $\\abs{e^{-\\ii\\delta t_c}}=1$, the magnitude of the surviving term is $\\tfrac A2n_{\\rm fit}\\abs{\\sin(\\delta T/2)/(\\delta T/2)}$, so"
+   "old": "To first order in $\\hat t_n-t_n$, the left side is $(\\hat t_n-t_n)/\\gap_n$ by \\eqref{eq:sparse-frequency-slope-gap}, and $F(\\hat t_n)",
+   "new": "To first order in $\\hat t_n-t_n$, the left side is $\\Nsm'(t_n)(\\hat t_n-t_n)$. The slope $\\Nsm'(t_n)$ differs from $\\Nsm'(s_n)=1/\\gap_n$ of \\eqref{eq:sparse-frequency-slope-gap} by about $\\Nsm''\\cdot(t_n-s_n)$, and since $\\Nsm''=1/(2\\pi t)$ is tiny this is a small relative change: for a displacement of one spacing at zero 400 it is $1.34/(2\\pi\\cdot680\\cdot0.745)\\approx4\\times10^{-4}$, using $\\Nsm'(680)\\approx0.745$ (computed in \\cref{sec:sparse-frequency-roots}). So the left side is $(\\hat t_n-t_n)/\\gap_n$, and $F(\\hat t_n)"
   },
   {
-   "old": "The two samples below show, in tiny dimensions, why the joint refit matters.",
-   "new": "Each element of the dictionary is called an \\textbf{atom}. The two samples below work in tiny dimensions: the first shows the orthonormal case, where plain and orthogonal pursuit agree; the second shows, with overlapping atoms, why the joint refit matters."
+   "old": "When $\\abs{F'}\\gap_n\\ll1$, the error of the predicted zero in mean spacings is just the fitting residual $y_n-F(t_n)$. We will meet the condition on $F'$ again in \\cref{sec:sparse-frequency-roots}, where it decides whether \\eqref{eq:sparse-frequency-level} has one root or several.",
+   "new": "In general the denominator $1+F'(t_n)\\gap_n$ must be kept. Only when $\\abs{F'}\\gap_n\\ll1$ is the error of the predicted zero, in mean spacings, simply the fitting residual $y_n-F(t_n)$, and for an accurate model this condition fails. The function being approximated, $S(t)$, is a staircase. Between zeros it falls with slope $-\\Nsm'(t)\\approx-1/\\gap$, and at each zero it jumps up by 1. A smooth approximation to it therefore falls between zeros and rises steeply near each zero, so at a zero $F'(t_n)\\gap_n$ is typically positive and of order one or larger. The zero error is then smaller than the residual. The residual is thus only a proxy for the paper's score, which is computed from the solved zeros $\\hat t_n$. We will compare $F'$ with $\\Nsm'$ again in \\cref{sec:sparse-frequency-roots}, where the comparison decides whether \\eqref{eq:sparse-frequency-level} has one root or several."
   },
   {
-   "old": "\\emph{Step 5: why the phase does not interfere.} If $\\varphi$ is fitted too, its sensitivity is $A\\cos(\\omega_0u_n+\\varphi)$, and its overlap with $g_n$ is $A^2\\sum_nu_n\\cos^2(\\cdot)\\approx\\tfrac{A^2}{2}\\sum_nu_n\\approx0$ because $u$ is measured from the window centre. The two parameters decouple, which is why we centred the time variable.",
-   "new": "\\emph{Step 5: why the phase does not interfere.} If $\\varphi$ is fitted too, linearize in both parameters: the model changes by $g_n\\,\\delta\\omega+h_n\\,\\delta\\varphi$ with $h_n=A\\cos(\\omega_0u_n+\\varphi)$. Least squares for $(\\delta\\omega,\\delta\\varphi)$ then gives the $2\\times2$ normal equations\n\\begin{equation}\n\\begin{pmatrix}\\sum_ng_n^2&\\sum_ng_nh_n\\\\ \\sum_ng_nh_n&\\sum_nh_n^2\\end{pmatrix}\\begin{pmatrix}\\delta\\omega\\\\ \\delta\\varphi\\end{pmatrix}=\\begin{pmatrix}\\sum_ng_nd_n\\\\ \\sum_nh_nd_n\\end{pmatrix}.\n\\end{equation}\nThe off-diagonal entry is $\\sum_ng_nh_n=A^2\\sum_nu_n\\cos^2(\\omega_0u_n+\\varphi)=\\tfrac{A^2}{2}\\sum_nu_n+\\tfrac{A^2}{2}\\sum_nu_n\\cos\\bigl(2(\\omega_0u_n+\\varphi)\\bigr)$. The first sum is close to zero because $u$ is measured from the window centre, so positive and negative $u_n$ cancel; the second oscillates and is small compared with the diagonal entries. Neglecting the off-diagonal entry, the matrix is diagonal, and its first row reads $\\bigl(\\sum_ng_n^2\\bigr)\\delta\\omega=\\sum_ng_nd_n$, exactly the one-parameter equation of Step 2. The variance of Step 3 is therefore unchanged. The two parameters decouple, which is why we centred the time variable."
+   "old": "In between sits a model told only \"the answer is a sum of a few sinusoids in $t$\".",
+   "new": "In between sits a model told only ``the answer is a sum of a few sinusoids in $t$''."
   },
   {
-   "old": "For the 400-zero window the centre is near $t_c\\approx(14+680)/2=347$, and zero 2000 sits near $t\\approx2515$, about $2170$ units away.",
-   "new": "For the 400-zero window the centre is near $t_c\\approx(14+680)/2=347$, and zero 2000 sits near $t\\approx2515$ (values computed with \\texttt{qmnt.zeros}), about $2170$ units away."
+   "old": "only \"few frequencies\" (sparsity)",
+   "new": "only ``few frequencies'' (sparsity)"
   },
   {
-   "old": "Why half? The resolution $2\\pi/T$ is the width of the region in which the window cannot distinguish frequencies; a learned frequency is only meaningful to within that cell, and requiring it to fall within half a cell of $\\log q$ means that $\\log q$ lies inside the cell centred on $\\omega$.",
-   "new": "This tolerance is a convention of the paper, not something derived from first principles. Its meaning is as follows. Frequencies closer than about one resolution cell, $2\\pi/T$, cannot be separated by the window (\\cref{sec:sparse-frequency-known}), so a learned frequency is only meaningful to within such a cell. Draw a cell of width $2\\pi/T$ centred on $\\omega$: it extends $\\pi/T$ on each side, so \\eqref{eq:sparse-frequency-match} says precisely that $\\log q$ lies inside the cell centred on $\\omega$. A wider tolerance would admit more chance matches (see below); a narrower one would reject frequencies that are correct to within what the window can resolve."
+   "old": "\\frac1n\\sum_n\\sin(\\omega_i t_n)\\sin(\\omega_j t_n)=\\frac12\\Bigl[\\frac1n\\sum_n\\cos(\\delta_-t_n)-\\frac1n\\sum_n\\cos(\\delta_+t_n)\\Bigr]",
+   "new": "\\frac{1}{n_{\\rm fit}}\\sum_n\\sin(\\omega_i t_n)\\sin(\\omega_j t_n)=\\frac12\\Bigl[\\frac{1}{n_{\\rm fit}}\\sum_n\\cos(\\delta_-t_n)-\\frac{1}{n_{\\rm fit}}\\sum_n\\cos(\\delta_+t_n)\\Bigr]"
   },
   {
-   "old": "\\item The $\\log q$ crowd together at high $\\omega$ (density about $e^\\omega/\\omega$), so chance matching must be controlled; the paper's surrogate check is cutoff-free but exploratory.",
-   "new": "\\item The $\\log q$ crowd together at high $\\omega$ (density about $e^\\omega/\\omega$; for $T\\approx666$ a cell of width $2\\pi/T$ expects at least one $\\log p$ above $\\omega\\approx6.5$), so chance matching must be controlled; the paper's surrogate check is cutoff-free but exploratory."
+   "old": "is an average such as $\\frac1n\\sum_n",
+   "new": "is an average such as $\\frac{1}{n_{\\rm fit}}\\sum_n"
   },
   {
-   "old": "because the explicit formula says the fluctuation is (approximately) exactly this kind of function.",
-   "new": "because the explicit formula says, heuristically, that the fluctuation is approximately this kind of function (recall from Chapter~\\ref{ch:explicit-formula} that the prime sum does not converge on the critical line, and that its truncations are approximations whose accuracy is established numerically, as in Table~V)."
+   "old": "Fitting the amplitudes helps because the truncated formula leaves out everything beyond $p\\le97$ and $m\\le3$; fitted amplitudes can partly absorb leftover structure at nearby frequencies.",
+   "new": "A plausible reading (ours, not the paper's, and not tested here) is that fitting the amplitudes helps since the truncated formula leaves out everything beyond $p\\le97$ and $m\\le3$, and fitted amplitudes can partly absorb leftover structure at nearby frequencies."
   },
   {
-   "old": "\\textbf{19.} You should reproduce Table~V's six-prime entry on 401–500",
-   "new": "\\textbf{19.} You should reproduce Table~V's six-prime entry on 401--500"
+   "old": "With 800 training zeros the same 900-coefficient model improves to $0.100$/$+0.94$, as more data pin the amplitudes.",
+   "new": "With 800 training zeros the same 900-coefficient model scores $0.100$/$+0.94$ on the different holdout 801--1000 (null $0.274$), plausibly because more data constrain the amplitudes."
+  },
+  {
+   "old": "\\item Control B is told the frequencies $m\\log p$. Even underdetermined, it keeps positive skill, because every member of its family oscillates at the right frequencies forever.",
+   "new": "\\item Control B is told the frequencies $m\\log p$. Even underdetermined, it keeps positive skill in the paper's Table~IV; a heuristic reason is that every member of its family oscillates at the right frequencies."
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Periodograms for Messy Data}\nAstronomers rarely get evenly spaced data, because clouds, daylight and seasons interrupt observing. Nicholas Lomb in 1976 and Jeffrey Scargle in 1982 developed a periodogram that fits sinusoids directly to irregularly timed points. The Lomb-Scargle periodogram is now used to find periods of variable stars and exoplanet signals by scanning a dense grid of trial frequencies.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "against a null of $0.263$; with 800 training zeros, $0.267$/$+0.22$ on 801--1000 against $0.274$. It \"stays within $0.005$ of the null\". Why does",
+   "new": "against a null of $0.263$, so it ``stays within $0.005$ of the null'' (Sec.~IV). With 800 training zeros it scores $0.267$/$+0.22$ on 801--1000, which lies $0.007$ below its null $0.274$. Why does"
+  },
+  {
+   "old": "Shift $t$ by $P=2\\pi/\\Delta\\omega$:\n\\begin{equation}\n\\sin\\bigl(\\omega_j(t+P)\\bigr)=\\sin\\bigl(\\omega_jt+j\\Delta\\omega\\cdot\\tfrac{2\\pi}{\\Delta\\omega}\\bigr)=\\sin(\\omega_jt+2\\pi j)=\\sin(\\omega_jt),\n\\end{equation}\nand likewise for cosine. Every term repeats after $P$, so the whole model does:\n\\begin{equation}\nF(t+P)=F(t),\\qquad P=\\frac{2\\pi}{\\Delta\\omega}=2\\pi\\cdot\\frac{450}{8}\\approx353.4 .\n\\label{eq:sparse-frequency-period}\n\\end{equation}\n\\emph{Whatever} amplitudes are fitted, the C1 model is a periodic function with period about $353.4$ in $t$. The true fluctuation is not periodic: it is a sum of sinusoids at the mutually incommensurate frequencies $\\log q$, an almost-periodic function that never repeats (Chapter~\\ref{ch:fourier-series}).",
+   "new": "Shift $t$ by $T_{\\rm rep}=2\\pi/\\Delta\\omega$. (We write $T_{\\rm rep}$, for ``repeat'', to keep $P$ for the prime set and $T$ for the window length.)\n\\begin{equation}\n\\sin\\bigl(\\omega_j(t+T_{\\rm rep})\\bigr)=\\sin\\bigl(\\omega_jt+j\\Delta\\omega\\cdot\\tfrac{2\\pi}{\\Delta\\omega}\\bigr)=\\sin(\\omega_jt+2\\pi j)=\\sin(\\omega_jt),\n\\end{equation}\nand likewise for cosine. Every term repeats after $T_{\\rm rep}$, so the whole model does too:\n\\begin{equation}\nF(t+T_{\\rm rep})=F(t),\\qquad T_{\\rm rep}=\\frac{2\\pi}{\\Delta\\omega}=2\\pi\\cdot\\frac{450}{8}\\approx353.4 .\n\\label{eq:sparse-frequency-period}\n\\end{equation}\n\\emph{Whatever} amplitudes are fitted, the C1 model is a periodic function with period about $353.4$ in $t$. The true fluctuation is not periodic. It is a sum of sinusoids whose base frequencies $\\log p$, for distinct primes $p$, are mutually incommensurate, together with their harmonics $m\\log p$. The base frequencies are incommensurate because $\\log p/\\log p'=a/b$ with integers $a,b$ would give $p^b=p'^a$, which is impossible for distinct primes by unique factorization (Chapter~\\ref{ch:primes}). Such a sum is almost periodic and never repeats (Chapter~\\ref{ch:fourier-series})."
+  },
+  {
+   "old": "The ridge solution with strength $\\mu$ (in the paper's form, $\\mu=\\lambda\\sigma_1^2$) is $\\bm c=(X^\\top X+\\mu I)^{-1}X^\\top\\bm y$. We now rewrite it.\n\nStart from the identity\n\\begin{equation}\n(X^\\top X+\\mu I)X^\\top = X^\\top XX^\\top+\\mu X^\\top = X^\\top(XX^\\top+\\mu I).\n\\end{equation}\nMultiply on the left by $(X^\\top X+\\mu I)^{-1}$ and on the right by $(XX^\\top+\\mu I)^{-1}$ (both exist for $\\mu>0$. To see this for the first, take any nonzero vector $\\bm v$; then $\\bm v^\\top(X^\\top X+\\mu I)\\bm v=\\norm{X\\bm v}^2+\\mu\\norm{\\bm v}^2>0$, so $(X^\\top X+\\mu I)\\bm v\\ne\\bm 0$. No nonzero vector is sent to zero, so zero is not an eigenvalue and the square matrix is invertible (Chapter~\\ref{ch:eigen}). The same argument with $X^\\top$ in place of $X$ covers $XX^\\top+\\mu I$):\n\\begin{equation}\nX^\\top(XX^\\top+\\mu I)^{-1}=(X^\\top X+\\mu I)^{-1}X^\\top .\n\\end{equation}\nTherefore\n\\begin{equation}\n\\bm c=X^\\top\\bm\\alpha,\\qquad \\bm\\alpha=(XX^\\top+\\mu I)^{-1}\\bm y ,",
+   "new": "Write $\\kappa=\\lambda\\sigma_1^2$. The ridge solution with filter factors $\\sigma_i/(\\sigma_i^2+\\kappa)$, which are those of \\eqref{eq:sparse-frequency-ridge}, is $\\bm c=(X^\\top X+\\kappa I)^{-1}X^\\top\\bm y$. (We avoid the symbol $\\mu$ here, because the paper uses $\\mu$ for the dimensionless ridge strength that multiplies $\\sigma_1^2$.) We now rewrite this solution.\n\nFirst, both $X^\\top X+\\kappa I$ and $XX^\\top+\\kappa I$ are invertible for $\\kappa>0$. To see this for the first, take any nonzero vector $\\bm v$. Then $\\bm v^\\top(X^\\top X+\\kappa I)\\bm v=\\norm{X\\bm v}^2+\\kappa\\norm{\\bm v}^2>0$, so $(X^\\top X+\\kappa I)\\bm v\\ne\\bm 0$. No nonzero vector is sent to zero, so zero is not an eigenvalue, and the square matrix is invertible (Chapter~\\ref{ch:eigen}). The same argument with $X^\\top$ in place of $X$ covers $XX^\\top+\\kappa I$.\n\nNext, start from the identity\n\\begin{equation}\n(X^\\top X+\\kappa I)X^\\top = X^\\top XX^\\top+\\kappa X^\\top = X^\\top(XX^\\top+\\kappa I).\n\\end{equation}\nMultiply on the left by $(X^\\top X+\\kappa I)^{-1}$ and on the right by $(XX^\\top+\\kappa I)^{-1}$:\n\\begin{equation}\nX^\\top(XX^\\top+\\kappa I)^{-1}=(X^\\top X+\\kappa I)^{-1}X^\\top .\n\\end{equation}\nTherefore\n\\begin{equation}\n\\bm c=X^\\top\\bm\\alpha,\\qquad \\bm\\alpha=(XX^\\top+\\kappa I)^{-1}\\bm y ,"
+  },
+  {
+   "old": "\\equiv K(t-t_n).",
+   "new": "\\equiv D(t-t_n)."
+  },
+  {
+   "old": "F(t)=\\sum_{n=1}^{n_{\\rm fit}}\\alpha_n\\,K(t-t_n),\\qquad K(\\tau)=\\sum_{j=1}^{J}\\cos(j\\Delta\\omega\\,\\tau).",
+   "new": "F(t)=\\sum_{n=1}^{n_{\\rm fit}}\\alpha_n\\,D(t-t_n),\\qquad D(\\tau)=\\sum_{j=1}^{J}\\cos(j\\Delta\\omega\\,\\tau)."
+  },
+  {
+   "old": "copies of one fixed shape $K$, called the \\textbf{kernel}",
+   "new": "copies of one fixed shape $D$, called the \\textbf{kernel} (we write $D$ rather than $K$, which denotes the number of selected frequencies)"
+  },
+  {
+   "old": "This is a geometric series (Chapter~\\ref{ch:series}) with first term $e^{-\\ii Jx}$, ratio $e^{\\ii x}$ and $2J+1$ terms:",
+   "new": "This is a geometric series (Chapter~\\ref{ch:series}) with first term $e^{-\\ii Jx}$, ratio $e^{\\ii x}$ and $2J+1$ terms. For $x$ not a multiple of $2\\pi$ the ratio is not 1, and the sum is as follows. (At multiples of $2\\pi$ every term is 1 and the sum is $2J+1$.)"
+  },
+  {
+   "old": "K(\\tau)=\\frac12\\left[",
+   "new": "D(\\tau)=\\frac12\\left["
+  },
+  {
+   "old": "This is the Dirichlet kernel. Its properties tell the whole story of C1:\n\\begin{itemize}\n\\item At $\\tau=0$, both sines vanish; their ratio tends to $(J+\\frac12)\\Delta\\omega\\tau/(\\Delta\\omega\\tau/2)=2J+1$, so $K(0)=J=450$.\n\\item The central peak is narrow: the numerator first vanishes at $\\tau=\\pi/\\bigl((J+\\frac12)\\Delta\\omega\\bigr)=\\pi/8.009\\approx0.39$, where $K=-\\frac12$, tiny compared with the peak.\n\\item Away from the peak, for $\\Delta\\omega\\abs\\tau\\ll1$, $\\sin(\\Delta\\omega\\tau/2)\\approx\\Delta\\omega\\tau/2$, so $K$ oscillates with an envelope falling like $1/(\\Delta\\omega\\abs\\tau)$: slowly, but steadily.\n\\item $K$ repeats with period $P\\approx353.4$, as it must by Fact 1.",
+   "new": "This is the Dirichlet kernel. Its properties explain the structure of C1:\n\\begin{itemize}\n\\item At $\\tau=0$, both sines vanish; their ratio tends to $(J+\\frac12)\\Delta\\omega\\tau/(\\Delta\\omega\\tau/2)=2J+1$, so $D(0)=J=450$.\n\\item The central peak is narrow. The numerator first vanishes at $\\tau=\\pi/\\bigl((J+\\frac12)\\Delta\\omega\\bigr)=\\pi/8.009\\approx0.39$, where $D=-\\frac12$, tiny compared with the peak.\n\\item Away from the peak, for $\\Delta\\omega\\abs\\tau\\ll1$, $\\sin(\\Delta\\omega\\tau/2)\\approx\\Delta\\omega\\tau/2$, so $D$ oscillates with an envelope falling like $1/(\\Delta\\omega\\abs\\tau)$: slowly, but steadily.\n\\item $D$ repeats with period $T_{\\rm rep}\\approx353.4$, as it must by Fact 1."
+  },
+  {
+   "old": "\\caption{The kernel $K(\\tau)=\\sum_{j=1}^{450}\\cos(j\\Delta\\omega\\,\\tau)$ of the dense uniform-grid model C1, $\\Delta\\omega=8/450$. (a)~Near $\\tau=0$: a narrow central peak of height 450 whose first zero lies at $\\tau\\approx0.39$ in $t$. (b)~Over a long range: the peak recurs at $\\tau=P\\approx353.4$, because every grid frequency is a multiple of $\\Delta\\omega$. By \\eqref{eq:sparse-frequency-kernel}, the fitted C1 model at height $t$ is built from training values near $t$ and near its periodic images $t\\pm P,\\ t\\pm2P,\\dots$}",
+   "new": "\\caption{The kernel $D(\\tau)=\\sum_{j=1}^{450}\\cos(j\\Delta\\omega\\,\\tau)$ of the dense uniform-grid model C1, $\\Delta\\omega=8/450$. (a)~Near $\\tau=0$: a narrow central peak of height 450 whose first zero lies at $\\tau\\approx0.39$ in $t$. (b)~Over a long range: the peak recurs at $\\tau=T_{\\rm rep}\\approx353.4$, because every grid frequency is a multiple of $\\Delta\\omega$. By \\eqref{eq:sparse-frequency-kernel}, the fitted C1 model at height $t$ is built from training values near $t$ and near its periodic images $t\\pm T_{\\rm rep},\\ t\\pm2T_{\\rm rep},\\dots$}"
+  },
+  {
+   "old": "or of one of its images $t-P$, $t-2P$, and so on.",
+   "new": "or of one of its images $t-T_{\\rm rep}$, $t-2T_{\\rm rep}$, and so on."
+  },
+  {
+   "old": "That is the sense in which it \"behaves like a generic basis\":",
+   "new": "That is the sense in which it ``behaves like a generic basis'':"
+  },
+  {
+   "old": "(c)~How many periods of the $p=2$ wave fit into one period $P$ of the C1 model?",
+   "new": "(c)~How many periods of the $p=2$ wave fit into one period $T_{\\rm rep}$ of the C1 model?"
+  },
+  {
+   "old": "\\textbf{Step 3: periods.} $P/(2\\pi/\\log2)=P\\log2/(2\\pi)=(450/8)\\log2=38.99$.",
+   "new": "\\textbf{Step 3: periods.} $T_{\\rm rep}/(2\\pi/\\log2)=T_{\\rm rep}\\log2/(2\\pi)=(450/8)\\log2=38.99$."
+  },
+  {
+   "old": "P\\ \\text{holds}\\ 38.99",
+   "new": "T_{\\rm rep}\\ \\text{holds}\\ 38.99"
+  },
+  {
+   "old": "unless $\\log2$ were a rational multiple of $\\Delta\\omega$",
+   "new": "unless $\\log2$ were an integer multiple of $\\Delta\\omega$"
+  },
+  {
+   "old": "\"The dense grid contains frequencies near every $\\log q$, so it contains the answer.\" Containing approximately the right frequencies is not enough: the fit must also \\emph{prefer} them. With more coefficients than data, infinitely many coefficient vectors fit the window exactly (Chapter~\\ref{ch:least-squares}), and the ridge solution picks the one of smallest norm, which spreads weight over all 450 frequencies rather than concentrating it on the few that are right.",
+   "new": "``The dense grid contains frequencies near every $\\log q$, so it contains the answer.'' Containing approximately the right frequencies is not enough: the fit must also \\emph{prefer} them. With more coefficients than data, infinitely many coefficient vectors fit the window exactly (Chapter~\\ref{ch:least-squares}). As the ridge strength tends to zero, the ridge solution tends to the exact fit of smallest norm. For positive strength it trades a little misfit for an even smaller norm. Either way the weight is spread over all 450 frequencies rather than concentrated on the few that are right."
+  },
+  {
+   "old": "lists C2 with \"72, 129\" parameters",
+   "new": "lists C2 with ``72, 129'' parameters"
+  },
+  {
+   "old": "\\includegraphics[width=0.75\\linewidth]{figs/sparse-frequency_pursuit.pdf}",
+   "new": "\\includegraphics[width=0.85\\linewidth]{figs/sparse-frequency_pursuit.pdf}"
+  },
+  {
+   "old": "Aliasing. For samples equally spaced by $\\Delta$, frequencies above $\\pi/\\Delta$ are indistinguishable from lower ones (Chapter~\\ref{ch:fourier-transform}).",
+   "new": "Aliasing. Take samples equally spaced by $\\Delta$, $t_n=n\\Delta$. Two frequencies that differ by $2\\pi/\\Delta$ give identical samples: $e^{\\ii(\\omega+2\\pi/\\Delta)t_n}=e^{\\ii\\omega t_n}e^{2\\pi\\ii n}=e^{\\ii\\omega t_n}$, because $n$ is an integer. Also, $-\\omega$ gives the same cosine samples as $\\omega$ and sine samples of opposite sign, and the free sign of a fitted amplitude absorbs that. So every frequency has an alias in $[0,\\pi/\\Delta]$, and frequencies above $\\pi/\\Delta$ cannot be told apart from lower ones."
+  },
+  {
+   "old": "simplification of the paper's scoring through root solving (by \\eqref{eq:sparse-frequency-errorlink} the two agree to first order).}",
+   "new": "simplification of the paper's scoring through root solving. By \\eqref{eq:sparse-frequency-errorlink} the zero error is the residual divided by $1+F'(t_n)\\gap_n$, so the residual is only a proxy for that score.}"
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{The Most Precise Measurement}\nFrequency is the quantity physicists measure best. Modern optical atomic clocks reach fractional uncertainties around $10^{-18}$, which corresponds to drifting less than a second over the age of the universe. Yet even they obey the basic rule of this section: to resolve two frequencies separated by $\\Delta f$, you must observe for a time of order $1/\\Delta f$.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "(for the zeros, \"error\" is everything other",
+   "new": "(for the zeros, ``error'' is everything other"
+  },
+  {
+   "old": "so $\\sum_nu_n^2\\approx n\\,T^2/12$ with $n$ the number of samples. Hence $\\sum_ng_n^2\\approx A^2nT^2/24$.",
+   "new": "so $\\sum_nu_n^2\\approx n_{\\rm fit}\\,T^2/12$, with $n_{\\rm fit}$ the number of samples. Hence $\\sum_ng_n^2\\approx A^2n_{\\rm fit}T^2/24$."
+  },
+  {
+   "old": "The variance of Step 3 is therefore unchanged. The two parameters decouple, which is why we centred the time variable.",
+   "new": "The variance of Step 3 is therefore unchanged. The two parameters decouple, which is why we centred the time variable. The same holds for the amplitude. The derivative of the model with respect to $A$ is $k_n=\\sin(\\omega_0u_n+\\varphi)$, and its cross term with $g_n$ is $\\sum_ng_nk_n=A\\sum_nu_n\\sin(\\omega_0u_n+\\varphi)\\cos(\\omega_0u_n+\\varphi)=\\tfrac A2\\sum_nu_n\\sin\\bigl(2(\\omega_0u_n+\\varphi)\\bigr)$. This is an oscillating sum, small for the same reason. Its cross term with $h_n$, $\\tfrac A2\\sum_n\\sin\\bigl(2(\\omega_0u_n+\\varphi)\\bigr)$, is small likewise. So $A$ decouples too, and fitting it does not change the variance of $\\widehat{\\delta\\omega}$ to this order."
+  },
+  {
+   "old": "\\mathrm{std}(\\widehat\\omega)\\approx\\frac{\\sqrt{24}\\,\\sigma}{A\\sqrt n\\,T}.",
+   "new": "\\mathrm{std}(\\widehat\\omega)\\approx\\frac{\\sqrt{24}\\,\\sigma}{A\\sqrt{n_{\\rm fit}}\\,T}."
+  },
+  {
+   "old": "like $1/\\sqrt n$ with the number of samples",
+   "new": "like $1/\\sqrt{n_{\\rm fit}}$ with the number of samples"
+  },
+  {
+   "old": "For the zeros the \"noise\" is the deterministic sum",
+   "new": "For the zeros the ``noise'' is the deterministic sum"
+  },
+  {
+   "old": "$n=400$ and $T=666$",
+   "new": "$n_{\\rm fit}=400$ and $T=666$"
+  },
+  {
+   "old": "\\textbf{Step 2: denominator.} $A\\sqrt n\\,T=",
+   "new": "\\textbf{Step 2: denominator.} $A\\sqrt{n_{\\rm fit}}\\,T="
+  },
+  {
+   "old": "and the fitted one $A\\sin(\\theta+\\phi)$ with the same amplitude and a frequency error $\\delta\\omega$. The phase error is then\n\\begin{equation}\n\\phi(t)=\\delta\\omega\\,(t-t_c),",
+   "new": "and the fitted one $A\\sin(\\theta+\\epsilon)$ with the same amplitude and a frequency error $\\delta\\omega$. The phase error is then\n\\begin{equation}\n\\epsilon(t)=\\delta\\omega\\,(t-t_c),"
+  },
+  {
+   "old": "\\emph{Prediction error.} Over a stretch of $t$ short enough that $\\phi$ is nearly constant but long enough to contain many periods, $\\theta$ sweeps uniformly through all angles. The difference between prediction and truth is\n\\begin{equation}\nA\\sin(\\theta+\\phi)-A\\sin\\theta=2A\\cos\\bigl(\\theta+\\tfrac\\phi2\\bigr)\\sin\\tfrac\\phi2\\quad\\text{($\\sin\\alpha-\\sin\\beta=2\\cos\\tfrac{\\alpha+\\beta}2\\sin\\tfrac{\\alpha-\\beta}2$)}.\n\\end{equation}\nThe mean of $\\cos^2$ over all angles is $\\tfrac12$, so the mean square error is $4A^2\\sin^2(\\phi/2)\\cdot\\tfrac12$, and\n\\begin{equation}\n\\text{rms error}=\\sqrt2\\,A\\,\\abs{\\sin(\\phi/2)} .\n\\end{equation}\nThe null prediction (zero) has rms error equal to the rms of $A\\sin\\theta$, which is $A/\\sqrt2$. The ratio is\n\\begin{equation}\n\\frac{\\text{rms error}}{\\text{null rms}}=2\\abs{\\sin(\\phi/2)} .\n\\label{eq:sparse-frequency-rmsratio}\n\\end{equation}\n\n\\emph{Correlation.} The mean of $\\sin\\theta\\sin(\\theta+\\phi)=\\tfrac12[\\cos\\phi-\\cos(2\\theta+\\phi)]$ over all angles is $\\tfrac12\\cos\\phi$; each factor alone has mean square $\\tfrac12$ and mean zero. Dividing the covariance by the product of the standard deviations (Chapter~\\ref{ch:probability}),\n\\begin{equation}\n\\corr=\\frac{\\tfrac12A^2\\cos\\phi}{\\sqrt{\\tfrac12A^2}\\sqrt{\\tfrac12A^2}}=\\cos\\phi .\n\\label{eq:sparse-frequency-corr}\n\\end{equation}\n\n\\emph{Consequences.} At $\\phi=0$ the prediction is perfect. As $\\phi$ grows, the correlation falls as $\\cos\\phi$ and the error grows. The prediction is worse than the null once $2\\abs{\\sin(\\phi/2)}>1$, that is, once $\\phi>\\pi/3$; at $\\phi=\\pi/2$ the correlation is zero; at $\\phi=\\pi$ the prediction is anticorrelated and twice as bad as the null.",
+   "new": "\\emph{Prediction error.} Over a stretch of $t$ short enough that $\\epsilon$ is nearly constant but long enough to contain many periods, $\\theta$ sweeps uniformly through all angles. The difference between prediction and truth is\n\\begin{equation}\nA\\sin(\\theta+\\epsilon)-A\\sin\\theta=2A\\cos\\bigl(\\theta+\\tfrac\\epsilon2\\bigr)\\sin\\tfrac\\epsilon2\\quad\\text{($\\sin\\alpha-\\sin\\beta=2\\cos\\tfrac{\\alpha+\\beta}2\\sin\\tfrac{\\alpha-\\beta}2$)}.\n\\end{equation}\nThe mean of $\\cos^2$ over all angles is $\\tfrac12$, so the mean square error is $4A^2\\sin^2(\\epsilon/2)\\cdot\\tfrac12$, and\n\\begin{equation}\n\\text{rms error}=\\sqrt2\\,A\\,\\abs{\\sin(\\epsilon/2)} .\n\\end{equation}\nThe null prediction (zero) has rms error equal to the rms of $A\\sin\\theta$, which is $A/\\sqrt2$. The ratio is\n\\begin{equation}\n\\frac{\\text{rms error}}{\\text{null rms}}=2\\abs{\\sin(\\epsilon/2)} .\n\\label{eq:sparse-frequency-rmsratio}\n\\end{equation}\n\n\\emph{Correlation.} The mean of $\\sin\\theta\\sin(\\theta+\\epsilon)=\\tfrac12[\\cos\\epsilon-\\cos(2\\theta+\\epsilon)]$ over all angles is $\\tfrac12\\cos\\epsilon$; each factor alone has mean square $\\tfrac12$ and mean zero. Dividing the covariance by the product of the standard deviations (Chapter~\\ref{ch:probability}),\n\\begin{equation}\n\\corr=\\frac{\\tfrac12A^2\\cos\\epsilon}{\\sqrt{\\tfrac12A^2}\\sqrt{\\tfrac12A^2}}=\\cos\\epsilon .\n\\label{eq:sparse-frequency-corr}\n\\end{equation}\n\n\\emph{Consequences.} At $\\epsilon=0$ the prediction is perfect. As $\\epsilon$ grows, the correlation falls as $\\cos\\epsilon$ and the error grows. The prediction is worse than the null once $2\\abs{\\sin(\\epsilon/2)}>1$, that is, once $\\epsilon>\\pi/3$. At $\\epsilon=\\pi/2$ the correlation is zero, and at $\\epsilon=\\pi$ the prediction is anticorrelated and twice as bad as the null."
+  },
+  {
+   "old": "\\textbf{Step 1: phase.} $\\phi=3\\times10^{-4}\\times2000=0.6$~rad.",
+   "new": "\\textbf{Step 1: phase.} $\\epsilon=3\\times10^{-4}\\times2000=0.6$~rad."
+  },
+  {
+   "old": "\\textbf{Step 4: break-even.} $\\phi=\\pi/3$ requires",
+   "new": "\\textbf{Step 4: break-even.} $\\epsilon=\\pi/3$ requires"
+  },
+  {
+   "old": "$$\\boxed{\\phi=0.6,",
+   "new": "$$\\boxed{\\epsilon=0.6,"
+  },
+  {
+   "old": "on zeros 1001--2000, \"as the estimated frequencies dephase, which the exact frequencies of the oracle do not\".",
+   "new": "on zeros 1001--2000, ``as the estimated frequencies dephase, which the exact frequencies of the oracle do not''."
+  },
+  {
+   "old": "\\includegraphics[width=\\linewidth]{figs/sparse-frequency_dephasing.pdf}\n\\caption{Dephasing. (a)~Local correlation $\\cos\\phi(t)$ of a learned component with the truth, \\eqref{eq:sparse-frequency-dephase} and \\eqref{eq:sparse-frequency-corr}, for frequency errors $\\delta\\omega=3\\times10^{-4}$, $10^{-3}$ and $3\\times10^{-3}$; the 400-zero training window $14\\le t\\le680$ is shaded and $t$ is the height (dimensionless). (b)~Rms error relative to the null, $2\\abs{\\sin(\\phi/2)}$, and correlation $\\cos\\phi$, against the phase error $\\phi$; the prediction is worse than the null beyond $\\phi=\\pi/3$ (dotted).}",
+   "new": "\\includegraphics[width=0.85\\linewidth]{figs/sparse-frequency_dephasing.pdf}\n\\caption{Dephasing. (a)~Local correlation $\\cos\\epsilon(t)$ of a learned component with the truth, \\eqref{eq:sparse-frequency-dephase} and \\eqref{eq:sparse-frequency-corr}, for frequency errors $\\delta\\omega=3\\times10^{-4}$, $10^{-3}$ and $3\\times10^{-3}$, measured from the window centre $t_c=347$. The 400-zero training window $14\\le t\\le680$ is shaded, and $t$ is the height (dimensionless). (b)~Rms error relative to the null, $2\\abs{\\sin(\\epsilon/2)}$, and correlation $\\cos\\epsilon$, against the phase error $\\epsilon$. The prediction is worse than the null beyond $\\epsilon=\\pi/3$ (dotted).}"
+  },
+  {
+   "old": "precision of a single strong frequency is much finer, roughly $\\sqrt{24}\\,\\sigma/(A\\sqrt n\\,T)$",
+   "new": "precision of a single strong frequency is much finer, roughly $\\sqrt{24}\\,\\sigma/(A\\sqrt{n_{\\rm fit}}\\,T)$"
+  },
+  {
+   "old": "correlation falls as $\\cos\\phi$, and the prediction is worse than the null beyond $\\phi=\\pi/3$.",
+   "new": "correlation falls as $\\cos\\epsilon$, and the prediction is worse than the null beyond $\\epsilon=\\pi/3$."
+  },
+  {
+   "old": "when do we say it \"is\" $\\log q$?",
+   "new": "when do we say it ``is'' $\\log q$?"
+  },
+  {
+   "old": "matching \"43 distinct prime powers: those up to 113 except 32, 64, and 81, and six primes between 131 and 211\".",
+   "new": "matching ``43 distinct prime powers: those up to 113 except 32, 64, and 81, and six primes between 131 and 211''."
+  },
+  {
+   "old": "the \"noise\" of all other terms",
+   "new": "the ``noise'' of all other terms"
+  },
+  {
+   "old": "which reaches 1 near $\\omega\\approx6.5$. Above that, almost \\emph{any} frequency matches some $\\log q$ by chance, and the criterion \\eqref{eq:sparse-frequency-match} carries no information. Below it,",
+   "new": "which reaches 1 near $\\omega\\approx6.5$. Suppose the $\\log q$ were scattered at random with this density (a Poisson-like model). Then a frequency near $6.5$ would already match some $\\log q$ with probability about $1-e^{-1}\\approx63\\%$, more often than not. That chance rises quickly toward 1 at higher $\\omega$, where the expected count per cell grows like $e^\\omega/\\omega$, so matches there carry little information. Below $6.5$,"
+  },
+  {
+   "old": "This is why the paper uses \"a statistic that does not depend on a chosen frequency cutoff\" (Sec.~IV): a binomial score that measures how improbable the observed number of matches would be if each frequency matched only by chance, maximized over the cutoff.",
+   "new": "This is a plausible motivation for the paper's use of ``a statistic that does not depend on a chosen frequency cutoff'' (Sec.~IV). Our reading of its name, ``cutoff-maximized binomial score'' (Appendix~A step~(23)), is a score measuring how improbable the observed number of matches would be if each frequency matched only by chance, maximized over the cutoff. The definition itself is in the record."
+  },
+  {
+   "old": "The paper is explicit about the status: \"the statistic was defined after the data were seen, so the check is exploratory\", and \"no significance claim is made here beyond the size of the ensembles\".",
+   "new": "The paper is explicit about the status: ``the statistic was defined after the data were seen, so the check is exploratory'', and ``no significance claim is made here beyond the size of the ensembles''."
+  },
+  {
+   "old": "the paper says so explicitly: \"C2 is a control built on that fact, not a new result\".",
+   "new": "the paper says so explicitly: ``C2 is a control built on that fact, not a new result''."
+  },
+  {
+   "old": "\"Every selected frequency matches a prime power, so the matches prove arithmetic structure.\" Not by itself: above $\\omega\\approx6.5$ (for $T\\approx666$) the matching cells of the $\\log q$ overlap and nearly cover the axis, so matches there are automatic.",
+   "new": "``Every selected frequency matches a prime power, so the matches prove arithmetic structure.'' Not by itself. Near $\\omega\\approx6.5$ (for $T\\approx666$), a random frequency already matches some $\\log q$ more often than not. A little higher up it almost always does, so matches there are weak evidence."
+  },
+  {
+   "old": "C1 says: \"the fluctuation is some function on this window\".",
+   "new": "C1 says: ``the fluctuation is some function on this window''."
+  },
+  {
+   "old": "C2 says: \"the fluctuation is a sum of a few sinusoids, each of which persists for all $t$\".",
+   "new": "C2 says: ``the fluctuation is a sum of a few sinusoids, each of which persists for all $t$''."
+  },
+  {
+   "old": "B says even more: \"and the frequencies are these\".",
+   "new": "B says even more: ``and the frequencies are these''."
+  },
+  {
+   "old": "The paper's own words are worth keeping: \"sparse in $t$-frequency\" is \"itself a strong and well-chosen prior\".",
+   "new": "The paper's own words are worth keeping: ``sparse in $t$-frequency'' is ``itself a strong and well-chosen prior''."
+  },
+  {
+   "old": "Recall from Chapters~\\ref{ch:fitting} and~\\ref{ch:generalization} that a change $\\delta V$ in the potential shifts the level $E_n$ by $\\int\\abs{\\psi_n}^2\\delta V\\,\\dd x$ to first order, and that a level is most sensitive",
+   "new": "Recall from Chapter~\\ref{ch:perturbation} that a change $\\delta V$ in the potential shifts the level $E_n$ by $\\int\\abs{\\psi_n}^2\\delta V\\,\\dd x$ to first order, and from Chapter~\\ref{ch:wkb} that a level is most sensitive"
+  },
+  {
+   "old": "Nothing in that parametrization says \"the pattern found in levels 1--400 continues, with the same frequency in $t$, in levels 401--500\".",
+   "new": "Nothing in that parametrization says ``the pattern found in levels 1--400 continues, with the same frequency in $t$, in levels 401--500''."
+  },
+  {
+   "old": "whether the memorization result \"can be derived rather than measured is an open problem\".",
+   "new": "whether the memorization result ``can be derived rather than measured is an open problem''."
+  },
+  {
+   "old": "\\checkanswer{The right frequencies. Every member of B's family, whatever its amplitudes, oscillates forever at the frequencies $m\\log p$, so the in-window fit is carried forward at the correct frequencies.",
+   "new": "\\checkanswer{The right frequencies. A heuristic reason for B's positive skill is that every member of its family, whatever its amplitudes, oscillates forever at the frequencies $m\\log p$, so the in-window fit is carried forward at the correct frequencies."
+  },
+  {
+   "old": "\"Few persistent sinusoids\" excludes almost everything",
+   "new": "``Few persistent sinusoids'' excludes almost everything"
+  },
+  {
+   "old": "a heuristic reason it does not express \"keep oscillating at $\\log2$\".",
+   "new": "a heuristic reason it does not express ``keep oscillating at $\\log2$''."
+  },
+  {
+   "old": "the sufficient condition fails badly, and yet the oracle's roots behave in practice, because the many incommensurate slopes rarely line up. The sufficient condition is conservative.",
+   "new": "the sufficient condition fails badly. Failure of a sufficient condition does not by itself mean that roots are ambiguous, since the bound is reached only if all the slopes line up. We have not examined how often the oracle's level equation is non-monotone. The paper flags root ambiguity only for the 900-coefficient B row (below)."
+  },
+  {
+   "old": "\\includegraphics[width=\\linewidth]{figs/sparse-frequency_roots.pdf}",
+   "new": "\\includegraphics[width=0.85\\linewidth]{figs/sparse-frequency_roots.pdf}"
+  },
+  {
+   "old": "so \"the\" predicted zero is not defined",
+   "new": "so ``the'' predicted zero is not defined"
+  },
+  {
+   "old": "The paper flags its 900-coefficient B row as root-ambiguous: \"the level equation has several roots for about a third of the held-out levels\", and \"the score varies by at most $0.012$ with the choice of root\"",
+   "new": "The paper flags its 900-coefficient B row as root-ambiguous: ``the level equation has several roots for about a third of the held-out levels'', and ``the score varies by at most $0.012$ with the choice of root''"
+  },
+  {
+   "old": "the row is \"not a clean predictive score\"",
+   "new": "the row is ``not a clean predictive score''"
+  },
+  {
+   "old": "\\paragraph{Sec.~II~D, \"Fitted sinusoidal controls\".}",
+   "new": "\\paragraph{Sec.~II~D, ``Fitted sinusoidal controls''.}"
+  },
+  {
+   "old": "The paper explains why it adds these controls: the oracle of Eq.~(4) \"is given the functional form\", so it is \"not a fair ML competitor\". All controls have \"the shape $\\Nsm(t)+F(t)=n-\\tfrac12$ with $F(t)=\\sum_j[a_j\\sin(\\omega_jt)+b_j\\cos(\\omega_jt)]$\", are \"trained by least squares on $y_n=n-\\tfrac12-\\Nsm(t_n)$ at the training zeros only\", and are \"scored exactly as the oracle\". These are our \\eqref{eq:sparse-frequency-model}, \\eqref{eq:sparse-frequency-target} and \\eqref{eq:sparse-frequency-level}; \\cref{sec:sparse-frequency-why} showed why fitting in $y$ is equivalent, to first order, to fitting the zeros in mean spacings, \\eqref{eq:sparse-frequency-errorlink}.",
+   "new": "The paper explains why it adds these controls: the oracle of Eq.~(4) ``is given the functional form'', so it is ``not a fair ML competitor''. All controls have ``the shape $\\Nsm(t)+F(t)=n-\\tfrac12$ with $F(t)=\\sum_j[a_j\\sin(\\omega_jt)+b_j\\cos(\\omega_jt)]$'', are ``trained by least squares on $y_n=n-\\tfrac12-\\Nsm(t_n)$ at the training zeros only'', and are ``scored exactly as the oracle''. These are our \\eqref{eq:sparse-frequency-model}, \\eqref{eq:sparse-frequency-target} and \\eqref{eq:sparse-frequency-level}. \\Cref{sec:sparse-frequency-why} showed how residuals in $y$ are related to zero errors in mean spacings, through the factor $1+F'(t_n)\\gap_n$ of \\eqref{eq:sparse-frequency-errorlink}."
+  },
+  {
+   "old": "the oracle \"improves monotonically\" with budget",
+   "new": "the oracle ``improves monotonically'' with budget"
+  },
+  {
+   "old": "\"capacity without a suitable prior does not generalize, and in this respect the operator family is not special\"",
+   "new": "``capacity without a suitable prior does not generalize, and in this respect the operator family is not special''"
+  },
+  {
+   "old": "\"the level of the 25-prime oracle\"",
+   "new": "``the level of the 25-prime oracle''"
+  },
+  {
+   "old": "The paper reports that \"every selected frequency lies within half the Fourier resolution of the training window of the logarithm of a prime power\", our criterion",
+   "new": "The paper reports that ``every selected frequency lies within half the Fourier resolution of the training window of the logarithm of a prime power'', our criterion"
+  },
+  {
+   "old": "the score was \"defined after the data were seen\".",
+   "new": "the score was ``defined after the data were seen''."
+  },
+  {
+   "old": "Our density estimate $e^\\omega/\\omega$ shows why a cutoff matters and why the paper sought a cutoff-free statistic.",
+   "new": "Our density estimate $e^\\omega/\\omega$ suggests why a cutoff matters and why a cutoff-free statistic is useful."
+  },
+  {
+   "old": "The paper observes that C2's skill \"decays with distance from the training window as the estimated frequencies dephase ($0.078$/$+0.96$ on zeros 1001--2000 for the 400-zero fit), which the exact frequencies of the oracle do not\".",
+   "new": "The paper observes that C2's skill ``decays with distance from the training window as the estimated frequencies dephase ($0.078$/$+0.96$ on zeros 1001--2000 for the 400-zero fit), which the exact frequencies of the oracle do not''."
+  },
+  {
+   "old": "The paper's Sec.~VI limits note that \"the fitted sinusoidal controls were scored only below zero 2000\".",
+   "new": "The paper's Sec.~VI limits note that ``the fitted sinusoidal controls were scored only below zero 2000''."
+  },
+  {
+   "old": "\\paragraph{\"The obstacle is the parametrization, not the parameter count.\"}",
+   "new": "\\paragraph{``The obstacle is the parametrization, not the parameter count.''}"
+  },
+  {
+   "old": "(\"what fails is a potential $V(x)$ as the parametrization\")",
+   "new": "(``what fails is a potential $V(x)$ as the parametrization'')"
+  },
+  {
+   "old": "sparsity in frequency is \"a strong and well-chosen prior\", C2 is \"a control built on\" the classical Landau--Gonek fact \\cite{landau,gonek}, \"not a new result\",",
+   "new": "sparsity in frequency is ``a strong and well-chosen prior'', C2 is ``a control built on'' the classical Landau--Gonek fact \\cite{landau,gonek}, ``not a new result'',"
+  },
+  {
+   "old": "Fig.~1 of the paper shows the six-prime oracle predicting held-out zeros 401--460 with correlation $+0.96$; Table~V shows",
+   "new": "Fig.~1 of the paper shows zeros 370--460 (fit on 1--400) with the six-prime oracle and a fitted operator. The oracle's held-out correlation is $+0.96$, the 401--500 value of Table~V. Table~V shows"
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Prony's 1795 Fit}\nIn 1795 Gaspard de Prony published a method for fitting data with a sum of exponentials by turning the problem into polynomial root finding. With complex exponents those exponentials become oscillations, so Prony's method extracts frequencies and damping rates from short data records. Variants are still used in power systems and signal processing more than two centuries later.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "\\item Frequency precision scales as $\\sqrt{24}\\,\\sigma/(A\\sqrt n\\,T)$",
+   "new": "\\item Frequency precision scales as $\\sqrt{24}\\,\\sigma/(A\\sqrt{n_{\\rm fit}}\\,T)$"
+  },
+  {
+   "old": "a frequency error dephases as $\\phi=\\delta\\omega\\,\\Delta t$, \\eqref{eq:sparse-frequency-dephase}, giving correlation $\\cos\\phi$ and rms ratio $2\\abs{\\sin(\\phi/2)}$",
+   "new": "a frequency error dephases as $\\epsilon=\\delta\\omega\\,\\Delta t$, \\eqref{eq:sparse-frequency-dephase}, giving correlation $\\cos\\epsilon$ and rms ratio $2\\abs{\\sin(\\epsilon/2)}$"
+  },
+  {
+   "old": "\\prob{1}{Control B uses frequencies $m\\log p$ with $m=1,2,3$. How many frequencies and how many fitted coefficients does it have with 25 primes? With 150 primes? Which of these two configurations is underdetermined on 400 training zeros?}",
+   "new": "\\prob{1}{Control B uses frequencies $m\\log p$ with $m=1,2,3$. How many frequencies and how many fitted coefficients would it have with 50 primes? With 100 primes? Which of these configurations is underdetermined on 400 training zeros, and which on 800?}"
+  },
+  {
+   "old": "(a) Prove that $F(t)=\\sum_{j=1}^{450}[a_j\\sin(j\\Delta\\omega t)+b_j\\cos(j\\Delta\\omega t)]$ with $\\Delta\\omega=8/450$ satisfies $F(t+P)=F(t)$ for $P=2\\pi/\\Delta\\omega$. (b) For held-out heights $680<t\\le811$, find the two intervals of images $t-P$ and $t-2P$, and say which of them overlap the training window $14\\le t\\le680$. (c) Exploration: the $p=2$ wave nearly repeats after $P$ (\\cref{sec:sparse-frequency-dense}). Compute the phase shift after $P$ of the $p=3$ and $p=5$ waves.",
+   "new": "(a) Prove that $F(t)=\\sum_{j=1}^{450}[a_j\\sin(j\\Delta\\omega t)+b_j\\cos(j\\Delta\\omega t)]$ with $\\Delta\\omega=8/450$ satisfies $F(t+T_{\\rm rep})=F(t)$ for $T_{\\rm rep}=2\\pi/\\Delta\\omega$. (b) For held-out heights $680<t\\le811$, find the two intervals of images $t-T_{\\rm rep}$ and $t-2T_{\\rm rep}$, and say which of them overlap the training window $14\\le t\\le680$. (c) Exploration: the $p=2$ wave nearly repeats after $T_{\\rm rep}$ (\\cref{sec:sparse-frequency-dense}). Compute the phase shift after $T_{\\rm rep}$ of the $p=3$ and $p=5$ waves."
+  },
+  {
+   "old": "the correlation of $\\sin\\theta$ and $\\sin(\\theta+\\phi)$, averaged over uniformly distributed $\\theta$, is $\\cos\\phi$.",
+   "new": "the correlation of $\\sin\\theta$ and $\\sin(\\theta+\\epsilon)$, averaged over uniformly distributed $\\theta$, is $\\cos\\epsilon$."
+  },
+  {
+   "old": "applies with \"null rms\" the paper's null.",
+   "new": "applies with ``null rms'' the paper's null."
+  },
+  {
+   "old": "\\prob{2}{(Paper.) Verify that the list \"prime powers up to 113 except 32, 64 and 81, and six primes between 131 and 211\" contains 43 entries. Which entry corresponds to a term with $m=4$? Compute its amplitude \\eqref{eq:sparse-frequency-amp} and compare it with the amplitude of the prime $131$.}",
+   "new": "\\prob{2}{(Paper.) List all prime powers $q=p^m\\le200$ with $m\\ge2$ and compute their amplitudes \\eqref{eq:sparse-frequency-amp}. Which five are the weakest? Compare them with the three prime powers up to 113 ($32$, $64$, $81$) that the paper's 800-zero sparse search left out, and with the smallest amplitude of any prime up to 200.}"
+  },
+  {
+   "old": "\\prob{2}{For RE2, the paper's arithmetic-continuation target, find $\\max\\abs{F'}$ and the threshold height $t^*$ of \\eqref{eq:sparse-frequency-monotone}. Can root ambiguity affect the oracle solved with RE2 alone on the paper's holdout 401--500?}",
+   "new": "\\prob{2}{For the $p=3$ wave $F(t)=-\\frac1\\pi\\sum_{m=1}^3\\frac{\\sin(mt\\log3)}{m\\,3^{m/2}}$, find $\\max\\abs{F'}$ and the threshold height $t^*$ of \\eqref{eq:sparse-frequency-monotone}. Then find the bound \\eqref{eq:sparse-frequency-slope} and the corresponding $t^*$ for the sum of the $p=2$ and $p=3$ waves. In each case, is a unique root guaranteed on the paper's holdout 401--500?}"
+  },
+  {
+   "old": "\\prob{2}{For the 800-zero window, give the inner fit and validation sizes, the cap on $K$, and the approximate number of coarse search frequencies when $T\\approx1170$.}",
+   "new": "\\prob{2}{For a 600-zero training window, give the inner fit and validation sizes and the cap on $K$. Then compute $T=t_{600}-t_1$ with qmnt and the approximate number of coarse search frequencies on $0.05<\\omega<8$.}"
+  },
+  {
+   "old": "$\\sigma=0.2$, $n=800$, $T=1170$",
+   "new": "$\\sigma=0.2$, $n_{\\rm fit}=800$, $T=1170$"
+  },
+  {
+   "old": "localization of sensitivity near turning points (Chapters~\\ref{ch:fitting} and~\\ref{ch:generalization}), for why",
+   "new": "localization of sensitivity near turning points (Chapters~\\ref{ch:perturbation} and~\\ref{ch:wkb}), for why"
+  },
+  {
+   "old": "\\textbf{1.} Three frequencies per prime, two coefficients per frequency. 25 primes: 75 frequencies, 150 coefficients. 150 primes: 450 frequencies, 900 coefficients. Only the 900-coefficient model is underdetermined on 400 zeros ($900>400$).",
+   "new": "\\textbf{1.} Three frequencies per prime, two coefficients per frequency. 50 primes: 150 frequencies, 300 coefficients. 100 primes: 300 frequencies, 600 coefficients. On 400 training zeros the 300-coefficient model is overdetermined ($300<400$) and the 600-coefficient model underdetermined ($600>400$). On 800 zeros both are overdetermined ($600<800$)."
+  },
+  {
+   "old": "\\textbf{4.} Worse than null when $\\phi>\\pi/3$",
+   "new": "\\textbf{4.} Worse than null when $\\epsilon>\\pi/3$"
+  },
+  {
+   "old": "$0.034/0.263=0.129=2\\sin(\\phi/2)$ gives $\\phi\\approx0.129$~rad; $0.078/0.279=0.280$ gives $\\phi\\approx0.280$~rad.",
+   "new": "$0.034/0.263=0.129=2\\sin(\\epsilon/2)$ gives $\\epsilon\\approx0.129$~rad; $0.078/0.279=0.280$ gives $\\epsilon\\approx0.280$~rad."
+  },
+  {
+   "old": "\\textbf{15.} $30$ primes up to 113, plus $10$ higher powers ($4,8,16,32,64,9,27,81,25,49$), minus $3$, plus $6$: $43$. The $m=4$ entry is $16=2^4$, amplitude $1/(16\\pi)=0.0199$, smaller than the prime 131's $1/(\\pi\\sqrt{131})=0.0278$; the selection is not a strict ranking by amplitude.",
+   "new": "\\textbf{15.} The prime powers with $m\\ge2$ up to 200 are $4,8,16,32,64,128$; $9,27,81$; $25,125$; $49$; $121$; $169$: 14 in all. With amplitudes $1/(\\pi m\\sqrt q)$, the five weakest are $B_{128}\\approx0.0040$, $B_{64}\\approx0.0066$, $B_{81}\\approx0.0088$, $B_{125}\\approx0.0095$ and $B_{32}\\approx0.0113$. Every prime $p\\le200$ has $B_p=1/(\\pi\\sqrt p)\\ge1/(\\pi\\sqrt{199})\\approx0.0226$, which is larger. So the three prime powers up to 113 that the 800-zero search left out ($32$, $64$, $81$) are exactly the three weakest prime powers up to 113, and they are among the five weakest up to 200. The other two ($125$, $128$) lie above 113."
+  },
+  {
+   "old": "\\textbf{21.} From the RE2 sample, $\\max\\abs{F'}=\\frac{\\log2}{\\pi}(2^{-1/2}+2^{-1}+2^{-3/2})=0.3443$ and $t^*=2\\pi e^{2\\pi\\times0.3443}\\approx54.7$. The holdout 401--500 lies at $t\\approx680$--$811$, where $\\Nsm'\\ge0.745>0.3443$, so by \\eqref{eq:sparse-frequency-monotone} every level equation there has exactly one root: no ambiguity.",
+   "new": "\\textbf{21.} As in the RE2 sample, the factor $m$ cancels on differentiation, so $F'(t)=-\\frac{\\log3}{\\pi}\\sum_{m=1}^3 3^{-m/2}\\cos(mt\\log3)$. Its maximum magnitude is $\\frac{\\log3}{\\pi}(3^{-1/2}+3^{-1}+3^{-3/2})=0.3497\\times1.1031=0.3858$, attained at $t=2\\pi k/\\log3$. Then $t^*=2\\pi e^{2\\pi\\times0.3858}\\approx70.9$. For the sum of the $p=2$ and $p=3$ waves the bound \\eqref{eq:sparse-frequency-slope} is $0.3443+0.3858=0.7301$, giving $t^*=2\\pi e^{2\\pi\\times0.7301}\\approx617$. The holdout 401--500 lies at $t\\ge680$, where $\\Nsm'\\ge0.745$. That exceeds both bounds, so a unique root is guaranteed in both cases, though only narrowly for the two-prime sum."
+  },
+  {
+   "old": "roughly $0.55$ of $\\pi/T$: a weak component can still match, but much less comfortably, and a match there is closer to a coin toss than for $p=5$.",
+   "new": "roughly $0.55$ of $\\pi/T$. The tolerance is then only about $1.8$ standard deviations, so under a Gaussian error model a correct component would miss the criterion about $7\\%$ of the time. For $p=5$ the tolerance is about $13$ standard deviations, so a miss essentially never happens."
+  },
+  {
+   "old": "a rule that says \"continue the oscillation in $t$\"",
+   "new": "a rule that says ``continue the oscillation in $t$''"
+  },
+  {
+   "old": "the evidence concerns \"the tested parametrizations and optimizer together, not a statement about what a potential can represent\", and",
+   "new": "the evidence concerns ``the tested parametrizations and optimizer together, not a statement about what a potential can represent'', and"
   }
  ],
- "new_checks": "import numpy as np, qmnt\nfrom scipy.optimize import brentq\ndef Nsm(t): u=np.asarray(t)/(2*np.pi); return u*np.log(u)-u+7/8\n# Sample: four-point fit\ntt=np.array([0,np.pi/2,np.pi,3*np.pi/2]); yy=np.array([1.1,2.0,-0.9,-2.2])\nX=np.c_[np.sin(tt),np.cos(tt)]; a,b=np.linalg.lstsq(X,yy,rcond=None)[0]\nassert abs(a-2.1)<1e-9 and abs(b-1.0)<1e-9\nassert abs(np.hypot(a,b)-2.326)<1e-3 and abs(np.arctan2(b,a)-0.444)<1e-3\nassert abs(np.sqrt(np.mean((yy-X@[a,b])**2))-0.1)<1e-9\n# zeros heights, gaps\nt=qmnt.zeros(2000)\nassert abs(t[399]-680)<3; assert abs(t[399]-t[0]-666)<3\nassert abs(t[1999]-2515)<5; assert abs(t[449]-745)<5\n# holdout heights 401-500 (Answer 21: t approx 680--811)\nassert abs(t[400]-680)<5 and abs(t[499]-811.18)<0.01\n# distance from window centre to zero 2000 (Sec. dephasing: about 2170)\nassert abs(t[1999]-347-2170)<10\ng400=qmnt.mean_gap(np.array([400]))[0]; assert abs(g400-1.34)<0.02\nassert abs(g400**2/(4*np.pi*680)-2e-4)<0.5e-4\n# primes\nP=qmnt.first_primes(300); assert P[24]==97 and P[149]==863 and P[299]==1987\nassert abs(3*np.log(97)-13.724)<1e-3\n# C1\ndw=8/450; assert abs(2*np.pi/dw-353.4)<0.05; assert abs(dw/(2*np.pi/666)-1.9)<0.05\nassert abs(2*np.pi/666-0.0094)<1e-4\nassert abs(39*dw-0.693333)<1e-6 and abs(39*dw-np.log(2)-1.86e-4)<1e-6\nassert abs(450/8*np.log(2)-38.99)<0.005\nassert abs(np.pi/(450.5*dw)-0.39)<0.005 and abs(450.5*dw-8.009)<1e-3\nj=np.arange(1,451); assert abs(np.cos(0*j*dw).sum()-450)<1e-9\n# periodogram peak\nassert abs(400*0.225**2/4-5.06)<0.01; assert abs(1/(np.pi*np.sqrt(2))-0.2251)<1e-4\ns=np.sin(np.pi/8)/(np.pi/8); assert abs(s-0.9745)<1e-4 and abs(s**2-0.9496)<1e-4\n# matching pursuit\nassert abs(4/np.sqrt(2)-2.828)<1e-3\nbb=np.array([0.5,np.sqrt(3)/2]); y2=np.array([1,0])+0.8*bb\nassert abs(y2@bb-1.3)<1e-9; r=y2-1.4*np.array([1,0]); assert abs(r@bb-0.6)<1e-9\nassert abs(np.linalg.norm(r-0.6*bb)-0.346)<1e-3\n# validation bookkeeping\nassert len(np.arange(-8,3.01,0.5))==23 and 400//3==133 and 800//3==266\nassert abs(7.95*4*666/(2*np.pi)-3400)<50 and abs(7.95*4*1170/(2*np.pi)-5900)<50\n# precision\nsd=np.sqrt(24)*0.18/(0.225*20*666); assert abs(sd-2.94e-4)<1e-6\nassert abs(np.sqrt(24)-4.899)<1e-3 and abs(np.sqrt(24)*0.18-0.8818)<1e-4 and abs(0.225*20*666-2997)<1\nassert abs(sd/(2*np.pi/666)-0.031)<0.001 and abs((np.pi/666)/sd-16)<0.5\nassert abs(np.sqrt(2)*1170/666-2.5)<0.02\n# dephasing\nassert abs(2*np.sin(0.3)-0.591)<1e-3 and abs(np.cos(0.6)-0.825)<1e-3\nassert abs((np.pi/3)/3e-4-3491)<1; assert abs((14+680)/2-347)<1\n# amplitude table\nfor q,p,m,B in [(2,2,1,.2251),(3,3,1,.1838),(4,2,2,.0796),(5,5,1,.1424),(7,7,1,.1203),(8,2,3,.0375),(9,3,2,.0531),(11,11,1,.0960),(13,13,1,.0883),(16,2,4,.0199)]:\n    assert abs(1/(np.pi*m*np.sqrt(q))-B)<1e-4\n# 43 prime powers\npr=qmnt.primes_upto(211); pp=[q for q in range(2,114) if any(q==p**k for p in pr for k in range(1,8))]\nassert len([q for q in pp if q in pr])==30 and len(pp)==40\nassert len(pp)-3+6==43 and len([p for p in pr if 131<=p<=211])==16\nfor q,m,B in [(64,6,.0066),(81,4,.0088),(32,5,.0113)]: assert abs(1/(np.pi*m*np.sqrt(q))-B)<1e-4\nassert abs(1/(np.pi*np.sqrt(211))-0.0219)<1e-4 and abs(1/(np.pi*np.sqrt(131))-0.0278)<1e-4\n# chance density\nw=brentq(lambda w:0.0094*np.exp(w)/w-1,3,10); assert abs(w-6.5)<0.15\n# RE2 roots\nassert abs(np.log(2)/np.pi-0.2206)<1e-4 and abs(2**-.5+.5+2**-1.5-1.5607)<1e-4\nmx=np.log(2)/np.pi*(2**-.5+.5+2**-1.5); assert abs(mx-0.3443)<1e-4\nassert abs(np.log(2*np.pi*0.3443*1)/1-np.log(2*np.pi*0.3443))<1e-12\nassert abs(2*np.pi*mx-2.1636)<1e-3 and abs(np.exp(2*np.pi*mx)-8.70)<0.01\nts=2*np.pi*np.exp(2*np.pi*mx); assert abs(ts-54.7)<0.2\nd=lambda x:np.log(x/(2*np.pi))/(2*np.pi)\nassert abs(d(14.134725)-0.129)<1e-3 and abs(d(680)-0.745)<1e-3 and abs(d(t[449])-0.77)<0.02\nassert abs(14.134725/(2*np.pi)-2.2496)<1e-3 and abs(680/(2*np.pi)-108.2)<0.05\nassert d(t[400])>0.745-1e-3\nbound=sum(np.log(p)/np.pi*sum(p**(-m/2) for m in (1,2,3)) for p in P[:25]); assert bound>4\n# roots figure: slope of 0.6 sin 3t\nassert abs(0.6*3-1.8)<1e-12\n# answers\nassert abs(np.arctan2(-0.4,0.3)+0.927)<1e-3\nassert abs(np.pi/1170-0.002685)<1e-6 and abs(1.0996-np.log(3))<np.pi/1170\nassert abs(2*np.pi/1170-0.00537)<1e-5 and abs(abs(1.0996-np.log(3))-0.000988)<1e-6\nassert abs((np.pi/3)/0.002-523.6)<0.1 and len(np.arange(-6,2.01,0.5))==17\nassert abs(400*0.184**2/4-3.39)<0.01 and abs(0.225**2/0.184**2-1.50)<0.01\nassert abs(400/72-5.56)<0.01 and abs(800/129-6.20)<0.01\nassert abs(400/900-0.444)<1e-3 and abs(800/900-0.889)<1e-3\nphi1=2*np.arcsin(0.034/0.263/2); phi2=2*np.arcsin(0.078/0.279/2)\nassert abs(phi1-0.129)<0.002 and abs(phi2-0.280)<0.002\nsd5=np.sqrt(24)*0.2/(0.142*np.sqrt(800)*1170); assert abs(sd5-2.09e-4)<2e-6 and abs(sd5/(np.pi/1170)-0.078)<0.002\nassert abs(np.sqrt(24)*0.2-0.980)<1e-3 and abs(0.142*np.sqrt(800)*1170-4699)<1\nsd16=np.sqrt(24)*0.2/(0.0199*np.sqrt(800)*1170); assert abs(sd16-1.5e-3)<1e-4 and abs(sd16/(np.pi/1170)-0.55)<0.03\nc=np.pi/666; assert abs(c-0.004717)<1e-6\nassert abs(1.3870-np.log(4))<c and abs(2.3979-np.log(11))<c\nassert abs(abs(1.3870-np.log(4))-0.00071)<1e-5 and abs(2.3979-np.log(11))<1e-5\nassert abs(1.7-np.log(5))>c and abs(1.7-np.log(7))>c\nassert abs(np.log(127/125)/(2*np.pi/666)-1.68)<0.01\n# Problem 17 / greedy first pick: largest peak near log 2\ny=np.arange(1,401)-0.5-Nsm(t[:400]); T=t[399]-t[0]\nwg=np.arange(0.05,8,0.25*2*np.pi/T)\nPw=(np.cos(np.outer(wg,t[:400]))@y)**2+(np.sin(np.outer(wg,t[:400]))@y)**2\nassert abs(wg[np.argmax(Pw)]-np.log(2))<np.pi/T\n# Problem 19: six-prime oracle on 401-500\nhold=np.arange(401,501); tp=qmnt.oracle_zeros(hold,qmnt.first_primes(6))\nrm,co=qmnt.score(tp,hold); assert abs(rm-0.074)<0.003 and abs(co-0.96)<0.01\nprint(\"all checks passed\")\n",
+ "new_checks": "import numpy as np, qmnt\nfrom scipy.optimize import brentq\nfrom scipy.stats import norm\ndef Nsm(t): u=np.asarray(t)/(2*np.pi); return u*np.log(u)-u+7/8\n# Sample: four-point fit\ntt=np.array([0,np.pi/2,np.pi,3*np.pi/2]); yy=np.array([1.1,2.0,-0.9,-2.2])\nX=np.c_[np.sin(tt),np.cos(tt)]; a,b=np.linalg.lstsq(X,yy,rcond=None)[0]\nassert abs(a-2.1)<1e-9 and abs(b-1.0)<1e-9\nassert abs(np.hypot(a,b)-2.326)<1e-3 and abs(np.arctan2(b,a)-0.444)<1e-3\nassert abs(np.sqrt(np.mean((yy-X@[a,b])**2))-0.1)<1e-9\n# zeros heights, gaps\nt=qmnt.zeros(2000)\nassert abs(t[399]-680)<3; assert abs(t[399]-t[0]-666)<3\nassert abs(t[1999]-2515)<5; assert abs(t[449]-745)<5\nassert abs(t[400]-680)<5 and abs(t[499]-811.18)<0.01\nassert abs(t[1999]-347-2170)<10\ng400=qmnt.mean_gap(np.array([400]))[0]; assert abs(g400-1.34)<0.02\nassert abs(g400**2/(4*np.pi*680)-2e-4)<0.5e-4\n# Sec 1: relative change of Nsm' over one spacing at zero 400\nassert abs(1.34/(2*np.pi*680*0.745)-4e-4)<0.5e-4\n# 800-zero window length\nassert abs(t[799]-t[0]-1170)<10\n# primes\nP=qmnt.first_primes(300); assert P[24]==97 and P[149]==863 and P[299]==1987\nassert abs(3*np.log(97)-13.724)<1e-3\n# C1\ndw=8/450; assert abs(2*np.pi/dw-353.4)<0.05; assert abs(dw/(2*np.pi/666)-1.9)<0.05\nassert abs(2*np.pi/666-0.0094)<1e-4\nassert abs(39*dw-0.693333)<1e-6 and abs(39*dw-np.log(2)-1.86e-4)<1e-6\nassert abs(450/8*np.log(2)-38.99)<0.005\nassert abs(np.pi/(450.5*dw)-0.39)<0.005 and abs(450.5*dw-8.009)<1e-3\nj=np.arange(1,451); assert abs(np.cos(0*j*dw).sum()-450)<1e-9\nassert abs(0.274-0.267-0.007)<1e-12 and abs(0.263-0.258-0.005)<1e-12\n# periodogram peak\nassert abs(400*0.225**2/4-5.06)<0.01; assert abs(1/(np.pi*np.sqrt(2))-0.2251)<1e-4\ns=np.sin(np.pi/8)/(np.pi/8); assert abs(s-0.9745)<1e-4 and abs(s**2-0.9496)<1e-4\n# aliasing pitfall numbers\nassert abs(np.pi/1.34-2.34)<0.01 and abs(np.log(131)-4.88)<0.01\n# matching pursuit\nassert abs(4/np.sqrt(2)-2.828)<1e-3\nbb=np.array([0.5,np.sqrt(3)/2]); y2=np.array([1,0])+0.8*bb\nassert abs(y2@bb-1.3)<1e-9; r=y2-1.4*np.array([1,0]); assert abs(r@bb-0.6)<1e-9\nassert abs(np.linalg.norm(r-0.6*bb)-0.346)<1e-3\n# Answer 9\na9=np.array([1.,0.]); b9=np.array([.6,.8]); y9=.5*a9+b9\nassert np.allclose(y9,[1.1,0.8]) and abs(y9@a9-1.1)<1e-12 and abs(y9@b9-1.3)<1e-12\nr9=y9-1.3*b9; assert np.allclose(r9,[0.32,-0.24]) and abs(r9@a9-0.32)<1e-12\nassert abs(np.linalg.norm(r9-0.32*a9)-0.24)<1e-12\nassert np.allclose(np.linalg.solve(np.c_[a9,b9],y9),[0.5,1.0])\n# validation bookkeeping\nassert len(np.arange(-8,3.01,0.5))==23 and 400//3==133 and 800//3==266\nassert abs(7.95*4*666/(2*np.pi)-3400)<50 and abs(7.95*4*1170/(2*np.pi)-5900)<50\n# precision\nsd=np.sqrt(24)*0.18/(0.225*20*666); assert abs(sd-2.94e-4)<1e-6\nassert abs(np.sqrt(24)-4.899)<1e-3 and abs(np.sqrt(24)*0.18-0.8818)<1e-4 and abs(0.225*20*666-2997)<1\nassert abs(sd/(2*np.pi/666)-0.031)<0.001 and abs((np.pi/666)/sd-16)<0.5\nassert abs(np.sqrt(2)*1170/666-2.5)<0.02\n# dephasing\nassert abs(2*np.sin(0.3)-0.591)<1e-3 and abs(np.cos(0.6)-0.825)<1e-3\nassert abs((np.pi/3)/3e-4-3491)<1; assert abs((14+680)/2-347)<1\n# amplitude table (B_q and log q)\nfor q,p,m,B,Lq in [(2,2,1,.2251,.6931),(3,3,1,.1838,1.0986),(4,2,2,.0796,1.3863),(5,5,1,.1424,1.6094),(7,7,1,.1203,1.9459),(8,2,3,.0375,2.0794),(9,3,2,.0531,2.1972),(11,11,1,.0960,2.3979),(13,13,1,.0883,2.5649),(16,2,4,.0199,2.7726)]:\n    assert abs(1/(np.pi*m*np.sqrt(q))-B)<1e-4 and abs(np.log(q)-Lq)<1e-4\n# 43 prime powers\npr=qmnt.primes_upto(211); pp=[q for q in range(2,114) if any(q==int(p)**k for p in pr for k in range(1,8))]\nassert len([q for q in pp if q in pr])==30 and len(pp)==40\nassert len(pp)-3+6==43 and len([p for p in pr if 131<=p<=211])==16\nfor q,m,B in [(64,6,.0066),(81,4,.0088),(32,5,.0113)]: assert abs(1/(np.pi*m*np.sqrt(q))-B)<1e-4\nassert abs(1/(np.pi*np.sqrt(211))-0.0219)<1e-4 and abs(1/(np.pi*np.sqrt(131))-0.0278)<1e-4\n# chance density\nw=brentq(lambda w:0.0094*np.exp(w)/w-1,3,10); assert abs(w-6.5)<0.15\nassert abs(1-np.exp(-1)-0.63)<0.01\n# RE2 roots\nassert abs(np.log(2)/np.pi-0.2206)<1e-4 and abs(2**-.5+.5+2**-1.5-1.5607)<1e-4\nmx=np.log(2)/np.pi*(2**-.5+.5+2**-1.5); assert abs(mx-0.3443)<1e-4\nassert abs(2*np.pi*mx-2.1636)<1e-3 and abs(np.exp(2*np.pi*mx)-8.70)<0.01\nts=2*np.pi*np.exp(2*np.pi*mx); assert abs(ts-54.7)<0.2\nd=lambda x:np.log(x/(2*np.pi))/(2*np.pi)\nassert abs(d(14.134725)-0.129)<1e-3 and abs(d(680)-0.745)<1e-3 and abs(d(t[449])-0.77)<0.02\nassert abs(14.134725/(2*np.pi)-2.2496)<1e-3 and abs(680/(2*np.pi)-108.2)<0.05\nassert d(t[400])>0.745-1e-3\nbound=sum(np.log(p)/np.pi*sum(p**(-m/2) for m in (1,2,3)) for p in P[:25]); assert bound>4\nassert abs(0.6*3-1.8)<1e-12\n# answers\nassert abs(np.arctan2(-0.4,0.3)+0.927)<1e-3\nassert abs(np.pi/1170-0.002685)<1e-6 and abs(1.0996-np.log(3))<np.pi/1170\nassert abs(2*np.pi/1170-0.00537)<1e-5 and abs(abs(1.0996-np.log(3))-0.000988)<1e-6\nassert abs((np.pi/3)/0.002-523.6)<0.1 and len(np.arange(-6,2.01,0.5))==17\nassert abs(400*0.184**2/4-3.39)<0.01 and abs(0.225**2/0.184**2-1.50)<0.01\nassert abs(400/72-5.56)<0.01 and abs(800/129-6.20)<0.01\nassert abs(400/900-0.444)<1e-3 and abs(800/900-0.889)<1e-3\nphi1=2*np.arcsin(0.034/0.263/2); phi2=2*np.arcsin(0.078/0.279/2)\nassert abs(phi1-0.129)<0.002 and abs(phi2-0.280)<0.002\nsd5=np.sqrt(24)*0.2/(0.142*np.sqrt(800)*1170); assert abs(sd5-2.09e-4)<2e-6 and abs(sd5/(np.pi/1170)-0.078)<0.002\nassert abs(np.sqrt(24)*0.2-0.980)<1e-3 and abs(0.142*np.sqrt(800)*1170-4699)<1\nsd16=np.sqrt(24)*0.2/(0.0199*np.sqrt(800)*1170); assert abs(sd16-1.5e-3)<1e-4 and abs(sd16/(np.pi/1170)-0.55)<0.03\n# Answer 23: tolerance in standard deviations and miss probability\nz16=(np.pi/1170)/sd16; assert abs(z16-1.8)<0.05 and abs(2*norm.sf(z16)-0.07)<0.01\nassert abs((np.pi/1170)/sd5-13)<0.5\nc=np.pi/666; assert abs(c-0.004717)<1e-6\nassert abs(1.3870-np.log(4))<c and abs(2.3979-np.log(11))<c\nassert abs(abs(1.3870-np.log(4))-0.00071)<1e-5 and abs(2.3979-np.log(11))<1e-5\nassert abs(1.7-np.log(5))>c and abs(1.7-np.log(7))>c\nassert abs(np.log(127/125)/(2*np.pi/666)-1.68)<0.01\n# Answer 1 (50 and 100 primes)\nassert 50*3==150 and 50*3*2==300 and 100*3==300 and 100*3*2==600\nassert 300<400 and 600>400 and 600<800\n# Answer 15: prime powers m>=2 up to 200\npr200=[int(p) for p in qmnt.primes_upto(200)]\npw=[(p**m,p,m) for p in pr200 for m in range(2,9) if p**m<=200]\nassert len(pw)==14\namp=sorted((1/(np.pi*m*np.sqrt(q)),q) for q,p,m in pw)\nassert [q for _,q in amp[:5]]==[128,64,81,125,32]\nfor (B,q),Bc in zip(amp[:5],[.0040,.0066,.0088,.0095,.0113]): assert abs(B-Bc)<1e-4\nassert min(1/(np.pi*np.sqrt(p)) for p in pr200)>0.0113\nassert abs(1/(np.pi*np.sqrt(199))-0.0226)<1e-4\n# Answer 21: p=3 wave and {2,3} sum\nmx3=np.log(3)/np.pi*(3**-.5+1/3+3**-1.5)\nassert abs(np.log(3)/np.pi-0.3497)<1e-4 and abs(3**-.5+1/3+3**-1.5-1.1031)<1e-4\nassert abs(mx3-0.3858)<1e-4\nassert abs(2*np.pi*np.exp(2*np.pi*mx3)-70.9)<0.2\ntot=mx+mx3; assert abs(tot-0.7301)<1e-4\nassert abs(2*np.pi*np.exp(2*np.pi*tot)-617)<2\nassert d(t[400])>tot and t[400]>617\n# Problem 17 / greedy first pick: largest peak near log 2\ny=np.arange(1,401)-0.5-Nsm(t[:400]); T=t[399]-t[0]\nwg=np.arange(0.05,8,0.25*2*np.pi/T)\nPw=(np.cos(np.outer(wg,t[:400]))@y)**2+(np.sin(np.outer(wg,t[:400]))@y)**2\nassert abs(wg[np.argmax(Pw)]-np.log(2))<np.pi/T\n# Problem 19: six-prime oracle on 401-500\nhold=np.arange(401,501); tp=qmnt.oracle_zeros(hold,qmnt.first_primes(6))\nrm,co=qmnt.score(tp,hold); assert abs(rm-0.074)<0.003 and abs(co-0.96)<0.01\nprint(\"all checks passed\")\n",
  "new_figures": {
-  "sparse-frequency_kernel": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nJ = 450; dw = 8/450\nj = np.arange(1, J+1)*dw\ndef K(tau):\n    out = np.empty(len(tau))\n    for i in range(0, len(tau), 2000):\n        out[i:i+2000] = np.cos(np.outer(tau[i:i+2000], j)).sum(axis=1)\n    return out\nP = 2*np.pi/dw\nfig, ax = plt.subplots(1, 2, figsize=(6.5, 3))\nta = np.linspace(-3, 3, 3001)\nax[0].plot(ta, K(ta), lw=0.8)\nax[0].set_xlabel(r\"$\\tau$ (height units, dimensionless)\")\nax[0].set_ylabel(r\"$K(\\tau)$\")\nax[0].set_title(r\"(a) near $\\tau=0$\", fontsize=9)\ntb = np.linspace(0, 800, 40001)\nax[1].plot(tb, K(tb), lw=0.4)\nfor k in (1, 2):\n    ax[1].axvline(k*P, ls=\":\", color=\"gray\")\nax[1].text(P, 470, r\"$P$\", ha=\"center\", fontsize=8)\nax[1].text(2*P, 470, r\"$2P$\", ha=\"center\", fontsize=8)\nax[1].set_ylim(-60, 500)\nax[1].set_xlabel(r\"$\\tau$ (height units, dimensionless)\")\nax[1].set_title(\"(b) long range\", fontsize=9)\nplt.tight_layout()\nplt.savefig(\"sparse-frequency_kernel.pdf\", bbox_inches=\"tight\")\n",
-  "sparse-frequency_periodogram": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport qmnt\nt = qmnt.zeros(400); n = np.arange(1, 401)\nu = t/(2*np.pi); y = n - 0.5 - (u*np.log(u) - u + 7/8)\nw = np.linspace(0.05, 4.5, 20000)\nC = np.cos(np.outer(w, t)) @ y; S = np.sin(np.outer(w, t)) @ y\nPw = (C**2 + S**2)/len(t)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(w, Pw, lw=0.6, color=\"k\")\ntop = Pw.max()*1.05\nfor p in (2, 3, 5, 7, 11, 13):\n    ax.axvline(np.log(p), ls=\"--\", lw=0.7, color=\"tab:blue\")\n    ax.text(np.log(p), top, str(p), ha=\"center\", fontsize=8, color=\"tab:blue\")\nfor q in (4, 8, 9):\n    ax.axvline(np.log(q), ls=\":\", lw=0.8, color=\"tab:red\")\n    ax.text(np.log(q), top*0.93, str(q), ha=\"center\", fontsize=8, color=\"tab:red\")\nax.set_ylim(0, top*1.1)\nax.set_xlabel(r\"angular frequency $\\omega$ (radians per unit height $t$)\")\nax.set_ylabel(r\"periodogram $\\mathcal{P}(\\omega)$ (counting units$^2$)\")\nplt.savefig(\"sparse-frequency_periodogram.pdf\", bbox_inches=\"tight\")\n",
-  "sparse-frequency_pursuit": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\na = np.array([1.0, 0.0]); b = np.array([0.5, np.sqrt(3)/2])\ny = a + 0.8*b\nfig, ax = plt.subplots(figsize=(6, 4))\ndef arrow(p, q, **kw):\n    ax.annotate(\"\", xy=q, xytext=p, arrowprops=dict(arrowstyle=\"->\", **kw))\narrow((0, 0), a, color=\"tab:blue\"); ax.text(1.0, -0.07, r\"$\\mathbf{a}$\", color=\"tab:blue\")\narrow((0, 0), b, color=\"tab:green\"); ax.text(0.42, 0.9, r\"$\\mathbf{b}$\", color=\"tab:green\")\narrow((0, 0), y, color=\"k\", lw=1.5); ax.text(y[0]+0.03, y[1]+0.03, r\"$\\mathbf{y}$\")\np1 = 1.4*a\narrow((0, 0), p1, color=\"tab:orange\", ls=\"--\")\nend = p1 + 0.6*b\narrow(p1, end, color=\"tab:orange\", ls=\"--\")\nax.plot(*end, \"o\", mfc=\"white\", mec=\"tab:orange\")\nax.text(end[0]+0.03, end[1]-0.08, \"plain pursuit\", color=\"tab:orange\", fontsize=8)\nax.plot(*y, \"ko\")\nax.text(y[0]-0.45, y[1]+0.08, \"orthogonal pursuit\", fontsize=8)\nax.set_xlim(-0.1, 2.0); ax.set_ylim(-0.15, 1.1); ax.set_aspect(\"equal\")\nax.set_xlabel(\"first component (dimensionless)\")\nax.set_ylabel(\"second component (dimensionless)\")\nplt.savefig(\"sparse-frequency_pursuit.pdf\", bbox_inches=\"tight\")\n",
-  "sparse-frequency_greedy": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport qmnt\nt = qmnt.zeros(400); n = np.arange(1, 401)\nu = t/(2*np.pi); y = n - 0.5 - (u*np.log(u) - u + 7/8)\ntr, ytr, tv, yv = t[:300], y[:300], t[300:], y[300:]\ndef design(tt, om):\n    return np.hstack([np.sin(np.outer(tt, om)), np.cos(np.outer(tt, om))])\ndef pg(tt, r, w):\n    return ((np.cos(np.outer(w, tt)) @ r)**2 + (np.sin(np.outer(w, tt)) @ r)**2)/len(tt)\nT = tr[-1] - tr[0]; step = 0.25*2*np.pi/T\ncoarse = np.arange(0.05, 8.0, step)\nom, r = [], ytr.copy(); trr, vr = [], []\nKmax = 40; lam = 1e-8\nfor k in range(Kmax):\n    w0 = coarse[np.argmax(pg(tr, r, coarse))]\n    fine = np.linspace(w0 - step, w0 + step, 201)\n    om.append(fine[np.argmax(pg(tr, r, fine))])\n    X = design(tr, np.array(om))\n    U, s, Vt = np.linalg.svd(X, full_matrices=False)\n    c = Vt.T @ (s/(s**2 + lam*s[0]**2) * (U.T @ ytr))\n    r = ytr - X @ c\n    trr.append(np.sqrt(np.mean(r**2)))\n    vr.append(np.sqrt(np.mean((yv - design(tv, np.array(om)) @ c)**2)))\nKs = np.arange(1, Kmax+1)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(Ks, trr, \"o-\", ms=4, label=\"training (zeros 1--300)\")\nax.plot(Ks, vr, \"o-\", ms=4, mfc=\"white\", label=\"validation (zeros 301--400)\")\nax.axhline(np.sqrt(np.mean(ytr**2)), ls=\"--\", color=\"tab:blue\", lw=0.8)\nax.axhline(np.sqrt(np.mean(yv**2)), ls=\"--\", color=\"tab:orange\", lw=0.8)\nax.set_xlabel(r\"number of frequencies $K$\")\nax.set_ylabel(r\"rms of $y_n-F(t_n)$ (counting units)\")\nax.legend(fontsize=8)\nplt.savefig(\"sparse-frequency_greedy.pdf\", bbox_inches=\"tight\")\n",
-  "sparse-frequency_dephasing": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, ax = plt.subplots(1, 2, figsize=(6.5, 3))\ntc = 347.0\ntt = np.linspace(0, 6000, 3000)\nfor dw in (3e-4, 1e-3, 3e-3):\n    ax[0].plot(tt, np.cos(dw*(tt - tc)), label=r\"$\\delta\\omega=%g$\" % dw)\nax[0].axvspan(14, 680, color=\"gray\", alpha=0.3)\nax[0].set_xlabel(r\"height $t$ (dimensionless)\")\nax[0].set_ylabel(r\"local correlation $\\cos\\phi$\")\nax[0].set_title(\"(a)\", fontsize=9)\nax[0].legend(fontsize=7)\nphi = np.linspace(0, np.pi, 400)\nax[1].plot(phi, 2*np.abs(np.sin(phi/2)), label=\"rms / null rms\")\nax[1].plot(phi, np.cos(phi), label=r\"corr $=\\cos\\phi$\")\nax[1].axvline(np.pi/3, ls=\":\", color=\"k\")\nax[1].axhline(1, ls=\":\", color=\"gray\", lw=0.7)\nax[1].set_xlabel(r\"phase error $\\phi$ (rad)\")\nax[1].set_title(\"(b)\", fontsize=9)\nax[1].legend(fontsize=7)\nplt.tight_layout()\nplt.savefig(\"sparse-frequency_dephasing.pdf\", bbox_inches=\"tight\")\n",
-  "sparse-frequency_roots": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfrom scipy.optimize import brentq\ndef Nsm(t):\n    u = np.asarray(t)/(2*np.pi); return u*np.log(u) - u + 7/8\ns450 = brentq(lambda x: Nsm(x) - 449.5, 100, 5000)\ntt = np.linspace(s450 - 8, s450 + 8, 4000)\nF1 = -sum(np.sin(m*tt*np.log(2))/(m*2**(m/2)) for m in (1, 2, 3))/np.pi\nF2 = 0.6*np.sin(3*tt)\nfig, ax = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)\nfor a_, F, title in ((ax[0], F1, \"(a) RE2\"), (ax[1], F2, r\"(b) $0.6\\sin 3t$\")):\n    a_.plot(tt, Nsm(tt) + F, color=\"k\", lw=1)\n    a_.plot(tt, Nsm(tt), \":\", color=\"gray\")\n    lo, hi = Nsm(tt[0]), Nsm(tt[-1])\n    for nn in range(int(np.ceil(lo + 0.5)), int(np.floor(hi + 0.5)) + 1):\n        a_.axhline(nn - 0.5, color=\"tab:blue\", lw=0.4)\n    a_.set_xlabel(r\"height $t$ (dimensionless)\")\n    a_.set_title(title, fontsize=9)\nax[0].set_ylabel(r\"$N_{\\rm sm}(t)+F(t)$ (counting units)\")\nplt.tight_layout()\nplt.savefig(\"sparse-frequency_roots.pdf\", bbox_inches=\"tight\")\n"
+  "sparse-frequency_kernel": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\ndw = 8/450\nj = np.arange(1, 451)\ndef D(tau):\n    tau = np.asarray(tau, dtype=float)\n    out = np.empty_like(tau)\n    for i in range(0, tau.size, 2000):\n        out[i:i+2000] = np.cos(np.outer(tau[i:i+2000], j*dw)).sum(axis=1)\n    return out\nTrep = 2*np.pi/dw\nfig, ax = plt.subplots(1, 2, figsize=(6.5, 3))\nta = np.linspace(-2, 2, 2001)\nax[0].plot(ta, D(ta), lw=0.8)\nax[0].axhline(0, color=\"0.7\", lw=0.5)\nax[0].set_xlabel(r\"$\\tau$ (height difference, dimensionless)\")\nax[0].set_ylabel(r\"$D(\\tau)$\")\nax[0].set_title(r\"(a) near $\\tau=0$\", fontsize=9)\ntb = np.linspace(-20, 400, 42001)\nax[1].plot(tb, D(tb), lw=0.3)\nax[1].axvline(Trep, ls=\":\", color=\"gray\")\nax[1].text(Trep-5, 380, r\"$T_{\\rm rep}\\approx353.4$\", ha=\"right\", fontsize=8)\nax[1].set_xlabel(r\"$\\tau$ (height difference, dimensionless)\")\nax[1].set_ylabel(r\"$D(\\tau)$\")\nax[1].set_title(\"(b) long range\", fontsize=9)\nplt.tight_layout()\nplt.savefig(\"sparse-frequency_kernel.pdf\", bbox_inches=\"tight\")\n",
+  "sparse-frequency_dephasing": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nfig, ax = plt.subplots(1, 2, figsize=(6.5, 3))\nt = np.linspace(0, 3000, 3001); tc = 347\nfor dwv, ls in [(3e-4, \"-\"), (1e-3, \"--\"), (3e-3, \":\")]:\n    ax[0].plot(t, np.cos(dwv*(t - tc)), ls, lw=1, label=r\"$\\delta\\omega=%g$\" % dwv)\nax[0].axvspan(14, 680, color=\"0.85\")\nax[0].axhline(0, color=\"0.6\", lw=0.5)\nax[0].set_xlabel(r\"height $t$ (dimensionless)\")\nax[0].set_ylabel(r\"local correlation $\\cos\\epsilon$\")\nax[0].set_title(\"(a)\", fontsize=9)\nax[0].legend(fontsize=7, loc=\"lower left\")\neps = np.linspace(0, np.pi, 400)\nax[1].plot(eps, 2*np.abs(np.sin(eps/2)), label=r\"rms ratio $2|\\sin(\\epsilon/2)|$\")\nax[1].plot(eps, np.cos(eps), \"--\", label=r\"corr $\\cos\\epsilon$\")\nax[1].axvline(np.pi/3, ls=\":\", color=\"gray\")\nax[1].axhline(1, color=\"0.6\", lw=0.5)\nax[1].set_xlabel(r\"phase error $\\epsilon$ (rad)\")\nax[1].set_ylabel(\"ratio or correlation\")\nax[1].set_title(\"(b)\", fontsize=9)\nax[1].legend(fontsize=7, loc=\"lower left\")\nplt.tight_layout()\nplt.savefig(\"sparse-frequency_dephasing.pdf\", bbox_inches=\"tight\")\n"
  },
- "notes": "Issue 1: the filenames figs/sparse-frequency_<name>.pdf already follow the bible pattern figs/<slug>_<name>.pdf with slug 'sparse-frequency', so no renaming was needed. The missing figure scripts are now supplied for all six figures (kernel, periodogram, pursuit, greedy, dephasing, roots). Issue 2 is invalid: I counted the problems and there are 27. The cross-references are correct: Problem 6 is the C1 periodicity exploration, Problem 18 is the control-B validation extension, and Problem 20 is the C2 implementation. Answers are given for every \\prob{1} (1 to 5 and 27) and for every odd-numbered problem (1 to 27). Issues 6, 10, 21 and 22 state that no change is needed, so none was made. Everything else was fixed. The Unicode en dash is replaced by '--'. The prerequisites list is wrapped in itemize. The kernel caption now gives the first zero instead of a half-width. The heights from qmnt are flagged as computed values. The uniform-sampling assumption and a geometric-series bound are added to the periodogram sample, together with the complex-exponential integral. The invertibility argument is added to the kernel derivation. The 2x2 normal matrix is written out in the precision derivation. 'Atom' is defined, and the sentence introducing the two pursuit samples is corrected. The B explanation is labelled heuristic and not the paper's. The C1 'interpolation plus copying' description is labelled as our interpretation. 'Heuristically' is added, with a reminder of the explicit formula's status. The pi/T tolerance is stated as the paper's convention with its meaning. The T approx 666 qualifier is added to the key ideas. The new checks add asserts for the 2170 distance, 0.2206 and 1.5607, t_401 and t_500, and several intermediate values."
+ "notes": "All issues judged valid and addressed. Notes on specific choices: (1) didyouknow blocks deleted; no replacement sentence added, since a dated historical remark would need a citation outside the allowed keys. (8) Oracle-root claim rephrased (option 2) rather than adding a monotonicity check. (9, 10, 12, 13) The kernel is renamed D(tau), the C1 period T_rep, the ridge strength in the kernel derivation kappa = lambda sigma_1^2, and the dephasing phase error epsilon. The kernel and dephasing figure scripts are regenerated to match the new symbols. (11) The sample count is n_fit throughout. (29) Problems 1, 15, 21 and 22 are replaced with varied versions (50/100 primes; prime powers up to 200; the p=3 wave and the {2,3} sum; a 600-zero window), and their answers are updated and checked. (31) All straight double quotes in running text are converted to ``...''; pycode listings are untouched. (2) The greedy-figure caption and the paper-connection sentence that claimed first-order equivalence are softened as well."
 }

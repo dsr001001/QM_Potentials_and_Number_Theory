@@ -2,155 +2,218 @@
  {
   "category": "RULE",
   "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/sparse-frequency_kernel.pdf}",
-  "problem": "Figure filenames use the slug 'sparse-frequency' but the bible requires figs/<slug>_<name>.pdf. The response also contains no FIGURES part, so the five figures (kernel, periodogram, pursuit, greedy, dephasing, roots) have no scripts.",
-  "fix": "Provide a '### FIG sparse-frequency_<name>' script for every figure (kernel, periodogram, pursuit, greedy, dephasing, roots), and ensure the filenames match the scripts."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\prob{2}{Using qmnt and numpy, compute $y_n$ for $n\\le400$ and its periodogram",
-  "problem": "Answer numbering is wrong. Problems are numbered from 1 and the answers refer to 17, 19, 21, 23, 25, 27, but problems 3, 5, 7 and 9 (odd) are fine while many others are mismatched: the problem listed as 17 in the answers is the periodogram problem only if the count is exact, and Problem 18 is referenced in the text as the validation extension while the listing places it elsewhere. Odd problems 11, 13, 15, 21, 23, 25, 27 must each be answered, and the cross-references to Problem 6, 18 and 20 must be checked against the actual order.",
-  "fix": "Count the problems, fix cross-references (Problem~6, 18, 20) and give answers to every odd-numbered problem and every \\prob{1}."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\textbf{19.} You should reproduce Table~V's six-prime entry on 401–500",
-  "problem": "Contains an en dash in a numeric range written as a Unicode character rather than '--'. Other places do the same ('Table~V...401–500', 'Secs.' ranges).",
-  "fix": "Use '--' in LaTeX for all ranges."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\begin{prerequisites}\n\\item Chapter~\\ref{ch:fourier-transform}",
-  "problem": "The bible specifies that prerequisites is a bullet-list environment with itemize inside; here \\item is used directly without an itemize.",
-  "fix": "Wrap the items in \\begin{itemize}...\\end{itemize} inside prerequisites."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "Where this shows up in the paper: these are the \"fitted sinusoidal controls\"",
-  "problem": "No CHECKS cover several quoted numbers: 0.2206 factor, 0.745, Table amplitude values are covered, but 1.5607, the bound 'exceeds 4' is covered while 'Problem 21 holdout t≈680--811' and 2170 distance are not, and answer 25 and Table~IV figures are only quoted.",
-  "fix": "Add asserts for the 2170 distance, 0.2206*1.5607, and holdout heights t_401 and t_500."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "the first is $t_1=14.134725$ (running example RE1). The counting function $N(t)$ is the number of zeros with $0<t_n\\le t$.",
-  "problem": "Not an error itself, but the later claim '$\\Nsm''(t)=1/(2\\pi t)$' is fine; however the sign convention is wrong elsewhere: the text says '$y_n$ is minus the fluctuation in mean spacings' while the paper's fluctuation is $(t-s_n)/\\gap_n$; this is consistent. The real error: the Taylor remainder term is called neglected with $\\Nsm''=1/(2\\pi t)$ and the check gives $1.34^2/(4\\pi\\cdot680)\\approx2\\times10^{-4}$, but the displacement is in t units (one spacing = 1.34), fine. OK.",
-  "fix": "No change needed; verify wording only."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "The central peak is narrow: the numerator first vanishes at $\\tau=\\pi/\\bigl((J+\\frac12)\\Delta\\omega\\bigr)=\\pi/8.009\\approx0.39$, where $K=-\\frac12$",
-  "problem": "At the first zero of the numerator sine, K=(0-1)/2=-1/2 is correct, but the half-width 0.39 is described as the 'half-width' of the peak; also (J+1/2)Δω=8.009 is right. Minor, but the claim K(0)=J=450 is right. The statement 'half-width about 0.39' is the first-zero location, not half-width.",
-  "fix": "Say 'first zero at 0.39' rather than 'half-width about 0.39' in text and figure caption."
+  "quote": "Astronomers rarely get evenly spaced data, because clouds, daylight and seasons interrupt observing.",
+  "problem": "The chapter uses a `didyouknow` environment three times (Lomb-Scargle, atomic clocks, Prony). The bible does not define it, so it may not compile. The boxes are asides the bible forbids, carry uncited historical facts and numbers that are neither checked nor from the paper, and one sits inside the Summary, which must be a bullet list only.",
+  "fix": "Delete all three `didyouknow` blocks and their `% DYK-BEGIN/END` markers. If a remark on irregular-sample periodograms is wanted, put one plain sentence in the periodogram subsection."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "for a displacement of one full spacing at zero 400 ($t\\approx680$, $\\gap\\approx1.34$)",
-  "problem": "Chapter later uses the 400-zero window centre as (14+680)/2 and the correct t_400 is ~677.8; fine, but 'zero 2000 sits near t≈2515' and 'zero 450 near 745' are quoted without a stated source in the chapter beyond checks tolerance of 5.",
-  "fix": "State these as approximate values computed with qmnt.zeros."
+  "quote": "When $\\abs{F'}\\gap_n\\ll1$, the error of the predicted zero in mean spacings is just the fitting residual $y_n-F(t_n)$.",
+  "problem": "The condition does not hold for the models that matter. A good approximation to $S$ has slope near $-\\Nsm'$ between zeros and a large positive slope at the zeros, so $F'\\gap_n$ is of order 1 or more. The chapter itself later finds the 25-prime slope bound exceeds 4 against $\\Nsm'\\approx0.745$. The claim in the greedy-figure caption that residual scoring and root-solved scoring 'agree to first order' inherits this problem.",
+  "fix": "State that the denominator $1+F'(t_n)\\gap_n$ must be kept in general. Say that for accurate models $F'$ is typically positive and large at a zero, so the zero error is smaller than the residual, and the residual is only a proxy for the paper's score. Soften the caption of the greedy figure accordingly."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "$\\mathcal P(\\omega_0)\\approx n_{\\rm fit}A^2/4\\approx5.06,\\qquad \\text{first zero at }\\delta=2\\pi/T$",
-  "problem": "The sample uses A=0.225 as amplitude of a term in S(t), but the sum approximated by an integral assumes uniform sampling; zeros are denser at height, and the claim that the amplitude in y is 0.225 ignores that sample points are not uniform. Also in 'Step 2' the neglected second term is 'of order 1' without justification.",
-  "fix": "State the uniform-sampling assumption explicitly in the sample and justify the order-1 bound (geometric-sum bound 1/|sin|)."
+  "quote": "it is a sum of sinusoids at the mutually incommensurate frequencies $\\log q$",
+  "problem": "The frequencies $\\log q$ over prime powers are not mutually incommensurate: $\\log4=2\\log2$, $\\log8=3\\log2$, $\\log9=2\\log3$. Only the logarithms of distinct primes are incommensurate.",
+  "fix": "Write: 'it is a sum of sinusoids whose base frequencies $\\log p$, for distinct primes $p$, are mutually incommensurate (by unique factorization), together with their harmonics $m\\log p$; such a sum is almost periodic and never repeats'."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The mean of $\\cos^2$ over all angles is $\\tfrac12$, so the mean square error is $4A^2\\sin^2(\\phi/2)\\cdot\\tfrac12$",
-  "problem": "Correct, but the 'worse than the null once 2|sin(φ/2)|>1, that is φ>π/3' is right; the claim 'at φ=π ... twice as bad as the null' is right. No error; however the correlation formula with 'each factor alone has mean square 1/2' is fine. Retained as OK.",
-  "fix": "No change."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Replacing the sum by $(n_{\\rm fit}/T)$ times the integral over the window, as in \\eqref{eq:sparse-frequency-orth}, its magnitude is",
-  "problem": "The integral of e^{-iδt} gives a complex phase factor and sin(δT/2)/(δT/2); the chapter only derived the cosine version, and the step from cosine integral to complex-exponential magnitude is not shown.",
-  "fix": "Show that |(1/T)∫e^{-iδt}dt| = |sin(δT/2)/(δT/2)| in one line."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Multiply on the left by $(X^\\top X+\\mu I)^{-1}$ and on the right by $(XX^\\top+\\mu I)^{-1}$ (both exist for $\\mu>0$, since $X^\\top X$ and $XX^\\top$ have no negative eigenvalues)",
-  "problem": "Invertibility justification is thin for a first-year reader: positive semidefiniteness is not defined or proved in the assumed chapters.",
-  "fix": "Add a line: for any v, v^T(X^TX+μI)v = |Xv|^2+μ|v|^2>0, so no zero eigenvalue."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "\\emph{Step 5: why the phase does not interfere.} If $\\varphi$ is fitted too",
-  "problem": "The Fisher-matrix decoupling argument is asserted without writing the 2x2 normal matrix; the Var formula is then used as if the phase were known. Also 'independent errors' claim and Var of weighted sum cited to Chapter probability only.",
-  "fix": "Write the 2x2 matrix [[Σg²,Σg h],[Σg h,Σh²]] with h=A cos(...), and show the off-diagonal is ~0."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "which first vanishes when $\\delta T/2=\\pi$.",
-  "problem": "Introduces 'Dirichlet kernel' and 'matching pursuit' terminology without definition of 'dictionary' atoms normalization; also uses 'atom' in the sample before defining it.",
-  "fix": "Define 'atom' as a dictionary element when first used."
+  "quote": "the ridge solution picks the one of smallest norm, which spreads weight over all 450 frequencies",
+  "problem": "With $\\mu>0$ the ridge solution does not fit the window exactly and is not the minimum-norm exact fit. That is only its limit as $\\mu\\to0$.",
+  "fix": "Replace with: 'as the ridge strength tends to zero the solution tends to the exact fit of smallest norm, and for positive strength it trades a little misfit for an even smaller norm; either way the weight is spread over all 450 frequencies'."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Because every candidate $F$ in this family, however badly its amplitudes are pinned, is built only from the correct frequencies. Whatever it does in the window, it keeps doing at the right frequencies outside the window.",
-  "problem": "Presented as an explanation for B's positive skill, but it is the author's heuristic; large cancelling amplitudes can produce arbitrary extrapolation and the paper does not explain it this way.",
-  "fix": "Label as heuristic reading and note the paper does not give this explanation."
+  "quote": "We derive why the first and third generalize to unseen zeros and the second does not",
+  "problem": "The chapter does not derive generalization or its failure. It derives the periodicity and kernel form of C1 and gives heuristic readings, which it labels 'our interpretation'. The paper itself calls its explanation heuristic.",
+  "fix": "Write: 'We explain, with exact structural facts where available and labelled heuristics elsewhere, why the first and third are observed to generalize and the second is not'."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The near-integer 38.99 is a coincidence of the paper's choice of grid: it means the $p=2$ wave very nearly repeats after one C1 period.",
-  "problem": "Phase shift is 2π(38.99) ≡ −0.06 rad per period; fine, but it is labeled a coincidence of design yet presented as possibly relevant; also the statement that C1 'predicts by local interpolation and periodic copying' is asserted as fact for the ridge fit with selected λ.",
-  "fix": "Mark the 'local interpolation plus periodic copying' description as an interpretation, valid for the kernel form, and qualify that λ shrinks it."
+  "quote": "Fitting the amplitudes helps because the truncated formula leaves out everything beyond $p\\le97$ and $m\\le3$",
+  "problem": "This causal explanation is stated as fact. The paper only reports the numbers, and no computation in the chapter supports the mechanism.",
+  "fix": "Prefix with 'A plausible reading (ours, not the paper's, and not tested here) is that' and change 'helps because' to 'helps since'."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "In the language of Chapter~\\ref{ch:generalization}, C2 has a strong \\textbf{inductive bias}, and here it is the \\emph{right} one",
-  "problem": "Fine, but the statement 'because the explicit formula says ... exactly this kind of function' treats a heuristic (non-convergent on critical line) formula as exact.",
-  "fix": "Add 'heuristically' and recall the explicit formula status from Chapter 18."
+  "quote": "Even underdetermined, it keeps positive skill, because every member of its family oscillates at the right frequencies forever.",
+  "problem": "The Key Idea states as established what the body text explicitly calls 'our heuristic reading' and 'not a guarantee'. The same applies to the checkpoint answer in the prior section.",
+  "fix": "Write: 'Even underdetermined, it keeps positive skill in the paper's Table IV; a heuristic reason is that every member of its family oscillates at the right frequencies.'"
  },
  {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The two samples below show, in tiny dimensions, why the joint refit matters.",
-  "problem": "The first of the two samples shows agreement of plain and orthogonal pursuit (no need for joint refit); the sentence misdescribes it.",
-  "fix": "Say 'The first sample shows the orthonormal case where the variants agree; the second shows why joint refit matters.'"
+  "quote": "and yet the oracle's roots behave in practice, because the many incommensurate slopes rarely line up",
+  "problem": "This empirical claim and its cause are neither in the paper nor checked in CHECKS. A sharp approximation to the staircase can have near-zero or negative slope between zeros, so the claim is not self-evident.",
+  "fix": "Either add a check that $\\Nsm+\\Nfl$ for 25 primes is monotone, or has a single root per bracket, on 401--500, or rephrase: 'the paper flags root ambiguity only for the 900-coefficient B row; we have not examined how often the oracle's level equation is non-monotone'."
  },
  {
   "category": "CLARITY",
   "severity": "medium",
-  "quote": "Why half? The resolution $2\\pi/T$ is the width of the region in which the window cannot distinguish frequencies",
-  "problem": "The justification for the π/T tolerance is circular and unclear.",
-  "fix": "Say the tolerance is half a resolution cell, i.e. log q is within the cell centred on ω; note this is the paper's convention, not derived."
+  "quote": "The fitted model is a weighted sum of copies of one fixed shape $K$, called the \\textbf{kernel}",
+  "problem": "$K$ is the bible's symbol for the number of selected frequencies and is used that way in the following sections. Here it is reused for the kernel function.",
+  "fix": "Rename the kernel, for example $D(\\tau)$ or $\\kappa(\\tau)$, in the equations, text and figure caption."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Every term repeats after $P$, so the whole model does:",
+  "problem": "$P$ already denotes the prime set in the chapter's version of Eq. (4), is the prime list in the code, and $\\mathcal P$ is the periodogram. Three meanings in one chapter.",
+  "fix": "Rename the period, for example $T_{\\rm rep}$ or $\\Pi$, throughout Section 3, the figure caption, the checkpoint answers and Problem 6."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "is an average such as $\\frac1n\\sum_n\\sin(\\omega_i t_n)\\sin(\\omega_j t_n)$",
+  "problem": "$n$ is both the summation index and the number of samples. The same clash recurs in the precision derivation ('$n$ the number of samples' with $\\sum_n$).",
+  "fix": "Use $n_{\\rm fit}$ (already defined) for the count everywhere: $\\frac{1}{n_{\\rm fit}}\\sum_n$ here, and $\\sqrt{n_{\\rm fit}}$ in the precision formula and its sample."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The ridge solution with strength $\\mu$ (in the paper's form, $\\mu=\\lambda\\sigma_1^2$)",
+  "problem": "The bible and paper use $\\mu$ for the dimensionless ridge strength that multiplies $\\Sigma_1^2$ in the filter. Here $\\mu$ already includes $\\sigma_1^2$, which conflicts with that notation.",
+  "fix": "Use a different symbol, for example $\\kappa=\\lambda\\sigma_1^2$, or write $\\lambda\\sigma_1^2$ explicitly in $(X^\\top X+\\lambda\\sigma_1^2I)^{-1}$."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "By the prime number theorem (Chapter~\\ref{ch:primes}), the number of primes near $x$ per unit $x$ is about $1/\\log x$",
-  "problem": "Density e^ω/ω derivation: with x=e^ω, dx=e^ω dω and 1/log x=1/ω, correct, but the threshold ω≈6.5 uses width 0.0094 for T=666 only; the Pitfall states it generally.",
-  "fix": "State that 6.5 applies for T≈666 in the keyideas too."
+  "quote": "and the fitted one $A\\sin(\\theta+\\phi)$ with the same amplitude and a frequency error $\\delta\\omega$",
+  "problem": "$\\varphi$ is the sinusoid's phase and $\\phi$ is the dephasing error, in the same paragraph. The bible also uses $\\phi_k$ for basis functions. The two glyphs are easy to confuse.",
+  "fix": "Rename the phase error, for example $\\Delta\\varphi(t)$ or $\\epsilon(t)$, in the equations, figure caption, samples, problems and answers."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "It \"stays within $0.005$ of the null\".",
+  "problem": "The paper's phrase refers to the 401--500 result ($0.258$ against $0.263$). Placed after the 801--1000 numbers ($0.267$ against $0.274$, a difference of $0.007$), it reads as covering both.",
+  "fix": "Move the quotation to directly after the 401--500 numbers, and say separately that the 800-zero fit lies $0.007$ below its null."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "unless $\\log2$ were a rational multiple of $\\Delta\\omega$ the two drift apart",
+  "problem": "A model with period $2\\pi/\\Delta\\omega$ contains $\\sin(t\\log2)$ exactly only if $\\log2$ is an integer multiple of $\\Delta\\omega$. A non-integer rational multiple would still not be representable.",
+  "fix": "Replace 'a rational multiple' with 'an integer multiple'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "a match there is closer to a coin toss than for $p=5$",
+  "problem": "With a standard deviation of $0.55$ of the tolerance, a Gaussian error falls inside the tolerance with probability about 93% ($\\abs z<1.8$). That is not close to a coin toss.",
+  "fix": "Replace with: 'the tolerance is then only about 1.8 standard deviations, so a correct component misses the criterion several percent of the time, against essentially never for $p=5$'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Fig.~1 of the paper shows the six-prime oracle predicting held-out zeros 401--460 with correlation $+0.96$",
+  "problem": "Fig. 1 displays zeros 370--460. The correlation $+0.96$ is the held-out value on 401--500 (Table V), not on 401--460.",
+  "fix": "Write: 'Fig. 1 of the paper shows zeros 370--460 (fit on 1--400); the six-prime oracle's held-out correlation is $+0.96$ (the 401--500 value of Table V)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Above that, almost \\emph{any} frequency matches some $\\log q$ by chance, and the criterion \\eqref{eq:sparse-frequency-match} carries no information.",
+  "problem": "At an expected count of 1 per cell the chance of a match is roughly $1-e^{-1}\\approx63\\%$. That is neither 'almost any' nor 'no information'. The pitfall's 'nearly cover the axis' has the same problem.",
+  "fix": "Write: 'Near that frequency a random frequency already matches some $\\log q$ more often than not (roughly 60% for a Poisson-like scatter), and the chance rises quickly toward 1 at higher $\\omega$, so matches there carry little information.' Adjust the pitfall likewise."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "This is why the paper uses \"a statistic that does not depend on a chosen frequency cutoff\" (Sec.~IV)",
+  "problem": "The paper does not give this motivation and does not define the binomial score in the text. The chapter attributes both a reason and a definition to the paper.",
+  "fix": "Write: 'This is a plausible motivation for the paper's use of ...', and label the description of the binomial score as 'our reading of the name; the definition is in the record'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "With 800 training zeros the same 900-coefficient model improves to $0.100$/$+0.94$, as more data pin the amplitudes.",
+  "problem": "The two scores are on different holdouts (401--500 and 801--1000) with different nulls. The cause is asserted, not shown.",
+  "fix": "Add 'on the different holdout 801--1000 (null $0.274$)' and change 'as more data pin the amplitudes' to 'plausibly because more data constrain the amplitudes'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "For samples equally spaced by $\\Delta$, frequencies above $\\pi/\\Delta$ are indistinguishable from lower ones",
+  "problem": "The aliasing (Nyquist) fact is attributed to Chapter 6, but the bible's contract for that chapter does not list aliasing. The reader may never have seen it.",
+  "fix": "Add the one-line derivation: 'for $t_n=n\\Delta$, $e^{\\ii(\\omega+2\\pi/\\Delta)t_n}=e^{\\ii\\omega t_n}e^{2\\pi\\ii n}=e^{\\ii\\omega t_n}$, so $\\omega$ and $\\omega+2\\pi/\\Delta$ give identical samples; every frequency therefore has an alias in $[-\\pi/\\Delta,\\pi/\\Delta]$'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Suppose the samples are spread roughly uniformly over the window and $A$ and $\\varphi$ are known well.",
+  "problem": "Step 5 shows that $\\varphi$ decouples from $\\omega$, but the corresponding statement for the amplitude $A$ is never shown.",
+  "fix": "Add to Step 5: 'the amplitude derivative is $\\sin(\\omega_0u_n+\\varphi)$; its cross term with $g_n$ is $\\tfrac A2\\sum_nu_n\\sin(2(\\omega_0u_n+\\varphi))$, an oscillating sum that is small for the same reason, so $A$ decouples too'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the left side is $(\\hat t_n-t_n)/\\gap_n$ by \\eqref{eq:sparse-frequency-slope-gap}",
+  "problem": "The cited equation gives $\\Nsm'$ at $s_n$, but it is used at $t_n$. The step that $\\Nsm'(t_n)\\approx\\Nsm'(s_n)$ is missing.",
+  "fix": "Add: 'since $\\Nsm''=1/(2\\pi t)$ is tiny, $\\Nsm'(t_n)\\approx\\Nsm'(s_n)=1/\\gap_n$ with relative error of order $10^{-3}$ at these heights'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "This is a geometric series (Chapter~\\ref{ch:series}) with first term $e^{-\\ii Jx}$, ratio $e^{\\ii x}$ and $2J+1$ terms:",
+  "problem": "The closed form needs $e^{\\ii x}\\ne1$, that is, $x$ not a multiple of $2\\pi$. This is not stated, although the next bullet takes the limit $\\tau\\to0$.",
+  "fix": "Add 'for $x$ not a multiple of $2\\pi$ (at such $x$ every term is 1 and the sum is $2J+1$)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Recall from Chapters~\\ref{ch:fitting} and~\\ref{ch:generalization} that a change $\\delta V$ in the potential shifts the level",
+  "problem": "The first-order shift is taught in the perturbation chapter and the turning-point sensitivity in the WKB chapter, not in the two chapters cited. Problem 25 has the same misattribution.",
+  "fix": "Cite Chapter~\\ref{ch:perturbation} for the first-order shift and Chapter~\\ref{ch:wkb} for turning points, here and in Problem 25."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(both exist for $\\mu>0$. To see this for the first, take any nonzero vector $\\bm v$;",
+  "problem": "A multi-sentence invertibility proof is packed inside a parenthesis in the middle of a sentence that ends in a colon before an equation. It is hard to parse.",
+  "fix": "Move the invertibility argument to its own short paragraph before 'Multiply on the left by...', then state the multiplication step cleanly."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "so plain pursuit gives coefficients $0.32$ on $\\bm a$ and $1.3$ on $\\bm b$",
+  "problem": "Answer 9 (values $1.1$, $1.3$, $0.32$, $0.24$, and $\\alpha=0.5$, $\\beta=1$) is not recomputed in the CHECKS script. The bible requires every numerical answer to be asserted.",
+  "fix": "Add to CHECKS: with `a=[1,0]`, `b=[.6,.8]`, `y=.5*a+b`, assert `y@b==1.3`, the residual `(0.32,-0.24)`, final residual norm `0.24`, and the least-squares solution `(0.5,1)`."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\Cref{sec:sparse-frequency-paper}",
-  "problem": "Uses \\Cref (capitalized) at sentence starts; bible lists \\cref only (cleveref provides \\Cref, so compiles) but minor.",
-  "fix": "Acceptable; optionally use \\cref."
+  "quote": "giving $\\pi/1.34\\approx2.34$, yet the paper's band reaches $\\omega=8$",
+  "problem": "Several quoted numbers are not asserted in CHECKS: $\\pi/1.34\\approx2.34$, $\\log131\\approx4.88$, the 800-zero window length $T\\approx1170$ (used in a sample, a checkpoint and problems), and the $\\log q$ column of the amplitude table.",
+  "fix": "Add assertions: `abs(np.pi/1.34-2.34)<0.01`, `abs(np.log(131)-4.88)<0.01`, `abs(qmnt.zeros(800)[-1]-qmnt.zeros(1)[0]-1170)<5`, and a loop checking each $\\log q$ value in the table."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\textbf{Step 1: count.} Each prime contributes $m=1,2,3$: three frequencies.",
-  "problem": "Sample Problem steps are bold 'Step n:' as required, but the sample 'Height and width of a periodogram peak' uses a nested equation environment inside sample without annotation; fine. Also the chapter has no problem requiring Python for '\\prob{2}{For RE2...}' etc.; the count of computational problems is ok (≥3).",
-  "fix": "No change needed."
+  "quote": "For RE2, the paper's arithmetic-continuation target, find $\\max\\abs{F'}$ and the threshold height $t^*$",
+  "problem": "Problem 21 repeats the 'Is the prime-2 wave safe?' sample almost verbatim. Problems 1, 15 and 22 likewise repeat the budget, 43-prime-power and bookkeeping samples. The bible forbids length from repetition.",
+  "fix": "Vary each one. For example, Problem 21: use the $p=3$ wave or the two-prime sum $\\{2,3\\}$. Problem 22: use a 600-zero window. Problem 1: use 50 primes. Problem 15: apply the count to a cutoff of 200 or ask which prime powers up to 113 are the five weakest."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.75\\linewidth]{figs/sparse-frequency_pursuit.pdf}",
+  "problem": "The bible's figure template fixes `width=0.85\\linewidth`. This figure uses 0.75, and the dephasing and roots figures use `\\linewidth`.",
+  "fix": "Set all `\\includegraphics` widths to `0.85\\linewidth`."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "told only that it was made by \"a few tuning forks\"",
+  "problem": "Straight double quotes are used throughout the chapter. In LaTeX they typeset as closing quotes on both sides.",
+  "fix": "Replace every `\"...\"` in running text with ``` ``...'' ``` (not inside `pycode` listings)."
  }
 ]
