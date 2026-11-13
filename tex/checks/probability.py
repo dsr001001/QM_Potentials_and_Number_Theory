@@ -115,10 +115,10 @@ rms_re2 = math.sqrt(ms)
 assert abs(rms_re2 - 0.17088) < 1e-5
 # m=1 term carries 87% of the mean square (autocorrelation discussion)
 assert abs(round(100*a1**2/(a1**2 + a2**2 + a3**2)) - 87) < 1e-12
-# sampled at smooth zeros 401-500: close to the paper's probe-null 0.1708
+# sampled at smooth zeros 401-500: within 0.001 of the paper's probe-null 0.1708
 nh = np.arange(401, 501)
 yre2 = qmnt.Nfl(qmnt.smooth_zeros(nh), [2], mmax=3)
-assert abs(qmnt.rms(yre2) - 0.1708) < 0.01
+assert abs(qmnt.rms(yre2) - 0.1708) < 1e-3
 sh = qmnt.smooth_zeros(np.array([401, 500]))
 assert 13 < (sh[1] - sh[0])/(2*math.pi/math.log(2)) < 17
 assert abs(2*math.pi/math.log(2) - 9.07) < 0.01

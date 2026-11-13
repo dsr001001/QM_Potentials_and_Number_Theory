@@ -2,106 +2,148 @@
  {
   "category": "RULE",
   "severity": "high",
-  "quote": "\\begin{keyideas}\n\\item A random variable attaches a number to each outcome;",
-  "problem": "The chapter uses figures (hist_fluct, gaussian, exponential, corr_rms, autocorr, lln) but the response as given contains no FIGURES section with scripts; the bible requires a script for each figure.",
-  "fix": "Add a FIGURES part with a '### FIG probability_<name>' script for each of the six figures."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\begin{prerequisites}\n\\item Chapter~\\ref{ch:series}",
-  "problem": "Prerequisites items are not inside an itemize, although the bible says the environment contains a bullet list (the bible says 'itemize inside it').",
-  "fix": "Wrap the items in \\begin{itemize}...\\end{itemize} inside prerequisites."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\prob{3}{Prove the equality case of Cauchy--Schwarz in detail: if $(\\sum u_iv_i)^2=\\sum u_i^2\\sum v_i^2$ and $\\sum v_i^2>0$, then $u_i=\\lambda v_i$ for one constant $\\lambda$ and all $i$.}\\label{prob:probability-cs-eq}",
-  "problem": "Labels use the prefix 'prob:' rather than the allowed prefixes sec/eq/fig/tab; also \\label placed outside \\prob after the argument.",
-  "fix": "Rename labels to a permitted form (e.g. eq:probability-prob-...) or avoid labels; place consistently."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\textbf{25.} About $0.263$ on 401--500 and $0.270$ on 501--1000",
-  "problem": "Answers section omits answers to several odd-numbered problems (e.g. 29 Bessel, 18 paper-only fine, but 19-ok; odd 29 (acf bound), 31 missing) and problem numbering relies on implicit counting. Odd problems 29 and 31 (Cov, Cauchy-Schwarz acf, Bessel) have no answers.",
-  "fix": "Add short solutions for all odd-numbered problems, including 29 and 31."
+  "quote": "In 1898 Ladislaus Bortkiewicz showed that the yearly number of Prussian cavalrymen killed by horse kicks",
+  "problem": "The chapter uses an environment `didyouknow` three times (here, in the autocorrelation section, and inside the Summary). It is not among the environments the bible says the preamble defines, so it will not compile unless added. The boxes also carry uncited historical facts, and one sits inside the Summary, which the bible says is a bullet list of results.",
+  "fix": "Remove all three `didyouknow` blocks (and the `% DYK-BEGIN/END` markers), or recast the content as ordinary prose in the relevant teaching section. In any case remove the box from the Summary."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The window covers about 15 periods of the wave, enough for the long-run average to be a good approximation, and the two values agree to the digits shown.",
-  "problem": "Sampled at the smooth zeros (discrete, ~100 points), the agreement 0.1708 vs 0.1709 is not guaranteed; the checks only test within 0.01, so 'agree to the digits shown' is unverified. Also paper's probe-null is not stated to be from smooth-zero sampling.",
-  "fix": "Compute the sampled rms in CHECKS to 4 digits or soften to 'agree closely'."
+  "quote": "meet the two distributions that appear in the paper's Fig.~2: the Gaussian and the exponential",
+  "problem": "Paper Fig. 2 shows the GUE Wigner surmise and the Poisson law e^{-s}. No Gaussian density appears there; the 'Gaussian' in GUE names a matrix ensemble, not the bell curve. The chapter's own Paper connection describes Fig. 2 correctly, so the intro contradicts it.",
+  "fix": "Replace with: 'meet two distributions you must know: the Gaussian, and the exponential, which is the Poisson law plotted in the paper's Fig.~2'."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "it oscillates with a period of roughly 6--7 levels, the level-count of one period $2\\pi/\\log 2\\approx9.07$ in $t$ at these heights (compare paper Sec.~V)",
-  "problem": "The paper says ~6-7 levels (Sec. V) is for the p=2 oscillation; fine, but the sample autocorrelation of a sampled sinusoid also includes harmonics m=2,3 so it is not a pure cosine; claim 'by eq sin-acf oscillates' is approximate.",
-  "fix": "Say the m=1 term dominates and harmonics modify the shape."
+  "quote": "The caption of Table~II warns that its intervals ``resample held-out levels independently although the fluctuations are serially correlated''",
+  "problem": "The quoted words are from the running text of Sec. III ('Other bases'), not from the caption of Table II. The caption says only 'bootstrap 95% intervals from independent resampling of the held-out levels (block-bootstrap sensitivity in the text)'.",
+  "fix": "Write: 'Sec.~III (``Other bases'') warns that the intervals in Table~II ``resample held-out levels independently although the fluctuations are serially correlated'''."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Replace the sums in \\cref{eq:probability-acf} by averages over one full period $P=2\\pi/\\omega$",
-  "problem": "Passing from a sample autocorrelation to a time average is asserted without justification; also the acf in the figure is at integer lags on irregular levels, not continuous tau.",
-  "fix": "State this as an approximation for fine sampling and long windows, and note that level-sampling makes the lag in levels correspond to variable tau."
+  "quote": "\\textbf{Correlation.} Dividing the covariance by the two standard deviations,",
+  "problem": "The correlation coefficient of two random variables, Cov(X,Y)/(σ_Xσ_Y), is never defined. Pearson's r was defined only for lists and |r|≤1 proved only for lists. Yet the population version is used here, in the definition of ρ_1 and ρ_2, and in the beyond box ('true correlation ρ').",
+  "fix": "After the covariance definition add: 'The correlation coefficient of two random variables is ρ = Cov(X,Y)/(σ_Xσ_Y); for the empirical distribution of paired lists it reduces to the Pearson r below, and the Cauchy--Schwarz proof carries over with sums replaced by expectations, so |ρ|≤1.' Then refer to it here."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "A stronger version (the \\emph{strong} law, convergence with probability 1) is proved in \\cite{rhb}.",
+  "problem": "As far as I can recall, Riley, Hobson and Bence prove the central limit theorem but do not prove the strong law of large numbers. The pointer is probably wrong and should be checked against the book.",
+  "fix": "Replace with 'A stronger version (the strong law, convergence with probability 1) holds as well; its proof needs measure-theoretic probability and is beyond this book', preferably in a `beyond` box and without the citation."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "If $r\\le0$, the smallest allowed value is $\\sigma_p=0$ (a standard deviation cannot be negative), giving $\\rms=\\sigma_y$",
+  "problem": "At σ_p=0 the correlation is undefined (0/0), as the pitfall a page later says. So a prediction with fixed r≤0 cannot actually have σ_p=0; the value σ_y is a limit that is approached, not attained.",
+  "fix": "Rewrite: 'If r≤0, the expression increases with σ_p for σ_p>0, so the rms exceeds σ_y (strictly for r<0, and for r=0 by \\cref{eq:probability-uncorr}) and only approaches σ_y as σ_p→0: no prediction with nonpositive correlation beats the null.'"
  },
  {
   "category": "JUMP",
-  "severity": "medium",
-  "quote": "Choose $\\lambda^*=\\sum u_iv_i\\big/\\sum v_i^2$ (the value that minimizes $g$; you can confirm this by setting $g'(\\lambda)=0$).",
-  "problem": "Student is told to confirm; the proof does not actually need minimality but the remark invites a gap.",
-  "fix": "Say 'any real lambda works in g>=0; we choose this one' and drop the minimization claim, or show g'=0 line."
+  "severity": "low",
+  "quote": "and then \\cref{eq:probability-var-sum} with all covariances zero (independence)",
+  "problem": "Additivity of expectation and of variance was proved for two variables only. Here, and in 'By linearity, E[x̄]=...', it is applied to n variables with no extension step.",
+  "fix": "Add one sentence: 'Applying the two-variable results repeatedly (first to x_1+x_2, then to (x_1+x_2)+x_3, and so on; the partial sum is independent of the next draw) gives E[Σx_i]=ΣE[x_i] and, for independent draws, Var(Σx_i)=ΣVar(x_i).'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "all drawn with \\texttt{numpy.random.default\\_rng(seed)}",
+  "problem": "The paper states the default_rng convention for the revision computations (steps 16--23) and names it in step 12. Step 10 (non-Hermitian restarts, seed 0) does not specify the generator.",
+  "fix": "Write: 'the revision computations (steps 16--23) and the permutations of step 12 draw from numpy.random.default_rng(seed); step 10 records seed 0'."
  },
  {
   "category": "JUMP",
-  "severity": "medium",
-  "quote": "The same conclusion holds for incommensurate frequencies averaged over a long time, Chapter~\\ref{ch:fourier-series}.",
-  "problem": "Cross-term vanishing for incommensurate frequencies is asserted by pointer; also Chapter 5 is mentioned but the wave RE2 has commensurate frequencies so fine.",
-  "fix": "Clarify the pointer names the orthogonality result, or omit the remark."
+  "severity": "low",
+  "quote": "for which $P(a<X<b\\text{ and }c<Y<d)=\\int_a^b\\int_c^d f(x,y)\\,\\dd y\\,\\dd x$",
+  "problem": "This uses a double integral, although the reader knows only single-variable calculus and the earlier beyond box says the book does not develop integrals over a plane. The claim that 'every definition and proof carries over' therefore rests on an undeveloped tool.",
+  "fix": "Add a short explanation of the iterated integral (integrate over y at fixed x, then over x), or mark the continuous case explicitly as taken on trust in a `beyond` box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The approximation comes from assumptions 1 and 2 holding only for tiny pieces; it becomes exact as $n\\to\\infty$.",
+  "problem": "It is asserted, not argued, that the per-piece errors (each small compared with s/n) do not add up to a finite error over n pieces.",
+  "fix": "Add: 'Each piece's emptiness probability is 1 - s/n + ε_n with ε_n negligible compared with 1/n, so nε_n→0; the logarithm of the product, n log(1-s/n+ε_n), then differs from n log(1-s/n) by a quantity that tends to 0.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the probability of any single exact value is zero (there are infinitely many possible values)",
+  "problem": "The parenthetical reason is wrong as stated. A discrete variable can also have infinitely many values (for example a count 0,1,2,...) with nonzero probability on each.",
+  "fix": "Replace the parenthesis with: '(the probability of an interval shrinks to zero with its width, \\cref{eq:probability-density})'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Rare, independent events spread over many opportunities produce Poisson counts, whatever their cause.",
+  "problem": "The Poisson distribution of counts is never defined in the chapter; only the Poisson process and its exponential gaps are. The reader cannot interpret 'followed a Poisson distribution' or 'Poisson counts'.",
+  "fix": "Delete the box (see the `didyouknow` issue), or define the count distribution P(k)=e^{-λ}λ^k/k! in the Poisson-process subsection first."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the centre of mass is at",
+  "problem": "British spelling 'centre' (also in 'moment of inertia about the centre of mass', twice more) breaks the bible's American-spelling rule. The chapter uses 'centered' and 'neighbors' elsewhere.",
+  "fix": "Change every 'centre' to 'center' outside direct quotations from the paper."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/probability_exponential.pdf}",
+  "problem": "The bible's figure template fixes width=0.85\\linewidth. This figure and probability_corr_rms use 0.95.",
+  "fix": "Set width=0.85\\linewidth for both figures."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the long-run value $0.1709$ agrees closely with the paper's $0.1708$",
+  "problem": "The chapter's own sampled value of the RE2 rms on smooth zeros 401--500 is never quoted. The check only asserts it is within 0.01 of 0.1708, which is too loose to support 'agrees closely' (a 0.0001 difference).",
+  "fix": "Compute rms of qmnt.Nfl(smooth_zeros(401..500),[2]) and quote it in the text. Tighten the assertion to about 1e-3, or to whatever the computed value supports."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "The paper's arithmetic-continuation probe uses exactly this wave as a synthetic target",
+  "problem": "By App. A step 15 the target is T_n = E_n[smooth] - N_fl^{p=2}(s_n) gap_n. The target fluctuation in spacings is therefore minus RE2 as defined here (RE2 = N_fl). 'Exactly this wave' ignores the sign; the rms is unaffected.",
+  "fix": "Write: 'uses this wave (with the opposite sign, since a level shift is minus the counting fluctuation; the rms is unaffected) as a synthetic target'."
  },
  {
   "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "and why the paper's zero-parameter prime formula sits almost exactly where the identity says the best possible predictor with its correlation must sit.",
-  "problem": "This is the author's own observation, with rounded correlations; presented in the intro as a finding. Also the bound assumes mean zero and equality of the 'null' with sigma_y.",
-  "fix": "Label as 'our observation from the paper's rounded numbers' in the introduction too."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "has, for large $n$, a standard deviation of approximately $(1-\\rho^2)/\\sqrt n$.",
-  "problem": "Correct for Gaussian pairs, but the paper-connection says the widths 'agree in order of magnitude' with ±0.2 near r=0 using 1.96*... ; the paper interval for r≈-0.07 is about ±0.15, fine; however 'derivation in efron' is doubtful (Efron-Tibshirani is bootstrap text, not the normal-theory derivation).",
-  "fix": "Cite the result as standard normal-theory (e.g. via the Fisher transformation) and do not attribute its derivation to efron; or point to rhb."
- },
- {
-  "category": "JUMP",
   "severity": "low",
-  "quote": "Why does the Gaussian appear so often? The reason is a theorem about sums of many independent random contributions, which we state in \\cref{sec:probability-sampling} (the central limit theorem).",
-  "problem": "Forward reference; fine, but Chebyshev bound in pitfall is also referenced before it is proved.",
-  "fix": "Add 'proved later in this chapter' wording for Chebyshev."
+  "quote": "That is why the paper's tables give a null rms but never a null correlation.",
+  "problem": "This attributes a reason to the paper that the paper does not state.",
+  "fix": "Rephrase: 'Consistently, the paper's tables give a null rms but no null correlation.'"
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The rms current of an alternating supply is the peak current divided by $\\sqrt2$",
-  "problem": "Reader of first-year physics knows this, but 'joint distribution' for continuous variables and independence for continuous variables are never defined; covariance formulas proved only discrete.",
-  "fix": "Add a sentence that the continuous case replaces sums by double integrals."
+  "quote": "the Gaussian rule of thumb $(1-\\rho^2)/\\sqrt n$ of the second \\texttt{beyond} box",
+  "problem": "'The second beyond box' is ambiguous. It is the third in the chapter and the second only within the sampling section, which is not named here.",
+  "fix": "Write 'of the \\texttt{beyond} box on the scatter of a sample correlation in \\cref{sec:probability-sampling}'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "Their widths agree in order of magnitude with the Gaussian rule of thumb $(1-\\rho^2)/\\sqrt n$ of the second \\texttt{beyond} box: about $\\pm0.2$ near $r=0$",
-  "problem": "The paper's interval for corr is [-0.21,+0.08], asymmetric around -0.07 with half-width ~0.15; stating ±0.2 slightly overstates agreement.",
-  "fix": "Say 'about ±0.2 (1.96 SE)' compared with the paper's half-width about 0.15."
+  "quote": "compare with the exact values 1 and 1, in units of the standard error of the mean",
+  "problem": "The standard error of the mean is the wrong yardstick for the sample variance. The standard error of a variance estimate is not taught in the chapter.",
+  "fix": "Change to: 'Compare the mean with 1 in units of its standard error; for the variance, just report the relative deviation from 1.'"
  },
  {
-  "category": "RULE",
+  "category": "CLARITY",
   "severity": "low",
-  "quote": "\\prob{2}{Using numpy, draw $10^4$ exponential numbers of mean 1 with \\texttt{default\\_rng(0)}.",
-  "problem": "Answers section lacks answer for this problem (24) though only odd required; fine, but the bible requires at least 3 computational problems whose checks exist; ok. However there are no problem answers for 25's code beyond line mentions.",
-  "fix": "No change needed beyond completing odd answers."
+  "quote": "a simulated Poisson process of unit rate, seed 1",
+  "problem": "A fixed number of points dropped uniformly on an interval is not exactly a Poisson process (the count is fixed and the gaps are weakly dependent). The student is not told it is an approximation.",
+  "fix": "Add: 'For 10^4 points this is indistinguishable in practice from a Poisson process; strictly, the Poisson process has a random number of points.'"
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "\\item Chapter~\\ref{ch:series}: limits of sequences, partial sums, the geometric series",
+  "problem": "`\\item` is used directly inside `prerequisites` (and `keyideas`) with no `itemize`. The bible says 'itemize inside it'. If the preamble environments are boxes rather than lists, this gives 'Lonely \\item' errors.",
+  "fix": "Wrap the items in \\begin{itemize}...\\end{itemize} inside `prerequisites` and every `keyideas`, unless the preamble confirms these environments are lists themselves."
  }
 ]
