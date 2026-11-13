@@ -38,3 +38,4 @@ API credit used up: ledger total $78.54. The queue stopped before finite-differe
 | linear-algebra | 25 (1/6/18) | 29 / 0 | exit code 0 passed assertions: 152; failures: 0 | 1.49 | 2026-11-14 03:33 |
 | asymptotics | 34 (2/5/27) | 76 / 0 | exit code 0 passed assertions: 124; failures: 0 | 1.75 | 2026-11-14 03:44 |
 | series | 20 (1/3/16) | 44 / 0 | exit code 0 passed assertions: 132; failures: 0 | 1.37 | 2026-11-14 03:54 |
+| complex | 24 (2/9/13) | 60 / 0 | exit code 0 passed assertions: 230; failures: 0 | 1.63 | 2026-11-14 04:06 |

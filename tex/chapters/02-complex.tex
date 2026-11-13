@@ -1,7 +1,7 @@
 \chapter{Complex Numbers and the Exponential}\label{ch:complex}
 
 \begin{chapterintro}
-The numbers at the center of this book are not ordinary real numbers. The $n$-th nontrivial zero of the Riemann zeta function is written $\rho_n=\tfrac12+i t_n$, where $i$ is a number whose square is $-1$. The list $t_1=14.134725$, $t_2=21.022040,\dots$ that you met in Chapter~\ref{ch:intro} is the list of \emph{imaginary parts} of these zeros. The formula that predicts the zeros so well in the paper contains terms like $\sin(mt\log p)/(m\,p^{m/2})$. As you will see in this chapter, each such term is the imaginary part of a complex power $p^{-ms}$, an arrow that turns around a circle as $t$ increases. To read even the first sentence of the paper you need complex numbers. To understand where its prime-number formula comes from you need the complex exponential.
+The numbers at the center of this book are not ordinary real numbers. The $n$-th nontrivial zero of the Riemann zeta function is written $\rho_n=\tfrac12+i t_n$, where $i$ is a number whose square is $-1$. The list $t_1=14.134725$, $t_2=21.022040,\dots$ that you met in Chapter~\ref{ch:intro} is the list of \emph{imaginary parts} of these zeros. The formula that predicts the zeros so well in the paper contains terms like $\sin(mt\log p)/(m\,p^{m/2})$. As you will see in this chapter, each such term is, up to the factor $-1/m$, the imaginary part of a complex power $p^{-ms}$ evaluated at $s=\tfrac12+it$: an arrow that turns around a circle as $t$ increases. To read even the first sentence of the paper you need complex numbers. To understand where its prime-number formula comes from you need the complex exponential.
 
 This chapter builds that language from the ground up. We define $i$ and the arithmetic of complex numbers, draw them as points and arrows in a plane, and describe them by a length and an angle. Then we derive Euler's formula $e^{i\theta}=\cos\theta+i\sin\theta$, the single most useful identity in this book. With it, rotations, oscillations, logarithms and powers like $p^{-s}$ all become simple. We end with functions of a complex variable, their zeros, and the way the angle (``argument'') of a product splits into a sum of angles. That last fact is how the primes enter the counting of zeros later in the book.
 
@@ -20,9 +20,7 @@ Where this shows up in the paper: the notation $\rho_n=\tfrac12+it_n$ in the fir
 %==========================================================
 \section{Why a new kind of number?}\label{sec:complex-why}
 % DYK-BEGIN
-\begin{didyouknow}{Ten Split Into Two}
-In his 1545 book \emph{Ars Magna}, Gerolamo Cardano asked for two numbers that add to 10 and multiply to 40. The answer, $5+\sqrt{-15}$ and $5-\sqrt{-15}$, struck him as subtle but useless. Yet his cubic formula sometimes passed through square roots of negative numbers even when the final roots were real. In 1572 Rafael Bombelli showed how to calculate with them consistently.
-\end{didyouknow}
+
 % DYK-END
 
 Try to solve $x^2+1=0$. You need a number whose square is $-1$. No real number works: the square of a positive number is positive, the square of a negative number is positive, and $0^2=0$. So within the real numbers this equation has no solution at all.
@@ -31,7 +29,7 @@ Mathematicians did not invent a new number just to be stubborn about such equati
 
 That last point is why physicists care. An oscillation $\cos\omega t$ is the shadow of a point going around a circle (you met this in first-year physics: SHM is the projection of uniform circular motion). Complex numbers let us work with the whole circle instead of its shadow, and the circle is much easier to compute with. Alternating-current circuits, waves, and all of quantum mechanics (Chapter~\ref{ch:schrodinger}) are written in complex numbers for this reason.
 
-For us there is a further reason. The Riemann zeta function, from which our mysterious list of numbers comes, is a function of a \emph{complex} variable $s$. Its zeros are complex numbers. And the primes enter through quantities $p^{-s}$, which on the line where the zeros sit are arrows of fixed length turning at a rate set by $\log p$. By the end of this chapter you will be able to compute such arrows, add them, and take their angles.
+For us there is a further reason. The Riemann zeta function, from which our mysterious list of numbers comes, is a function of a \emph{complex} variable $s$. Its zeros are complex numbers. And the primes enter through quantities $p^{-s}$, which on the vertical line where all the computed zeros sit are arrows of fixed length turning at a rate set by $\log p$. By the end of this chapter you will be able to compute such arrows, add them, and take their angles.
 
 \begin{keyideas}
 \item Some equations, like $x^2+1=0$, have no real solutions. We extend the number system by adding a number $i$ with $i^2=-1$.
@@ -78,7 +76,12 @@ To multiply, we use the ordinary distributive law of algebra, treating $i$ as a 
 &=ac+adi+bci-bd\quad\text{(using $i^2=-1$)}\nonumber\\
 &=(ac-bd)+(ad+bc)i.\label{eq:complex-mult}
 \end{align}
-Look at the final line: if you swap $(a,b)$ with $(c,d)$, the real part $ac-bd$ and the imaginary part $ad+bc$ do not change. So complex multiplication is commutative, $zw=wz$. The associative law $(zw)u=z(wu)$ and the distributive law $z(w+u)=zw+zu$ also hold: expand both sides of each with Eq.~\eqref{eq:complex-mult} and compare real and imaginary parts, which reduces each law to the same law for real numbers. Problem~7 asks you to carry out the expansion for a concrete case. The upshot is that you may manipulate complex numbers with all the familiar rules of algebra, remembering only that $i^2=-1$.
+Look at the final line: if you swap $(a,b)$ with $(c,d)$, the real part $ac-bd$ and the imaginary part $ad+bc$ do not change. So complex multiplication is commutative, $zw=wz$. The distributive law $z(w+u)=zw+zu$ also holds. With $z=a+bi$, $w=c+di$, $u=e+fi$, Eq.~\eqref{eq:complex-add} gives $w+u=(c+e)+(d+f)i$, so by Eq.~\eqref{eq:complex-mult}
+\begin{align*}
+z(w+u)&=\bigl[a(c+e)-b(d+f)\bigr]+\bigl[a(d+f)+b(c+e)\bigr]i\\
+&=\bigl[(ac-bd)+(ae-bf)\bigr]+\bigl[(ad+bc)+(af+be)\bigr]i ,
+\end{align*}
+which by Eqs.~\eqref{eq:complex-mult} and \eqref{eq:complex-add} is $zw+zu$. The associative law $(zw)u=z(wu)$ holds too: expanding both sides with Eq.~\eqref{eq:complex-mult} produces the same real products in each part. Problem~9 asks you to carry out this expansion in general and for a concrete case. The upshot is that you may manipulate complex numbers with all the familiar rules of algebra, remembering only that $i^2=-1$.
 
 \subsection{Powers of $i$}
 
@@ -154,7 +157,7 @@ The \textbf{complex conjugate} of $z=a+bi$ is
 \begin{equation}
 \bar z=a-bi.\label{eq:complex-conj}
 \end{equation}
-(Some books write $z^*$; the paper does not need either symbol, but later chapters on quantum mechanics use both.) Geometrically, $\bar z$ is the reflection of $z$ in the real axis. Three identities follow directly by writing out the parts:
+(Some books write $z^*$; the paper does not need either symbol, but later chapters on quantum mechanics use both.) Geometrically, $\bar z$ is the reflection of $z$ in the real axis. Reflecting twice returns the original point: $\overline{\bar z}=\overline{a-bi}=a+bi=z$. Three identities follow directly by writing out the parts:
 \begin{align}
 z+\bar z&=(a+bi)+(a-bi)=2a=2\Re z,\label{eq:complex-zpluszbar}\\
 z-\bar z&=(a+bi)-(a-bi)=2bi=2i\Im z,\nonumber\\
@@ -229,7 +232,7 @@ Geometrically: one side of a triangle is no longer than the other two together. 
 \begin{align*}
 \abs{z+w}^2&=(z+w)(\bar z+\bar w)\quad\text{(Eqs.~\eqref{eq:complex-zzbar2}, \eqref{eq:complex-conjrules})}\\
 &=z\bar z+z\bar w+w\bar z+w\bar w\\
-&=\abs z^2+\abs w^2+\bigl(z\bar w+\overline{z\bar w}\bigr)\quad\text{(since $w\bar z=\overline{z\bar w}$ by Eq.~\eqref{eq:complex-conjrules})}\\
+&=\abs z^2+\abs w^2+\bigl(z\bar w+\overline{z\bar w}\bigr)\quad\text{(since $\overline{z\bar w}=\bar z\,\overline{\bar w}=\bar z w$ by Eq.~\eqref{eq:complex-conjrules} and $\overline{\bar w}=w$)}\\
 &=\abs z^2+\abs w^2+2\Re(z\bar w)\quad\text{(Eq.~\eqref{eq:complex-zpluszbar})}.
 \end{align*}
 Now for any complex $u=c+di$, $\Re u=c\le\sqrt{c^2+d^2}=\abs u$. With $u=z\bar w$ and $\abs{z\bar w}=\abs z\abs{\bar w}=\abs z\abs w$ (Eq.~\eqref{eq:complex-absprod}, and $\abs{\bar w}=\abs w$ because changing the sign of the imaginary part does not change $c^2+d^2$),
@@ -240,7 +243,7 @@ Taking nonnegative square roots proves Eq.~\eqref{eq:complex-triangle}.
 
 \subsection{Complex numbers cannot be put in order}
 
-Real numbers can be compared: $2<3$. Complex numbers cannot, at least not in any way that cooperates with multiplication. Suppose there were an ordering in which, as for real numbers, the product of two positive numbers is positive and exactly one of $z$, $-z$ is positive for $z\neq0$. If $i$ were positive, then $i\cdot i=-1$ would be positive, and so would $(-1)(-1)=1$; but then both $1$ and $-1$ are positive, a contradiction. If instead $-i$ were positive, then $(-i)(-i)=i^2=-1$ would be positive, the same contradiction. So the phrase ``the larger of two complex numbers'' has no meaning. This matters later: the eigenvalues of the paper's non-Hermitian operators (Sec.~II~E) are complex, so they cannot simply be listed ``in increasing order'' the way real energy levels can; the paper matches them to unperturbed states by overlap instead (Chapter~\ref{ch:non-hermitian}).
+Real numbers can be compared: $2<3$. Complex numbers cannot, at least not in any way that cooperates with multiplication. Suppose there were an ordering in which, as for real numbers, the product of two positive numbers is positive and exactly one of $z$, $-z$ is positive for $z\neq0$. If $i$ were positive, then $i\cdot i=-1$ would be positive, and so would $(-1)(-1)=1$; but then both $1$ and $-1$ are positive, a contradiction. If instead $-i$ were positive, then $(-i)(-i)=i^2=-1$ would be positive, the same contradiction. So the phrase ``the larger of two complex numbers'' has no meaning. This matters later: the eigenvalues of the paper's non-Hermitian operators (Sec.~II~E) can be complex, so they have no natural ``increasing order'' of the kind real energy levels have. In any case, order alone would not tell which perturbed state came from which unperturbed one. The paper identifies states by overlap (Sec.~II~E (iii); Chapter~\ref{ch:non-hermitian}).
 
 \begin{checkpoint}
 What is the conjugate of a real number? What does conjugation do to the modulus?
@@ -315,7 +318,7 @@ So the modulus of a product is the product of the moduli (as already found in Eq
 \begin{equation}
 \arg(z_1z_2)=\arg z_1+\arg z_2\quad(\text{up to a multiple of }2\pi).\label{eq:complex-argprod}
 \end{equation}
-The phrase ``up to a multiple of $2\pi$'' matters: if $\operatorname{Arg}z_1=3$ and $\operatorname{Arg}z_2=1$, the sum $4$ is outside $(-\pi,\pi]$, and the principal argument of the product is $4-2\pi$.
+We abbreviate ``up to adding an integer multiple of $2\pi$'' as ``mod $2\pi$''. The phrase ``up to a multiple of $2\pi$'' matters: if $\operatorname{Arg}z_1=3$ and $\operatorname{Arg}z_2=1$, the sum $4$ is outside $(-\pi,\pi]$, and the principal argument of the product is $4-2\pi$.
 
 For quotients, since $z_1=(z_1/z_2)z_2$, Eq.~\eqref{eq:complex-argprod} gives $\arg(z_1/z_2)=\arg z_1-\arg z_2$, and $\abs{z_1/z_2}=r_1/r_2$. For the conjugate, $\bar z=r(\cos\theta-i\sin\theta)=r(\cos(-\theta)+i\sin(-\theta))$ (cosine even, sine odd), so $\arg\bar z=-\arg z$.
 
@@ -438,7 +441,7 @@ e^{i\theta}&=\Bigl(1-\frac{\theta^2}{2!}+\frac{\theta^4}{4!}-\frac{\theta^6}{6!}
 This is \textbf{Euler's formula}. Equation~\eqref{eq:complex-euler} is a theorem, given the definition \eqref{eq:complex-expdef} and the convergence facts below.
 
 \begin{beyond}
-Splitting an infinite sum into two sub-sums (here, even and odd terms) is a rearrangement. For some infinite series rearranging changes the answer (Chapter~\ref{ch:series} gives an example). It is safe when the series converges \emph{absolutely}, meaning that the sum of the moduli $\sum_n\abs{z^n/n!}=\sum_n\abs z^n/n!=e^{\abs z}$ is finite, which it is for every complex $z$. We take on trust that (i) the series \eqref{eq:complex-expdef} converges absolutely for every complex $z$, and (ii) absolutely convergent series may be rearranged freely. Both are proved in Chapter~\ref{ch:series} and in~\cite{rhb}.
+Splitting an infinite sum into two sub-sums (here, even and odd terms) is a rearrangement. For some infinite series rearranging changes the answer (conditionally convergent series, met in Chapter~\ref{ch:series}, can behave this way). It is safe when the series converges \emph{absolutely}, meaning that the sum of the moduli $\sum_n\abs{z^n/n!}=\sum_n\abs z^n/n!=e^{\abs z}$ is finite, which it is for every complex $z$. We take on trust that (i) the series \eqref{eq:complex-expdef} converges absolutely for every complex $z$, and (ii) absolutely convergent series may be rearranged freely. Absolute convergence is defined in Chapter~\ref{ch:series}; both facts are proved in~\cite{rhb}.
 \end{beyond}
 
 \begin{sample}{Euler's formula by brute force}
@@ -448,10 +451,10 @@ Evaluate the partial sums $S_N=\sum_{n=0}^{N}(i\theta)^n/n!$ for $\theta=\pi/3$ 
 
 \textbf{Step 2:} With $\theta=\pi/3\approx1.047198$, the terms are $1$, $1.047198\,i$, $-\theta^2/2=-0.548311$, $-i\theta^3/6=-0.191397\,i$, $\theta^4/24=0.050108$, $i\theta^5/120=0.010494\,i$, $-\theta^6/720=-0.001832$, $-i\theta^7/5040=-0.000274\,i$, $\theta^8/40320=0.000036$.
 
-\textbf{Step 3:} Add them cumulatively (\Cref{tab:complex-partial}). Each even term changes only the real part and each odd term only the imaginary part, exactly as in the derivation.
+\textbf{Step 3:} Add them cumulatively (see the table below). Each even term changes only the real part and each odd term only the imaginary part, exactly as in the derivation.
 
-\begin{table}[H]\centering
-\caption{Partial sums of the exponential series for $e^{i\pi/3}$.}\label{tab:complex-partial}
+\begin{center}
+\textit{Partial sums of the exponential series for $e^{i\pi/3}$.}\\[4pt]
 \begin{tabular}{ccc}
 \toprule
 $N$ & $\Re S_N$ & $\Im S_N$\\
@@ -469,7 +472,7 @@ $N$ & $\Re S_N$ & $\Im S_N$\\
 exact & 0.50000 & 0.86603\\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{center}
 
 \textbf{Step 4:} By $N=8$ the partial sum agrees with the exact value to about $10^{-5}$.
 \[
@@ -514,7 +517,7 @@ The product rule Eq.~\eqref{eq:complex-prodpolar} now reads $r_1e^{i\theta_1}\,r
 
 \emph{Exponentials of general complex numbers.} The exponent law holds for all complex numbers:
 \begin{beyond}
-For all complex $z$ and $w$, $e^{z}e^{w}=e^{z+w}$, where both sides are defined by the series \eqref{eq:complex-expdef}. The proof multiplies the two absolutely convergent series term by term (the ``Cauchy product'') and uses the binomial theorem; see Chapter~\ref{ch:series} and~\cite{rhb}. For purely imaginary $z,w$ we proved it above, as Eq.~\eqref{eq:complex-Elaw}.
+For all complex $z$ and $w$, $e^{z}e^{w}=e^{z+w}$, where both sides are defined by the series \eqref{eq:complex-expdef}. The proof multiplies the two absolutely convergent series term by term (the ``Cauchy product'') and uses the binomial theorem; see~\cite{rhb}. For purely imaginary $z,w$ we proved it above, as Eq.~\eqref{eq:complex-Elaw}.
 \end{beyond}
 With $z=x$ real and $w=iy$ purely imaginary,
 \begin{equation}
@@ -522,7 +525,17 @@ e^{x+iy}=e^{x}e^{iy}=e^{x}(\cos y+i\sin y).\label{eq:complex-exprect}
 \end{equation}
 So $\abs{e^{x+iy}}=e^{x}$ (using Eq.~\eqref{eq:complex-absprod} and $\abs{e^{iy}}=1$) and $\arg e^{x+iy}=y$. The real part of the exponent sets the size; the imaginary part sets the angle. Since $e^x>0$ for every real $x$, $e^{z}$ is never zero.
 
-\emph{Derivative.} We found $\frac{\dd}{\dd\theta}e^{i\theta}=ie^{i\theta}$. More generally, for real $t$ and a complex constant $k=\alpha+i\omega$, Eq.~\eqref{eq:complex-exprect} gives $e^{kt}=e^{\alpha t}(\cos\omega t+i\sin\omega t)$, and differentiating real and imaginary parts with the product rule shows $\frac{\dd}{\dd t}e^{kt}=k\,e^{kt}$ (Problem~23 explores why this characterizes the exponential).
+\emph{Derivative.} We found $\frac{\dd}{\dd\theta}e^{i\theta}=ie^{i\theta}$. More generally, for real $t$ and a complex constant $k=\alpha+i\omega$, Eq.~\eqref{eq:complex-exprect} gives $e^{kt}=e^{\alpha t}(\cos\omega t+i\sin\omega t)$, with real part $u(t)=e^{\alpha t}\cos\omega t$ and imaginary part $v(t)=e^{\alpha t}\sin\omega t$. By the real product rule,
+\begin{align*}
+u'(t)&=\alpha e^{\alpha t}\cos\omega t-\omega e^{\alpha t}\sin\omega t,\\
+v'(t)&=\alpha e^{\alpha t}\sin\omega t+\omega e^{\alpha t}\cos\omega t .
+\end{align*}
+On the other hand, by Eq.~\eqref{eq:complex-mult},
+\begin{align*}
+k\,e^{kt}&=(\alpha+i\omega)\,e^{\alpha t}(\cos\omega t+i\sin\omega t)\\
+&=e^{\alpha t}\bigl[(\alpha\cos\omega t-\omega\sin\omega t)+i(\alpha\sin\omega t+\omega\cos\omega t)\bigr],
+\end{align*}
+whose real part is $u'$ and whose imaginary part is $v'$. Hence $\frac{\dd}{\dd t}e^{kt}=u'+iv'=k\,e^{kt}$ (Problem~27 explores why this characterizes the exponential).
 
 \begin{checkpoint}
 What is $\abs{e^{i\theta}}$ for real $\theta$? What is $\abs{e^{2+3i}}$?
@@ -539,9 +552,7 @@ What is $\abs{e^{i\theta}}$ for real $\theta$? What is $\abs{e^{2+3i}}$?
 %==========================================================
 \section{The exponential as rotation: phasors and oscillations}\label{sec:complex-rotation}
 % DYK-BEGIN
-\begin{didyouknow}{Phasors Power the Grid}
-Charles Proteus Steinmetz, an engineer later at General Electric, showed in 1893 that alternating-current circuits become simple algebra if each sinusoidal voltage and current is represented by a complex number. Derivatives turn into multiplication by $i\omega$. His phasor method spread rapidly, and engineers still use it to analyze AC power networks, though they write $j$ instead of $i$.
-\end{didyouknow}
+
 % DYK-END
 
 \subsection{Multiplying by $e^{i\alpha}$ rotates}
@@ -573,7 +584,7 @@ Adding the two lines and dividing by 2, or subtracting them and dividing by $2i$
 Equivalently, $\cos\theta=\Re e^{i\theta}$ and $\sin\theta=\Im e^{i\theta}$. A real cosine is the sum of two arrows turning in opposite directions; their imaginary parts cancel and their real parts add. Formulas \eqref{eq:complex-cossin} turn every trigonometric identity into algebra with exponentials, as the samples below show.
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=0.95\linewidth]{figs/complex_rotation.pdf}
+\includegraphics[width=0.85\linewidth]{figs/complex_rotation.pdf}
 \caption{Left: the point $e^{i\theta}$ on the unit circle (here $\theta=0.9$ rad); its horizontal and vertical projections are $\cos\theta$ and $\sin\theta$. The dashed arrow $w=1.5+0.4i$ is rotated by $60^\circ$ when multiplied by $e^{i\pi/3}$. Right: as $\theta$ increases, the real and imaginary parts of $e^{i\theta}$ trace out $\cos\theta$ and $\sin\theta$ (angle $\theta$ in radians).}
 \label{fig:complex-rotation}
 \end{figure}
@@ -619,7 +630,7 @@ $e^{iA}+e^{iB}=e^{iP}(e^{iQ}+e^{-iQ})=2e^{iP}\cos Q$ and likewise $e^{-iA}+e^{-i
 \[
 \boxed{\sin(t\log2)+\sin(t\log3)=2\sin\!\bigl(\tfrac{t\log 6}{2}\bigr)\cos\!\bigl(\tfrac{t\log(3/2)}{2}\bigr),\quad\text{beat period}\approx15.50}
 \]
-Unlike ordinary beats between two tuning forks, this sum never repeats exactly. The ratio $\log 2/\log 3$ is irrational: if $\log2/\log3=b/a$ with positive integers $a,b$, then $a\log2=b\log3$, so $2^a=3^b$, which is impossible because $2^a$ is even and $3^b$ is odd. Sums of sinusoids with irrationally related frequencies are ``almost periodic''; Chapter~\ref{ch:fourier-series} shows that they never repeat. The paper's Eq.~(4) is such a sum.
+Unlike beats between two frequencies in a whole-number ratio, this sum never repeats exactly. The ratio $\log 2/\log 3$ is irrational: if $\log2/\log3=b/a$ with positive integers $a,b$, then $a\log2=b\log3$, so $2^a=3^b$, which is impossible because $2^a$ is even and $3^b$ is odd. Sums of sinusoids with irrationally related frequencies are ``almost periodic''; Chapter~\ref{ch:fourier-series} shows that they never repeat. The paper's Eq.~(4) is such a sum.
 \end{sample}
 
 \begin{checkpoint}
@@ -700,7 +711,7 @@ The zeta function and its relatives are built from quantities $k^{-s}$, with $k$
 \[
 s=\sigma+it,\qquad\sigma=\Re s,\quad t=\Im s .
 \]
-Here $\sigma$ is the Greek letter sigma. Note that $t$ is \emph{not} time in this context: it is a position along the vertical direction of the complex $s$-plane, the ``height''. The zeros of zeta have $\sigma=\tfrac12$ and heights $t=t_n$.
+Here $\sigma$ is the Greek letter sigma. Note that $t$ is \emph{not} time in this context: it is a position along the vertical direction of the complex $s$-plane, the ``height''. All the nontrivial zeros used in this book have been verified numerically to lie on the line $\sigma=\tfrac12$, with heights $t=t_n$; whether every nontrivial zero does is the Riemann hypothesis, which is open (Chapter~\ref{ch:zeta}). (Zeta also has so-called trivial zeros on the negative real axis, Chapter~\ref{ch:zeta}; they play no role here.)
 
 Apply the definition \eqref{eq:complex-power} with $a=k$ and exponent $-s$:
 \begin{align}
@@ -747,14 +758,14 @@ $p$ & $1/\sqrt p$ & $\log p$ & $2\pi/\log p$\\
 \end{table}
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=0.95\linewidth]{figs/complex_pminus_s.pdf}
+\includegraphics[width=0.85\linewidth]{figs/complex_pminus_s.pdf}
 \caption{Left: as $t$ runs from 0 to 4 in steps of 0.25, the arrow $p^{-1/2-it}$ moves clockwise around a circle of radius $1/\sqrt p$, for $p=2,3,5$; dots mark the steps, and larger primes turn faster. Right: the imaginary parts $\Im p^{-1/2-it}=-p^{-1/2}\sin(t\log p)$ as functions of the height $t$ (dimensionless). The $p=2$ curve has period $2\pi/\log2\approx9.065$.}
 \label{fig:complex-pminus-s}
 \end{figure}
 
 \subsection{Powers $p^{-ms}$ and harmonics}
 
-Raising $p^{-s}$ to the $m$-th power ($m=1,2,3,\dots$) gives, by Eq.~\eqref{eq:complex-pms} with $k=p^m$ (or by De Moivre),
+Raise $p^{-s}$ to the $m$-th power ($m=1,2,3,\dots$). Applying the exponent law $e^{z}e^{w}=e^{z+w}$ $m-1$ times gives $(p^{-s})^m=(e^{-s\log p})^m=e^{-ms\log p}$, and since $m\log p=\log p^m$ this equals $e^{-s\log p^m}=(p^m)^{-s}$, which we write $p^{-ms}$. Then Eq.~\eqref{eq:complex-pms} with $k=p^m$, together with $(p^m)^{-\sigma}=p^{-m\sigma}$, gives
 \begin{equation}
 p^{-ms}=(p^m)^{-s}=p^{-m\sigma}\,e^{-imt\log p}.\label{eq:complex-pmms}
 \end{equation}
@@ -766,7 +777,7 @@ The left-hand form is exactly the shape of each term in the paper's Eq.~(4). In 
 \begin{equation}
 -\frac1\pi\sum_{m=1}^{3}\frac{\sin(mt\log2)}{m\,2^{m/2}}=\frac1\pi\sum_{m=1}^3\frac1m\Im\bigl[2^{-m(1/2+it)}\bigr].\label{eq:complex-re2}
 \end{equation}
-Its three frequencies $\log2,\ 2\log2=\log4,\ 3\log2=\log8$ are whole-number multiples of $\log 2$, so RE2 repeats with the period of the slowest one, $2\pi/\log2\approx9.0647$ (Problem~16). Where the factor $-1/\pi$ and the sum over primes come from is the story of Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula}.
+Its three frequencies $\log2,\ 2\log2=\log4,\ 3\log2=\log8$ are whole-number multiples of $\log 2$, so RE2 repeats with the period of the slowest one, $2\pi/\log2\approx9.0647$ (Problem~18). Where the factor $-1/\pi$ and the sum over primes come from is the story of Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula}.
 
 \begin{sample}{The arrow $2^{-s}$ at the first zero}
 Compute $2^{-\rho_1}$ for $\rho_1=\tfrac12+14.134725\,i$, giving its modulus, its principal argument and its real and imaginary parts.
@@ -821,13 +832,26 @@ A \textbf{zero} of $f$ is a point $z_0$ with $f(z_0)=0$. By Eq.~\eqref{eq:comple
 \begin{equation}
 u(x_0,y_0)=0\qquad\text{and}\qquad v(x_0,y_0)=0\label{eq:complex-zero}
 \end{equation}
-hold at once. Equivalently, $\abs{f(z_0)}=0$, since $\abs f=\sqrt{u^2+v^2}$ vanishes only when $u$ and $v$ both vanish. Each equation alone typically holds along a curve in the plane; the zeros are where two such curves cross. Two equations in two unknowns usually have isolated solutions, which is why the zeros of a typical complex function are separate points that can be listed one by one, $\rho_1,\rho_2,\dots$, rather than lines or regions. (This counting of equations is a heuristic; for the functions in this book, isolated zeros are a theorem covered in~\cite{titchmarsh}.)
+hold at once. Equivalently, $\abs{f(z_0)}=0$, since $\abs f=\sqrt{u^2+v^2}$ vanishes only when $u$ and $v$ both vanish. Each equation alone typically holds along a curve in the plane; the zeros are where two such curves cross. Two equations in two unknowns usually have isolated solutions, so we expect the zeros of a complex function to be separate points that can be listed one by one, $\rho_1,\rho_2,\dots$, rather than lines or regions. This counting of equations is only a heuristic. The function $f(z)=\Re z$ assigns a complex number to each $z$, yet it vanishes on the whole imaginary axis: its imaginary part $v$ is $0$ everywhere, so one of the two equations imposes no condition at all.
+\begin{beyond}
+For \emph{analytic} functions, meaning those with a complex derivative $f'(z)=\lim_{h\to0}[f(z+h)-f(z)]/h$ as the complex number $h$ approaches $0$ from every direction in the plane, the zeros of a function that is not identically zero are isolated points. Polynomials, $e^z$, $1-2^{-s}$ and the zeta function (away from its pole at $s=1$, Chapter~\ref{ch:zeta}) are analytic; $\Re z$ is not. We take this theorem on trust; it is proved in the complex-variables chapters of~\cite{rhb}.
+\end{beyond}
 
 For $f(z)=z^2$: $v=2xy=0$ requires $x=0$ or $y=0$. If $y=0$, then $u=x^2=0$ forces $x=0$. If $x=0$, then $u=-y^2=0$ forces $y=0$. So the only zero is $z=0$: the curves $u=0$ (the diagonal lines $y=\pm x$) and $v=0$ (the two axes) cross only at the origin.
 
 \subsection{Zeros of polynomials}
 
-The quadratic formula works for complex coefficients too, provided we interpret the square root as either of the two complex numbers whose square is the discriminant. For real coefficients and a negative discriminant $D<0$, the two square roots of $D$ are $\pm i\sqrt{\abs D}$ (check: $(i\sqrt{\abs D})^2=-\abs D=D$).
+\textbf{The quadratic formula for complex numbers.} Take $az^2+bz+c=0$ with complex $a,b,c$ and $a\ne0$, and write $D=b^2-4ac$ for the discriminant. Completing the square uses only the commutative, associative and distributive laws, which hold for complex numbers (Section~\ref{sec:complex-arith}):
+\begin{align*}
+az^2+bz+c&=a\Bigl[z^2+\frac{b}{a}z+\frac{c}{a}\Bigr]\\
+&=a\Bigl[\Bigl(z+\frac{b}{2a}\Bigr)^2-\frac{b^2}{4a^2}+\frac{c}{a}\Bigr]\quad\text{(since $(z+\tfrac{b}{2a})^2=z^2+\tfrac{b}{a}z+\tfrac{b^2}{4a^2}$)}\\
+&=a\Bigl[\Bigl(z+\frac{b}{2a}\Bigr)^2-\frac{D}{4a^2}\Bigr]\quad\text{(since $-\tfrac{b^2}{4a^2}+\tfrac{4ac}{4a^2}=-\tfrac{D}{4a^2}$)}.
+\end{align*}
+Let $w$ be a complex number with $w^2=D$. (One always exists: if $D=re^{i\theta}$, take $w=\sqrt r\,e^{i\theta/2}$, whose square is $re^{i\theta}$ by Eq.~\eqref{eq:complex-prodpolar}.) Then $D/(4a^2)=(w/2a)^2$, and with $u=z+b/(2a)$ the bracket is $u^2-(w/2a)^2=(u-w/2a)(u+w/2a)$. Since $a\ne0$, the equation holds exactly when this product is zero. A product of complex numbers is zero only if a factor is zero: by Eq.~\eqref{eq:complex-absprod}, $\abs{u_1u_2}=\abs{u_1}\abs{u_2}$ vanishes only if $\abs{u_1}=0$ or $\abs{u_2}=0$. So $u=\pm w/(2a)$, that is
+\[
+z=\frac{-b\pm w}{2a},\qquad w^2=D .
+\]
+This is the familiar formula, with the square root of $D$ meaning either complex number whose square is $D$ (the $\pm$ covers the other one). For real coefficients and a negative discriminant $D<0$, the two square roots of $D$ are $\pm i\sqrt{\abs D}$ (check: $(i\sqrt{\abs D})^2=-\abs D=D$).
 
 \textbf{Conjugate pairs.} If a polynomial $q(z)=c_0+c_1z+\dots+c_dz^d$ has \emph{real} coefficients and $q(z_0)=0$, then $q(\bar z_0)=0$ too. Proof: by Eq.~\eqref{eq:complex-conjrules}, conjugation passes through sums and products, and $\bar c_k=c_k$ for real $c_k$, so $\overline{q(z_0)}=\bar c_0+\bar c_1\bar z_0+\cdots+\bar c_d\bar z_0^{\,d}=q(\bar z_0)$. Since $q(z_0)=0$, $q(\bar z_0)=\bar0=0$. So the non-real roots of a real polynomial come in mirror-image pairs.
 
@@ -903,14 +927,14 @@ Equation~\eqref{eq:complex-argprod} extends to any number of factors by applying
 \begin{equation}
 \arg F=\arg f_1+\arg f_2+\cdots+\arg f_K\quad(\text{mod }2\pi),\label{eq:complex-argmany}
 \end{equation}
-and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angle that is a \emph{sum} of many angles. This simple fact is how the primes get into the counting of the zeta zeros: Chapter~\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), each factor being $1/(1-p^{-s})$. Since $\arg(1/f)=-\arg f$, the argument of zeta becomes minus a sum over primes, $\arg\zeta(s)=-\sum_p\arg(1-p^{-s})$ (mod $2\pi$; for an infinite product this also needs a convergence argument, which Chapter~\ref{ch:explicit-formula} supplies).
+and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angle that is a \emph{sum} of many angles. This simple fact is how the primes get into the counting of the zeta zeros: Chapter~\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), each factor being $1/(1-p^{-s})$. Since $\arg(1/f)=-\arg f$, the argument of zeta becomes minus a sum over primes, $\arg\zeta(s)=-\sum_p\arg(1-p^{-s})$ (mod $2\pi$). This holds for $\Re s>1$, where the infinite product converges (Chapter~\ref{ch:zeta}). On the critical line the product does not converge, so the corresponding formula there is only formal (heuristic), as Chapter~\ref{ch:explicit-formula} discusses honestly.
 
 \begin{sample}{Argument of a product, and of a prime factor}
 (a) Find $\operatorname{Arg}\bigl[(1+i)(\sqrt3+i)\bigr]$ two ways. (b) Find $\operatorname{Arg}(1-2^{-s})$ on the critical line at the height $t^*$ where $t^*\log2=\pi/2$.
 
 \textbf{Step 1:} (a) $\operatorname{Arg}(1+i)=\pi/4$ and $\operatorname{Arg}(\sqrt3+i)=\arctan(1/\sqrt3)=\pi/6$. Their sum $5\pi/12\approx1.308997$ lies in $(-\pi,\pi]$, so it is the principal argument of the product.
 
-\textbf{Step 2:} Directly: $(1+i)(\sqrt3+i)=\sqrt3+i+i\sqrt3+i^2=(\sqrt3-1)+i(\sqrt3+1)\approx0.732051+2.732051\,i$. Then $\arctan(2.732051/0.732051)=\arctan(3.732051)$, and $3.732051=2+\sqrt3=\tan75^\circ$, so the argument is $75^\circ=5\pi/12$. Agreed.
+\textbf{Step 2:} Directly: $(1+i)(\sqrt3+i)=\sqrt3+i+i\sqrt3+i^2=(\sqrt3-1)+i(\sqrt3+1)\approx0.732051+2.732051\,i$. Then $\arctan(2.732051/0.732051)=\arctan(3.732051)$. To recognize this angle, divide the addition formulas for $\sin(A+B)$ and $\cos(A+B)$ and then divide top and bottom by $\cos A\cos B$: $\tan(A+B)=(\tan A+\tan B)/(1-\tan A\tan B)$. With $A=45^\circ$ ($\tan A=1$) and $B=30^\circ$ ($\tan B=1/\sqrt3$), $\tan75^\circ=\frac{1+1/\sqrt3}{1-1/\sqrt3}=\frac{\sqrt3+1}{\sqrt3-1}=\frac{(\sqrt3+1)^2}{3-1}=\frac{4+2\sqrt3}{2}=2+\sqrt3\approx3.732051$. Since $\arctan$ returns angles in $(-90^\circ,90^\circ)$, the argument is $75^\circ=5\pi/12$. Agreed.
 
 \textbf{Step 3:} (b) $t^*=\pi/(2\log2)\approx2.266180$. On the critical line, $2^{-s}=2^{-1/2}e^{-it^*\log2}=2^{-1/2}e^{-i\pi/2}=-i/\sqrt2$.
 
@@ -923,13 +947,18 @@ and for a reciprocal, $\arg(1/f)=-\arg f$. A product of many factors has an angl
 
 \subsection{Following the argument continuously}
 
-Suppose $f(t)$ is a complex number that depends continuously on a real parameter $t$ running over an interval (for instance, a function evaluated along the critical line, $f(\tfrac12+it)$) and is never zero along the way. A \textbf{continuous argument} of $f$ is a continuous real function $\alpha(t)$ with $f(t)=\abs{f(t)}e^{i\alpha(t)}$ for all $t$. Two facts:
+Suppose $f(t)$ is a complex number that depends continuously on a real parameter $t$ running over an interval (for instance, a function evaluated along the critical line, $f(\tfrac12+it)$) and is never zero along the way. A \textbf{continuous argument} of $f$ is a continuous real function $\alpha(t)$ with $f(t)=\abs{f(t)}e^{i\alpha(t)}$ for all $t$. Three facts:
+
+\emph{It exists.} We take this on trust, with the following sketch.
+\begin{beyond}
+Two calculus theorems are used without proof (see~\cite{rhb}): a continuous function on a closed interval attains a minimum, and it is uniformly continuous there. Since $\abs{f(t)}$ is continuous and never zero on the closed interval $[t_a,t_b]$, it has a positive minimum $\mu$. By uniform continuity we can cut $[t_a,t_b]$ into finitely many pieces so short that on each piece $\abs{f(t)-f(t_j)}<\mu$, where $t_j$ is the left end of the piece. Then $\abs{f(t)/f(t_j)-1}<\mu/\abs{f(t_j)}\le1$, so $f(t)/f(t_j)$ lies in the disc of radius 1 about the point 1, which is inside the right half-plane. There $\operatorname{Arg}$ is continuous, so $\operatorname{Arg}f(t_j)+\operatorname{Arg}[f(t)/f(t_j)]$ is a continuous argument of $f$ on that piece (Eq.~\eqref{eq:complex-argprod}). At the end of each piece, the next piece's argument differs from it by a multiple of $2\pi$; subtracting that constant joins the pieces into one continuous argument.
+\end{beyond}
 
 \emph{It is unique up to a constant multiple of $2\pi$.} If $\alpha_1$ and $\alpha_2$ are both continuous arguments, their difference is continuous and, at every $t$, an integer multiple of $2\pi$ (by the lemma of Section~\ref{sec:complex-log}). Recall the intermediate value theorem of calculus: if $g$ is continuous on an interval $[t_a,t_b]$, then $g$ takes every value between $g(t_a)$ and $g(t_b)$. Let $g=\alpha_1-\alpha_2$, defined on the interval over which $t$ runs. If $g$ took two different values $2\pi j<2\pi j'$ at two points, it would also take every value between them, including $2\pi j+\pi$, which is not a multiple of $2\pi$. That is impossible, so $g$ is constant. Fixing $\alpha$ at one starting point fixes it everywhere.
 
 \emph{For products it adds exactly.} If $\alpha$ and $\beta$ are continuous arguments of $f$ and $g$, then $fg=\abs f\abs g\,e^{i(\alpha+\beta)}$ and $\alpha+\beta$ is continuous, so $\alpha+\beta$ is a continuous argument of $fg$. With continuous arguments there is no ``mod $2\pi$'' left in Eq.~\eqref{eq:complex-argmany}.
 
-The principal argument $\operatorname{Arg}$ is continuous as long as $f(t)$ avoids the negative real axis (Section~\ref{sec:complex-log}). When the path does cross that axis, $\operatorname{Arg}$ jumps by $2\pi$, and we must add or subtract $2\pi$ to remove the jump; numpy's \texttt{np.unwrap} does this. If the path circles around the origin, a continuous argument can grow without bound; counting such windings is the idea behind counting zeros in Chapter~\ref{ch:counting-zeros} (see also Problem~25).
+The principal argument $\operatorname{Arg}$ is continuous as long as $f(t)$ avoids the negative real axis (Section~\ref{sec:complex-log}). When the path does cross that axis, $\operatorname{Arg}$ jumps by $2\pi$, and we must add or subtract $2\pi$ to remove the jump; numpy's \texttt{np.unwrap} does this. If the path circles around the origin, a continuous argument can grow without bound; counting such windings is the idea behind counting zeros in Chapter~\ref{ch:counting-zeros} (see also Problem~28).
 
 \textbf{A continuous argument of $1-2^{-s}$ on the critical line.} Let $x=2^{-1/2-it}$, so $\abs x=1/\sqrt2$. Then $\Re(1-x)=1-\Re x\ge1-\abs x=1-1/\sqrt2>0$. So $1-2^{-s}$ stays in the right half-plane for all real $t$, never touches the negative real axis, and its principal argument is continuous and lies in $(-\pi/2,\pi/2)$. No unwrapping is needed.
 
@@ -943,7 +972,15 @@ Here is a numerical observation that previews the central mechanism of Chapter~\
 \label{fig:complex-arg-prime2}
 \end{figure}
 
-The status of this observation: in this chapter it is a numerical observation. It becomes a theorem once you know the series $-\log(1-x)=x+x^2/2+x^3/3+\cdots$ for $\abs x<1$, which Chapter~\ref{ch:series} proves. Write $\mathcal S(x)=-(x+x^2/2+x^3/3+\cdots)$ for the sum of that series. Chapter~\ref{ch:series} also shows that $e^{\mathcal S(x)}=1-x$, so $\mathcal S(x)$ is one of the logarithms of $1-x$ in Eq.~\eqref{eq:complex-log}, and $\Im\mathcal S(x)$ is one of the arguments of $1-x$. Which one? By the triangle inequality applied to the series (Chapter~\ref{ch:series}), $\abs{\Im\mathcal S}\le\abs{\mathcal S}\le\sum_{m\ge1}\abs x^m/m=-\log(1-\abs x)$, and for $\abs x=1/\sqrt2$ this is $-\log(1-1/\sqrt2)\approx1.228<\pi$. Arguments of the same number differ by multiples of $2\pi$, so only one of them lies in $(-\pi,\pi)$, and that one is the principal argument. Hence $\Im\mathcal S(x)=\operatorname{Arg}(1-x)$. With $x=2^{-1/2-it}$, Eq.~\eqref{eq:complex-oracleterm} gives $\Im x^m=-2^{-m/2}\sin(mt\log2)$, so $\operatorname{Arg}(1-2^{-s})=\sum_{m\ge1}\sin(mt\log2)/(m2^{m/2})$ exactly, and RE2 keeps the first three terms. Chapter~\ref{ch:explicit-formula} then does the same for every prime factor of zeta, which is where the paper's Eq.~(4) comes from (with an honest discussion of what is rigorous and what is not).
+The status of this observation: in this chapter it is a numerical observation. It becomes a theorem once we take one fact on trust.
+\begin{beyond}
+For a complex number $x$ with $\abs x<1$, the series $\mathcal S(x)=-(x+x^2/2+x^3/3+\cdots)$ converges, and $e^{\mathcal S(x)}=1-x$. For real $x$ in $(-1,1)$ this is the Taylor series $\log(1-x)=-(x+x^2/2+x^3/3+\cdots)$ derived in Chapter~\ref{ch:series}. The extension to complex $x$, including the identity $e^{\mathcal S(x)}=1-x$, is proved in the complex-variables chapters of~\cite{rhb}.
+\end{beyond}
+Given this, $\mathcal S(x)$ is one of the logarithms of $1-x$ in Eq.~\eqref{eq:complex-log}, and $\Im\mathcal S(x)$ is one of the arguments of $1-x$. Which one? Apply the triangle inequality, Eq.~\eqref{eq:complex-triangle}, repeatedly to a partial sum, using $\abs{x^m}=\abs x^m$ (Eq.~\eqref{eq:complex-absprod}):
+\[
+\Bigl\lvert x+\frac{x^2}{2}+\cdots+\frac{x^N}{N}\Bigr\rvert\le\abs x+\frac{\abs x^2}{2}+\cdots+\frac{\abs x^N}{N}.
+\]
+The right side is a partial sum of the real series for $-\log(1-\abs x)$; its terms are positive, so it never exceeds $-\log(1-\abs x)$. Letting $N\to\infty$, and using $\abs{\Im u}\le\abs u$ for any complex $u$, we get $\abs{\Im\mathcal S}\le\abs{\mathcal S}\le-\log(1-\abs x)$. For $\abs x=1/\sqrt2$ this is $-\log(1-1/\sqrt2)\approx1.228<\pi$. Arguments of the same number differ by multiples of $2\pi$, so only one of them lies in $(-\pi,\pi)$, and that one is the principal argument. Hence $\Im\mathcal S(x)=\operatorname{Arg}(1-x)$. With $x=2^{-1/2-it}$, Eq.~\eqref{eq:complex-oracleterm} gives $\Im x^m=-2^{-m/2}\sin(mt\log2)$, so $\operatorname{Arg}(1-2^{-s})=\sum_{m\ge1}\sin(mt\log2)/(m2^{m/2})$ exactly, and RE2 keeps the first three terms. Chapter~\ref{ch:explicit-formula} then does the same for every prime factor of zeta, which is where the paper's Eq.~(4) comes from (with an honest discussion of what is rigorous and what is not).
 
 \begin{pycode}
 import numpy as np, qmnt
@@ -967,9 +1004,7 @@ print(np.max(np.abs(phase - re2)))  # below 0.05
 %==========================================================
 \section{Paper connection}\label{sec:complex-paper}
 % DYK-BEGIN
-\begin{didyouknow}{Who Named $i$?}
-The symbol $i$ for $\sqrt{-1}$ is due to Leonhard Euler, who used it in a memoir written in 1777 and published in 1794, after his death. Gauss later adopted it, which helped make it standard. Euler also introduced the letter $e$, popularized $\pi$, and found $e^{ix}=\cos x+i\sin x$. Every zeta zero in this book is written $\tfrac12+it_n$ in his notation.
-\end{didyouknow}
+
 % DYK-END
 
 \paragraph{The zeros are complex numbers (Sec.~I, first sentence; Sec.~II~A).} The paper opens: ``The Hilbert--P\'olya conjecture proposes that the imaginary parts $t_n$ of the nontrivial zeros $\rho_n=\tfrac12+it_n$ of the Riemann zeta function are the spectrum of a self-adjoint operator''~\cite{soniR1}. You can now parse every symbol: $\rho_n$ is a complex number with real part $\tfrac12$ and imaginary part $t_n$, a real number. Sec.~II~A reports $t_1=14.134725141734695$ and $t_{1000}=1419.42248094599$; these are imaginary parts, as in our Sample Problem on $\abs{\rho_1}$. Writing every zero with real part $\tfrac12$ places them all on the vertical line $\sigma=\tfrac12$ of the complex plane (\Cref{fig:complex-critical}). That \emph{every} nontrivial zero lies on this line is the Riemann hypothesis, which is open (Chapter~\ref{ch:zeta}); the paper only uses zeros for which this has been verified numerically (a numerical observation, not a proof). From Sec.~II on, the paper works only with the real list $t_n$; the complex structure is hidden in that choice, and in the conjugate-pair symmetry that lets one keep only $t_n>0$.
@@ -984,17 +1019,17 @@ The symbol $i$ for $\sqrt{-1}$ is due to Leonhard Euler, who used it in a memoir
 \[
 N_{\rm fl}(t)=-\frac1\pi\sum_{p\in P}\sum_{m=1}^{3}\frac{\sin(mt\log p)}{m\,p^{m/2}}.
 \]
-By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated at $s=\tfrac12+it$. The factor $p^{-m/2}$ is the length of the arrow $p^{-ms}$ on the critical line, Eq.~\eqref{eq:complex-critmod}: it arises because the sum is evaluated at $s=\tfrac12+it$, that is at $\sigma=\tfrac12$, the real part shared by every zero $\rho_n$, and there $\abs{p^{-ms}}=p^{-m\sigma}=1/\sqrt{p^m}$. The argument $mt\log p$ is the arrow's angle (up to sign), so $m\log p$ is an angular frequency in the variable $t$. So Eq.~(4) is a sum of rotating arrows, one family per prime, projected onto the imaginary axis. Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula} derive why this sum approximates the fluctuating part of the zero count.
+By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated at $s=\tfrac12+it$. The factor $p^{-m/2}$ is the length of the arrow $p^{-ms}$ on the critical line, Eq.~\eqref{eq:complex-critmod}: it arises because the sum is evaluated at $s=\tfrac12+it$, that is at $\sigma=\tfrac12$, the real part shared by every zero $\rho_n$ that the paper uses, and there $\abs{p^{-ms}}=p^{-m\sigma}=1/\sqrt{p^m}$. The argument $mt\log p$ is the arrow's angle (up to sign), so $m\log p$ is an angular frequency in the variable $t$. So Eq.~(4) is a sum of rotating arrows, one family per prime, projected onto the imaginary axis. Chapters~\ref{ch:counting-zeros} and~\ref{ch:explicit-formula} derive why this sum approximates the fluctuating part of the zero count.
 
-\paragraph{Frequencies $\log p^m$ (Secs.~II~D and IV; Table~IV; App.~A steps 20, 23).} Sec.~IV reports that the sparse control C2 ``recovers frequencies at $\log p^m$''. In our language $\log p^m=m\log p$ is the angular frequency of $p^{-ms}$ (Eq.~\eqref{eq:complex-pmms}). The smallest is $\log2\approx0.693$, period $9.0647$ in $t$; the controls search the range $0.05<\omega<8$ (Sec.~II~D). Note that $\omega=8$ corresponds to the prime power $q=e^8\approx2981$, which is consistent with the cutoff $q\le3000$ used in the alignment check of App.~A step 23. In the 800-zero C2 fit, the matched prime powers include $4=2^2$ and $8=2^3$, the $m=2,3$ harmonics of the prime 2 (Sec.~IV lists ``those up to 113 except 32, 64, and 81'').
+\paragraph{Frequencies $\log p^m$ (Secs.~II~D and IV; Table~IV; App.~A steps 20, 23).} The paper's abstract says that the sparse control C2 ``recovers frequencies at $\log p^m$''. Sec.~IV states this more carefully: every selected frequency ``lies within half the Fourier resolution of the training window of the logarithm of a prime power''. In our language $\log p^m=m\log p$ is the angular frequency of $p^{-ms}$ (Eq.~\eqref{eq:complex-pmms}). The smallest is $\log2\approx0.693$, period $9.0647$ in $t$; the controls search the range $0.05<\omega<8$ (Sec.~II~D). Note that $\omega=8$ corresponds to the prime power $q=e^8\approx2981$, which is consistent with the cutoff $q\le3000$ used in the alignment check of App.~A step 23. In the 800-zero C2 fit, the matched prime powers include $4=2^2$ and $8=2^3$, the $m=2,3$ harmonics of the prime 2 (Sec.~IV lists ``those up to 113 except 32, 64, and 81'').
 
-\paragraph{The prime-2 wave and its period (Sec.~III continuation probe; Sec.~V).} The arithmetic-continuation probe of Sec.~III replaces the targets by ``a synthetic fluctuation consisting solely of the $p{=}2$ term of Eq.~(4)'': our RE2, Eq.~\eqref{eq:complex-re2}. It is a periodic signal with period $2\pi/\log 2\approx9.0647$ in $t$ (Problem~16). Sec.~V quotes this period: ``The dominant $p{=}2$ oscillation, period $2\pi/\log 2\approx9$ in $t$, is only $\sim$6--7 levels at these heights.'' Problem~27 checks that statement using the mean spacing derived in Chapter~\ref{ch:counting-zeros}: near height $t=650$, one period of the prime-2 wave spans about $6.7$ mean spacings. Our \Cref{fig:complex-arg-prime2} also shows that RE2 is, up to a tail smaller than $0.05$, minus $1/\pi$ times the phase of the single factor $1-2^{-s}$: the probe asks a fitted potential to continue the phase of one rotating arrow, and the paper finds that it cannot (held-out correlation $+0.07$, Sec.~III).
+\paragraph{The prime-2 wave and its period (Sec.~III continuation probe; Sec.~V).} The arithmetic-continuation probe of Sec.~III replaces the targets by ``a synthetic fluctuation consisting solely of the $p{=}2$ term of Eq.~(4)'': our RE2, Eq.~\eqref{eq:complex-re2}. It is a periodic signal with period $2\pi/\log 2\approx9.0647$ in $t$ (Problem~18). Sec.~V quotes this period: ``The dominant $p{=}2$ oscillation, period $2\pi/\log 2\approx9$ in $t$, is only $\sim$6--7 levels at these heights.'' Problem~30 checks that statement using the mean spacing derived in Chapter~\ref{ch:counting-zeros}: near height $t=650$, one period of the prime-2 wave spans about $6.7$ mean spacings. Our \Cref{fig:complex-arg-prime2} also shows that RE2 is, up to a tail smaller than $0.05$, minus $1/\pi$ times the phase of the single factor $1-2^{-s}$: the probe asks a fitted potential to continue the phase of one rotating arrow, and the paper finds that it cannot (held-out correlation $+0.07$, Sec.~III).
 
-\paragraph{Complex eigenvalues (Sec.~II~E; Sec.~V; App.~A step 11).} The non-Hermitian classes of Sec.~II~E perturb $H\to H+iA$, an operator containing $i$ explicitly; the absorptive class models a term $-i\Gamma/2$. Such operators have complex eigenvalues, and App.~A step 11 uses ``dense complex \texttt{eig}'' to compute them. The imaginary part of an eigenvalue $E-i\Gamma/2$ controls decay: in quantum mechanics a state with energy $E$ evolves with the factor $e^{-iEt}$ (Chapter~\ref{ch:schrodinger}, with $t$ now time), and by Eq.~\eqref{eq:complex-exprect} $\abs{e^{-i(E-i\Gamma/2)t}}=e^{-\Gamma t/2}$ (Problem~22). When Sec.~V reports that ``58\% of its widths have the wrong sign'', it refers to the sign of this imaginary part. Because complex numbers cannot be ordered (Section~\ref{sec:complex-plane}), the paper matches perturbed eigenstates to unperturbed ones ``by overlap'' (Sec.~II~E (iii)); Chapter~\ref{ch:non-hermitian} explains the procedure.
+\paragraph{Complex eigenvalues (Sec.~II~E; Sec.~V; App.~A step 11).} The non-Hermitian classes of Sec.~II~E perturb $H\to H+iA$, an operator containing $i$ explicitly; the absorptive class models a term $-i\Gamma/2$. Such operators can have complex eigenvalues (the PT-odd class has a real spectrum to leading order, Sec.~II~E), and App.~A step 11 uses ``dense complex \texttt{eig}'' to compute them. The imaginary part of an eigenvalue $E-i\Gamma/2$ controls decay: in quantum mechanics a state with energy $E$ evolves with the factor $e^{-iEt}$ (Chapter~\ref{ch:schrodinger}, with $t$ now time), and by Eq.~\eqref{eq:complex-exprect} $\abs{e^{-i(E-i\Gamma/2)t}}=e^{-\Gamma t/2}$ (Problem~24). When Sec.~V reports that ``58\% of its widths have the wrong sign'', it refers to the sign of this imaginary part. Complex eigenvalues have no natural ``increasing order'' (Section~\ref{sec:complex-plane}), and in any case order does not tell which perturbed state came from which unperturbed one; the paper identifies states ``by overlap'' (Sec.~II~E (iii)), and Chapter~\ref{ch:non-hermitian} explains the procedure.
 
-\paragraph{Phases and surrogates (Sec.~III; App.~A step 18).} The ``phase-randomized surrogate''~\cite{theiler} of Sec.~III keeps ``power spectrum kept exactly'' while destroying arithmetic content. In Chapter~\ref{ch:fourier-transform} you will see that a sequence can be written as a sum of complex exponentials with complex coefficients; the surrogate keeps the modulus of each coefficient and replaces its argument by a random angle (``uniform phases'' in App.~A step 18). Modulus and argument, the two halves of polar form, are exactly the quantities being kept and scrambled.
+\paragraph{Phases and surrogates (Sec.~III; App.~A step 18).} The ``phase-randomized surrogate''~\cite{theiler} of Sec.~III is described as ``power spectrum kept exactly, no arithmetic content''. In Chapter~\ref{ch:fourier-transform} you will see that a sequence can be written as a sum of complex exponentials with complex coefficients; the surrogate keeps the modulus of each coefficient and replaces its argument by a random angle (``uniform phases'' in App.~A step 18). Modulus and argument, the two halves of polar form, are exactly the quantities being kept and scrambled.
 
-\paragraph{Fig.~1.} The curves of Fig.~1 (fluctuations of zeros 370--460) are real numbers measured in mean spacings, but the six-prime prediction plotted there is built from six families of rotating arrows $p^{-ms}$, $p\le13$ (\Cref{tab:complex-primes}), projected onto the imaginary axis.
+\paragraph{Fig.~1.} The curves of Fig.~1 (fluctuations of zeros 370--460) are real numbers measured in mean spacings, but the six-prime prediction plotted there is built from six families of rotating arrows $p^{-ms}$ (presumably the first six primes, $p\le13$, \Cref{tab:complex-primes}; the paper says only ``six-prime''), projected onto the imaginary axis.
 
 %==========================================================
 \section{Summary}
@@ -1028,7 +1063,11 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \prob{1}{The second zeta zero is $\rho_2=\tfrac12+it_2$ with $t_2=21.022040$ (RE1). Compute $\abs{\rho_2}$ and $\operatorname{Arg}\rho_2$ (in radians and degrees). What is $\bar\rho_2$?}
 
-\prob{2}{Using components $z=a+bi$, $w=c+di$ (not polar form), prove that $\abs{zw}=\abs z\abs w$ and $\overline{zw}=\bar z\bar w$. Then verify the associative law $(zw)u=z(wu)$ for $z=1+i$, $w=2-i$, $u=3i$ by computing both sides.}
+\prob{1}{Evaluate $e^{i\pi}$, $e^{i\pi/2}$, $e^{2\pi i}$ and $e^{-i\pi/4}$ in the form $a+bi$.}
+
+\prob{1}{For $z=5+12i$, find $\bar z$, $\abs z$, $1/z$ in the form $a+bi$, and $\abs{1/z}$.}
+
+\prob{2}{Using components $z=a+bi$, $w=c+di$ (not polar form), prove that $\abs{zw}=\abs z\abs w$ and $\overline{zw}=\bar z\bar w$. Then, writing $u=e+fi$, prove the associative law $(zw)u=z(wu)$ by expanding both sides, and check it for $z=1+i$, $w=2-i$, $u=3i$ by computing both sides.}
 
 \prob{2}{(a) Prove the reverse triangle inequality $\abs z-\abs w\le\abs{z-w}$. (Hint: apply Eq.~\eqref{eq:complex-triangle} to $z=(z-w)+w$.) (b) Use it to show that for $\sigma=\Re s>0$, $\abs{1-2^{-s}}\ge1-2^{-\sigma}>0$, so $1-2^{-s}$ has no zeros in the right half-plane. Compare with \Cref{fig:complex-zeros-1m2s}.}
 
@@ -1046,7 +1085,7 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \prob{2}{(Paper.) Show that on the critical line $\sin(mt\log p)/(m\,p^{m/2})=-\Im[p^{-ms}]/m$. Hence rewrite the paper's Eq.~(4) as $N_{\rm fl}(t)=\frac1\pi\sum_{p\in P}\sum_{m=1}^3\frac1m\Im\bigl[p^{-m(1/2+it)}\bigr]$.}
 
-\prob{2}{(Paper.) For the prime-2 wave RE2, list the angular frequencies of its three terms, write each as $\log q$ for an integer $q$, and give each term's period in $t$. Explain why the sum is periodic and find its period. (The paper's Sec.~IV calls such frequencies $\log p^m$.)}
+\prob{2}{(Paper.) For the prime-2 wave RE2, list the angular frequencies of its three terms, write each as $\log q$ for an integer $q$, and give each term's period in $t$. Explain why the sum is periodic and find its period. (The paper's abstract says that the sparse control C2 recovers frequencies at $\log p^m$; Sec.~IV says that each selected frequency lies within half the Fourier resolution of the training window of the logarithm of a prime power.)}
 
 \prob{2}{Find all zeros of (a) $f(s)=1-3^{-s}$ and (b) $g(s)=1+2^{-s}$. Where do they lie, and how far apart are neighboring zeros?}
 
@@ -1060,19 +1099,20 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \prob{2}{(Paper.) In quantum mechanics a state of complex energy $\mathcal E=E-i\Gamma/2$ ($E,\Gamma$ real) carries the time factor $e^{-i\mathcal Et}$, $t$ being time. Show that $\abs{e^{-i\mathcal Et}}=e^{-\Gamma t/2}$ and that the probability $\abs{e^{-i\mathcal Et}}^2$ decays as $e^{-\Gamma t}$. For $E=100$ and $\Gamma=1$ (units with $\hbar=1$), when has the modulus fallen to one half? The probability? Why does Sec.~V of the paper call $\Gamma<0$ the ``wrong sign''?}
 
+\prob{2}{(Paper, computational.) Show that for any zero on the critical line, $1-\rho_n=\bar\rho_n$, and hence $\rho_n(1-\rho_n)=\tfrac14+t_n^2$ is real and positive. Using \texttt{qmnt.zeros(10)}, verify numerically that $\rho_n(1-\rho_n)-(\tfrac14+t_n^2)$ vanishes to rounding error for $n=1,\dots,10$, and report the value of $\rho_1(1-\rho_1)$. (The symmetry $s\leftrightarrow1-s$ appears in the functional equation of Chapter~\ref{ch:zeta}.)}
+
+\prob{2}{A particle moves on a circle of radius $R=0.5$ m at angular frequency $\omega=4$ rad/s, with position $z(t)=Re^{i\omega t}$ in the complex plane (meters). Find its velocity and acceleration as complex numbers, and their magnitudes. Show that the acceleration points toward the center.}
+
 \prob{3}{Let $E(\theta)=\cos\theta+i\sin\theta$. (a) Show that $\overline{E(\theta)}$ satisfies $\frac{\dd}{\dd\theta}\overline{E}=-i\overline E$. (b) Suppose $F(\theta)$ is any differentiable complex function with $F'=iF$ and $F(0)=1$. By differentiating $F\overline E$, show that $F\overline E=1$, and deduce $F=E$. This gives a second proof that the only ``exponential with rate $i$'' is $\cos\theta+i\sin\theta$.}
 
 \prob{3}{Use the finite geometric sum to show $\sum_{k=0}^{n-1}e^{ik\theta}=\dfrac{e^{in\theta}-1}{e^{i\theta}-1}$ for $e^{i\theta}\ne1$. By factoring $e^{in\theta/2}$ from the numerator and $e^{i\theta/2}$ from the denominator, derive $\sum_{k=0}^{n-1}\cos k\theta=\dfrac{\sin(n\theta/2)\cos((n-1)\theta/2)}{\sin(\theta/2)}$. Check numerically for $n=5$, $\theta=0.7$. (This sum reappears in Chapter~\ref{ch:fourier-transform}.)}
 
 \prob{3}{Let $f(t)=1-re^{-it}$ with $r>0$ fixed and $t$ running from 0 to $2\pi$. (a) Show that $f(t)$ traces a circle of radius $r$ centered at 1, clockwise. (b) For $r<1$, show that the continuous argument of $f$ returns to its starting value at $t=2\pi$. (c) For $r>1$, show that it changes by $-2\pi$. (d) Using numpy's \texttt{np.unwrap}, confirm (b) and (c) numerically for $r=1/\sqrt2$ and $r=2$. Relate (b) to the absence of branch jumps in $\operatorname{Arg}(1-2^{-1/2-it})$.}
 
-\prob{2}{(Paper, computational.) Show that for any zero on the critical line, $1-\rho_n=\bar\rho_n$, and hence $\rho_n(1-\rho_n)=\tfrac14+t_n^2$ is real and positive. Using \texttt{qmnt.zeros(10)}, verify numerically that $\rho_n(1-\rho_n)-(\tfrac14+t_n^2)$ vanishes to rounding error for $n=1,\dots,10$, and report the value of $\rho_1(1-\rho_1)$. (The symmetry $s\leftrightarrow1-s$ appears in the functional equation of Chapter~\ref{ch:zeta}.)}
+
 
 \prob{3}{(Paper.) Take as given (it is derived in Chapter~\ref{ch:counting-zeros}) that the local mean spacing of the zeros at height $t$ is $2\pi/\log(t/2\pi)$. How many mean spacings does one period $2\pi/\log2$ of the prime-2 wave span at $t=300$ and at $t=650$? Compare with the paper's statement in Sec.~V that the $p=2$ oscillation is ``only $\sim$6--7 levels at these heights'', and explain in words why the number of levels per period grows with height.}
 
-\prob{1}{Evaluate $e^{i\pi}$, $e^{i\pi/2}$, $e^{2\pi i}$ and $e^{-i\pi/4}$ in the form $a+bi$.}
-
-\prob{2}{A particle moves on a circle of radius $R=0.5$ m at angular frequency $\omega=4$ rad/s, with position $z(t)=Re^{i\omega t}$ in the complex plane (meters). Find its velocity and acceleration as complex numbers, and their magnitudes. Show that the acceleration points toward the center.}
 \end{problemlist}
 
 %==========================================================
@@ -1090,28 +1130,36 @@ By Eq.~\eqref{eq:complex-oracleterm}, every term is $-\Im[p^{-ms}]/m$ evaluated 
 
 \textbf{6.} $\abs{\rho_2}^2=0.25+21.022040^2=0.25+441.926166=442.176166$, so $\abs{\rho_2}\approx21.0280$. $\operatorname{Arg}\rho_2=\pi/2-\arctan(0.5/21.022040)\approx1.570796-0.023780=1.547016$ rad $\approx88.64^\circ$. $\bar\rho_2=\tfrac12-21.022040\,i$.
 
-\textbf{7.} $zw=(ac-bd)+(ad+bc)i$, so $\abs{zw}^2=(ac-bd)^2+(ad+bc)^2=a^2c^2-2abcd+b^2d^2+a^2d^2+2abcd+b^2c^2=(a^2+b^2)(c^2+d^2)$; take square roots. For the conjugate, see the computation before Eq.~\eqref{eq:complex-conjrules}. Associativity: $zw=(1+i)(2-i)=2-i+2i-i^2=3+i$, $(zw)u=(3+i)3i=9i+3i^2=-3+9i$; $wu=(2-i)3i=6i+3=3+6i$, $z(wu)=(1+i)(3+6i)=3+6i+3i+6i^2=-3+9i$. Equal.
+\textbf{7.} $e^{i\pi}=-1$; $e^{i\pi/2}=i$; $e^{2\pi i}=1$; $e^{-i\pi/4}=\tfrac{\sqrt2}2-i\tfrac{\sqrt2}2\approx0.70711-0.70711\,i$.
 
-\textbf{9.} Binomial expansion: $(\cos\theta+i\sin\theta)^3=\cos^3\theta+3i\cos^2\theta\sin\theta+3i^2\cos\theta\sin^2\theta+i^3\sin^3\theta=(\cos^3\theta-3\cos\theta\sin^2\theta)+i(3\cos^2\theta\sin\theta-\sin^3\theta)$. By De Moivre this equals $\cos3\theta+i\sin3\theta$; equate parts (Eq.~\eqref{eq:complex-equal}). Then use $\sin^2\theta=1-\cos^2\theta$: real part $\cos^3\theta-3\cos\theta(1-\cos^2\theta)=4\cos^3\theta-3\cos\theta$; with $\cos^2\theta=1-\sin^2\theta$: imaginary part $3(1-\sin^2\theta)\sin\theta-\sin^3\theta=3\sin\theta-4\sin^3\theta$.
+\textbf{8.} $\bar z=5-12i$. $\abs z=\sqrt{25+144}=\sqrt{169}=13$. By Eq.~\eqref{eq:complex-div}, $1/z=\bar z/\abs z^2=(5-12i)/169\approx0.029586-0.071006\,i$. By Eq.~\eqref{eq:complex-absprod}, $\abs{1/z}=1/\abs z=1/13\approx0.076923$.
 
-\textbf{11.} $\cos^2(\omega t)=\bigl(\tfrac{e^{i\omega t}+e^{-i\omega t}}2\bigr)^2=\tfrac{e^{2i\omega t}+2+e^{-2i\omega t}}4=\tfrac12+\tfrac12\cos(2\omega t)$. Over one period $2\pi/\omega$, $\cos(2\omega t)$ completes two full cycles and averages to zero, so the average is $\tfrac12$. The rms of $A\cos\omega t$ is $\sqrt{A^2/2}=A/\sqrt2$.
+\textbf{9.} $zw=(ac-bd)+(ad+bc)i$, so $\abs{zw}^2=(ac-bd)^2+(ad+bc)^2=a^2c^2-2abcd+b^2d^2+a^2d^2+2abcd+b^2c^2=(a^2+b^2)(c^2+d^2)$; take square roots. For the conjugate, see the computation before Eq.~\eqref{eq:complex-conjrules}. Associativity in general, with $u=e+fi$: $(zw)u$ has real part $(ac-bd)e-(ad+bc)f=ace-bde-adf-bcf$ and imaginary part $(ac-bd)f+(ad+bc)e=acf-bdf+ade+bce$. Next, $wu=(ce-df)+(cf+de)i$, so $z(wu)$ has real part $a(ce-df)-b(cf+de)=ace-adf-bcf-bde$ and imaginary part $a(cf+de)+b(ce-df)=acf+ade+bce-bdf$. The same four products appear in each part, so the two sides are equal. Numerical case: $zw=(1+i)(2-i)=2-i+2i-i^2=3+i$, $(zw)u=(3+i)3i=9i+3i^2=-3+9i$; $wu=(2-i)3i=6i+3=3+6i$, $z(wu)=(1+i)(3+6i)=3+6i+3i+6i^2=-3+9i$. Equal.
 
-\textbf{13.} $\operatorname{Log}(-e)=\log e+i\pi=1+i\pi\approx1+3.14159\,i$. $\operatorname{Log}(2i)=\log2+i\pi/2\approx0.69315+1.57080\,i$. $i^i=e^{-\pi/2}\approx0.20788$. $2^i=\cos(\log2)+i\sin(\log2)\approx0.76924+0.63896\,i$.
+\textbf{11.} Binomial expansion: $(\cos\theta+i\sin\theta)^3=\cos^3\theta+3i\cos^2\theta\sin\theta+3i^2\cos\theta\sin^2\theta+i^3\sin^3\theta=(\cos^3\theta-3\cos\theta\sin^2\theta)+i(3\cos^2\theta\sin\theta-\sin^3\theta)$. By De Moivre this equals $\cos3\theta+i\sin3\theta$; equate parts (Eq.~\eqref{eq:complex-equal}). Then use $\sin^2\theta=1-\cos^2\theta$: real part $\cos^3\theta-3\cos\theta(1-\cos^2\theta)=4\cos^3\theta-3\cos\theta$; with $\cos^2\theta=1-\sin^2\theta$: imaginary part $3(1-\sin^2\theta)\sin\theta-\sin^3\theta=3\sin\theta-4\sin^3\theta$.
 
-\textbf{15.} By Eq.~\eqref{eq:complex-pmms} with $\sigma=\tfrac12$, $p^{-ms}=p^{-m/2}[\cos(mt\log p)-i\sin(mt\log p)]$, so $\Im[p^{-ms}]=-p^{-m/2}\sin(mt\log p)$; divide by $-m$. Substituting into Eq.~(4): $-\frac1\pi\sum\frac{\sin(mt\log p)}{mp^{m/2}}=-\frac1\pi\sum\bigl(-\frac1m\Im[p^{-ms}]\bigr)=\frac1\pi\sum\frac1m\Im[p^{-ms}]$.
+\textbf{13.} $\cos^2(\omega t)=\bigl(\tfrac{e^{i\omega t}+e^{-i\omega t}}2\bigr)^2=\tfrac{e^{2i\omega t}+2+e^{-2i\omega t}}4=\tfrac12+\tfrac12\cos(2\omega t)$. Over one period $2\pi/\omega$, $\cos(2\omega t)$ completes two full cycles and averages to zero, so the average is $\tfrac12$. The rms of $A\cos\omega t$ is $\sqrt{A^2/2}=A/\sqrt2$.
 
-\textbf{17.} (a) $3^{-s}=1\iff-s\log3=2\pi ik$, so $s=2\pi ik/\log3$: on the imaginary axis, spacing $2\pi/\log3\approx5.7192$. (b) $2^{-s}=-1=e^{i\pi(2k+1)}$ (using the lemma of Section~\ref{sec:complex-log}: $e^{w}=-1$ iff $w=i\pi+2\pi ik$, from $e^{w-i\pi}=1$), so $-s\log2=i\pi(2k+1)$ and $s=-i\pi(2k+1)/\log2$: on the imaginary axis at odd multiples of $\pi/\log2\approx4.5324$, spacing $9.0647$, interleaved halfway between the zeros of $1-2^{-s}$.
+\textbf{15.} $\operatorname{Log}(-e)=\log e+i\pi=1+i\pi\approx1+3.14159\,i$. $\operatorname{Log}(2i)=\log2+i\pi/2\approx0.69315+1.57080\,i$. $i^i=e^{-\pi/2}\approx0.20788$. $2^i=\cos(\log2)+i\sin(\log2)\approx0.76924+0.63896\,i$.
 
-\textbf{19.} See the conjugate-pair proof in Section~\ref{sec:complex-functions}. The polynomial $z^2-z+(\tfrac14+t_n^2)$ has real coefficients and root $\tfrac12+it_n$ (as in the Sample Problem), so $\tfrac12-it_n$ is also a root.
+\textbf{17.} By Eq.~\eqref{eq:complex-pmms} with $\sigma=\tfrac12$, $p^{-ms}=p^{-m/2}[\cos(mt\log p)-i\sin(mt\log p)]$, so $\Im[p^{-ms}]=-p^{-m/2}\sin(mt\log p)$; divide by $-m$. Substituting into Eq.~(4): $-\frac1\pi\sum\frac{\sin(mt\log p)}{mp^{m/2}}=-\frac1\pi\sum\bigl(-\frac1m\Im[p^{-ms}]\bigr)=\frac1\pi\sum\frac1m\Im[p^{-ms}]$.
 
-\textbf{21.} Each term has $\abs{\sin}\le1$, so its size is at most $1/(\pi m2^{m/2})$. The sum of these bounds for $m\ge4$ is about $0.0487$, so the two curves can never differ by more than $0.0487$; the observed maximum on a fine grid is below this bound. (Exact identity behind the figure: Chapter~\ref{ch:series}.)
+\textbf{19.} (a) $3^{-s}=1\iff-s\log3=2\pi ik$, so $s=2\pi ik/\log3$: on the imaginary axis, spacing $2\pi/\log3\approx5.7192$. (b) $2^{-s}=-1=e^{i\pi(2k+1)}$ (using the lemma of Section~\ref{sec:complex-log}: $e^{w}=-1$ iff $w=i\pi+2\pi ik$, from $e^{w-i\pi}=1$), so $-s\log2=i\pi(2k+1)$ and $s=-i\pi(2k+1)/\log2$: on the imaginary axis at odd multiples of $\pi/\log2\approx4.5324$, spacing $9.0647$, interleaved halfway between the zeros of $1-2^{-s}$.
 
-\textbf{23.} (a) $\overline E=\cos\theta-i\sin\theta$, derivative $-\sin\theta-i\cos\theta=-i(\cos\theta-i\sin\theta)=-i\overline E$. (b) $(F\overline E)'=F'\overline E+F\overline E'=iF\overline E-iF\overline E=0$, so $F\overline E$ is constant, equal to its value $F(0)\overline{E(0)}=1$ at $\theta=0$. Since $E\overline E=\abs E^2=1$, multiply $F\overline E=1$ by $E$: $F=E$.
+\textbf{21.} See the conjugate-pair proof in Section~\ref{sec:complex-functions}. The polynomial $z^2-z+(\tfrac14+t_n^2)$ has real coefficients and root $\tfrac12+it_n$ (as in the Sample Problem), so $\tfrac12-it_n$ is also a root.
 
-\textbf{25.} (a) $\abs{f(t)-1}=\abs{-re^{-it}}=r$, so $f$ is on the circle of radius $r$ about 1; the angle of $-re^{-it}=re^{i(\pi-t)}$ is $\pi-t$, decreasing, so the motion is clockwise. (b) For $r<1$ the circle lies in the half-plane $\Re f\ge1-r>0$; the principal argument is continuous there and is a continuous argument, so it returns to $\operatorname{Arg}f(0)$ at $t=2\pi$. (c) For $r>1$ the circle encloses the origin. As $f(t)$ goes once clockwise around it, the arrow from the origin to $f(t)$ makes one full clockwise turn, so the continuous argument changes by $-2\pi$. (d) \texttt{np.unwrap(np.angle(f))} ends where it started for $r=1/\sqrt2$, and $2\pi$ lower for $r=2$. With $r=1/\sqrt2$ and $t\log2$ in place of $t$, this is $1-2^{-1/2-it}$, which is why its argument needs no unwrapping.
+\textbf{23.} Each term has $\abs{\sin}\le1$, so its size is at most $1/(\pi m2^{m/2})$. The sum of these bounds for $m\ge4$ is about $0.0487$, so the two curves can never differ by more than $0.0487$; the observed maximum on a fine grid is below this bound. (Exact identity behind the figure: the argument after \Cref{fig:complex-arg-prime2}, which uses the fact stated in the \texttt{beyond} box there.)
 
-\textbf{27.} At $t=300$: $\log(300/2\pi)\approx3.8659$, mean spacing $\approx1.6253$, and $9.0647/1.6253\approx5.58$ spacings per period. At $t=650$: $\log(650/2\pi)\approx4.6391$, spacing $\approx1.3544$, giving $\approx6.69$. The paper's ``$\sim$6--7 levels'' matches the upper part of the fitted range: the 400th zero sits at $t_{400}\approx680$ (from \texttt{qmnt.zeros(400)}), where one period spans $(2\pi/\log2)/(2\pi/\log(t_{400}/2\pi))=\log(t_{400}/2\pi)/\log2\approx6.8$ spacings. The period in $t$ is fixed, while the zeros crowd together as $t$ grows (the spacing shrinks like $1/\log t$), so more levels fit into one period.
+\textbf{25.} On the critical line $\rho_n=\tfrac12+it_n$, so $1-\rho_n=\tfrac12-it_n=\bar\rho_n$. Hence $\rho_n(1-\rho_n)=\rho_n\bar\rho_n=\abs{\rho_n}^2=\tfrac14+t_n^2$ by Eq.~\eqref{eq:complex-zzbar2}, which is real and positive. Numerically the difference $\rho_n(1-\rho_n)-(\tfrac14+t_n^2)$ is at the level of rounding error for all ten zeros, and $\rho_1(1-\rho_1)\approx200.040451$ (compare $\abs{\rho_1}^2$ in the Sample Problem on $\rho_1$).
 
-\textbf{28.} $e^{i\pi}=-1$; $e^{i\pi/2}=i$; $e^{2\pi i}=1$; $e^{-i\pi/4}=\tfrac{\sqrt2}2-i\tfrac{\sqrt2}2\approx0.70711-0.70711\,i$.
+\textbf{26.} $v=\dd z/\dd t=i\omega Re^{i\omega t}$, magnitude $\omega R=2$ m/s, direction $90^\circ$ ahead of the position (tangent). $a=\dd v/\dd t=(i\omega)^2Re^{i\omega t}=-\omega^2z$, magnitude $\omega^2R=8$ m/s$^2$; the factor $-1$ means it points from $z$ back toward the origin, the center of the circle.
 
-\textbf{29.} $v=\dd z/\dd t=i\omega Re^{i\omega t}$, magnitude $\omega R=2$ m/s, direction $90^\circ$ ahead of the position (tangent). $a=\dd v/\dd t=(i\omega)^2Re^{i\omega t}=-\omega^2z$, magnitude $\omega^2R=8$ m/s$^2$; the factor $-1$ means it points from $z$ back toward the origin, the center of the circle.
+\textbf{27.} (a) $\overline E=\cos\theta-i\sin\theta$, derivative $-\sin\theta-i\cos\theta=-i(\cos\theta-i\sin\theta)=-i\overline E$. (b) $(F\overline E)'=F'\overline E+F\overline E'=iF\overline E-iF\overline E=0$, so $F\overline E$ is constant, equal to its value $F(0)\overline{E(0)}=1$ at $\theta=0$. Since $E\overline E=\abs E^2=1$, multiply $F\overline E=1$ by $E$: $F=E$.
+
+\textbf{29.} (a) $\abs{f(t)-1}=\abs{-re^{-it}}=r$, so $f$ is on the circle of radius $r$ about 1; the angle of $-re^{-it}=re^{i(\pi-t)}$ is $\pi-t$, decreasing, so the motion is clockwise. (b) For $r<1$ the circle lies in the half-plane $\Re f\ge1-r>0$; the principal argument is continuous there and is a continuous argument, so it returns to $\operatorname{Arg}f(0)$ at $t=2\pi$. (c) For $r>1$ the circle encloses the origin. As $f(t)$ goes once clockwise around it, the arrow from the origin to $f(t)$ makes one full clockwise turn, so the continuous argument changes by $-2\pi$. (d) \texttt{np.unwrap(np.angle(f))} ends where it started for $r=1/\sqrt2$, and $2\pi$ lower for $r=2$. With $r=1/\sqrt2$ and $t\log2$ in place of $t$, this is $1-2^{-1/2-it}$, which is why its argument needs no unwrapping.
+
+\textbf{30.} At $t=300$: $\log(300/2\pi)\approx3.8659$, mean spacing $\approx1.6253$, and $9.0647/1.6253\approx5.58$ spacings per period. At $t=650$: $\log(650/2\pi)\approx4.6391$, spacing $\approx1.3544$, giving $\approx6.69$. The paper's ``$\sim$6--7 levels'' matches the upper part of the fitted range: the 400th zero sits at $t_{400}\approx680$ (from \texttt{qmnt.zeros(400)}), where one period spans $(2\pi/\log2)/(2\pi/\log(t_{400}/2\pi))=\log(t_{400}/2\pi)/\log2\approx6.8$ spacings. The period in $t$ is fixed, while the zeros crowd together as $t$ grows (the spacing shrinks like $1/\log t$), so more levels fit into one period.
+
+
+
+

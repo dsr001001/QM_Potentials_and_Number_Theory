@@ -2,99 +2,169 @@
  {
   "category": "RULE",
   "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/complex_plane.pdf}",
-  "problem": "The chapter includes seven figures (complex_plane, complex_euler_partial, complex_rotation, complex_pminus_s, complex_zeros_1m2s, complex_arg_prime2, complex_critical_line), but the response has no FIGURES part with scripts. The paths and file names also break the required form: scripts must be named complex_<name>.pdf and the includes should follow the bible template.",
-  "fix": "Add a ### FIG complex_<name> script for each of the seven figures, writing complex_<name>.pdf. Keep the includegraphics paths consistent with the bible template."
+  "quote": "In his 1545 book \\emph{Ars Magna}, Gerolamo Cardano asked for two numbers that add to 10 and multiply to 40.",
+  "problem": "This text sits in a `didyouknow` environment (used three times, with `% DYK-BEGIN/END` markers). The bible's fixed environment list does not include it, so it may not compile. Its historical dates are also neither checked nor cited.",
+  "fix": "Remove the three `didyouknow` boxes, or fold the history into ordinary prose or an allowed environment. Keep them only if the coordinator confirms the environment exists in the preamble."
  },
  {
-  "category": "RULE",
+  "category": "LATEX",
   "severity": "high",
-  "quote": "the computation in the CHECKS script finds that they differ by less than $0.05$ for all $t$",
-  "problem": "The book text refers to a CHECKS script, which readers never see. Also, the chapter's figure-related statements are not backed by the supplied scripts.",
-  "fix": "Replace this with 'a numerical computation (see the code listing below) finds ...'."
+  "quote": "\\caption{Partial sums of the exponential series for $e^{i\\pi/3}$.}\\label{tab:complex-partial}",
+  "problem": "The table uses `\\begin{table}[H]`, which needs the `float` package. That package is not in the bible's list and may not be added. A float inside the `sample` box (likely a tcolorbox) will also fail.",
+  "fix": "Replace the table float with a non-floating `\\begin{center}\\begin{tabular}...\\end{tabular}\\end{center}` inside the sample and refer to it as \"the table below\". Alternatively move the table float outside the sample with `[htbp]`."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "The zeros of zeta have $\\sigma=\\tfrac12$ and heights $t=t_n$.",
+  "problem": "This states the Riemann hypothesis as fact and ignores the trivial zeros. The bible forbids implying RH is true. The same slip appears in \"on the line where the zeros sit\" and \"the real part shared by every zero $\\rho_n$\".",
+  "fix": "Write: \"All the nontrivial zeros used in this book (numerically verified to lie on the line) have $\\sigma=\\tfrac12$ and heights $t=t_n$; whether every nontrivial zero does is the Riemann hypothesis, which is open (Chapter~\\ref{ch:zeta}).\" Soften the two parallel phrases the same way."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "for an infinite product this also needs a convergence argument, which Chapter~\\ref{ch:explicit-formula} supplies",
+  "problem": "The Euler product converges only for $\\Re s>1$. On the critical line, where it is used, there is no convergence argument; Chapter 18 is contracted to explain that the step is formal. The sentence promises rigor that does not exist and does not say where $s$ is.",
+  "fix": "Say: \"valid for $\\Re s>1$, where the product converges (Chapter~\\ref{ch:zeta}); on the critical line the product does not converge and the formula is only formal/heuristic, as Chapter~\\ref{ch:explicit-formula} discusses honestly.\""
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "on the critical line, Eq.~\\eqref{eq:complex-abspms} gives for a prime $p$",
-  "problem": "The formula for the argument of a power ($\\arg k^{-s}=-t\\log k$) is fine, but the statement 'it is $\\tfrac12$ in the exponent of $\\rho_n$ that makes the amplitude $1/\\sqrt{p^m}$' in the Paper connection is garbled. The amplitude comes from the evaluation point $s=\\tfrac12+it$, not from the zeros $\\rho_n$.",
-  "fix": "Rewrite: 'the factor $p^{-m/2}$ arises because the sum is evaluated at $\\sigma=\\tfrac12$, the real part of every $\\rho_n$.'"
+  "quote": "Sec.~IV reports that the sparse control C2 ``recovers frequencies at $\\log p^m$''.",
+  "problem": "The quoted phrase is from the paper's abstract, not Sec. IV. Sec. IV says every selected frequency \"lies within half the Fourier resolution of the training window of the logarithm of a prime power\". Problem 16 repeats the misattribution (\"The paper's Sec. IV calls such frequencies $\\log p^m$\").",
+  "fix": "Attribute the quote to the abstract and paraphrase Sec. IV accurately, including the \"within half the Fourier resolution\" qualifier. Fix the parenthetical in Problem 16 to match."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Both are proved in Chapter~\\ref{ch:series} and in~\\cite{rhb}.",
+  "problem": "The chapter promises that Chapter 3 proves several things outside its contract: free rearrangement of absolutely convergent series, a rearrangement counterexample, and the Cauchy-product proof of $e^ze^w=e^{z+w}$. Chapters are written in parallel, so these promises may be false.",
+  "fix": "Phrase these as taken on trust with only the textbook citation, e.g. \"absolute convergence is defined in Chapter~\\ref{ch:series}; the rearrangement theorem and the Cauchy product are proved in~\\cite{rhb}\". Do not assert what Chapter 3 proves beyond its contract."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Chapter~\\ref{ch:series} also shows that $e^{\\mathcal S(x)}=1-x$",
+  "problem": "Chapter 3's contract is only the Taylor series of $\\log(1-x)$ and its radius of convergence. It need not prove the series for complex $x$, nor that its exponential equals $1-x$. The \"becomes a theorem\" argument rests on an unverifiable promise.",
+  "fix": "Put the complex-$x$ statement $e^{\\mathcal S(x)}=1-x$ for $\\abs x<1$ in a `beyond` box with a textbook reference. Say only that Chapter~\\ref{ch:series} derives the real series."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Because complex numbers cannot be ordered (Section~\\ref{sec:complex-plane}), the paper matches perturbed eigenstates to unperturbed ones",
+  "problem": "The paper gives no such reason for overlap matching. It matches by overlap to identify which perturbed state descends from which unperturbed state (it reports 3% of states cannot be matched one-to-one). Sorting by real part would be possible but would not track identity. Section 3 makes the same claim.",
+  "fix": "Rephrase in both places: \"Complex eigenvalues have no natural 'increasing order', and in any case order does not tell which perturbed state came from which unperturbed one; the paper identifies states by overlap (Sec. II E (iii); Chapter~\\ref{ch:non-hermitian})\". Do not attribute the motivation to the paper."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Along a path that avoids zeros, a continuous argument exists, is unique up to a constant $2\\pi k$",
+  "problem": "Existence of a continuous argument is asserted in the Key Ideas but never proved. The text proves only uniqueness and additivity and describes unwrapping informally.",
+  "fix": "Add a short existence argument: on short enough sub-intervals $f$ stays in a half-plane, where a rotated principal argument is continuous; patch the pieces by adding multiples of $2\\pi$. Otherwise put existence in a `beyond` box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "differentiating real and imaginary parts with the product rule shows $\\frac{\\dd}{\\dd t}e^{kt}=k\\,e^{kt}$",
+  "problem": "The computation is asserted, not shown, although it is used at once for the velocity and acceleration of circular motion. This breaks the no-skipped-steps rule.",
+  "fix": "Show the lines: real part derivative $\\alpha e^{\\alpha t}\\cos\\omega t-\\omega e^{\\alpha t}\\sin\\omega t$, imaginary part derivative $\\alpha e^{\\alpha t}\\sin\\omega t+\\omega e^{\\alpha t}\\cos\\omega t$. Then verify that the sum equals $(\\alpha+i\\omega)e^{\\alpha t}(\\cos\\omega t+i\\sin\\omega t)$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The quadratic formula works for complex coefficients too, provided we interpret the square root",
+  "problem": "This is asserted without derivation. The reader knows the formula only for real numbers, and the following sample relies on it for complex roots.",
+  "fix": "Add the completing-the-square derivation, $az^2+bz+c=a[(z+b/2a)^2-D/4a^2]$. Note that it uses only field algebra valid for complex numbers, and that $w^2=D$ has the two solutions $\\pm i\\sqrt{\\abs D}$ when $D<0$."
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "The paper's ``$\\sim$6--7 levels'' matches the upper part of the fitted range (zeros up to about $t\\approx650$ for zeros 1--400).",
-  "problem": "The claim that zeros 1--400 reach about $t\\approx650$ is not verified. t_500=811, and zero 400 is near t=catalogue ~ 600 (roughly). The statement is unchecked and may be inaccurate.",
-  "fix": "Use a checked value from qmnt.zeros, e.g. state the actual t_400 and t_500 (t_500 = 811.18 from the paper) and add a CHECKS assertion."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Both sides of Eq.~\\eqref{eq:complex-absprod} are nonnegative, so taking square roots gives the result.",
-  "problem": "The proof uses $\\overline{zw}=\\bar z\\bar w$, which is established before, but also uses that $zw\\overline{zw}=|zw|^2$ is defined for complex numbers; this is fine. However the reader has not been told that $z\\bar z$ real implies the square root is the modulus. Minor.",
-  "fix": "Add 'since $|zw|$ is defined as the nonnegative square root of $zw\\overline{zw}$'."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Differentiate $E$ with respect to $\\theta$, treating the real and imaginary parts separately:",
-  "problem": "Differentiating a complex-valued function of a real variable is used without a definition.",
-  "fix": "State that $\\dd E/\\dd\\theta=\\dd(\\Re E)/\\dd\\theta+i\\,\\dd(\\Im E)/\\dd\\theta$ by definition."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "A continuous function that only takes values in $\\{\\dots,-2\\pi,0,2\\pi,\\dots\\}$ cannot move from one of these values to another",
-  "problem": "The intermediate value theorem is invoked without being stated, and the domain is not specified as an interval.",
-  "fix": "State the theorem briefly and require that $t$ runs over an interval."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Taking the imaginary part of that series at $x=2^{-1/2-it}$ gives $\\operatorname{Arg}(1-2^{-s})=\\sum_{m\\ge1}\\sin(mt\\log2)/(m2^{m/2})$ exactly",
-  "problem": "This asserts that Im Log(1-x) equals Arg(1-x) and that the series gives the principal branch. This needs Re(1-x)>0, which was shown, but the link between the series and the principal log is not argued.",
-  "fix": "Add a sentence: because $\\Re(1-x)>0$, the series sum is the principal logarithm, whose imaginary part is Arg."
- },
- {
-  "category": "JUMP",
   "severity": "low",
-  "quote": "Chapter~\\ref{ch:zeta} writes zeta as an infinite product with one factor per prime (the Euler product), so the argument of zeta becomes a sum over primes.",
-  "problem": "The relation between the argument of $1-2^{-s}$ and the argument of zeta is not made explicit. The Euler product has factors $(1-p^{-s})^{-1}$, so there is a sign.",
-  "fix": "Mention that each factor is $1/(1-p^{-s})$, so $\\arg\\zeta=-\\sum_p\\arg(1-p^{-s})$."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "Problem~23 explores why this characterizes the exponential",
-  "problem": "The references to problem numbers rely on a numbering that is shifted: the list ends with extra problems out of order (problems 28 and 29 are placed after 27, and an easy problem appears late). Problem~7, 16, 22, 25 and 27 cross-references should be checked against actual numbering. Problem 23 is the characterization, which matches, but problem 26 is the sum-rule check.",
-  "fix": "Verify numbering; reorder the graded list, and ensure that all references match."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "\\begin{table}[H]\\centering",
-  "problem": "The [H] float specifier needs the float package, which is not among the loaded packages, so this will not compile.",
-  "fix": "Use \\begin{table}[htbp]."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "Appendix~A explains how to run such snippets.",
-  "problem": "Plain text reference to an appendix; allowed but fragile. More importantly, there is no Python-based check of 'z.real' formatting claims.",
-  "fix": "Acceptable; optionally use a descriptive phrase without a hard-coded letter."
+  "quote": "each such term is the imaginary part of a complex power $p^{-ms}$",
+  "problem": "This is imprecise. By the chapter's own oracle-term equation the term equals $-\\frac1m\\Im[p^{-ms}]$ at $\\sigma=\\tfrac12$, not the imaginary part itself.",
+  "fix": "Write \"each such term is, up to the factor $-1/m$, the imaginary part of a complex power $p^{-ms}$ evaluated at $s=\\tfrac12+it$\"."
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "the paper only uses zeros for which this has been verified numerically.",
-  "problem": "Slightly loose wording; the paper says it is verified numerically for all zeros used, and states it as such. Acceptable, but the bible requires an explicit status label.",
-  "fix": "Add 'numerical observation' label for the verification."
+  "quote": "isolated zeros are a theorem covered in~\\cite{titchmarsh}",
+  "problem": "Isolation of zeros is a theorem about analytic (holomorphic) functions, a notion the chapter never introduces. \"A typical complex function\" is misleading, since $f(z)=\\Re z$ vanishes on a whole line. Titchmarsh's zeta book is not the natural source for this general theorem.",
+  "fix": "Put it in a `beyond` box: \"for analytic functions (those with a complex derivative, such as polynomials, $e^z$, and zeta) that are not identically zero, zeros are isolated; see the complex-variables chapters of~\\cite{rhb}.\" Mention $\\Re z$ as a non-analytic counterexample."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Problem~7 asks you to carry out the expansion for a concrete case.",
+  "problem": "The general associative and distributive laws are left as \"expand both sides and compare\". Problem 7 checks only one numerical instance of associativity and nothing about distributivity.",
+  "fix": "Show the distributive law in two lines in the text. Either show the associativity expansion or make Problem 7 ask for the general proof of both laws."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Such operators have complex eigenvalues, and App.~A step 11 uses",
+  "problem": "This overgeneralizes. The paper's PT-odd class has $A_{nn}=0$ and a real spectrum to leading order.",
+  "fix": "Write \"Such operators can have complex eigenvalues (the PT-odd class has a real spectrum to leading order, Sec. II E), and App.~A step 11 uses ...\"."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "Problem~27 checks that statement using the mean spacing derived in Chapter~\\ref{ch:counting-zeros}",
-  "problem": "The spacing formula is used in Problem 27 before it is derived. The problem states the formula only inside Problem 27, so it is a forward reference.",
-  "fix": "State the mean spacing formula explicitly in the problem as given."
+  "quote": "of Sec.~III keeps ``power spectrum kept exactly'' while destroying arithmetic content",
+  "problem": "The spliced quotation is ungrammatical (\"keeps 'power spectrum kept exactly'\").",
+  "fix": "Write: \"of Sec.~III is described as ``power spectrum kept exactly, no arithmetic content''\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "\\arg k^{-s}=-t\\log k\\ (\\text{mod }2\\pi)",
+  "problem": "The notation \"mod $2\\pi$\" is never defined. Earlier the chapter only says \"up to a multiple of $2\\pi$\".",
+  "fix": "At first use (the Key Ideas of the polar-form section, or here) add: \"(mod $2\\pi$) is shorthand for 'up to adding an integer multiple of $2\\pi$'\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "$3.732051=2+\\sqrt3=\\tan75^\\circ$, so the argument is $75^\\circ=5\\pi/12$",
+  "problem": "The value $\\tan75^\\circ=2+\\sqrt3$ is not a standard first-year fact and is asserted without derivation.",
+  "fix": "Add the derivation: $\\tan(45^\\circ+30^\\circ)=\\frac{1+1/\\sqrt3}{1-1/\\sqrt3}=\\frac{\\sqrt3+1}{\\sqrt3-1}=2+\\sqrt3$. Or evaluate $\\arctan(3.732051)\\approx1.308997$ numerically."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "\\text{(since $w\\bar z=\\overline{z\\bar w}$ by Eq.~\\eqref{eq:complex-conjrules})}",
+  "problem": "This step also needs $\\overline{\\bar w}=w$, which is never stated.",
+  "fix": "State after the definition of the conjugate that $\\overline{\\bar z}=z$ (two reflections), and cite it here: $\\overline{z\\bar w}=\\bar z\\,\\overline{\\bar w}=\\bar z w$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Raising $p^{-s}$ to the $m$-th power ($m=1,2,3,\\dots$) gives, by Eq.~\\eqref{eq:complex-pms} with $k=p^m$ (or by De Moivre)",
+  "problem": "The equality $(p^{-s})^m=p^{-ms}=(p^m)^{-s}$ is not justified. It needs $(e^w)^m=e^{mw}$ (repeated exponent law) and $\\log p^m=m\\log p$. De Moivre covers only the unit-modulus factor.",
+  "fix": "Insert: \"$(p^{-s})^m=(e^{-s\\log p})^m=e^{-ms\\log p}$ by applying the exponent law $m-1$ times, and $m\\log p=\\log p^m$, so this equals $(p^m)^{-s}$.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Unlike ordinary beats between two tuning forks, this sum never repeats exactly.",
+  "problem": "The contrast is false in general. Two tuning forks with an irrational frequency ratio also never repeat exactly. What matters is whether the ratio is rational.",
+  "fix": "Write: \"Unlike beats between two frequencies in a whole-number ratio, this sum never repeats exactly.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "built from six families of rotating arrows $p^{-ms}$, $p\\le13$",
+  "problem": "The paper never lists the six primes. Problem 14 correctly hedges (\"the natural reading is the first six\"), but this paragraph states it as fact.",
+  "fix": "Write \"six families of rotating arrows $p^{-ms}$ (presumably the first six primes, $p\\le13$; the paper says only 'six-prime')\"."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{1}{Evaluate $e^{i\\pi}$, $e^{i\\pi/2}$, $e^{2\\pi i}$ and $e^{-i\\pi/4}$ in the form $a+bi$.}",
+  "problem": "The problems are not in graded order. Difficulty-1 and difficulty-2 problems (26, 28, 29) come after the difficulty-3 problems.",
+  "fix": "Move this problem into the opening block of level-1 problems and move Problems 26 and 29 before the level-3 problems. Then renumber the answers and the in-text references to Problems 7, 16, 22, 23, 25 and 27."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/complex_rotation.pdf}",
+  "problem": "The bible's figure template fixes `width=0.85\\linewidth`. This figure and `complex_pminus_s` use 0.95.",
+  "fix": "Change both to `width=0.85\\linewidth`, with the scripts using figsize (6.5,3) for the two-panel layout."
  }
 ]
