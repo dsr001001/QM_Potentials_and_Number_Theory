@@ -1,7 +1,7 @@
 \chapter{Vectors, Matrices and Linear Systems}\label{ch:linear-algebra}
 
 \begin{chapterintro}
-In first-year physics a vector is an arrow: a displacement, a velocity, a force, with two or three components. This chapter keeps everything you know about arrows (adding, scaling, the dot product, length, perpendicularity) and drops one restriction, the number of components. A list of 400 numbers turns out to obey the same rules as a list of three, and once you accept that, a great deal of computation becomes geometry. "How far is my prediction from the truth?" becomes the length of a difference vector. "Is my prediction shaped like the truth?" becomes the angle between two vectors. "Can I find coefficients that reproduce these data exactly?" becomes the question of whether a system of linear equations has a solution, and how many.
+In first-year physics a vector is an arrow: a displacement, a velocity, a force, with two or three components. This chapter keeps everything you know about arrows (adding, scaling, the dot product, length, perpendicularity) and drops one restriction, the number of components. A list of 400 numbers turns out to obey the same rules as a list of three, and once you accept that, a great deal of computation becomes geometry. ``How far is my prediction from the truth?'' becomes the length of a difference vector. ``Is my prediction shaped like the truth?'' becomes the angle between two vectors. ``Can I find coefficients that reproduce these data exactly?'' becomes the question of whether a system of linear equations has a solution, and how many.
 
 We also introduce matrices. A matrix is a rectangular table of numbers, but its real meaning is a rule that turns one vector into another in a straight-line (linear) way. We learn to multiply matrices, to undo them (the inverse), to solve the equations they define by elimination, to measure how many independent pieces of information they carry (the rank), and to compute the determinant. We end by treating functions themselves as vectors with very many components, which is exactly what a computer does when it stores a wavefunction on a grid.
 
@@ -10,7 +10,7 @@ Where this shows up in the paper \cite{soniR1}: the fitted correction $\delta V(
 
 \begin{prerequisites}
 \item Chapter~\ref{ch:complex}: complex numbers $z=a+ib$, the complex conjugate $z^*=a-ib$, the modulus $\abs{z}$ with $\abs{z}^2=z^*z$, Euler's formula $e^{i\theta}=\cos\theta+i\sin\theta$.
-\item First-year physics: vectors in two and three dimensions, components, the dot product $\bm a\cdot\bm b=a_xb_x+a_yb_y+a_zb_z$, the magnitude $\abs{\bm a}=\sqrt{\bm a\cdot\bm a}$, the relation $\bm a\cdot\bm b=\abs{\bm a}\abs{\bm b}\cos\theta$, and the cross product.
+\item First-year physics: vectors in two and three dimensions, components, the dot product $\bm a\cdot\bm b=a_xb_x+a_yb_y+a_zb_z$, the magnitude $\abs{\bm a}=\sqrt{\bm a\cdot\bm a}$, and the relation $\bm a\cdot\bm b=\abs{\bm a}\abs{\bm b}\cos\theta$.
 \item Calculus: the integral as a limit of Riemann sums, integration by parts, the identities $\cos^2\theta+\sin^2\theta=1$, $\sin^2\theta=\tfrac12(1-\cos2\theta)$ and $\cos A\cos B=\tfrac12[\cos(A-B)+\cos(A+B)]$.
 \item Appendix A (Python) for the code listings: arrays, \texttt{@} for matrix products, \texttt{numpy.linalg}.
 \end{prerequisites}
@@ -178,14 +178,14 @@ with $\theta$ the angle between $\bm p$ and $\bm d$. The prediction beats the nu
 Two consequences follow at once.
 \begin{itemize}
 \item If $\cos\theta\le0$, the right side of \cref{eq:linear-algebra-beatnull} is $\le0$, which no positive $\norm{\bm p}$ can be below. So \emph{every nonzero prediction that is orthogonal or anti-aligned to the truth is worse than predicting nothing.}
-\item If we keep the direction $\hat{\bm p}$ fixed and choose the length $\alpha$ of $\bm p=\alpha\hat{\bm p}$ to minimize the error, \cref{eq:linear-algebra-errid} reads $\alpha^2-2\alpha\norm{\bm d}\cos\theta+\norm{\bm d}^2$, a parabola in $\alpha$ with minimum at $\alpha=\norm{\bm d}\cos\theta$ (set the derivative $2\alpha-2\norm{\bm d}\cos\theta$ to zero). The minimum value is $\norm{\bm d}^2-\norm{\bm d}^2\cos^2\theta=\norm{\bm d}^2\sin^2\theta$, so the best achievable error in that direction is
+\item If we keep the direction $\hat{\bm p}$ fixed and choose the signed amplitude $\alpha$ of $\bm p=\alpha\hat{\bm p}$ (a negative $\alpha$ reverses the direction) to minimize the error, \cref{eq:linear-algebra-errid} reads $\alpha^2-2\alpha\norm{\bm d}\cos\theta+\norm{\bm d}^2$, a parabola in $\alpha$ with minimum at $\alpha=\norm{\bm d}\cos\theta$ (set the derivative $2\alpha-2\norm{\bm d}\cos\theta$ to zero). The minimum value is $\norm{\bm d}^2-\norm{\bm d}^2\cos^2\theta=\norm{\bm d}^2\sin^2\theta$, so the best achievable error in that direction is
 \begin{equation}
 \min_\alpha\norm{\alpha\hat{\bm p}-\bm d}=\norm{\bm d}\sin\theta .
 \label{eq:linear-algebra-sintheta}
 \end{equation}
 \end{itemize}
 
-The Pearson correlation of statistics (Chapter~\ref{ch:probability}) is $\cos\theta$ computed after subtracting from each vector the mean of its components. If $\bar p=\frac1n\sum_jp_j$ and $\bm 1=(1,\dots,1)$, then
+The Pearson correlation of statistics (Chapter~\ref{ch:probability}) is $\cos\theta$ computed after subtracting from each vector the mean of its components. If $\bar p=\frac1n\sum_jp_j$ and $\bar d=\frac1n\sum_jd_j$ are the means of the components and $\bm 1=(1,\dots,1)$, then, provided neither centered vector is zero (otherwise the denominator vanishes and the correlation is undefined; a constant prediction such as the null has no correlation),
 \begin{equation}
 \corr(\bm p,\bm d)=\frac{(\bm p-\bar p\bm 1)\cdot(\bm d-\bar d\bm 1)}{\norm{\bm p-\bar p\bm 1}\,\norm{\bm d-\bar d\bm 1}} .
 \label{eq:linear-algebra-corr}
@@ -216,7 +216,7 @@ The perfectly shaped prediction has a large error because its amplitude is wrong
 %======================================================================
 \section{Complex vectors}\label{sec:linear-algebra-complex}
 
-Quantum wavefunctions (Chapter~\ref{ch:schrodinger}) are complex, and in the paper's Sec.~II~E the eigenvectors of a non-Hermitian matrix are complex. So we need vectors whose components are complex numbers. Addition and scaling (now by complex scalars) work exactly as before. The inner product needs one change.
+Quantum wavefunctions (Chapter~\ref{ch:schrodinger}) are complex, and in the paper's Sec.~II~E certain special vectors of a complex matrix (eigenvectors, previewed in \cref{sec:linear-algebra-mult} and defined in Chapter~\ref{ch:eigen}) have complex components. So we need vectors whose components are complex numbers. Addition and scaling (now by complex scalars) work exactly as before. The inner product needs one change.
 
 \begin{checkpoint}
 Using the real formula \cref{eq:linear-algebra-dot} without change, compute $\bm u\cdot\bm u$ for $\bm u=(1,i)$. Would this make a sensible ``length squared''?
@@ -232,7 +232,7 @@ Recall from Chapter~\ref{ch:complex} that for a complex number $z$, $z^*z=\abs{z
 \end{equation}
 and the norm is $\norm{\bm v}=\sqrt{\langle\bm v,\bm v\rangle}=\sqrt{\sum_j\abs{v_j}^2}$.
 
-This is the physicists' convention (conjugate on the first slot), the one used with the bra--ket notation $\braket{u}{v}$ of Chapter~\ref{ch:schrodinger}. Some mathematics books conjugate the second slot instead; the content is the same. For real vectors $u_j^*=u_j$ and \cref{eq:linear-algebra-cinner} reduces to \cref{eq:linear-algebra-dot}.
+This is the physicists' convention (conjugate on the first slot), the one used with the bra-ket notation $\braket{u}{v}$ of Chapter~\ref{ch:schrodinger}. Some mathematics books conjugate the second slot instead; the content is the same. For real vectors $u_j^*=u_j$ and \cref{eq:linear-algebra-cinner} reduces to \cref{eq:linear-algebra-dot}.
 
 \paragraph{Properties.}
 \begin{enumerate}
@@ -282,11 +282,6 @@ print(np.linalg.norm(r), np.sqrt(np.mean(r**2)))   # 0.5477, 0.2739
 
 %======================================================================
 \section{Bases, orthogonality and projection}\label{sec:linear-algebra-basis}
-% DYK-BEGIN
-\begin{didyouknow}{Gram, Schmidt, and Laplace}
-The Gram-Schmidt procedure turns any set of independent vectors into an orthonormal basis by subtracting projections one at a time. It is named after J{\o}rgen Gram (1883) and Erhard Schmidt (1907), but Pierre-Simon Laplace had used an equivalent method decades earlier. Schmidt applied it to functions, which is exactly the infinite-dimensional setting of quantum mechanics.
-\end{didyouknow}
-% DYK-END
 
 \subsection{Independence, span and basis}
 
@@ -402,9 +397,9 @@ T(\alpha\bm u+\beta\bm v)=\alpha T(\bm u)+\beta T(\bm v).
 \end{equation}
 Physical examples: rotating a vector by a fixed angle; stretching the $x$-component by 2; taking differences of consecutive entries. Differentiation of functions is also linear, $\frac{\dd}{\dd x}(\alpha f+\beta g)=\alpha f'+\beta g'$, which is why Chapter~\ref{ch:eigen} can turn $-\dd^2/\dd x^2$ into a matrix.
 
-\subsection{Matrices and the matrix--vector product}
+\subsection{Matrices and the matrix-vector product}
 
-An $m\times n$ \emph{matrix} $A$ is a rectangular array of numbers with $m$ rows and $n$ columns; the entry in row $i$ and column $j$ is $A_{ij}$. Its product with a vector $\bm x\in\mathbb R^n$ is the vector $A\bm x\in\mathbb R^m$ with components
+An $m\times n$ \emph{matrix} $A$ is a rectangular array of numbers with $m$ rows and $n$ columns; the entry in row $i$ and column $j$ is $A_{ij}$. Matrices of the same shape are added entry by entry, $(A+B)_{ij}=A_{ij}+B_{ij}$, and multiplied by a scalar $s$ entry by entry, $(sA)_{ij}=sA_{ij}$. Its product with a vector $\bm x\in\mathbb R^n$ is the vector $A\bm x\in\mathbb R^m$ with components
 \begin{equation}
 (A\bm x)_i=\sum_{j=1}^nA_{ij}x_j,\qquad i=1,\dots,m.
 \label{eq:linear-algebra-matvec}
@@ -485,7 +480,7 @@ Comparing with \cref{eq:linear-algebra-matvec},
 \end{equation}
 Entry $(i,k)$ of $AB$ is the dot product of row $i$ of $A$ with column $k$ of $B$. The product exists only if the number of columns of $A$ equals the number of rows of $B$; an $m\times n$ times an $n\times p$ gives an $m\times p$.
 
-Because $AB$ is defined as a composition, $(AB)C=A(BC)$ (both mean ``$C$, then $B$, then $A$''), and $A(B+C)=AB+AC$ (from \cref{eq:linear-algebra-matmul}, since each entry is a sum). But the order matters.
+Because $AB$ is defined as a composition, $(AB)C=A(BC)$ (both mean ``$C$, then $B$, then $A$''), and $A(B+C)=AB+AC$, because by \cref{eq:linear-algebra-matmul}, entry by entry, $(A(B+C))_{ik}=\sum_jA_{ij}(B_{jk}+C_{jk})=\sum_jA_{ij}B_{jk}+\sum_jA_{ij}C_{jk}=(AB)_{ik}+(AC)_{ik}$. But the order matters.
 
 \begin{sample}{Rotate then stretch, or stretch then rotate?}
 Let $R=\begin{pmatrix}0&-1\\1&0\end{pmatrix}$ (rotation by $90^\circ$ counterclockwise) and $S=\begin{pmatrix}2&0\\0&1\end{pmatrix}$ (stretch $x$ by 2). Compute $RS$ and $SR$ and apply both to $\bm e_1=(1,0)$.
@@ -559,7 +554,7 @@ A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}.
 \end{equation}
 The number $ad-bc$ is the \emph{determinant} of $A$ (\cref{sec:linear-algebra-det}).
 
-\paragraph{When $ad-bc=0$ there is no inverse.} The computation above then reads $A\begin{pmatrix}d\\-c\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}$ (the first column of the displayed product). If $(d,-c)\ne\bm 0$, $A$ sends a nonzero vector to $\bm 0$. It also sends $\bm 0$ to $\bm 0$. An inverse would have to send $\bm 0$ back to both, which is impossible. If $c=d=0$, then $A(b,-a)=(ab-ba,\,0)=\bm 0$, and the same argument applies unless $a=b=0$ too, in which case $A$ is the zero matrix, which has no inverse. A matrix without an inverse is called \emph{singular}.
+\paragraph{When $ad-bc=0$ there is no inverse.} The computation above then reads $A\begin{pmatrix}d\\-c\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}$ (the first column of the displayed product). If $(d,-c)\ne\bm 0$, $A$ sends a nonzero vector to $\bm 0$. It also sends $\bm 0$ to $\bm 0$. An inverse would have to send $\bm 0$ back to both, which is impossible. If $c=d=0$, then $A(b,-a)=(ab-ba,\,0)=\bm 0$, and the same argument applies unless $a=b=0$ too, in which case $A$ is the zero matrix, which has no inverse, since $X\cdot0=0\ne I$ for every matrix $X$. A matrix without an inverse is called \emph{singular}.
 
 \begin{sample}{Inverting a $2\times2$ matrix and solving}
 Solve $4x+7y=1$, $2x+6y=2$ using the inverse.
@@ -646,7 +641,11 @@ Count multiply-and-add operations for an $n\times n$ system. At step $k$ (cleari
 \[
 \sum_{k=1}^{n-1}(n-k)(n-k+1)=\sum_{j=1}^{n-1}j(j+1)\quad(j=n-k).
 \]
-Using $\sum_{j=1}^{n-1}j^2=\frac{(n-1)n(2n-1)}6$ and $\sum_{j=1}^{n-1}j=\frac{(n-1)n}2$,
+We need two sums. First, $\sum_{j=1}^{n-1}j=\frac{(n-1)n}2$: write the sum forwards and backwards and add term by term; each of the $n-1$ pairs $j+(n-j)$ equals $n$, so twice the sum is $(n-1)n$. Second, add up the identity $(j+1)^3-j^3=3j^2+3j+1$ for $j=1,\dots,n-1$. The left side telescopes (each intermediate cube appears once with $+$ and once with $-$) to $n^3-1=(n-1)(n^2+n+1)$, so
+\[
+3\sum_{j=1}^{n-1}j^2=(n-1)(n^2+n+1)-3\frac{(n-1)n}2-(n-1)=(n-1)\Big[n^2-\frac n2\Big]=\frac{(n-1)n(2n-1)}2 ,
+\]
+that is, $\sum_{j=1}^{n-1}j^2=\frac{(n-1)n(2n-1)}6$ (check: $n=3$ gives $1+4=5=\frac{2\cdot3\cdot5}6$; $n=4$ gives $1+4+9=14=\frac{3\cdot4\cdot7}6$). Using these two results,
 \begin{equation}
 \sum_{j=1}^{n-1}j(j+1)=\frac{(n-1)n(2n-1)}6+\frac{3(n-1)n}6=\frac{(n-1)n(2n+2)}6=\frac{(n-1)n(n+1)}3\approx\frac{n^3}3 .
 \label{eq:linear-algebra-cost}
@@ -657,7 +656,7 @@ For $n=3$ this gives $8$, which you can confirm by counting Step~2 ($2$ rows $\t
 import numpy as np
 A = np.array([[1., 1, 1], [2, 3, 1], [1, 2, 3]])
 b = np.array([6., 11, 14])
-x = np.linalg.solve(A, b)        # elimination (LU) inside LAPACK
+x = np.linalg.solve(A, b)        # Gaussian elimination, done by a standard library routine
 print(x)                         # [1. 2. 3.]
 print(np.abs(A @ x - b).max())   # residual at rounding level
 print(np.linalg.matrix_rank(A), np.linalg.det(A))   # 3, 3.0
@@ -739,11 +738,6 @@ Spacings alone cannot tell you where the zeros sit; one extra fact (one zero) is
 
 %======================================================================
 \section{The determinant}\label{sec:linear-algebra-det}
-% DYK-BEGIN
-\begin{didyouknow}{Determinants Before Matrices}
-Determinants are older than matrices. Seki Takakazu described them in Japan in 1683, and Gottfried Leibniz independently used them in 1693 to solve systems of linear equations. The word \emph{determinant} in its modern sense comes from Augustin-Louis Cauchy in 1812. Matrices as objects in their own right arrived only in the 1850s, more than 150 years after the determinant.
-\end{didyouknow}
-% DYK-END
 
 \subsection{The $2\times2$ determinant as an area}
 
@@ -762,7 +756,7 @@ So the area is $\abs{a_1b_2-a_2b_1}$, and we define the \emph{determinant}
 \end{equation}
 the same $ad-bc$ that appeared in the inverse. Its sign records orientation: positive if turning from $\bm a$ to $\bm b$ is counterclockwise.
 
-Since $A\bm e_1=\bm a$ and $A\bm e_2=\bm b$, the map $A$ sends the unit square (spanned by $\bm e_1,\bm e_2$, area 1) to the parallelogram spanned by $\bm a,\bm b$. \emph{The determinant is the factor by which $A$ scales areas} (\cref{fig:linear-algebra-map}). If $\det A=0$ the parallelogram is flattened onto a line: the columns are parallel (dependent), and some nonzero vector is squashed to $\bm 0$, which is the singular case of \cref{sec:linear-algebra-inverse}.
+Since $A\bm e_1=\bm a$ and $A\bm e_2=\bm b$, the map $A$ sends the unit square (spanned by $\bm e_1,\bm e_2$, area 1) to the parallelogram spanned by $\bm a,\bm b$. \emph{The determinant is the factor by which $A$ scales areas} (\cref{fig:linear-algebra-map}). For a general region, cover it by small squares of side $\epsilon$. By linearity each such square is mapped to a copy of the parallelogram above shrunk by the factor $\epsilon$, of area $\abs{\det A}\,\epsilon^2$, so the total area is multiplied by the same factor $\abs{\det A}$ (in the limit $\epsilon\to0$). If $\det A=0$ the parallelogram is flattened onto a line: the columns are parallel (dependent), and some nonzero vector is squashed to $\bm 0$, which is the singular case of \cref{sec:linear-algebra-inverse}.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/linear-algebra_map.pdf}
@@ -777,12 +771,14 @@ For a $3\times3$ matrix, expand along the first row:
 \det A=A_{11}(A_{22}A_{33}-A_{23}A_{32})-A_{12}(A_{21}A_{33}-A_{23}A_{31})+A_{13}(A_{21}A_{32}-A_{22}A_{31}).
 \label{eq:linear-algebra-det3}
 \end{equation}
-Each bracket is the $2\times2$ determinant left after deleting the row and column of the entry in front, and the signs alternate $+,-,+$. Recall from first-year physics that the cross product of the second and third rows $\bm r_2,\bm r_3$ is $\bm r_2\times\bm r_3=(A_{22}A_{33}-A_{23}A_{32},\ A_{23}A_{31}-A_{21}A_{33},\ A_{21}A_{32}-A_{22}A_{31})$. Dot this with the first row $\bm r_1=(A_{11},A_{12},A_{13})$, component by component:
+Each bracket is the $2\times2$ determinant left after deleting the row and column of the entry in front, and the signs alternate $+,-,+$. There is a compact way to write \cref{eq:linear-algebra-det3}. For the second and third rows $\bm r_2,\bm r_3$ define the vector (called their \emph{cross product}; no prior knowledge of it is needed here) $\bm r_2\times\bm r_3=(A_{22}A_{33}-A_{23}A_{32},\ A_{23}A_{31}-A_{21}A_{33},\ A_{21}A_{32}-A_{22}A_{31})$. Dot this with the first row $\bm r_1=(A_{11},A_{12},A_{13})$, component by component:
 \begin{align*}
 \bm r_1\cdot(\bm r_2\times\bm r_3)&=A_{11}(A_{22}A_{33}-A_{23}A_{32})+A_{12}(A_{23}A_{31}-A_{21}A_{33})+A_{13}(A_{21}A_{32}-A_{22}A_{31})\\
 &=A_{11}(A_{22}A_{33}-A_{23}A_{32})-A_{12}(A_{21}A_{33}-A_{23}A_{31})+A_{13}(A_{21}A_{32}-A_{22}A_{31}),
 \end{align*}
-where the second line only rewrites the middle bracket as $A_{23}A_{31}-A_{21}A_{33}=-(A_{21}A_{33}-A_{23}A_{31})$. This is exactly \cref{eq:linear-algebra-det3}, so $\det A=\bm r_1\cdot(\bm r_2\times\bm r_3)$. Now recall the geometry of the triple product from first-year physics \cite{hrw}: $\abs{\bm r_2\times\bm r_3}$ is the area of the parallelogram spanned by $\bm r_2,\bm r_3$, and the cross product points perpendicular to it; dotting with $\bm r_1$ multiplies that area by the component of $\bm r_1$ along the perpendicular, which is the height of the parallelepiped (up to sign). Area of base times height is volume, so $\abs{\det A}=\abs{\bm r_1\cdot(\bm r_2\times\bm r_3)}$ is the volume of the parallelepiped spanned by the rows.
+where the second line only rewrites the middle bracket as $A_{23}A_{31}-A_{21}A_{33}=-(A_{21}A_{33}-A_{23}A_{31})$. This is exactly \cref{eq:linear-algebra-det3}, so $\det A=\bm r_1\cdot(\bm r_2\times\bm r_3)$. \begin{beyond}
+\textbf{Taken on trust: the volume interpretation.} The vector $\bm r_2\times\bm r_3$ is perpendicular to both $\bm r_2$ and $\bm r_3$, and its length is the area of the parallelogram they span. Dotting it with $\bm r_1$ therefore multiplies that base area by the height of $\bm r_1$ above the base (up to sign). Base times height is volume, so $\abs{\det A}=\abs{\bm r_1\cdot(\bm r_2\times\bm r_3)}$ is the volume of the parallelepiped spanned by the rows. By property (D7) below, $\det A^\top=\det A$, so it is also the volume spanned by the columns, which are the images $A\bm e_1,A\bm e_2,A\bm e_3$ of the edges of the unit cube. Hence $\abs{\det A}$ is the factor by which $A$ scales volumes. Proofs: Riley, Hobson and Bence \cite{rhb}, Chs.~7 and~8.
+\end{beyond}
 
 \subsection{Properties}
 
@@ -960,7 +956,7 @@ The paper also uses Chebyshev polynomials $T_k(2|x|/L-1)$ and piecewise-linear `
 \sum_k\underbrace{\langle\phi_j,\phi_k\rangle}_{G_{jk}}a_k=\underbrace{\langle\phi_j,f\rangle}_{b_j}\qquad\Longleftrightarrow\qquad G\bm a=\bm b ,
 \label{eq:linear-algebra-gram}
 \end{equation}
-a linear system with the \emph{Gram matrix} $G$. For an orthogonal basis $G$ is diagonal and \cref{eq:linear-algebra-gram} collapses to \cref{eq:linear-algebra-coeffs}; otherwise you solve it by elimination. (When $f$ is \emph{not} exactly in the span, the same equations give the closest function in the span, the least-squares fit of Chapter~\ref{ch:least-squares}; Problem~17 is an example.)
+a linear system with the \emph{Gram matrix} $G$. For an orthogonal basis $G$ is diagonal and \cref{eq:linear-algebra-gram} collapses to \cref{eq:linear-algebra-coeffs}; otherwise you solve it by elimination. (When $f$ is \emph{not} exactly in the span, require instead that the residual $f-\sum_ka_k\phi_k$ be orthogonal to every $\phi_j$. The condition $\langle\phi_j,f-\sum_ka_k\phi_k\rangle=0$ is exactly \cref{eq:linear-algebra-gram}. A residual orthogonal to the span makes $\sum_ka_k\phi_k$ the closest function in the span, by the same Pythagoras argument that gave \cref{eq:linear-algebra-closest}; that argument used only the orthogonality of the residual, not the orthonormality of the spanning set. This is the least-squares fit of Chapter~\ref{ch:least-squares}; Problem~17 is an example.)
 
 \begin{keyideas}
 \item On the grid $x_j=-L+jh$, $h=2L/(N+1)$, a function is a vector in $\mathbb R^N$; $h\sum f_j^*g_j\to\int f^*g\,\dd x$.
@@ -980,7 +976,7 @@ where $\psi_n$ is the normalized wavefunction of level $n$ ($\int\abs{\psi_n}^2\
 
 \paragraph{Reading the matrix.} Row $n$ belongs to level $n$, column $k$ to basis function $k$. In the column picture \cref{eq:linear-algebra-colpic}, $\delta\bm E=A\bm c$ is a combination of columns: column $k$ is the pattern of level shifts produced by basis function $k$ at unit amplitude. Entry $A_{nk}$ is the inner product $\langle\abs{\psi_n}^2,\phi_k\rangle$ of two real functions: the overlap between where level $n$ ``lives'' and the shape of basis function $k$.
 
-\paragraph{The first column is all ones.} With $\phi_0=1$, $A_{n0}=\int\abs{\psi_n}^2\dd x=1$ for every $n$, by normalization alone, for any potential. So a constant correction $c_0$ shifts every level by the same $c_0$, to first order. This is the ``joint shift'' direction, and it will matter in Chapter~\ref{ch:non-hermitian}, where a constant imaginary potential produces no real shift at all.
+\paragraph{The first column is all ones.} With $\phi_0=1$, $A_{n0}=\int\abs{\psi_n}^2\dd x=1$ for every $n$, by normalization alone, for any potential. So a constant correction $c_0$ shifts every level by the same $c_0$, to first order. This is the uniform-shift direction, and it will matter in Chapter~\ref{ch:non-hermitian}, where a constant imaginary potential produces no real shift at all.
 
 \paragraph{On a grid.} With $W_{nj}=\abs{\psi_n(x_j)}^2$ (an $n_{\rm lev}\times N$ matrix) and $\Phi_{jk}=\phi_k(x_j)$ (an $N\times M$ matrix), the Riemann sum for \cref{eq:linear-algebra-Ank} is
 \begin{equation}
@@ -1026,7 +1022,7 @@ A=\begin{pmatrix}1&\tfrac12&0&0\\ 1&0&-\tfrac12&0\\ 1&0&0&\tfrac12\end{pmatrix}.
 \]
 Three equations, four unknowns: underdetermined.
 
-\textbf{Step 2 (a):} Choose $c_0=s$ as the free variable. Row 1: $s+c_1/2=0.2\Rightarrow c_1=2(0.2-s)$. Row 2: $s-c_2/2=-0.1\Rightarrow c_2=2(0.1+s)$. Row 3: $s+c_3/2=0.3\Rightarrow c_3=2(0.3-s)$.
+\textbf{Step 2 (a):} Choose $c_0=s$ as the free variable. (Elimination would make $c_3$ the free variable, since the pivots fall in the columns of $c_0,c_1,c_2$. Any one of the four can be used to parametrize the line of solutions, and $c_0$ is the most convenient here.) Row 1: $s+c_1/2=0.2\Rightarrow c_1=2(0.2-s)$. Row 2: $s-c_2/2=-0.1\Rightarrow c_2=2(0.1+s)$. Row 3: $s+c_3/2=0.3\Rightarrow c_3=2(0.3-s)$.
 
 \textbf{Step 3 (a):} In the form \cref{eq:linear-algebra-general}: $\bm c=(0,\,0.4,\,0.2,\,0.6)+s(1,-2,2,-2)$. Check the null vector: $A(1,-2,2,-2)=(1-1,\ 1-1,\ 1-1)=\bm 0$. Raising $c_0$ lifts all three levels, and the other three coefficients exactly cancel it.
 
@@ -1053,7 +1049,7 @@ k = np.arange(M)                    # cosines start at 0
 psi = np.sin(np.outer(x + L, n)*np.pi/(2*L))/np.sqrt(L)   # N x nlev
 Phi = np.cos(np.outer(x, k)*np.pi/L)                       # N x M
 A = h*(psi**2).T @ Phi              # nlev x M, the grid version of A_nk
-print(np.round(A, 6))               # first column 1, A[n-1, n] = +-0.5
+print(np.round(A, 6))               # first column 1; A[n-1, n] = +-0.5 for n <= M-1
 \end{pycode}
 
 \begin{keyideas}
@@ -1064,11 +1060,6 @@ print(np.round(A, 6))               # first column 1, A[n-1, n] = +-0.5
 
 %======================================================================
 \section{Paper connection}\label{sec:linear-algebra-paper}
-% DYK-BEGIN
-\begin{didyouknow}{A Word From Sylvester}
-James Joseph Sylvester coined the word \emph{matrix} in 1850, from the Latin for womb, because he saw a rectangular array as the source from which determinants are born. His friend Arthur Cayley published the first systematic algebra of matrices in 1858, including matrix multiplication and inverses. Every numerical calculation later in this book ultimately reduces to operations on matrices.
-\end{didyouknow}
-% DYK-END
 
 Here is where the tools of this chapter appear in the paper \cite{soniR1} (revision R1; code and data in \cite{zenodo}).
 
@@ -1076,13 +1067,15 @@ Here is where the tools of this chapter appear in the paper \cite{soniR1} (revis
 
 \paragraph{The sensitivity matrix and the residual vector (Sec.~II~C, App.~A step~6).} The paper forms the residual vector $r$ with components $r_n=\tilde t_n-E_n$ and the matrix $A_{nk}=\int\abs{\psi_n}^2\cos(k\pi x/L)\,\dd x$, then updates $c$ by a damped least-squares solution of $A\,\delta c\approx r$. The shape of $A$ is (number of training levels)$\times M$. In Table~I, the scale-1 fit on zeros 1--400 with $M=200$ has a $400\times200$ matrix (overdetermined); the same fit with $M=600$ has $400\times600$ (underdetermined, null space of dimension at least $200$). The first column is all ones (\cref{sec:linear-algebra-sens}), so $c_0$ moves all levels together. The ``SVD-damped'' step itself is the subject of Chapter~\ref{ch:least-squares}; the update rule as a whole is explained in Chapter~\ref{ch:fitting}.
 
-\paragraph{``More coefficients than levels''.} \Cref{sec:linear-algebra-rank} showed that an underdetermined system of full row rank has exact solutions for \emph{every} right-hand side, and infinitely many of them. This is the linear-algebra core of several statements in the paper. Sec.~III reports that on the full 500 zeros the fit reaches rms $0.186$ at $M=300$ and reproduces all 500 zeros to rms $<10^{-4}$ spacings by $M=900$. Table~III notes that the odd/even splits have 200 training levels at scale 1, ``so the rows with $M\ge200$ are saturated'', and the $M=400$ odd/even rows indeed have in-sample error $<10^{-3}$. Sec.~IV says of control B that ``at 900 coefficients on 400 zeros the least-squares problem is underdetermined''. (Control B's model $F(t)=\sum_j[a_j\sin(\omega_jt)+b_j\cos(\omega_jt)]$ is linear in the amplitudes, so its fit is literally a linear system with one row per training zero and one column per coefficient: 150 primes times three harmonics times two amplitudes gives 900 columns; control C1 has 450 frequencies times two, again 900.) A caution about status: the operator fit is nonlinear, because $\psi_n$ and $E_n$ change as $c$ changes, so the counting argument applies exactly only to each linearized step. The paper's own statement is empirical and heuristic: the bases ``are effectively complete for in-sample level patterns, so they realize essentially arbitrary joint shifts'' (Sec.~VI). The surrogate tests of Sec.~III, in which shuffled and phase-randomized targets are fitted as well as the true zeros (in-sample rms $0.134\pm0.010$, $0.141\pm0.006$, $0.138\pm0.005$ against $0.137$ for the true zeros), are, heuristically, what a nearly full-rank, nearly saturated linear model would lead you to expect. This is an analogy, not a derivation: the paper itself calls its explanation of the failure heuristic (``The failure is intelligible, though heuristically so'', Sec.~VI).
+\paragraph{``More coefficients than levels''.} \Cref{sec:linear-algebra-rank} showed that an underdetermined system of full row rank has exact solutions for \emph{every} right-hand side, and infinitely many of them. This is the linear-algebra core of several statements in the paper. Sec.~III reports that on the full 500 zeros the fit reaches rms $0.186$ at $M=300$ and reproduces all 500 zeros to rms $<10^{-4}$ spacings by $M=900$. Sec.~III (Within-height splits) notes that the odd/even splits have 200 training levels at scale 1, ``so the rows with $M\ge200$ are saturated'', and the $M=400$ odd/even rows of Table~III indeed have in-sample error $<10^{-3}$. The square case $M=200$ still leaves in-sample rms $0.176$ and $0.171$, so saturation by count does not by itself give an exact fit. Sec.~IV says of control B that ``at 900 coefficients on 400 zeros the least-squares problem is underdetermined''. (Control B's model $F(t)=\sum_j[a_j\sin(\omega_jt)+b_j\cos(\omega_jt)]$ is linear in the amplitudes, so its fit is literally a linear system with one row per training zero and one column per coefficient: 150 primes times three harmonics times two amplitudes gives 900 columns; control C1 has 450 frequencies times two, again 900.) A caution about status: the operator fit is nonlinear, because $\psi_n$ and $E_n$ change as $c$ changes, so the counting argument applies exactly only to each linearized step. The paper's own statement is empirical and heuristic: the bases ``are effectively complete for in-sample level patterns, so they realize essentially arbitrary joint shifts'' (Sec.~VI). Here ``joint shifts'' means arbitrary patterns of simultaneous level shifts, not the uniform shift produced by $c_0$. The surrogate tests of Sec.~III, in which permuted, phase-randomized and amplitude-adjusted surrogate targets are fitted as well as the true zeros (in-sample rms $0.134\pm0.010$, $0.141\pm0.006$ and $0.138\pm0.005$ respectively, against $0.137$ for the true zeros), are, heuristically, what a nearly full-rank, nearly saturated linear model would lead you to expect. This is an analogy, not a derivation: the paper itself calls its explanation of the failure heuristic (``The failure is intelligible, though heuristically so'', Sec.~VI).
 
-\paragraph{rms is a norm; corr is an angle.} Every rms in the paper is $\norm{\bm e}/\sqrt n$ for an error vector measured in local mean spacings (\cref{eq:linear-algebra-rms}). The null rms on the principal holdout, zeros 401--500 (running example RE5), is $0.2631$ (App.~A, key anchors), so the null error vector over those 100 zeros has norm $0.2631\times\sqrt{100}=2.631$. The correlations are the cosines of \cref{eq:linear-algebra-corr}. The geometry of \cref{eq:linear-algebra-beatnull} explains why the paper can say both ``the held-out rms never improves on the null'' and ``no reproducible positive held-out correlation appears'' (Sec.~III): with $\cos\theta\lesssim0$ no nonzero prediction can beat the null. Fig.~1 shows the two extremes, the fitted operator with held-out correlation $-0.07$ and the six-prime formula with $+0.96$. As a rough consistency check only (it assumes mean-zero vectors and optimal amplitude, and the correlation is rounded to two digits), \cref{eq:linear-algebra-sintheta} with $\cos\theta=0.96$ gives a best error of $0.263\times\sqrt{1-0.96^2}=0.074$ spacings, the same as the six-prime rms $0.074$ reported for 401--500 in Table~V.
+\paragraph{Shape is not rank.} Counting rows and columns gives only an upper bound on what can be fitted: an underdetermined shape guarantees an exact fit only if the matrix has full row rank. In Table~I the fits with more coefficients than levels (zeros 1--300 with $M=400$, 1--400 with $M=600$, 1--800 with $M=900$) still have in-sample rms $0.120$, $0.064$ and $0.103$. Sec.~III reports that the 500 zeros are reproduced to rms $<10^{-4}$ only by $M=900$, not as soon as $M$ exceeds 500. The linearized sensitivity matrix is therefore effectively rank deficient until the cosines can resolve the wavefunctions of the levels being fitted. This is the paper's coverage law $M\pi/L>2\sqrt E$, discussed in Chapter~\ref{ch:fitting}, and the notion of ``effectively'' rank deficient (tiny but nonzero singular values) is made precise in Chapter~\ref{ch:least-squares}.
+
+\paragraph{rms is a norm; corr is an angle.} Every rms in the paper is $\norm{\bm e}/\sqrt n$ for an error vector measured in local mean spacings (\cref{eq:linear-algebra-rms}). The null rms on the principal holdout, zeros 401--500 (running example RE5), is $0.2631$ (App.~A, key anchors), so the null error vector over those 100 zeros has norm $0.2631\times\sqrt{100}=2.631$. The correlations are the cosines of \cref{eq:linear-algebra-corr}. The geometry of \cref{eq:linear-algebra-beatnull} is consistent with the paper's two statements ``the held-out rms never improves on the null'' and ``no reproducible positive held-out correlation appears'' (Sec.~III) appearing together. When $\cos\theta$ is zero or negative, no nonzero prediction can beat the null. When $\cos\theta$ is small and positive, only a prediction of small amplitude, $\norm{\bm p}<2\norm{\bm d}\cos\theta$, can. This is a guide, not an exact explanation, for two reasons. The paper's corr is the centered (Pearson) cosine. The paper also has rows with positive correlation and rms above the null, for example $+0.12$ with $0.439$ in Table~I, and Chebyshev $M=400$ with $+0.18$ and $0.291$ in Table~II. In those rows the predictions are too large for their small correlation. Fig.~1 shows the two extremes, the fitted operator with held-out correlation $-0.07$ and the six-prime formula with $+0.96$. As a rough consistency check only (it assumes mean-zero vectors and optimal amplitude, and the correlation is rounded to two digits), \cref{eq:linear-algebra-sintheta} with $\cos\theta=0.96$ gives a best error of $0.263\times\sqrt{1-0.96^2}=0.074$ spacings, the same as the six-prime rms $0.074$ reported for 401--500 in Table~V.
 
 \paragraph{Functions on grids (Sec.~II~B, App.~A steps 3, 4, 9).} At scale 1 the paper uses $L=44.8827$ and a working grid of $N=6000$ interior points, so every wavefunction is a vector in $\mathbb R^{6000}$ with spacing $h=2L/(N+1)\approx0.01496$ (\cref{eq:linear-algebra-grid}). Eigenvectors are normalized by $\sum\psi^2\,\dd x=1$, the grid form of $\norm{\psi}=1$ (step~9). The Hamiltonian matrix is real symmetric and tridiagonal (step~4: diagonal $2/\dd x^2+V$, off-diagonal $-1/\dd x^2$); Chapters~\ref{ch:eigen} and~\ref{ch:finite-differences} take it from there.
 
-\paragraph{Vector identities.} The no-leakage argument, Eq.~(3), $\tilde t_n-E_n[\mathrm{fit}]=t_n-(E_n[\mathrm{fit}]-\Delta_n)$, is an identity between vectors: subtracting the fixed vector $\Delta$ from the targets is the same as adding it to the prediction. Eq.~(5), $\delta E_n=-c^\top T^{(n)}c$, is a quadratic form, one $M\times M$ matrix $T^{(n)}$ per level. The sum rule of Sec.~V~A, $\sum_n\delta E_n=0$, says that the vector of second-order shifts is orthogonal to the all-ones vector $(1,\dots,1)$.
+\paragraph{Vector identities.} The no-leakage argument, Eq.~(3), $\tilde t_n-E_n[\mathrm{fit}]=t_n-(E_n[\mathrm{fit}]-\Delta_n)$, is an identity between vectors: adding the fixed vector $\Delta$ to the targets ($\tilde t=t+\Delta$, Sec.~II~B) is the same as subtracting it from the prediction and scoring against the raw zeros. Eq.~(5), $\delta E_n=-c^\top T^{(n)}c$, is a quadratic form, one $M\times M$ matrix $T^{(n)}$ per level. The sum rule of Sec.~V~A, $\sum_n\delta E_n=0$, says that the vector of second-order shifts is orthogonal to the all-ones vector $(1,\dots,1)$.
 
 \paragraph{Complex vectors and overlaps (Sec.~II~E).} In the non-Hermitian study the eigenvectors of $H+iA$ are complex, and they are ``matched to the unperturbed basis by overlap'': the overlap is the complex inner product \cref{eq:linear-algebra-cinner}, whose modulus is largest for the unperturbed state the perturbed one most resembles (Chapters~\ref{ch:eigen} and~\ref{ch:non-hermitian}). Notice the overloaded symbols: $A$ is the sensitivity matrix in Sec.~II~C but a non-Hermitian multiplication operator in Sec.~II~E; $N$ is the grid size in App.~A but the zero-counting function in Eq.~(1).
 
@@ -1168,7 +1161,7 @@ Here is where the tools of this chapter appear in the paper \cite{soniR1} (revis
 
 \textbf{Problem 17.} $G=\begin{pmatrix}\int1&\int x\\ \int x&\int x^2\end{pmatrix}=\begin{pmatrix}1&1/2\\1/2&1/3\end{pmatrix}$, $\bm b=(\int x^2,\int x^3)=(1/3,1/4)$. $\det G=1/3-1/4=1/12$, so $G^{-1}=12\begin{pmatrix}1/3&-1/2\\-1/2&1\end{pmatrix}$ and $\bm a=12\,(1/9-1/8,\ -1/6+1/4)=12\,(-1/72,\ 1/12)=(-1/6,\ 1)$. The function $x-1/6$ is the straight line closest to $x^2$ in the norm $\sqrt{\int_0^1(\cdot)^2\dd x}$, since $x^2$ is not in the span of $\{1,x\}$ and the equations select its projection.
 
-\textbf{Problem 19.} (a) $300\times400$: underdetermined, null space of dimension at least $100$. (b) $400\times200$: overdetermined. (c) $800\times900$: underdetermined, null space at least $100$. (d) $200\times400$: underdetermined, null space at least $200$; this is what Table~III calls ``saturated'', and its in-sample entry $<10^{-3}$ is what one expects when a nearly full-rank model has more coefficients than training levels. (The fit is nonlinear, so this counting is a guide, not a proof.)
+\textbf{Problem 19.} (a) $300\times400$: underdetermined, null space of dimension at least $100$. (b) $400\times200$: overdetermined. (c) $800\times900$: underdetermined, null space at least $100$. (d) $200\times400$: underdetermined, null space at least $200$; this is what Table~III calls ``saturated'', and its in-sample entry $<10^{-3}$ is what one expects when a nearly full-rank model has more coefficients than training levels. (The fit is nonlinear, so this counting is a guide, not a proof.) Note that (a) and (c) are also underdetermined by shape, yet Table~I reports in-sample rms $0.120$ and $0.103$ for them. Their matrices are not effectively of full row rank, so counting columns gives only an upper bound on what can be fitted.
 
 \textbf{Problem 21.} If $\bm v=\bm 0$ both sides vanish. Otherwise, for complex $\lambda$, $0\le\norm{\bm u-\lambda\bm v}^2=\norm{\bm u}^2-\lambda\langle\bm u,\bm v\rangle-\lambda^*\langle\bm v,\bm u\rangle+\abs{\lambda}^2\norm{\bm v}^2$, using conjugate-linearity in the first slot and linearity in the second. Put $\lambda=\langle\bm v,\bm u\rangle/\norm{\bm v}^2$, so $\lambda^*=\langle\bm u,\bm v\rangle/\norm{\bm v}^2$. Then $\lambda\langle\bm u,\bm v\rangle=\lambda^*\langle\bm v,\bm u\rangle=\abs{\langle\bm u,\bm v\rangle}^2/\norm{\bm v}^2$ and $\abs{\lambda}^2\norm{\bm v}^2=\abs{\langle\bm u,\bm v\rangle}^2/\norm{\bm v}^2$. The inequality becomes $0\le\norm{\bm u}^2-\abs{\langle\bm u,\bm v\rangle}^2/\norm{\bm v}^2$; multiply by $\norm{\bm v}^2$ and take square roots.
 

@@ -2,78 +2,176 @@
  {
   "category": "RULE",
   "severity": "high",
-  "quote": "\\begin{problemlist}\n\\prob{1}{For $\\bm u=(2,-1,3,0)$",
-  "problem": "The chapter's figures (vectors, lines, map, grid, cosine, Amatrix) are included but the response supplied no FIGURES part, and the bible requires a script for each figure.",
-  "fix": "Add a FIGURES section with a script for each of the six figures (linear-algebra_vectors, _lines, _map, _grid, _cosine, _Amatrix)."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "Problem~21 asks you to prove it",
-  "problem": "Hard-coded problem numbers are fragile; also the answer section skips odd-numbered problems (e.g. 33 absent, 19 present but 3, 5 etc. mixed) and omits answers to several odd problems (e.g. 33, 35 do not exist but 21, 23 only). Problems 1-35: odd ones such as 33/35 do not exist, yet answers for 20? Check: odd problems 13,15,17,19,21,23,25,27,29,31 are answered, but problem 33 (if any) is not; answers to all \\prob{1} are required.",
-  "fix": "Verify all \\prob{1} problems and every odd-numbered problem have answers (e.g. Problem 12, 14, 18 fine; ensure problem numbers cited match actual order). Use \\ref labels instead of hard-coded numbers."
+  "quote": "The Gram-Schmidt procedure turns any set of independent vectors into an orthonormal basis by subtracting projections one at a time.",
+  "problem": "The chapter uses a `didyouknow` environment three times (sections on bases, determinants and Paper connection). It is not among the environments the bible defines, so it may not compile. The boxes are historical asides the bible's voice rule excludes (\"no filler, no motivational asides\"), they carry unsourced dates, and Gram-Schmidt is never taught in the chapter. One box sits at the top of the mandatory Paper connection section. \"Gram-Schmidt\" also uses a hyphen where paired names take an en dash.",
+  "fix": "Delete the three didyouknow boxes (including the DYK-BEGIN/END comments). If the Gram--Schmidt remark is wanted, put one plain sentence after the projection subsection, with an en dash."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Problem 2.} $\\norm{\\bm w}=\\sqrt{1+4+4}=3$",
-  "problem": "Answer labels misaligned with problem list numbering: the problem list's 5th item (prove orthogonality/Pythagoras) is labelled 'Problem 5' correctly, but \\prob{1} on A\\bm x is 6th, while problem 8 (prove (AB)^\\dagger) and 10, 12 have no answers although odd/\\prob{1} requirements apply to 12? (Problem 12 is difficulty 2, fine). Problem 9 answered ok. Problem 10 (\\prob{2}, even) fine.",
-  "fix": "Re-check numbering of answers against problem order, especially after the 14th item; ensure Problem 16 etc. are not required."
+  "quote": "subtracting the fixed vector $\\Delta$ from the targets is the same as adding it to the prediction",
+  "problem": "The sign is reversed relative to the paper's Eq. (3). There the targets are t̃_n = t_n + Δ_n (Δ is added), and the identity t̃_n − E_n = t_n − (E_n − Δ_n) says this equals subtracting Δ from the prediction.",
+  "fix": "Replace with: \"adding the fixed vector $\\Delta$ to the targets ($\\tilde t=t+\\Delta$) is the same as subtracting it from the prediction and scoring against the raw zeros\"."
  },
  {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "The null predicts $t_n=s_n$, so its error vector in mean spacings is exactly $-\\bm d$",
-  "problem": "Problem 25 answer says raw fluct rms matches 0.2631 but the paper's null is for the bias-corrected targets/smooth-potential levels; the equality with the smooth-zero null is stated in the paper only as numerical coincidence. Also the check used tolerance 2e-3 on a quoted '0.263'.",
-  "fix": "Say 'about 0.263, matching the paper's oracle null (the paper notes the potential null coincides numerically)'."
+  "quote": "This is the linear-algebra core of several statements in the paper.",
+  "problem": "The counting argument (more columns than rows gives an exact fit) is contradicted by the paper's own Table I. Fits with M larger than the number of training zeros still leave sizeable in-sample error: 300 zeros/M=400 gives 0.120, 400/M=600 gives 0.064, 800/M=900 gives 0.103. Exact fit of 500 zeros needs M≈900, not M>500. So the linearized matrix is far from full row rank in practice (the paper's coverage law Mπ/L > 2√E). The chapter never says this, and a student will be misled.",
+  "fix": "Add after this paragraph: \"Shape alone does not guarantee full row rank. In Table I the fits with more coefficients than levels (300/400, 400/600, 800/900) still have in-sample rms 0.120, 0.064 and 0.103, and 500 zeros are reproduced exactly only near M=900. The sensitivity matrix is effectively rank deficient until the cosines resolve the wavefunctions (the coverage law, Chapter~\\ref{ch:fitting}).\""
  },
  {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Remarkably, the answer does not depend on $L$.",
-  "problem": "Box sensitivity answer requires n<M for the diagonal entry; for n>=M columns lack the entry. The boxed formula does not state this; Problem 24 shape also affected.",
-  "fix": "State 'A_{nk} = (-1)^{n+1}/2 for k=n (only if n \\le M-1)'."
+  "quote": "is what one expects when a nearly full-rank model has more coefficients than training levels",
+  "problem": "Answer 19 presents near-zero in-sample error as the expected result of M exceeding the number of levels. Parts (a) and (c) of the same problem have M above the number of levels, yet Table I gives in-sample rms 0.120 and 0.103 for them. The answer hides that contradiction.",
+  "fix": "Add to the answer: \"Note that (a) and (c) are also underdetermined by shape, yet Table I reports in-sample rms 0.120 and 0.103. Their matrices are not effectively of full row rank, so counting columns gives only an upper bound on what can be fitted.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "explains why the paper can say both",
+  "problem": "The beat-the-null inequality is exact only for the uncentered cosine, whereas the paper reports Pearson correlation. With \"cos θ ≲ 0\" the conclusion is not exact: a slightly positive cosine allows a small-amplitude prediction to beat the null. The paper also has rows with positive correlation and rms above the null (+0.12 with 0.439; Chebyshev +0.18 with 0.291), so the geometry does not \"explain\" both statements.",
+  "fix": "Rewrite as: \"is consistent with the two statements appearing together: when the cosine is zero or negative no nonzero prediction can beat the null, and when it is small and positive only a prediction of very small amplitude ($\\norm{\\bm p}<2\\norm{\\bm d}\\cos\\theta$) can. This is a guide, since the paper's corr is the centered (Pearson) cosine.\""
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Chapter~\\ref{ch:eigen} shows that this single property forces their eigenvalues to be real",
-  "problem": "Eigenvalues are not yet defined in this chapter; used as forward reference with no explanation, as are 'self-adjoint' and 'Hilbert--Pólya'.",
-  "fix": "Add a one-sentence gloss of eigenvalue or defer the remark to a forward-pointer with clear label."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Recall from first-year physics that the cross product of the second and third rows",
-  "problem": "The identity det = r1·(r2×r3) is claimed 'term by term' without displaying the dot product lines; the 3D volume claim is not proved.",
-  "fix": "Write out r1·(r2×r3) explicitly and note volume = |a·(b×c)| from HRW."
+  "quote": "Now recall the geometry of the triple product from first-year physics \\cite{hrw}",
+  "problem": "The bible's reader knows only components, dot product and magnitude of 3D vectors. The cross product is not in the assumed list (the chapter adds it to its own prerequisites), and the scalar triple product is not first-year material. The component formula for r2×r3 and the fact that |r2×r3| is the parallelogram area are used without derivation.",
+  "fix": "Either define the cross product by components here and show in two lines that it is perpendicular to both factors with magnitude |a||b| sin θ, or drop the triple-product route and put the volume interpretation in the `beyond` box with the other determinant properties."
  },
  {
   "category": "JUMP",
   "severity": "low",
-  "quote": "By the discussion above (with $\\bm b=\\bm 0$, which is always consistent), its members are described by $n-r$ free parameters, so it is a subspace of dimension $n-r$.",
-  "problem": "Dimension of a null space is asserted from free-parameter count without showing independence of the n-r special solutions.",
-  "fix": "Note each free variable set to 1 (others 0) gives an independent solution and every solution is a combination."
+  "quote": "is the volume of the parallelepiped spanned by the rows.",
+  "problem": "The 2D discussion and the key idea (\"volume scaling factor of A\", \"columns are dependent\") are about columns, but the 3D argument gives the volume spanned by the rows. The link is det A^T = det A (property D7), which comes later and is not invoked.",
+  "fix": "Add: \"By property (D7) below, $\\det A^\\top=\\det A$, so this is also the volume spanned by the columns, the images of the unit cube's edges; hence $\\abs{\\det A}$ is the volume scaling factor.\""
  },
  {
-  "category": "JUMP",
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "So a constant correction $c_0$ shifts every level by the same $c_0$, to first order.",
+  "problem": "The next sentence calls this uniform shift \"the ``joint shift'' direction\" in quotation marks. The paper uses \"arbitrary joint shifts\" (Sec. VI) for arbitrary patterns of shifts across all levels at once, not for a uniform shift. The chapter then quotes the paper's phrase in the Paper connection, so the two uses collide.",
+  "fix": "Rename it \"the uniform-shift direction\" and remove the quotation marks. In the Paper connection, gloss the paper's phrase as \"arbitrary patterns of simultaneous level shifts\"."
+ },
+ {
+  "category": "ERROR",
   "severity": "low",
-  "quote": "When both vectors already have mean close to zero, as fluctuations do, the correlation and the $\\cos\\theta$ of \\cref{eq:linear-algebra-angle} are close",
-  "problem": "Claim about fluctuations having mean near zero is unsupported here.",
-  "fix": "Mark as an empirical remark or cite Chapter on counting zeros."
+  "quote": "Table~III notes that the odd/even splits have 200 training levels at scale 1",
+  "problem": "The quoted words \"so the rows with M≥200 are saturated\" come from the Sec. III paragraph \"Within-height splits\", not from Table III (whose caption is worded differently). The chapter also omits that the saturated M=200 rows have in-sample rms 0.176/0.171, far from zero, which matters for the full-rank argument.",
+  "fix": "Change to \"Sec.~III (Within-height splits) notes ...\" and add: \"the square case $M=200$ still leaves in-sample rms 0.176 and 0.171, so saturation by count does not by itself give an exact fit.\""
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The paper starts this index at $0$, not $1$; we return to this in a pitfall below.",
-  "problem": "Paper-level statements (e.g. 'App. A step 9', 'step 3') are cited as supporting normalization; step numbers: normalization is in step 9 per paper, fine, but 'Table~III ... saturated' quoting uses M=400 odd/even in-sample <10^{-3} which is correct. Minor: pitfall on trapezoid says 'removes most of it' without numbers.",
-  "fix": "Add the trapezoid value for N=9 (0.6667 exactly for x^2? check) or drop the claim."
+  "quote": "in which shuffled and phase-randomized targets are fitted as well as the true zeros",
+  "problem": "Three in-sample numbers follow but only two surrogate types are named. The third (0.138 ± 0.005) is the amplitude-adjusted (IAAFT) surrogate.",
+  "fix": "Write \"in which permuted, phase-randomized and amplitude-adjusted surrogate targets are fitted as well as the true zeros (in-sample rms ..., respectively)\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and $A(B+C)=AB+AC$ (from \\cref{eq:linear-algebra-matmul}, since each entry is a sum)",
+  "problem": "Matrix addition and multiplication of a matrix by a scalar are never defined, yet they are used here and in $(ad-bc)\\,I$ and the $1/(ad-bc)$ prefactor of the 2×2 inverse.",
+  "fix": "Add when matrices are introduced: \"Matrices of the same shape are added entry by entry, $(A+B)_{ij}=A_{ij}+B_{ij}$, and scaled entry by entry, $(sA)_{ij}=sA_{ij}$.\" Then show the one-line index proof of distributivity."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Using $\\sum_{j=1}^{n-1}j^2=\\frac{(n-1)n(2n-1)}6$",
+  "problem": "The sum-of-squares formula is used without proof or reference. The bible forbids unstated results, and this chapter may assume only Chapter 2.",
+  "fix": "Add a short justification, for example the telescoping sum of $(j+1)^3-j^3=3j^2+3j+1$, or state it as a standard calculus result and verify it for n=3 and n=4."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "If $\\bar p=\\frac1n\\sum_jp_j$ and $\\bm 1=(1,\\dots,1)$, then",
+  "problem": "The symbol $\\bar d$ appears in the correlation formula but is never defined. The case where a centered vector is zero (a constant prediction such as the null) is also not mentioned; corr is undefined there.",
+  "fix": "Write \"If $\\bar p=\\frac1n\\sum_jp_j$ and $\\bar d=\\frac1n\\sum_jd_j$ are the component means ...\" and add \"(defined when neither centered vector is zero)\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "choose the length $\\alpha$ of $\\bm p=\\alpha\\hat{\\bm p}$ to minimize the error",
+  "problem": "α is called a length, but the minimizer α = ‖d‖ cos θ is negative when cos θ < 0 (the direction flips).",
+  "fix": "Say \"choose the signed amplitude $\\alpha$ (negative $\\alpha$ reverses the direction)\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the eigenvectors of a non-Hermitian matrix are complex",
+  "problem": "\"Eigenvectors\" and \"non-Hermitian\" are used before either is defined. Eigenvectors are previewed and Hermitian is defined only three sections later.",
+  "fix": "Rephrase: \"and in the paper's Sec.~II~E certain special vectors of a complex matrix (eigenvectors, defined in Chapter~\\ref{ch:eigen}) have complex components\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Choose $c_0=s$ as the free variable.",
+  "problem": "By the chapter's own definition, free variables are the non-pivot columns after elimination, which here is c_3 (pivots fall in columns 0, 1, 2). Choosing c_0 without comment contradicts the procedure just taught.",
+  "fix": "Add: \"(Elimination would make $c_3$ the free variable; any one of the four can be used to parametrize the line of solutions, and $c_0$ is the most convenient here.)\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the same equations give the closest function in the span",
+  "problem": "The claim that the Gram equations give the best approximation when f is outside the span is asserted without derivation, yet Answer 17 relies on it.",
+  "fix": "Add one line: \"requiring the residual $f-\\sum_ka_k\\phi_k$ to be orthogonal to every $\\phi_j$, the closest-point condition of \\cref{eq:linear-algebra-closest}, gives exactly these equations\". Or mark it explicitly as proved in Chapter~\\ref{ch:least-squares}."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The determinant is the factor by which $A$ scales areas",
+  "problem": "This is shown only for the unit square. The extension to arbitrary regions is asserted.",
+  "fix": "Add: \"By linearity every small grid square is mapped to a copy of this parallelogram, so any region built from such squares has its area multiplied by the same factor.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "in which case $A$ is the zero matrix, which has no inverse",
+  "problem": "The statement is given without a reason.",
+  "fix": "Append: \"since $0\\cdot X=0\\ne I$ for every $X$\"."
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "are what a nearly full-rank, nearly saturated linear model would lead you to expect.",
-  "problem": "Links nonlinear operator fit's surrogate results to linear saturation argument as if explanatory; paper's explanation is heuristic.",
-  "fix": "Add 'heuristically' and repeat the paper's hedge."
+  "quote": "Every numerical calculation later in this book ultimately reduces to operations on matrices.",
+  "problem": "This is false as stated: root finding for the smooth zeros and evaluating the prime sum are not matrix operations.",
+  "fix": "Delete the sentence (along with the box), or soften to \"Many of the numerical calculations later in this book ...\"."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the one used with the bra--ket notation",
+  "problem": "The bible allows en dashes only for numeric ranges and paired names. \"bra--ket\" and \"matrix--vector product\" (subsection title) are neither.",
+  "fix": "Use hyphens: \"bra-ket\", \"matrix-vector product\"."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "\"How far is my prediction from the truth?\" becomes the length of a difference vector.",
+  "problem": "Straight double quotes in LaTeX typeset as two closing quotes. This occurs three times in the chapter introduction.",
+  "fix": "Use ``...'' for all three quoted questions."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the first column is again $1$, but the rest of the matrix is no longer sparse",
+  "problem": "This is a numerical claim about the Wu--Sprung sensitivity matrix from the chapter's own computation, but the CHECKS script has no assertion for it.",
+  "fix": "Add a check that builds A for the Wu--Sprung potential with `qmnt.wu_sprung_V`, `qmnt.grid` and `qmnt.fd_levels(..., return_vectors=True)`, then asserts column 0 equals 1 and that many off-diagonal entries exceed a threshold."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "first column 1, A[n-1, n] = +-0.5",
+  "problem": "With nlev = M = 6 the entry A[5, 6] does not exist; level 6 has only the 1 in column 0. The comment invites an index error.",
+  "fix": "Change the comment to \"# first column 1; A[n-1, n] = +-0.5 for n <= M-1\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "elimination (LU) inside LAPACK",
+  "problem": "\"LU\" and \"LAPACK\" are not defined in this chapter or in any assumed one.",
+  "fix": "Change the comment to \"# Gaussian elimination, done by a standard library routine\", or add one sentence defining LAPACK as the standard linear-algebra library behind numpy."
  }
 ]

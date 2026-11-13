@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.integrate import quad
+from scipy.linalg import eigh_tridiagonal
 import qmnt
 
 def close(a, b, tol):
@@ -87,9 +88,16 @@ assert cost(3) == 8 and sum(j * (j + 1) for j in range(1, 3)) == 8
 assert sum(j * (j + 1) for j in range(1, 50)) == cost(50)
 close(cost(6000), 7.2e10, 1e7)                     # Problem 27 / text
 
+# Sum of squares and sum of integers (cost derivation), incl. n=3 and n=4 checks
+for nq in [3, 4, 10, 57]:
+    assert sum(j * j for j in range(1, nq)) == (nq - 1) * nq * (2 * nq - 1) // 6
+    assert sum(range(1, nq)) == (nq - 1) * nq // 2
+assert 1 + 4 == 5 == 2 * 3 * 5 // 6 and 1 + 4 + 9 == 14 == 3 * 4 * 7 // 6
+
 # det = r1.(r2 x r3) instance
 Ar = np.array([[1., 4, -2], [3, 0.5, 2], [-1, 2, 5]])
 close(np.linalg.det(Ar), Ar[0] @ np.cross(Ar[1], Ar[2]), 1e-10)
+close(np.linalg.det(Ar), np.linalg.det(Ar.T), 1e-10)
 
 # Null-space special solutions instance (Problem 12 matrix)
 A12 = np.array([[1., 2, 3], [2, 4, 6], [1, 0, 1]])
@@ -162,6 +170,21 @@ L2 = 3.0; h2 = 2 * L2 / (N + 1); x2 = -L2 + h2 * np.arange(1, N + 1)
 psi2 = np.sin(np.outer(x2 + L2, n) * np.pi / (2 * L2)) / np.sqrt(L2)
 A2 = h2 * (psi2**2).T @ np.cos(np.outer(x2, k) * np.pi / L2)
 assert np.abs(A2 - Aan).max() < 1e-9
+
+# Figure claim: Wu--Sprung sensitivity matrix (1200-point grid, 30 x 30):
+# first column 1, and the rest of the matrix is no longer sparse
+Lw, Nw, nk = 44.883, 1200, 30
+hw = 2 * Lw / (Nw + 1); xw = -Lw + hw * np.arange(1, Nw + 1)
+Vw = np.array([float(qmnt.wu_sprung_V(abs(xi))) for xi in xw])
+dw = 2 / hw**2 + Vw; ew = -np.ones(Nw - 1) / hw**2
+Ew, vw = eigh_tridiagonal(dw, ew, select='i', select_range=(0, nk - 1))
+vw = vw / np.sqrt(hw * np.sum(vw**2, axis=0))
+Phiw = np.cos(np.outer(xw, np.arange(nk)) * np.pi / Lw)
+Aw = hw * (vw**2).T @ Phiw
+assert np.allclose(Aw[:, 0], 1, atol=1e-9)
+frac_ws = (np.abs(Aw[:, 1:]) > 1e-3).mean()
+frac_box = (nk - 1) / (nk * (nk - 1))
+assert frac_ws > 0.25 and frac_ws > 5 * frac_box
 
 # Sample: too many / too few coefficients in the box
 Ab4 = np.array([[1, 0.5, 0, 0], [1, 0, -0.5, 0], [1, 0, 0, 0.5]])
