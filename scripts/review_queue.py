@@ -35,11 +35,30 @@ for slug in QUEUE:
         open(LOG, "a").write(f"| {slug} | not reviewed: credit exhausted (spent {s0:.2f}) | | | | |\n")
         break
     print(f"== {slug}: critique", flush=True)
-    print(run_batch("critique", slug).strip().splitlines()[-2], flush=True)
-    iss = json.load(open(os.path.join(ROOT, "work", f"{slug}.critique.json")))
+    mt = os.path.getmtime(os.path.join(ROOT, "work", f"{slug}.critique.json")) if os.path.exists(os.path.join(ROOT, "work", f"{slug}.critique.json")) else 0
+    try:
+        out = run_batch("critique", slug)
+    except Exception as e:
+        out = f"API ERROR {e}"
+    print(out.strip()[-400:], flush=True)
+    cj = os.path.join(ROOT, "work", f"{slug}.critique.json")
+    if "FAILED" in out or "API ERROR" in out or not os.path.exists(cj) or os.path.getmtime(cj) <= mt:
+        print(f"API STOPPED at {slug}", flush=True)
+        open(LOG, "a").write(f"| {slug} | API refused (credit exhausted at ledger {llm.spent():.2f}); handed to in-session review | | | | |\n")
+        sh('git add -A && git -c user.name="Claude" -c user.email="noreply@anthropic.com" commit -q -m "Review log: API credit exhausted\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01SuMwdyJD2Vh7EGuCvcG9hm" && git push -q origin HEAD:main')
+        break
+    iss = json.load(open(cj))
     sev = [sum(1 for i in iss if i.get("severity") == k) for k in ("high", "medium", "low")]
     print(f"== {slug}: revise ({len(iss)} issues)", flush=True)
-    out = run_batch("revise", slug)
+    try:
+        out = run_batch("revise", slug)
+    except Exception as e:
+        out = f"API ERROR {e}"
+    if f"revise__{slug} end_turn" not in out and f"revise__{slug} max_tokens" not in out:
+        print(f"API STOPPED during revision of {slug}: {out[-300:]}", flush=True)
+        open(LOG, "a").write(f"| {slug} | {len(iss)} issues found by Fable; revision refused by API (credit exhausted); handed to in-session revision | | | | |\n")
+        sh('git add -A && git -c user.name="Claude" -c user.email="noreply@anthropic.com" commit -q -m "Review log: API credit exhausted during revision\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01SuMwdyJD2Vh7EGuCvcG9hm" && git push -q origin HEAD:main')
+        break
     line = [l for l in out.splitlines() if l.startswith(f"revise__{slug}")]
     pat = line[0].split()[-2:] if line else ["?", "?"]
     chk = sh(f"python3 scripts/run_checks.py {slug}", timeout=1800).strip().splitlines()[-1]
