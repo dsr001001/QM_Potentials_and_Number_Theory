@@ -2,85 +2,211 @@
  {
   "category": "ERROR",
   "severity": "high",
-  "quote": "$10^3$ & 996.681 & 0.997 & $-3.319$\\\\",
-  "problem": "The checks failed at line 177 and 179: psi(10^3) is not 996.681 to 1e-3 (it is about 996.68 but check tolerance fails for at least one row, probably 10^4 or 10^3). The table values must match the computed values.",
-  "fix": "Recompute psi(x) at 10,100,1000,10000 and correct the table entries and the in-text values (996.68, 10013.39, differences) to the exact computed digits."
+  "quote": "oscillate more times per mean spacing of the zeros and their combined omitted contribution matters more",
+  "problem": "Backwards. The mean spacing of the zeros is 2π/log(t/2π), which shrinks as t grows, so a wave of fixed frequency log q completes log q/log(t/2π) cycles per mean spacing: fewer at larger t, not more.",
+  "fix": "Replace with: 'at larger t the mean spacing 2π/log(t/2π) shrinks, so a wave sin(t log q) completes only log q/log(t/2π) cycles per spacing; more prime powers (roughly those with q below t/2π) then vary slowly on the scale of one spacing and shift individual zeros coherently, so a fixed prime set leaves out more of what matters (heuristic).'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "high",
+  "quote": "In every case computed directly (including all of \\cref{tab:primes-pi}), $\\pi(x)<\\mathrm{Li}(x)$.",
+  "problem": "False for the chapter's own Li (integral from 2). Li(2)=0<π(2)=1, and π(x)>Li(x) at x=2,3,5,7 (e.g. Li(7)≈3.71<4). So 'No sign change has been found' is also false as written. The classical statement and Littlewood's theorem concern li(x)=∫_0^x.",
+  "fix": "State the comparison for li(x)=Li(x)+1.045: 'In every case computed directly, π(x)<li(x) for x≥2', and phrase Littlewood's theorem and the first-sign-change bound for π(x)−li(x). Alternatively restrict the Li statement to x≥11."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "$10^4$ & 10013.391 & 1.001 & $+13.391$\\\\",
-  "problem": "Table value fails the machine check (line 177/179); the quoted psi(10^4) and psi-x are not verified.",
-  "fix": "Replace with the value computed by the check script and rerun checks."
+  "quote": "Both approximations are asymptotically correct, but $\\mathrm{Li}$ is far better at every height we can check.",
+  "problem": "Contradicted by Table tab:primes-pi. At x=10 the errors are +0.34 (x/log x) vs +1.12 (Li); at x=100 they are −3.3 vs +4.1. Li is the worse approximation at both.",
+  "fix": "Replace with: 'Both are asymptotically correct; from x=10^3 upward in our table Li is far better (at x=10 and 100 it is not).'"
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "$10^3$ & 168 & 144.765 & 176.564 & 1.161 & $-8.56$ & 5.952\\\\",
-  "problem": "Problem 19 answers assert pi(x)log x equals 115.13, 1160.50, 11319.46; check at line 196 failed, so at least one of these quoted numbers is wrong (likely 168 log 1000 = 1160.5 or 1229 log 10^4 = 11319.5).",
-  "fix": "Recompute 25 log 100, 168 log 1000, 1229 log 10^4 and correct the Answer 19 values (e.g. 115.13, 1160.49, 11319.5 as computed)."
+  "quote": "is within a fraction of a percent of 1 over most of the range",
+  "problem": "π(x)/Li(x) is 0.78 at x=10, 0.86 at 100, 0.951 at 10^3 and 0.987 at 10^4. It is within 1% only above a few times 10^4, a minority of the logarithmic axis shown.",
+  "fix": "Write: 'π(x)/Li(x) is within 2% of 1 from x=10^4 on and within 0.2% at 10^6, while π(x)/(x/log x) is still about 1.08 at x=10^6.'"
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "These contain $3$, $9$, $18$ and $75$ terms. On the principal holdout RE5 (zeros 401--500, null $0.263$), they give rms $0.198$, $0.116$, $0.074$ and $0.043$",
-  "problem": "The 25-prime column in the paper is 25 primes; fine, but the text says 'Table V, first row' while budgets listed include {2} as 3 terms; consistent. However the check script's final assertion line with np.array([...])[0]*0 is a vacuous check, and the checks failed, so claims are unverified.",
-  "fix": "Remove the vacuous assertion and fix failing checks."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Around 1850 Chebyshev proved that the ratio $\\pi(x)/(x/\\log x)$ is trapped, for all large $x$, between two constants close to 1 (about $0.921$ and $1.106$)",
-  "problem": "Chebyshev's bounds hold for large x only asymptotically (liminf/limsup within these); also the constant 0.921 coincides with pi(10)/(10/log10), which is confusing. Lower constant is for large x, with 6A/5 upper.",
-  "fix": "State: for all sufficiently large x, ratio lies between about 0.92 and 1.11."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Every prime $p$ with $n<p\\le2n$ divides $\\binom{2n}{n}$.} Such a $p$ is one of the factors",
-  "problem": "Step 2 claims product of distinct primes divides binom without justifying that distinct primes dividing a number have product dividing it (needs uniqueness/Euclid); only loosely stated.",
-  "fix": "Say: by unique factorization of binom(2n,n), each distinct prime appears at least once, so the product of these distinct primes divides it."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Step 4 relied on intuition for the slowest component; Chapter~\\ref{ch:fourier-series} makes it precise using orthogonality.",
-  "problem": "Step 4 of the RE2 sample asserts minimal period without proof; a sample should not rest on intuition.",
-  "fix": "Argue: a common period P requires P log2 =2πk for the m=1 term's frequency components to be unchanged; or state RE2 is 'a period' and drop the minimality claim."
- },
- {
-  "category": "JUMP",
   "severity": "low",
-  "quote": "By Euclid's lemma $p$ divides $\\binom{2n}{n}$ or $(n!)^2$.",
-  "problem": "Euclid's lemma was taken on trust but is used here for a product of two integers; fine, yet (n!)^2 step needs repeated version, which is stated later; ordering acceptable. Also 'Problem~21' and 'Problem~8' cross references rely on numbering not shown by labels.",
-  "fix": "Use \\ref-free wording or keep problem numbers consistent; verify they match."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "The first sign change is known to occur only at astronomically large $x$.",
-  "problem": "Vague; also the earlier claim that in every computed case pi<Li is stated without source.",
-  "fix": "Say: the first sign change is known to occur below a huge bound (about 10^316 by Skewes-type results) and no explicit crossing has been found by direct computation."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "This weight ordering is consistent with what C2 found, but the paper does not offer this interpretation; treat it as our heuristic observation.",
-  "problem": "Weight of 16 is 1/(4*4)=0.0625 but 1/q-type values: 32 and 64 and 81 weights; the claim 'consistent' is shaky as primes 131-211 selected only six of sixteen.",
-  "fix": "Add that only six of the sixteen primes in [131,211] were selected, so the ordering does not fully explain the list."
+  "quote": "(close to the staircase). At $x=100$ the three values are $25$, $21.7$ and $29.1$.",
+  "problem": "The caption calls Li 'close to the staircase', but the values it quotes show Li is farther from π(100)=25 (off by 4.1) than x/log x is (off by 3.3). Over 2≤x≤100, Li is not visibly the closer curve.",
+  "fix": "Change to '(above the staircase over most of this range)' and add that Li's advantage only shows at larger x (see fig:primes-ratio)."
  },
  {
   "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{didyouknow}{Euclid's Endless Primes}",
+  "problem": "The environment `didyouknow` is not among the environments the bible defines (chapterintro, prerequisites, keyideas, sample, checkpoint, pitfall, beyond, pycode, problemlist). It is used three times and will not compile unless added to the preamble. Its facts (dates, digit count) are also not covered by CHECKS.",
+  "fix": "Remove the three didyouknow boxes or fold their content into running text or a permitted environment; otherwise have the coordinator define the environment in the preamble."
+ },
+ {
+  "category": "ERROR",
   "severity": "low",
-  "quote": "Chapter~\\ref{ch:sparse-frequency} and \\ref{ch:paper-arithmetic} return to this.",
-  "problem": "Prerequisites assume chapter ch:complex 'only in the Paper connection' yet the log-p section (not the paper section) uses it.",
-  "fix": "Adjust prerequisites to say Chapter complex is used in the log p section as well."
+  "quote": "Red: the 18 terms of the six-prime explicit formula ($p\\le13$, $m\\le3$).",
+  "problem": "The figure shows only q≤200, but three of the 18 terms (7^3=343, 11^3=1331, 13^3=2197) exceed 200. At most 15 red lines can appear. The same applies to the 'blue' 25-prime terms.",
+  "fix": "Say 'Red: the 15 of the 18 six-prime terms with q≤200 (343, 1331 and 2197 lie off the plot)', or extend the frequency axis to log 2197≈7.7."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "when $\\abs{\\omega-\\log q}<\\pi/T$. There are $466$ prime powers up to $3000$",
+  "problem": "T is never defined in this chapter. It is the length of the training window in t, and the bible notes T is overloaded. 'Half the Fourier resolution' and '2π/T' are used with no definition or number, so the student cannot judge the crowding argument.",
+  "fix": "Add: 'Here T is the length in t of the training window (about 1170 for zeros 1–800, so π/T≈0.003 and the full window 2π/T≈0.005); Chapter~\\ref{ch:fourier-transform} derives the resolution 2π/T.' Compute these values in CHECKS."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "This is one reason the paper does not rest the alignment claim on matches alone",
+  "problem": "This attributes a motive to the paper that it does not state. The paper's stated reason for the surrogate check is 'Because the frequencies are the output of a search'; it does not mention crowding of log q.",
+  "fix": "Rephrase: 'The paper gives its own reason for the surrogate check (the frequencies are the output of a search). The crowding of log q, our observation, is a further reason why matches alone would be weak evidence.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "$\\psi(x)-x$ fluctuates on the scale $\\sqrt x$; the von Mangoldt explicit formula writes it as a sum over the zeta zeros.",
+  "problem": "Stated as fact with no status. That ψ(x)−x is of size about √x is a numerical observation for x≤10^5. It is known only conditionally (RH gives O(√x log²x)); unconditionally only the far weaker de la Vallée Poussin bound is proved. The same unlabelled claim is in the text before tab:primes-psi and in the fig:primes-psi caption.",
+  "fix": "Label it: 'Numerically (x≤10^5), ψ(x)−x fluctuates on the scale √x; a bound O(√x log²x) for all x is equivalent to the Riemann hypothesis (open).' Add the same qualifier in the caption and running text."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "and the argument used nothing but factorization",
+  "problem": "The Chebyshev theorem is labelled 'Theorem (proved)', yet steps 1 and 2 use Euclid's lemma, which the chapter took on trust in a beyond box. The status should be stated consistently.",
+  "fix": "Write 'proved, given Euclid's lemma (taken on trust in \\cref{sec:primes-fta})' in the theorem header and here."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Table~V's columns are the sets $P=\\{2\\}$; ``3 primes'' $=\\{2,3,5\\}$",
+  "problem": "The paper never lists the prime sets for '3 primes', '6 primes', '25 primes'. That they are the first k primes is an inference, and CHECKS verifies it only for 6 primes.",
+  "fix": "Add 'which we take to be the first k primes; the paper does not list them, but this choice reproduces its numbers (checked with qmnt)'. Add qmnt checks for the {2}, 3-prime and 25-prime entries of the 401–500 row."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "The cutoff is natural because C2 searches $0.05<\\omega<8$",
+  "problem": "The paper gives no reason for the cutoff q≤3000; presenting e^8≈2981 as the reason reads as a statement about the paper.",
+  "fix": "Write 'A plausible reason for the cutoff (ours; the paper does not give one) is that C2 searches 0.05<ω<8 and e^8≈2981.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "Step 3 also tells us \\emph{how fast} the ratio approaches 1: the correction is of relative size $1/\\log x$",
+  "problem": "Step 3 only gives an upper bound of about 4/log x, not that the correction is 1/log x. The text then compares this Li-vs-x/log x correction with the excess of π(x) over x/log x, mixing two different quantities without saying π≈Li.",
+  "fix": "Say: 'Step 3 bounds the relative correction by about 4/log x; the asymptotic series below shows it is in fact ≈1/log x. Since π(x)≈Li(x), π(x) exceeds x/log x by about the same fraction: 1/log x≈0.072 at 10^6, against the observed 8%.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The left side becomes a product of $r-1$ primes, the right side a product of $s-1$ primes",
+  "problem": "The induction step does not treat s=1 with r≥2. After cancelling, the right side is the empty product 1, which is not 'a product of primes', so the induction hypothesis does not apply.",
+  "fix": "Add before cancelling: 'If s=1 then q_1=p_1p_2\\cdots p_r with r≥2 would make the prime q_1 composite, so s≥2 and both sides remain nonempty products after cancelling.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "We show by induction on $r$ that the two lists are the same up to order.",
+  "problem": "Proof by induction is not in the reader's stated background and is used here without explanation, whereas well-ordering was explained.",
+  "fix": "Add one sentence: 'Induction means: prove the statement for r=1, then show that its truth for r−1 forces its truth for r; it then holds for every r.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "(because $p$ is the \\emph{smallest} prime divisor of $n$, so every prime factor of $c$ is at least $p$)",
+  "problem": "Lemma 2 only supplies some prime divisor p≤√n, not the smallest one; the parenthesis silently changes which p is meant.",
+  "fix": "Write 'let p be the smallest prime divisor of n; by Lemma 2, p≤√n≤√x. Then c=n/p≥√n≥p, so n≥p^2 ...'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "\\textbf{Corollary (proved): $\\pi(x)=\\order(x/\\log x)$.}",
+  "problem": "The derived bound is √x+(8 log 2)x/log x. The step from this to O(x/log x), which needs √x=O(x/log x), is not stated.",
+  "fix": "Add: 'Since √x≤x/log x for x>1 (because log x≤√x), the right side is at most (1+8\\log2)\\,x/\\log x, which is the O-statement.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "So for any $s$ for which the sums converge (Chapter~\\ref{ch:series}; $\\Re s>1$ suffices),",
+  "problem": "Regrouping a double sum over (p,m) into a single sum over n requires absolute convergence, not mere convergence.",
+  "fix": "Write 'for any s for which the sums converge absolutely (so that terms may be regrouped, Chapter~\\ref{ch:series}); Re s>1 suffices because |p^{-ms}/m|≤p^{-m\\,\\Re s}'."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The first term tends to zero because $\\log x$ grows more slowly than any positive power of $x$",
-  "problem": "Fine, but Step 2 uses '(assume $x>4$...)' and the bound on interval length for [sqrt x, x] is crude; no figure for Chebyshev. Minor.",
-  "fix": "No change needed beyond noting the bound is crude."
+  "quote": "On the line $s=\\tfrac12+it$ the term $n^{-s}=n^{-1/2}e^{-it\\log n}$ is a wave of frequency $\\log n$",
+  "problem": "The identity just above was justified only for Re s>1. The text moves to the critical line with no warning here that the sum does not converge there; the caveat comes only later.",
+  "fix": "Add: '(Each term makes sense on this line, but the sum itself no longer converges there; see \\cref{sec:primes-paper} and Chapter~\\ref{ch:explicit-formula}.)'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "contributes a wave $x^{1/2}e^{it_n\\log x}$ in the variable $\\log x$, of size $\\sqrt x$",
+  "problem": "The term is x^ρ/ρ, so its size is √x/|ρ_n|≈√x/t_n, not √x. The statement also assumes the zero lies on the critical line without saying so.",
+  "fix": "Write 'contributes (for a zero on the critical line) a wave x^{1/2}e^{it_n\\log x}/\\rho_n in the variable log x, of size \\sqrt x/\\abs{\\rho_n}'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\log 5040 = 4\\log2+2\\log3+\\log5+\\log7 = 2.7726+2.1972+1.6094+1.9459 = 8.5252 .",
+  "problem": "The four displayed numbers add to 8.5251, not 8.5252 (the latter is the true log 5040 rounded). The same mismatch occurs in the ψ(30) sample: the ten displayed terms add to 28.4764, not 28.4765.",
+  "fix": "Add '(the last digit differs from the sum of the rounded terms because of rounding)', or carry five decimals in the terms."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Do not stop trial division at $\\sqrt n$ \\emph{rounded down to a prime you like}",
+  "problem": "The phrase is obscure; the student cannot tell which mistake is being warned against.",
+  "fix": "Replace with: 'Do not stop early: every prime up to and including the largest prime ≤√n must be tried (for 10403 the factor appears only at 101).'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(that power must be divisible, and no larger power of $p$ is needed)",
+  "problem": "Ungrammatical and incomplete. It should say the lcm must be divisible by p^m because p^m is one of 1..N, and that no number ≤N contains a higher power of p.",
+  "fix": "Replace with: '(p^m is itself one of the numbers 1,…,N, so the lcm must be divisible by it; and no number ≤N is divisible by p^{m+1}>N, so no higher power is needed)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "It omits $32=2^5$, $64=2^6$ and $81=3^4$",
+  "problem": "'It' grammatically refers to Eq. (4), the subject of the previous clause, but the intended subject is C2's list.",
+  "fix": "Write 'C2's list omits 32=2^5, 64=2^6 and 81=3^4'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Chebyshev's \\emph{theta function} is",
+  "problem": "The symbol θ(x) introduced here collides with the Riemann–Siegel theta function θ(T) that the bible fixes for Chapter counting-zeros. No warning is given, unlike the careful pitfall for π(x).",
+  "fix": "Add a sentence or pitfall: 'This θ is unrelated to the Riemann–Siegel theta function θ(T) of Chapter~\\ref{ch:counting-zeros}; context distinguishes them.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "has $2n+1$ terms, of which $\\binom{2n}{n}$ is the largest",
+  "problem": "That the central binomial coefficient is the largest is asserted without justification.",
+  "fix": "Add: 'since \\binom{2n}{k+1}/\\binom{2n}{k}=(2n-k)/(k+1) is ≥1 exactly when k<n, the terms rise up to k=n and fall afterwards'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "so $p_1\\mid q_1-p_1$, hence $p_1\\mid q_1$, impossible for distinct primes",
+  "problem": "The case q_1−p_1=1 (which has no prime factorization) is not treated. The appeal to unique factorization of m to place p_1 among the prime factors of q_1−p_1 is compressed.",
+  "fix": "Insert: 'By uniqueness for m<n, p_1 must be among the primes of (q_1−p_1)q_2\\cdots q_s; it is not a q_j, so q_1−p_1≥2 and p_1 is one of its prime factors (if q_1−p_1=1, m=q_2\\cdots q_s would not contain p_1, already a contradiction).'"
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "with 41{,}024{,}320 decimal digits",
+  "problem": "A number stated in the chapter that CHECKS does not recompute; the bible requires every quoted number to be checked or sourced. The dates and 'three million' in the other boxes are likewise unchecked.",
+  "fix": "Add to CHECKS: assert floor(136279841*log10(2))+1 == 41024320. Or remove the box."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the scale tied to the critical line $\\Re s=\\tfrac12$ of the zeta function",
+  "problem": "The critical line and the zeta function as a function of complex s are not defined until Chapter zeta. Here they appear in a figure caption outside any beyond box, with no forward pointer.",
+  "fix": "Append '(defined in Chapter~\\ref{ch:zeta}; for now, read this as a preview)', or drop the clause."
  }
 ]

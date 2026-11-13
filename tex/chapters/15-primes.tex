@@ -20,9 +20,7 @@ Throughout this chapter, as everywhere in this book and in the paper, $\log$ mea
 %=====================================================================
 \section{What is a prime?}\label{sec:primes-definition}
 % DYK-BEGIN
-\begin{didyouknow}{Euclid's Endless Primes}
-Around 300 BC, Euclid's \emph{Elements} (Book IX, Proposition 20) proved that the primes outnumber any given finite collection. Multiply all the primes on your list and add 1. The result has a prime factor that is not on your list. The proof remains one of the most admired in mathematics, and it is short enough to check in a minute.
-\end{didyouknow}
+
 % DYK-END
 
 \subsection{Divisibility}
@@ -92,7 +90,7 @@ To test whether $n=10403$ is prime by trial division, what is the largest prime 
 \checkanswer{The largest prime not exceeding $101.99$, namely $101$. (In fact $10403=101\cdot103$, so you would find a factor only at the very last trial.)}
 
 \begin{pitfall}
-Do not stop trial division at $\sqrt n$ \emph{rounded down to a prime you like}; stop at the largest prime $\le\sqrt n$. And do not include $1$ among the primes: $1$ divides everything, so ``$1\mid n$'' tells you nothing.
+Do not stop early. You must try every prime up to and including the largest prime $\le\sqrt n$. For $10403$ the factor appears only at $101$. And do not include $1$ among the primes: $1$ divides everything, so ``$1\mid n$'' tells you nothing.
 \end{pitfall}
 
 \begin{keyideas}
@@ -147,10 +145,10 @@ Applying Euclid's lemma repeatedly gives the version we need: \emph{if a prime $
 p_1p_2\cdots p_r = q_1q_2\cdots q_s
 \label{eq:primes-twofact}
 \end{equation}
-with all $p_i$ and $q_j$ prime, repetitions allowed. We show by induction on $r$ that the two lists are the same up to order.
+with all $p_i$ and $q_j$ prime, repetitions allowed. We show by induction on $r$ that the two lists are the same up to order. (\emph{Induction} works in two stages. First prove the statement for $r=1$. Then show that its truth for $r-1$ forces its truth for $r$. It then holds for $r=2,3,4,\dots$ in turn, hence for every $r$.)
 \begin{itemize}
 \item \emph{Case $r=1$.} The left side is the prime $p_1$. If $s\ge2$, then $q_1$ would be a divisor of $p_1$ with $1<q_1<p_1$ (since $q_1\ge2$ and the remaining factors multiply to at least 2), which is impossible for a prime. So $s=1$ and $q_1=p_1$.
-\item \emph{Step.} Assume the statement for products of $r-1$ primes. In \cref{eq:primes-twofact}, $p_1$ divides the left side, hence the right side. By the repeated Euclid's lemma, $p_1\mid q_j$ for some $j$. The only positive divisors of the prime $q_j$ are $1$ and $q_j$, and $p_1\neq1$, so $p_1=q_j$. Cancel this common factor from both sides of \cref{eq:primes-twofact}. The left side becomes a product of $r-1$ primes, the right side a product of $s-1$ primes, and by the induction hypothesis these two lists agree up to order. Restoring $p_1=q_j$ to both lists, the original lists agree. $\blacksquare$
+\item \emph{Step.} Assume the statement for products of $r-1$ primes. In \cref{eq:primes-twofact}, $p_1$ divides the left side, hence the right side. By the repeated Euclid's lemma, $p_1\mid q_j$ for some $j$. The only positive divisors of the prime $q_j$ are $1$ and $q_j$, and $p_1\neq1$, so $p_1=q_j$. Suppose $s=1$. Then $q_1=p_1p_2\cdots p_r$ with $r\ge2$, so $p_1$ would be a divisor of the prime $q_1$ with $1<p_1<q_1$ (the remaining factors multiply to at least 2). That is impossible, so $s\ge2$, and after cancelling both sides are still nonempty products of primes. Cancel this common factor from both sides of \cref{eq:primes-twofact}. The left side becomes a product of $r-1$ primes, the right side a product of $s-1$ primes, and by the induction hypothesis these two lists agree up to order. Restoring $p_1=q_j$ to both lists, the original lists agree. $\blacksquare$
 \end{itemize}
 
 \subsection{Uniqueness is not automatic}
@@ -178,6 +176,7 @@ Find the canonical factorization of $5040$ and use it to write $\log 5040$ as a 
 \[
 \log 5040 = 4\log2+2\log3+\log5+\log7 = 2.7726+2.1972+1.6094+1.9459 = 8.5252 .
 \]
+(The four rounded terms add to $8.5251$. The value $8.5252$ is $\log5040$ correctly rounded; the last digit differs only because of rounding.)
 \[
 \boxed{5040=2^4\cdot3^2\cdot5\cdot7,\qquad \log5040=4\log2+2\log3+\log5+\log7\approx 8.525.}
 \]
@@ -285,7 +284,7 @@ Trial division tests one number at a time. To list \emph{all} primes up to some 
 \item If $p^2\le x$ for the next unused unmarked $p$, return to step 2. Otherwise stop: the numbers still unmarked are exactly the primes up to $x$.
 \end{enumerate}
 
-\emph{Why it works.} A number $n\le x$ is marked only when it is a multiple of some smaller number $p$ found in step 2, so marked numbers are composite. Conversely, if $n\le x$ is composite, Lemma~2 gives it a prime divisor $p\le\sqrt n\le\sqrt x$, and $n=p\cdot c$ with $c\ge p$ (because $p$ is the \emph{smallest} prime divisor of $n$, so every prime factor of $c$ is at least $p$). Hence $n\ge p^2$ and $n$ lies on the list $p^2,p^2+p,\dots$, so it is marked when $p$ is processed. Two consequences: we may start crossing out at $p^2$ (smaller multiples $kp$ with $k<p$ have a smaller prime factor and were already marked), and we may stop once $p^2>x$.
+\emph{Why it works.} A number $n\le x$ is marked only when it is a multiple of some smaller number $p$ found in step 2, so marked numbers are composite. Conversely, let $n\le x$ be composite and let $p$ be its \emph{smallest} prime divisor. By Lemma~2, $n$ has some prime divisor $\le\sqrt n$, so the smallest one satisfies $p\le\sqrt n\le\sqrt x$. Write $n=p\cdot c$. Then $c=n/p\ge n/\sqrt n=\sqrt n\ge p$. Hence $n=pc\ge p^2$ and $n$ lies on the list $p^2,p^2+p,\dots$, so it is marked when $p$ is processed. Two consequences: we may start crossing out at $p^2$ (smaller multiples $kp$ with $k<p$ have a smaller prime factor and were already marked), and we may stop once $p^2>x$.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/primes_sieve.pdf}
@@ -379,7 +378,7 @@ $10^6$ & 78498 & 72382.414 & 78626.504 & 1.084 & $-128.50$ & 12.739\\
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/primes_pi_small.pdf}
-\caption{The prime counting function $\pi(x)$ (staircase) for $2\le x\le100$, with the two smooth approximations of the prime number theorem: $x/\log x$ (below the staircase over most of this range) and $\mathrm{Li}(x)=\int_2^x\dd t/\log t$ (close to the staircase). At $x=100$ the three values are $25$, $21.7$ and $29.1$.}
+\caption{The prime counting function $\pi(x)$ (staircase) for $2\le x\le100$, with the two smooth approximations of the prime number theorem: $x/\log x$ (below the staircase over most of this range) and $\mathrm{Li}(x)=\int_2^x\dd t/\log t$ (above the staircase over most of this range). At such small $x$, $\mathrm{Li}$ is not yet the better approximation; its advantage shows only at larger $x$ (see \cref{fig:primes-ratio}). At $x=100$ the three values are $25$, $21.7$ and $29.1$.}
 \label{fig:primes-pi-small}
 \end{figure}
 
@@ -461,7 +460,7 @@ Many tables use instead $\mathrm{li}(x)=\int_0^x\dd t/\log t$, where the singula
 \]
 (The first term tends to zero because $\log x$ grows more slowly than any positive power of $x$, Chapter~\ref{ch:asymptotics}.) Also $(2/\log2)/(x/\log x)\to0$. Dividing \cref{eq:primes-Liparts} by $x/\log x$ therefore gives $\mathrm{Li}(x)/(x/\log x)\to1$. $\blacksquare$
 
-Step 3 also tells us \emph{how fast} the ratio approaches 1: the correction is of relative size $1/\log x$, which shrinks painfully slowly. At $x=10^6$, $1/\log x\approx0.072$, matching the $8\%$ excess of $\pi(x)$ over $x/\log x$ in \cref{tab:primes-pi}. Repeating the integration by parts (Problem~25) gives the \emph{asymptotic series}
+Step 3 also tells us something about \emph{how fast} the ratio approaches 1. It bounds the relative correction by $4/\log x$ plus a term that is even smaller. The asymptotic series below shows that the correction is in fact about $1/\log x$, which shrinks painfully slowly. Since $\pi(x)\approx\mathrm{Li}(x)$, $\pi(x)$ exceeds $x/\log x$ by about the same fraction. At $x=10^6$, $1/\log x\approx0.072$, against the observed excess of about $8\%$ (ratio $1.084$ in \cref{tab:primes-pi}). Repeating the integration by parts (Problem~25) gives the \emph{asymptotic series}
 \[
 \mathrm{Li}(x)=\frac{x}{\log x}+\frac{x}{\log^2x}+\frac{2x}{\log^3x}+\dots,
 \]
@@ -469,7 +468,7 @@ whose first terms improve the approximation, although (like Stirling's series in
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/primes_ratio.pdf}
-\caption{Ratios $\pi(x)/(x/\log x)$ and $\pi(x)/\mathrm{Li}(x)$ for $10\le x\le10^6$ (logarithmic $x$-axis). Both tend to 1, as the prime number theorem requires, but $\pi(x)/\mathrm{Li}(x)$ is within a fraction of a percent of 1 over most of the range while $\pi(x)/(x/\log x)$ is still about $1.08$ at $x=10^6$.}
+\caption{Ratios $\pi(x)/(x/\log x)$ and $\pi(x)/\mathrm{Li}(x)$ for $10\le x\le10^6$ (logarithmic $x$-axis). Both tend to 1, as the prime number theorem requires, but $\pi(x)/\mathrm{Li}(x)$ is within $2\%$ of 1 from $x=10^4$ on and within $0.2\%$ at $x=10^6$, while $\pi(x)/(x/\log x)$ is still about $1.08$ at $x=10^6$.}
 \label{fig:primes-ratio}
 \end{figure}
 
@@ -487,7 +486,7 @@ x/\log x:\ -13.8\%\ (10^3),\ -7.8\%\ (10^6);\quad \mathrm{Li}:\ +5.1\%\ (10^3),\
 \text{primes in }(10^4,10^5]:\ 8363\ \text{actual vs } 8383.7\ \text{predicted}
 \end{array}}
 \]
-Both approximations are asymptotically correct, but $\mathrm{Li}$ is far better at every height we can check.
+Both approximations are asymptotically correct. From $x=10^3$ upward in \cref{tab:primes-pi}, $\mathrm{Li}$ is far better. At $x=10$ and $x=100$ it is not: its errors there, $+1.12$ and $+4.08$, are larger in size than those of $x/\log x$, which are $+0.34$ and $-3.29$.
 \end{sample}
 
 \subsection{Mean spacing of primes}
@@ -503,7 +502,7 @@ How large is $\pi(x)-\mathrm{Li}(x)$? In \cref{tab:primes-pi} it is negative and
 
 \textbf{The Riemann hypothesis connection.} It is a theorem (von Koch, 1901) that the Riemann hypothesis of Chapter~\ref{ch:zeta} is \emph{equivalent} to the statement $\pi(x)=\mathrm{Li}(x)+\order(\sqrt x\log x)$. The Riemann hypothesis itself is \textbf{open}: it has been neither proved nor disproved. So the best possible error term for counting primes is an open problem, and it is controlled by the zeros (\cite{edwards}, Chapter~5).
 
-\textbf{A warning about numerical evidence.} In every case computed directly (including all of \cref{tab:primes-pi}), $\pi(x)<\mathrm{Li}(x)$. Yet Littlewood proved in 1914 that $\pi(x)-\mathrm{Li}(x)$ changes sign infinitely often. No sign change has been found by direct computation; the literature proves that the first one lies below an explicit but astronomically large bound, far beyond any table. Tables, however large, can mislead.
+\textbf{A warning about numerical evidence.} Classical tables compare $\pi(x)$ with $\mathrm{li}(x)=\mathrm{Li}(x)+\mathrm{li}(2)$ (see the pitfall above). In every case computed directly, $\pi(x)<\mathrm{li}(x)$ for $x\ge2$; this chapter's check script confirms it for all $x\le10^6$. Our $\mathrm{Li}$ is smaller than $\mathrm{li}$ by the constant $1.045$. For $\mathrm{Li}$ the inequality fails at a few small $x$ (for example $\mathrm{Li}(7)\approx3.71<\pi(7)=4$), but it holds for every $x$ from $10$ to $10^6$, including all of \cref{tab:primes-pi}. Yet Littlewood proved in 1914 that $\pi(x)-\mathrm{li}(x)$ changes sign infinitely often. The oscillations he found grow without bound, so $\pi(x)-\mathrm{Li}(x)$, which differs from $\pi(x)-\mathrm{li}(x)$ only by a constant, also changes sign infinitely often. No sign change of $\pi(x)-\mathrm{li}(x)$ has been found by direct computation; the literature proves that the first one lies below an explicit but astronomically large bound, far beyond any table. Tables, however large, can mislead.
 \end{beyond}
 
 \begin{checkpoint}
@@ -521,9 +520,7 @@ How large is $\pi(x)-\mathrm{Li}(x)$? In \cref{tab:primes-pi} it is negative and
 %=====================================================================
 \section{A proven bound: Chebyshev's argument}\label{sec:primes-chebyshev}
 % DYK-BEGIN
-\begin{didyouknow}{Always a Prime Between}
-In 1845 Joseph Bertrand conjectured that for every $n>1$ there is a prime between $n$ and $2n$, and he checked it for $n$ up to about three million. Pafnuty Chebyshev proved it around 1850 using clever bounds on binomial coefficients. In 1932 the 19-year-old Paul Erd\H{o}s published a famously simple proof.
-\end{didyouknow}
+
 % DYK-END
 
 The PNT is beyond us, but a weaker statement of the right shape is not. It introduces a function that appears throughout the rest of the chapter.
@@ -537,9 +534,9 @@ The PNT is beyond us, but a weaker statement of the right shape is not. It intro
 the sum of the logarithms of all primes up to $x$. Equivalently $\theta(x)=\log\bigl(\prod_{p\le x}p\bigr)$.
 \end{quote}
 
-So $\theta(10)=\log(2\cdot3\cdot5\cdot7)=\log210$. Where $\pi(x)$ counts each prime with weight 1, $\theta(x)$ counts it with weight $\log p$, its ``size''.
+So $\theta(10)=\log(2\cdot3\cdot5\cdot7)=\log210$. Where $\pi(x)$ counts each prime with weight 1, $\theta(x)$ counts it with weight $\log p$, its ``size''. This $\theta$ is unrelated to the Riemann--Siegel theta function $\theta(T)$ of Chapter~\ref{ch:counting-zeros}; context distinguishes them.
 
-\textbf{Theorem (proved).} \emph{For every integer $n\ge1$,}
+\textbf{Theorem (proved, given Euclid's lemma, which was taken on trust in \cref{sec:primes-fta}).} \emph{For every integer $n\ge1$,}
 \begin{equation}
 \theta(2n)-\theta(n) < n\log4,
 \label{eq:primes-cheb1}
@@ -571,7 +568,9 @@ Rearranging and using $\pi(\sqrt x)\le\sqrt x$ and $\theta(x)<(4\log2)x$,
 \pi(x)\ \le\ \pi(\sqrt x)+\frac{2\,\theta(x)}{\log x}\ <\ \sqrt x+(8\log2)\frac{x}{\log x}.
 \label{eq:primes-chebbound}
 \end{equation}
-The constant $8\log2\approx5.55$ is generous (at $x=10^6$ the bound is about $402{,}000$ against the true $78{,}498$), but the \emph{shape} $x/\log x$ is exactly the one in the PNT, and the argument used nothing but factorization. Chebyshev's sharper version of this reasoning gave the constants $0.921$ and $1.106$ quoted above; Problem~23 proves a lower bound of the same shape.
+We now show that the right side has the form $\order(x/\log x)$. The function $\log x/\sqrt x$ has derivative $(1-\tfrac12\log x)/x^{3/2}$, which vanishes only at $x=e^2$, where the function takes its maximum value $2/e<1$. So $\log x\le\sqrt x$ for all $x>0$. Then for $x>1$ we have $\sqrt x=x/\sqrt x\le x/\log x$. Hence the right side of \cref{eq:primes-chebbound} is at most $(1+8\log2)\,x/\log x$, which is the $\order$-statement of the corollary.
+
+The constant $8\log2\approx5.55$ is generous (at $x=10^6$ the bound is about $402{,}000$ against the true $78{,}498$), but the \emph{shape} $x/\log x$ is exactly the one in the PNT. The argument used nothing but unique factorization and Euclid's lemma (taken on trust in \cref{sec:primes-fta}). Chebyshev's sharper version of this reasoning gave the constants $0.921$ and $1.106$ quoted above; Problem~23 proves a lower bound of the same shape.
 
 \begin{sample}{Chebyshev's divisibility for $n=10$}
 Check each step of the proof of \cref{eq:primes-cheb1} for $n=10$.
@@ -704,7 +703,7 @@ Like $\pi(x)$, $\psi(x)$ is a step function, but its steps sit at all prime powe
 \end{equation}
 The sum is finite: once $m>\log x/\log2$ we have $x^{1/m}<2$ and $\theta(x^{1/m})=0$. The $m=1$ term dominates; the others add up to something much smaller (Problem~22 shows the extra amount is $\order(\sqrt x\log^2x)$).
 
-\textbf{(b) $\psi$ is the logarithm of a least common multiple.} For a positive integer $N$, let $\mathrm{lcm}(1,\dots,N)$ be the smallest positive integer divisible by each of $1,2,\dots,N$. Write $\lfloor y\rfloor$ (the \emph{floor} of $y$) for the largest integer not exceeding $y$. A prime $p$ appears in $\mathrm{lcm}(1,\dots,N)$ with exponent equal to the largest $m$ with $p^m\le N$ (that power must be divisible, and no larger power of $p$ is needed), namely $m=\lfloor\log N/\log p\rfloor$. Taking logs,
+\textbf{(b) $\psi$ is the logarithm of a least common multiple.} For a positive integer $N$, let $\mathrm{lcm}(1,\dots,N)$ be the smallest positive integer divisible by each of $1,2,\dots,N$. Write $\lfloor y\rfloor$ (the \emph{floor} of $y$) for the largest integer not exceeding $y$. A prime $p$ appears in $\mathrm{lcm}(1,\dots,N)$ with exponent equal to the largest $m$ with $p^m\le N$ ($p^m$ is itself one of the numbers $1,\dots,N$, so the lcm must be divisible by it; and no number $\le N$ is divisible by $p^{m+1}>N$, so no higher power is needed), namely $m=\lfloor\log N/\log p\rfloor$. Taking logs,
 \[
 \log\mathrm{lcm}(1,\dots,N)=\sum_{p\le N}\Bigl\lfloor\frac{\log N}{\log p}\Bigr\rfloor\log p .
 \]
@@ -731,7 +730,7 @@ On the other hand, in \cref{eq:primes-psi} each prime $p\le N$ contributes $\log
 This is the most natural form of the PNT: the prime powers, each weighted by $\log p$, accumulate at an average rate of exactly 1 per unit of $x$.
 \end{beyond}
 
-\Cref{tab:primes-psi} shows how quickly $\psi(x)/x$ approaches 1, much faster than $\pi(x)/(x/\log x)$ did in \cref{tab:primes-pi}. Panel (b) of \cref{fig:primes-psi} shows that $\psi(x)-x$ wanders on the scale of $\sqrt x$.
+\Cref{tab:primes-psi} shows how quickly $\psi(x)/x$ approaches 1, much faster than $\pi(x)/(x/\log x)$ did in \cref{tab:primes-pi}. Panel (b) of \cref{fig:primes-psi} shows that, for $x\le10^5$, $\psi(x)-x$ wanders on the scale of $\sqrt x$. This is a numerical observation, not a theorem. A bound $\psi(x)-x=\order(\sqrt x\log^2x)$ valid for all large $x$ is equivalent to the Riemann hypothesis (von Koch, 1901), which is open. Without that hypothesis, only much weaker bounds are proved, of the de la Vall\'ee Poussin type quoted for $\pi(x)$ in \cref{sec:primes-pnt}.
 
 \begin{table}[htbp]\centering
 \caption{Chebyshev's function $\psi(x)$ compared with $x$ (computed in the check script).}
@@ -750,7 +749,7 @@ $10^4$ & 10013.4 & 1.001 & $+13.4$\\
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{figs/primes_psi.pdf}
-\caption{(a) Chebyshev's functions $\psi(x)$ (steps at every prime power) and $\theta(x)$ (steps at primes only) for $x\le100$, with the line $y=x$ that the PNT says $\psi$ follows. (b) The scaled difference $(\psi(x)-x)/\sqrt x$ at integers $x$ up to $10^5$: the deviation of $\psi(x)$ from $x$ fluctuates on the scale $\sqrt x$, the scale tied to the critical line $\Re s=\tfrac12$ of the zeta function.}
+\caption{(a) Chebyshev's functions $\psi(x)$ (steps at every prime power) and $\theta(x)$ (steps at primes only) for $x\le100$, with the line $y=x$ that the PNT says $\psi$ follows. (b) The scaled difference $(\psi(x)-x)/\sqrt x$ at integers $x$ up to $10^5$: in this range the deviation of $\psi(x)$ from $x$ fluctuates on the scale $\sqrt x$ (a numerical observation). This is the scale tied to the critical line $\Re s=\tfrac12$ of the zeta function (defined in Chapter~\ref{ch:zeta}; read this as a preview).}
 \label{fig:primes-psi}
 \end{figure}
 
@@ -765,7 +764,7 @@ Compute $\psi(10)$ and $\psi(30)$ using \cref{eq:primes-lcm}.
 \[
 \psi(30)=4\log2+3\log3+2\log5+\log7+\log11+\log13+\log17+\log19+\log23+\log29 .
 \]
-Numerically: $2.7726+3.2958+3.2189+1.9459+2.3979+2.5649+2.8332+2.9444+3.1355+3.3673=28.4765$.
+Numerically: $2.7726+3.2958+3.2189+1.9459+2.3979+2.5649+2.8332+2.9444+3.1355+3.3673=28.4764$. Carried at full precision, the sum is $28.4765$; the last digit differs because of rounding.
 
 \textbf{Step 4: compare with $x$.}
 \[
@@ -792,7 +791,7 @@ print(psi[1000], psi[10000] / 10000)  # 996.68..., 1.0013...
 \[
 \psi(x)=x-\sum_{\rho}\frac{x^{\rho}}{\rho}-\log(2\pi)-\tfrac12\log\bigl(1-x^{-2}\bigr),
 \]
-where $\rho$ runs over the nontrivial zeros of the zeta function, summed in pairs $\rho,\bar\rho$ in order of increasing $\abs{\Im\rho}$ (proof: \cite{davenport}, Chapter~17; \cite{edwards}, Chapter~3). Each zero $\rho_n=\tfrac12+it_n$ contributes a wave $x^{1/2}e^{it_n\log x}$ in the variable $\log x$, of size $\sqrt x$: the zeros are frequencies of the primes. Chapter~\ref{ch:explicit-formula} turns this duality around, making the prime powers the frequencies of the zeros, which is the content of the paper's Eq.~(4).
+where $\rho$ runs over the nontrivial zeros of the zeta function, summed in pairs $\rho,\bar\rho$ in order of increasing $\abs{\Im\rho}$ (proof: \cite{davenport}, Chapter~17; \cite{edwards}, Chapter~3). Consider a zero $\rho_n=\tfrac12+it_n$ on the critical line. All zeros used in this book lie on it; whether all zeros do is the Riemann hypothesis (Chapter~\ref{ch:zeta}). Such a zero contributes $-x^{\rho_n}/\rho_n=-x^{1/2}e^{it_n\log x}/\rho_n$, a wave in the variable $\log x$ of size $\sqrt x/\abs{\rho_n}$. In this sense the zeros are frequencies of the primes. Chapter~\ref{ch:explicit-formula} turns this duality around, making the prime powers the frequencies of the zeros, which is the content of the paper's Eq.~(4).
 \end{beyond}
 
 \begin{checkpoint}
@@ -803,7 +802,7 @@ What are $\psi(16)-\psi(15)$ and $\psi(18)-\psi(17)$?
 \begin{keyideas}
 \item $\psi(x)=\sum_{k\le x}\Lambda(k)$ (\cref{eq:primes-psi}) $=\theta(x)+\theta(x^{1/2})+\dots$ (\cref{eq:primes-psitheta}) $=\log\mathrm{lcm}(1,\dots,\lfloor x\rfloor)$ (\cref{eq:primes-lcm}).
 \item $\psi(x)\le\pi(x)\log x$ (proved). PNT in Chebyshev's form: $\psi(x)\sim x$ (equivalence proved, beyond this book).
-\item $\psi(x)-x$ fluctuates on the scale $\sqrt x$; the von Mangoldt explicit formula writes it as a sum over the zeta zeros.
+\item Numerically ($x\le10^5$), $\psi(x)-x$ fluctuates on the scale $\sqrt x$. An $\order(\sqrt x\log^2x)$ bound for all $x$ is equivalent to the (open) Riemann hypothesis. The von Mangoldt explicit formula writes $\psi(x)-x$ as a sum over the zeta zeros.
 \end{keyideas}
 
 %=====================================================================
@@ -846,16 +845,16 @@ Here is a piece of pure bookkeeping that prepares the paper connection. Consider
 \frac{\Lambda(n)}{\log n}=\frac{\log p}{\log(p^m)}=\frac{\log p}{m\log p}=\frac1m .
 \label{eq:primes-weight}
 \end{equation}
-So for any $s$ for which the sums converge (Chapter~\ref{ch:series}; $\Re s>1$ suffices),
+So for any $s$ for which the sums converge \emph{absolutely}, so that their terms may be regrouped (Chapter~\ref{ch:series}), we have the identity below. The condition $\Re s>1$ suffices: $\abs{p^{-ms}/m}\le p^{-m\,\Re s}$, and by unique factorization these are distinct terms of the convergent series $\sum_k k^{-\Re s}$. The identity reads
 \begin{equation}
 \sum_{p}\sum_{m=1}^{\infty}\frac{p^{-ms}}{m}=\sum_{n=2}^{\infty}\frac{\Lambda(n)}{\log n}\,n^{-s},
 \label{eq:primes-logzeta}
 \end{equation}
-where on the right the terms with $\Lambda(n)=0$ simply vanish. In Chapter~\ref{ch:explicit-formula} you will prove that the left side is $\log\zeta(s)$; here we only note that the right side is a sum over prime powers $n$ with weights $\Lambda(n)/\log n$. On the line $s=\tfrac12+it$ the term $n^{-s}=n^{-1/2}e^{-it\log n}$ is a wave of frequency $\log n$ and amplitude $n^{-1/2}\Lambda(n)/\log n$.
+where on the right the terms with $\Lambda(n)=0$ simply vanish. In Chapter~\ref{ch:explicit-formula} you will prove that the left side is $\log\zeta(s)$; here we only note that the right side is a sum over prime powers $n$ with weights $\Lambda(n)/\log n$. On the line $s=\tfrac12+it$ the term $n^{-s}=n^{-1/2}e^{-it\log n}$ is a wave of frequency $\log n$ and amplitude $n^{-1/2}\Lambda(n)/\log n$. Each term makes sense on this line, but the sum no longer converges absolutely there; see \cref{sec:primes-paper} and Chapter~\ref{ch:explicit-formula}.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/primes_spectrum.pdf}
-\caption{The ``prime-power spectrum'': a vertical line at angular frequency $\omega=\log q$ for every prime power $q\le200$, of height $\Lambda(q)/(\sqrt q\,\log q)=1/(m\,p^{m/2})$ for $q=p^m$. Red: the 18 terms of the six-prime explicit formula ($p\le13$, $m\le3$). Blue: further terms with $m\le3$ and $p\le97$, included in the 25-prime formula. Gray: powers with $m\ge4$ (such as $16$, $32$, $64$, $81$), which Eq.~(4) of the paper omits. The weights decay roughly like $q^{-1/2}$ while the lines crowd together at large $\omega$.}
+\caption{The ``prime-power spectrum'': a vertical line at angular frequency $\omega=\log q$ for every prime power $q\le200$, of height $\Lambda(q)/(\sqrt q\,\log q)=1/(m\,p^{m/2})$ for $q=p^m$. Red: the 15 terms of the six-prime explicit formula ($p\le13$, $m\le3$) with $q\le200$. Its other three terms, $7^3=343$, $11^3=1331$ and $13^3=2197$, lie off the plot. Blue: further terms with $m\le3$, $p\le97$ and $q\le200$, included in the 25-prime formula, which also has terms beyond $q=200$. Gray: powers with $m\ge4$ (such as $16$, $32$, $64$, $81$), which Eq.~(4) of the paper omits. The weights decay roughly like $q^{-1/2}$ while the lines crowd together at large $\omega$.}
 \label{fig:primes-spectrum}
 \end{figure}
 
@@ -885,7 +884,7 @@ N_{\rm fl}(t)=-\frac1\pi\sum_{\substack{q=p^m,\ p\in P\\ 1\le m\le3}}\frac{\Lamb
 \]
 Every term is one line of \cref{fig:primes-spectrum}: a sinusoid in the zero height $t$ with angular frequency $\log q$ and amplitude $\Lambda(q)/(\pi\sqrt q\log q)$. The sine (rather than a cosine) and the factor $-1/\pi$ come from taking an imaginary part of \cref{eq:primes-logzeta} on the critical line; Chapter~\ref{ch:explicit-formula} derives this, and is careful about its formal status. Two things are already visible here. First, the largest amplitude belongs to $q=2$, $m=1$: $1/\sqrt2=0.707$ before the factor $1/\pi$. Second, the amplitudes shrink only like $q^{-1/2}$, while by the PNT the primes up to $x$ number about $x/\log x$; summing the $m=1$ amplitudes with density $1/\log t$ gives roughly $\int_2^x\dd t/(\sqrt t\log t)$, which grows without bound (heuristic; Problem~26). So the full sum cannot converge absolutely on the critical line, and truncating to a finite $P$ is a genuine approximation, as anticipated in Chapter~\ref{ch:series}.
 
-\paragraph{The prime budgets of Table~V and Fig.~1.} Table~V's columns are the sets $P=\{2\}$; ``3 primes'' $=\{2,3,5\}$; ``6 primes'' $=\{2,3,5,7,11,13\}$; and ``25 primes'' $=$ all primes up to $p_{25}=97$. With $m\le3$ these contain $3$, $9$, $18$ and $75$ terms. On the principal holdout RE5 (zeros 401--500, null $0.263$), they give rms $0.198$, $0.116$, $0.074$ and $0.043$ mean spacings, with correlations $+0.66$, $+0.90$, $+0.96$, $+0.99$ (Table~V, first row). The $\{2\}$ column is RE2 used as a predictor: the single slowest prime-power family already beats the null. Fig.~1 shows the six-prime formula, held-out correlation $+0.96$. ``Zero fitted parameters'' (Sec.~II~D) means exactly this: the set $P$ is chosen by size, and its members are fixed facts that the sieve of \cref{sec:primes-sieve} produces without error.
+\paragraph{The prime budgets of Table~V and Fig.~1.} Table~V's columns are the sets $P=\{2\}$; ``3 primes'' $=\{2,3,5\}$; ``6 primes'' $=\{2,3,5,7,11,13\}$; and ``25 primes'' $=$ all primes up to $p_{25}=97$. We take these to be the first $k$ primes. The paper does not list them, but this choice reproduces its numbers: this chapter's check script recomputes the 401--500 row with qmnt for all four budgets. With $m\le3$ these contain $3$, $9$, $18$ and $75$ terms. On the principal holdout RE5 (zeros 401--500, null $0.263$), they give rms $0.198$, $0.116$, $0.074$ and $0.043$ mean spacings, with correlations $+0.66$, $+0.90$, $+0.96$, $+0.99$ (Table~V, first row). The $\{2\}$ column is RE2 used as a predictor: the single slowest prime-power family already beats the null. Fig.~1 shows the six-prime formula, held-out correlation $+0.96$. ``Zero fitted parameters'' (Sec.~II~D) means exactly this: the set $P$ is chosen by size, and its members are fixed facts that the sieve of \cref{sec:primes-sieve} produces without error.
 
 \paragraph{``Primes $p\le13$''.} Sec.~I~A~b and Sec.~II~D describe Connes' construction \cite{connes26}, which extremizes a truncated Weil quadratic form over primes $p\le13$. That is the same prime set as the six-prime oracle: $\{2,3,5,7,11,13\}$, $\pi(13)=6$. The paper places this construction ``on the arithmetic side'' because its input is this list of primes, not zeros.
 
@@ -893,13 +892,13 @@ Every term is one line of \cref{fig:primes-spectrum}: a sinusoid in the zero hei
 
 \paragraph{The prime powers found by C2 (Sec.~IV).} The sparse frequency search C2, given no arithmetic input, selected 43 frequencies from 800 zeros, each lying within half the Fourier resolution of some $\log q$: ``those up to 113 except 32, 64, and 81, and six primes between 131 and 211''. You can now check the count (Sample Problem below). Two further observations follow from this chapter:
 \begin{itemize}
-\item The list contains $16=2^4$, whose frequency $\log16=4\log2$ is \emph{absent} from Eq.~(4), which stops at $m=3$. It omits $32=2^5$, $64=2^6$ and $81=3^4$, whose weights $1/(m\,p^{m/2})$ are $0.035$, $0.021$ and $0.028$, smaller than those of the six primes between 131 and 211 (for example $1/\sqrt{211}=0.069$), while $16$ has weight $1/16=0.0625$. This weight ordering is consistent with part of what C2 found, but it does not explain the whole list: only six of the sixteen primes in $[131,211]$ were selected, although all sixteen have weights $1/\sqrt p\ge1/\sqrt{211}=0.069$, larger than those of $32$, $64$ and $81$. The paper does not offer this interpretation; treat it as our heuristic observation.
-\item App.~A step~23 matches a frequency $\omega$ to a prime power $q\le3000$ when $\abs{\omega-\log q}<\pi/T$. There are $466$ prime powers up to $3000$ ($\pi(3000)=430$ primes plus $36$ higher powers). The cutoff is natural because C2 searches $0.05<\omega<8$ (Sec.~II~D) and $e^8\approx2981$. But the numbers $\log q$ crowd together: near $q$, consecutive prime powers are about $\log q$ apart (the PNT spacing), so consecutive values of $\log q$ are about $\log q/q$ apart, roughly $0.007$ near $q=1000$ (heuristic). Once that spacing is smaller than the matching window $2\pi/T$, almost any $\omega$ matches some $q$. This is one reason the paper does not rest the alignment claim on matches alone, reruns the search on 900 surrogate replicates, uses ``a statistic that does not depend on a chosen frequency cutoff'', and labels the check exploratory (Sec.~IV). Chapters~\ref{ch:sparse-frequency} and \ref{ch:paper-arithmetic} return to this.
+\item The list contains $16=2^4$, whose frequency $\log16=4\log2$ is \emph{absent} from Eq.~(4), which stops at $m=3$. C2's list omits $32=2^5$, $64=2^6$ and $81=3^4$, whose weights $1/(m\,p^{m/2})$ are $0.035$, $0.021$ and $0.028$, smaller than those of the six primes between 131 and 211 (for example $1/\sqrt{211}=0.069$), while $16$ has weight $1/16=0.0625$. This weight ordering is consistent with part of what C2 found, but it does not explain the whole list: only six of the sixteen primes in $[131,211]$ were selected, although all sixteen have weights $1/\sqrt p\ge1/\sqrt{211}=0.069$, larger than those of $32$, $64$ and $81$. The paper does not offer this interpretation; treat it as our heuristic observation.
+\item App.~A step~23 matches a frequency $\omega$ to a prime power $q\le3000$ when $\abs{\omega-\log q}<\pi/T$. Here $T$ is the length in $t$ of the training window. For zeros 1--800 the window runs from $t_1$ to $t_{800}$, so $T\approx1170$. Then $\pi/T\approx0.0027$ (``half the Fourier resolution''), and the full matching window has width $2\pi/T\approx0.0054$. Chapter~\ref{ch:fourier-transform} derives the resolution $2\pi/T$. (This $T$ is a window length, not the height $T$ used in other chapters.) There are $466$ prime powers up to $3000$ ($\pi(3000)=430$ primes plus $36$ higher powers). A plausible reason for the cutoff, ours rather than the paper's (the paper does not give one), is that C2 searches $0.05<\omega<8$ (Sec.~II~D) and $e^8\approx2981$. But the numbers $\log q$ crowd together: near $q$, consecutive prime powers are about $\log q$ apart (the PNT spacing), so consecutive values of $\log q$ are about $\log q/q$ apart, roughly $0.007$ near $q=1000$ (heuristic). Once that spacing is smaller than the matching window $2\pi/T$, almost any $\omega$ matches some $q$. The paper gives its own reason for checking the alignment on surrogates: ``Because the frequencies are the output of a search'' (Sec.~IV). It reruns the search on 900 surrogate replicates, uses ``a statistic that does not depend on a chosen frequency cutoff'', and labels the check exploratory. The crowding of the $\log q$ is our own observation; it is a further reason why counting matches alone would be weak evidence. Chapters~\ref{ch:sparse-frequency} and \ref{ch:paper-arithmetic} return to this.
 \end{itemize}
 
 \paragraph{``Logarithms of prime powers'' and Landau--Gonek.} Sec.~IV notes that ``the Fourier transform of the zeros is concentrated at logarithms of prime powers'' and cites \cite{landau,gonek}. Those peaks sit at the frequencies $\log q$ of \cref{fig:primes-spectrum}, with strengths governed by $\Lambda(q)$; Chapter~\ref{ch:explicit-formula} states Landau's formula and Chapter~\ref{ch:sparse-frequency} recovers the peaks numerically.
 
-\paragraph{Table~V's caption.} The caption attributes the mild growth of the error at fixed prime budget partly to ``the increasing number of arithmetically relevant primes at height''. A heuristic reading in this chapter's terms: at larger $t$, the faster waves $\sin(t\log q)$ for larger $q$ oscillate more times per mean spacing of the zeros and their combined omitted contribution matters more, so a fixed prime set leaves out more of what matters. The paper states this qualitatively, and so do we.
+\paragraph{Table~V's caption.} The caption attributes the mild growth of the error at fixed prime budget partly to ``the increasing number of arithmetically relevant primes at height''. A heuristic reading in this chapter's terms: at larger $t$ the mean spacing of the zeros, $2\pi/\log(t/2\pi)$ (Chapter~\ref{ch:counting-zeros}), shrinks. A wave $\sin(t\log q)$ therefore completes only $\log q/\log(t/2\pi)$ cycles per spacing. More prime powers (roughly those with $q$ below $t/2\pi$) then vary slowly on the scale of one spacing and shift individual zeros coherently. A fixed prime set therefore leaves out more of what matters. The paper states this qualitatively, and so do we.
 
 \paragraph{Why logarithms, not primes.} Finally, Sec.~III's arithmetic-continuation probe uses the $p=2$ part of Eq.~(4) (RE2), whose period $2\pi/\log2\approx9.065$ in $t$ appears again in Sec.~V. The reason the target is ``almost periodic'' rather than periodic once more primes are added is the independence of $\log2,\log3,\dots$ proved in \cref{sec:primes-fta}.
 
@@ -921,9 +920,7 @@ Verify that ``prime powers up to 113 except 32, 64, and 81, and six primes betwe
 %=====================================================================
 \section{Summary}\label{sec:primes-summary}
 % DYK-BEGIN
-\begin{didyouknow}{A 41-Million-Digit Prime}
-In October 2024 the record for the largest known prime went to the Mersenne prime $2^{136279841}-1$, with 41{,}024{,}320 decimal digits. Luke Durant discovered it in the Great Internet Mersenne Prime Search, using graphics processors rented in the cloud. Mersenne numbers $2^p-1$ dominate the record list because the Lucas-Lehmer test checks them far faster than primality tests for general numbers.
-\end{didyouknow}
+
 % DYK-END
 
 \begin{itemize}
@@ -1037,9 +1034,9 @@ In October 2024 the record for the largest known prime went to the Mersenne prim
 
 \textbf{19.} $\psi(x)/x=0.9405,\ 0.9967,\ 1.0013$. The inequality: $94.05\le25\log100=115.13$; $996.68\le168\log1000=1160.50$; $10013.4\le1229\log10^4=11319.51$. All hold.
 
-\textbf{21.} (a) If some $p_i=q_j$, cancel it to get a smaller integer with two different factorizations, contradicting minimality. (b) $p_1<q_1$ gives $p_1q_2\cdots q_s<q_1q_2\cdots q_s=n$, so $m>0$, and $m<n$ because $p_1q_2\cdots q_s>0$. Factoring, $m=(q_1-p_1)q_2\cdots q_s$; also $m=p_1(p_2\cdots p_r-q_2\cdots q_s)$, so $p_1\mid m$. (c) Since $m<n$, $m$ has a unique factorization. From the second form, $p_1$ appears in it. From the first, its factorization is that of $q_1-p_1$ times $q_2\cdots q_s$; $p_1$ is not among the $q_j$, so $p_1\mid q_1-p_1$, hence $p_1\mid q_1$, impossible for distinct primes. (If $s=1$, $n=q_1$ is prime and has only one factorization.) So no counterexample exists.
+\textbf{21.} (a) If some $p_i=q_j$, cancel it to get a smaller integer with two different factorizations, contradicting minimality. (b) $p_1<q_1$ gives $p_1q_2\cdots q_s<q_1q_2\cdots q_s=n$, so $m>0$, and $m<n$ because $p_1q_2\cdots q_s>0$. Factoring, $m=(q_1-p_1)q_2\cdots q_s$; also $m=p_1(p_2\cdots p_r-q_2\cdots q_s)$, so $p_1\mid m$. (c) We have $m<n$, and $m\ge2$ because $p_1\mid m$ and $m>0$, so $m$ has a unique factorization. From the second form, $p_1$ appears in it. Consider the first form. If $q_1-p_1=1$, then $m=q_2\cdots q_s$ is a factorization of $m$ that does not contain $p_1$ (no $q_j$ equals $p_1$, by (a)). That is already a contradiction. Otherwise $q_1-p_1\ge2$. Factor it into primes; then $m$ is the product of those primes and $q_2,\dots,q_s$. By uniqueness $p_1$ is in this list, and it is not a $q_j$, so it is one of the prime factors of $q_1-p_1$, i.e.\ $p_1\mid q_1-p_1$. Since also $p_1\mid p_1$, this gives $p_1\mid q_1$, impossible for distinct primes. (If $s=1$, $n=q_1$ is prime and has only one factorization.) So no counterexample exists.
 
-\textbf{23.} (a) $4^n=\sum_{k=0}^{2n}\binom{2n}{k}$ has $2n+1$ terms, of which $\binom{2n}{n}$ is the largest, so $4^n\le(2n+1)\binom{2n}{n}$. (b) Each term of Legendre's sum vanishes once $p^j>2n$, so the exponent $a$ is at most the number of $j$ with $p^j\le2n$, i.e.\ $p^a\le2n$. (c) $\binom{2n}{n}$ is a product over the primes $p\le2n$ of factors $p^a\le2n$, so it is at most $(2n)^{\pi(2n)}$; combining with (a) and taking logs, $n\log4-\log(2n+1)\le\pi(2n)\log(2n)$. (d) $n=50$: $(69.315-4.615)/4.605=14.05\le\pi(100)=25$.
+\textbf{23.} (a) $4^n=\sum_{k=0}^{2n}\binom{2n}{k}$ has $2n+1$ terms, of which $\binom{2n}{n}$ is the largest. To see this, note that $\binom{2n}{k+1}/\binom{2n}{k}=(2n-k)/(k+1)$ is $\ge1$ exactly when $k<n$, so the terms rise up to $k=n$ and fall afterwards. Hence $4^n\le(2n+1)\binom{2n}{n}$. (b) Each term of Legendre's sum vanishes once $p^j>2n$, so the exponent $a$ is at most the number of $j$ with $p^j\le2n$, i.e.\ $p^a\le2n$. (c) $\binom{2n}{n}$ is a product over the primes $p\le2n$ of factors $p^a\le2n$, so it is at most $(2n)^{\pi(2n)}$; combining with (a) and taking logs, $n\log4-\log(2n+1)\le\pi(2n)\log(2n)$. (d) $n=50$: $(69.315-4.615)/4.605=14.05\le\pi(100)=25$.
 
 \textbf{25.} With $u=1/\log^2t$, $\dd v=\dd t$: $\int_2^x\dd t/\log^2t=x/\log^2x-2/\log^22+2\int_2^x\dd t/\log^3t$, which gives the stated form with $C=-2/\log2-2/\log^22$. Repeating, the next term is $6x/\log^4x$ (the pattern is $(k-1)!\,x/\log^kx$). At $x=10^6$: $72382.4$, then $77621.7$, then $78380.1$, against $\pi=78498$ and $\mathrm{Li}=78626.5$. Each term helps here, but the series is asymptotic, not convergent.
 
