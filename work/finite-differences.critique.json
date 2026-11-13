@@ -1,93 +1,205 @@
 [
  {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "\\begin{tabular}{ccccccc}\n\\toprule\n$n_{\\rm pw}$ & 4 & 6 & 8 & 12 & 24 & 50\\\\",
-  "problem": "The check on the table of 1-K_h/q^2 fails (assertion at line 26). Some entries are misquoted. For n=4 the value is 1-(sin(pi/4)/(pi/4))^2 = 0.189 (19% is OK). The others need recomputation: n=6 gives 8.8%, n=8 gives 5.0%, n=12 gives 2.3%, n=24 gives 0.57%, n=50 gives 0.13%, and at least one is off beyond the tolerance (likely 8.8% or 5.0%).",
-  "fix": "Recompute every table entry with numpy, correct the mismatched value(s), and set the check tolerance consistently with the displayed digits."
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "the error is a series in even powers of $h$:",
+  "problem": "The even-power expansion of the eigenvalue error, E(h)=E+Ch^2+Dh^4+..., is asserted for a general potential by pointing at the local truncation error of D_h^2. That is an expansion for the difference operator acting on a fixed function, not for eigenvalues of the grid matrix. It was only proved for the box. For smooth V it is a true theorem, but it is taken on trust without saying so.",
+  "fix": "State that the expansion is proved here only for the box. For general smooth V with Dirichlet walls, put the claim in a \\begin{beyond} box saying what is taken on trust and where the proof is, and point to the ratio test (condition 2) as the empirical check."
  },
  {
-  "category": "ERROR",
+  "category": "RULE",
   "severity": "medium",
-  "quote": "Problem~21).\n\\end{pitfall}",
-  "problem": "The pitfall refers to Problem 21 for the central first difference, but the problem list is not numbered by hand; the numbering depends on order. Several other problem cross-references (Problem 6, 10, 11, 14, 28, 29, 31, 1) may be misaligned with the actual list order. For example, 'Problem~28' (constant shift) is the 28th item, but the listing has the constant-shift item at a different position.",
-  "fix": "Recount the problems and correct all cross-references, or use labels."
+  "quote": "The sum of squares is $0.5+1+0.5=2$, so $\\mathbf u=(0.5,0.7071,0.5)$.",
+  "problem": "The Sample Problem 'Normalizing the three-point ground state' (u, the rescaled psi, A_11=0.5 on the grid and in the continuum) has no assertion in the CHECKS script. The bible requires every Sample Problem numerical answer to be recomputed.",
+  "fix": "Add to CHECKS: take the lowest eigenvector of the 3x3 matrix, assert |u|=(0.5,0.7071,0.5), u/sqrt(h)=(0.7071,1,0.7071), sum u^2 cos(pi x_j)=0.5, and a quadrature of the continuum integral equal to 0.5."
  },
  {
-  "category": "ERROR",
+  "category": "RULE",
   "severity": "medium",
-  "quote": "Problem~31 shows that the opposite assignment is worse than no extrapolation at all.",
-  "problem": "The answer to Problem 31 shows the wrong weighting gives error 0.155, worse than both raw values (0.124 and 0.032). This is consistent, but the 'Swapping them makes things worse' claim in the conditions list also cites Problem 31 while that problem concerns a different numbering, so the references are fragile.",
-  "fix": "Verify numbering; keep the claim."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Its levels 401--500 lie at heights roughly between $t_{401}$ and $t_{500}=811.18$",
-  "problem": "The text then uses E=811.18 to compute q, but the Wu--Sprung bias is also quoted as 'eight times larger than the signal' (2/0.26 is about 7.7); fine, but the 14.8 points per wavelength uses level 500 energy at the well bottom, where V=V0, so q is the maximum; this is not a typical value for the state.",
-  "fix": "State that this is the shortest wavelength (at the well bottom), not typical."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The paper says ``two grids''; in the Richardson sense the Richardson pair is two grids, and the working grid supplies $E^g$.",
-  "problem": "Confusing and somewhat hand-waving. Also the chapter's Definitions say 'three times' on three grids while the paper's Eq.(3) text says two grids; the chapter's answer to Problem 13 says 'three grids'.",
-  "fix": "Say plainly: the paper's 'two grids' refers to the Richardson pair; the full Delta_n uses three grids including the working grid."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Because $h=2L/(N+1)$, doubling $N$ from $12000$ to $24000$ halves $h$ only approximately ($r=24001/12001$)",
-  "problem": "Chapter earlier says exact halving needs N+1 doubled; the paper's pair 12000/24000 is not exact halving, and the paper formula (4E_{2h}-E_h)/3 is attributed to a reading of subscripts; speculation about the paper's notation is asserted without evidence.",
-  "fix": "Hedge: 'we read the paper's subscripts as...' and note this is an interpretation."
+  "quote": "That number is dominated by the grid bias of about two spacings computed in this chapter; the real fluctuations",
+  "problem": "The chapter never computes the Wu--Sprung grid bias in checked form. It only quotes the paper's 'two mean spacings' and draws a figure. The claim 'computed in this chapter' has no assertion in CHECKS, although the computation is cheap.",
+  "fix": "Either write 'reported by the paper (Sec. II C) and plotted in Fig. wsbias', or add a CHECKS block that builds the spline potential, solves N=6000/12000/24000, and asserts Delta_n/gap_n on 401--500 is about 2, the Richardson residual against s_n is about 0.005 mean and 0.063 max, and optionally the raw null is about 2.09."
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Algebra and experiment agree that held-out values do not reach the fit.",
-  "problem": "The overwriting-with-noise experiment is for the sinusoidal controls only, not the operator fits; the chapter generalizes.",
-  "fix": "Say it supports the same conclusion for the sinusoidal controls."
+  "quote": "far larger than any plausible change in $\\Delta_n$",
+  "problem": "This is unsupported, and the paper says nothing of the kind. With |δV|=199 where V≈500, near the turning points of levels 201--300, δV/(E−V) is of order one or more. By the chapter's own Problem 29 the change in the bias could then be comparable to Δ_n itself (a fair fraction of a spacing). No estimate or computation is given.",
+  "fix": "Hedge it: 'the paper does not quantify this; by the estimate of Problem 29 the change in Δ_n could be a sizeable fraction of Δ_n itself (which is below two spacings at these levels), still smaller than the 2.64-spacing gap error, but we have not verified this'. Or add a small numerical check."
  },
  {
-  "category": "JUMP",
+  "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Treating $W$ as a small perturbation and using the continuum form of \\eqref{eq:finite-differences-hf}, the grid level should sit at",
-  "problem": "Eq. hf was derived for matrices; the continuum version and the replacement of the grid operator by H+W acting on smooth functions is asserted. Also W (fourth derivative) is unbounded, so 'small' is not justified beyond the pitfall.",
-  "fix": "Add a sentence that this step is heuristic and refer to Chapter 13 for the continuum formula."
+  "quote": "That experiment concerns the sinusoidal controls only, not the operator fits",
+  "problem": "In the paper the sentence 'Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical' stands on its own after step (20). The paper does not say whether it covers only the sinusoidal controls. The chapter states its interpretation as fact.",
+  "fix": "Write: 'The sentence follows step 20 (the sinusoidal controls), and we read it as referring to them; the paper does not say explicitly whether the operator fits were tested in the same way. For the operator fits the guarantee we can verify is the algebraic identity ...'."
  },
  {
-  "category": "JUMP",
+  "category": "ERROR",
   "severity": "low",
-  "quote": "which also vanishes at the walls (for a potential that is finite there, as all ours are)",
-  "problem": "The Wu--Sprung potential is only used up to V=1000 and finite; fine, but the second derivative argument also needs psi_n'' continuous up to the wall, not stated.",
-  "fix": "Mention smoothness of V."
- },
- {
-  "category": "CLARITY",
-  "severity": "low",
-  "quote": "The $n_{\\rm pw}=4$ entry reproduces the middle level of the three-point box: there $k=2$, $q=\\pi$, $h=0.5$",
-  "problem": "The three-point box k=2 energy error 18.9% uses (k pi/2L)=pi; consistent, but the table gives 19% vs 18.9%; minor rounding mismatch with the check tolerance.",
-  "fix": "Give the entry as 18.9%."
+  "quote": "For corrections that are a few percent of the local kinetic energy it is a few hundredths of a spacing or less.",
+  "problem": "This disagrees with the chapter's own Problem 29, which gives a relative change of order 2|δV−δE|/(E−V); the preceding sentence drops the factor 2. With Δ≈2 spacings and a 3% correction this gives about 0.12 spacings, not 'a few hundredths or less'. The number is also not checked.",
+  "fix": "Include the factor 2 ('multiplied by a ratio like 2|δV−δE_n|/(E−V)') and say 'of order a tenth of a spacing or less (smaller if δV oscillates and averages out)'. Label it an order-of-magnitude estimate."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "\\item Chapter~\\ref{ch:complex}: $e^{i\\theta}=\\cos\\theta+i\\sin\\theta$. Chapter~\\ref{ch:series}: the geometric series.",
-  "problem": "Prerequisites uses \\item directly inside prerequisites; fine, but the chapter references ch:fitting, ch:wu-sprung, ch:counting-zeros, ch:wkb, ch:non-hermitian, ch:perturbation which are allowed. No issue; however no CHECKS cover several quoted numbers (e.g. 71,700 within tolerance, 51.3, 2.78e-5 are covered; the 0.12 factor sqrt(h), the 652/1079 states, 2.5 times larger, 1.0e-3) and figure scripts are missing from the response.",
-  "fix": "Add the FIGURES section with scripts for the six figures and checks for sqrt(h)=0.122 and the continuum level counts in Problem 18."
+  "quote": "\\begin{didyouknow}{Weather by Hand}",
+  "problem": "The environment 'didyouknow' is used three times but is not among the environments the bible defines. If the preamble does not define it, the chapter will not compile. One box sits at the top of 'Answers to selected problems' and another directly under a section heading, which interrupts the mandated anatomy.",
+  "fix": "Remove the three didyouknow boxes or convert them to ordinary paragraphs, unless the coordinator confirms the environment exists. Do not place one inside the Answers section."
  },
  {
   "category": "RULE",
-  "severity": "medium",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/finite-differences_taylor.pdf}",
-  "problem": "Figures are included but no FIGURES part with scripts was supplied for taylor, grid, dispersion, richardson, states, wsbias.",
-  "fix": "Provide a '### FIG' script for each of the six figures."
+  "severity": "low",
+  "quote": "has error $h^2E_1^2/12\\approx3\\times10^{-11}$, completely negligible",
+  "problem": "Several quoted numbers are not asserted in CHECKS: this 3e-11, E_1=1.22483e-3, the 8.3e-4 box estimate in the oscillator sample, 5.007e-8 and 2.871e7 in the brute-force sample, the 0.155 error in Answer 31, and the 'about 10^{-11}' roundoff agreement in Answer 15 (checked only to 1e-8).",
+  "fix": "Add one-line assertions for each of these to CHECKS, or soften the Answer 15 claim to match the tolerance actually tested."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "gives this value to about $10^{-6}$, as the CHECKS script of this chapter confirms",
+  "problem": "The check uses tolerance 5e-6, not 1e-6, so the stated accuracy is not what is verified. The reader-facing text also refers to 'the CHECKS script', a production artifact the reader does not see. The same happens in the Paper connection ('the CHECKS script confirms that the same formula gives').",
+  "fix": "Tighten the check to the claimed accuracy, or write 'to within a few times 10^{-6}'. Replace references to the CHECKS script by 'as you can confirm with the listing above' or 'Problem 12'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "in the paper and in \\texttt{qmnt}, ``$N$'' always counts interior points",
+  "problem": "'Always' is wrong for the paper: N(T), N_sm and N_fl are counting functions. The bible requires this overload to be pointed out where relevant.",
+  "fix": "Write: 'for grids, the paper and qmnt use N for the number of interior points; do not confuse it with the counting functions N(T), N_sm, N_fl, which the paper writes with the same letter'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "a smooth parabola, no kink at $x=0$",
+  "problem": "A leading-order expansion V≈V_0+51.3x^2 does not show smoothness. Higher-order terms could contain odd powers such as |x|^3, which would break Richardson's condition 3. The full argument is that x is an odd analytic function of s=√(V−V_0).",
+  "fix": "Add: with s=√(V−V_0), √V is even in s and log[(√V+s)^2/V_0] is odd in s, so x(s) is odd and smooth with nonzero slope at s=0. Hence s is an odd smooth function of x and V=V_0+s^2 is even and smooth in x, with no |x|^3 terms."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and the second logarithm is $\\log\\big[(1+\\sqrt{\\varepsilon/V_0})^2\\big]\\approx2\\sqrt{\\varepsilon/V_0}$",
+  "problem": "Two steps are skipped: rationalizing (√V+s)/(√V−s)=(√V+s)^2/(V−s^2)=(√V+s)^2/V_0, and the approximation log(1+u)≈u. The first appears only in a code comment further down.",
+  "fix": "Insert the line (√V+√(V−V_0))/(√V−√(V−V_0))=(√V+√(V−V_0))^2/V_0 (multiply numerator and denominator by √V+√(V−V_0)), then set √V≈√V_0 and use log(1+u)≈u for small u."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "introduces odd powers of $h$ that Richardson does not remove",
+  "problem": "The claim about a kink in V is stated as fact with no derivation, example or reference. The bible forbids unsupported assertions.",
+  "fix": "Label it a numerical observation and add a problem or check (for example V=|x|, successive error ratios departing from 4), or soften to 'spoils the clean even-power expansion, so Richardson's cancellation is no longer guaranteed'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "see \\cite{trefethen} or the treatment in Chapter~\\ref{ch:perturbation}",
+  "problem": "The beyond box must say where the proof can be found. Trefethen and Bau does not prove differentiability of simple eigenvalues and eigenvectors in a parameter, and the Chapter 13 contract (derive the first-order shift) does not promise it either.",
+  "fix": "Describe the source in words (the implicit function theorem applied to the characteristic polynomial at a simple root, as in standard texts on matrix perturbation theory), or cite only a reference that contains it."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "use the continuum first-order formula $\\delta E\\approx\\int\\psi\\,\\delta H\\,\\psi\\,\\dd x$, which Chapter~\\ref{ch:perturbation} derives",
+  "problem": "The chapter contract assumes only Chapters 8 and 11 (and their prerequisites), and the prerequisites box does not list Chapter 13. A Chapter 13 result is used as an ingredient of a boxed formula.",
+  "fix": "Add Chapter 13 (first-order shift) to the prerequisites box, or justify the continuum formula as the h→0 limit of Eq. (hf) written with grid sums, which keeps the section self-contained."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The paper reports the result: the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C).",
-  "problem": "The quote's location is Sec. II C paragraph 'No leakage', fine, but the chapter intro says Eq.(3) is in II C while the paper's reference sheet puts it there too; ok. Statement 'bias eight times larger than the signal' is rough (2/0.263=7.6).",
-  "fix": "Say 'about eight times'."
+  "quote": "comparable to, and larger than, the tiny fluctuations",
+  "problem": "'Comparable to, and larger than' is self-contradictory and understates the point. The bias (about 2 spacings) is roughly eight times the fluctuation rms (0.263), as the chapter says later.",
+  "fix": "Replace with 'several times larger than the tiny fluctuations'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Appendix~A, steps 3--5 and 9, records the grids",
+  "problem": "Steps 3--5 record grids, solver and bias-corrected targets. Step 9 records the tensor construction and the normalization Σψ²dx=1, not grids.",
+  "fix": "Write: 'Appendix A steps 3--5 record the grids, the solver and the corrected targets, and step 9 the normalization of the eigenvectors'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "has ground state $\\psi_0\\propto e^{-x^2/2}$ with $E_0=1$",
+  "problem": "Notation clash: ψ_0 was defined in this chapter as the wall value (ψ_0=0), and levels are otherwise indexed from 1 (E_1 is the box ground state). Here ψ_0 and E_0 denote the oscillator ground state.",
+  "fix": "Add 'oscillator states are traditionally numbered from n=0; do not confuse this ψ_0 with the wall value ψ_0=0 of Eq. (walls)', or rename to ψ_gs, E_gs."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The grid levels are \\emph{below} the true levels (the first correction is negative), for every $k$.",
+  "problem": "A negative leading term of a series that is valid only for small y does not justify 'for every k'. The real reason (sin²y<y² for all y>0) appears only later in a checkpoint answer.",
+  "fix": "Replace the parenthesis by '(exactly, because sin²y<y² for every y>0 in Eq. (box-exact); the series shows the leading size)'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Since grid levels sit below the true ones (\\cref{sec:finite-differences-bias}), $\\Delta_n<0$",
+  "problem": "'Grid levels sit below the true ones' was proved only for the box. For a general potential it rests on the heuristic estimate Eq. (bias-estimate), which the chapter itself labels as not a theorem.",
+  "fix": "Write 'Since grid levels sit below the true ones (exactly for the box, and to leading order by the heuristic estimate of Sec. ... for smooth potentials), Δ_n is negative in practice'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "on two finer grids related by exact halving",
+  "problem": "The definition says the Richardson grids are related by exact halving, but the paper's pairs 12000/24000 and 16000/32000 are not (r=24001/12001), as the chapter explains later. A reader may think the paper's Δ_n does not meet the definition.",
+  "fix": "Write 'on two finer grids related by (nearly) exact halving; see Sec. Paper connection and Problem 11 for the paper's pairs'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "For a one-dimensional bound-state problem the eigenvalues are non-degenerate and come out sorted",
+  "problem": "Non-degeneracy of 1D bound states is asserted without proof or a pointer. The matrix version is also unjustified.",
+  "fix": "Add a pointer ('Chapter bound-states: node counting orders the states, one per node number') or a one-line reason. Label the matrix statement (a symmetric tridiagonal matrix with nonzero off-diagonals has distinct eigenvalues) as a fact taken on trust."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the natural replacement is the trapezoid rule, which approximates the integral of a function $g$ by",
+  "problem": "The trapezoid rule is used without saying where it comes from or how accurate it is. It is not in the prerequisites list.",
+  "fix": "Add one sentence: each strip [x_j,x_{j+1}] is replaced by a trapezoid of area h(g_j+g_{j+1})/2; summing gives the formula, with error O(h²) for smooth g. Or list it under first-year calculus in the prerequisites."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "For a small change $\\varepsilon\\mathsf W$, the eigenvalue moves by approximately $\\varepsilon\\,\\mathbf u^\\top\\mathsf W\\mathbf u$.",
+  "problem": "The bible requires each new concept to have a fully worked numerical example. Eq. (hf) has none before it is used for the bias estimate and for A_nk.",
+  "fix": "Add a short sample. For the three-point box, add ε·diag(0,1,0); predict dE_1/dε=u_2²=0.5 from u=(0.5,0.7071,0.5); compare with the exact lowest eigenvalue at ε=0.01. Include it in CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and $E-V<E$ wherever the potential is above $V_0\\approx9.7$",
+  "problem": "The sentence is muddled: E−V<E holds everywhere, since V≥V_0>0. The intended point is that V is a substantial fraction of E over most of the allowed region.",
+  "fix": "Replace with: 'In the Wu--Sprung well V rises from V_0≈9.7 to E across the allowed region, so E−V is well below E over most of it and tends to zero at the turning points, where the state spends much of its time.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "(The exact agreement is a lucky feature of this tiny example, not a general rule.)",
+  "problem": "For the box it is not luck. The grid eigenvectors are exact samples and ψ²φ_k is a trigonometric polynomial, for which the equal-weight grid sum is exact whenever no aliasing occurs. Problem 32 (N=99) will also agree to roundoff, contradicting 'lucky'.",
+  "fix": "Replace with: '(For the box this exactness is systematic, because the grid sum integrates low-order trigonometric polynomials exactly; for a general potential the grid sum differs from the continuum integral by O(h²).)'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "exactly the factor $2^2$ that second-order accuracy predicts",
+  "problem": "The ratio is 3.999, shown rounded to 4.00. 'Exactly' is wrong, since the h⁴ terms make it slightly different from 4.",
+  "fix": "Write 'the factor 2²=4 that second-order accuracy predicts, to three digits'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the pattern of the $10\\times10$ matrix $\\mathsf H$ of Eq.~\\eqref{eq:finite-differences-matrix} with $V=0$",
+  "problem": "The left panel shows N=7 interior points while the right panel shows a 10×10 matrix, so the figure's two halves do not match.",
+  "fix": "Use the same N in both panels (a 7×7 matrix) and update the script and caption."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Put $V=V_0+\\varepsilon$ with small $\\varepsilon$ in Eq.~(2).",
+  "problem": "The chapter uses three unrelated epsilons: \\epsilon for machine epsilon, \\varepsilon for the perturbation parameter in Eq. (hf), and \\varepsilon again for V−V_0.",
+  "fix": "Rename this one (for example V=V_0+η, or use s²) and remind the reader that it is unrelated to machine epsilon and to the perturbation parameter."
  }
 ]
