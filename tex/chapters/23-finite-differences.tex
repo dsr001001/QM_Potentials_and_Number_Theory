@@ -3,9 +3,9 @@
 \begin{chapterintro}
 In Chapter~\ref{ch:bound-states} you solved the infinite square well with pencil and paper: you wrote down sines and cosines, imposed the walls, and read off the energies $E_k=(k\pi/2L)^2$. That worked because the potential inside the box was zero. The potential this book cares about, the Wu--Sprung potential, has no such luck. Nobody can write its eigenfunctions in closed form. To get its energy levels we have to hand the problem to a computer.
 
-A computer cannot take a derivative of a function it only knows at a finite list of points. What it can do is subtract neighboring numbers. In this chapter you will learn to replace $-\dd^2\psi/\dd x^2$ by a difference of neighboring values, and you will watch the Schr\"odinger equation turn into a matrix eigenvalue problem of exactly the kind Chapter~\ref{ch:eigen} taught you to solve. That replacement has a price. The computed levels are slightly wrong, and the error grows quickly with the level number. For the levels that matter in the paper the error is not small at all: at levels 401--500 it is comparable to, and larger than, the tiny fluctuations the paper is trying to predict. So we will learn how big the error is, why it has the size it has, how to remove it by Richardson extrapolation, and how to keep track of normalization when integrals become sums.
+A computer cannot take a derivative of a function it only knows at a finite list of points. What it can do is subtract neighboring numbers. In this chapter you will learn to replace $-\dd^2\psi/\dd x^2$ by a difference of neighboring values, and you will watch the Schr\"odinger equation turn into a matrix eigenvalue problem of exactly the kind Chapter~\ref{ch:eigen} taught you to solve. That replacement has a price. The computed levels are slightly wrong, and the error grows quickly with the level number. For the levels that matter in the paper the error is not small at all: at levels 401--500 it is several times larger than the tiny fluctuations the paper is trying to predict. So we will learn how big the error is, why it has the size it has, how to remove it by Richardson extrapolation, and how to keep track of normalization when integrals become sums.
 
-\emph{Where this shows up in the paper.} Section~II~B of the paper \cite{soniR1} describes the ``forward solver'': second-order finite differences on $N$ interior points with Dirichlet walls, a symmetric tridiagonal matrix, eigenpairs from LAPACK, and a Richardson extrapolation used to correct the \emph{targets} rather than the operator. Section~II~C proves, in Eq.~(3), that this correction leaks no information from the held-out zeros. Appendix~A, steps 3--5 and 9, records the grids, and its list of key anchors contains a striking number: without the correction the null model's error on zeros 401--500 is $2.09$ mean spacings instead of $0.263$. By the end of this chapter you will be able to explain every one of those statements and reproduce the underlying computations at small scale.
+\emph{Where this shows up in the paper.} Section~II~B of the paper \cite{soniR1} describes the ``forward solver'': second-order finite differences on $N$ interior points with Dirichlet walls, a symmetric tridiagonal matrix, eigenpairs from LAPACK, and a Richardson extrapolation used to correct the \emph{targets} rather than the operator. Section~II~C proves, in Eq.~(3), that this correction leaks no information from the held-out zeros. Appendix~A steps 3--5 record the grids, the solver and the corrected targets, and step 9 the normalization of the eigenvectors; the appendix's list of key anchors contains a striking number: without the correction the null model's error on zeros 401--500 is $2.09$ mean spacings instead of $0.263$. By the end of this chapter you will be able to explain every one of those statements and reproduce the underlying computations at small scale.
 \end{chapterintro}
 
 \begin{prerequisites}
@@ -91,7 +91,7 @@ The exact value is $f''(1)=-\sin1=-0.8414710$.
 \begin{equation*}
 \boxed{\frac{7.010\times10^{-4}}{1.753\times10^{-4}}=4.00}
 \end{equation*}
-exactly the factor $2^2$ that second-order accuracy predicts.
+the factor $2^2=4$ that second-order accuracy predicts, to three digits (the small $h^4$ terms keep it from being exactly 4).
 \end{sample}
 
 \subsection{When smaller is not better: roundoff}
@@ -136,7 +136,7 @@ Divide $[-L,L]$ into $N+1$ equal intervals. That creates $N+2$ points,
 x_j=-L+jh,\qquad j=0,1,\dots,N+1,\qquad h=\frac{2L}{N+1}.
 \label{eq:finite-differences-grid}
 \end{equation}
-The spacing formula follows because $N+1$ intervals of width $h$ must fill the length $2L$. The two end points $x_0=-L$ and $x_{N+1}=L$ sit on the walls. The other $N$ points, $x_1,\dots,x_N$, are the \emph{interior points}; in the paper and in \texttt{qmnt}, ``$N$'' always counts interior points. Write $\psi_j$ for our approximation to $\psi(x_j)$ and $V_j=V(x_j)$. The walls give
+The spacing formula follows because $N+1$ intervals of width $h$ must fill the length $2L$. The two end points $x_0=-L$ and $x_{N+1}=L$ sit on the walls. The other $N$ points, $x_1,\dots,x_N$, are the \emph{interior points}; for grids, the paper and \texttt{qmnt} use ``$N$'' for the number of interior points. Do not confuse it with the counting functions $N(T)$, $\Nsm$ and $\Nfl$, which the paper writes with the same letter. Write $\psi_j$ for our approximation to $\psi(x_j)$ and $V_j=V(x_j)$. The walls give
 \begin{equation}
 \psi_0=0,\qquad \psi_{N+1}=0,
 \label{eq:finite-differences-walls}
@@ -188,7 +188,7 @@ Three properties follow at once from the pattern of entries.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/finite-differences_grid.pdf}
-\caption{Left: the grid of Eq.~\eqref{eq:finite-differences-grid} for $N=7$ interior points on $[-1,1]$ (units $\hbar=2m=1$, $x$ dimensionless). Hollow squares: wall points where $\psi=0$; filled dots: the $N$ unknowns, here the sampled ground state of the box. Right: the pattern of the $10\times10$ matrix $\mathsf H$ of Eq.~\eqref{eq:finite-differences-matrix} with $V=0$; only three diagonals are nonzero.}
+\caption{Left: the grid of Eq.~\eqref{eq:finite-differences-grid} for $N=7$ interior points on $[-1,1]$ (units $\hbar=2m=1$, $x$ dimensionless). Hollow squares: wall points where $\psi=0$; filled dots: the $N$ unknowns, here the sampled ground state of the box. Right: the pattern of the $7\times7$ matrix $\mathsf H$ of Eq.~\eqref{eq:finite-differences-matrix} with $V=0$; only three diagonals are nonzero.}
 \label{fig:finite-differences-grid}
 \end{figure}
 
@@ -256,9 +256,7 @@ The library \texttt{qmnt} provides the same thing as \texttt{qmnt.fd\_levels(Vva
 %==========================================================
 \section{A test we can solve exactly: the box on a grid}\label{sec:finite-differences-box}
 % DYK-BEGIN
-\begin{didyouknow}{Weather by Hand}
-Lewis Fry Richardson's 1922 book \emph{Weather Prediction by Numerical Process} replaced the equations of the atmosphere with finite differences on a grid. His hand-computed six-hour forecast came out badly wrong, largely because of problems with the initial data. He imagined a forecast factory of 64{,}000 human computers. Electronic computers later made his grid approach the basis of modern forecasting. He also invented Richardson extrapolation, which you meet in this chapter.
-\end{didyouknow}
+
 % DYK-END
 
 Before trusting a numerical method on a hard problem, test it on a problem whose answer you know. The infinite well with $V=0$ is perfect, because, remarkably, the \emph{discrete} problem can also be solved exactly. That will tell us precisely how the error depends on $h$ and on the level index.
@@ -337,7 +335,7 @@ Therefore
 \end{equation}
 Three lessons are packed into this formula.
 \begin{itemize}
-\item The grid levels are \emph{below} the true levels (the first correction is negative), for every $k$.
+\item The grid levels are \emph{below} the true levels for every $k$: exactly so, because $\sin^2y<y^2$ for every $y>0$ in Eq.~\eqref{eq:finite-differences-box-exact}; the series gives the leading size of the deficit.
 \item The error is $\order(h^2)$, as \eqref{eq:finite-differences-second-difference} promised, with only even powers of $h$.
 \item At fixed $h$ the error grows like $E_k^2$, that is like $k^4$. The relative error, $h^2E_k/12$, grows like $k^2$. High levels are far worse than low ones.
 \end{itemize}
@@ -432,7 +430,7 @@ Let $\mathsf H(\varepsilon)=\mathsf H_0+\varepsilon\mathsf W$, where $\mathsf H_
 \end{equation*}
 
 \begin{beyond}
-That a non-repeated eigenvalue and its eigenvector depend smoothly (differentiably) on $\varepsilon$ is a standard theorem of matrix perturbation theory, which we take on trust; see \cite{trefethen} or the treatment in Chapter~\ref{ch:perturbation}. Everything below is then ordinary calculus.
+That a non-repeated eigenvalue and its eigenvector depend smoothly (differentiably) on $\varepsilon$ is a standard theorem of matrix perturbation theory, which we take on trust. Its proof applies the implicit function theorem to the characteristic equation $\det(\mathsf H(\varepsilon)-E\,I)=0$ at a simple root (where the derivative of the determinant with respect to $E$ is nonzero), and then to the linear equations for the eigenvector; it is found in standard texts on matrix perturbation theory. Everything below is then ordinary calculus.
 \end{beyond}
 
 Differentiate the eigen-equation with respect to $\varepsilon$, using the product rule and writing a prime for $\dd/\dd\varepsilon$:
@@ -450,13 +448,27 @@ Because $\mathsf H$ is symmetric, $\mathbf u^\top\mathsf H=(\mathsf H\mathbf u)^
 \end{equation}
 For a small change $\varepsilon\mathsf W$, the eigenvalue moves by approximately $\varepsilon\,\mathbf u^\top\mathsf W\mathbf u$. The continuum version, which Chapter~\ref{ch:perturbation} derives, reads $\delta E\approx\int\psi\,\delta H\,\psi\,\dd x$. Keep \eqref{eq:finite-differences-hf} in mind: we will use it twice more in this chapter.
 
+\begin{sample}{An eigenvalue nudged by hand}
+Take the three-point box of Sample Problem ``A three-point box'' ($L=1$, $h=0.5$, $V=0$) and add $\varepsilon$ to the middle diagonal entry only, so $\mathsf W=\mathrm{diag}(0,1,0)$. Predict $\dd E/\dd\varepsilon$ for the lowest eigenvalue from Eq.~\eqref{eq:finite-differences-hf} and test the prediction at $\varepsilon=0.01$.
+
+\textbf{Step 1: The unit eigenvector.} By \cref{sec:finite-differences-box}, the lowest eigenvector is proportional to $(\sin\frac\pi4,\sin\frac\pi2,\sin\frac{3\pi}4)=(0.7071,1,0.7071)$. Its squares sum to $0.5+1+0.5=2$, so dividing by $\sqrt2$ gives the unit vector $\mathbf u=(0.5,0.7071,0.5)$.
+
+\textbf{Step 2: Predict.} $\mathbf u^\top\mathsf W\mathbf u=u_2^2=0.5$, so the lowest eigenvalue should rise by about $0.5\varepsilon=5.000\times10^{-3}$, from $2.343146$ to $2.348146$.
+
+\textbf{Step 3: Exact.} The lowest eigenvalue of the matrix with rows $(8,-4,0)$, $(-4,8.01,-4)$, $(0,-4,8)$, computed with \texttt{np.linalg.eigvalsh}, is $2.3481435$, a rise of $4.998\times10^{-3}$.
+\begin{equation*}
+\boxed{\frac{\dd E}{\dd\varepsilon}=0.5;\quad\text{predicted shift }5.000\times10^{-3},\ \text{exact }4.998\times10^{-3}.}
+\end{equation*}
+The tiny difference is the next term of the expansion in $\varepsilon$, of order $\varepsilon^2$.
+\end{sample}
+
 \subsection{The grid as a perturbed Hamiltonian}
 
 By \eqref{eq:finite-differences-second-difference}, applied to a smooth wavefunction, $-D_h^2\psi=-\psi''-\tfrac{h^2}{12}\psi''''-\cdots$. So, acting on smooth functions, the grid Hamiltonian looks like the true Hamiltonian plus an extra operator,
 \begin{equation*}
 H_{\rm grid}\approx H+W,\qquad W=-\frac{h^2}{12}\frac{\dd^4}{\dd x^4}.
 \end{equation*}
-This step is heuristic, for three reasons: Eq.~\eqref{eq:finite-differences-hf} was proved for matrices, not for differential operators; the replacement of the grid operator by $H+W$ holds only when acting on smooth functions; and $W$ is not a small operator in general (it is large on rapidly varying functions). We nevertheless treat $W$ as a small perturbation and use the continuum first-order formula $\delta E\approx\int\psi\,\delta H\,\psi\,\dd x$, which Chapter~\ref{ch:perturbation} derives. Then the grid level should sit at
+This step is heuristic, for three reasons: Eq.~\eqref{eq:finite-differences-hf} was proved for matrices, not for differential operators; the replacement of the grid operator by $H+W$ holds only when acting on smooth functions; and $W$ is not a small operator in general (it is large on rapidly varying functions). We nevertheless treat $W$ as a small perturbation and carry Eq.~\eqref{eq:finite-differences-hf} over to functions. If $\psi$ is normalized, $\int\psi^2\,\dd x=1$, then the grid vector with entries $u_j=\sqrt h\,\psi(x_j)$ is approximately a unit vector, because $\sum_ju_j^2=\sum_j\psi(x_j)^2h$ is a Riemann sum for $\int\psi^2\,\dd x$. Likewise $\mathbf u^\top\mathsf W\mathbf u=\sum_j\psi(x_j)\,(W\psi)(x_j)\,h$ is a Riemann sum for $\int\psi\,W\psi\,\dd x$. So the continuum form of Eq.~\eqref{eq:finite-differences-hf} is $\delta E\approx\int\psi\,\delta H\,\psi\,\dd x$ (Chapter~\ref{ch:perturbation} reaches the same formula directly in the continuum). Then the grid level should sit at
 \begin{equation*}
 E_n^{\rm grid}-E_n\approx\int_{-L}^{L}\psi_n\,W\psi_n\,\dd x=-\frac{h^2}{12}\int_{-L}^{L}\psi_n\,\psi_n''''\,\dd x,
 \end{equation*}
@@ -484,7 +496,7 @@ Equation \eqref{eq:finite-differences-bias-estimate} is a \textbf{heuristic, lea
 The quantity $E_n-V(x)$ is the local kinetic energy, and in our units it equals the square of the local wavenumber, $q(x)^2=E_n-V(x)$, inside the classically allowed region. So \eqref{eq:finite-differences-bias-estimate} says: the grid bias of a level is $h^2/12$ times the average of $q(x)^4$ over the state. Where the particle moves fast (deep in the well, high above the potential) the wave is short and the grid underestimates it most. Near a classical turning point $q\to0$ and the grid does well. This is the general version of the box statement ``error grows like $E^2$''.
 
 \begin{sample}{Grid bias for the harmonic oscillator}
-Recall from Chapter~\ref{ch:bound-states} that in units $\hbar=2m=1$ the Hamiltonian $H=-\dd^2/\dd x^2+x^2$ has ground state $\psi_0\propto e^{-x^2/2}$ with $E_0=1$. Estimate the grid bias of $E_0$ for $h=0.1$ and predict the computed value.
+Recall from Chapter~\ref{ch:bound-states} that in units $\hbar=2m=1$ the Hamiltonian $H=-\dd^2/\dd x^2+x^2$ has ground state $\psi_0\propto e^{-x^2/2}$ with $E_0=1$. (Oscillator states are traditionally numbered from $n=0$; do not confuse this $\psi_0$ with the wall value $\psi_0=0$ of Eq.~\eqref{eq:finite-differences-walls}.) Estimate the grid bias of $E_0$ for $h=0.1$ and predict the computed value.
 
 \textbf{Step 1: The integrand.} $E_0-V=1-x^2$, so $(E_0-V)^2=1-2x^2+x^4$ and
 \begin{equation*}
@@ -502,7 +514,7 @@ E_0^{\rm grid}-E_0\approx-\frac{h^2}{12}\cdot\frac34=-\frac{h^2}{16}=-6.25\times
 \begin{equation*}
 \boxed{E_0^{\rm grid}\approx0.999375.}
 \end{equation*}
-Solving the tridiagonal problem on $[-10,10]$ with $N=199$ (so $h=20/200=0.1$; the walls are so far out that $\psi_0$ is negligible there) gives this value to about $10^{-6}$, as the CHECKS script of this chapter confirms. Notice that the box formula $h^2E_0^2/12=8.3\times10^{-4}$ would overestimate the bias: the potential slows the particle down, and the state spends time near its turning points.
+Solving the tridiagonal problem on $[-10,10]$ with $N=199$ (so $h=20/200=0.1$; the walls are so far out that $\psi_0$ is negligible there) gives this value to within a few times $10^{-6}$, as Problem~12 lets you confirm. Notice that the box formula $h^2E_0^2/12=8.3\times10^{-4}$ would overestimate the bias: the potential slows the particle down, and the state spends time near its turning points.
 \end{sample}
 
 \subsection{Why levels 401--500 are hard}
@@ -532,12 +544,16 @@ We could shrink the bias by brute force: more points. Because the error is $\ord
 
 \subsection{The derivation}
 
-For a given level, write its computed value on a grid of spacing $h$ as $E(h)$. From \eqref{eq:finite-differences-second-difference} (and, for the box, explicitly from \eqref{eq:finite-differences-box-expansion}), the error is a series in even powers of $h$:
+For a given level, write its computed value on a grid of spacing $h$ as $E(h)$. For the box we proved, in Eq.~\eqref{eq:finite-differences-box-expansion}, that the error is a series in even powers of $h$. For a general potential, Eq.~\eqref{eq:finite-differences-second-difference} makes this plausible, since the local error of $D_h^2$ contains only even powers of $h$; but that equation describes the difference operator acting on a fixed function, not the eigenvalues of the grid matrix, so for a general smooth potential the eigenvalue expansion is an assumption here (see the box below). We assume
 \begin{equation}
 E(h)=E+Ch^2+Dh^4+\order(h^6),
 \label{eq:finite-differences-error-series}
 \end{equation}
-where $E$ is the exact level and $C$, $D$ are numbers that depend on the level and the potential but not on $h$. Now compute the same level on a grid with half the spacing:
+where $E$ is the exact level and $C$, $D$ are numbers that depend on the level and the potential but not on $h$.
+
+\begin{beyond}
+For a smooth potential on a finite interval with Dirichlet walls, the eigenvalues of the second-order finite-difference matrix do have, for each fixed level, an expansion $E(h)=E+Ch^2+Dh^4+\cdots$ in even powers of $h$. We take this on trust. Its proof belongs to the numerical analysis of finite-difference eigenvalue problems and is found in advanced texts on that subject; in this book it is proved only for the box, Eq.~\eqref{eq:finite-differences-box-expansion}. You need not trust it blindly: condition 2 below gives an empirical test (successive differences should shrink by a factor close to 4), and Problem~25 applies it.
+\end{beyond} Now compute the same level on a grid with half the spacing:
 \begin{equation*}
 E(h/2)=E+C\frac{h^2}{4}+D\frac{h^4}{16}+\order(h^6).
 \end{equation*}
@@ -571,9 +587,9 @@ With $r=2$ this is \eqref{eq:finite-differences-richardson}.
 
 Every step above relied on something; here is the list.
 \begin{enumerate}
-\item \textbf{The same level on both grids.} $E(h)$ and $E(h/2)$ must be the \emph{same} physical level. For a one-dimensional bound-state problem the eigenvalues are non-degenerate and come out sorted, so ``the $n$-th smallest eigenvalue on each grid'' identifies the level, as long as $n$ is far below $N$.
+\item \textbf{The same level on both grids.} $E(h)$ and $E(h/2)$ must be the \emph{same} physical level. The grid matrix has no repeated eigenvalues. Proof: suppose $\mathsf H\mathbf v=\lambda\mathbf v$. The first row of $\mathsf H$ gives $(2/h^2+V_1-\lambda)v_1-v_2/h^2=0$, which fixes $v_2$ once $v_1$ is known; row $j$, Eq.~\eqref{eq:finite-differences-row}, then fixes $v_{j+1}$ from $v_j$ and $v_{j-1}$, because the coefficient $-1/h^2$ of $v_{j+1}$ is not zero. So $v_1=0$ forces $\mathbf v=0$, and every eigenvector for $\lambda$ is a multiple of the one with $v_1=1$: each eigenspace is one-dimensional. For a symmetric matrix the number of times an eigenvalue is repeated equals the dimension of its eigenspace (spectral theorem, Chapter~\ref{ch:eigen}), so all $N$ eigenvalues are distinct. (The continuum counterpart is the non-degeneracy of one-dimensional bound states, Chapter~\ref{ch:bound-states}.) The solver returns them sorted, so ``the $n$-th smallest eigenvalue on each grid'' identifies the level, as long as $n$ is far below $N$.
 \item \textbf{The asymptotic regime.} The expansion \eqref{eq:finite-differences-error-series} must be dominated by its first term, which requires many points per wavelength. A practical test: the ratio $[E(h)-E(h/2)]/[E(h/2)-E(h/4)]$ should be close to 4.
-\item \textbf{Smoothness.} The derivation of \eqref{eq:finite-differences-second-difference} needs a smooth wavefunction, which needs a smooth potential. A kink in $V$ (for example $\abs{x}$ at $x=0$) introduces odd powers of $h$ that Richardson does not remove.
+\item \textbf{Smoothness.} The derivation of \eqref{eq:finite-differences-second-difference} needs a smooth wavefunction, which needs a smooth potential. A kink in $V$ (for example $\abs{x}$ at $x=0$) makes $\psi''$ jump in slope there, so the Taylor argument fails at the kink, the clean even-power expansion is no longer guaranteed, and neither is Richardson's cancellation; the ratio test of condition 2 is the practical way to detect such trouble.
 \item \textbf{The right weights.} The \emph{finer} grid gets the weight 4. Swapping them makes things worse, not better (Problem~31).
 \item \textbf{Exact halving.} Halving $h$ means doubling $N+1$, not $N$. Doubling $N$ gives a ratio $r$ slightly below 2; \eqref{eq:finite-differences-richardson-r} shows how small the resulting mistake is (Problem~11).
 \end{enumerate}
@@ -639,14 +655,12 @@ In $E^{\rm Rich}=(4E_a-E_b)/3$, which grid is $a$: the coarse one or the fine on
 %==========================================================
 \section{Normalization and integrals on a grid}\label{sec:finite-differences-normalization}
 % DYK-BEGIN
-\begin{didyouknow}{Kepler and the Wine Barrels}
-In 1615 Johannes Kepler published a book on measuring the volume of wine barrels, prompted by buying wine for his 1613 wedding and doubting the merchants' measuring method. One of his formulas is equivalent to what we now call Simpson's rule, which Thomas Simpson published in 1743. Grid integration is old: weight a few sample values cleverly and you get an excellent estimate of an area.
-\end{didyouknow}
+
 % DYK-END
 
 \subsection{From integrals to sums}
 
-The continuum wavefunction is normalized by $\int_{-L}^{L}\psi^2\,\dd x=1$ (Chapter~\ref{ch:schrodinger}; we take $\psi$ real). On the grid the natural replacement is the trapezoid rule, which approximates the integral of a function $g$ by
+The continuum wavefunction is normalized by $\int_{-L}^{L}\psi^2\,\dd x=1$ (Chapter~\ref{ch:schrodinger}; we take $\psi$ real). On the grid the natural replacement is the trapezoid rule. Replace the area under $g$ over each strip $[x_j,x_{j+1}]$ by the area $h(g_j+g_{j+1})/2$ of the trapezoid through the two end values, and add the $N+1$ strips. Each interior value belongs to two strips and so appears with total weight $h$; each end value belongs to one strip and appears with weight $h/2$. (For smooth $g$ the error of the rule is $\order(h^2)$, a standard result of numerical integration \cite{nr} that we do not need below.) The rule approximates the integral of a function $g$ by
 \begin{equation*}
 \int_{-L}^{L}g\,\dd x\approx h\left[\frac{g_0}{2}+g_1+g_2+\cdots+g_N+\frac{g_{N+1}}{2}\right].
 \end{equation*}
@@ -704,7 +718,7 @@ For the three-point box ($L=1$, $N=3$, $h=0.5$), find the unit eigenvector of th
 \begin{equation*}
 \boxed{\bm\psi=(0.7071,\,1,\,0.7071),\qquad A_{11}=0.5\ \text{on the grid and in the continuum.}}
 \end{equation*}
-(The exact agreement is a lucky feature of this tiny example, not a general rule.)
+(For the box this agreement is not an accident: the grid vectors are exact samples of the continuum states, and the equal-weight grid sum reproduces exactly the integral of a product of a few low-frequency sines and cosines, as Problem~9 illustrates for $\sin^2$. For a general potential the grid sum and the continuum integral differ by $\order(h^2)$.)
 \end{sample}
 
 \begin{figure}[htbp]\centering
@@ -739,7 +753,7 @@ The paper uses option 3. Let us define it precisely.
 
 \subsection{Definitions}
 
-Let $V$ be the smooth (unperturbed) potential. Compute its levels three times: on the working grid, giving $E_n^{g}[\mathrm{smooth}]$, and on two finer grids related by exact halving, combined by \eqref{eq:finite-differences-richardson} into $E_n^{\rm Rich}[\mathrm{smooth}]$, an estimate of the true continuum levels with only $\order(h^4)$ error. Define the \emph{grid bias}
+Let $V$ be the smooth (unperturbed) potential. Compute its levels three times: on the working grid, giving $E_n^{g}[\mathrm{smooth}]$, and on two finer grids related by (nearly) exact halving (see \cref{sec:finite-differences-paper} and Problem~11 for the paper's pairs), combined by \eqref{eq:finite-differences-richardson} into $E_n^{\rm Rich}[\mathrm{smooth}]$, an estimate of the true continuum levels with only $\order(h^4)$ error. Define the \emph{grid bias}
 \begin{equation}
 \Delta_n=E_n^{g}[\mathrm{smooth}]-E_n^{\rm Rich}[\mathrm{smooth}]
 \label{eq:finite-differences-Delta}
@@ -749,7 +763,7 @@ and the \emph{bias-corrected targets}
 \tilde t_n=t_n+\Delta_n.
 \label{eq:finite-differences-ttilde}
 \end{equation}
-Since grid levels sit below the true ones (\cref{sec:finite-differences-bias}), $\Delta_n<0$ and the corrected targets are lowered to where the working grid would place a level that is truly at $t_n$. The fit then compares working-grid eigenvalues $E_n[\mathrm{fit}]$ with $\tilde t_n$.
+Since grid levels sit below the true ones (exactly for the box, \cref{sec:finite-differences-box}, and to leading order by the heuristic estimate of \cref{sec:finite-differences-bias} for smooth potentials), $\Delta_n$ is negative in practice and the corrected targets are lowered to where the working grid would place a level that is truly at $t_n$. The fit then compares working-grid eigenvalues $E_n[\mathrm{fit}]$ with $\tilde t_n$.
 
 \subsection{The approximation being made}
 
@@ -758,7 +772,7 @@ Option 3 assumes that the grid bias of the \emph{fitted} potential equals that o
 \item \textbf{Exactly true for a constant shift.} If $\delta V=c$ everywhere, the grid matrix changes by $c$ times the identity, so every grid eigenvalue shifts by exactly $c$; the continuum levels and the Richardson estimate also shift by exactly $c$. The difference $\Delta_n$ is unchanged.
 \item \textbf{Approximately true for a small varying correction.} By \eqref{eq:finite-differences-bias-estimate} the bias depends on $\langle(E_n-V)^2\rangle$. Adding $\delta V$ changes $E_n-V$ to $E_n+\delta E_n-V-\delta V$. Problem~29 shows the bias then changes by approximately $-\tfrac{h^2}{6}\langle(E_n-V)(\delta E_n-\delta V)\rangle$, which is a small fraction of $\Delta_n$ as long as $\delta V-\delta E_n$ is small compared with the local kinetic energy $E_n-V$ over the region the level occupies.
 \end{itemize}
-The neglected piece is therefore the change of a correction that is itself of order two mean spacings, multiplied by a ratio like $\abs{\delta V}/(E-V)$. For corrections that are a few percent of the local kinetic energy it is a few hundredths of a spacing or less. Keep in mind that this is an estimate built on the heuristic \eqref{eq:finite-differences-bias-estimate}.
+The neglected piece is therefore the change of a correction that is itself of order two mean spacings, multiplied by a ratio like $2\abs{\delta V-\delta E_n}/(E_n-V)$ (Problem~29). As an order-of-magnitude estimate: if $\delta V-\delta E_n$ is $3\%$ of the local kinetic energy, the change is about $2\times0.03\times2=0.12$ spacings, roughly a tenth of a spacing; it is smaller where $\delta V$ oscillates and its effect averages out over the state. Keep in mind that this is an estimate built on the heuristic \eqref{eq:finite-differences-bias-estimate}.
 
 \subsection{Why the correction leaks nothing: the identity of the paper's Eq.~(3)}
 
@@ -821,11 +835,19 @@ Everything in this chapter was built to read the paper's ``forward solver''. Her
 
 \paragraph{The solver (Sec.~II~B, App.~A steps 3--4).} The paper works in units $\hbar=2m=1$ with $H=-\dd^2/\dd x^2+V(x)$, $V$ even. It uses ``second-order finite differences on $N$ uniform interior points (Dirichlet walls)'', which ``give a symmetric tridiagonal matrix; eigenpairs from LAPACK''. That is \cref{sec:finite-differences-grid} exactly: Appendix~A step 4 records the matrix as ``tridiagonal $\mathrm{diag}=2/dx^2+V$, off $=-1/dx^2$'' (the paper's $dx$ is our $h$) and the solver as \texttt{eigh\_tridiagonal}, the routine used in our listings. Step 3 records the grids: interior-point uniform on $(-L,L)$, scale~1 with $L=44.8827$ and working grid $N=6000$, scale~2 with $L=59.9572$ and $N=8000$. With $h=2L/(N+1)$ both scales have nearly the same spacing, $0.0149585$ and $0.0149874$ (Problem~1). The paper evaluates only the eigenvalues it needs: step 4 lists ranges $[0,900]$ for the scale-1 Hermitian work, $[0,1000]$ for the tensors of Sec.~II~E (652 states) and $[0,1500]$ at scale~2 (1079 states).
 
-\paragraph{The potential on the grid (Sec.~II~B, App.~A step 3).} The Wu--Sprung potential is given implicitly by $x(V)$, Eq.~(2), which Chapter~\ref{ch:wu-sprung} derives. The paper inverts it ``by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated''. Richardson needs a smooth potential (condition 3 of \cref{sec:finite-differences-richardson}), so it is reassuring to check the bottom of the well. Put $V=V_0+\varepsilon$ with small $\varepsilon$ in Eq.~(2). Then $\sqrt{V-V_0}=\sqrt\varepsilon$, $\sqrt V\approx\sqrt{V_0}$, and the second logarithm is $\log\big[(1+\sqrt{\varepsilon/V_0})^2\big]\approx2\sqrt{\varepsilon/V_0}$, so
+\paragraph{The potential on the grid (Sec.~II~B, App.~A step 3).} The Wu--Sprung potential is given implicitly by $x(V)$, Eq.~(2), which Chapter~\ref{ch:wu-sprung} derives. The paper inverts it ``by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated''. Richardson needs a smooth potential (condition 3 of \cref{sec:finite-differences-richardson}), so it is reassuring to check the bottom of the well. Put $V=V_0+\eta^2$ with $\eta=\sqrt{V-V_0}\ge0$ (a new symbol, unrelated to machine epsilon $\epsilon$ and to the perturbation parameter $\varepsilon$ of Eq.~\eqref{eq:finite-differences-hf}). First rationalize the argument of the second logarithm by multiplying numerator and denominator by $\sqrt V+\eta$:
 \begin{equation*}
-x\approx\frac1\pi\left[\sqrt\varepsilon\log\frac{V_0}{2\pi e^2}+2\sqrt\varepsilon\right]=\frac{\sqrt\varepsilon}{\pi}\log\frac{V_0}{2\pi}.
+\frac{\sqrt V+\eta}{\sqrt V-\eta}=\frac{(\sqrt V+\eta)^2}{V-\eta^2}=\frac{(\sqrt V+\eta)^2}{V_0},
 \end{equation*}
-Solving for $\varepsilon$, $V\approx V_0+\big(\pi/\log(V_0/2\pi)\big)^2x^2\approx V_0+51.3\,x^2$: a smooth parabola, no kink at $x=0$. The code below reproduces the paper's construction with a spline, and the CHECKS script confirms that the same formula gives $x(1000)=44.883$.
+so Eq.~(2) reads
+\begin{equation*}
+x=\frac1\pi\left[\eta\log\frac{V_0}{2\pi e^2}+2\sqrt{V_0+\eta^2}\,\log\frac{\sqrt{V_0+\eta^2}+\eta}{\sqrt{V_0}}\right].
+\end{equation*}
+Now let $\eta$ be small. Then $\sqrt{V_0+\eta^2}\approx\sqrt{V_0}$, and with $\log(1+u)\approx u$ for small $u$, $\log\big[(\sqrt{V_0}+\eta)/\sqrt{V_0}\big]=\log(1+\eta/\sqrt{V_0})\approx\eta/\sqrt{V_0}$, so
+\begin{equation*}
+x\approx\frac1\pi\left[\eta\log\frac{V_0}{2\pi e^2}+2\eta\right]=\frac{\eta}{\pi}\log\frac{V_0}{2\pi}\qquad\text{(since }\log e^2=2\text{)}.
+\end{equation*}
+Solving for $\eta^2=V-V_0$, $V\approx V_0+\big(\pi/\log(V_0/2\pi)\big)^2x^2\approx V_0+51.3\,x^2$. This leading-order parabola does not by itself exclude higher terms such as $\abs{x}^3$, which would be a hidden kink. To exclude them, read the formula for $x$ as a function of $\eta$ allowed to take either sign. The factor $\sqrt{V_0+\eta^2}$ is even in $\eta$. The logarithm is odd in $\eta$, because $(\sqrt{V_0+\eta^2}-\eta)(\sqrt{V_0+\eta^2}+\eta)=V_0$ gives $\log\big[(\sqrt{V_0+\eta^2}-\eta)/\sqrt{V_0}\big]=-\log\big[(\sqrt{V_0+\eta^2}+\eta)/\sqrt{V_0}\big]$. The first term is odd as well. So $x(\eta)$ is an odd smooth function with nonzero slope $\log(V_0/2\pi)/\pi$ at $\eta=0$ (here $V_0/2\pi=1.550$, whose logarithm is positive). A smooth function with nonzero slope has a smooth inverse (first-year calculus), so $\eta$ is a smooth odd function of $x$, and $V=V_0+\eta^2$ is a smooth even function of $x$: no kink at $x=0$. The code below reproduces the paper's construction with a spline, and evaluating \texttt{x\_of\_V(1000.0)} returns $44.883$, the paper's scale-1 half-width $L$.
 
 \begin{pycode}
 import numpy as np
@@ -857,15 +879,15 @@ The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$
 \label{fig:finite-differences-wsbias}
 \end{figure}
 
-\paragraph{No leakage (Sec.~II~C, Eq.~(3)).} The paragraph ``No leakage through the bias correction'' is the identity \eqref{eq:finite-differences-leakage}: ``scoring the fit against $\tilde t_n$ is algebraically identical to correcting the \emph{prediction} by the fit-independent quantity $\Delta_n$ and scoring against the raw zeros''; $\Delta_n$ ``is built solely from eigenvalues of the \emph{unperturbed} potential on two grids; no zero, in-sample or held-out, enters it''. (The paper's ``two grids'' refers to the Richardson pair. The full $\Delta_n$ of Eq.~\eqref{eq:finite-differences-Delta} uses three grids: the working grid supplies $E^g_n$ and the pair supplies $E^{\rm Rich}_n$. None of the three involves a zero.) The paper also states why the correction cannot be skipped: finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings and would otherwise dominate both the null and every model identically''. Appendix~A (step 20, revision computations) adds an empirical counterpart for the sinusoidal controls: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical''. That experiment concerns the sinusoidal controls only, not the operator fits; for the operator fits the guarantee is the algebraic identity \eqref{eq:finite-differences-leakage} together with the zero-free construction of $\Delta_n$.
+\paragraph{No leakage (Sec.~II~C, Eq.~(3)).} The paragraph ``No leakage through the bias correction'' is the identity \eqref{eq:finite-differences-leakage}: ``scoring the fit against $\tilde t_n$ is algebraically identical to correcting the \emph{prediction} by the fit-independent quantity $\Delta_n$ and scoring against the raw zeros''; $\Delta_n$ ``is built solely from eigenvalues of the \emph{unperturbed} potential on two grids; no zero, in-sample or held-out, enters it''. (The paper's ``two grids'' refers to the Richardson pair. The full $\Delta_n$ of Eq.~\eqref{eq:finite-differences-Delta} uses three grids: the working grid supplies $E^g_n$ and the pair supplies $E^{\rm Rich}_n$. None of the three involves a zero.) The paper also states why the correction cannot be skipped: finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings and would otherwise dominate both the null and every model identically''. Appendix~A (step 20, revision computations) adds an empirical counterpart for the sinusoidal controls: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical''. The sentence follows step 20, which describes the sinusoidal controls, and we read it as referring to them; the paper does not say explicitly whether the operator fits were tested in the same way. For the operator fits the guarantee we can verify ourselves is the algebraic identity \eqref{eq:finite-differences-leakage} together with the zero-free construction of $\Delta_n$.
 
-\paragraph{The raw-zero null 2.09 (App.~A, key anchors).} The null model of Sec.~II~C is the unperturbed potential itself. Scored against corrected targets, its error on zeros 401--500 is $0.2631$ mean spacings (key anchors; $0.263$ in the tables). By the rewriting in \cref{sec:finite-differences-targets}, this is the rms of $t_n-E_n^{\rm Rich}[\mathrm{smooth}]$, the genuine fluctuation of the zeros about the smooth levels. Scored instead against the \emph{raw} zeros on the uncorrected working grid, the same null gives $2.09$. That number is dominated by the grid bias of about two spacings computed in this chapter; the real fluctuations of size $0.26$ are buried underneath it (Problem~14). This is also why the paper's two nulls can coincide numerically (Sec.~II~C): after correction, $E_n^{\rm Rich}[\mathrm{smooth}]$ agrees with the smooth zeros $s_n$ to $0.005$ spacings on average, so ``unperturbed levels'' and ``smooth zeros'' are, as predictions, nearly the same.
+\paragraph{The raw-zero null 2.09 (App.~A, key anchors).} The null model of Sec.~II~C is the unperturbed potential itself. Scored against corrected targets, its error on zeros 401--500 is $0.2631$ mean spacings (key anchors; $0.263$ in the tables). By the rewriting in \cref{sec:finite-differences-targets}, this is the rms of $t_n-E_n^{\rm Rich}[\mathrm{smooth}]$, the genuine fluctuation of the zeros about the smooth levels. Scored instead against the \emph{raw} zeros on the uncorrected working grid, the same null gives $2.09$. That number is dominated by the grid bias of about two spacings reported by the paper (Sec.~II~C) and plotted in \cref{fig:finite-differences-wsbias}; the real fluctuations of size $0.26$ are buried underneath it (Problem~14). This is also why the paper's two nulls can coincide numerically (Sec.~II~C): after correction, $E_n^{\rm Rich}[\mathrm{smooth}]$ agrees with the smooth zeros $s_n$ to $0.005$ spacings on average, so ``unperturbed levels'' and ``smooth zeros'' are, as predictions, nearly the same.
 
 \paragraph{Normalization and the sensitivity matrix (Sec.~II~C, App.~A steps 6, 9).} The fit uses $A_{nk}=\int\abs{\psi_n}^2\cos(k\pi x/L)\,\dd x$, and Appendix~A step 9 records ``$\psi$ normalized $\sum\psi^2dx=1$'', Eq.~\eqref{eq:finite-differences-norm}. By \eqref{eq:finite-differences-Ank}, the grid sum is the exact derivative of the grid eigenvalue with respect to $c_k$, which is what an iterated linearization needs (Chapter~\ref{ch:fitting}).
 
 \paragraph{Exact checks on a coarser grid (App.~A step 11).} The non-Hermitian checks of Sec.~V diagonalize the complex matrix of $H+iA$ densely on $N=2500$, a coarser common grid; dense complex eigensolves cost far more than tridiagonal ones (Chapters~\ref{ch:eigen} and \ref{ch:non-hermitian}). Those checks compare two calculations on the same grid, so the grid bias is common to both.
 
-\paragraph{The interpolation split (Sec.~III, Fig.~4).} When the paper says ``$x$ and $V$ are in the units $\hbar=2m=1$ of Sec.~II~B'', and reports a fitted correction with maximum $\abs{\delta V}=199$ where the smooth potential is about 500, it is describing a potential on exactly the grid of this chapter. A correction of that size is a large fraction of the local kinetic energy, the regime where the target-correction approximation of \cref{sec:finite-differences-targets} is least accurate; the paper's conclusion there concerns errors of $2.64$ spacings, far larger than any plausible change in $\Delta_n$.
+\paragraph{The interpolation split (Sec.~III, Fig.~4).} When the paper says ``$x$ and $V$ are in the units $\hbar=2m=1$ of Sec.~II~B'', and reports a fitted correction with maximum $\abs{\delta V}=199$ where the smooth potential is about 500, it is describing a potential on exactly the grid of this chapter. A correction of that size is a large fraction of the local kinetic energy, the regime where the target-correction approximation of \cref{sec:finite-differences-targets} is least accurate. The paper does not quantify how much $\Delta_n$ changes there. By the estimate of Problem~29 the change could be a sizeable fraction of $\Delta_n$ itself, which at levels 201--300 is presumably below its size of about two spacings at 401--500 (the bias grows with energy). That would still be smaller than the $2.64$-spacing gap error the paper reports, but we have not verified it numerically: read this as a plausibility argument, not a result.
 
 %==========================================================
 \section{Summary}\label{sec:finite-differences-summary}
@@ -954,9 +976,7 @@ The paper writes the extrapolation compactly as ``$E^{\rm Rich}=(4E_{2h}-E_h)/3$
 %==========================================================
 \section{Answers to selected problems}\label{sec:finite-differences-answers}
 % DYK-BEGIN
-\begin{didyouknow}{Surprise in the Simulation}
-In 1955 Enrico Fermi, John Pasta, Stanislaw Ulam and Mary Tsingou, who programmed the computer, simulated a chain of masses joined by slightly nonlinear springs on the MANIAC at Los Alamos. They expected the energy to spread evenly among all modes. Instead it sloshed among a few modes and almost returned to its starting state. It was among the first discoveries made by numerical experiment.
-\end{didyouknow}
+
 % DYK-END
 
 \textbf{1.} Scale~1: $h=89.766/6001=0.0149585$. Scale~2: $h=119.914/8001=0.0149874$. The two spacings agree to about $0.2\%$: the paper increased $N$ in proportion to $L$, so the grid resolution is essentially the same at both scales. (The scale-2 levels go higher, so their bias is still larger.)
@@ -986,7 +1006,7 @@ Let $z=e^{2\pi ik/(N+1)}$. For $1\le k\le N$, $z\ne1$ but $z^{N+1}=e^{2\pi ik}=1
 
 \textbf{13.} By Eq.~\eqref{eq:finite-differences-leakage}, scoring against $\tilde t_n$ is identical, number by number, to scoring the adjusted prediction $E_n[\mathrm{fit}]-\Delta_n$ against the raw zeros. The adjustment $\Delta_n$ is computed from eigenvalues of the smooth potential on three grids, before any fit, without any zero. So the held-out zeros enter only in the final comparison, which is what out-of-sample scoring means. If $\Delta_n$ were computed from the fitted potential instead, it would still contain no zero (the fitted potential depends only on training zeros), so there would still be no leakage; it would merely be a slightly more accurate, fit-dependent correction, at the cost of extra fine-grid eigensolves.
 
-\textbf{15.} \texttt{qmnt.fd\_levels(np.zeros(6000), 44.883, k=500)[-1]} gives $304.46$, matching \eqref{eq:finite-differences-box-exact} (agreement to the solver's roundoff, about $10^{-11}$); the continuum value is $306.21$, so the grid is $1.74$ too low, $1.42$ box level spacings (RE3 Sample Problem).
+\textbf{15.} \texttt{qmnt.fd\_levels(np.zeros(6000), 44.883, k=500)[-1]} gives $304.46$, matching \eqref{eq:finite-differences-box-exact} (agreement to better than $10^{-8}$); the continuum value is $306.21$, so the grid is $1.74$ too low, $1.42$ box level spacings (RE3 Sample Problem).
 
 \textbf{17.} The eigenvalues are $(4/h^2)\sin^2(k\pi/(2(N+1)))$ with $0<k\pi/(2(N+1))<\pi/2$ for $1\le k\le N$, so $0<\sin^2<1$ and $0<E^{(h)}_k<4/h^2$. The largest is $k=N$: $(4/h^2)\cos^2(\pi/(2(N+1)))$, which for $N=6000$ is $17876.5$ (the cosine factor differs from 1 by less than $10^{-7}$). Its eigenvector $\sin(jN\pi/(N+1))=(-1)^{j+1}\sin(j\pi/(N+1))$ alternates in sign from point to point, the zigzag mode of \cref{fig:finite-differences-states}. Its continuum partner would have energy $(N\pi/2L)^2\approx4/h^2\times(\pi/2)^2$, about $2.5$ times larger; it is not a usable approximation of any physical level. Only levels with $k\ll N$ are physical.
 
@@ -994,7 +1014,7 @@ Let $z=e^{2\pi ik/(N+1)}$. For $1\le k\le N$, $z\ne1$ but $z^{N+1}=e^{2\pi ik}=1
 
 \textbf{21.} Subtract \eqref{eq:finite-differences-taylor-minus} from \eqref{eq:finite-differences-taylor-plus}: even powers cancel, odd powers double, $f(x+h)-f(x-h)=2hf'+\tfrac{h^3}{3}f'''+\order(h^5)$; divide by $2h$ to get $f'+\tfrac{h^2}{6}f'''+\order(h^4)$. For $\sin$ at $1$ with $h=0.1$: $[\sin1.1-\sin0.9]/0.2=\cos1\,\sin(0.1)/0.1=0.5394022$, against $\cos1=0.5403023$: error $-9.0005\times10^{-4}$, prediction $\tfrac{h^2}{6}(-\cos1)=-9.0050\times10^{-4}$.
 
-\textbf{23.} $h^2=2.23757\times10^{-4}$, $E^2=811.18^2=6.580\times10^5$, so $h^2E^2/12=12.3$ energy units. The mean spacing near $t=811$ is $2\pi/\log(811.18/2\pi)=1.293$, so the box estimate is $9.5$ spacings, several times the paper's ``two mean spacings''. The box formula assumes all of $E$ is kinetic energy everywhere. In the Wu--Sprung well, Eq.~\eqref{eq:finite-differences-bias-estimate} averages $(E-V)^2$, and $E-V<E$ wherever the potential is above $V_0\approx9.7$, which for a high level is most of the region it occupies; moreover the state spends much of its time near its turning points, where $E-V\to0$. Both effects make $\langle(E-V)^2\rangle$ much smaller than $E^2$.
+\textbf{23.} $h^2=2.23757\times10^{-4}$, $E^2=811.18^2=6.580\times10^5$, so $h^2E^2/12=12.3$ energy units. The mean spacing near $t=811$ is $2\pi/\log(811.18/2\pi)=1.293$, so the box estimate is $9.5$ spacings, several times the paper's ``two mean spacings''. The box formula assumes all of $E$ is kinetic energy everywhere. In the Wu--Sprung well, Eq.~\eqref{eq:finite-differences-bias-estimate} averages $(E-V)^2$. In the Wu--Sprung well $V$ rises from $V_0\approx9.7$ to $E$ across the allowed region, so $E-V$ is well below $E$ over most of it and tends to zero at the turning points, where the state spends much of its time. Both effects make $\langle(E-V)^2\rangle$ much smaller than $E^2$.
 
 \textbf{25.} With $E_1=\pi^2/4=2.4674011$: errors $0.12426$ ($N+1=4$), $0.031546$ ($8$), $0.0079170$ ($16$), $0.0019811$ ($32$). Ratios $3.94$, $3.98$, $4.00$, approaching $4=2^2$. Ratios close to 4 show the $h^2$ term dominates, so Richardson's cancellation is valid; a ratio far from 4 would warn that the grid is too coarse (or the potential not smooth).
 
