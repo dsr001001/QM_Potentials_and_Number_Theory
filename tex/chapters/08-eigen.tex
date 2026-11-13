@@ -10,7 +10,6 @@ Where this shows up in the paper \cite{soniR1}: the phrase ``spectrum of a self-
 
 \begin{prerequisites}
 \item Chapter~\ref{ch:complex}: complex numbers, the conjugate $z^*$, the modulus $\abs{z}$, Euler's formula $e^{i\theta}=\cos\theta+i\sin\theta$.
-\item Chapter~\ref{ch:asymptotics}: big-O notation, floating-point numbers and machine epsilon ($2.2\times10^{-16}$ in double precision), bisection.
 \item Chapter~\ref{ch:linear-algebra}: vectors in $n$ dimensions (real and complex), the inner product, norm and orthogonality; matrix multiplication, transpose $A^\top$ and conjugate transpose $A^\dagger$; the identity $I$ and the inverse; determinants of $2\times2$ and $3\times3$ matrices and their stated properties; the fact that a square matrix $B$ is invertible exactly when $\det B\ne0$, exactly when $Bv=0$ has only the solution $v=0$; linear independence and bases; functions sampled on a grid as vectors.
 \item First-year physics: standing waves on a string fixed at both ends, harmonics \cite{hrw}; Taylor expansion of a smooth function.
 \end{prerequisites}
@@ -137,7 +136,7 @@ If the two roots are $\lambda_1$ and $\lambda_2$, then $p_A(\lambda)=(\lambda-\l
 \lambda_1+\lambda_2=\operatorname{tr}A,\qquad \lambda_1\lambda_2=\det A.
 \label{eq:eigen-trdet}
 \end{equation}
-These two relations are handy checks on any eigenvalue calculation. (They hold for $n\times n$ matrices too: the sum of all eigenvalues is the trace and their product is the determinant. We will use only the $2\times2$ version, which we have just proved.)
+These two relations are handy checks on any eigenvalue calculation. (For $n\times n$ matrices the same two facts hold. The determinant part follows in one line. By the fundamental theorem of algebra (box above), and because the highest power of $\lambda$ in $\det(A-\lambda I)$ is $(-\lambda)^n$, coming from the product of the diagonal entries, we can write $p_A(\lambda)=(\lambda_1-\lambda)(\lambda_2-\lambda)\cdots(\lambda_n-\lambda)$, with each eigenvalue repeated according to its multiplicity. Setting $\lambda=0$ gives $\det A=\lambda_1\lambda_2\cdots\lambda_n$. The trace part, $\lambda_1+\dots+\lambda_n=\operatorname{tr}A$, we state without proof; it follows by comparing the coefficients of $\lambda^{n-1}$ on the two sides, see \cite{strang}. We use the factorization in \cref{sec:eigen-numerics} and both $n\times n$ facts in the answer to Problem~31.)
 
 The quadratic formula applied to Eq.~\eqref{eq:eigen-char2b} gives
 \begin{equation}
@@ -255,11 +254,6 @@ A $2\times2$ matrix has eigenvalues $1$ and $4$. What are its trace and determin
 
 %==========================================================
 \section{When eigenvalues are complex}\label{sec:eigen-complex}
-% DYK-BEGIN
-\begin{didyouknow}{Eigen Means Own}
-The prefix \emph{eigen} is German for own or characteristic. David Hilbert used \emph{Eigenwert} and \emph{Eigenfunktion} in his 1904 work on integral equations, and the half-translated hybrid eigenvalue stuck in English. A real two-dimensional rotation matrix has no real eigenvectors unless the angle is $0$ or $\pi$. Its eigenvalues are $e^{\pm i\theta}$, a first hint that complex eigenvalues signal rotation.
-\end{didyouknow}
-% DYK-END
 
 A matrix with real entries can have complex eigenvalues. The simplest example is a rotation. The matrix
 \begin{equation}
@@ -433,7 +427,7 @@ because every term with $l\ne j$ vanishes by orthogonality. Since $\norm{u_j}^2>
 \end{equation}
 \end{enumerate}
 
-\textbf{Proof.} (1) By Theorem 2 the $u_k$ are mutually orthogonal, and we normalized them, so $u_j^\dagger u_k=\delta_{jk}$. By the Lemma they are linearly independent. Recall from Chapter~\ref{ch:linear-algebra} that $n$ linearly independent vectors in $n$-dimensional space form a basis. (2) The $(j,k)$ entry of $U^\dagger U$ is (row $j$ of $U^\dagger$) times (column $k$ of $U$), which is $u_j^\dagger u_k=\delta_{jk}$; so $U^\dagger U=I$, and therefore $U^\dagger$ is the inverse of $U$, which also gives $UU^\dagger=I$. Next compute $AU$ column by column: column $k$ of $AU$ is $Au_k=\lambda_ku_k$, which is column $k$ of $U\Lambda$ (multiplying $U$ on the right by a diagonal matrix multiplies column $k$ by $\lambda_k$). So $AU=U\Lambda$. Multiply on the right by $U^\dagger$: $AUU^\dagger=U\Lambda U^\dagger$, and $UU^\dagger=I$ gives $A=U\Lambda U^\dagger$. $\blacksquare$
+\textbf{Proof.} (1) By Theorem 2 the $u_k$ are mutually orthogonal, and we normalized them, so $u_j^\dagger u_k=\delta_{jk}$. By the Lemma they are linearly independent. Recall from Chapter~\ref{ch:linear-algebra} that $n$ linearly independent vectors in $n$-dimensional space form a basis. (2) The $(j,k)$ entry of $U^\dagger U$ is (row $j$ of $U^\dagger$) times (column $k$ of $U$), which is $u_j^\dagger u_k=\delta_{jk}$; so $U^\dagger U=I$. The columns of $U$ are linearly independent, so $U$ is invertible (Chapter~\ref{ch:linear-algebra}). Multiplying $U^\dagger U=I$ on the right by $U^{-1}$ gives $U^\dagger=U^{-1}$, and hence $UU^\dagger=UU^{-1}=I$. Next compute $AU$ column by column: column $k$ of $AU$ is $Au_k=\lambda_ku_k$, which is column $k$ of $U\Lambda$ (multiplying $U$ on the right by a diagonal matrix multiplies column $k$ by $\lambda_k$). So $AU=U\Lambda$. Multiply on the right by $U^\dagger$: $AUU^\dagger=U\Lambda U^\dagger$, and $UU^\dagger=I$ gives $A=U\Lambda U^\dagger$. $\blacksquare$
 
 A matrix with $U^\dagger U=I$ is called \emph{unitary}; if it is real, $U^\top U=I$ and it is called \emph{orthogonal}. Unitary matrices preserve lengths: $\norm{Ux}^2=(Ux)^\dagger(Ux)=x^\dagger U^\dagger Ux=x^\dagger x=\norm{x}^2$. So Eq.~\eqref{eq:eigen-spectral} says: a Hermitian matrix acts by (i) rotating into its eigenvector axes ($U^\dagger$), (ii) stretching each axis by its eigenvalue ($\Lambda$), (iii) rotating back ($U$). That is precisely the ellipse of \cref{fig:eigen-stretch}.
 
@@ -463,7 +457,7 @@ A^2=U\Lambda U^\dagger U\Lambda U^\dagger=U\Lambda^2U^\dagger,
 \end{equation}
 and by repeating the same cancellation, $A^k=U\Lambda^kU^\dagger$ for every positive integer $k$. Raising a diagonal matrix to a power just raises each diagonal entry to that power.
 
-\paragraph{The Rayleigh quotient (proved).} For a Hermitian $A$ and any nonzero $x$, define $\mathcal{R}(x)=x^\dagger Ax/x^\dagger x$. Expand $x=\sum_ka_ku_k$ in the eigenbasis (possible by part 1 of the theorem). Then, using $u_j^\dagger u_k=\delta_{jk}$,
+\paragraph{The Rayleigh quotient (proved).} For a Hermitian $A$ and any nonzero $x$, define $\mathcal{R}(x)=x^\dagger Ax/x^\dagger x$. Expand $x=\sum_ka_ku_k$ in the eigenbasis. When the eigenvalues are distinct this is possible by part 1 of the theorem. When some are repeated it relies on the general spectral theorem taken on trust in the box above, so in that case the result inherits that status. Then, using $u_j^\dagger u_k=\delta_{jk}$,
 \begin{align}
 x^\dagger x&=\sum_{j,k}a_j^*a_k\,u_j^\dagger u_k=\sum_k\abs{a_k}^2,\\
 x^\dagger Ax&=\sum_{j,k}a_j^*a_k\lambda_k\,u_j^\dagger u_k=\sum_k\lambda_k\abs{a_k}^2.
@@ -528,9 +522,9 @@ b_1&d_2&b_2&&\\
 
 Tridiagonal matrices arise whenever each point of a system interacts only with its nearest neighbors: masses on a chain connected by springs, a string sampled at equally spaced points, and (\cref{sec:eigen-second-derivative}) the quantum Hamiltonian on a grid.
 
-\subsection{Nondegeneracy (proved)}
+\subsection{Nondegeneracy}
 
-\textbf{Theorem.} If $T$ is symmetric tridiagonal and every off-diagonal entry $b_j$ is nonzero, then each eigenvalue of $T$ has, up to a multiplicative constant, only one eigenvector.
+\textbf{Theorem (proved).} If $T$ is symmetric tridiagonal and every off-diagonal entry $b_j$ is nonzero, then each eigenvalue of $T$ has, up to a multiplicative constant, only one eigenvector.
 
 \textbf{Proof.} Fix an eigenvalue $\lambda$ and write out $(T-\lambda I)v=0$ row by row:
 \begin{align}
@@ -539,7 +533,7 @@ Tridiagonal matrices arise whenever each point of a system interacts only with i
 \end{align}
 Because $b_1\ne0$, row 1 determines $v_2=-(d_1-\lambda)v_1/b_1$. Because $b_j\ne0$, row $j$ determines $v_{j+1}=-[b_{j-1}v_{j-1}+(d_j-\lambda)v_j]/b_j$ from the two previous components. So once $v_1$ is chosen, every component is fixed, and doubling $v_1$ doubles every component. If $v_1=0$, then $v_2=0$, then $v_3=0$, and so on: $v=0$, which is not an eigenvector. Hence every eigenvector is a nonzero multiple of the single vector obtained with $v_1=1$. $\blacksquare$
 
-Combined with the general spectral theorem (taken on trust in the box of \cref{sec:eigen-spectral}), which says a symmetric matrix has as many independent eigenvectors as the multiplicity of each eigenvalue, this shows that a repeated eigenvalue is impossible here: \emph{all $N$ eigenvalues of such a $T$ are distinct}. We can therefore list them unambiguously in increasing order, $\lambda_1<\lambda_2<\dots<\lambda_N$, and speak of ``the $n$-th eigenvalue'' and ``the $n$-th eigenvector'' without ambiguity. That is what makes ``level $n$'' a well-defined object in the paper.
+\textbf{Consequence (relies on a result taken on trust).} Combined with the general spectral theorem (taken on trust in the box of \cref{sec:eigen-spectral}), which says a symmetric matrix has as many independent eigenvectors as the multiplicity of each eigenvalue, this shows that a repeated eigenvalue is impossible here: \emph{all $N$ eigenvalues of such a $T$ are distinct}. We can therefore list them unambiguously in increasing order, $\lambda_1<\lambda_2<\dots<\lambda_N$, and speak of ``the $n$-th eigenvalue'' and ``the $n$-th eigenvector'' without ambiguity. That is what makes ``level $n$'' a well-defined object in the paper.
 
 If some $b_j=0$, the matrix splits into two independent blocks and degeneracy becomes possible (Problem~16).
 
@@ -580,14 +574,14 @@ Therefore
 &=2\sin(j\theta)-2\sin(j\theta)\cos\theta\\
 &=(2-2\cos\theta)\,v_j.
 \end{align}
-So Eq.~\eqref{eq:eigen-row} holds for every $j$ with $\lambda=2-2\cos\theta$. The left boundary condition holds automatically: $v_0=\sin0=0$. The right one requires $\sin((N+1)\theta)=0$, i.e.\ $(N+1)\theta=k\pi$ for an integer $k$. The values $k=1,2,\dots,N$ give $N$ different eigenvalues (because $\cos\theta$ is strictly decreasing on $0<\theta<\pi$), and since an $N\times N$ matrix has only $N$ eigenvalues, these are all of them. (The value $k=0$ gives $v=0$; $k=N+1$ also gives $v_j=\sin(j\pi)=0$ for all $j$; larger $k$ repeat earlier vectors up to sign.) Using $1-\cos\theta=2\sin^2(\theta/2)$:
+So Eq.~\eqref{eq:eigen-row} holds for every $j$ with $\lambda=2-2\cos\theta$. The left boundary condition holds automatically: $v_0=\sin0=0$. The right one requires $\sin((N+1)\theta)=0$, i.e.\ $(N+1)\theta=k\pi$ for an integer $k$. For $1\le k\le N$ the first component $\sin(k\pi/(N+1))$ is nonzero because $0<k\pi/(N+1)<\pi$, so $v\ne0$ is a genuine eigenvector. The values $k=1,2,\dots,N$ give $N$ different eigenvalues (because $\cos\theta$ is strictly decreasing on $0<\theta<\pi$), and since an $N\times N$ matrix has only $N$ eigenvalues, these are all of them. (The value $k=0$ gives $v=0$; $k=N+1$ also gives $v_j=\sin(j\pi)=0$ for all $j$; larger $k$ repeat earlier vectors up to sign.) Using $1-\cos\theta=2\sin^2(\theta/2)$:
 \begin{equation}
 \boxed{\lambda_k=2-2\cos\frac{k\pi}{N+1}=4\sin^2\frac{k\pi}{2(N+1)},\qquad (v_k)_j=\sin\frac{jk\pi}{N+1},\qquad k=1,\dots,N.}
 \label{eq:eigen-DN-eig}
 \end{equation}
 Check with $N=3$: $k=1$ gives $2-2\cos(\pi/4)=2-\sqrt2$ and $v=(\sin\frac\pi4,\sin\frac\pi2,\sin\frac{3\pi}4)=(\tfrac{\sqrt2}2,1,\tfrac{\sqrt2}2)\propto(1,\sqrt2,1)$, exactly as in the Sample Problem.
 
-\Cref{fig:eigen-modes} shows several eigenvectors for $N=20$. They are the harmonics of a string sampled at 20 points. Eigenvector $k$ changes sign $k-1$ times as $j$ runs from $1$ to $N$, because $\sin(jk\pi/(N+1))$ passes through $k-1$ zeros strictly between $j=0$ and $j=N+1$. In Chapter~\ref{ch:bound-states} you will meet the same ``node counting'' for quantum states. All eigenvalues lie strictly between $0$ and $4$ (Problem~25 proves this without the formula).
+\Cref{fig:eigen-modes} shows several eigenvectors for $N=20$. They are the harmonics of a string sampled at 20 points. Eigenvector $k$ changes sign $k-1$ times as $j$ runs from $1$ to $N$ (counting a passage through a zero component, as in $(1,0,-1)$, as one change), because $\sin(jk\pi/(N+1))$ passes through $k-1$ zeros strictly between $j=0$ and $j=N+1$. In Chapter~\ref{ch:bound-states} you will meet the same ``node counting'' for quantum states. All eigenvalues lie strictly between $0$ and $4$ (Problem~25 proves this without the formula).
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/eigen_modes.pdf}
@@ -608,11 +602,6 @@ In Eq.~\eqref{eq:eigen-DN-eig}, why is $k=N+1$ not allowed?
 
 %==========================================================
 \section{The second derivative as a matrix}\label{sec:eigen-second-derivative}
-% DYK-BEGIN
-\begin{didyouknow}{A String Inside a Matrix}
-The matrix with $2$ on the diagonal and $-1$ just above and below is the finite-difference version of $-d^2/dx^2$. For $N$ grid points its eigenvalues are known exactly, $4\sin^2[k\pi/(2N+2)]$, and its eigenvectors are sampled sine waves $\sin(jk\pi/(N+1))$. These are the standing waves of a guitar string, so a simple matrix already contains the physics of vibrating strings.
-\end{didyouknow}
-% DYK-END
 
 Recall from Chapter~\ref{ch:linear-algebra} that a function $f(x)$ on an interval can be represented by its values on a grid. Here we use the grid the paper uses. Divide $[-L,L]$ into $N+1$ equal steps of width
 \begin{equation}
@@ -626,7 +615,7 @@ x_j=-L+jh,\qquad j=1,2,\dots,N.
 \end{equation}
 The endpoints $x_0=-L$ and $x_{N+1}=L$ are the walls. Write $f_j=f(x_j)$.
 
-\paragraph{The second difference.} Expand $f$ about $x_j$ in a Taylor series (first-year calculus), assuming $f$ has at least four continuous derivatives:
+\paragraph{The second difference.} Expand $f$ about $x_j$ in a Taylor series (first-year calculus), assuming $f$ has at least six continuous derivatives. We use big-O notation: $\order(h^5)$, read ``order $h^5$'', stands for a quantity whose size is at most a fixed constant times $\abs{h}^5$ for all sufficiently small $h$. (Similarly, an algorithm whose cost is $\order(n^3)$ needs at most a fixed constant times $n^3$ operations for large $n$.) The expansions are:
 \begin{align}
 f(x_j+h)&=f_j+hf'_j+\tfrac{h^2}{2}f''_j+\tfrac{h^3}{6}f'''_j+\tfrac{h^4}{24}f''''_j+\order(h^5),\\
 f(x_j-h)&=f_j-hf'_j+\tfrac{h^2}{2}f''_j-\tfrac{h^3}{6}f'''_j+\tfrac{h^4}{24}f''''_j+\order(h^5).
@@ -640,7 +629,7 @@ where the remainder is $\order(h^6)$ because the $h^5$ terms are odd in $h$ and 
 \frac{f_{j+1}-2f_j+f_{j-1}}{h^2}=f''_j+\frac{h^2}{12}f''''_j+\order(h^4).
 \label{eq:eigen-second-diff}
 \end{equation}
-So the ``second difference'' on the left approximates $f''(x_j)$ with an error of order $h^2$ (Chapter~\ref{ch:asymptotics}). Chapter~\ref{ch:finite-differences} studies this error carefully; here we need only the structure.
+So the ``second difference'' on the left approximates $f''(x_j)$ with an error of order $h^2$. Chapter~\ref{ch:finite-differences} studies this error carefully; here we need only the structure.
 
 \paragraph{The matrix.} Multiply Eq.~\eqref{eq:eigen-second-diff} by $-1$ and impose the wall conditions $f_0=f_{N+1}=0$ (the function vanishes at the walls, like a string tied down there). Then the list of values $-f''(x_j)$ is approximated by
 \begin{equation}
@@ -681,9 +670,17 @@ Now forget the grid and ask the continuous question. Which functions $y(x)$ on $
 -y''(x)=\lambda\,y(x),\qquad y(-L)=y(L)=0,
 \label{eq:eigen-string}
 \end{equation}
-for some number $\lambda$, with $y$ not identically zero? This is an eigenvalue problem in which the ``matrix'' is the operator $-d^2/dx^2$ and the ``vectors'' are functions. It is also the equation of a standing wave on a string of length $2L$ fixed at both ends: for a shape $y(x)\cos(\omega t)$ the wave equation reduces to Eq.~\eqref{eq:eigen-string} with $\lambda=\omega^2/v^2$, $v$ the wave speed \cite{hrw}. And in Chapter~\ref{ch:bound-states} it will be the Schr\"odinger equation for a particle in a box, with $\lambda$ the energy.
+for some number $\lambda$, with $y$ not identically zero? This is an eigenvalue problem in which the ``matrix'' is the operator $-d^2/dx^2$ and the ``vectors'' are functions. It is also the equation of a standing wave on a string of length $2L$ fixed at both ends: for a shape $y(x)\cos(\omega t)$ the wave equation reduces to Eq.~\eqref{eq:eigen-string} with $\lambda=\omega^2/c_{\rm w}^2$, where $\omega$ is the angular frequency of the standing wave and $c_{\rm w}$ the wave speed \cite{hrw}. And in Chapter~\ref{ch:bound-states} it will be the Schr\"odinger equation for a particle in a box, with $\lambda$ the energy.
 
-\paragraph{Solving it completely.} We consider the three possible signs of $\lambda$ in turn.
+\paragraph{The eigenvalues are real and non-negative.} Before solving, we show that $\lambda$ must be real. Allow $y$ and $\lambda$ to be complex for the moment. Multiply both sides of $-y''=\lambda y$ by $y^*$, the complex conjugate of $y$, and integrate over $[-L,L]$:
+\begin{align}
+\lambda\int_{-L}^L\abs{y}^2\,\dd x&=-\int_{-L}^Ly^*y''\,\dd x\\
+&=\bigl[-y^*y'\bigr]_{-L}^{L}+\int_{-L}^L(y^*)'\,y'\,\dd x\quad\text{(parts: }u=y^*,\ \dd v=-y''\dd x)\\
+&=\int_{-L}^L\abs{y'}^2\,\dd x.\quad\text{(}y(\pm L)=0\text{ and }(y^*)'=(y')^*)
+\end{align}
+Both integrals are real and non-negative. Also $\int\abs{y}^2\dd x>0$, because $y$ is not identically zero. So $\lambda=\int\abs{y'}^2\dd x\big/\int\abs{y}^2\dd x$ is real and $\lambda\ge0$. This is the continuous analogue of Eq.~\eqref{eq:eigen-rayleigh-eig}.
+
+\paragraph{Solving it completely.} Knowing that $\lambda$ is real, we still consider all three possible signs of $\lambda$ in turn, which also confirms that $\lambda\le0$ gives nothing.
 
 \emph{Case $\lambda=0$.} Then $y''=0$, so $y=a+bx$. The conditions give $a-bL=0$ and $a+bL=0$; adding, $2a=0$, so $a=0$; then $bL=0$, so $b=0$. Only $y\equiv0$: no eigenvalue.
 
@@ -711,7 +708,7 @@ Unlike a matrix, the operator has infinitely many eigenvalues, growing without b
 &=\int_{-L}^L(-f'')\,g\,\dd x.\quad\text{(}g(\pm L)=0)
 \label{eq:eigen-parts}
 \end{align}
-This is the function version of $u^\top Av=(Au)^\top v$. Adding a real potential keeps the property, since $\int f\,(Vg)\,\dd x=\int(Vf)\,g\,\dd x$ trivially. Now repeat the proof of Theorem 2 with integrals: if $-y_k''=\lambda_ky_k$ and $-y_l''=\lambda_ly_l$, Eq.~\eqref{eq:eigen-parts} with $f=y_k$, $g=y_l$ gives $\lambda_l\int y_ky_l\,\dd x=\lambda_k\int y_ky_l\,\dd x$, so $\int y_ky_l\,\dd x=0$ when $\lambda_k\ne\lambda_l$. For the sines of Eq.~\eqref{eq:eigen-string-sol} this is the orthogonality you met in Fourier series (Chapter~\ref{ch:fourier-series}).
+This is the function version of $u^\top Av=(Au)^\top v$. Adding a real potential keeps the property, since $\int f\,(Vg)\,\dd x=\int(Vf)\,g\,\dd x$ trivially. Now repeat the proof of Theorem 2 with integrals: if $-y_k''=\lambda_ky_k$ and $-y_l''=\lambda_ly_l$, Eq.~\eqref{eq:eigen-parts} with $f=y_k$, $g=y_l$ gives $\lambda_l\int y_ky_l\,\dd x=\lambda_k\int y_ky_l\,\dd x$, so $\int y_ky_l\,\dd x=0$ when $\lambda_k\ne\lambda_l$. Readers who have studied Fourier series (Chapter~\ref{ch:fourier-series}) will recognize this as the orthogonality of the sines of Eq.~\eqref{eq:eigen-string-sol}. Here it has been derived without evaluating any trigonometric integral.
 
 \begin{beyond}
 \textbf{Taken on trust: ``self-adjoint'' in infinite dimensions.} For operators on infinitely many dimensions, such as $-d^2/dx^2$ acting on functions, the property of Eq.~\eqref{eq:eigen-parts} (called ``symmetric'' or ``Hermitian'') is not by itself enough to guarantee all the conclusions of the spectral theorem. One needs a stronger condition, \emph{self-adjointness}, which also specifies precisely which functions the operator acts on (its ``domain''; here, the boundary conditions). For a Schr\"odinger operator on a finite interval with walls, the two notions coincide, and the conclusions (real eigenvalues, orthonormal eigenfunctions forming a basis) hold. The precise definitions and proofs belong to functional analysis and are beyond this book; a physicist's account is in \cite{griffiths}. When the paper says ``self-adjoint operator'', you can read ``the infinite-dimensional analogue of a Hermitian matrix, whose eigenvalues are therefore real''.
@@ -778,7 +775,11 @@ $k$ & exact & matrix & relative error\\
 
 For a $6000\times6000$ matrix no human will expand a determinant. Computers find eigenvalues by iterative algorithms, packaged in libraries that you can treat as black boxes, provided you know what goes in, what comes out, and roughly how long it takes.
 
-\paragraph{Why iteration?} Finding eigenvalues of an $n\times n$ matrix is equivalent to finding the roots of a polynomial of degree $n$. For degree $5$ and higher there is no general formula built from arithmetic operations and roots (a classical theorem of algebra, the Abel--Ruffini theorem, which we take on trust). So every eigenvalue algorithm for large matrices is iterative: it produces a sequence of better and better approximations and stops when the error is at the level of rounding.
+\paragraph{Why iteration?} Finding eigenvalues of an $n\times n$ matrix is equivalent to finding the roots of a polynomial of degree $n$. For degree $5$ and higher there is no general formula built from arithmetic operations and roots (see the box below). So every eigenvalue algorithm for large matrices is iterative: it produces a sequence of better and better approximations and stops when the error is at the level of rounding.
+
+\begin{beyond}
+\textbf{Taken on trust: the Abel--Ruffini theorem.} There is no formula that expresses the roots of every polynomial of degree $5$ or higher in terms of its coefficients using only addition, subtraction, multiplication, division and $k$-th roots. The proof belongs to Galois theory and is found in standard texts on abstract algebra. Every polynomial with leading coefficient $1$ is, up to sign, the characteristic polynomial of some matrix (a so-called companion matrix), so no such formula can exist for the eigenvalues of general $n\times n$ matrices with $n\ge5$ either.
+\end{beyond}
 
 \paragraph{What LAPACK does.} LAPACK (Linear Algebra PACKage) is the standard, freely available library of linear algebra routines that numpy and scipy call internally. For a dense real symmetric or complex Hermitian matrix, its strategy has three stages \cite{trefethen}:
 \begin{enumerate}
@@ -795,13 +796,13 @@ If your matrix is \emph{already} tridiagonal, as Eq.~\eqref{eq:eigen-Hmatrix} is
 q_1=d_1-x,\qquad q_j=d_j-x-\frac{b_{j-1}^2}{q_{j-1}},\quad j=2,\dots,N.
 \label{eq:eigen-sturm}
 \end{equation}
-These $q_j$ are the pivots that Gaussian elimination (Chapter~\ref{ch:linear-algebra}) produces when it reduces $T-xI$ to triangular form without swapping rows: eliminating the entry $b_{j-1}$ below the pivot $q_{j-1}$ subtracts $(b_{j-1}/q_{j-1})\times$ row $j-1$ from row $j$, which changes the diagonal entry $d_j-x$ into $d_j-x-b_{j-1}^2/q_{j-1}$. Their product is therefore $\det(T-xI)=\prod_k(\lambda_k-x)$.
+These $q_j$ are the pivots that Gaussian elimination (Chapter~\ref{ch:linear-algebra}) produces when it reduces $T-xI$ to triangular form without swapping rows: eliminating the entry $b_{j-1}$ below the pivot $q_{j-1}$ subtracts $(b_{j-1}/q_{j-1})\times$ row $j-1$ from row $j$, which changes the diagonal entry $d_j-x$ into $d_j-x-b_{j-1}^2/q_{j-1}$. Their product is therefore $\det(T-xI)$, which equals $\prod_k(\lambda_k-x)$ by the factorization of the characteristic polynomial in \cref{sec:eigen-charpoly}.
 
 \begin{beyond}
 \textbf{Taken on trust: Sturm count (Sylvester's law of inertia).} If no $q_j$ is exactly zero, the number of negative values among $q_1,\dots,q_N$ equals the number of eigenvalues of $T$ that are less than $x$. The product formula above shows only that the two counts have the same parity (both even or both odd); the full statement is a consequence of Sylvester's law of inertia, proved in \cite{trefethen} and \cite{nr}.
 \end{beyond}
 
-Each Sturm count costs $\order(N)$ operations. To pin down eigenvalue number $k$, start with an interval known to contain it and bisect (Chapter~\ref{ch:asymptotics}): at the midpoint, the count tells you whether $\lambda_k$ lies to the left or right. Each step halves the interval, so reaching double precision from a reasonable starting interval takes a few dozen steps. All $N$ eigenvalues then cost $N\times(\text{a few dozen})\times\order(N)=\order(N^2)$. The eigenvectors can be obtained afterwards by solving a few tridiagonal linear systems per eigenvalue (``inverse iteration''), each $\order(N)$. The same count also answers the question ``how many levels lie below $E$?'' in $\order(N)$ operations, which is one standard way (bisection with Sturm counts) for a solver to return ``all eigenvalues in a range''.
+Each Sturm count costs $\order(N)$ operations. To pin down eigenvalue number $k$, start with an interval known to contain it and \emph{bisect} it, that is, keep halving it and retain the half that contains the target: at the midpoint, the count tells you whether $\lambda_k$ lies to the left or right. Each step halves the interval, so reaching double precision from a reasonable starting interval takes a few dozen steps. All $N$ eigenvalues then cost $N\times(\text{a few dozen})\times\order(N)=\order(N^2)$. The eigenvectors can be obtained afterwards by solving a few tridiagonal linear systems per eigenvalue (``inverse iteration''), each $\order(N)$. The same count also answers the question ``how many levels lie below $E$?'' in $\order(N)$ operations, which is one standard way (bisection with Sturm counts) for a solver to return ``all eigenvalues in a range''.
 
 \begin{pycode}
 import numpy as np
@@ -875,20 +876,20 @@ print(E[499], exact[499])               # 304.463...  306.208...
 \end{pycode}
 
 \begin{pitfall}
-\textbf{Normalization conventions.} Solvers return eigenvectors with $\sum_j v_j^2=1$. A wavefunction sampled on a grid should instead satisfy $\sum_j\psi_j^2h\approx\int\psi^2\dd x=1$. The two differ by the factor $1/\sqrt h$, as in the listing above. Getting this wrong multiplies every integral such as $\int\abs{\psi_n}^2\phi_k\,\dd x$ by a factor $1/h$.
+\textbf{Normalization conventions.} Solvers return eigenvectors with $\sum_j v_j^2=1$. A wavefunction sampled on a grid should instead satisfy $\sum_j\psi_j^2h\approx\int\psi^2\dd x=1$. The two differ by the factor $1/\sqrt h$, as in the listing above. Forgetting the rescaling makes every such integral, computed as $\sum_jv_j^2\phi_k(x_j)h$, too small by a factor $h$. Rescaling but forgetting the $h$ in the sum makes it too large by a factor $1/h$.
 \end{pitfall}
 
 \begin{pitfall}
 \textbf{Signs and order.} The sign (or complex phase) of each returned eigenvector is arbitrary and may change between runs or library versions; never compare eigenvectors without fixing it or using quantities like $\abs{u^\dagger w}^2$ that do not depend on it. \texttt{np.linalg.eig} returns eigenvalues in no particular order; always sort, or match (\cref{sec:eigen-matching}). Finally, do not use \texttt{eig} on a symmetric matrix: rounding can produce tiny spurious imaginary parts; use \texttt{eigh}.
 \end{pitfall}
 
-\paragraph{How accurate are computed eigenvalues?} The computer works in floating-point arithmetic with machine epsilon $\epsilon\approx2.2\times10^{-16}$ (Chapter~\ref{ch:asymptotics}).
+\paragraph{How accurate are computed eigenvalues?} The computer works in floating-point arithmetic with machine epsilon $\epsilon\approx2.2\times10^{-16}$ in double precision. This is the relative gap between neighboring representable numbers near $1$, so each arithmetic operation can introduce a relative rounding error of about this size.
 
 \begin{beyond}
 \textbf{Taken on trust: stability of Hermitian eigenvalues.} The LAPACK symmetric eigensolvers are \emph{backward stable}: the eigenvalues they return are the exact eigenvalues of a slightly perturbed matrix $A+E$ with the size of $E$ about $\epsilon$ times the size of $A$. For Hermitian matrices, Weyl's inequality guarantees that perturbing $A$ by $E$ moves each eigenvalue by at most the size (largest singular value, Chapter~\ref{ch:least-squares}) of $E$. Together: computed eigenvalues of a Hermitian matrix are accurate to about $\epsilon$ times the largest $\abs{\lambda}$. Proofs in \cite{trefethen}. Non-Hermitian matrices enjoy no such guarantee; their eigenvalues can be far more sensitive.
 \end{beyond}
 
-For the matrix of the listing, the entries are of size $4/h^2\approx1.79\times10^4$ (plus $V$, up to $1000$ for the Wu--Sprung potential at scale 1), so rounding errors in the eigenvalues are a few times $10^{-12}$: utterly negligible against the $\order(1)$ discretization errors of \cref{tab:eigen-box}. The numerical eigensolver is not the weak link; the grid is.
+For the matrix of the listing, the largest eigenvalue is close to $4/h^2\approx1.79\times10^4$. Adding the Wu--Sprung potential, which reaches $1000$ at scale 1, raises it by at most $1000$. So rounding errors in the eigenvalues are a few times $10^{-12}$: utterly negligible against the $\order(1)$ discretization errors of \cref{tab:eigen-box}. The numerical eigensolver is not the weak link; the grid is.
 
 \Cref{fig:eigen-wavefunctions} shows what the same code produces when $V$ is the Wu--Sprung potential of the paper's Eq.~(2), which you will study in Chapter~\ref{ch:wu-sprung}.
 
@@ -916,7 +917,7 @@ Roughly how many times more arithmetic does a dense symmetric eigensolve of a $6
 
 In the paper, ``level $n$'' of a fitted potential is compared with ``zero $n$''. That requires a labelling of eigenvalues by an index $n$ that means the same thing before and after the potential is changed. For Hermitian matrices there is a natural labelling; for non-Hermitian ones there is not, and one must match eigenvectors instead.
 
-\paragraph{Hermitian case: order by size.} Real eigenvalues can be sorted, $\lambda_1<\lambda_2<\dots$. For the tridiagonal Hamiltonian \eqref{eq:eigen-Hmatrix} they are all distinct (\cref{sec:eigen-tridiagonal}) for \emph{every} potential, so the $n$-th eigenvalue is well defined. Even more is true: as you change $V$ smoothly, the eigenvalues move continuously (they are roots of a characteristic polynomial whose coefficients change continuously), and two of them can never meet, because meeting would be a degeneracy. So the $n$-th level stays the $n$-th level; levels cannot overtake one another.
+\paragraph{Hermitian case: order by size.} Real eigenvalues can be sorted, $\lambda_1<\lambda_2<\dots$. For the tridiagonal Hamiltonian \eqref{eq:eigen-Hmatrix} they are all distinct (\cref{sec:eigen-tridiagonal}) for \emph{every} potential, so the $n$-th eigenvalue is well defined. Even more is true: as you change $V$ smoothly, the eigenvalues move continuously. This follows from Weyl's inequality (taken on trust in the box of \cref{sec:eigen-numerics}): changing $V$ by at most $\delta$ at every grid point adds a diagonal matrix whose largest singular value is at most $\delta$, so each eigenvalue moves by at most $\delta$. Two of them can never meet, because meeting would be a degeneracy. So the $n$-th level stays the $n$-th level; levels cannot overtake one another.
 
 But ``the $n$-th level'' and ``the state that looks like the original state $n$'' need not be the same thing. Consider
 \begin{equation}
@@ -956,7 +957,7 @@ The reference matrix is $H_0=\operatorname{diag}(1,3)$ with eigenvectors $e_1,e_
 
 \textbf{Step 3: eigenvalues of $H_b$.} $\operatorname{tr}=4$, $\det=3-(0.5i)^2=3+0.25=3.25$, so $\lambda=2\pm\sqrt{4-3.25}=2\pm\sqrt{0.75}=2\pm0.866025$: $1.133975$ and $2.866025$. Still real, but now the levels have moved \emph{toward} each other, whereas in (a) they were pushed apart.
 
-\textbf{Step 4: eigenvectors of $H_b$.} Row 1: $(1-\lambda)v_1+0.5iv_2=0$, so $v_2=(\lambda-1)v_1/(0.5i)=-2i(\lambda-1)v_1$. For $\lambda=1.133975$: $u=(1,-0.267949i)^\top$; for $\lambda=2.866025$: $w=(1,-3.732051i)^\top$. Overlaps: $O_{11}=1/(1+0.267949^2)=1/1.0717968=0.933013$ for $u$, and $O_{21}=3.732051^2/(1+3.732051^2)=13.928203/14.928203=0.933013$ for $w$. Matching is one-to-one.
+\textbf{Step 4: eigenvectors of $H_b$.} Row 1: $(1-\lambda)v_1+0.5iv_2=0$, so $v_2=(\lambda-1)v_1/(0.5i)=-2i(\lambda-1)v_1$. For $\lambda=1.133975$: $u=(1,-0.267949i)^\top$; for $\lambda=2.866025$: $w=(1,-3.732051i)^\top$. Overlaps: $O_{11}=1/(1+0.267949^2)=1/1.0717968=0.933013$ for $u$, and $O_{22}=3.732051^2/(1+3.732051^2)=13.928203/14.928203=0.933013$ for $w$. So $u$ is matched to $e_1$ and $w$ to $e_2$, and the matching is one-to-one.
 
 \textbf{Step 5: are $u$ and $w$ orthogonal?} $u^\dagger w=1\cdot1+(0.267949i)(-3.732051i)=1+0.267949\times3.732051=1+1=2$. Normalized: $\abs{u^\dagger w}/(\norm u\norm w)=2/\sqrt{1.0717968\times14.928203}=2/\sqrt{16}=0.5$.
 
@@ -1001,27 +1002,22 @@ You diagonalize a non-Hermitian matrix with \texttt{np.linalg.eig} and sort the 
 
 %==========================================================
 \section{Paper connection}\label{sec:eigen-paper}
-% DYK-BEGIN
-\begin{didyouknow}{Jacobi's Rotations}
-In 1846 Carl Jacobi published a method for diagonalizing a symmetric matrix through a sequence of plane rotations, each one zeroing an off-diagonal element. He applied it to astronomical problems computed by hand. The method was rediscovered for electronic computers in the 1950s and is still valued for its accuracy, because rotations do not amplify rounding errors.
-\end{didyouknow}
-% DYK-END
 
 Here is where each idea of this chapter enters the paper \cite{soniR1}. Section, equation, table and figure numbers refer to revision R1.
 
 \paragraph{``The spectrum of a self-adjoint operator'' (Sec.~I, first sentence).} The Hilbert--P\'olya conjecture proposes that the heights $t_n$ of the nontrivial zeros $\rho_n=\tfrac12+it_n$ are the eigenvalues of a self-adjoint operator. Why would that matter? A zero $\rho$ lies on the critical line $\Re\rho=\tfrac12$ exactly when the number $t$ in $\rho=\tfrac12+it$ is real (Chapters~\ref{ch:complex} and~\ref{ch:zeta}). Theorem 1 of \cref{sec:eigen-hermitian}, in its infinite-dimensional form (box in \cref{sec:eigen-ode}), says that a self-adjoint operator has only real eigenvalues. So if such an operator existed, its eigenvalues would be real, and the zeros would all lie on the critical line: that is the Riemann hypothesis. No such operator is known; the Hilbert--P\'olya conjecture and the Riemann hypothesis are both open problems (Chapter~\ref{ch:hilbert-polya}). The paper does not attempt to settle them; it tests whether \emph{fitted} operators capture transferable information about the zeros.
 
-\paragraph{The forward solver (Sec.~II~B; App.~A steps 3--4).} The paper's Hamiltonian is ``$H=-d^2/dx^2+V(x)$ with $V$ even'' on $[-L,L]$, with $L=44.883$ at scale 1 and $59.957$ at scale 2. The sentence ``Second-order finite differences on $N$ uniform interior points (Dirichlet walls) give a symmetric tridiagonal matrix; eigenpairs from LAPACK'' is exactly \cref{sec:eigen-second-derivative,sec:eigen-numerics}: ``interior points'' are the $x_j$ of Eq.~\eqref{eq:eigen-grid}, ``Dirichlet walls'' are the conditions $\psi(\pm L)=0$ that made the first and last rows of $D_N$ lose one neighbor, and the matrix is Eq.~\eqref{eq:eigen-Hmatrix}, which App.~A step 4 writes as ``tridiagonal $\mathrm{diag}=2/dx^2+V$, off $=-1/dx^2$''. Step 4 names the solver, \texttt{eigh\_tridiagonal}, and gives value ranges: ``$[0,900]$ (Hermitian work, scale 1), $[0,1000]$ (tensors; 652 states), $[0,1500]$ (scale 2; 1079 states)''. The paper gives these energy windows but not the solver options used to impose them. A window of this kind is naturally requested through a value-range selection such as the \texttt{select='v'} option of \cref{sec:eigen-numerics}, and one standard way for a solver to return all eigenvalues in a window is bisection with Sturm counts. The working grids $N=6000$ (scale 1) and $N=8000$ (scale 2) are large, but because the matrix is tridiagonal the $\order(N^2)$ cost keeps them practical, and only the few hundred levels below the cutoff are computed.
+\paragraph{The forward solver (Sec.~II~B; App.~A steps 3--4).} The paper's Hamiltonian is ``$H=-d^2/dx^2+V(x)$ with $V$ even'' on $[-L,L]$, with $L=44.883$ at scale 1 and $59.957$ at scale 2. The sentence ``Second-order finite differences on $N$ uniform interior points (Dirichlet walls) give a symmetric tridiagonal matrix; eigenpairs from LAPACK'' is exactly \cref{sec:eigen-second-derivative,sec:eigen-numerics}: ``interior points'' are the $x_j$ of Eq.~\eqref{eq:eigen-grid}, ``Dirichlet walls'' are the conditions $\psi(\pm L)=0$ that made the first and last rows of $D_N$ lose one neighbor, and the matrix is Eq.~\eqref{eq:eigen-Hmatrix}, which App.~A step 4 writes as ``tridiagonal $\mathrm{diag}=2/dx^2+V$, off $=-1/dx^2$''. Step 4 names the solver, \texttt{eigh\_tridiagonal}, and gives value ranges: ``$[0,900]$ (Hermitian work, scale 1), $[0,1000]$ (tensors; 652 states), $[0,1500]$ (scale 2; 1079 states)''. The paper gives these energy windows but not the solver options used to impose them. A window of this kind is naturally requested through a value-range selection such as the \texttt{select='v'} option of \cref{sec:eigen-numerics}, and one standard way for a solver to return all eigenvalues in a window is bisection with Sturm counts. The working grids $N=6000$ (scale 1) and $N=8000$ (scale 2) are large, but because the matrix is tridiagonal the $\order(N^2)$ cost keeps them practical, and only the levels below the cutoff are computed (652 states below $1000$ at scale 1 and 1079 below $1500$ at scale 2, as quoted above).
 
 \paragraph{Why ``level $n$'' is meaningful.} The paper compares the $n$-th eigenvalue $E_n$ with the $n$-th zero $t_n$, and forms residuals $r_n=\tilde t_n-E_n$ (Sec.~II~C). This needs an unambiguous numbering of levels. For the Hermitian fits it is supplied by the nondegeneracy theorem of \cref{sec:eigen-tridiagonal}: all off-diagonal entries of Eq.~\eqref{eq:eigen-Hmatrix} equal $-1/h^2\ne0$, so the levels are distinct for every fitted $\delta V$, and ascending order labels them.
 
-\paragraph{Grid error in eigenvalues (Sec.~II~B--C, Eq.~(3)).} Sample Problem ``The box of RE3'' showed that on the scale-1 grid the 500th eigenvalue of the empty box is off by $1.42$ level spacings. The paper states that for its potential the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C, ``No leakage'' paragraph), and App.~A's key anchors give a ``raw-zero null on the uncorrected working grid $2.09$ (401--500)''. This is why the paper computes eigenvalues on two grids and builds a Richardson correction; Chapter~\ref{ch:finite-differences} treats it in full.
+\paragraph{Grid error in eigenvalues (Sec.~II~B--C).} Sample Problem ``The box of RE3'' showed that on the scale-1 grid the 500th eigenvalue of the empty box is off by $1.42$ level spacings. The paper states that for its potential the finite-difference dispersion ``at levels 401--500 on the working grid reaches two mean spacings'' (Sec.~II~C, ``No leakage'' paragraph), and App.~A's key anchors give a ``raw-zero null on the uncorrected working grid $2.09$ (401--500)''. The two kinds of figure use different yardsticks: the empty-box level spacing here, the mean zero spacing $\gap_n$ in the paper. They also refer to different potentials, so only the order of magnitude should be compared. This is why the paper computes eigenvalues on two grids and builds a Richardson correction; Chapter~\ref{ch:finite-differences} treats it in full.
 
 \paragraph{Eigenvectors and normalization (Sec.~II~C; Eq.~(5); App.~A step 9).} The fit needs eigenvectors, not just eigenvalues: the sensitivity matrix $A_{nk}=\int\abs{\psi_n}^2\cos(k\pi x/L)\,\dd x$ (Sec.~II~C) and the matrix elements $A_{nm}=\langle n|A|m\rangle$ of Eq.~(5) (written in the bra-ket notation of Eq.~\eqref{eq:eigen-matel}) are integrals of eigenvectors. App.~A step 9 states ``$\psi$ normalized $\sum\psi^2dx=1$'', which is the $1/\sqrt h$ rescaling of the pitfall in \cref{sec:eigen-numerics}. With this normalization, the $k=0$ column $A_{n0}=\sum_j\psi_n(x_j)^2h=1$ for every $n$ (Problem~18). Note that the paper uses the letter $A$ both for this sensitivity matrix and for the non-Hermitian operator of Sec.~II~E; context distinguishes them.
 
 \paragraph{Non-Hermitian classes (Sec.~II~E).} There $H\to H+iA$ with $A$ a ``real multiplication operator'', i.e.\ on the grid a real diagonal matrix $\operatorname{diag}(A(x_j))$. The matrix $H+iA$ is then complex \emph{symmetric}, $(H+iA)^\top=H+iA$, but \emph{not} Hermitian, $(H+iA)^\dagger=H-iA$, just like $H_b$ in Sample Problem ``Matching a Hermitian and a non-Hermitian perturbation''. Theorems 1 and 2 do not apply: eigenvalues may be complex and eigenvectors are not orthogonal. The constant mode $\phi_0=1$ deserves a remark: $iA=ic_0I$ shifts every eigenvalue by exactly $ic_0$ and leaves the eigenvectors untouched (Problems~8 and~20), consistent with Sec.~II~E (i), which records that this mode has zero second-order real shift; in fact the real shift vanishes exactly, to all orders. An optimizer gains nothing real from $c_0$, which is why, in Sec.~V, a huge value $c_0\approx2.2\times10^6$ could only be exploiting numerical noise.
 
-\paragraph{Exact diagonalization and matching by overlap (Sec.~II~E (iii); App.~A step 11; Sec.~V; Fig.~5).} Safeguard (iii) checks final claims ``against \emph{exact} dense complex diagonalization of $H+iA$ on a common grid, with eigenstates matched to the unperturbed basis by overlap''; App.~A step 11 specifies ``dense complex \texttt{eig} of $H+iA$ on $N=2500$ \dots\ eigenstate matching by overlap with the unperturbed basis''. Because $H+iA$ is not Hermitian, it cannot use \texttt{eigh\_tridiagonal}; a dense $\order(N^3)$ solve is needed, which is why the exact check uses a smaller grid. Its eigenvalues come back unordered and complex, so they are labelled by the overlap matrix \eqref{eq:eigen-overlap}. Sec.~V reports that at the fitted amplitude ``3\% of eigenstates can no longer be matched one-to-one to unperturbed states'': precisely the failure that \cref{sec:eigen-matching} showed is impossible for Hermitian matrices with overlaps above $\tfrac12$ but possible for non-Hermitian ones. For the amplitude-controlled $R=4$ fits Sec.~V reports ``all states matched''. Fig.~5 (left) plots the exact level shifts obtained this way against the second-order surrogate.
+\paragraph{Exact diagonalization and matching by overlap (Sec.~II~E (iii); App.~A step 11; Sec.~V; Fig.~5).} Safeguard (iii) checks final claims ``against \emph{exact} dense complex diagonalization of $H+iA$ on a common grid, with eigenstates matched to the unperturbed basis by overlap''; App.~A step 11 specifies ``dense complex \texttt{eig} of $H+iA$ on $N=2500$ \dots\ eigenstate matching by overlap with the unperturbed basis''. Because $H+iA$ is not Hermitian, it cannot use \texttt{eigh\_tridiagonal}; a dense $\order(N^3)$ solve is needed. This plausibly explains why the exact check uses a smaller grid ($N=2500$); the paper does not state its reason. Its eigenvalues come back unordered and complex, so they are labelled by the overlap matrix \eqref{eq:eigen-overlap}. Sec.~V reports that at the fitted amplitude ``3\% of eigenstates can no longer be matched one-to-one to unperturbed states'': precisely the failure that \cref{sec:eigen-matching} showed is impossible for Hermitian matrices with overlaps above $\tfrac12$ but possible for non-Hermitian ones. For the amplitude-controlled $R=4$ fits Sec.~V reports ``all states matched''. Fig.~5 (left) plots the exact level shifts obtained this way against the second-order surrogate.
 
 \paragraph{Discrete spectrum and Hermiticity as the physical premise.} Every operator fit in the paper (Tables~I--III) scores eigenvalues of a real symmetric tridiagonal matrix. Its real, ordered, nondegenerate spectrum is what makes the comparison with the real, ordered zeros meaningful at all.
 
@@ -1088,7 +1084,7 @@ Here is where each idea of this chapter enters the paper \cite{soniR1}. Section,
 
 \prob{2}{(Paper, App.~A step 4.) Using \texttt{qmnt.wu\_sprung\_V} to sample the Wu--Sprung potential on the grid \texttt{qmnt.grid(L, N)} with $L=44.883$, and \texttt{qmnt.fd\_levels}, count the eigenvalues below $1000$ for $N=2000$, $4000$ and $6000$. Compare with the $652$ states that the paper reports for its tensor computations, and with your answer to Problem~21. Why are there far fewer states below $1000$ for the Wu--Sprung potential than for the empty box of the same width?}
 
-\prob{2}{(Paper, Sec.~II~B and App.~A step 11.) Taking the operation counts of a dense eigensolve and of a full tridiagonal eigensolve to be $n^3$ and $n^2$ (ignoring constants), compute both for $n=6000$ and their ratio. Then compute $n^3$ for the dense complex check at $n=2500$. Why does the paper use a smaller grid for the exact non-Hermitian check than for its Hermitian fits?}
+\prob{2}{(Paper, Sec.~II~B and App.~A step 11.) Taking the operation counts of a dense eigensolve and of a full tridiagonal eigensolve to be $n^3$ and $n^2$ (ignoring constants), compute both for $n=6000$ and their ratio. Then compute $n^3$ for the dense complex check at $n=2500$. Suggest why a smaller grid is a natural choice for the exact non-Hermitian check than for the Hermitian fits. (The paper does not state its reason.)}
 
 \prob{2}{A non-Hermitian $3\times3$ matrix is diagonalized and its eigenvectors give the overlap matrix (rows $k$ = reference states, columns $m$ = new eigenvectors)
 \[
@@ -1144,7 +1140,7 @@ Check that the columns sum to one. Apply the matching rule. Is it one-to-one? Co
 
 \textbf{21.} The exact count is the number of $k$ with $k\pi/(2L)<\sqrt{1000}$, i.e.\ $k<2L\sqrt{1000}/\pi=903.6$: $903$ levels. For the matrix, $\lambda_k^{\rm disc}<1000$ means $\sin(k\pi/12002)<\tfrac h2\sqrt{1000}=0.23651$, i.e.\ $k<12002\arcsin(0.23651)/\pi=912.2$: $912$ levels. The Sturm count gives the same. There are more matrix levels below $1000$ because the matrix eigenvalues lie \emph{below} the exact ones (\cref{tab:eigen-box}): every level is pulled down, so more of them fit under the cutoff.
 
-\textbf{23.} $6000^3=2.16\times10^{11}$, $6000^2=3.6\times10^7$, ratio $6000$. $2500^3=1.5625\times10^{10}$. The Hermitian fits can use the cheap tridiagonal solver on the large grid; the non-Hermitian check $H+iA$ is not Hermitian, so it needs a dense complex solve whose cost grows like $n^3$, and a smaller grid keeps it affordable.
+\textbf{23.} $6000^3=2.16\times10^{11}$, $6000^2=3.6\times10^7$, ratio $6000$. $2500^3=1.5625\times10^{10}$. The Hermitian fits can use the cheap tridiagonal solver on the large grid; the non-Hermitian check $H+iA$ is not Hermitian, so it needs a dense complex solve whose cost grows like $n^3$, and a smaller grid keeps it affordable. (This is our inference; the paper gives no reason.)
 
 \textbf{25.} (a) $x^\top D_Nx=2\sum_{j=1}^Nx_j^2-2\sum_{j=1}^{N-1}x_jx_{j+1}$. Expanding $\sum_{j=1}^{N-1}(x_j-x_{j+1})^2=\sum_{j=1}^{N-1}x_j^2+\sum_{j=2}^{N}x_j^2-2\sum_{j=1}^{N-1}x_jx_{j+1}$ and adding $x_1^2+x_N^2$ gives $2\sum_{j=1}^Nx_j^2-2\sum x_jx_{j+1}$, the same. For $x=(1,2,-1,3)$: $D_4x=(0,4,-7,7)^\top$, $x^\top D_4x=0+8+7+21=36$; the identity gives $1+9+(1+9+16)=36$. (b) The right side is a sum of squares, zero only if $x_1=0$ and all consecutive differences vanish, i.e.\ $x=0$. So for $x\ne0$ the Rayleigh quotient is positive, and taking $x$ an eigenvector, $\lambda>0$. (c) $x^\top(4I-D_N)x=2\sum x_j^2+2\sum x_jx_{j+1}=x_1^2+x_N^2+\sum_{j=1}^{N-1}(x_j+x_{j+1})^2>0$ for $x\ne0$, so $4-\lambda>0$.
 
@@ -1154,4 +1150,4 @@ Check that the columns sum to one. Apply the matching rule. Is it one-to-one? Co
 
 \textbf{31.} (a) Write $g=0.4$. Expanding $\det(H-2I)$ along the first row gives $-1\cdot(0\cdot1-(ig)^2)-ig\,(ig\cdot1-ig\cdot0)=-g^2+g^2=0$, so $\lambda=2$. The trace is $6$, so the others are $2\pm d$; $\det H=1\cdot(6-(ig)^2)-ig\cdot(3ig)=6+g^2+3g^2=6+4g^2$ must equal $2(2+d)(2-d)=2(4-d^2)$, so $d^2=1-2g^2=0.68$ and $\lambda=1.175379,\ 2,\ 2.824621$. (b) The eigenvector for $\lambda=2$ is $(ig,1,-ig)$, overlap with $e_2$ equal to $1/(1+2g^2)=0.758$; the other two have largest overlaps $0.832$ with $e_1$ and $e_3$. The matching is one-to-one. (c) Complex when $1-2g^2<0$, i.e.\ $g>1/\sqrt2\approx0.707$.
 
-\textbf{33.} $\sum_{j=1}^N\sin^2(ja)=\tfrac12\bigl(N-\sum_{j=1}^N\cos(2ja)\bigr)$ with $a=k\pi/(N+1)$. Let $z=e^{2ia}=e^{2\pi ik/(N+1)}$; since $1\le k\le N$, $z\ne1$ but $z^{N+1}=1$. Then $\sum_{j=0}^Nz^j=(1-z^{N+1})/(1-z)=0$ (geometric series, Chapter~\ref{ch:series}); its real part gives $\sum_{j=0}^N\cos(2ja)=0$, so $\sum_{j=1}^N\cos(2ja)=-1$ (removing the $j=0$ term, which is $1$). Hence the sum is $\tfrac12(N+1)$. Multiplying by $h=2L/(N+1)$ gives $L$, exactly the integral $\int_{-L}^L\sin^2(k\pi(x+L)/2L)\,\dd x=L$: the grid sum $\sum v_j^2h$ reproduces the continuum normalization integral.
+\textbf{33.} $\sum_{j=1}^N\sin^2(ja)=\tfrac12\bigl(N-\sum_{j=1}^N\cos(2ja)\bigr)$ with $a=k\pi/(N+1)$. Let $z=e^{2ia}=e^{2\pi ik/(N+1)}$; since $1\le k\le N$, $z\ne1$ but $z^{N+1}=1$. Then $\sum_{j=0}^Nz^j=(1-z^{N+1})/(1-z)=0$ (finite geometric sum: multiplying $S=\sum_{j=0}^Nz^j$ by $1-z$ cancels all middle terms and leaves $1-z^{N+1}$); its real part gives $\sum_{j=0}^N\cos(2ja)=0$, so $\sum_{j=1}^N\cos(2ja)=-1$ (removing the $j=0$ term, which is $1$). Hence the sum is $\tfrac12(N+1)$. Multiplying by $h=2L/(N+1)$ gives $L$, exactly the integral $\int_{-L}^L\sin^2(k\pi(x+L)/2L)\,\dd x=L$: the grid sum $\sum v_j^2h$ reproduces the continuum normalization integral.

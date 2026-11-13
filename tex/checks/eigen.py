@@ -17,6 +17,8 @@ assert np.allclose(w, [2-np.sqrt(2), 2, 2+np.sqrt(2)])
 assert abs(w[0]-0.585786) < 1e-6 and abs(w[2]-3.414214) < 1e-6
 for lam, v in [(2-np.sqrt(2), [1, np.sqrt(2), 1]), (2, [1, 0, -1]), (2+np.sqrt(2), [1, -np.sqrt(2), 1])]:
     assert np.allclose(D3 @ np.array(v), lam*np.array(v))
+# n x n: det = product, trace = sum
+assert abs(np.prod(w) - np.linalg.det(D3)) < 1e-12 and abs(np.sum(w) - np.trace(D3)) < 1e-12
 
 # R90
 assert np.allclose(sorted(np.linalg.eigvals(np.array([[0, -1], [1, 0]])).imag), [-1, 1])
@@ -73,8 +75,9 @@ Nf = 600; hf = 2*L/(Nf+1)
 ratio = (4/hf**2*np.sin(Nf*np.pi*hf/(4*L))**2)/(Nf*q)**2
 assert abs(ratio - 0.41) < 0.01
 
-# Rounding level ~ few 1e-12
+# Largest eigenvalue ~ 4/h^2 ~ 1.79e4; rounding ~ few 1e-12
 assert abs(4/h**2 - 1.79e4) < 50
+assert 1e-12 < 4/h**2*2.2e-16 < 1e-11
 
 # Sturm count sample
 def sturm_count(d, b, x):
@@ -95,12 +98,13 @@ Ha = np.array([[1, .5], [.5, 3]])
 wa, Ua = np.linalg.eigh(Ha)
 assert np.allclose(wa, [0.881966, 3.118034], atol=1e-6)
 assert abs(abs(Ua[0, 0])**2 - 0.947214) < 1e-6
+assert abs(abs(Ua[1, 0])**2 - 0.052786) < 1e-6
 Hb = np.array([[1, .5j], [.5j, 3]])
 lb, Wb = np.linalg.eig(Hb)
 o = np.argsort(lb.real); lb = lb[o]; Wb = Wb[:, o]
 assert np.allclose(lb, [1.133975, 2.866025], atol=1e-6)
 O = np.abs(Wb)**2/np.sum(np.abs(Wb)**2, axis=0)
-assert abs(O[0, 0]-0.933013) < 1e-6 and abs(O[1, 1]-0.933013) < 1e-6
+assert abs(O[0, 0]-0.933013) < 1e-6 and abs(O[1, 1]-0.933013) < 1e-6  # O_11 for u, O_22 for w
 uu = np.array([1, -0.267949j]); wv = np.array([1, -3.732051j])
 assert abs(np.vdot(uu, wv) - 2) < 1e-5
 assert abs(abs(np.vdot(uu, wv))/np.linalg.norm(uu)/np.linalg.norm(wv) - 0.5) < 1e-5
@@ -110,7 +114,7 @@ assert abs(1 - 0.25/2 - 0.875) < 1e-12 and abs(1 + 0.25/2 - 1.125) < 1e-12
 lg = np.linalg.eigvals(np.array([[1, 1.5j], [1.5j, 3]]))
 assert np.allclose(lg.real, 2) and np.allclose(sorted(lg.imag), [-1.118034, 1.118034], atol=1e-6)
 
-# Checkpoint: tridiagonal storage
+# Tridiagonal storage
 assert 2*6000-1 == 11999 and 6000**2 == 3.6e7
 
 # Problem 1, 3, 4
@@ -123,6 +127,12 @@ assert np.allclose(sorted(np.linalg.eigvals(np.array([[1, 4, 5], [0, 3, 6], [0, 
 P7 = np.array([[1, 1+1j], [1-1j, 2]])
 assert np.allclose(np.linalg.eigvalsh(P7), [0, 3])
 assert abs(np.vdot(np.array([-(1+1j), 1]), np.array([1+1j, 2]))) < 1e-14
+# Problem 9: numerical instance theta = 0.7
+th = 0.7
+R = np.array([[np.cos(th), -np.sin(th)], [np.sin(th), np.cos(th)]])
+assert np.allclose(np.sort_complex(np.linalg.eigvals(R)), np.sort_complex(np.array([np.exp(-1j*th), np.exp(1j*th)])))
+assert np.allclose(R @ np.array([1, -1j]), np.exp(1j*th)*np.array([1, -1j]))
+assert np.allclose(R @ np.array([1, 1j]), np.exp(-1j*th)*np.array([1, 1j]))
 # Problem 11
 U = np.column_stack([np.array([1, np.sqrt(2), 1])/2, np.array([1, 0, -1])/np.sqrt(2), np.array([1, -np.sqrt(2), 1])/2])
 assert np.allclose(U.T @ U, np.eye(3))
@@ -158,8 +168,8 @@ D4 = 2*np.eye(4) - np.eye(4, k=1) - np.eye(4, k=-1)
 x4 = np.array([1., 2., -1., 3.])
 assert np.allclose(D4 @ x4, [0, 4, -7, 7]) and abs(x4 @ D4 @ x4 - 36) < 1e-12
 assert abs(x4[0]**2 + x4[-1]**2 + np.sum(np.diff(x4)**2) - 36) < 1e-12
-# Problem 27 (corrected value at eps=0.5: 0.0714)
-for ep, ov in [(-2, 0.9945), (0, 0.5), (0.5, 0.07125), (2, 0.0055)]:
+# Problem 27 (answer quotes 0.0713 at eps=0.5; exact 0.07125)
+for ep, ov in [(-2, 0.9945), (0, 0.5), (0.5, 0.0713), (2, 0.0055)]:
     wq, Uq = np.linalg.eigh(np.array([[ep, .3], [.3, -ep]]))
     assert abs(abs(Uq[0, 0])**2 - ov) < 1e-4, (ep, abs(Uq[0, 0])**2)
     assert abs(0.5*(1 - ep/np.sqrt(ep**2+0.09)) - ov) < 1e-4
@@ -175,6 +185,7 @@ H31 = np.diag([1., 2., 3.]) + 1j*g*(np.eye(3, k=1) + np.eye(3, k=-1))
 l31, W31 = np.linalg.eig(H31)
 o = np.argsort(l31.real); l31 = l31[o]; W31 = W31[:, o]
 assert np.allclose(l31, [1.175379, 2, 2.824621], atol=1e-6)
+assert abs(np.linalg.det(H31) - (6+4*g**2)) < 1e-12
 O31 = np.abs(W31)**2/np.sum(np.abs(W31)**2, axis=0)
 assert abs(O31[0, 0]-0.832) < 1e-3 and abs(O31[1, 1]-0.758) < 1e-3 and abs(O31[2, 2]-0.832) < 1e-3
 assert abs(1/np.sqrt(2) - 0.707) < 1e-3
