@@ -10,7 +10,7 @@ import anthropic
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LEDGER = os.path.join(ROOT, "ledger", "costs.csv")
-CAP_USD = 75.0
+CAP_USD = 79.5
 KEYFILE = os.environ.get("BOOK_API_KEY_FILE", "/home/claude/book/.apikey")
 
 # USD per million tokens: input, output, cache read, cache write (5 min)

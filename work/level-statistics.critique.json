@@ -2,148 +2,232 @@
  {
   "category": "ERROR",
   "severity": "high",
-  "quote": "$t_{400}=676.1$ (from qmnt), $\\gap\\approx1.343$, and $9.065/1.343\\approx6.7$ levels",
-  "problem": "The check run failed on t_400=676.1. The value is not what qmnt returns, so the quoted t_400 and the derived gap are unverified. The true t_400 is about 6\\times 10^2 and is not 676.1.",
-  "fix": "Recompute t_400 with qmnt.zeros(400)[-1], then correct t_400, the gap and the level count in the answer, and fix the check."
+  "quote": "if zero $n$ moves up, it crowds zero $n+1$, and since spacings vary little",
+  "problem": "The heuristic runs backwards. If zero n moves up and repels zero n+1, then n+1 is pushed up too, which gives a positive correlation of consecutive fluctuations, not a negative one. The chapter's own identity Var(Δu)=2(C0−C1) says the same: smaller spacing variance (stronger rigidity) pushes C1 up. In large GUE spectra C0 grows logarithmically while Var(Δu) stays near 0.18, so C1 is positive. The negative lag-1 value at these heights is an empirical fact about low zeros (C0≈0.06 is below Var/2), not a consequence of repulsion.",
+  "fix": "Delete the 'crowds ... relax back' picture. State that negative r_1 for zeros 1–400 is a numerical observation (the paper's, and Fig. acf). Use the identity to explain it: C1=C0−Var(Δu)/2 is negative because at these heights C0≈0.06 is smaller than Var(Δu)/2. Say explicitly that repulsion alone does not imply it."
  },
  {
-  "category": "ERROR",
+  "category": "OVERCLAIM",
   "severity": "high",
-  "quote": "is $\\frac{1}{\\sigma^2}I_2=\\frac{1}{\\sigma^2}\\cdot\\frac{\\sqrt\\pi\\,(2\\sigma^2)^{3/2}}{4}$",
-  "problem": "Normalization and mean are computed with a wrong power of B. I_2 with B=1/(2\\sigma^2) is \\sqrt\\pi(2\\sigma^2)^{3/2}/4, which is fine, but the preceding normalization uses I_1 for \\int s e^{-Bs^2}, correct. No error here; however the following mean should read \\sigma\\sqrt{\\pi/2}, which holds.",
-  "fix": "No change needed (verified)."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "A small spacing variance with a given fluctuation size $C_0$ requires $C_1$ close to $C_0$ (not the case here) \\emph{or} a spacing variance that is itself fixed by repulsion;",
-  "problem": "Muddled and partly wrong reasoning. Var(\\Delta u)=2(C_0-C_1) is an identity, so the 'or' clause is meaningless. Also with C_1<0 the variance is larger than 2C_0.",
-  "fix": "Say: a small spacing variance requires C_1 close to C_0; negative C_1 gives variance above 2C_0. Delete the 'or ... repulsion' clause."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "This is the fluctuation side of level repulsion: if zero $n$ moves up, it crowds zero $n+1$, and the stiffness of the spectrum (spacings vary little, by Sec.~\\ref{sec:level-statistics-wigner}) makes the pattern relax back.",
-  "problem": "Presented as an explanation, but it is a heuristic. The link from the surmise to the negative C_1 is not derived.",
-  "fix": "Label it heuristic and note that Var(\\Delta u)=2(C_0-C_1) only ties the two together."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The two eigenvalues coincide only if $(a-d)^2+4b^2=0$, and since both terms are squares of real numbers this requires \\emph{two} conditions at once",
-  "problem": "The counting says a real symmetric matrix has three free numbers (a,b,d), yet the degeneracy takes two conditions. Elsewhere the Dyson-index rule says D=2,3,5 conditions give p~s^{D-1}, and the text never explains D=5 for the symplectic case (it is stated).",
-  "fix": "Justify D=5 for the symplectic ensemble or mark it as quoted (a 2x2 quaternion Hermitian matrix has five conditions)."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The Dyson index $\\beta$ (0, 1, 2, 4) controls small-spacing behavior $\\Pr(s<\\varepsilon)\\propto\\varepsilon^{\\beta+1}$.",
-  "problem": "For the symplectic case p~s^4, so Pr~\\varepsilon^5=\\varepsilon^{\\beta+1}, correct. But the earlier counting gives D-1=4 for D=5 while the text says 'GOE D=2, GUE D=3', consistent. No error.",
-  "fix": "No change needed."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Take logarithms and use the Taylor series $\\log(1-x)=-x-\\tfrac{x^2}{2}-\\tfrac{x^3}{3}-\\cdots$, valid for $|x|<1$",
-  "problem": "Assumes a finite-N model with a uniform density, but the 'one other point' step treats N-1 points as independent of the choice of the reference point without comment. The claim that points near the end cost nothing is asserted, not shown.",
-  "fix": "State that for fixed s the fraction of reference points within s of the end is s/N and tends to 0."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The neglected term involves the curvature $\\bar N''$; for the zeros $\\Nsm''(t)=1/(2\\pi t)$, which is small once $t$ is large.",
-  "problem": "No quantitative statement of when the first-order approximation is good, and the sample shows 0.7% error at low t without a criterion.",
-  "fix": "Give the relative error ~ \\bar N''\\,\\Delta E/\\bar N' and evaluate it for the first pair."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "$\\Pr(s>2)$. GUE: integrate the surmise numerically (for example \\texttt{scipy.integrate.quad}) from 2 to $\\infty$, giving $0.017$",
-  "problem": "The result is stated without a closed form, though one exists via erfc. It is an unexplained jump for a student.",
-  "fix": "Give the closed form: Pr(s>2)=erfc(4/\\sqrt\\pi)+(4/\\pi)... or show the integration by parts, or say the value comes from the check script."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "The trace has the property $\\mathrm{tr}(XY)=\\sum_i\\sum_jX_{ij}Y_{ji}=\\sum_j\\sum_iY_{ji}X_{ij}=\\mathrm{tr}(YX)$",
-  "problem": "The 'trace' of a matrix and the matrix product are used before being defined in this chapter. The rotation invariance argument also uses O H O^T without explanation.",
-  "fix": "Add a one-line definition of the matrix product and refer to Chapter on linear algebra."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The same computation with a complex $b$ whose real and imaginary parts each have variance $\\sigma_0^2/2$ gives the \\textbf{Gaussian Unitary Ensemble (GUE)}",
-  "problem": "The GUE variables y=2b_r and z=2b_i are not shown to be independent with variance 2\\sigma_0^2, and the unitary invariance is not proved. This is left to a problem.",
-  "fix": "Write the three lines in the text or flag explicitly that the invariance proof is deferred."
+  "quote": "Repulsion makes consecutive fluctuations negatively correlated; then neighbor interpolation is anticorrelated with the truth",
+  "problem": "The Key Idea states as fact a causal link that the body text admits was not derived ('We have not derived a negative lag-1 correlation'). As a general statement it is false (see the previous item).",
+  "fix": "Replace with: 'For the low zeros, consecutive fluctuations are observed to be negatively correlated (numerical observation); whenever r_1<0 and r_2≈0, neighbor interpolation is anticorrelated with the truth (corr=√2 r_1 in the MA(1) model).'"
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Odlyzko then tested these ideas numerically at great heights. His 1987 paper \\cite{odlyzko87} used the first $10^5$ zeros and, separately, $10^5$ zeros starting just above zero number $10^{12}$.",
-  "problem": "The details of the zero ranges in the 1987 paper are not in the bible or in the paper. They are likely wrong, since the 10^12 data came from later work.",
-  "fix": "Remove the specific counts and say Odlyzko computed large samples at several heights, including very high ones."
+  "quote": "repulsion makes neighbors disagree, so interpolation that assumes similarity points the wrong way",
+  "problem": "The Paper connection says the paper's negative autocorrelation is 'explained' by repulsion. The paper only reports the negative autocorrelation as an observed fact, and the chapter has not derived it from repulsion.",
+  "fix": "Rewrite: 'The paper observes negative autocorrelation at lags 1–3. Given that observation, Sec. 9.3 shows why neighbor interpolation is anticorrelated with truth.' Remove the claim that repulsion causes it."
  },
  {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "Montgomery published the result in 1973 \\cite{montgomery}.",
-  "problem": "The afternoon-tea story is told as fact with no source.",
-  "fix": "Mark it as anecdote ('as usually told')."
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "now the steps have mean width one everywhere, and the straight line $u+\\tfrac12$ follows them",
+  "problem": "Since Nsm(s_n)=n−1/2, the smooth curve passes through the step midpoints, so in the unfolded variable the staircase follows the line N=u. The line u+1/2 would run along the upper corners of the steps. This also contradicts the midpoint convention and δ_n=u_n−(n−1/2) oscillating about zero.",
+  "fix": "Change the caption (and the figure script) to 'the straight line $N=u$ passes through the middle of the steps'."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "Both are features of the pattern you will learn to quantify.",
+  "problem": "The bible requires teaching the short-range negative correlation of consecutive spacings. The chapter promises to quantify the alternation of long and short spacings but never computes or discusses corr(Δu_n,Δu_{n+1}); it only treats the fluctuations δ_n.",
+  "fix": "Add a subsection defining the lag-1 spacing correlation. Derive Cov(Δu_n,Δu_{n+1})=−C0+2C1−C2 from Δu_n=1+δ_{n+1}−δ_n, compute it with qmnt for the zeros, and relate it to the paper's lags 1–3 statement. Add the number to CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{didyouknow}{Wigner's Inspired Guess}",
+  "problem": "The environment didyouknow (used twice) is not among the environments the bible defines in the preamble. It may not compile and is outside the chapter anatomy. The first box also quotes the GOE surmise before anything in the section has defined it.",
+  "fix": "Remove both didyouknow boxes, or move their content into running text or a beyond box. If the coordinator inserted them deliberately, confirm the environment exists in the preamble."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Let the matrix depend on a parameter $\\lambda$ (think of a field strength you are turning up), with a fixed coupling $g$",
+  "problem": "λ was used a few lines earlier for the eigenvalues (λ_±) and is now reused as a control parameter. The sample's boxed answer then mixes both meanings ('λ_±=0.7838 ... (λ=0)'). The bible also reserves λ for the Levenberg–Marquardt damping.",
+  "fix": "Rename the control parameter (for example $\\tau$ or $\\epsilon$) in the text, the figure, its caption, the sample, Problem 7 and Answer 7."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "those whose Fourier transform, Chapter~\\ref{ch:fourier-transform}, vanishes outside a finite interval",
+  "problem": "Montgomery's theorem holds only for test functions whose Fourier transform is supported in one specific interval, (−1,1) in his normalization. If an arbitrary finite interval were allowed, the statement would be essentially the full (open) pair correlation conjecture.",
+  "fix": "Write: 'those whose Fourier transform vanishes outside one specific fixed interval, $(-1,1)$ in Montgomery's normalization; extending the result to larger intervals is the open conjecture.'"
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "so over ten thousand zeros the mean spacing differs from one by roughly $10^{-4}$.",
-  "problem": "The bound 2C/k with C<1 and k=10^4 gives about 2\\times10^{-4}. Also |\\delta| is 'typically below one', not bounded.",
-  "fix": "Write 'of order 10^{-4}' and state that the bound is typical, not rigorous."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "(Problem~17)",
-  "problem": "Hard-coded problem number in a reference. Problems are not labelled for this item, and the numbering is fragile.",
-  "fix": "Add \\label{prob:level-statistics-period} to that problem and use \\ref."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\prob{1}{Unfold the box levels $E_k=(k\\pi/2L)^2$ for the scale-2 box $L=59.957$. What are the unfolded spacings?}",
-  "problem": "The problem list has 22 problems. The answers cover only some of them, but the bible requires answers to every odd-numbered problem and all \\prob{1}. Odd problems 1, 3, 5, ... 21 are not all answered (e.g. 5 is, 15 is, 19 is, but 2/4 are not needed). Problem 16 etc. is fine, yet at least problems 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21 appear; 1-level \\prob{1} problems 2, 15, 20 also appear.",
-  "fix": "Check coverage against the numbering; problem 4 (\\prob{2}) is not required."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "\\prob{2}{Using numpy, throw $2\\times10^4$ uniform points on $[0,2\\times10^4]$, sort, and compute the fraction of spacings below $0.1$. Compare with theory.}",
-  "problem": "Only about 5 of the 22 problems use the paper, as the bible requires at least 4, and computational ones are at least 3. This is satisfied, but the paper-use problems are thin.",
-  "fix": "No change needed, optionally add one more."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "In the 1950s, nuclear physicists measuring how heavy nuclei absorb slow neutrons",
-  "problem": "The \\cite{mehta} sentence is placed at the end of a claim about physics history that Mehta only partly supports.",
-  "fix": "Acceptable; optionally soften."
+  "quote": "Simpson's rule with step $1/8$ (or \\texttt{quad}) gives $0.38685$",
+  "problem": "Simpson's rule with h=1/8 on [0,0.5] gives 0.38687, not 0.38685; the latter is the exact value (Si(π)−2/π)/π. Simpson's rule is also not taught in any assumed chapter, and CHECKS only verifies the quad value.",
+  "fix": "Write 'numerical integration (\\texttt{scipy.integrate.quad}) gives 0.38685', or quote the Simpson value 0.38687 with one sentence defining the rule and add it to CHECKS."
  },
  {
   "category": "CLARITY",
   "severity": "medium",
-  "quote": "Because it is a probability density on $s\\ge0$ and because unfolding forces the mean spacing to be one, every spacing distribution in this chapter obeys two conditions:",
-  "problem": "The Poisson derivation assumes mean one by construction, which is consistent, but the checkpoint needing the exponential and GUE surmise being only approximations for N>2 is not stated at this point.",
-  "fix": "Add a sentence that the surmises are approximations for large matrices."
+  "quote": "Problem~\\ref{prob:level-statistics-gue-check} asks you to write this out.",
+  "problem": "The text says the problem is about unitary invariance of the GUE density. The referenced problem instead asks for independence and equal variance of x,y,z and the trace form of the density, all of which the text has just derived.",
+  "fix": "Change Problem 5 to: 'Show that $\\mathrm{tr}((UHU^\\dagger)^2)=\\mathrm{tr}(H^2)$ for unitary $U$, hence the GUE density is basis independent', and update Answer 5 to match. Alternatively, reword the sentence."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "Unfolding the zeros. (a) The staircase $N(t)$ (number of zeros up to height $t$)",
+  "problem": "Three figures are never referenced in the text: the staircase figure, the surmises figure and the pair-correlation figure. The student is not told when to look at them or what to notice.",
+  "fix": "Add references: 'Figure~\\ref{fig:level-statistics-staircase} shows...' after Eq. (unfold); 'Figure~\\ref{fig:level-statistics-surmises} compares the three laws' after the GUE boxed result; 'Figure~\\ref{fig:level-statistics-paircorr} shows the test for the first $10^4$ zeros' in the Odlyzko paragraph."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "medium",
+  "quote": "The numbers $u_n$ are the \\textbf{unfolded levels}, and $\\Delta u_n=u_{n+1}-u_n$ is the $n$-th \\textbf{unfolded spacing}.",
+  "problem": "The boxed definition of unfolding appears with no introductory sentence. The subsection title promises 'the definition of unfolding' but the text never says in words what the operation is before the equation.",
+  "fix": "Insert before the equation: 'Unfolding replaces each level $E_n$ by the value of the smooth counting function there:' and add a plain-language sentence saying that this stretches dense regions and compresses sparse ones."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "A small spacing variance",
-  "problem": "Sentence quoted is part of the muddled passage. Also the claim that the sign alternation in Table 1 'mostly alternate' is based on 10 values.",
-  "fix": "Say the signs alternate in this short sample and quantify with Fig. acf."
+  "quote": "we adopt the \\textbf{midpoint convention} that at the jump $N(E_n)=n-\\tfrac12$",
+  "problem": "The preceding sentence defines N(E) as the number of levels at or below E, which gives N(E_n)=n. The box sample then uses the floor form (N(E_k)=k), which contradicts the midpoint convention.",
+  "fix": "Define N(E) as the number of levels strictly below E plus one half for a level exactly at E. In the sample, note that the floor formula holds away from the jumps."
  },
  {
-  "category": "LATEX",
+  "category": "CLARITY",
   "severity": "low",
-  "quote": "\\prob{2}{\\label{prob:level-statistics-gue-check}Let $a,d$",
-  "problem": "\\label inside \\prob argument likely does not give a usable \\ref value for 'Problem~\\ref'; it refers to the enclosing counter, which may be a list item.",
-  "fix": "Ensure the \\prob macro steps a counter, or use \\ref only on section labels; otherwise write 'Problem 5'."
+  "quote": "the natural smooth version is $\\bar N(E)=2L\\sqrt E/\\pi$",
+  "problem": "With this choice N−N̄ lies in [−1,0] and does not oscillate about zero. Under the chapter's own definition δ_k=u_k−(k−1/2)=1/2, not 0, so 'no fluctuation' is inconsistent with Eq. (delta).",
+  "fix": "Use $\\bar N(E)=2L\\sqrt E/\\pi-\\tfrac12$ (so u_k=k−1/2, δ_k=0), or state explicitly that the constant offset δ_k=1/2 is irrelevant to spacings. Adjust Answer 1 and Problem 10 accordingly."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "so small areas are preserved and the density only needs re-expressing, Chapter~\\ref{ch:linear-algebra}",
+  "problem": "The Jacobian notation ∂(a,d)/∂(c,x) and the rule that a density transforms with the absolute determinant of a change of variables are used without definition. The bible's Chapter 7 contract covers only 2×2 and 3×3 determinants with properties stated, not change of variables for densities.",
+  "fix": "Add two sentences: a linear map with matrix J sends a small rectangle of area dc dx to a parallelogram of area |det J| dc dx (the 2×2 determinant as area factor), so a density in (a,d) becomes density×|det J| in (c,x). Here |det J|=1."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The ensemble therefore has no preferred basis: rotating every matrix leaves the probabilities unchanged.",
+  "problem": "Invariance of the exponent tr(H²) is shown, but invariance of probabilities also needs the volume element da db dd to be unchanged under H→OHO^T. This is not mentioned.",
+  "fix": "Add: 'The map $H\\to OHO^\\top$ is a linear map on $(a,\\sqrt2 b,d)$ that preserves $a^2+2b^2+d^2$, i.e. a rotation or reflection of that three-dimensional space, so it also preserves volumes.' Or state in a beyond box that the measure invariance is taken on trust, citing \\cite{mehta}."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Now let the off-diagonal entry be complex, $b=b_r+\\ii b_i$, with $b_r,b_i$ independent Gaussians each of variance $\\sigma_0^2/2$.",
+  "problem": "The GUE construction begins in the middle of a long paragraph about GOE, with no break. With the upper-right entry of Eq. (paramC) equal to (y−iz)/2, identifying b=b_r+i b_i gives z=−2b_i unless b is the lower-left entry, which is not stated.",
+  "fix": "Start a new paragraph headed 'The complex case.' State that $b$ denotes the lower-left entry $(y+\\ii z)/2$, so $y=2b_r$, $z=2b_i$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Physically, real symmetric Hamiltonians arise for systems that are invariant under time reversal (no magnetic field, for instance)",
+  "problem": "The chapter's contract assumes only Chapters 8, 17, 19 and the prerequisites box does not list Chapter 10. 'Hamiltonian' and 'time-reversal symmetry' are used without a definition or reminder.",
+  "fix": "Add Chapter~\\ref{ch:schrodinger} to the prerequisites, or a one-line reminder that the Hamiltonian is the Hermitian matrix or operator whose eigenvalues are the energy levels. Add one sentence saying what time reversal means (running the motion backwards; complex conjugation of the wavefunction), marked as background."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:asymptotics} for the Gamma function in one hard problem.",
+  "problem": "No problem in the chapter uses the Gamma function. Problem 11 is solved with the I_k recursion.",
+  "fix": "Delete this prerequisite, or add a problem that actually uses Γ (for example the general-β surmise constants)."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "(Eq.~\\eqref{eq:level-statistics-meanone} guarantees this, since the fluctuations stay below one in size)",
+  "problem": "Earlier the chapter correctly says |δ_n|<1 is an observed typical size, not a proved bound. 'Guarantees' overstates this.",
+  "fix": "Write: 'Eq. (meanone) explains this: for these $10^4$ zeros the fluctuations are observed to stay below one in size, so the deviation is at most about $2\\times10^{-4}$.'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "or if paper Eq.~(1) had been mistyped, the histogram would show it at once",
+  "problem": "This is not true in general. An error in the constant 7/8 cancels in every spacing, and a small error in a coefficient changes the mean spacing only slightly. The spacing histogram is insensitive to such errors.",
+  "fix": "Replace with: 'or if the unfolding function had the wrong density (for example a wrong factor in the logarithmic term), the mean spacing would drift from one and the histogram would be distorted; a wrong additive constant, however, would go unnoticed.'"
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "a variance close to the GUE value $0.178$ and far from both the GOE value $0.273$ and the Poisson value $1$",
+  "problem": "The chapter asserts qualitative results of its own computation (variance, fraction of spacings below 0.1) without quoting the numbers. CHECKS only tests the variance in the loose window 0.13–0.23, which does not establish 'close to 0.178'.",
+  "fix": "Quote the computed variance and small-gap fraction to three digits in the text, and assert those values in CHECKS with a tight tolerance."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Every term after $-s$ carries at least one factor $1/N$",
+  "problem": "There are infinitely many such terms. Each one vanishing does not by itself show that their sum vanishes.",
+  "fix": "Add a bound: for $s/N\\le\\tfrac12$, $|\\log(1-x)+x|\\le x^2$, so $|\\log Q_N+s|\\le s/N+(N-1)s^2/N^2\\le (s+s^2)/N\\to0$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Superposing the spectra of many unrelated systems therefore tends toward Poisson statistics.",
+  "problem": "This is a nontrivial result stated with 'therefore' but no argument. Absence of repulsion between two spectra does not immediately give Poisson statistics.",
+  "fix": "Label it as a known result taken on trust (proof in \\cite{mehta}), or soften to 'so close pairs are no longer suppressed; with many superposed spectra the statistics approach Poisson (stated without proof)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "This is an identity, valid for any stationary sequence.",
+  "problem": "'Stationary' is used here and in the definition of C_k without being defined in this chapter.",
+  "fix": "Add: 'stationary means that averages such as $\\langle\\delta_n\\rangle$ and $\\langle\\delta_n\\delta_{n+k}\\rangle$ do not depend on $n$'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "throwing $N$ points independently and uniformly onto an interval of length $N$",
+  "problem": "N is already the counting function N(E) in this chapter (and the grid size in the book). A third meaning in the Poisson derivation invites confusion.",
+  "fix": "Use a different letter (for example $n_{\\rm pts}$ or $K$) for the number of points, giving $Q_K(s)=(1-s/K)^{K-1}$."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{\\label{prob:level-statistics-gue-check}Let $a,d$ be Gaussians",
+  "problem": "The bible allows only label prefixes sec:, eq:, fig:, tab: with the chapter slug. The prob: labels are outside that list, and \\ref to them works only if \\prob steps a referenceable counter, which the bible does not promise.",
+  "fix": "Refer to problems by number in words ('Problem 5', 'Problem 11', 'Problem 17') and remove the prob: labels, or confirm with the coordinator that \\prob supports labels."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/level-statistics_2x2sim.pdf}",
+  "problem": "The bible's figure template fixes width=0.85\\linewidth.",
+  "fix": "Change to width=0.85\\linewidth."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "\\sqrt{0.095\\times0.905/2\\times10^4}\\approx0.002",
+  "problem": "As typeset this reads as (0.095×0.905/2)×10^4. The intended denominator is 2×10^4.",
+  "fix": "Write $\\sqrt{0.095\\times0.905/(2\\times10^4)}\\approx0.002$."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Expand $(\\delta_{n+1}-\\delta_n)^2$ and average, as in the text.",
+  "problem": "Problem 21 (graded hard) asks for a derivation already given in full in the text, and the answer just points back to it. The bible asks for short solutions. The numerical half gives no values.",
+  "fix": "Change the problem to something new, for example deriving Cov(Δu_n,Δu_{n+1})=−C0+2C1−C2. In the answer, quote the computed Var(Δu), C0 and C1 for zeros 1–1000 and add them to CHECKS."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "agree with $0.0078$ (GOE) and $0.0011$ (GUE) to within $0.001$",
+  "problem": "A tolerance of 0.001 on a quantity of size 0.0011 is uninformative: a simulated value of 0.0002 would also 'agree'.",
+  "fix": "Quote the simulated fractions for seed 0 and state agreement to within the binomial standard error (about 2×10^{-4} for GOE and 7×10^{-5} for GUE). Tighten the CHECKS assertion to match."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "A GUE matrix of the right size, unfolded, has the same statistics as the zeros",
+  "problem": "The agreement is approximate and asymptotic (a numerical observation, with finite-height deviations), not exact.",
+  "fix": "Write 'has, to the accuracy of the comparisons above, the same local statistics as the zeros'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "It is the paper's Fig.~2 recomputed.",
+  "problem": "The book's figure adds a GOE curve that the paper's Fig. 2 does not have (the paper shows only GUE and Poisson). The listing above also plots only those two, so the listing, the figure and the claim do not match.",
+  "fix": "Say 'It is the paper's Fig. 2 recomputed, with the GOE surmise added for comparison', and either add the GOE line to the listing or note the difference."
  }
 ]
