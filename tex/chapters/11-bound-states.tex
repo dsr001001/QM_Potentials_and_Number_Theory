@@ -3,7 +3,7 @@
 \begin{chapterintro}
 A guitar string clamped at both ends can vibrate only in a discrete set of patterns: the fundamental, the second harmonic, the third, and so on. You met this in first-year physics, and you met its mathematical skeleton in Chapter~\ref{ch:eigen}, where the equation $-y''=\lambda y$ with fixed ends had eigenvalues $(k\pi/2L)^2$. A quantum particle trapped in a well behaves the same way. Its wavefunction must fit inside the well, and only special energies allow that. These special energies are the \emph{bound-state energies}, and the list of them is the particle's \emph{spectrum}.
 
-In this chapter we solve the two exactly solvable wells that every physicist knows, the infinite square well (the ``box'') and the harmonic oscillator. We prove general facts that hold for every one-dimensional well: the energies are never degenerate, an even well has states that are alternately even and odd, and the $n$-th state has $n-1$ nodes. Then we ask the question that matters most for this book: how does the \emph{shape} of a well control the \emph{spacing} of its levels? We find a simple and physical answer: the level density equals the classical period divided by $2\pi$, so a well that widens quickly with energy, that is a potential that grows slowly, makes its levels crowd together.
+In this chapter we solve the two exactly solvable wells that every physicist knows, the infinite square well (the ``box'') and the harmonic oscillator. We then establish general facts. Bound-state energies in one dimension are never degenerate (proved from a uniqueness theorem we take on trust). Every state of an even well is even or odd (proved). The $n$-th state has $n-1$ nodes (stated; the proof is beyond this book). Then we ask the question that matters most for this book: how does the \emph{shape} of a well control the \emph{spacing} of its levels? We find a simple and physical answer: the level density equals the classical period divided by $2\pi$, so a well that widens quickly with energy, that is a potential that grows slowly, makes its levels crowd together.
 
 Where this shows up in the paper: the paper's Hamiltonian $H=-d^2/dx^2+V(x)$ lives in a box $[-L,L]$ with Dirichlet walls (Sec.~II~B of \cite{soniR1}); its potential, the Wu--Sprung potential of Eq.~(2), is even; its levels are labeled from $n=1$ and the first 500 are scored at scale 1; and the slowly rising level density of the Riemann zeros suggests, at the heuristic semiclassical level of \cref{sec:bound-states-density}, that such a potential must grow a little more slowly than a harmonic well. The parity facts of this chapter also explain why the paper's ``PT-odd'' perturbations have vanishing diagonal matrix elements (Sec.~II~E).
 \end{chapterintro}
@@ -68,7 +68,7 @@ The second derivative is the \emph{curvature} of the graph of $\psi$. \Cref{eq:b
 
 \subsection{Why only special energies work: shooting}
 
-Take the bowl-shaped potential $V(x)=x^2$, which is even, and look for an even solution. An even function has $\psi'(0)=0$ (its slope at the origin is zero), so start at $x=0$ with $\psi(0)=1$, $\psi'(0)=0$ and integrate \cref{eq:bound-states-curv} outward, like firing a projectile and watching where it lands. This is called \emph{shooting}. For $x$ beyond the turning point $\sqrt E$ the region is forbidden and the solution is some mixture of a growing and a decaying piece. For almost every $E$ the growing piece is present, and $\psi$ runs off to $+\infty$ or $-\infty$; such a $\psi$ violates \cref{eq:bound-states-norm}. \Cref{fig:bound-states-shooting} shows what happens: for $E=0.9$ the solution has not curved enough and shoots up; for $E=1.1$ it has curved too much and shoots down. Between them, at exactly $E=1$, it decays to zero.
+Take the bowl-shaped potential $V(x)=x^2$, which is even, and look for an even solution. An even function has $\psi'(0)=0$ (its slope at the origin is zero), so start at $x=0$ with $\psi(0)=1$, $\psi'(0)=0$ and integrate \cref{eq:bound-states-curv} outward, like firing a projectile and watching where it lands. This is called \emph{shooting}. On a computer you step outward in small steps $\Delta x$. From $\psi$ and $\psi'$ at $x$, the rule $\psi''=(V-E)\psi$ gives the change in slope, $\psi'(x+\Delta x)\approx\psi'(x)+\psi''(x)\Delta x$. Then $\psi(x+\Delta x)\approx\psi(x)+\psi'(x)\Delta x$, and you repeat. For $x$ beyond the turning point $\sqrt E$ the region is forbidden and the solution is some mixture of a growing and a decaying piece. For almost every $E$ the growing piece is present, and $\psi$ runs off to $+\infty$ or $-\infty$; such a $\psi$ violates \cref{eq:bound-states-norm}. \Cref{fig:bound-states-shooting} shows what happens: for $E=0.9$ the solution has not curved enough and shoots up; for $E=1.1$ it has curved too much and shoots down. Between them, at exactly $E=1$, it decays to zero.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/bound-states_shooting.pdf}
@@ -225,7 +225,7 @@ Many textbooks put the box on $[0,a]$ and write $\psi_n=\sqrt{2/a}\,\sin(n\pi x/
 
 \subsection{Orthogonality}
 
-Chapter~\ref{ch:eigen} proved that eigenvectors of a symmetric matrix with different eigenvalues are orthogonal, and Chapter~\ref{ch:schrodinger} carried this over to Hermitian operators. Let us confirm it directly. Substitute $u=\pi(x+L)/(2L)$ in \cref{eq:bound-states-boxpsi-unified}: as $x$ runs from $-L$ to $L$, $u$ runs from $0$ to $\pi$, and $\dd x=(2L/\pi)\dd u$. Then
+Chapter~\ref{ch:eigen} proved that eigenvectors of a symmetric matrix with different eigenvalues are orthogonal. The same argument applies to the Hermitian operator $H$, with integration by parts playing the role of the matrix transpose. Here we confirm orthogonality directly for the box. Substitute $u=\pi(x+L)/(2L)$ in \cref{eq:bound-states-boxpsi-unified}: as $x$ runs from $-L$ to $L$, $u$ runs from $0$ to $\pi$, and $\dd x=(2L/\pi)\dd u$. Then
 \[
 \int_{-L}^{L}\psi_m\psi_n\,\dd x=\frac{1}{L}\cdot\frac{2L}{\pi}\int_0^{\pi}\sin mu\,\sin nu\,\dd u .
 \]
@@ -241,7 +241,7 @@ Using $\sin mu\sin nu=\tfrac12[\cos(m-n)u-\cos(m+n)u]$ (Chapter~\ref{ch:fourier-
 \label{fig:bound-states-box}
 \end{figure}
 
-\Cref{fig:bound-states-box} shows the first five states. Three patterns are visible, and the next section proves that they hold for every one-dimensional well: the energies are all different; the states are alternately even and odd; and the $n$-th state crosses zero $n-1$ times inside the box.
+\Cref{fig:bound-states-box} shows the first five states. Three patterns are visible: the energies are all different; the states are alternately even and odd; and the $n$-th state crosses zero $n-1$ times inside the box. The next section does three things. It proves that the first pattern holds for every one-dimensional well. It proves that every state of an even well is even or odd. It states the third pattern (the node theorem), with its proof taken on trust. Combined with the node theorem, the alternation of parity then follows for every even well.
 
 \subsection{Spacing}
 
@@ -255,7 +255,7 @@ The spacing grows linearly with $n$: in a box, levels \emph{spread out} as you g
 \begin{sample}{The empty box of the paper (RE3)}
 The paper's scale-1 box has half-width $L=44.883$ (Sec.~II~B of \cite{soniR1}). With no potential inside (running example RE3), find (a) $E_1$, (b) $E_{500}$, (c) how many levels lie at or below $E=1000$, (d) $E_{501}-E_{500}$.
 
-\textbf{Step 1:} $E_1=\pi^2/(4L^2)$. Here $L^2=44.883^2=2014.48$ and $4L^2=8057.94$, so $E_1=9.8696/8057.94=1.2248\times10^{-3}$.
+\textbf{Step 1:} $E_1=\pi^2/(4L^2)$. Here $L^2=44.883^2=2014.48$ and $4L^2=8057.93$, so $E_1=9.8696/8057.94=1.2248\times10^{-3}$.
 
 \textbf{Step 2:} $E_{500}=500^2E_1=250000\times1.2248\times10^{-3}=306.2$.
 
@@ -299,11 +299,6 @@ If you double the half-width $L$ of the box, what happens to $E_1$ and to every 
 
 %==========================================================
 \section{Uniqueness, parity and nodes}\label{sec:bound-states-parity}
-% DYK-BEGIN
-\begin{didyouknow}{Counting Nodes}
-In the 1830s Charles Sturm and Joseph Liouville proved that for a large class of one-dimensional wave equations, the $n$-th eigenfunction, counting from $n=0$, has exactly $n$ zeros inside the interval. This oscillation theorem is why the ground state of any 1D potential well has no nodes, the first excited state has one, and so on. They proved it long before quantum mechanics existed.
-\end{didyouknow}
-% DYK-END
 
 \subsection{One-dimensional bound states are never degenerate}
 
@@ -313,26 +308,26 @@ Two different states with the same energy are called \emph{degenerate}. In three
 \textbf{Taken on trust: uniqueness for the initial-value problem.} If $V$ is continuous on an interval and $x_0$ is a point in it, then for any numbers $a$, $b$ there is exactly one solution of $\psi''=(V-E)\psi$ on the interval with $\psi(x_0)=a$ and $\psi'(x_0)=b$. In particular, a solution with $\psi(x_0)=\psi'(x_0)=0$ is identically zero. This is the existence and uniqueness theorem for linear second-order equations; see \cite{rhb}. Physically: knowing the position and slope of the wavefunction at one point, the curvature rule \cref{eq:bound-states-curv} determines the rest, just as knowing a projectile's position and velocity determines its path.
 \end{beyond}
 
-\textbf{Theorem (proved, given the box above).} If $\psi_1$ and $\psi_2$ are bound states of the same potential with the same energy $E$, then $\psi_2=c\,\psi_1$ for a constant $c$.
+\textbf{Theorem (proved, given the box above).} If $u$ and $w$ are bound states of the same potential with the same energy $E$, then $w=c\,u$ for a constant $c$. (We call the two functions $u$ and $w$ rather than $\psi_1$ and $\psi_2$, because elsewhere in this chapter $\psi_1,\psi_2$ denote the ground and first excited states, which have different energies.)
 
-\emph{Proof.} Define the \emph{Wronskian} $W(x)=\psi_1\psi_2'-\psi_2\psi_1'$.
+\emph{Proof.} Define the \emph{Wronskian} $W(x)=uw'-wu'$.
 
 \emph{Step 1: $W$ is constant.} By the product rule,
 \[
-W'=\psi_1'\psi_2'+\psi_1\psi_2''-\psi_2'\psi_1'-\psi_2\psi_1''=\psi_1\psi_2''-\psi_2\psi_1'' .
+W'=u'w'+uw''-w'u'-wu''=uw''-wu'' .
 \]
-Insert $\psi_i''=(V-E)\psi_i$ from \cref{eq:bound-states-curv}:
+Insert $u''=(V-E)u$ and $w''=(V-E)w$ from \cref{eq:bound-states-curv}:
 \[
-W'=\psi_1(V-E)\psi_2-\psi_2(V-E)\psi_1=0 .
+W'=u(V-E)w-w(V-E)u=0 .
 \]
 
-\emph{Step 2: $W=0$.} At a Dirichlet wall $x=L$ both functions vanish, so $W(L)=0$. For a potential on the whole line, both $\psi_i$ and $\psi_i'$ tend to zero at infinity, so $W\to0$. Either way, the constant is zero.
+\emph{Step 2: $W=0$.} At a Dirichlet wall $x=L$ both functions vanish, so $W(L)=0$. For a potential on the whole line, we use the property of bound states already assumed in Sample Problem ``A lower bound on every bound-state energy'': both the function and its slope tend to zero at infinity. Hence $W\to0$. Heuristically, deep in the forbidden region a normalizable solution must be the decaying branch. Its slope is about $-\sqrt{V-E}$ times the function, and the decay of the function wins over the growth of $\sqrt{V-E}$. The oscillator shows this: there $\psi'=-x\psi$ with $\psi\propto e^{-x^2/2}$. A proof belongs to the Sturm--Liouville theory taken on trust in \cref{sec:bound-states-what}. Either way, the constant is zero.
 
-\emph{Step 3: compare at one point.} Pick a point $x_0$ with $\psi_1(x_0)\ne0$ (one exists, since $\psi_1$ is not identically zero) and set $c=\psi_2(x_0)/\psi_1(x_0)$. Define $\phi=\psi_2-c\psi_1$, which solves the same equation (linearity). Then $\phi(x_0)=\psi_2(x_0)-c\psi_1(x_0)=0$.
+\emph{Step 3: compare at one point.} Pick a point $x_0$ with $u(x_0)\ne0$ (one exists, since $u$ is not identically zero) and set $c=w(x_0)/u(x_0)$. Define $\phi=w-cu$, which solves the same equation (linearity). Then $\phi(x_0)=w(x_0)-cu(x_0)=0$.
 
-\emph{Step 4: the slope also vanishes.} From $W(x_0)=0$: $\psi_1(x_0)\psi_2'(x_0)=\psi_2(x_0)\psi_1'(x_0)$. Divide by $\psi_1(x_0)$: $\psi_2'(x_0)=c\,\psi_1'(x_0)$. Hence $\phi'(x_0)=\psi_2'(x_0)-c\psi_1'(x_0)=0$.
+\emph{Step 4: the slope also vanishes.} From $W(x_0)=0$: $u(x_0)w'(x_0)=w(x_0)u'(x_0)$. Divide by $u(x_0)$: $w'(x_0)=c\,u'(x_0)$. Hence $\phi'(x_0)=w'(x_0)-cu'(x_0)=0$.
 
-\emph{Step 5.} By uniqueness, $\phi\equiv0$, so $\psi_2=c\psi_1$. $\square$
+\emph{Step 5.} By uniqueness, $\phi\equiv0$, so $w=cu$. $\square$
 
 \subsection{Even potentials have even and odd states}
 
@@ -447,7 +442,7 @@ Insert into \cref{eq:bound-states-hermite}:
 \[
 \sum_{j=0}^{\infty}\Bigl[(j+2)(j+1)a_{j+2}-2ja_j+(E-1)a_j\Bigr]x^j=0 .
 \]
-A power series that vanishes for all $x$ has every coefficient zero, so
+A power series that vanishes for all $x$ has every coefficient zero. To see this, set $x=0$: every term except the constant vanishes, so the constant coefficient is zero. Differentiate once term by term (Chapter~\ref{ch:series}) and set $x=0$ again: the next coefficient is zero. Continue in the same way. Therefore
 \begin{equation}
 a_{j+2}=\frac{2j+1-E}{(j+2)(j+1)}\,a_j .
 \label{eq:bound-states-recur}
@@ -456,7 +451,7 @@ Choosing $a_0$ starts a chain of even powers; choosing $a_1$ starts a chain of o
 
 \subsection{Quantization: the series must stop}
 
-Suppose the chain never stops. For large $j$, \cref{eq:bound-states-recur} gives $a_{j+2}/a_j\approx 2j/j^2=2/j$. Compare $e^{x^2}=\sum_{k}x^{2k}/k!$: with $j=2k$, the ratio of successive coefficients is $\frac{1/(k+1)!}{1/k!}=\frac{1}{k+1}=\frac{2}{j+2}\approx\frac{2}{j}$. So a nonterminating $h$ grows at large $|x|$ like $e^{x^2}$, and then $\psi=he^{-x^2/2}$ grows like $e^{+x^2/2}$: not normalizable. This is the growing branch that wrecked the shooting curves in \cref{fig:bound-states-shooting}. (This standard comparison of tails is a heuristic as written; a careful version bounds the coefficients from below for all large $j$. See \cite{griffiths}.)
+Suppose the chain never stops. For large $j$, \cref{eq:bound-states-recur} gives $a_{j+2}/a_j\approx 2j/j^2=2/j$. Compare $e^{x^2}=\sum_{k}x^{2k}/k!$: with $j=2k$, the ratio of successive coefficients is $\frac{1/(k+1)!}{1/k!}=\frac{1}{k+1}=\frac{2}{j+2}\approx\frac{2}{j}$. For the odd chain, compare instead with $x\,e^{x^2}=\sum_k x^{2k+1}/k!$. With $j=2k+1$ the ratio of successive coefficients is again $\frac{1}{k+1}=\frac{2}{j+1}\approx\frac2j$. So a nonterminating $h$ grows at large $|x|$ like $e^{x^2}$ (times at most a power of $x$), and then $\psi=he^{-x^2/2}$ grows like $e^{+x^2/2}$: not normalizable. This is the growing branch that wrecked the shooting curves in \cref{fig:bound-states-shooting}. (This standard comparison of tails is a heuristic as written; a careful version bounds the coefficients from below for all large $j$. See \cite{griffiths}.)
 
 The only escape is for the chain to stop. The numerator of \cref{eq:bound-states-recur} vanishes at $j=J$ when $E=2J+1$; then $a_{J+2}=a_{J+4}=\cdots=0$ and $h$ is a polynomial of degree $J$. (The \emph{other} chain must be switched off by setting its starting coefficient to zero.) With our labeling $n=J+1$ starting from the ground state $n=1$:
 \begin{equation}
@@ -544,7 +539,7 @@ E_n=\sqrt a\,(2n-1).
 \]
 \end{sample}
 
-You can confirm \cref{eq:bound-states-shoE} on a computer with the tridiagonal matrix of Chapter~\ref{ch:eigen}. Chapter~\ref{ch:finite-differences} analyzes this method in depth; here we use it as a black box.
+You can confirm \cref{eq:bound-states-shoE} on a computer with the tridiagonal matrix of Chapter~\ref{ch:eigen}. Chapter~\ref{ch:finite-differences} analyzes this method in depth; here we use it as a black box. (In the code, \texttt{h} is the grid spacing, not the polynomial $h(x)$ above.)
 
 \begin{pycode}
 import numpy as np
@@ -592,7 +587,7 @@ Pick a level $E$ in a smooth, even, confining well. The turning points are $\pm 
 \lambda(x)=\frac{2\pi\hbar}{p(x)}=\frac{2\pi}{\sqrt{E-V(x)}} .
 \label{eq:bound-states-lambda}
 \end{equation}
-The amplitude also varies: it is larger where the particle is slow. A classical particle spends time $\dd t=\dd x/v$ in each slice $\dd x$, so its classical probability density is proportional to $1/v$; the quantum density, averaged over the wiggles, follows this trend for high levels. In \cref{fig:bound-states-oscillator} the high states are largest near their turning points, where a classical oscillator is slowest.
+This local wavelength is meaningful only where $V$ changes little over one wavelength, $|\lambda\,dV/dx|\ll E-V$. It fails close to the turning points, where $\lambda\to\infty$. This is why the counting rule of \cref{sec:bound-states-spacing} is only approximate and needs the correction $\gamma$. The amplitude also varies: it is larger where the particle is slow. A classical particle spends time $\dd t=\dd x/v$ in each slice $\dd x$, so its classical probability density is proportional to $1/v$; the quantum density, averaged over the wiggles, follows this trend for high levels. In \cref{fig:bound-states-oscillator} the high states are largest near their turning points, where a classical oscillator is slowest.
 
 \emph{Beyond the turning points} $\psi$ decays. The local decay rate is $\kappa(x)=\sqrt{V(x)-E}$; the farther above $E$ the potential rises, the faster the decay. The wavefunction does \emph{not} vanish at the turning point; it leaks into the forbidden region (look at \cref{fig:bound-states-oscillator}).
 
@@ -629,7 +624,7 @@ E_b-1=\frac{-2\phi'(L)\psi(L)}{\int_{-L}^{L}\phi\psi\,\dd x}.
 
 \textbf{Step 6 (result):} $E_b-1\approx4L\psi(L)^2=\dfrac{4L}{\sqrt\pi}e^{-L^2}$.
 
-\textbf{Step 7 (numbers):} For $L=2$: $\frac{8}{\sqrt\pi}e^{-4}=0.083$. A numerical solution (the tridiagonal method above) gives $E_b\approx1.075$, so the estimate is about 10\% high, reasonable since $L^2=4$ is only four times $E$. For $L=4$: $\frac{16}{\sqrt\pi}e^{-16}\approx1.0\times10^{-6}$, and numerically the shift is below $10^{-5}$.
+\textbf{Step 7 (numbers):} For $L=2$: $\frac{8}{\sqrt\pi}e^{-4}=0.083$. A numerical solution (the tridiagonal method above) gives $E_b\approx1.075$, so the estimate is about 10\% high, reasonable since $L^2=4$ is only four times $E$. For $L=4$: $\frac{16}{\sqrt\pi}e^{-16}\approx1.0\times10^{-6}$. Numerically the shift is also about $1.0\times10^{-6}$, a few percent below the estimate. (This computation uses the same grid spacing with and without walls, so that the grid errors cancel.)
 
 \[
 \boxed{E_b-1\approx\frac{4L}{\sqrt\pi}e^{-L^2}:\ \ L=2\to0.083\ (\text{numerics }0.075),\ \ L=4\to\sim10^{-6}}
@@ -662,7 +657,7 @@ In the box, the $n$-th state holds exactly $n$ half-wavelengths. In a general we
 \frac1\pi\int_{x_1}^{x_2}\sqrt{E_n-V(x)}\,\dd x\;\approx\;n-\gamma .
 \label{eq:bound-states-count}
 \end{equation}
-The constant $\gamma$ accounts for how the wavefunction meets the boundary. At a hard wall it is pinned to zero; at a soft turning point it leaks into the forbidden region, so the oscillation inside is a little short of a full extra half-wavelength. The precise result (Chapter~\ref{ch:wkb}) is $\gamma=0$ for two hard walls and $\gamma=\tfrac12$ for two soft turning points. Here we test the rule on wells we already know.
+The constant $\gamma$ accounts for how the wavefunction meets the boundary. At a hard wall it is pinned to zero; at a soft turning point it leaks into the forbidden region, so the oscillation inside is a little short of a full extra half-wavelength. The precise result (Chapter~\ref{ch:wkb}) is that each soft turning point contributes $\tfrac14$ to $\gamma$ and each hard wall contributes 0. So $\gamma=0$ for two hard walls, $\gamma=\tfrac14$ for one hard wall and one soft turning point, and $\gamma=\tfrac12$ for two soft turning points. Here we test the rule on wells we already know.
 
 \emph{Box} (hard walls, $\gamma=0$): $V=0$ on $[-L,L]$, so $\frac1\pi\cdot2L\sqrt{E_n}=n$, which gives $E_n=(n\pi/2L)^2$. Exactly \cref{eq:bound-states-boxE}.
 
@@ -685,7 +680,7 @@ where $I_\alpha=\int_0^1\sqrt{1-u^\alpha}\,\dd u$ is a pure number and we used $
 E_n\propto\bigl(n-\tfrac12\bigr)^{\frac{2\alpha}{\alpha+2}}.
 \label{eq:bound-states-powerlaw}
 \end{equation}
-Checks: $\alpha=2$ gives $I_2=\pi/4$ (a quarter of the unit disk) and $E_n\propto n$; as $\alpha\to\infty$ the well becomes a box of half-width 1, $I_\alpha\to1$, and $E_n\propto n^2$. In general the spacing behaves as
+Checks: $\alpha=2$ gives $I_2=\pi/4$ (a quarter of the unit disk) and $E_n\propto n$; as $\alpha\to\infty$ the well becomes a box of half-width 1, $I_\alpha\to1$, and $E_n\propto n^2$. (Only the power of $n$ is being checked here. In the limit the turning points become hard walls, so $\gamma$ changes from $\tfrac12$ to 0 and $n-\tfrac12$ becomes $n$.) In general the spacing behaves as
 \[
 E_{n+1}-E_n\approx\frac{dE_n}{dn}\propto n^{\frac{2\alpha}{\alpha+2}-1}=n^{\frac{\alpha-2}{\alpha+2}}:
 \]
@@ -739,7 +734,7 @@ The rule is off by about 10\% for the ground state and by at most about $0.003$ 
 \end{sample}
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=0.95\linewidth]{figs/bound-states_ladders.pdf}
+\includegraphics[width=0.85\linewidth]{figs/bound-states_ladders.pdf}
 \caption{Left: the first ten levels of three even wells, scaled by their ground-state energy (logarithmic axis): $V=|x|$ (levels crowd), $V=x^2$ (equally spaced), and the box (levels spread). Right: spacing $E_{n+1}-E_n$, divided by the first spacing, versus $n$ on logarithmic axes, for $V=|x|$, $x^2$, $x^4$ and the box. The slopes approach $(\alpha-2)/(\alpha+2)$: $-1/3$, $0$, $1/3$ and $1$. Energies in units $\hbar=2m=1$; the scaled quantities are dimensionless.}
 \label{fig:bound-states-ladders}
 \end{figure}
@@ -756,24 +751,19 @@ For $V=|x|^3$, do the levels crowd or spread as $n$ grows?
 
 %==========================================================
 \section{Level density, and why slow growth means crowding}\label{sec:bound-states-density}
-% DYK-BEGIN
-\begin{didyouknow}{Can You Hear a Drum?}
-Hermann Weyl proved in 1911 that the number of vibration modes of a drum below a given frequency grows in proportion to its area. In 1966 Mark Kac asked whether the full list of frequencies determines the drum's shape. In 1992 Carolyn Gordon, David Webb and Scott Wolpert answered no by constructing two differently shaped drums with identical spectra. Level counts reveal a lot, but not everything.
-\end{didyouknow}
-% DYK-END
 
 \subsection{Counting function and density}
 
-When levels are numerous, it is convenient to describe them collectively. The \emph{counting function} $N(E)$ is the number of levels with $E_n\le E$. It is a staircase that jumps by 1 at each level. Its smooth trend $\bar N(E)$ is what the counting rule \cref{eq:bound-states-count} supplies:
+When levels are numerous, it is convenient to describe them collectively. The \emph{counting function} $N(E)$ is the number of levels with $E_n\le E$. It is a staircase that jumps by 1 at each level. The counting rule \cref{eq:bound-states-count} supplies a smooth function $\bar N(E)$ that follows the staircase:
 \[
 \bar N(E)=\frac1\pi\int_{x_1(E)}^{x_2(E)}\sqrt{E-V(x)}\,\dd x+\gamma ,
 \]
-with $\bar N(E_n)\approx n$ (the $\gamma$ is the same constant as before). The \emph{level density} is the derivative
+with $\bar N(E_n)\approx n$ (the $\gamma$ is the same constant as before). Strictly, a function with $\bar N(E_n)\approx n$ passes near the \emph{top} of each step. The staircase jumps from $n-1$ to $n$ at $E_n$, so its running average there is $n-\tfrac12$. The average of the staircase therefore lies half a unit lower, at $\bar N(E)-\tfrac12$. This is the convention behind the paper's smooth zeros, $\Nsm(s_n)=n-\tfrac12$. A constant shift does not change the derivative, so the level density below is the same either way. The \emph{level density} is the derivative
 \begin{equation}
 \rho(E)=\frac{d\bar N}{dE},
 \label{eq:bound-states-rho}
 \end{equation}
-the number of levels per unit energy near $E$. Its inverse $1/\rho$ is the \emph{mean spacing} near $E$.
+the number of levels per unit energy near $E$. Its inverse $1/\rho$ is the \emph{mean spacing} near $E$. Do not confuse $\rho(E)$ with the zeros $\rho_n=\tfrac12+it_n$, nor the counting function $N(E)$ with the number of grid points $N$ in the listings; context distinguishes them.
 
 \begin{pitfall}
 The level density $\rho(E)$ counts levels per unit \emph{energy}; the probability density $|\psi(x)|^2$ is probability per unit \emph{length} for one state. They are unrelated quantities that share a name.
@@ -781,12 +771,24 @@ The level density $\rho(E)$ counts levels per unit \emph{energy}; the probabilit
 
 \subsection{Density equals classical period over $2\pi$}
 
-Differentiate $\bar N$. The limits $x_{1,2}(E)$ depend on $E$, so we need Leibniz's rule for differentiating an integral with variable limits: the derivative is the integral of the derivative of the integrand, plus the integrand at each limit times the rate at which that limit moves (with a minus sign at the lower limit) \cite{rhb}. At a turning point the integrand $\sqrt{E-V}$ is zero, so the limit terms vanish, and
+Differentiate $\bar N$. The limits $x_{1,2}(E)$ depend on $E$, and so does the integrand, so we need a rule for differentiating such an integral.
+
+\begin{beyond}
+\textbf{Taken on trust: Leibniz's rule.} Let $f(x,E)$ be continuous, with a continuous derivative $\partial f/\partial E$ (the derivative with respect to $E$ at fixed $x$), and let the limits $x_1(E)$, $x_2(E)$ be differentiable. Then
+\[
+\frac{d}{dE}\int_{x_1(E)}^{x_2(E)}f(x,E)\,\dd x=\int_{x_1}^{x_2}\frac{\partial f}{\partial E}\,\dd x+f(x_2,E)\frac{dx_2}{dE}-f(x_1,E)\frac{dx_1}{dE}.
+\]
+The two limit terms come from the fundamental theorem of calculus and the chain rule. The first term is differentiation under the integral sign, whose proof we take from \cite{rhb}. In our use $f=\sqrt{E-V}$ and $\partial f/\partial E=1/(2\sqrt{E-V})$. This derivative is infinite at the moving limits, so the hypotheses fail at the endpoints. That the result \cref{eq:bound-states-rho-int} below still holds for potentials smooth near their turning points is also taken on trust from \cite{rhb}. In the main text we verify it exactly for power-law wells.
+\end{beyond}
+
+Here $f=\sqrt{E-V}$. At a turning point the integrand $\sqrt{E-V}$ is zero, so the limit terms vanish, and
 \begin{equation}
 \rho(E)=\frac1\pi\int_{x_1}^{x_2}\frac{\dd x}{2\sqrt{E-V(x)}}=\frac{1}{2\pi}\int_{x_1}^{x_2}\frac{\dd x}{\sqrt{E-V(x)}} .
 \label{eq:bound-states-rho-int}
 \end{equation}
-(The integrand blows up at the turning points, but like $1/\sqrt{\text{distance}}$, which integrates to a finite value.) Strictly, Leibniz's rule is stated for a differentiated integrand that stays finite; here $1/(2\sqrt{E-V})$ is infinite at the moving limits, so the step needs a check. For $V=|x|^\alpha$ we can make it. The substitution $x=au$, $a=E^{1/\alpha}$, of \cref{sec:bound-states-spacing} turns \cref{eq:bound-states-rho-int} into $\rho=\frac1\pi E^{\frac1\alpha-\frac12}J_\alpha$ with $J_\alpha=\int_0^1\dd u/\sqrt{1-u^\alpha}$, while differentiating $\bar N=\frac{2I_\alpha}{\pi}E^{\frac12+\frac1\alpha}+\gamma$ directly gives $\frac{2I_\alpha}{\pi}\bigl(\frac12+\frac1\alpha\bigr)E^{\frac1\alpha-\frac12}$. They agree if $J_\alpha=(1+\frac2\alpha)I_\alpha$. For $\alpha=2$: $J_2=\pi/2$ and $2I_2=2\cdot\pi/4=\pi/2$. For $\alpha=4$, numerical integration gives $J_4=1.3110$ and $\frac32I_4=1.3110$. A general justification, for potentials smooth near their turning points, is taken on trust from texts such as \cite{rhb}. Now the classical meaning. With $m=\tfrac12$, kinetic energy is $\tfrac12mv^2=v^2/4=E-V$, so the classical speed is $v=2\sqrt{E-V}$. The time to cross from $x_1$ to $x_2$ is $\int\dd x/v$, and a full round trip takes twice that:
+(The integrand blows up at the turning points, but like $1/\sqrt{\text{distance}}$, which integrates to a finite value.) Because the hypotheses of Leibniz's rule fail at the endpoints (see the box), we check the step for $V=|x|^\alpha$. The substitution $x=au$, $a=E^{1/\alpha}$, of \cref{sec:bound-states-spacing} turns \cref{eq:bound-states-rho-int} into $\rho=\frac1\pi E^{\frac1\alpha-\frac12}J_\alpha$ with $J_\alpha=\int_0^1\dd u/\sqrt{1-u^\alpha}$, while differentiating $\bar N=\frac{2I_\alpha}{\pi}E^{\frac12+\frac1\alpha}+\gamma$ directly gives $\frac{2I_\alpha}{\pi}\bigl(\frac12+\frac1\alpha\bigr)E^{\frac1\alpha-\frac12}$. They agree if $J_\alpha=(1+\frac2\alpha)I_\alpha$. For $\alpha=2$: $J_2=\pi/2$ and $2I_2=2\cdot\pi/4=\pi/2$. For $\alpha=4$, numerical integration gives $J_4=1.3110$ and $\frac32I_4=1.3110$. 
+
+\paragraph{The classical meaning.} With $m=\tfrac12$, kinetic energy is $\tfrac12mv^2=v^2/4=E-V$, so the classical speed is $v=2\sqrt{E-V}$. The time to cross from $x_1$ to $x_2$ is $\int\dd x/v$, and a full round trip takes twice that:
 \[
 T_{\rm cl}(E)=2\int_{x_1}^{x_2}\frac{\dd x}{2\sqrt{E-V}}=\int_{x_1}^{x_2}\frac{\dd x}{\sqrt{E-V}} .
 \]
@@ -848,6 +850,34 @@ Treat the zeros' density as if it came locally from a power law $|x|^\alpha$, an
 The effective exponent lies between the V-shaped well ($\alpha=1$) and the parabola ($\alpha=2$), and since $1/\log(t/2\pi)\to0$ it creeps toward 2 as $t$ grows, but only logarithmically slowly. This is a heuristic local description, not an exact property of any potential.
 \end{sample}
 
+\begin{sample}{A parabola slowed down by a logarithm}
+Suppose an even well, increasing for $x>0$, has for large $V$ the half-width $x(V)=\frac{\sqrt V}{\pi}(\log V+b)$, with $b$ a constant. Problem 23 shows that the paper's Wu--Sprung potential has this form with $b=\log\frac{2}{\pi e^2}$. Find the level density at large $E$ from \cref{eq:bound-states-period}.
+
+\textbf{Step 1:} By symmetry, $T_{\rm cl}=2\int_0^{x_E}\dd x/\sqrt{E-V(x)}$. On $x>0$ the potential increases, so we may use $V$ as the variable: $\dd x=x'(V)\,\dd V$. We use the large-$V$ formula all the way down to $V=0$. This is heuristic: the region near the bottom of the well contributes a relative error that shrinks as $E$ grows, so only the leading large-$E$ behavior is kept.
+
+\textbf{Step 2:} By the product rule, $x'(V)=\frac1\pi\Bigl[\frac{\log V+b}{2\sqrt V}+\sqrt V\cdot\frac1V\Bigr]=\frac{\log V+b+2}{2\pi\sqrt V}$.
+
+\textbf{Step 3:} Hence $T_{\rm cl}=\frac1\pi\int_0^E\frac{\log V+b+2}{\sqrt{V(E-V)}}\,\dd V$.
+
+\textbf{Step 4:} Substitute $V=E\sin^2\theta$, so $\dd V=2E\sin\theta\cos\theta\,\dd\theta$ and $\sqrt{V(E-V)}=E\sin\theta\cos\theta$, with $\theta$ from $0$ to $\pi/2$. Since $\log V=\log E+2\log\sin\theta$,
+\[
+T_{\rm cl}=\frac2\pi\int_0^{\pi/2}\bigl(\log E+b+2+2\log\sin\theta\bigr)\dd\theta=\log E+b+2+\frac4\pi\int_0^{\pi/2}\log\sin\theta\,\dd\theta .
+\]
+
+\textbf{Step 5:} Use $\int_0^{\pi/2}\log\sin\theta\,\dd\theta=-\frac\pi2\log2$ (taken on trust; see the box after this Sample Problem). Then $T_{\rm cl}=\log E+b+2-2\log2$.
+
+\textbf{Step 6:} $\rho=T_{\rm cl}/2\pi=\frac{1}{2\pi}(\log E+b+2-2\log2)$. With $b=\log2-\log\pi-2$ this becomes $\frac{1}{2\pi}(\log E-\log2-\log\pi)$.
+
+\[
+\boxed{\rho(E)\approx\frac{1}{2\pi}\log\frac{E}{2\pi}\quad\text{(large }E\text{)}}
+\]
+This is exactly \cref{eq:bound-states-rhozeta}. A parabola slowed down by a logarithm gives a density that grows logarithmically, which is what the zeros require. Like everything in this section, the result is heuristic (semiclassical, leading order in $E$).
+\end{sample}
+
+\begin{beyond}
+\textbf{Taken on trust: a classical definite integral.} $\displaystyle\int_0^{\pi/2}\log\sin\theta\,\dd\theta=-\frac{\pi}{2}\log2=-1.088793\ldots$ Its proof uses a symmetry trick with $\sin$ and $\cos$ that we do not reproduce. You can confirm it numerically with \texttt{scipy.integrate.quad(lambda th: np.log(np.sin(th)), 0, np.pi/2)}.
+\end{beyond}
+
 \begin{checkpoint}
 The paper scores errors in units of the ``local mean spacing'' $\gap_n$ (Sec.~II~A of \cite{soniR1}). In the language of this section, what is $\gap_n$?
 \end{checkpoint}
@@ -870,14 +900,14 @@ Section~II~B of \cite{soniR1} states the setting: ``In units $\hbar=2m=1$, $H=-d
 Why are the walls harmless? The walls are placed where the potential has climbed to 1000 (scale 1). The scored levels are ``the first 500'' (Sec.~II~B), and the 500th zero is $t_{500}=811.1843588465$ (App.~A, key anchors). So every scored level lies well below the potential at the wall. By the reasoning of \cref{sec:bound-states-shape} (a heuristic transfer of the oscillator estimate, not a computation for this potential), each scored state decays through a stretch of forbidden region before reaching the wall: for level 500 the turning point, which we computed from Eq.~(2) with \texttt{qmnt.wu\_sprung\_x}, is at $x(811.18)\approx38.5$, about 6.4 units inside the wall at $44.883$, where $V-E$ climbs from 0 to about 190. We therefore expect the wall's influence on such a state to be exponentially small, as \cref{fig:bound-states-wall} shows for the oscillator. Levels with energies close to 1000 would feel the wall strongly; the paper's solver computes more levels than it scores (App.~A step~4: eigenvalue range $[0,900]$ for the Hermitian work at scale 1).
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=0.95\linewidth]{figs/bound-states_wusprung.pdf}
+\includegraphics[width=0.85\linewidth]{figs/bound-states_wusprung.pdf}
 \caption{The paper's scale-1 setting (units $\hbar=2m=1$). Left: the Wu--Sprung potential of Eq.~(2) of \cite{soniR1} on $[-L,L]$, $L=44.883$, with Dirichlet walls (thick lines) where $V=1000$. The dashed line is the energy $t_{500}=811.18$ of the last scored level; dots mark its turning points, about 6.4 units inside the walls. Right: close-up near the bottom of the well ($V_0\approx9.741$), with the first four eigenfunctions drawn on baselines at their computed energies; they alternate even, odd, even, odd and have $0,1,2,3$ nodes.}
 \label{fig:bound-states-wusprung}
 \end{figure}
 
 \subsection{Counting levels in the filled box}
 
-The empty box holds 903 levels at or below $E=1000$ (Sample Problem above). The paper reports 652 states with $E\le1000$ (Sec.~II~E and App.~A step~4: ``$[0,1000]$ (tensors; 652 states)''); these are the eigenstates of the smooth (unperturbed) Wu--Sprung potential on the finite-difference grid, used as the basis for the second-order state sums of Sec.~II~E. The Wu--Sprung potential occupies the box and pushes the levels up, so far fewer fit below 1000. How many should fit? The potential was built so that its levels follow the smooth zeros, so the count should be close to $\Nsm(1000)+\tfrac12$, and $\Nsm(1000)=648.6$. The agreement is close but not exact; we do not analyze the small difference here. (The answer to Problem 19 names one possible contributor; it is an untested conjecture, not a result.)
+The empty box holds 903 levels at or below $E=1000$ (Sample Problem above). The paper reports 652 states with $E\le1000$ (Sec.~II~E and App.~A step~4: ``$[0,1000]$ (tensors; 652 states)''); these are the eigenstates of the smooth (unperturbed) Wu--Sprung potential on the finite-difference grid, used as the basis for the second-order state sums of Sec.~II~E. The Wu--Sprung potential occupies the box and pushes the levels up, so far fewer fit below 1000. How many should fit? The potential was built so that its levels follow the smooth zeros, so the count should be close to $\Nsm(1000)=648.6$. Precisely, $s_n\le1000$ exactly when $n-\tfrac12\le\Nsm(1000)$, so the number of smooth zeros $s_n\le1000$ is $\lfloor\Nsm(1000)+\tfrac12\rfloor=649$. The agreement with 652 is close but not exact; we do not analyze the small difference here.
 
 \subsection{Level index and turning points}
 
@@ -889,7 +919,7 @@ The counting rule \cref{eq:bound-states-count} depends on the potential only thr
 \begin{itemize}
 \item \emph{Alternating parity.} By \cref{sec:bound-states-parity}, the states alternate even, odd, even, \dots, starting from an even ground state (\cref{fig:bound-states-wusprung}, right).
 \item \emph{Even corrections.} The fitted correction $\delta V(x)=\sum_k c_k\cos(k\pi x/L)$ of Sec.~II~C uses even functions, and the alternative bases of Sec.~II~C, Chebyshev $T_k(2|x|/L-1)$ and hat functions of $|x|/L$, are even because they depend on $|x|$. So $V+\delta V$ stays even.
-\item \emph{Odd perturbations have no diagonal elements.} Since $\psi_n^2$ is even, $\int\psi_n^2\,f\,\dd x=0$ for any odd $f$ (an odd integrand on a symmetric interval). The paper's PT-odd class uses $\phi_k=\sin((k+1)\pi x/L)$, which is odd, and Sec.~II~E notes ``$A_{nn}=0$'': this is exactly that parity fact (Problem 27). Conversely, for the Hermitian fit, the first-order sensitivity $A_{nk}=\int|\psi_n|^2\phi_k\,\dd x$ of Sec.~II~C would vanish for any odd basis function, so restricting $\delta V$ to even functions loses nothing at first order (Problem 26 uses the first-order formula of Chapter~\ref{ch:perturbation}).
+\item \emph{Odd perturbations have no diagonal elements.} Since $\psi_n^2$ is even, $\int\psi_n^2\,f\,\dd x=0$ for any odd $f$ (an odd integrand on a symmetric interval). The paper's PT-odd class uses $\phi_k=\sin((k+1)\pi x/L)$, which is odd, and Sec.~II~E notes ``$A_{nn}=0$'': this is exactly that parity fact (Problem 27). Beware that the paper uses $A$ for two different objects. Here $A_{nn}=\langle n|A|n\rangle$ is a matrix element of the operator $A$ of Sec.~II~E, whereas $A_{nk}$ of Sec.~II~C is the sensitivity matrix. Conversely, for the Hermitian fit, the first-order sensitivity $A_{nk}=\int|\psi_n|^2\phi_k\,\dd x$ of Sec.~II~C would vanish for any odd basis function, so restricting $\delta V$ to even functions loses nothing at first order (Problem 26 uses the first-order formula of Chapter~\ref{ch:perturbation}).
 \end{itemize}
 
 \subsection{Shape and spacing}
@@ -914,7 +944,7 @@ print(np.round(s, 3))
 print(np.round(t, 3))
 \end{pycode}
 
-The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth potential knows only the average density. The differences $t_n-s_n$, the fluctuations, are what the paper's fitted corrections try to learn.
+The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth potential knows only the average density. When you run the listing, every $E_n$ lies within $0.15$ mean spacings of $s_n$. For $n=9$, by contrast, the true zero lies more than $0.15$ mean spacings from $E_9$. The differences $t_n-s_n$, the fluctuations, are what the paper's fitted corrections try to learn.
 
 %==========================================================
 \section{Summary}\label{sec:bound-states-summary}
@@ -963,7 +993,7 @@ The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth p
 \prob{2}{Assume the first-order shift formula $\delta E_n=\int\psi_n^2\,\delta V\,\dd x$ of Chapter~\ref{ch:perturbation}. Show that for an even unperturbed potential, only the even part of $\delta V$ shifts levels at first order.}
 \prob{2}{(Paper.) Section~II~E of \cite{soniR1} states that for the PT-odd class $\phi_k=\sin((k+1)\pi x/L)$ the diagonal elements $A_{nn}=\langle n|A|n\rangle$ vanish. Prove it, and say which property of the unperturbed potential you used.}
 \prob{2}{Show that adding a constant $C$ to any potential shifts every level by exactly $C$ and leaves every eigenfunction unchanged.}
-\prob{3}{Complete the Wronskian proof of nondegeneracy for the box: show directly that if $\psi_1,\psi_2$ both solve $-\psi''=E\psi$ with $\psi(\pm L)=0$, then $\psi_2=c\psi_1$.}
+\prob{3}{Complete the Wronskian proof of nondegeneracy for the box: show directly that if $u,w$ both solve $-\psi''=E\psi$ with $u(\pm L)=w(\pm L)=0$, then $w=cu$.}
 \prob{2}{At what height $t$ does the smooth density of the zeros equal the oscillator density $\tfrac12$?}
 \prob{2}{For odd $n$, show that the probability of the middle half of the box is $\tfrac12+\sin(n\pi/2)/(n\pi)$. Evaluate for $n=1,3,5$ and find the limit as $n\to\infty$. Interpret.}
 \end{problemlist}
@@ -991,7 +1021,7 @@ The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth p
 
 \textbf{17.} $I_4=0.8740$. The rule gives $\frac{2I_4}{\pi}E^{3/4}=n-\frac12$, so $E_{10}\approx\bigl[\pi(9.5)/(2I_4)\bigr]^{4/3}=17.07^{4/3}=43.96$. The tridiagonal method (for example $L=6$, $N=4000$) gives $E_{10}=43.98$: agreement to about $0.05\%$.
 
-\textbf{19.} Empty box: $n\le2L\sqrt{1000}/\pi=903.6$, so 903 levels. $\Nsm(1000)=\frac{1000}{2\pi}\log\frac{1000}{2\pi}-\frac{1000}{2\pi}+\frac78=648.6$. The paper's filled box has 652. The Wu--Sprung potential raises the levels so that about 250 fewer fit below 1000, and its count is close to the smooth count of zeros, as intended. The few extra states are not analyzed in this chapter. One possible contributor, offered as an untested conjecture (we have not checked it by computation), is that finite-difference eigenvalues of high levels lie slightly below the true ones (the paper's Sec.~II~C notes that the dispersion reaches about two mean spacings at levels 401--500 on its working grid), which lets a few more levels fall under the cutoff. Chapter~\ref{ch:finite-differences} studies this bias.
+\textbf{19.} Empty box: $n\le2L\sqrt{1000}/\pi=903.6$, so 903 levels. $\Nsm(1000)=\frac{1000}{2\pi}\log\frac{1000}{2\pi}-\frac{1000}{2\pi}+\frac78=648.6$. The paper's filled box has 652. The Wu--Sprung potential raises the levels so that about 250 fewer fit below 1000, and its count is close to the smooth count of zeros, as intended. Exactly $\lfloor\Nsm(1000)+\tfrac12\rfloor=649$ smooth zeros lie at or below 1000, so the paper's grid count exceeds the smooth count by 3. These few extra states are not analyzed in this chapter. Chapter~\ref{ch:finite-differences} studies the finite-difference bias of high levels, which is one effect a reader could examine.
 
 \textbf{21.} $\rho=\log(811.18/2\pi)/2\pi=4.8606/6.2832=0.774$ per unit energy, mean spacing $1.293$. Empty box: $\rho=L/(\pi\sqrt E)=44.883/(\pi\times28.481)=0.502$, spacing $1.99$. At this one energy the zeros (and hence the Wu--Sprung levels, which follow them on average) are about 1.5 times denser than the empty box: $0.774/0.502=1.54$. This compares densities (levels per unit energy) at a single energy, not cumulative counts of levels below it.
 
@@ -1001,6 +1031,6 @@ The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth p
 
 \textbf{27.} $A_{nn}=\int_{-L}^{L}\psi_n^2\sum_kc_k\sin\frac{(k+1)\pi x}{L}\dd x$. Each $\sin$ is odd. Because the unperturbed potential (Wu--Sprung) is even, each $\psi_n$ is even or odd (\cref{sec:bound-states-parity}), so $\psi_n^2$ is even, and even times odd is odd. An odd function integrates to zero over $[-L,L]$ (split at 0 and substitute $x\to-x$ in one half). So $A_{nn}=0$. The property used is the evenness of the unperturbed potential (together with the symmetric box).
 
-\textbf{29.} Both solutions have the form $A\cos kx+B\sin kx$ with $k=\sqrt E$ (for $E\le0$ only the zero solution exists, \cref{sec:bound-states-box}). The Wronskian $W=\psi_1\psi_2'-\psi_2\psi_1'$ has $W'=\psi_1\psi_2''-\psi_2\psi_1''=-E\psi_1\psi_2+E\psi_2\psi_1=0$, and $W(L)=0$ because both vanish at $L$. So $W\equiv0$. At a point $x_0$ with $\psi_1(x_0)\ne0$, set $c=\psi_2(x_0)/\psi_1(x_0)$; then $\phi=\psi_2-c\psi_1$ has $\phi(x_0)=0$ and, from $W(x_0)=0$, $\phi'(x_0)=0$. For $\phi=A\cos kx+B\sin kx$, these two conditions read $A\cos kx_0+B\sin kx_0=0$ and $-A\sin kx_0+B\cos kx_0=0$; multiplying the first by $\cos kx_0$, the second by $-\sin kx_0$ and adding gives $A=0$, and similarly $B=0$. So $\phi\equiv0$ and $\psi_2=c\psi_1$, without needing the general uniqueness theorem.
+\textbf{29.} Both solutions have the form $A\cos kx+B\sin kx$ with $k=\sqrt E$ (for $E\le0$ only the zero solution exists, \cref{sec:bound-states-box}). The Wronskian $W=uw'-wu'$ has $W'=uw''-wu''=-Euw+Ewu=0$, and $W(L)=0$ because both vanish at $L$. So $W\equiv0$. At a point $x_0$ with $u(x_0)\ne0$, set $c=w(x_0)/u(x_0)$; then $\phi=w-cu$ has $\phi(x_0)=0$ and, from $W(x_0)=0$, $\phi'(x_0)=0$. For $\phi=A\cos kx+B\sin kx$, these two conditions read $A\cos kx_0+B\sin kx_0=0$ and $-A\sin kx_0+B\cos kx_0=0$; multiplying the first by $\cos kx_0$, the second by $-\sin kx_0$ and adding gives $A=0$, and similarly $B=0$. So $\phi\equiv0$ and $w=cu$, without needing the general uniqueness theorem.
 
 \textbf{31.} $\psi_n^2=\frac1L\cos^2\frac{n\pi x}{2L}=\frac{1}{2L}\bigl(1+\cos\frac{n\pi x}{L}\bigr)$. Integrating over $[-L/2,L/2]$: $\frac12+\frac{1}{2L}\cdot\frac{L}{n\pi}\bigl[\sin\frac{n\pi}{2}-\sin(-\frac{n\pi}{2})\bigr]=\frac12+\frac{\sin(n\pi/2)}{n\pi}$. For $n=1$: $0.818$; $n=3$: $0.394$; $n=5$: $0.564$. The correction alternates in sign and shrinks like $1/n$, so the probability tends to $\frac12$, the classical value for a particle bouncing at constant speed: the correspondence principle.

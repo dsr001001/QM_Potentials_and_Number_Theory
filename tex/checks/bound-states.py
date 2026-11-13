@@ -15,6 +15,8 @@ def levels(Vfun, L, N, k):
 # Sample "Empty box of the paper" (RE3)
 L1 = 44.883
 E1 = pi**2/(4*L1**2)
+assert abs(4*L1**2 - 8057.93) < 0.005
+assert abs(L1**2 - 2014.48) < 0.005
 assert abs(E1 - 1.2248e-3) < 1e-7
 assert abs(500**2*E1 - 306.2) < 0.1
 assert int(np.floor(2*L1*np.sqrt(1000)/pi)) == 903
@@ -24,11 +26,28 @@ assert abs(1001*E1 - 1.226) < 1e-3
 # Sample "Where is the particle"
 assert abs(0.5 + 1/pi - 0.818) < 1e-3
 
+# Sample "Parity and nodes of the third box state": nodes at +-L/3
+for xx in (1/3, -1/3):
+    assert abs(np.cos(3*pi*xx/2)) < 1e-12
+# Answer 3: nodes of psi_5 at +-L/5, +-3L/5
+for xx in (0.2, -0.2, 0.6, -0.6):
+    assert abs(np.cos(5*pi*xx/2)) < 1e-12
+
 # Sample "Checking an oscillator state"
 assert abs(1/np.sqrt(2) - 0.7071) < 1e-4 and abs(np.sqrt(5) - 2.2361) < 1e-4
 val = quad(lambda x: (2*x**2 - 1)**2*np.exp(-x**2), -np.inf, np.inf)[0]
 assert abs(val - 2*np.sqrt(pi)) < 1e-8
 assert abs(quad(lambda x: np.exp(-x**2), -np.inf, np.inf)[0] - 1.7724539) < 1e-6
+
+# Sample "Stretching the oscillator" and checkpoint (4x^2: spacing 4)
+for a_ in (0.25, 4.0):
+    Ea = levels(lambda x: a_*x**2, 8.0, 4000, 3)
+    assert np.allclose(Ea, np.sqrt(a_)*np.array([1.0, 3.0, 5.0]), atol=0.01)
+E4 = levels(lambda x: 4*x**2, 8.0, 4000, 3)
+assert np.allclose(np.diff(E4), 4.0, atol=0.01)
+
+# Answer 11: <x^2> = 1/2
+assert abs(quad(lambda x: x**2*np.exp(-x**2)/np.sqrt(pi), -np.inf, np.inf)[0] - 0.5) < 1e-8
 
 # Listing: oscillator levels, error below 0.01 and growing with n
 E = levels(lambda x: x**2, 8.0, 2000, 10)
@@ -47,10 +66,15 @@ assert abs(Eb2 - 1.075) < 0.002
 assert abs((Eb2 - 1) - 0.075) < 0.002
 ratio = (8/np.sqrt(pi)*np.exp(-4))/(Eb2 - 1)
 assert 1.05 < ratio < 1.15   # "about 10% high"
-assert abs(16/np.sqrt(pi)*np.exp(-16) - 1.0e-6) < 0.05e-6
+est4 = 16/np.sqrt(pi)*np.exp(-16)
+assert abs(est4 - 1.0e-6) < 0.05e-6
 Eb4 = levels(lambda x: x**2, 4.0, 8000, 1)[0]
 Eref = levels(lambda x: x**2, 8.0, 16000, 1)[0]
 assert abs(Eb4 - Eref) < 1e-5
+# same grid spacing: L=4,N=8000 -> h=8/8001 ; L=8,N=16001 -> h=16/16002
+Eref4 = levels(lambda x: x**2, 8.0, 16001, 1)[0]
+shift4 = Eb4 - Eref4
+assert 0.95e-6 < shift4 < est4      # about 1.0e-6, a few percent below estimate
 
 # Table and V-shaped sample
 a, ap, _, _ = ai_zeros(8)
@@ -85,6 +109,16 @@ rb = L1/(pi*np.sqrt(t500)); assert abs(rb - 0.502) < 1e-3 and abs(1/rb - 1.99) <
 assert abs(np.sqrt(t500) - 28.481) < 1e-3
 assert abs(rz(t500)/rb - 1.54) < 0.01   # Problem 21
 
+# Sample "A parabola slowed down by a logarithm"
+lsin = quad(lambda th: np.log(np.sin(th)), 0, pi/2)[0]
+assert abs(lsin + pi/2*np.log(2)) < 1e-8
+assert abs(pi/2*np.log(2) - 1.088793) < 1e-6
+bw = np.log(2/(pi*np.e**2))
+for E_ in (1000.0, 5000.0):
+    T = (2/pi)*quad(lambda th: np.log(E_*np.sin(th)**2) + bw + 2, 0, pi/2)[0]
+    assert abs(T - (np.log(E_) + bw + 2 - 2*np.log(2))) < 1e-8
+    assert abs(T/(2*pi) - rz(E_)) < 1e-8
+
 # Paper connection
 assert abs(qmnt.L_of(1000) - 44.883) < 1e-3
 assert abs(qmnt.V0 - 9.741) < 1e-3
@@ -92,10 +126,23 @@ xt = qmnt.wu_sprung_x(t500); assert abs(xt - 38.5) < 0.1
 assert abs(L1 - xt - 6.4) < 0.1
 assert abs(1000 - t500 - 190) < 2
 Nsm1000 = float(qmnt.Nsm(1000.0)); assert abs(Nsm1000 - 648.6) < 0.05
+assert int(np.floor(Nsm1000 + 0.5)) == 649
+assert 652 - 649 == 3 and 903 - 652 == 251
 # turning-point band of levels 201--300 (paper Sec. III: 22.5--28.5)
 tz = qmnt.zeros(300)
 x201 = qmnt.wu_sprung_x(tz[200]); x300 = qmnt.wu_sprung_x(tz[299])
 assert abs(x201 - 22.5) < 0.5 and abs(x300 - 28.5) < 0.5
+
+# Listing in paper connection: Wu--Sprung levels follow s_n, not t_n
+Lw = qmnt.L_of(1000)
+xw = qmnt.grid(Lw, 3000)
+Vw = np.array([qmnt.wu_sprung_V(xi) for xi in xw])
+Ew = np.asarray(qmnt.fd_levels(Vw, Lw, k=10))
+nn = np.arange(1, 11)
+sw = np.asarray(qmnt.smooth_zeros(nn)); gw = np.asarray(qmnt.mean_gap(nn))
+tw = np.asarray(qmnt.zeros(10))
+assert np.max(np.abs(Ew - sw)/gw) < 0.15
+assert abs(Ew[8] - tw[8])/gw[8] > 0.15
 
 # Problem 1
 for n, w in [(1, 2.467), (2, 9.870), (3, 22.21), (4, 39.48)]:

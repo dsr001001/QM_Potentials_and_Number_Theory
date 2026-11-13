@@ -32,3 +32,4 @@ API credit used up: ledger total $78.54. The queue stopped before finite-differe
 | primes | 30 (2/8/20) | 33 / 0 | exit code 0 passed assertions: 3182; failures: 0 | 1.50 | 2026-11-14 02:34 |
 | eigen | 21 (1/5/15) | 32 / 0 | exit code 0 passed assertions: 124; failures: 0 | 1.32 | 2026-11-14 02:41 |
 | schrodinger | 25 (0/6/19) | 47 / 0 | exit code 0 passed assertions: 126; failures: 0 | 1.43 | 2026-11-14 02:49 |
+| bound-states | 28 (1/6/21) | 32 / 0 | exit code 0 passed assertions: 97; failures: 0 | 1.52 | 2026-11-14 02:59 |
