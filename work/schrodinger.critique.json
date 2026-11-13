@@ -1,93 +1,177 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "Recall from Chapter~\\ref{ch:eigen} that the second derivative becomes the tridiagonal matrix with $-2/h^2$ on the diagonal and $1/h^2$ just above and below.",
-  "problem": "This is the matrix for +d^2/dx^2. The Hamiltonian uses -d^2/dx^2, which has +2/h^2 on the diagonal and -1/h^2 off it. The text then states these entries without saying the sign was flipped.",
-  "fix": "Write: 'the second derivative becomes the matrix with -2/h^2 on the diagonal and 1/h^2 beside it; so -d^2/dx^2 has +2/h^2 and -1/h^2.'"
+  "severity": "medium",
+  "quote": "Dropping the floor gives a smooth curve that runs through the middle of the staircase.",
+  "problem": "The curve $2L\\sqrt E/\\pi$ equals exactly $k$ at $E=E_k$, where the staircase jumps to $k$, and then rises to $k+1$ at the next level. It therefore touches the top corner of every step and lies on or above the staircase everywhere; it does not run through the middle. The curve through the middle is $2L\\sqrt E/\\pi-\\tfrac12$. The staircase figure caption plots the same un-shifted curve, and the contrast with $\\Nsm$ (which does bisect the steps, since $\\Nsm(s_n)=n-\\tfrac12$) is lost.",
+  "fix": "Replace with: \"Dropping the floor gives a smooth curve that touches the top corner of each step; subtracting $\\tfrac12$ gives a curve through the middle of the staircase. Either way the slope is the same.\" Adjust the figure caption (and the figure script) to match, or plot $2L\\sqrt E/\\pi-\\tfrac12$."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Generalize the beat argument of Sec.~\\ref{sec:schrodinger-tdse} to a matter wave in units $\\hbar=2m=1$",
-  "problem": "The beat discussion is in the subsection on phase and group velocity, in Sec. 3 (tdse). The cross-reference is vague but acceptable. The real defect is that the answer to this problem (28) is missing even though the problem is even-numbered (fine). However, the claim 'with no approximation' is correct only for the two-wave envelope.",
-  "fix": "Add 'for the two-wave superposition' to the problem statement."
+  "quote": "the caption of Fig.~4 and the interpolation-split paragraph of Sec.~III say explicitly",
+  "problem": "Misattribution. The quoted sentence about the units of $x$ and $V$ appears only in the interpolation-split paragraph of Sec. III (in the parenthesis that cites Fig. 4). The caption of Fig. 4 does not contain it.",
+  "fix": "Write: \"the interpolation-split paragraph of Sec.~III, where Fig.~4 is cited, says explicitly that ...\"."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "\\begin{didyouknow}{Physics in a Footnote}",
+  "problem": "The environment `didyouknow` is used four times but is not among the environments the bible defines (chapterintro, prerequisites, keyideas, sample, checkpoint, pitfall, beyond, pycode, problemlist). If the preamble does not define it, the chapter will not compile. The box in the Answers section also repeats the Davisson–Germer and Thomson history already given in Sec. 2.",
+  "fix": "Remove the four `didyouknow` blocks, or fold their content into ordinary prose, unless the coordinator confirms the environment exists in the preamble. Drop the duplicate history in the Answers section in either case."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "From HRW you know that light of frequency $f$ comes in packets (photons) of energy $E=hf$ and momentum $p=h/\\lambda$",
+  "problem": "The bible's reader has first-year mechanics, waves and E&M and explicitly knows no quantum mechanics. Photons, $E=hf$ and $p=h/\\lambda$ are not on the list of assumed knowledge. The same applies to the hydrogen levels (\"HRW derives it in the chapter on atoms\") and to the prerequisites line \"photons with $E=hf$\".",
+  "fix": "Introduce $E=hf$ (Planck, Einstein, photoelectric effect) and $p=h/\\lambda$ (Compton scattering) in two or three sentences as experimental facts taken on trust, citing HRW, instead of asserting the reader knows them. Remove \"photons with $E=hf$\" from the prerequisites, and present $-13.6\\,\\text{eV}/n^2$ as a quoted textbook value."
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "The potential raises the energy everywhere inside the box, so fewer half-wavelengths fit below a given $E$",
-  "problem": "Wording is loose: the potential is bounded below by V_0>0 and rises, so it lowers the local wavenumber; 'raises the energy' is ambiguous.",
-  "fix": "Say 'the potential is positive inside the box, so the local wavenumber sqrt(E-V) is smaller than sqrt(E)'."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The same calculation with $u$ running from $0$ to $k\\pi$ shows that \\emph{every} box state $\\psi_k$ has normalization constant $1/\\sqrt L$ (the integral of $\\sin^2$ over $k$ half-periods is $k\\pi/2$, times $2L/\\pi$, divided by $k$... more simply:",
-  "problem": "Garbled mid-sentence self-correction with an ellipsis; confusing for a student.",
-  "fix": "Delete the false start and state: with u=k pi (x+L)/2L, dx=(2L/k pi)du and the integral of sin^2 over 0..k pi is k pi/2, giving A^2 L."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The second, with $u=g'$... more conveniently with $u=f^{*\\prime}$ and $\\dd v=g'\\dd x$:",
-  "problem": "Another visible false start in a derivation, violating the no-jump style.",
-  "fix": "Delete 'with u=g'... more conveniently' and just state u=f*' and dv=g' dx."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Equation~\\eqref{eq:schrodinger-favg} is the single most important formula for reading the paper's Sec.~II~C; hold on to it.",
-  "problem": "Fine, but the chapter uses the 'Born rule for energy' and expansion in eigenfunctions before completeness is justified; the proof of orthogonality is forward-referenced, which is acceptable. The 'Hermitian' term is used in the intro and Sec. 4 before definition.",
-  "fix": "Add a brief forward note in Sec. 4 that 'Hermitian' is defined in Sec. on Hermitian operators."
+  "severity": "low",
+  "quote": "So requirement (R3) rules out the string equation.",
+  "problem": "The string equation fails (R2), the free-particle dispersion relation. (R3) only closes the loophole of letting $v$ depend on $k$. Attributing the failure to (R3) alone is logically wrong.",
+  "fix": "Replace with: \"So the string equation cannot satisfy (R2) with a single constant $v$, and (R3) forbids letting $v$ depend on $k$.\""
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Chapter~\\ref{ch:bound-states} proves that these are \\emph{all} the eigenfunctions.",
-  "problem": "Promises a proof in another chapter whose contract may not include it; also the box with V=0 uniqueness is not shown here.",
-  "fix": "Say 'Chapter~\\ref{ch:bound-states} solves the box problem fully'."
+  "quote": "For a free particle we derived this from (R1)--(R3).",
+  "problem": "The equation was not derived from (R1)–(R3). The text chose the lowest derivative orders (\"we should try\") and the sign convention $e^{i(kx-\\omega t)}$; the opposite convention gives the conjugate equation, and higher-order equations are also compatible with the requirements. This contradicts the chapter's own beyond box, which correctly says \"simplest linear equation consistent with\".",
+  "fix": "Write: \"For a free particle this is the simplest equation meeting (R1)--(R3), given the convention $e^{i(kx-\\omega t)}$ for a right-moving wave; it is still a guess.\""
  },
  {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "This is why the paper never needs the time-dependent equation: everything about the system is encoded in the stationary states and their energies.",
-  "problem": "Requires completeness, which was only taken on trust; stated as definite.",
-  "fix": "Add 'given completeness (see the beyond box later in this chapter)'."
- },
- {
-  "category": "RULE",
+  "category": "JUMP",
   "severity": "medium",
-  "quote": "\\Cref{fig:schrodinger-staircase} shows both staircases.",
-  "problem": "Figures schrodinger_standing, planewave, born, beats, staircase and wusprung are included but the response shown contains no FIGURES section scripts.",
-  "fix": "Supply a '### FIG schrodinger_<name>' script for each of the six figures."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\textbf{Answer.}\n\\[\n\\boxed{\\lambda_e=0.1226~\\text{nm},\\qquad \\lambda_{\\rm ball}=1.14\\times10^{-34}~\\text{m}}\n\\]\n\\end{sample}",
-  "problem": "Sample/answer structure fine, but answers section omits odd-numbered problems 29-ish and several odd problems (e.g. 15 given, 25 given; 3 given) while problems 17,19 are present; problems 5 and 7 present. Checks: odd Problem 19/Problem 15 fine. Missing: no answer for problem counted odd 'Problem 29' does not exist; but Problem 24 plot has no answer needed. Fine. However the pycode in the answers section duplicates a listing >... acceptable.",
-  "fix": "Verify every odd-numbered problem has an answer; renumber carefully."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "In units $\\hbar=2m=1$, a stationary state has energy equal to the height of the first zeta zero, $E=t_1=14.134725$ (RE1).",
-  "problem": "Problems are fewer than 'at least 3 computational' flagged only by '(Computational)' labels; ok. But Wu-Sprung problem relies on a code snippet calling qmnt.smooth_zeros per n; fine. Minor: the phrase 'RE1' is used without definition in this chapter.",
-  "fix": "Write 'the first of the running-example zeros (the first ten zeros listed in Chapter 1)'."
+  "quote": "the average result is the probability-weighted average of $x$",
+  "problem": "The reader knows no probability beyond the plain average, and Chapter 19 comes later. The weighted-average rule $\\sum_i P_i x_i$ and its continuous limit are never stated. The same rule is used silently again in \"exactly what you would get if a measurement of energy returned $E_n$ with probability $\\abs{c_n}^2$\".",
+  "fix": "Add before Eq. (xavg): \"If outcomes $x_i$ occur with probabilities $P_i$ (fractions of many trials), the average is $\\sum_iP_ix_i$. With $P_i=\\abs\\Psi^2\\,\\dd x$ for the slice at $x$, the sum becomes the integral.\" Refer back to this when interpreting $\\sum\\abs{c_n}^2E_n$."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The right panel of \\cref{fig:schrodinger-planewave} contrasts the two.",
-  "problem": "The figure is referenced before it appears and before the units section in which its caption refers.",
-  "fix": "Move the reference after the figure or note the units forward reference."
+  "quote": "Take two waves, $k_1=k-\\tfrac12\\Delta k$ and $k_2=k+\\tfrac12\\Delta k$, with frequencies $\\omega_1,\\omega_2$",
+  "problem": "The argument adds real cosines $\\cos A+\\cos B$ a few pages after proving that real sinusoids cannot solve the Schrödinger equation. The student is not told this is the real part of a sum of two complex plane waves.",
+  "fix": "Say: \"Take two complex plane waves $e^{i(k_1x-\\omega_1t)}$ and $e^{i(k_2x-\\omega_2t)}$ and look at the real part of their sum, $\\cos A+\\cos B$ (the imaginary part behaves the same way).\""
  },
  {
-  "category": "ERROR",
+  "category": "JUMP",
   "severity": "low",
-  "quote": "which is $1.239$ at $t=1000$ and \\emph{shrinks} slowly as $t$ grows",
-  "problem": "Value is correct, but the preceding sentence claims N_sm derivative gives mean spacing; fine. No error. However the statement 'there are exactly 29 zeros below 100' is correct.",
-  "fix": "No change needed."
+  "quote": "(Any constant multiple of $\\varphi$ also works; we absorb that constant into $\\psi$.)",
+  "problem": "Only existence is checked. The text does not show that every solution of $\\varphi'=-i(E/\\hbar)\\varphi$ is a constant multiple of $e^{-iEt/\\hbar}$, and the reader knows no differential equations beyond SHM.",
+  "fix": "Add: \"There are no others: if $\\varphi$ solves the equation, then $\\frac{\\dd}{\\dd t}\\left(\\varphi e^{iEt/\\hbar}\\right)=\\varphi'e^{iEt/\\hbar}+\\frac{iE}{\\hbar}\\varphi e^{iEt/\\hbar}=0$, so $\\varphi e^{iEt/\\hbar}$ is a constant.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the same law as radioactive decay in HRW",
+  "problem": "The solution of $\\dd P/\\dd t=-(\\Gamma/\\hbar)P$ is asserted by appeal to radioactive decay, which is modern physics the bible does not list as known. The reader has no first-order ODE technique.",
+  "fix": "Verify by differentiation: \"Check: $\\frac{\\dd}{\\dd t}P(0)e^{-\\Gamma t/\\hbar}=-\\frac\\Gamma\\hbar P(0)e^{-\\Gamma t/\\hbar}=-\\frac\\Gamma\\hbar P$\", and give the uniqueness argument used for the time factor. Soften the HRW reference to \"the law of exponential decay\"."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the paper uses exactly this idea, the ``absorptive-even'' class modelling $-i\\Gamma/2$",
+  "problem": "The chapter derives the decay law only for a constant $\\Gamma$. In the paper $A(x)=\\sum_kc_k\\cos(k\\pi x/L)$ depends on position, so the width does too. \"Exactly this idea\" hides the difference, and the paper-connection section then cites the constant-$\\Gamma$ equation to justify the pointwise condition $A\\le0$.",
+  "fix": "Add one line: \"For a position-dependent $\\Gamma(x)$ the same steps give $\\dd P/\\dd t=-\\frac1\\hbar\\int\\Gamma(x)\\abs\\Psi^2\\dd x$, so probability is drained wherever $\\Gamma(x)>0$; this is the form the paper uses.\" Cite that formula in the paper-connection section."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Its derivative is the \\emph{level density}, the number of levels per unit energy; its reciprocal is the \\emph{mean spacing}.",
+  "problem": "\"Its reciprocal\" is ambiguous (of the curve or of the density). The text then computes $\\dd E/\\dd k$ instead of $1/(\\dd N/\\dd E)$ without saying why these are the same quantity.",
+  "fix": "Write: \"The derivative $\\dd N/\\dd E=L/(\\pi\\sqrt E)$ is the level density; the reciprocal of the density, $\\pi\\sqrt E/L$, is the mean spacing. Equivalently, since the level index is $k=N$, the spacing is $\\dd E/\\dd k$:\" and then give the existing equation."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "We keep the box label $k$ because the paper's cosine basis uses the same label",
+  "problem": "The paper's $k$ indexes the basis functions $\\cos(k\\pi x/L)$ of $\\delta V$, not energy levels (the paper labels levels by $n$). Calling them \"the same label\" invites confusion. The chapter then uses $n$ for levels and $k$ for cosines in $A_{nk}$, yet the Sample Problem has $\\psi_k$ and $A_{1k}$ side by side.",
+  "fix": "Replace with: \"The paper labels levels by $n$ and reserves $k$ for its cosine basis functions $\\cos(k\\pi x/L)$; in Sec.~\\ref{sec:schrodinger-paper} we switch to $n$ for levels.\" Use $\\psi_n$ consistently in the paper-connection section."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "precisely so that its smooth counting function equals $\\Nsm$",
+  "problem": "The Wu–Sprung construction makes the semiclassical (WKB) counting function equal $\\Nsm$. The actual levels only track $s_n$ approximately; the paper reports residuals of 0.005 mean and 0.063 max, worst at low $n$.",
+  "fix": "Write: \"so that its semiclassical (WKB) counting function equals $\\Nsm$; its actual levels then follow the smooth zeros closely but not exactly\"."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "in any case the paper shows the fits do not even predict the next zeros (Sec.~III)",
+  "problem": "This drops the paper's scoping. The result holds for the Wu–Sprung background, three bases and the optimizer tested, and is phrased as \"no reproducible held-out predictive skill\".",
+  "fix": "Write: \"in any case the paper finds that, for the operator families and fitting protocol it tested, the fits show no reproducible skill at predicting held-out zeros (Sec.~III)\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Applied to orthonormal eigenfunctions, Eq.~\\eqref{eq:schrodinger-hermitian-def} says",
+  "problem": "The step to $\\bra mQ\\ket n=\\bra nQ\\ket m^*$ is not shown. \"Eigenfunctions\" is unexplained (of which operator?) and unnecessary: the identity holds for any pair of allowed functions.",
+  "fix": "Write: \"Applied to any two allowed functions $\\psi_m,\\psi_n$ (for example members of an orthonormal basis): $\\bra mQ\\ket n=\\int(Q\\psi_m)^*\\psi_n\\,\\dd x=\\left(\\int\\psi_n^*Q\\psi_m\\,\\dd x\\right)^*=\\bra nQ\\ket m^*$.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the replacements $E\\to i\\hbar\\,\\partial_t$, $p\\to-i\\hbar\\,\\partial_x$ give the time-dependent",
+  "problem": "The shorthand $\\partial_t,\\partial_x$ is never defined. The same goes for the subscript notation $y_{xx}$, $y_{tt}$, $\\Psi_t$ in the analogy table and $\\partial_\\tau,\\partial_\\xi$ in Answer 25.",
+  "fix": "Define once: \"we abbreviate $\\partial/\\partial t$ as $\\partial_t$ and write $y_{xx}$ for $\\partial^2y/\\partial x^2$\", or write the derivatives out in full."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "show that $\\hat p^2=-\\hbar^2\\dd^2/\\dd x^2$ is Hermitian by applying the momentum Sample Problem twice",
+  "problem": "The Sample Problem proves Hermiticity of $\\hat p$ for $f,g$ both vanishing at the walls. In the second application the right-hand function is $\\hat pg\\propto g'$, which does not vanish at the walls, so the Sample's hypothesis is not met as stated.",
+  "fix": "Add a hint: \"Note that the boundary term $[f^*g]_{-L}^{L}$ in Step 1 vanishes if either function vanishes at the walls, so the result may be used with $\\hat pg$ on the right.\" Make the same remark in the Sample Problem."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Without it, momentum would not have real eigenvalues.",
+  "problem": "On $[-L,L]$ with Dirichlet walls $\\hat p$ has no eigenfunctions at all, because $e^{ikx}$ never vanishes. The closing remark suggests it has real eigenvalues in this setting, and the plane-wave eigenfunction shown earlier lives on the whole line.",
+  "fix": "Rephrase: \"Without it, momentum expectation values $\\bra\\Psi\\hat p\\ket\\Psi$ would not be real. (In the box $\\hat p$ has no eigenfunctions obeying the wall conditions; its eigenfunctions $e^{ikx}$ belong to the whole line. This is one of the domain subtleties of the box below.)\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "every $E\\ge0$ is allowed (each $k$ gives a plane wave), and the spectrum is continuous",
+  "problem": "The preceding sentence defines the spectrum as the set of eigenvalues, but plane waves are not normalizable (Problem 3) and so are not eigenfunctions in the chapter's sense. The student is left with an apparent contradiction.",
+  "fix": "Add: \"(The plane waves are not normalizable, so strictly these are not eigenvalues; the precise notion of continuous spectrum is beyond this book and is not needed, since every operator in the paper lives in a box.)\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "This is why the paper never needs the time-dependent equation",
+  "problem": "The reason given (completeness of stationary states) is not the paper's reason. The paper never evolves anything in time; it only compares eigenvalues $E_n$ with the heights $t_n$.",
+  "fix": "Replace with: \"The paper goes further and never considers time evolution at all: it uses only the eigenvalues $E_n$ and eigenfunctions $\\psi_n$ of $H$.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(This is why the sign of an eigenvector returned by a numerical solver never matters.)",
+  "problem": "\"Never matters\" conflicts with the later checkpoint, which shows that a relative sign inside a superposition is physical. It is also too strong for products of different eigenvectors such as $\\int x\\psi_1\\psi_2\\,\\dd x$.",
+  "fix": "Write: \"(This is why the overall sign of a single eigenvector returned by a numerical solver does not affect quantities such as $\\abs{\\psi_n}^2$; relative signs between different states are another matter, as a later checkpoint shows.)\""
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/schrodinger_wusprung.pdf}",
+  "problem": "This figure follows the bible's required form, but two others (schrodinger_beats and schrodinger_staircase) use width=0.95\\linewidth instead of the mandated 0.85\\linewidth.",
+  "fix": "Change both to \\includegraphics[width=0.85\\linewidth]{...}."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{2}{\\label{prob:schrodinger-realfail}Show in full that",
+  "problem": "Labels with prefix `prob:` are not among the permitted prefixes (sec:, eq:, fig:, tab: plus slug). A \\label inside \\prob will only resolve to a problem number if the macro steps a referable counter, which the bible does not promise. Also prob:schrodinger-e10, prob:schrodinger-parabola, prob:schrodinger-decay, prob:schrodinger-fdbox and prob:schrodinger-ws are never referenced.",
+  "fix": "Remove the prob: labels and refer to problems by number in words (\"Problem 4\"), or confirm with the coordinator that \\prob supports \\label."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Empty box with Dirichlet walls: $\\psi_k=L^{-1/2}\\sin(k\\pi(x+L)/2L)$, $E_k=\\frac{\\hbar^2}{2m}(k\\pi/2L)^2$, Eq.~\\eqref{eq:schrodinger-box-states}.",
+  "problem": "The cited equation contains only the normalized states. The energies $E_k$ appear only in a boxed answer of a Sample Problem with no equation number, so the Summary reference is inaccurate.",
+  "fix": "Give the level formula its own numbered equation in Sec. 5 (for example \\label{eq:schrodinger-box-levels}) and cite both equations here."
  }
 ]
