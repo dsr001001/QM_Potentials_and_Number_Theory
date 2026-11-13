@@ -1,100 +1,219 @@
 [
  {
-  "category": "ERROR",
+  "category": "LATEX",
   "severity": "high",
-  "quote": "the measured sum is close to the prediction $-(t_{10000}/2\\pi)\\log2/\\sqrt2\\approx-770.6$ (with $t_{10000}\\approx9878.7$)",
-  "problem": "The check failed: the quoted value of t_10000 and the prediction -770.6 do not match qmnt. The true t_10000 is about 9877.8, so the prediction is about -770.5 or so. Also 'smaller relative discrepancy' is asserted without a computed measured value.",
-  "fix": "Compute t_10000 and the prediction in CHECKS and quote the computed values. Report the measured sum and the actual relative discrepancy against the T=t_1000 case."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "gives a value within $25\\%$ of the prediction at $\\log2$.",
-  "problem": "Vague, loosely checked claim. The check tolerates 25% but the actual discrepancy is never quoted, and a 25% bound for a 'theorem' check is weak.",
-  "fix": "Quote the actual measured value from the pycode run (and check it in CHECKS) instead of a loose bound."
+  "quote": "\\begin{didyouknow}{Why CDs Use 44.1 kHz}",
+  "problem": "The environment `didyouknow` is not among the environments the bible defines (chapterintro, prerequisites, keyideas, sample, checkpoint, pitfall, beyond, pycode, problemlist). It is used three times and will not compile. Its content also duplicates the wagon-wheel remark in the body and adds uncited historical claims.",
+  "fix": "Delete all three didyouknow blocks (and the DYK-BEGIN/END comments), or fold any essential sentence into the running text."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Since $\\sin(\\pi\\delta\\pm\\pi)=-\\sin(\\pi\\delta)$, $s(\\delta\\pm1)=-\\sin(\\pi\\delta)/(\\pi(\\delta\\pm1))$.",
-  "problem": "Consistent, but the following simplification line writes the bracket with a minus sign and combines 1/(4(δ-1))+1/(4(δ+1)) as 2δ/(4(δ²-1)); the sign convention then needs the result -sin/(2πδ(δ²-1)), whose Hann peak at δ=0 is +1/2 only because of the sign. OK, but the stated 'highest Hann sidelobe 0.0267 of the peak' relies on dividing by 1/2, which is not stated.",
-  "fix": "State explicitly that sidelobe heights are normalized by the Hann peak 1/2."
+  "quote": "Two of the surrogate families in step 23 are",
+  "problem": "Misstates the paper. App. A step 23 lists three families, and only one is 'sorted phase-randomized surrogates'; the other two are explicit formulas with 25 displaced prime frequencies and explicit-formula shapes with 25 random base frequencies. The explanation of what 'sorted' means is also the chapter's guess, not something the paper states.",
+  "fix": "Write: 'One of the three surrogate families in step 23 is \"sorted phase-randomized surrogates\" (the other two are sparse signals with non-arithmetic frequencies); the phase randomization is the construction of Section ..., and the sorting presumably restores an increasing list of heights (the paper does not spell this out).'"
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Hence the 'first zero' ... the first zero is at $\\omega=2\\pi/T=\\pi/2=1.5708$.",
-  "problem": "Fine, but the Hann main-lobe claim 'twice as wide' is fine; however Problem 1 answer: f-hat at pi/T is 2T/pi, correct. No issue; however the surrogate answer for Problem 5 claims the extra phase is e^{-i(w-w0)T/2} which is right only if the shift is applied to the box then modulated; the text is muddled.",
-  "fix": "Write the answer cleanly: g(t)=e^{iw0 t} on [0,T] is the centered one shifted by T/2, so ĝ gets factor e^{-iωT/2} times the modulated box with ω-ω0, i.e. total extra phase e^{-i(ω)T/2}... derive explicitly."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Worst offset a quarter bin: $s(\\frac14)=\\sin(\\pi/4)/(\\pi/4)=0.900$, i.e.\\ 90\\% of the amplitude.",
-  "problem": "Problem 9 is a coarse grid with step half a bin, so the worst offset is a quarter bin; correct. But the answer is placed under item 9 with the check lacking tolerance detail; fine. Minor: 0.900 is 0.9003.",
-  "fix": "No change needed beyond stating 0.9003."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "for points scattered at random this floor is typically of size $\\sqrt N$ (a heuristic that Chapter~\\ref{ch:probability} makes precise)",
-  "problem": "Ch. 19 (probability) is a later chapter than this one, so the book is invoking a forward result; the reader has no probability. Likewise 'average of the noise' is used before defined.",
-  "fix": "Give a one-line argument (N unit phasors with random angles have mean square N) and label it heuristic."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "A signal that lives for a time of order $1/a$ has a spectral width of order $a$; the product is a pure number (here $2$).",
-  "problem": "The width 2a times lifetime 1/a gives 2, but the 'lifetime' of e^{-a|t|} is not defined; the FWHM x (1/a) statement is loose.",
-  "fix": "Define lifetime as 1/a (the e-folding time of |f|) and state the product FWHM x lifetime = 2."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "$N'_{\\rm sm}(t)=\\frac{1}{2\\pi}\\log\\frac{t}{2\\pi}+\\frac{t}{2\\pi}\\cdot\\frac1t-\\frac1{2\\pi}",
-  "problem": "Step C claims the integral of e^{iωt}N'_sm is O((1/ω)log T) 'tiny compared with T' without showing the integration by parts, and the claim that the first two terms are bounded relies on S being small, only 'typically'.",
-  "fix": "Show the integration by parts line: ∫e^{iωt}N'_sm dt = [e^{iωt}N'_sm/(iω)] - ∫ e^{iωt}N''_sm/(iω)dt, with N''_sm=1/(2πt), and say S is bounded only heuristically (it grows like log T at worst)."
+  "quote": "Careful: here, following the paper's usage in Landau's formula,",
+  "problem": "The paper never writes Landau's formula; it only cites Landau and Gonek. The follow-on sentence 'The paper itself uses $T$ in both senses' is also false: the paper uses T for the training-window length, the tensors T^(n) and Chebyshev T_k, never for a height.",
+  "fix": "Replace with: 'Careful: here, following the usual statement of Landau's formula, $T$ is the height of the top of the range, not the window length (the paper uses $T$ for the training window, the tensors $T^{(n)}$ and the Chebyshev polynomials $T_k$).' Delete 'The paper itself uses $T$ in both senses.'"
  },
  {
   "category": "OVERCLAIM",
   "severity": "medium",
-  "quote": "Step D is heuristic: the prime sum does not converge on the critical line, and the infinitely many non-resonant terms are not controlled. But the conclusion is a theorem.",
-  "problem": "Landau's formula is a theorem for fixed x, but the chapter's stated version (-T/2π Λ(x)/√x with ≈) hides the O(log T) error and the key-ideas box says 'proved' for an approximate statement.",
-  "fix": "State the theorem with its O(log T) error term in the Key Ideas and in the displayed equation text."
+  "quote": "Landau's formula (a theorem; proof beyond this book): for fixed $x>1$,",
+  "problem": "The theorem is unconditional only in the form with $x^{\\rho_n}$. The form with $e^{it_n\\log x}/\\sqrt x$ assumes every zero up to T has real part 1/2, which is RH for general T (verified only numerically at the heights used). Stating that form as a theorem implicitly assumes RH, against the honesty rules.",
+  "fix": "State the theorem as $\\sum_{0<\\Im\\rho\\le T}x^{\\rho}=-\\frac{T}{2\\pi}\\Lambda(x)+\\mathcal O(\\log T)$ and add: 'for heights where all zeros are on the critical line (verified numerically for all zeros used here) this is equivalent to Eq. (landau)'. Add the same caveat after the beyond box."
  },
  {
   "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "is exactly what phase randomization removes.",
+  "problem": "The surrogate is phase-randomized in the index n (FFT of d_n), not in t-frequency. It preserves the power spectrum exactly, so spectral peaks are not removed; only the phases are scrambled. The paper says only 'power spectrum kept exactly, no arithmetic content'. The chapter never explains how lines in t relate to the spectrum in n, and it attributes a mechanism the paper does not state.",
+  "fix": "Rephrase: 'Phase randomization keeps the power spectrum of $d_n$ (in frequency per level) but scrambles the phases, so the specific arithmetic pattern in $t$, sines at $\\log p^m$ with fixed phases, is no longer present; the paper summarizes this as \"no arithmetic content\".' Add one sentence that a line in $t$ is not a sharp line in $n$ because the gap varies across the window."
+ },
+ {
+  "category": "ERROR",
   "severity": "low",
-  "quote": "That the search recovered them is a numerical observation of the paper, consistent with the fact (Section~\\ref{sec:fourier-transform-sampling}) that irregular sampling breaks exact aliasing",
-  "problem": "Suggests the explanation is aliasing-breaking, but the chapter itself notes the zeros are not random and the explanation is unestablished.",
-  "fix": "Say it is 'compatible with' and add that the mechanism is not established here."
+  "quote": "the surrogate takes four different values, one of them negative",
+  "problem": "The surrogate x'=(1.2071, 0.5, -0.2071, 0.5) has three distinct values; 0.5 occurs twice.",
+  "fix": "Replace with 'the surrogate takes three different values (1.2071, 0.5 twice, and -0.2071), one of them negative'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "every phase $\\Omega t_j$ would have to be a multiple of $2\\pi$",
+  "problem": "The condition for |W(Ω)|=N is that all phases Ωt_j be equal modulo 2π, i.e. every difference Ω(t_j - t_l) is a multiple of 2π. The phases themselves need not be multiples of 2π (a uniform grid with an offset is a counterexample).",
+  "fix": "Write: 'all the phases $\\Omega t_j$ would have to agree up to multiples of $2\\pi$, that is, every difference $\\Omega(t_j-t_l)$ would have to be a multiple of $2\\pi$'."
  },
  {
   "category": "RULE",
   "severity": "medium",
-  "quote": "Is the spectral window of the zeros flat away from $\\omega=0$, as it would roughly be for random points?",
-  "problem": "Number of Problems is 25 but the problem list contains an out-of-order \\prob{2} for 'Complete the phase-randomization' placed after a \\prob{3}; also several answers use items not odd or prob 1 (e.g. 2, 4 are fine), but answers to all odd problems required: problems 1,3,5,...,25 are mostly present except 3? present; 25 present; however no answers for odd problem 'Problem 5'? present. Problem 7 is answered but statement of answer for 13-21 ok.",
-  "fix": "Check numbering order and ensure all odd and prob-1 answers are present; move problem 20 into sequence."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "This overloading of $T$ is noted in the book's notation table.",
-  "problem": "Refers to the notation appendix not yet written/visible; also uses 'Problem~10' and 'Problem~20' hard-coded cross refs that could break.",
-  "fix": "Remove the reference or say 'as flagged in Chapter 1 notation'; use \\ref-free wording for problem numbers or verify them."
+  "quote": "\\begin{didyouknow}{Gauss Did the FFT}",
+  "problem": "The Summary section must be a bullet list of results with equation references; a trivia box inside it violates the chapter anatomy. Its historical claims (Gauss 1805, Cooley and Tukey 1965) are uncited and not in the allowed citation list.",
+  "fix": "Remove the box from the Summary. If kept at all, move a one-sentence version into the FFT section without specific unsourced claims."
  },
  {
   "category": "RULE",
   "severity": "low",
-  "quote": "The paper does not spell out whether its $T$ is $t_{400}-t_1$ or $t_{400}$; the two differ by 2\\%, which changes nothing below.",
-  "problem": "Figures are referenced as figs/fourier-transform_*.pdf but bible requires figs/<slug>_<name>.pdf with slug 'fourier-transform' fine; however no FIGURES part was supplied for the 6 figures, violating the response format.",
-  "fix": "Provide the FIGURES section with scripts for sinc, leakage, aliasing, re2, zerospec, surrogate and landau."
+  "quote": "The Wiener-Khinchin theorem says that the power spectrum",
+  "problem": "Paired names must use an en dash (the rest of the chapter writes Wiener--Khinchin). The box's dates for Wiener (1930), Khinchin (1934) and Einstein (1914) are unsourced historical claims.",
+  "fix": "Delete the box (see the didyouknow issue), or write 'Wiener--Khinchin' and drop the unsourced dates."
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "gives $-111.1$ at $\\log2$, within $1\\%$ of the prediction",
+  "problem": "The checks script only asserts the measured sum is negative and within 25% of the prediction. Neither the quoted value -111.1 nor the 'within 1%' claim is asserted.",
+  "fix": "Add to CHECKS: `assert abs(meas + 111.1) < 0.05` and `assert abs(meas-pred1000)/abs(pred1000) < 0.01`."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "are about a sixth of the main line",
+  "problem": "This number, and the claim that Λ(q)/√q is largest at q=5, 7, 11, is the chapter's own computation and is not in CHECKS.",
+  "fix": "Add a check: compute (t_1000/2π)·Λ(q)/√q/1000 for prime powers q, and assert the top three are q=7, 11, 5 with values in about 0.160 to 0.170."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "they coincide exactly, including the negative values at lags 1--3",
+  "problem": "The negative autocorrelation of d_n at lags 1 to 3 (also asserted in the autocorrelation section) is never verified in CHECKS for the qmnt sequence used in the figure.",
+  "fix": "Add to CHECKS: compute the normalized circular autocorrelation of the mean-subtracted d400 and assert it is negative at lags 1, 2 and 3."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "appear with heights close to the prediction $NA_m^2/4$",
+  "problem": "Numerical claims about the RE2 periodogram (uniform heights close to NA_m²/4; zero-sampled heights 'differ somewhat') are not verified in CHECKS.",
+  "fix": "Add a check: compute the uniform-sample periodogram of RE2 on [t_1, t_400] and assert the three peak heights are within a stated tolerance (say 10%) of NA_m²/4. State the observed size of the difference for the zero-sampled case."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the other peaks line up with $\\log3$, $\\log5$, $\\log7$ and further prime powers",
+  "problem": "CHECKS verifies only that the tallest peak is at log 2; the alignment of the other peaks is asserted without a check.",
+  "fix": "Add a check: local maxima of the 1000-zero periodogram near log 3, log 5 and log 7 lie within 2π/T of those values and are among the largest peaks."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "# peak lies within 2*pi/T of log 2",
+  "problem": "This listing uses zeros 1 to 400, but CHECKS only verifies the tallest-peak claim for 1000 zeros. The 400-zero claim in the code comment is unverified.",
+  "fix": "Add a check that runs this listing's computation for 400 zeros and asserts abs(w_peak - log 2) < 2π/T."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "Chapter~\\ref{ch:paper-arithmetic}",
-  "problem": "The chapter references ch:paper-arithmetic and ch:sparse-frequency etc. before they exist; allowed labels, but 'Figure~1 of the paper' item and 'Table~V' references ok. Minor: a wrong slug would break.",
-  "fix": "Verify labels against the chapter map (ch:paper-arithmetic is valid)."
+  "quote": "Compute the measured sum with the listing of Section",
+  "problem": "Answers must be short solutions, but the measured value is withheld even though CHECKS computes it (about -771.6, relative discrepancy 0.14% against 0.35% at 1000 zeros). The Sample Problem's remark that the 1000-zero agreement is 'partly fortunate' is left unsupported.",
+  "fix": "State: 'The measured sum is about $-771.6$, a relative discrepancy of $0.14\\%$ (it was $0.35\\%$ at $t_{1000}$)', and assert these values in CHECKS."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "describes a case where the paper observes exactly this.",
+  "problem": "This contradicts the careful hedge in the Paper connection ('the mechanism is not established here. We claim nothing beyond this compatibility'). The paper does not claim to observe irregular sampling defeating a Nyquist limit.",
+  "fix": "Replace with: 'describes a result of the paper that is compatible with this (recovered frequencies above the equivalent Nyquist value), though the mechanism is not established.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "can sit anywhere inside the main lobe of the true line, whose half-width is $2\\pi/T$",
+  "problem": "If a peak could sit anywhere within a half-width 2π/T, the natural tolerance would be 2π/T, not π/T. The argument as written does not justify the paper's criterion and conflicts with the next clause ('a fraction of that').",
+  "fix": "Rephrase: 'an isolated line's periodogram maximum lies at the line itself; noise and the sidelobes of neighboring lines displace it by a fraction of the main-lobe half-width $2\\pi/T$, so half a resolution element, $\\pi/T$, is a reasonable tolerance.'"
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "the phrase ``within half the Fourier resolution'')",
+  "problem": "The chapter intro places this phrase among the items of Sec. II D. In the paper it appears in Sec. IV (and as the criterion |ω - log q| < π/T in App. A step 23), as the chapter itself says later.",
+  "fix": "Move the phrase out of the Sec. II D parenthesis: '... of Sec. II D; the phrase \"within half the Fourier resolution\" of Sec. IV; ...'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Table~IV reports C1 at $0.258$ with correlation $+0.28$ (interval $[+0.08,+0.46]$)",
+  "problem": "The correlation interval [+0.08,+0.46] is given in the text of Sec. IV, not in Table IV. Table IV's caption gives the rms interval [0.231, 0.285] for C1.",
+  "fix": "Write: 'Table IV reports C1 at 0.258 with correlation +0.28 (Sec. IV gives the correlation interval [+0.08,+0.46])'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "is buried in noise of rms $\\sigma=0.3$, three times larger",
+  "problem": "This compares a sinusoid's amplitude (0.1) with a noise rms (0.3). The sinusoid's rms is A/√2 ≈ 0.071, so the noise rms is about 4.2 times larger. 'rms' is also used before the book defines it (Ch. 19).",
+  "fix": "Write 'buried in noise whose root-mean-square size $\\sigma=0.3$ is three times the sinusoid's amplitude', and add a short gloss of rms (the square root of the average square)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "What the power spectrum does not know.",
+  "problem": "'Power spectrum' appears in the section title and here but is never defined; the reader has to guess that it means |X_k|² (or the periodogram). The bible requires every new concept to have a precise definition.",
+  "fix": "Add at the start of the section: 'The list of squared moduli $\\abs{X_k}^2$ (equivalently the periodogram $\\abs{X_k}^2/N$) is called the power spectrum of the sequence.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The uniform spectral window is the Dirichlet kernel",
+  "problem": "The name 'Dirichlet kernel' first appears in the Key Ideas; the body derives the formula without naming it.",
+  "fix": "Name it where derived ('this ratio of sines is called the Dirichlet kernel'), or drop the name from the Key Ideas."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "with the new phase of $X_1$ chosen to be $0$",
+  "problem": "The recipe multiplies X_k by e^{iφ_k} with φ_k random, but the Sample Problem specifies the resulting phase of X'_1 (0, then π/4). The original phase is -π/4, so these correspond to φ_1=π/4 and π/2. A student following the recipe literally would get a different answer.",
+  "fix": "State: 'choose $\\varphi_1=\\pi/4$, so that $X'_1=X_1e^{i\\pi/4}=\\sqrt2$ has phase 0', and in the later remark 'had we chosen $\\varphi_1=\\pi/2$ (new phase $\\pi/4$)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "X_def = np.array([np.sum(x*np.exp(-2j*np.pi*j*k/N)) for k in range(N)])",
+  "problem": "The listing uses the imaginary literal `2j` next to an array variable named `j`. For a reader who knows only Appendix A this is confusing.",
+  "fix": "Rename the index array (e.g. `idx = np.arange(N)`) and write `np.exp(-2j*np.pi*idx*k/N)` with a comment '# 2j is Python for 2i'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\item Complex numbers, the complex exponential",
+  "problem": "The bible specifies 'prerequisites (itemize inside it)' and 'keyideas (itemize inside)'. The chapter puts bare \\item directly in these environments. If the environments are not themselves lists, this gives 'Lonely \\item' errors.",
+  "fix": "Confirm against the preamble; if the environments are not lists, wrap the items in \\begin{itemize}...\\end{itemize} inside every prerequisites and keyideas environment."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\prob{3}{For $N=2^{20}$, find the speed-up factor of the FFT over the direct DFT.}",
+  "problem": "Problems are meant to be graded. This one-line arithmetic exercise is marked difficulty 3, and the list is not ordered by difficulty (level-2 problems 20, 23, 25 follow level-3 ones).",
+  "fix": "Mark this problem \\prob{1} and reorder the list so difficulties are non-decreasing; update the hard-coded 'Problem 10/20/21' references and the answer numbers accordingly."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "applied to the Riemann sums that define an integral, gives",
+  "problem": "The integral of a complex-valued function of a real variable has not been defined in this chapter (integrate real and imaginary parts separately). The passage to the limit in the inequality is asserted in one clause.",
+  "fix": "Add: 'The integral of a complex-valued $g=u+iv$ means $\\int u\\,\\dd t+i\\int v\\,\\dd t$; each Riemann sum satisfies $\\abs{\\sum g(t_j)\\Delta t}\\le\\sum\\abs{g(t_j)}\\Delta t$, and taking the limit of both sides gives ...'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "You have seen this in films where a fast-spinning wagon wheel appears to turn slowly backwards",
+  "problem": "The wagon-wheel example appears twice within a page (once in the didyouknow box, once here); the bible forbids length from repetition.",
+  "fix": "Keep this sentence and delete the box (see the didyouknow issue)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Let $N(t)$ be the number of zeros with $0<t_n\\le t$",
+  "problem": "N has meant the number of samples all chapter and here becomes the counting function; both N(T) and 'N samples' appear near each other, and the bible asks for overloaded symbols to be pointed out. Similar unflagged reuse: c_k (Fourier coefficients) vs c_m (autocorrelation), r (geometric ratio) vs r_m, x (sequence) vs x (prime power), w (Hann window, root of unity, code variable).",
+  "fix": "Add a sentence here: 'Careful: in this section $N(t)$ is the zero-counting function, not the number of samples.' Add a short note on the other reused letters, or rename the autocorrelations (e.g. $\\gamma_m$, $\\gamma^{\\rm circ}_m$)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "height on the critical line for the zeros",
+  "problem": "'Critical line' is used here (and in the intro and after the definition of the transform) without a reminder of what it is; it is only defined precisely in Chapter 16.",
+  "fix": "Add a short gloss at first use: 'the height $t$ of a zero $\\tfrac12+it$ (the line of complex numbers with real part $\\tfrac12$ is called the critical line; Chapter~\\ref{ch:zeta})'."
  }
 ]
