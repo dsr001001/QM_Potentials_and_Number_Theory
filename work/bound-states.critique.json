@@ -1,100 +1,198 @@
 [
  {
-  "category": "ERROR",
+  "category": "LATEX",
   "severity": "high",
-  "quote": "Both states are even, so $\\psi(-L)=\\psi(L)$ and $\\phi'(-L)=-\\phi'(L)$, and the left side is $-2\\phi'(L)\\psi(L)$.",
-  "problem": "The left side is [psi' phi - phi' psi] from -L to L = (psi'(L)phi(L)-phi'(L)psi(L)) - (psi'(-L)phi(-L)-phi'(-L)psi(-L)) = -phi'(L)psi(L)+phi'(-L)psi(-L) = -2phi'(L)psi(L). This is correct, but then Step 5 sign: phi'(L)≈-2L psi(L) gives E_b-1 = +4L psi^2, fine. However the same sample says 'Near x=L, phi is psi minus the growing solution' without justification of the logarithmic slope (growing slope 'close to +x'), which is hand-waved.",
-  "fix": "Label Step 5 clearly as heuristic and justify the growing solution's slope (e.g. WKB: psi_grow ~ e^{+x^2/2}, so psi'/psi ≈ +x)."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "the first integral is strictly positive.",
-  "problem": "Sample 'lower bound' assumes psi psi' -> 0 at ends but Step 6 says a constant vanishing at the ends; fine. But for the box V_min=0 and E>V_min is claimed for V=+infty walls, where the integral of V psi^2 is taken over the interior only; acceptable. The real flaw: V_min for oscillator with E>V_min is fine, but the checkpoint says 'lowest level should approximate t_1' while the Wu-Sprung lowest level follows s_1, not t_1, and WKB is poor at low n.",
-  "fix": "Reword the checkpoint to say only that t_1=14.13 exceeds V_0=9.741, so no inconsistency arises."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "the slowly rising level density of the Riemann zeros is exactly what forces that potential to grow a little more slowly than a harmonic well.",
-  "problem": "Overstated: the chapter's argument is a heuristic local power-law (semiclassical) reading, not a forcing.",
-  "fix": "Say 'suggests, at the heuristic level of Section on density'."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The empty box of RE3 (Sample Problem ``The empty box of the paper'') is what you get by deleting the potential.",
-  "problem": "The paper's Hamiltonian is not an empty box; the sentence is fine, but the claim in the sample that 'far fewer levels below 1000' relies on 652 from the paper's tensor computation, which is the Sec. II E state sum, and the chapter cites 'Sec.~II~E and App.~A step~4' as if 652 were the filled-box count for the smooth potential; the paper uses 652 basis states of the smooth potential, consistent, but N_sm(1000)+1/2 comparison is loose.",
-  "fix": "State that 652 is the number of states of the smooth potential with E<=1000 used in the tensor sums."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Even potential, even and odd solutions: exactly as the parity theorem promised.",
-  "problem": "Series solutions are used for the oscillator on the whole line, but the claim that the terminating polynomial times Gaussian is the complete set of bound states (no other E) relies on the divergence heuristic; also power series, ratio asymptotics and convergence of series are beyond assumed background (Ch. 3 is not listed in prerequisites).",
-  "fix": "Add Chapter~\\ref{ch:series} to prerequisites and state explicitly that completeness of the Hermite states is taken on trust."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Leibniz's rule for differentiating an integral with variable limits",
-  "problem": "Leibniz's rule is invoked but the integrand's derivative 1/(2 sqrt(E-V)) diverges at the endpoints, so the 'integral of the derivative' is improper; the justification is skipped.",
-  "fix": "Note that the integrand's E-derivative is integrable, or substitute x=x_E u in a power-law case to verify."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "Chapter~\\ref{ch:finite-differences} analyzes this method in depth; here we use it as a black box.",
-  "problem": "Listing uses 'select' and 'select_range' keywords and the second-difference matrix without explaining that indices are zero-based (0,9) giving ten levels.",
-  "fix": "Add a comment that select_range=(0,9) means the lowest ten eigenvalues (0-based indices)."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "Section~II~B of \\cite{soniR1} states the setting: ``In units $\\hbar=2m=1$, $H=-d^2/dx^2+V(x)$ with $V$ even.''",
-  "problem": "Paper text is 'In units hbar = 2m = 1, H = -d^2/dx^2 + V(x) with V even.' Fine, but the chapter then says the paper's 'Dirichlet walls' quote and 'the domain [-L,L]' quote are verbatim; the latter is 'the domain $[-L, L]$ with $L = x(V{=}1000) = 44.883$' ok. Minor: 'App.~A step~4: eigenvalue range [0,900]' is reported correctly.",
-  "fix": "No change needed beyond checking quotes."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "The paper's Wu--Sprung potential has its minimum $V_0=3.10073\\pi\\approx 9.741$ at $x=0$",
-  "problem": "Figure scripts and the FIGURES part are absent from the supplied response; six figures are included (shooting, box, oscillator, wall, ladders, density, wusprung) with no scripts.",
-  "fix": "Provide a '### FIG bound-states_<name>' script for each of the seven figures."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\begin{pycode}\nimport numpy as np\nimport qmnt",
-  "problem": "Check script does not verify the paper-connection listing outputs or claims such as 'below 0.01 ... growing with n', '10% high', 'numerics 0.075', 'numerical shift below 1e-5', turning points 22.5--28.5, 190 value to tolerance, and Problems 19-21 numbers (652 vs 903 vs 648.6 fine) partially.",
-  "fix": "Add asserts for 0.075 (L=2 shift), the 22.5--28.5 band via qmnt, and Problem 6/12/14/18/22/26/28/30 numbers quoted."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "\\prob{2}{Prove that if $\\psi(x)$ solves",
-  "problem": "Answers section omits many odd-numbered problems (e.g., 33 absent; 9 present but 'every odd-numbered problem' requires all odd, such as problem 1..31 odd: 21,25,27,29,31 ok but check 9, 11, 13 ... all given); also problems numbered by references like 'Problem 31' and 'Problem 13' in text must match actual list order.",
-  "fix": "Verify numbering: the infinite-box-probability problem is 31 (ok) but 'Problem 13 computes' forbidden-region probability matches item 13; recheck 'Problem 19' reference for the 652 count (item 19) and 'Problem 22' turning points (item 22), 'Problem 23', 26, 27 and add missing odd answers."
- },
- {
-  "category": "CLARITY",
-  "severity": "low",
-  "quote": "The zeros (and hence the Wu--Sprung levels) are about 1.5 times denser there",
-  "problem": "Answer 21 compares 0.774 with 0.502 but the density of the filled-box level count versus 'fewer levels below that energy in total' is confusing and mixes a heuristic empty box with the actual filled one.",
-  "fix": "Remove the clause about totals or clarify it compares density at one energy, not cumulative counts."
+  "quote": "Hermann Weyl proved in 1911 that the number of vibration modes of a drum below a given frequency",
+  "problem": "The `didyouknow` environment (used twice, with `% DYK-BEGIN/END` markers) is not among the environments the bible defines in the preamble, so it will not compile. The boxes are also historical asides with uncited facts and dates, outside the prescribed chapter anatomy.",
+  "fix": "Delete both `didyouknow` blocks, or fold one sentence of each into running text, citing only allowed keys (for Sturm-Liouville theory, \\cite{rhb})."
  },
  {
   "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "We prove general facts that hold for every one-dimensional well: the energies are never degenerate",
+  "problem": "The intro says all three facts are proved. The node theorem is taken on trust (beyond box), nondegeneracy rests on a trusted uniqueness theorem, and parity alternation holds only for even wells and depends on the unproved node theorem.",
+  "fix": "Write: \"We establish general facts: bound-state energies in one dimension are never degenerate (proved from a uniqueness theorem we take on trust), states of an even well are even or odd (proved), and the $n$-th state has $n-1$ nodes (stated; proof beyond this book).\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "Three patterns are visible, and the next section proves that they hold for every one-dimensional well",
+  "problem": "The next section does not prove the node count (it is in a beyond box), and alternating parity is a property of even wells only, not of every one-dimensional well.",
+  "fix": "Replace with: \"Three patterns are visible. The next section shows that the first holds for every one-dimensional well, the second for every even well, and states the third (the node theorem) with its proof taken on trust.\""
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Its smooth trend $\\bar N(E)$ is what the counting rule \\cref{eq:bound-states-count} supplies",
+  "problem": "A function with $\\bar N(E_n)\\approx n$ passes through the top of each step. The smooth trend (running average) of a staircase that jumps from $n-1$ to $n$ at $E_n$ equals $n-\\tfrac12$ there, so the trend is $\\frac1\\pi\\int\\sqrt{E-V}\\,\\dd x+\\gamma-\\tfrac12$. This is also inconsistent with the zeros, where the smooth count satisfies $\\Nsm(s_n)=n-\\tfrac12$.",
+  "fix": "Either define the smooth trend as $\\bar N(E)=\\frac1\\pi\\int\\sqrt{E-V}\\,\\dd x+\\gamma-\\tfrac12$ (so $\\bar N(E_n)\\approx n-\\tfrac12$, matching $\\Nsm$), or keep the formula but call it \"a smooth interpolating function with $\\bar N(E_n)\\approx n$, which lies half a unit above the average of the staircase\". The density $\\rho$ is unaffected."
+ },
+ {
+  "category": "ERROR",
   "severity": "low",
-  "quote": "and the 500th zero is $t_{500}=811.1843588465$ (App.~A, key anchors). So every scored level lies well below the potential at the wall.",
-  "problem": "Statement 'wall influence exponentially small' is heuristic extrapolated from the oscillator, and level 500's turning point value 38.5 is asserted without noting it is computed.",
-  "fix": "Mark as heuristic estimate; note the 38.5 is computed from Eq.(2) via qmnt."
+  "quote": "so the count should be close to $\\Nsm(1000)+\\tfrac12$, and $\\Nsm(1000)=648.6$",
+  "problem": "The expected number of levels below $E$ is $\\Nsm(E)$ itself (it is the average of the staircase). With levels at $s_n$ the exact count is $\\lfloor\\Nsm+\\tfrac12\\rfloor$, i.e. $\\Nsm$ rounded to the nearest integer (649), not $\\Nsm+\\tfrac12$.",
+  "fix": "Write: \"so the count should be close to $\\Nsm(1000)=648.6$ (precisely, the number of smooth zeros $s_n\\le1000$ is $\\lfloor\\Nsm(1000)+\\tfrac12\\rfloor=649$)\"."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Here $L^2=44.883^2=2014.48$ and $4L^2=8057.94$",
+  "problem": "$44.883^2=2014.4837$, so $4L^2=8057.93$ (8057.935 before rounding), not 8057.94. The final $E_1$ is unaffected, and the intermediate value is not in CHECKS.",
+  "fix": "Change to $4L^2=8057.93$ and add an assertion for it in CHECKS."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "so we need Leibniz's rule for differentiating an integral with variable limits",
+  "problem": "Leibniz's rule is not in the reader's assumed calculus and is asserted in one sentence with only a citation. The bible requires either showing the step or putting a trusted result in a labelled beyond box.",
+  "fix": "Derive it in two lines: write $F(E)=\\int_{x_1(E)}^{x_2(E)}f(x,E)\\,\\dd x$, apply the chain rule through the fundamental theorem of calculus for the limits, and differentiate under the integral for the integrand. Alternatively state it as a displayed formula inside a `beyond` box."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "A general justification, for potentials smooth near their turning points, is taken on trust from texts such as \\cite{rhb}.",
+  "problem": "A result taken on trust is stated inline instead of in a labelled `beyond` box, as bible style rule 1 requires. It also sits inside a very long paragraph.",
+  "fix": "Move the caveat about the singular integrand and the trusted general justification into a `\\begin{beyond}...\\end{beyond}` box after \\cref{eq:bound-states-rho-int}, keeping the power-law verification in the main text."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The agreement is close but not exact; we do not analyze the small difference here (Problem 19 suggests one likely contributor).",
-  "problem": "Problem 19 as posed asks only for counts; the contributor is given in Answer 19, speculative (grid dispersion), and presented as 'likely' without evidence.",
-  "fix": "Label as conjecture or compute the count of qmnt levels below 1000 to test it."
+  "quote": "Now the classical meaning. With $m=\\tfrac12$, kinetic energy is",
+  "problem": "The Leibniz caveat, the power-law verification and the classical-period argument all run in a single paragraph. The key physical step is buried mid-paragraph.",
+  "fix": "Start a new paragraph (or a `\\paragraph{}`) at \"Now the classical meaning.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "so $p(x)=\\sqrt{E-V(x)}$ and the local wavelength is",
+  "problem": "A position-dependent wavelength is introduced without the condition under which it makes sense (bible rule 6). It requires $V$ to change little over one wavelength, and it fails near turning points, where $\\lambda\\to\\infty$. This is also the validity condition of the counting rule \\cref{eq:bound-states-count}.",
+  "fix": "Add: \"This local wavelength is meaningful only where $V$ changes little over one wavelength, $|\\lambda\\,\\dd V/\\dd x|\\ll E-V$. It fails close to the turning points, where $\\lambda\\to\\infty$; this is why the counting rule below is approximate and needs the correction $\\gamma$.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "so the oscillation inside is a little short of a full extra half-wavelength",
+  "problem": "The origin of $\\gamma$ is vague. The reader cannot tell why two soft turning points give exactly $\\tfrac12$, or what one hard wall plus one soft turning point gives.",
+  "fix": "State that each soft turning point contributes $\\tfrac14$ to $\\gamma$ and each hard wall contributes 0 (derivation in Chapter~\\ref{ch:wkb}). So two soft give $\\tfrac12$, one hard and one soft give $\\tfrac14$, two hard give 0."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "as $\\alpha\\to\\infty$ the well becomes a box of half-width 1, $I_\\alpha\\to1$, and $E_n\\propto n^2$",
+  "problem": "In this limit \\cref{eq:bound-states-powerlaw} gives $E_n=[\\pi(n-\\tfrac12)/2]^2$, not the box's $(n\\pi/2)^2$. The turning points have become hard walls, so $\\gamma$ should change from $\\tfrac12$ to 0. An attentive reader will see the mismatch.",
+  "fix": "Add: \"(Only the power of $n$ is being checked here. In the limit the turning points become hard walls, so $\\gamma$ changes from $\\tfrac12$ to 0 and $n-\\tfrac12$ becomes $n$.)\""
+ },
+ {
+  "category": "RULE",
+  "severity": "medium",
+  "quote": "the $n$-th eigenfunction, counting from $n=0$, has exactly $n$ zeros inside the interval",
+  "problem": "This contradicts the book's and the paper's convention (levels from $n=1$, the $n$-th state has $n-1$ nodes), which the chapter itself stresses in a pitfall. It appears just before the node theorem and will confuse the reader.",
+  "fix": "If the passage is kept at all, rephrase as \"the $n$-th eigenfunction (counting the lowest as $n=1$) has exactly $n-1$ zeros inside the interval\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "For a potential on the whole line, both $\\psi_i$ and $\\psi_i'$ tend to zero at infinity, so $W\\to0$.",
+  "problem": "That $\\psi'\\to0$ at infinity for a normalizable solution is asserted without justification. Normalizability alone does not obviously give it.",
+  "fix": "Add a justification: in the forbidden region of a confining potential a normalizable solution is the decaying branch, for which $\\psi'/\\psi\\approx-\\sqrt{V-E}$, and $\\psi$ decays faster than any such factor grows. Or state it explicitly as an assumption covered by the trusted Sturm-Liouville box."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "If $\\psi_1$ and $\\psi_2$ are bound states of the same potential with the same energy $E$",
+  "problem": "Everywhere else in the chapter $\\psi_1,\\psi_2$ denote the ground and first excited states, which have different energies. Reusing these names for two hypothetical degenerate states is confusing.",
+  "fix": "Rename the two functions in the theorem and proof, e.g. $u$ and $w$ (or $\\psi_a,\\psi_b$), and update the Wronskian and Problem 29 accordingly."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and find the equation for $h$. By the product rule,",
+  "problem": "The symbol $h$ is used for the Hermite factor $h(x)$ and, in the listing of the same section, for the grid spacing (`h = 2*L/(N + 1)`). Bible notation reserves $h$ for the grid spacing.",
+  "fix": "Rename the polynomial factor (e.g. $u(x)$ or $f(x)$) throughout \\cref{sec:bound-states-sho}, including \\cref{eq:bound-states-hsub,eq:bound-states-hermite,eq:bound-states-recur} and the sample problem. Or add an explicit remark at the listing that the code's `h` is the grid spacing, not the polynomial."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Sec.~II~E notes ``$A_{nn}=0$'': this is exactly that parity fact (Problem 27)",
+  "problem": "The same bullet uses $A_{nn}$ (matrix element of the non-Hermitian operator $A$) and $A_{nk}$ (first-order sensitivity matrix) without flagging the paper's overloading of $A$, which the bible asks chapters to point out where relevant.",
+  "fix": "Add: \"(Beware: the paper uses $A$ for two different objects. Here $A_{nn}=\\langle n|A|n\\rangle$ is a matrix element of the operator $A$ of Sec.~II~E, whereas $A_{nk}$ of Sec.~II~C is the sensitivity matrix.)\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The \\emph{level density} is the derivative",
+  "problem": "The symbol $\\rho$ is introduced for level density while the book's fixed notation uses $\\rho_n$ for the zeta zeros. Likewise $N(E)$ (counting function) and $N$ (grid points in the listings) are both used with no remark on the overload.",
+  "fix": "Add one sentence: \"Do not confuse $\\rho(E)$ with the zeros $\\rho_n=\\tfrac12+it_n$, nor the counting function $N(E)$ with the number of grid points $N$ in the listings; context distinguishes them.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "A power series that vanishes for all $x$ has every coefficient zero, so",
+  "problem": "This fact, and term-by-term differentiation of power series (listed in the prerequisites as coming from Chapter~\\ref{ch:series}), are not in that chapter's contract and are used without justification.",
+  "fix": "Justify briefly: set $x=0$ to get the constant coefficient zero, differentiate and set $x=0$ again, and so on. Note that term-by-term differentiation inside the radius of convergence is taken on trust (\\cite{rhb})."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and integrate \\cref{eq:bound-states-curv} outward, like firing a projectile and watching where it lands",
+  "problem": "The reader has not been shown how to integrate a second-order differential equation numerically. \"Integrate outward\" is undefined for them.",
+  "fix": "Add one sentence: \"On a computer, step outward in small steps $\\Delta x$: from $\\psi$ and $\\psi'$ at $x$, the rule $\\psi''=(V-E)\\psi$ gives the change in slope, $\\psi'(x+\\Delta x)\\approx\\psi'(x)+\\psi''\\Delta x$, and then $\\psi(x+\\Delta x)\\approx\\psi(x)+\\psi'\\Delta x$.\""
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "So a nonterminating $h$ grows at large $|x|$ like $e^{x^2}$",
+  "problem": "The tail comparison is made only for the even chain ($j=2k$). The odd chain is not addressed.",
+  "fix": "Add: \"For the odd chain compare with $x\\,e^{x^2}=\\sum_k x^{2k+1}/k!$, whose coefficient ratio is again $1/(k+1)\\approx2/j$; the conclusion is the same.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and numerically the shift is below $10^{-5}$",
+  "problem": "This is a weak comparison for an estimate of $1.0\\times10^{-6}$. The reader cannot tell whether the estimate is right to 10% or wrong by a factor of 9. The matching check only bounds the shift.",
+  "fix": "Compute the shift with matched grid spacing (as CHECKS already sets up with Eb4 and Eref), quote the actual value, and assert it in CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The levels follow the smooth zeros $s_n$, not the true zeros $t_n$: the smooth potential knows only the average density.",
+  "problem": "This is a numerical claim about the output of the chapter's own listing, but CHECKS does not run the listing or assert it. The same applies to the parity and node claims in the \\cref{fig:bound-states-wusprung} caption.",
+  "fix": "In CHECKS, run the listing at reduced $N$ and assert that $\\max_n|E_n-s_n|/\\gap_n$ is small (the paper's 0.063 is the Richardson-extrapolated figure) and well below $\\max_n|E_n-t_n|/\\gap_n$. Optionally quote the numbers in the text."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\boxed{E_n=\\sqrt a\\,(2n-1);\\quad a=\\tfrac14:\\ E_n=0.5,\\ 1.5,\\ 2.5,\\dots}",
+  "problem": "CHECKS has no numerical instance for this sample result, nor for several algebraic answers: nodes $\\pm L/3$ of $\\psi_3$, Answer 3 nodes, Answer 11 $\\langle x^2\\rangle=\\tfrac12$, the checkpoint spacing 4 for $4x^2$. The bible requires a numerical instance for every sample and answer.",
+  "fix": "Add assertions: tridiagonal levels of $x^2/4$ and $4x^2$ against $\\sqrt a(2n-1)$; `quad` of $x^2e^{-x^2}/\\sqrt\\pi$ equal to 0.5; $\\cos(3\\pi x/2L)$ zero at $\\pm L/3$; zeros of $\\cos(5\\pi x/2L)$ at $\\pm L/5,\\pm3L/5$."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(The answer to Problem 19 names one possible contributor; it is an untested conjecture, not a result.)",
+  "problem": "The textbook leaves the 652 versus 649 discrepancy to an explicitly untested conjecture, although qmnt can test it in seconds. The wall at $V=1000$, which pushes the top levels up, is not mentioned as a competing effect.",
+  "fix": "Test it: with `qmnt.fd_levels` count the levels $\\le1000$ on the $N=6000$ grid, and again after Richardson correction. Report the outcome in the text and in Answer 19, with an assertion in CHECKS. If it is not tested, delete the conjecture."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\includegraphics[width=0.95\\linewidth]{figs/bound-states_ladders.pdf}",
+  "problem": "The bible's figure template prescribes `width=0.85\\linewidth`. This figure and the `bound-states_wusprung` figure use 0.95.",
+  "fix": "Change both to `width=0.85\\linewidth`, with two-panel scripts at figsize (6.5,3)."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "and Chapter~\\ref{ch:schrodinger} carried this over to Hermitian operators",
+  "problem": "Chapter 10's contract guarantees only that Hermitian operators have real eigenvalues. Orthogonality of eigenfunctions of a Hermitian differential operator may not have been shown there, so this back-reference may be false.",
+  "fix": "Rephrase: \"the same argument applies to the Hermitian operator $H$ (it is the integration-by-parts analogue of the matrix proof); here we confirm orthogonality directly.\" Optionally give the two-line proof using the Wronskian-type identity already used in the wall sample."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Now take $V=|x|^\\alpha$ with $\\alpha>0$.",
+  "problem": "The chapter contract asks for the dependence of spacing on shape to include \"logarithmic shapes\". Only pure power laws are treated; the Wu--Sprung-type shape $x\\sim\\sqrt V\\log V$ appears only in the paper section, with no worked spacing calculation.",
+  "fix": "Add a short subsection or sample after the power-law wells: for a well with half-width $x(V)=c\\sqrt V\\log V$, show via $\\rho=T_{\\rm cl}/2\\pi$ (or by substitution in \\cref{eq:bound-states-rho-int}) that $\\rho$ grows like $\\log E$, linking it to \\cref{eq:bound-states-rhozeta}."
  }
 ]
