@@ -11,8 +11,7 @@ Where this shows up in the paper: every iteration of the paper's potential fit i
 \begin{prerequisites}
 \item Chapter~\ref{ch:linear-algebra}: vectors in $n$ dimensions, dot (inner) product, norm, orthogonality, orthonormal bases, matrices and matrix multiplication, transpose, identity and inverse matrices, rank, solving $Ax=b$, sampling functions on a grid.
 \item Chapter~\ref{ch:eigen}: eigenvalues and eigenvectors; real symmetric matrices have real eigenvalues and an orthonormal basis of eigenvectors (the spectral theorem); diagonalization.
-\item Chapter~\ref{ch:asymptotics}: relative error, floating-point numbers and machine epsilon ($2.2\times10^{-16}$ in double precision).
-\item Chapter~\ref{ch:fourier-series}: sinusoids $\sin(\omega t)$, $\cos(\omega t)$, the cosine basis $\cos(k\pi x/L)$, the prime-2 wave (RE2).
+\item Recalled briefly where used, not required: relative error and machine epsilon ($2.2\times10^{-16}$ in double precision, the relative precision of a double-precision floating-point number; Chapter~\ref{ch:asymptotics}); the cosine functions $\cos(k\pi x/L)$ on $[-L,L]$ and the prime-2 wave RE2 (Chapter~\ref{ch:fourier-series}), whose formula is restated in \cref{eq:least-squares-re2}.
 \item First-year physics and calculus: derivatives, the condition $f'(x)=0$ at a smooth minimum, plotting data, the idea of measurement error.
 \end{prerequisites}
 
@@ -43,7 +42,7 @@ where $m$ is the number of data points ($m=4$ here). A residual is the vertical 
 S(c_0,c_1) = \sum_{i=1}^{m} r_i^2 = \sum_{i=1}^m \bigl(y_i - c_0 - c_1 t_i\bigr)^2 .
 \label{eq:least-squares-S-line}
 \end{equation}
-Four reasons make squares the standard choice. (1) Squares are never negative, so positive and negative residuals cannot cancel. (2) $S$ is a smooth function of the coefficients, so calculus finds its minimum; the sum of absolute values $\sum\abs{r_i}$ has corners where some $r_i=0$, and derivatives fail there. (3) Squaring penalizes a residual of 2 four times as much as a residual of 1, so the rule works hard to avoid large misses. (4) When measurement errors follow the Gaussian (bell-curve) distribution, least squares is the statistically most probable fit; this is discussed in Chapter~\ref{ch:probability}.
+Four reasons make squares the standard choice. (1) Squares are never negative, so positive and negative residuals cannot cancel. (2) $S$ is a smooth function of the coefficients, so calculus finds its minimum; the sum of absolute values $\sum\abs{r_i}$ has corners where some $r_i=0$, and derivatives fail there. (3) Squaring penalizes a residual of 2 four times as much as a residual of 1, so the rule works hard to avoid large misses. (4) When measurement errors follow the Gaussian (bell-curve) distribution, least squares picks the coefficients under which the observed data are most probable (see the box below).
 
 \begin{beyond}
 \textbf{The statistical justification of least squares.} Gauss showed that if the errors in $y_i$ are independent and Gaussian with a common width, the coefficients that minimize $S$ are the ones that make the observed data most probable (maximum likelihood), and the Gauss--Markov theorem states that among all unbiased estimators that are linear in the data, least squares has the smallest variance. We do not prove these statements here; they need the probability of Chapter~\ref{ch:probability}. Proofs are in \cite{esl}. Nothing in this chapter depends on them.
@@ -71,7 +70,7 @@ The second condition reads $\sum_i t_i y_i - c_0\sum_i t_i - c_1\sum_i t_i^2 = 0
 \Bigl(\sum_i t_i\Bigr)c_0 + \Bigl(\sum_i t_i^2\Bigr)c_1 = \sum_i t_i y_i .
 \label{eq:least-squares-ne2}
 \end{equation}
-Equations \cref{eq:least-squares-ne1} and \cref{eq:least-squares-ne2} are the \emph{normal equations} for the straight line: two linear equations for two unknowns. To solve them, multiply \cref{eq:least-squares-ne1} by $\sum_i t_i$ and \cref{eq:least-squares-ne2} by $m$:
+\Cref{eq:least-squares-ne1,eq:least-squares-ne2} are the \emph{normal equations} for the straight line: two linear equations for two unknowns. To solve them, multiply \cref{eq:least-squares-ne1} by $\sum_i t_i$ and \cref{eq:least-squares-ne2} by $m$:
 \begin{align*}
 m\Bigl(\sum t_i\Bigr)c_0 + \Bigl(\sum t_i\Bigr)^2 c_1 &= \Bigl(\sum t_i\Bigr)\Bigl(\sum y_i\Bigr),\\
 m\Bigl(\sum t_i\Bigr)c_0 + m\Bigl(\sum t_i^2\Bigr) c_1 &= m\sum t_iy_i .
@@ -83,7 +82,7 @@ c_1 = \frac{m\sum t_i y_i - \bigl(\sum t_i\bigr)\bigl(\sum y_i\bigr)}{m\sum t_i^
 c_0 = \frac{\sum y_i - c_1\sum t_i}{m}.
 \label{eq:least-squares-line-sol}
 \end{equation}
-The second formula is \cref{eq:least-squares-ne1} solved for $c_0$. Dividing it through by $m$ shows $c_0 = \bar y - c_1\bar t$, where $\bar t = \frac1m\sum t_i$ and $\bar y=\frac1m\sum y_i$ are the averages: the best line always passes through the point of averages $(\bar t,\bar y)$.
+The second formula is \cref{eq:least-squares-ne1} solved for $c_0$. Splitting its fraction term by term shows $c_0 = \bar y - c_1\bar t$, where $\bar t = \frac1m\sum t_i$ and $\bar y=\frac1m\sum y_i$ are the averages: the best line always passes through the point of averages $(\bar t,\bar y)$.
 
 \paragraph{When is the denominator safe?} The denominator in \cref{eq:least-squares-line-sol} equals $m\sum_i (t_i-\bar t)^2$. To see this, expand the square:
 \begin{align*}
@@ -130,17 +129,12 @@ You add $2$~m to every measured position in \cref{tab:least-squares-cart} (you m
 
 \begin{keyideas}
 \item A residual is data minus model; least squares minimizes the sum of squared residuals $S$.
-\item Setting the partial derivatives of $S$ to zero gives the normal equations \cref{eq:least-squares-ne1,eq:least-squares-ne2}, which say $\sum r_i=0$ and $\sum t_i r_i = 0$.
+\item Setting the partial derivatives of $S$ to zero gives the normal equations (\cref{eq:least-squares-ne1,eq:least-squares-ne2}), which say $\sum r_i=0$ and $\sum t_i r_i = 0$.
 \item The best line passes through the point of averages; it is unique unless all $t_i$ coincide.
 \end{keyideas}
 
 %======================================================================
 \section{Linear least squares in general}\label{sec:least-squares-general}
-% DYK-BEGIN
-\begin{didyouknow}{Finding a Lost Planet}
-On 1 January 1801 Giuseppe Piazzi discovered Ceres. He tracked it for only about six weeks before it was lost in the Sun's glare. The 24-year-old Carl Friedrich Gauss used those few observations to predict where it would reappear, and astronomers found it close to his prediction around New Year 1802. Adrien-Marie Legendre was the first to publish least squares, in 1805.
-\end{didyouknow}
-% DYK-END
 
 \paragraph{Linear models.} The straight line is the simplest case of a \emph{linear model}
 \begin{equation}
@@ -163,7 +157,7 @@ A model such as $y = c_1\sin(c_2 t)$ is \emph{not} linear in $c_2$; fitting it i
 A_{ik} = \phi_k(t_i),
 \label{eq:least-squares-design}
 \end{equation}
-so row $i$ holds all basis functions evaluated at the $i$th data point and column $k$ holds the $k$th basis function sampled at all data points (``functions as vectors'', Chapter~\ref{ch:linear-algebra}). Then the model values at the data points are the components of the matrix--vector product $Ac$, because $(Ac)_i = \sum_k A_{ik}c_k = \sum_k c_k\phi_k(t_i)$. The \emph{residual vector} is
+so row $i$ holds all basis functions evaluated at the $i$th data point and column $k$ holds the $k$th basis function sampled at all data points (``functions as vectors'', Chapter~\ref{ch:linear-algebra}). Then the model values at the data points are the components of the matrix-vector product $Ac$, because $(Ac)_i = \sum_k A_{ik}c_k = \sum_k c_k\phi_k(t_i)$. The \emph{residual vector} is
 \begin{equation}
 r = y - Ac,
 \label{eq:least-squares-resid}
@@ -193,7 +187,7 @@ Setting all $M$ partial derivatives to zero gives the vector equation $A^\top r 
 \end{equation}
 These are the \emph{normal equations}: $M$ linear equations for the $M$ coefficients. The matrix $A^\top A$ is $M\times M$ with entries $(A^\top A)_{k\ell} = \sum_i \phi_k(t_i)\phi_\ell(t_i)$. For the line, $A^\top A = \begin{pmatrix} m & \sum t_i\\ \sum t_i & \sum t_i^2\end{pmatrix}$ and $A^\top y = (\sum y_i,\ \sum t_iy_i)$, which reproduces \cref{eq:least-squares-ne1,eq:least-squares-ne2}.
 
-\paragraph{The solution really is a minimum.} Let $\hat c$ be any solution of \cref{eq:least-squares-normal} and $\hat r = y - A\hat c$ its residual, so $A^\top \hat r = 0$. For any other coefficient vector $c$,
+\paragraph{The solution really is a minimum.} A solution always exists, even when the columns of $A$ are dependent: in \cref{sec:least-squares-pinv} we construct one, $c^+$, and check that it satisfies the normal equations. Let $\hat c$ be any solution of \cref{eq:least-squares-normal} and $\hat r = y - A\hat c$ its residual, so $A^\top \hat r = 0$. For any other coefficient vector $c$,
 \[
 y - Ac = (y - A\hat c) + (A\hat c - Ac) = \hat r + A(\hat c - c).
 \]
@@ -228,8 +222,8 @@ You fit a parabola $c_1 + c_2t + c_3t^2$ to 7 points. What are the sizes of $A$,
 
 \begin{keyideas}
 \item A linear model $\sum_k c_k\phi_k(t)$ evaluated at the data points is $Ac$ with design matrix $A_{ik}=\phi_k(t_i)$.
-\item Least squares gives the normal equations $A^\top A c = A^\top y$, equivalently $A^\top r = 0$ \cref{eq:least-squares-normal}.
-\item Every solution of the normal equations is a global minimum \cref{eq:least-squares-min-identity}; it is unique if and only if the columns of $A$ are independent.
+\item Least squares gives the normal equations $A^\top A c = A^\top y$, equivalently $A^\top r = 0$ (\cref{eq:least-squares-normal}).
+\item Every solution of the normal equations is a global minimum (\cref{eq:least-squares-min-identity}); it is unique if and only if the columns of $A$ are independent.
 \end{keyideas}
 
 %======================================================================
@@ -237,7 +231,7 @@ You fit a parabola $c_1 + c_2t + c_3t^2$ to 7 points. What are the sizes of $A$,
 
 The condition $A^\top r = 0$ has a picture. Write the columns of $A$ as vectors $a_1,\dots,a_M$ in $m$-dimensional space. Then $Ac = \sum_k c_k a_k$ is a combination of the columns. The set of all such combinations, for all possible $c$, is the \emph{column space} of $A$: a line, a plane, or a higher-dimensional flat subspace through the origin. The data vector $y$ generally does not lie in it (that is why no model fits exactly).
 
-Component $k$ of $A^\top r$ is the dot product $a_k^\top r$. So $A^\top r = 0$ says: \emph{the residual is perpendicular to every column, and therefore to the whole column space.} The best model vector $\hat y = A\hat c$ is the foot of the perpendicular dropped from $y$ onto the column space, the \emph{orthogonal projection} of $y$. Think of a stick held above a table under the noon sun: its shadow is its projection onto the table, and the light rays (the residual) are perpendicular to the table. Equation~\cref{eq:least-squares-min-identity} is Pythagoras' theorem: moving the model point away from the foot of the perpendicular, by $A(\hat c - c)$ within the plane, can only lengthen the distance to $y$.
+Component $k$ of $A^\top r$ is the dot product $a_k^\top r$. So $A^\top r = 0$ says: \emph{the residual is perpendicular to every column, and therefore to the whole column space.} The best model vector $\hat y = A\hat c$ is the foot of the perpendicular dropped from $y$ onto the column space, the \emph{orthogonal projection} of $y$. Think of a stick held above a table under the noon sun: its shadow is its projection onto the table, and the light rays (the residual) are perpendicular to the table. \Cref{eq:least-squares-min-identity} is Pythagoras' theorem: moving the model point away from the foot of the perpendicular, by $A(\hat c - c)$ within the plane, can only lengthen the distance to $y$.
 
 Because $\hat y^\top \hat r = \hat c^\top A^\top \hat r = 0$, the data vector splits into two perpendicular pieces, and Pythagoras gives
 \begin{equation}
@@ -312,6 +306,8 @@ Rotations and reflections are orthogonal matrices: each preserves lengths and an
 u_j^\top u_\ell = \frac{(Av_j)^\top (Av_\ell)}{\sigma_j\sigma_\ell} = \frac{v_j^\top (A^\top A v_\ell)}{\sigma_j\sigma_\ell} = \frac{\nu_\ell\, v_j^\top v_\ell}{\sigma_j\sigma_\ell} = \begin{cases}\nu_j/\sigma_j^2 = 1, & j=\ell,\\ 0, & j\neq \ell.\end{cases}
 \]
 
+Since $u_1,\dots,u_\varrho$ are $\varrho$ orthonormal vectors in $m$-dimensional space, and at most $m$ vectors there can be orthonormal (Chapter~\ref{ch:linear-algebra}), we have $\varrho\le m$; also $\varrho\le M$, since $A^\top A$ has only $M$ eigenvalues. In particular, when $M>m$ every $\sigma_j$ with $j>m$ is zero.
+
 \emph{Step 4.} For $j>\varrho$, $\norm{Av_j} = \sigma_j = 0$, so $Av_j = 0$: these $v_j$ lie in the null space.
 
 \emph{Step 5.} If $\varrho < m$, extend $u_1,\dots,u_\varrho$ by further unit vectors $u_{\varrho+1},\dots,u_m$ to an orthonormal basis of $m$-dimensional space (always possible, by the Gram--Schmidt procedure; see the box below).
@@ -337,7 +333,7 @@ Each term $u_jv_j^\top$ is an $m\times M$ matrix of rank one. Applied to a vecto
 Ac = \sum_{j=1}^\varrho \sigma_j\,(v_j^\top c)\,u_j :
 \label{eq:least-squares-action}
 \end{equation}
-measure the component of $c$ along each $v_j$, multiply it by $\sigma_j$, and lay it down along $u_j$. That is the rotate--stretch--rotate picture in words.
+measure the component of $c$ along each $v_j$, multiply it by $\sigma_j$, and lay it down along $u_j$. That is the rotate, stretch, rotate picture in words.
 
 \paragraph{What the SVD tells you.}
 \begin{itemize}
@@ -371,7 +367,7 @@ Find the SVD of $A = \begin{pmatrix}3&0\\4&5\end{pmatrix}$, and verify the outer
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/least-squares_svd.pdf}
-\caption{The SVD as rotate--stretch--rotate, for $A=\begin{pmatrix}3&0\\4&5\end{pmatrix}$. Left: the unit circle and the right singular vectors $v_1,v_2$. Right: the image of the circle under $A$ is an ellipse whose semi-axes are $\sigma_1u_1$ and $\sigma_2u_2$, with $\sigma_1 = 3\sqrt5$ and $\sigma_2=\sqrt5$. Both axes are dimensionless.}\label{fig:least-squares-svd}
+\caption{The SVD as rotate, stretch, rotate, for $A=\begin{pmatrix}3&0\\4&5\end{pmatrix}$. Left: the unit circle and the right singular vectors $v_1,v_2$. Right: the image of the circle under $A$ is an ellipse whose semi-axes are $\sigma_1u_1$ and $\sigma_2u_2$, with $\sigma_1 = 3\sqrt5$ and $\sigma_2=\sqrt5$. Both axes are dimensionless.}\label{fig:least-squares-svd}
 \end{figure}
 
 \begin{pycode}
@@ -395,7 +391,7 @@ What are the singular values of (a) a $3\times 3$ orthogonal matrix $Q$, (b) $\m
 \checkanswer{(a) All three equal 1: $Q^\top Q = I$ has every eigenvalue 1. (b) $3$ and $2$: $A^\top A = \mathrm{diag}(9,4)$. The minus sign is absorbed into $U$ (take $u_2 = (0,-1)$).}
 
 \begin{keyideas}
-\item Every real matrix factors as $A = U\Sigma V^\top$ \cref{eq:least-squares-svd}: orthogonal $U$, $V$ and nonnegative singular values $\sigma_1\ge\sigma_2\ge\cdots$ on the diagonal of $\Sigma$.
+\item Every real matrix factors as $A = U\Sigma V^\top$ (\cref{eq:least-squares-svd}): orthogonal $U$, $V$ and nonnegative singular values $\sigma_1\ge\sigma_2\ge\cdots$ on the diagonal of $\Sigma$.
 \item $\sigma_j^2$ are the eigenvalues of $A^\top A$; $v_j$ its eigenvectors; $u_j = Av_j/\sigma_j$.
 \item $A = \sum_j\sigma_ju_jv_j^\top$: the direction $v_j$ in coefficient space produces the pattern $u_j$ in data space with gain $\sigma_j$. Zero singular values mark directions the data cannot see.
 \end{keyideas}
@@ -425,6 +421,8 @@ In these coordinates the problem has fallen apart into independent one-variable 
 \label{eq:least-squares-pinv-sol}
 \end{equation}
 where $\Sigma^+$ is the $M\times m$ matrix with $1/\sigma_j$ in position $(j,j)$ for $j\le\varrho$ and zeros elsewhere. $A^+$ is the (Moore--Penrose) \emph{pseudo-inverse} of $A$. Read \cref{eq:least-squares-pinv-sol} as a recipe: project the data onto each pattern $u_j$, divide by the gain $\sigma_j$, and build the coefficients from the directions $v_j$.
+
+\paragraph{The pseudo-inverse solves the normal equations.} Using $A^\top = V\Sigma^\top U^\top$, $A^\top Ac^+ = V\Sigma^\top U^\top U\Sigma V^\top V\Sigma^+U^\top y$. With $U^\top U = I$ and $V^\top V = I$ this is $V(\Sigma^\top\Sigma\Sigma^+)U^\top y$. The $M\times m$ matrix $\Sigma^\top\Sigma\Sigma^+$ has entry $\sigma_j^2\cdot(1/\sigma_j) = \sigma_j$ in position $(j,j)$ for $j\le\varrho$ and zeros elsewhere. That is exactly $\Sigma^\top$, whose diagonal entries with $j>\varrho$ are zero. Hence $A^\top Ac^+ = V\Sigma^\top U^\top y = A^\top y$: the normal equations always have at least one solution, as promised in \cref{sec:least-squares-general}.
 
 \paragraph{Agreement with the normal equations.} If the columns of $A$ are independent ($\varrho = M\le m$), then $c^+$ equals $(A^\top A)^{-1}A^\top y$. Proof: $A^\top A = V\Sigma^\top U^\top U\Sigma V^\top = V(\Sigma^\top\Sigma)V^\top$, where $\Sigma^\top\Sigma = \mathrm{diag}(\sigma_1^2,\dots,\sigma_M^2)$ is invertible. Its inverse is $V(\Sigma^\top\Sigma)^{-1}V^\top$ (multiply out and use $V^\top V = I$). Then
 \[
@@ -469,25 +467,20 @@ A model has $M=5$ coefficients and you have $m=3$ data points. At most how many 
 \checkanswer{At most $\min(3,5)=3$ nonzero singular values, so the rank is at most 3 and the null space has dimension at least $5-3 = 2$.}
 
 \begin{keyideas}
-\item In SVD coordinates, least squares splits into independent pieces: $\xi_j = \beta_j/\sigma_j$ for $\sigma_j>0$; the rest are free \cref{eq:least-squares-S-diag}.
-\item The pseudo-inverse $A^+ = V\Sigma^+U^\top$ gives the shortest least-squares solution \cref{eq:least-squares-pinv-sol}; with independent columns it equals $(A^\top A)^{-1}A^\top$.
-\item With more coefficients than independent data, there are infinitely many exact fits, differing by null-space vectors \cref{eq:least-squares-general-sol}.
+\item In SVD coordinates, least squares splits into independent pieces: $\xi_j = \beta_j/\sigma_j$ for $\sigma_j>0$; the rest are free (\cref{eq:least-squares-S-diag}).
+\item The pseudo-inverse $A^+ = V\Sigma^+U^\top$ gives the shortest least-squares solution (\cref{eq:least-squares-pinv-sol}); with independent columns it equals $(A^\top A)^{-1}A^\top$.
+\item With more coefficients than independent data, there are infinitely many exact fits, differing by null-space vectors (\cref{eq:least-squares-general-sol}).
 \end{keyideas}
 
 %======================================================================
 \section{Condition number and noise amplification}\label{sec:least-squares-cond}
-% DYK-BEGIN
-\begin{didyouknow}{Turing Named the Problem}
-Alan Turing introduced the term \emph{condition number} in a 1948 paper on rounding errors in matrix computations. It measures how much a matrix can amplify small errors in the data. A famous troublemaker is the Hilbert matrix, with entries $1/(i+j-1)$. The $10\times10$ version has a condition number around $10^{13}$, so solving with it can wipe out most of a computer's digits.
-\end{didyouknow}
-% DYK-END
 
 \paragraph{Gains are bounded by the singular values.} For any coefficient vector $c$ with SVD coordinates $\xi = V^\top c$, \cref{eq:least-squares-action} and the orthonormality of the $u_j$ give $\norm{Ac}^2 = \sum_{j\le\varrho}\sigma_j^2\xi_j^2$. Replacing every $\sigma_j$ by the largest one can only increase the sum, so $\norm{Ac}^2\le\sigma_1^2\sum_j\xi_j^2 = \sigma_1^2\norm{c}^2$:
 \begin{equation}
 \norm{Ac}\le\sigma_1\norm{c}.
 \label{eq:least-squares-upper}
 \end{equation}
-If $A$ is square ($m = M$) and invertible, all $\sigma_j>0$ and $A^{-1} = V\Sigma^{-1}U^\top$ has singular values $1/\sigma_j$, the largest being $1/\sigma_M$. Applying \cref{eq:least-squares-upper} to $A^{-1}$:
+If $A$ is square ($m = M$) and invertible, all $\sigma_j>0$ (a zero $\sigma_j$ would give $Av_j = 0$ with $v_j\neq0$). Then $A^{-1} = V\Sigma^{-1}U^\top$; check: $(V\Sigma^{-1}U^\top)(U\Sigma V^\top) = V\Sigma^{-1}\Sigma V^\top = VV^\top = I$. This product has the form orthogonal matrix times diagonal matrix with positive entries $1/\sigma_j$ times the transpose of an orthogonal matrix, so after reordering the entries into decreasing order (and the columns of $V$ and $U$ with them) it is an SVD of $A^{-1}$. Its singular values are the $1/\sigma_j$, the largest being $1/\sigma_M$. Applying \cref{eq:least-squares-upper} to $A^{-1}$:
 \begin{equation}
 \norm{A^{-1}w}\le\frac{\norm{w}}{\sigma_M}.
 \label{eq:least-squares-lower}
@@ -514,7 +507,7 @@ Solve $c_1 + c_2 = 2$, $c_1 + 1.001c_2 = 2.001$; then change the second right-ha
 
 \textbf{Step 3: relative changes.} $\norm{\delta y} = 0.001$ and $\norm{y} = \sqrt{2^2 + 2.001^2} = \sqrt{8.004001}\approx 2.8291$, so $\norm{\delta y}/\norm{y}\approx3.535\times10^{-4}$. $\norm{\delta c} = \norm{(-1,1)} = \sqrt2$ and $\norm{c} = \sqrt2$, so $\norm{\delta c}/\norm{c} = 1$. The amplification is $1/(3.535\times10^{-4})\approx 2829$.
 
-\textbf{Step 4: condition number.} $A = \begin{pmatrix}1&1\\1&1.001\end{pmatrix}$ is symmetric with positive eigenvalues, so its singular values equal its eigenvalues. The trace is $2.001$ and the determinant $0.001$, so the eigenvalues are $\frac12\bigl(2.001\pm\sqrt{2.001^2 - 0.004}\bigr)$, i.e.\ $\sigma_1\approx2.0005$ and $\sigma_2 = 0.001/\sigma_1\approx 4.999\times10^{-4}$. Then $\kappa = \sigma_1/\sigma_2 = \sigma_1^2/0.001\approx 4002$.
+\textbf{Step 4: condition number.} $A = \begin{pmatrix}1&1\\1&1.001\end{pmatrix}$ is symmetric with positive eigenvalues, so its singular values equal its eigenvalues. (Reason: if $B$ is symmetric with eigenvalues $\beta_j\ge0$ and orthonormal eigenvectors $q_j$, then $B^\top B = B^2$ and $B^2q_j = \beta_j^2q_j$, so the eigenvalues of $B^\top B$ are $\beta_j^2$ and the singular values are $\sqrt{\beta_j^2} = \beta_j$.) The trace is $2.001$ and the determinant $0.001$, so the eigenvalues are $\frac12\bigl(2.001\pm\sqrt{2.001^2 - 0.004}\bigr)$, i.e.\ $\sigma_1\approx2.0005$ and $\sigma_2 = 0.001/\sigma_1\approx 4.999\times10^{-4}$. Then $\kappa = \sigma_1/\sigma_2 = \sigma_1^2/0.001\approx 4002$.
 
 \textbf{Step 5: compare.} The observed amplification, about $2829$, is below the bound $\kappa\approx4002$, as \cref{eq:least-squares-cond-bound} requires.
 \[
@@ -529,12 +522,12 @@ c^+ = \sum_{j=1}^{\varrho}\frac{u_j^\top y_{\rm true}}{\sigma_j}v_j \;+\; \sum_{
 \end{equation}
 The first sum is what we want. The second is the noise, and each of its components is divided by $\sigma_j$. What follows is a heuristic, true in many problems but not in all, and we do not prove it. Measurement noise usually has comparable components along every pattern $u_j$ (it has no reason to prefer one), while a smooth true signal often has components $u_j^\top y_{\rm true}$ that become small for the patterns with small $\sigma_j$, which in many problems are the rapidly wiggling ones. Whether this holds must be checked problem by problem. When it does, for those $j$ the noise term dominates and is magnified by the large factor $1/\sigma_j$. The fitted coefficients then contain large, meaningless excursions along the poorly seen directions $v_j$. This is the precise sense in which ``small singular values amplify noise''.
 
-\paragraph{Floating point and the normal equations.} Even exact data carry rounding error of relative size about machine epsilon, $2.2\times10^{-16}$ in double precision (Chapter~\ref{ch:asymptotics}). By \cref{eq:least-squares-cond-bound}, a useful rule of thumb is that you can lose up to about $\log_{10}\kappa$ significant digits. Forming the normal equations makes things worse: the singular values of the symmetric positive semidefinite matrix $A^\top A$ are its eigenvalues $\sigma_j^2$, so
+\paragraph{Floating point and the normal equations.} Even exact data carry rounding error of relative size about machine epsilon, $2.2\times10^{-16}$ in double precision (Chapter~\ref{ch:asymptotics}). By \cref{eq:least-squares-cond-bound}, a useful rule of thumb is that you can lose up to about $\log_{10}\kappa$ significant digits. Forming the normal equations makes things worse: the singular values of the symmetric positive semidefinite matrix $A^\top A$ are its eigenvalues $\sigma_j^2$ (by the remark in Step~4 of the sample above), so
 \begin{equation}
 \kappa(A^\top A) = \frac{\sigma_1^2}{\sigma_M^2} = \kappa(A)^2 .
 \label{eq:least-squares-kappa2}
 \end{equation}
-A problem with $\kappa(A) = 10^8$ is solvable with about eight good digits by an SVD-based (or QR-based) method, but $\kappa(A^\top A) = 10^{16}$ wipes out essentially every digit of a double-precision normal-equations solution. This is why the paper, like library routines such as \texttt{numpy.linalg.lstsq}, works with the SVD.
+A problem with $\kappa(A) = 10^8$ is solvable with about eight good digits by an SVD-based (or QR-based) method, but $\kappa(A^\top A) = 10^{16}$ wipes out essentially every digit of a double-precision normal-equations solution. Library routines such as \texttt{numpy.linalg.lstsq} therefore work with the SVD, and the paper's update (Appendix~A step~6) is also written in SVD form, which in addition makes the damping filter explicit.
 
 \begin{pitfall}
 The normal equations are the right way to \emph{derive} least squares and the wrong way to \emph{compute} it when $A$ is ill-conditioned. Forming $A^\top A$ squares the condition number \cref{eq:least-squares-kappa2}. Use \texttt{numpy.linalg.lstsq} or an explicit SVD.
@@ -546,8 +539,8 @@ A least-squares problem has $\kappa(A)=10^5$. Roughly how many significant digit
 \checkanswer{Double precision carries about 16 digits. Losing about 5 leaves roughly 11 with the SVD; the normal equations have $\kappa = 10^{10}$ and leave roughly 6. These are rule-of-thumb estimates, not guarantees.}
 
 \begin{keyideas}
-\item $\kappa = \sigma_1/\sigma_M$ bounds how much relative data errors are magnified \cref{eq:least-squares-cond-bound}.
-\item In the least-squares solution the noise along pattern $u_j$ is divided by $\sigma_j$ \cref{eq:least-squares-noise}; small singular values amplify noise.
+\item $\kappa = \sigma_1/\sigma_M$ bounds how much relative data errors are magnified (\cref{eq:least-squares-cond-bound}).
+\item In the least-squares solution the noise along pattern $u_j$ is divided by $\sigma_j$ (\cref{eq:least-squares-noise}); small singular values amplify noise.
 \item $\kappa(A^\top A) = \kappa(A)^2$, so compute with the SVD, not the normal equations.
 \end{keyideas}
 
@@ -574,7 +567,7 @@ What truncated-SVD solution do you get with $J = \varrho$? With $J = 0$?
 \checkanswer{$J=\varrho$ keeps every nonzero singular value: the pseudo-inverse solution $c^+$. $J=0$ keeps nothing: $c = 0$, the model with no fitted correction at all.}
 
 \begin{keyideas}
-\item Regularized solutions have the form \cref{eq:least-squares-filter-form} with filter factors $0\le f_j\le1$.
+\item Regularized solutions have the form (\cref{eq:least-squares-filter-form}) with filter factors $0\le f_j\le1$.
 \item The truncated SVD uses a sharp cutoff: $f_j = 1$ for the $J$ largest $\sigma_j$, else $0$.
 \item Truncation trades noise (variance) for systematic shrinkage toward zero (bias).
 \end{keyideas}
@@ -674,7 +667,7 @@ $10^{-3}$ & 0.99900 & 0.1818 & 0.818\\\bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{Step 5: interpret.} $c_1$ barely notices the regularization (its $\sigma$ is far above $\sqrt\alpha$). For $c_2$, too little regularization leaves the noise in, too much removes the signal. At $\alpha = 10^{-4}$ the filter factor for $j=2$ is exactly $\frac12$, which here happens to cancel the noise exactly, because in this example the noise ($0.01$) equals the true signal ($0.01$). Such a perfect result is a coincidence of this example; Problem~24 finds the best $\alpha$ when the noise is known only on average.
+\textbf{Step 5: interpret.} $c_1$ barely notices the regularization (its $\sigma$ is far above $\sqrt\alpha$). For $c_2$, too little regularization leaves the noise in, too much removes the signal. At $\alpha = 10^{-4}$ the filter factor for $j=2$ is exactly $\frac12$, which here happens to cancel the noise exactly, because in this example the noise ($0.01$) equals the true signal ($0.01$). Such a perfect result is a coincidence of this example; Problem~25 finds the best $\alpha$ when the noise is known only on average.
 \[
 \boxed{\,\text{plain: }(1,2);\quad \text{TSVD: }(1,0);\quad \text{ridge }\alpha=10^{-4}: (0.9999,\,1.0000)\,}
 \]
@@ -707,9 +700,9 @@ As $\alpha$ is increased from $0$ to very large values, what happens to the in-s
 \checkanswer{It never decreases. At $\alpha = 0$ the residual is as small as any $c$ can make it; as $\alpha\to\infty$, $c_\alpha\to0$ and the residual approaches $\norm{y}$, the residual of doing nothing. Ridge trades in-sample accuracy for smaller coefficients.}
 
 \begin{keyideas}
-\item Ridge minimizes $\norm{y-Ac}^2+\alpha\norm{c}^2$; its solution $(A^\top A+\alpha I)^{-1}A^\top y$ always exists and is unique \cref{eq:least-squares-ridge-normal}.
-\item In SVD form the data along $u_j$ are multiplied by $\sigma_j/(\sigma_j^2+\alpha)$ \cref{eq:least-squares-ridge-svd}; filter factors $\sigma_j^2/(\sigma_j^2+\alpha)$.
-\item With $\alpha = \lambda\sigma_1^2$ the filter is $\sigma/(\sigma^2+\lambda\sigma_1^2)$, the paper's form \cref{eq:least-squares-ridge-rel}.
+\item Ridge minimizes $\norm{y-Ac}^2+\alpha\norm{c}^2$; its solution $(A^\top A+\alpha I)^{-1}A^\top y$ always exists and is unique (\cref{eq:least-squares-ridge-normal}).
+\item In SVD form the data along $u_j$ are multiplied by $\sigma_j/(\sigma_j^2+\alpha)$ (\cref{eq:least-squares-ridge-svd}); filter factors $\sigma_j^2/(\sigma_j^2+\alpha)$.
+\item With $\alpha = \lambda\sigma_1^2$ the filter is $\sigma/(\sigma^2+\lambda\sigma_1^2)$, the paper's form (\cref{eq:least-squares-ridge-rel}).
 \item $\alpha\to0$ gives the minimum-norm solution; $\alpha\to\infty$ gives $c=0$ (the null); the gain never exceeds $1/(2\sqrt\alpha)$.
 \end{keyideas}
 
@@ -732,21 +725,21 @@ $y_j$ & 0.1500 & 0.5242 & 1.0855 & 0.7132 & 0.4550 & $-0.4508$ & $-0.7316$ & $-1
 \end{tabular}
 \end{table}
 
-\paragraph{Polynomial models and their conditioning.} We fit polynomials of degree $d$, which have $M = d+1$ coefficients. Rather than powers of $t$ we use powers of the rescaled variable $u = t/3.15 - 1$, which runs from $-1$ to $1$ over the data. A polynomial of degree $d$ in $u$ is a polynomial of degree $d$ in $t$ and vice versa, so this changes only the coordinates in coefficient space, not the set of models or the fitted curve. It does change the conditioning. With powers of $t$, the column $t^9$ has entries up to $6.3^9\approx1.6\times10^7$ while the column $1$ has length $\sqrt{10}$, and Problem~27 shows this forces $\kappa > 10^6$; in the variable $u$ the condition number is far smaller: the listing below prints both condition numbers, and the first exceeds the second by more than a factor 100. Choosing a well-scaled basis is the first line of defense of \cref{sec:least-squares-cond}.
+\paragraph{Polynomial models and their conditioning.} We fit polynomials of degree $d$, which have $M = d+1$ coefficients. Rather than powers of $t$ we use powers of the rescaled variable $\tau = t/3.15 - 1$, which runs from $-1$ to $1$ over the data. (We write $\tau$ rather than $u$ because $u_j$ already denotes the left singular vectors.) A polynomial of degree $d$ in $\tau$ is a polynomial of degree $d$ in $t$ and vice versa, so this changes only the coordinates in coefficient space, not the set of models or the fitted curve. It does change the conditioning. With powers of $t$, the column $t^9$ has entries up to $6.3^9\approx1.6\times10^7$ while the column $1$ has length $\sqrt{10}$, and Problem~27 shows this forces $\kappa > 10^6$; in the variable $\tau$ the condition number is far smaller: the listing below prints both condition numbers, and the first exceeds the second by more than a factor 100. Choosing a well-scaled basis is the first line of defense of \cref{sec:least-squares-cond}.
 
 \begin{pycode}
 import numpy as np
 t = 0.7 * np.arange(10)          # the RE4 times
-u = t / 3.15 - 1                 # rescaled to [-1, 1]
+tau = t / 3.15 - 1                 # rescaled to [-1, 1]
 print(np.linalg.cond(np.vander(t, 10)))   # columns t^9, ..., t, 1
-print(np.linalg.cond(np.vander(u, 10)))   # columns u^9, ..., u, 1
+print(np.linalg.cond(np.vander(tau, 10)))   # columns tau^9, ..., tau, 1
 \end{pycode}
 
 \paragraph{Three fits.} \Cref{fig:least-squares-poly} shows the least-squares polynomials of degree $1$, $3$ and $9$.
 \begin{itemize}
 \item Degree 1 (a line) is too stiff to follow one full oscillation of $\sin t$: it \emph{underfits}.
 \item Degree 3 follows the overall shape and smooths through the errors.
-\item Degree 9 has $M=10$ coefficients for $m = 10$ points. The design matrix is square, and it is invertible because the times are distinct: if $Ac = 0$, the polynomial with coefficients $c$ vanishes at ten distinct points, but a nonzero polynomial of degree at most $9$ has at most $9$ roots, so $c = 0$. Hence the degree-9 polynomial passes \emph{exactly} through every data point, errors included. To do so it must wiggle, and between the data points, especially near the ends of the range, it swings far from $\sin t$.
+\item Degree 9 has $M=10$ coefficients for $m = 10$ points. The design matrix is square, and it is invertible because the times are distinct: if $Ac = 0$, the polynomial with coefficients $c$ vanishes at ten distinct points, but a nonzero polynomial of degree at most $9$ has at most $9$ roots, so $c = 0$. (The root count follows from the factor theorem of school algebra: if $t_0$ is a root, the polynomial equals $(t-t_0)$ times a polynomial of one lower degree, so each distinct root uses up one degree.) Hence the degree-9 polynomial passes \emph{exactly} through every data point, errors included. To do so it must wiggle, and between the data points, especially near the ends of the range, it swings far from $\sin t$.
 \end{itemize}
 
 \begin{figure}[htbp]\centering
@@ -754,16 +747,16 @@ print(np.linalg.cond(np.vander(u, 10)))   # columns u^9, ..., u, 1
 \caption{The memorizing polynomial (RE4). Points: the ten noisy samples of \cref{tab:least-squares-re4}. Gray: $\sin t$. Least-squares polynomials of degree 1 (underfits), 3 (follows the shape) and 9 (passes through every point, errors included, and oscillates between them). Horizontal axis: $t$ (dimensionless); vertical axis: $y$ (dimensionless).}\label{fig:least-squares-poly}
 \end{figure}
 
-\paragraph{Training error versus test error.} Call the rms residual on the ten data points the \emph{training error}, and the rms difference between the fitted polynomial and $\sin t$ over the whole interval $0\le t\le6.3$ the \emph{test error} (it measures how well the fit predicts values it was not given). \Cref{fig:least-squares-degree} plots both against degree.
+\paragraph{Training error versus test error.} The root mean square (rms) of numbers $r_1,\dots,r_m$ is $\sqrt{\frac1m\sum_i r_i^2} = \norm{r}/\sqrt m$. Call the rms residual on the ten data points the \emph{training error}, and the rms difference between the fitted polynomial and $\sin t$ over the whole interval $0\le t\le6.3$ the \emph{test error} (it measures how well the fit predicts values it was not given). \Cref{fig:least-squares-degree} plots both against degree.
 
-The training error can never increase with degree. Proof: every polynomial of degree $d-1$ is also a polynomial of degree $d$ (with top coefficient zero), so the minimum of $S$ over degree-$d$ models is taken over a larger set and can only be smaller or equal. At $d = 9$ it reaches zero (up to rounding). The test error behaves differently: it falls from degree 1 to degree 3, and at degree 9 it is much larger than at degree 3. Driving the training error to zero did not make the predictions better; it made them worse, because the extra coefficients were spent fitting the errors $\varepsilon_j$. This is \emph{overfitting}, and a model that reproduces its training data exactly, errors included, has \emph{memorized} them.
+The training error can never increase with degree. Proof: every polynomial of degree $d-1$ is also a polynomial of degree $d$ (with top coefficient zero), so the minimum of $S$ over degree-$d$ models is taken over a larger set and can only be smaller or equal. At $d = 9$ it reaches zero (up to rounding). The test error behaves differently: it falls from degree 1 to degree 3, and at degree 9 it is more than twice as large as at degree 3. Driving the training error to zero did not make the predictions better; it made them worse, because the extra coefficients were spent fitting the errors $\varepsilon_j$. This is \emph{overfitting}, and a model that reproduces its training data exactly, errors included, has \emph{memorized} them.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/least-squares_degree.pdf}
-\caption{Training error (rms residual on the ten RE4 points) and test error (rms deviation from $\sin t$ on $0\le t\le 6.3$) of least-squares polynomials against degree $d$. The training error never increases and reaches zero, to rounding, at $d=9$ (plotted at a floor of $10^{-16}$); the test error at $d=9$ is far larger than at $d=3$. Errors dimensionless, log scale.}\label{fig:least-squares-degree}
+\caption{Training error (rms residual on the ten RE4 points) and test error (rms deviation from $\sin t$ on $0\le t\le 6.3$) of least-squares polynomials against degree $d$. The training error never increases and reaches zero, to rounding, at $d=9$ (plotted at a floor of $10^{-16}$); the test error at $d=9$ is more than twice that at $d=3$. Errors dimensionless, log scale.}\label{fig:least-squares-degree}
 \end{figure}
 
-If we go further, to degree $15$ (16 coefficients, 10 data), the problem is underdetermined: by \cref{sec:least-squares-pinv} there is a null space of dimension at least $6$ and infinitely many polynomials that pass exactly through all ten points. \texttt{lstsq} returns the minimum-norm one. They all have training error zero, so the training data cannot tell them apart at all, yet between and beyond the points they differ arbitrarily (add any null vector). Ridge regularization of the degree-9 or degree-15 fit pulls the coefficients toward zero and tames the wiggles, at the cost of a nonzero training error; Chapter~\ref{ch:generalization} takes this up with the tools of statistics.
+If we go further, to degree $15$ (16 coefficients, 10 data), the problem is underdetermined: by \cref{sec:least-squares-pinv} there is a null space of dimension at least $6$ and infinitely many polynomials that pass exactly through all ten points. \texttt{lstsq} returns the minimum-norm one. They all have training error zero, so the training data cannot tell them apart at all, yet between and beyond the points they differ arbitrarily (add any null vector). Ridge regularization of the degree-9 or degree-15 fit pulls the coefficients toward zero, at the cost of a nonzero training error; whether that improves the predictions is examined, with the tools of statistics, in Chapter~\ref{ch:generalization}.
 
 \begin{sample}{Interpolation versus extrapolation with three points}
 Three points of $\sin t$ are known exactly: $(0,0)$, $(\pi/2,1)$, $(\pi,0)$. Fit (a) a least-squares line and (b) the parabola through all three, and use each to predict $\sin t$ at $t=\pi/4$ (inside the data range) and at $t = 3\pi/2$ (outside it).
@@ -788,7 +781,7 @@ Inside the data range the flexible exact fit wins easily; outside it, both model
 F_2(t) = -\frac1\pi\sum_{m=1}^{3}\frac{\sin(mt\log2)}{m\,2^{m/2}} ,
 \label{eq:least-squares-re2}
 \end{equation}
-which repeats with period $2\pi/\log 2\approx 9.065$ in $t$.
+which repeats with period $2\pi/\log 2\approx 9.065$ in $t$. (Here $m$ is the harmonic index, as in the paper's Eq.~(4), not the number of data points.)
 
 \begin{sample}{Least squares recovers the prime-2 wave}
 Sample $F_2$ of \cref{eq:least-squares-re2} at the first ten zeta-zero heights of RE1 ($t = 14.134725,\dots,49.773832$) and fit the six-coefficient model $\sum_{m=1}^3\bigl[a_m\sin(mt\log2) + b_m\cos(mt\log 2)\bigr]$ by least squares. What coefficients come out, and how well does the fit predict $F_2$ at other $t$?
@@ -831,18 +824,13 @@ A friend fits 50 data points with a 60-coefficient model and reports ``zero resi
 \begin{keyideas}
 \item Training error never increases as you add basis functions; with as many coefficients as data it is zero.
 \item A model that fits its training data exactly, errors included, has memorized them; its predictions elsewhere can be poor (RE4).
-\item Extrapolation succeeds only when the basis contains the true form (RE2 with the right frequencies); a large generic basis fits the window and fails outside it.
+\item In these examples extrapolation succeeded when the model family contained the true form (RE2 with the right frequencies) and failed for a large generic basis, which fits the window but not beyond it; more coefficients did not help.
 \end{keyideas}
 
 %======================================================================
 \section{Paper connection}\label{sec:least-squares-paper}
-% DYK-BEGIN
-\begin{didyouknow}{Taming Ill-Posed Problems}
-Andrey Tikhonov studied unstable inverse problems from the 1940s, and in 1963 he proposed adding a penalty term to stabilize them, now called Tikhonov regularization. Statisticians Arthur Hoerl and Robert Kennard independently popularized the same idea in 1970 as ridge regression. Both trade a little bias for a large reduction in noise amplification, the trade you will meet when fitting potentials to spectra.
-\end{didyouknow}
-% DYK-END
 
-This section reads the least-squares content of the paper \cite{soniR1} line by line. Quantities such as energy levels $E_n$ and wavefunctions $\psi_n$ are explained in Part~II (Chapters~\ref{ch:schrodinger}, \ref{ch:perturbation} and~\ref{ch:finite-differences}); here we need only that they are numbers and vectors computed from a matrix.
+This section reads the least-squares content of the paper \cite{soniR1} line by line. Quantities such as energy levels $E_n$ and wavefunctions $\psi_n$ are explained in Part~II (Chapters~\ref{ch:schrodinger} and~\ref{ch:perturbation}) and in Chapter~\ref{ch:finite-differences}; here we need only that they are numbers and vectors computed from a matrix.
 
 \paragraph{The fit is a sequence of least-squares problems (Sec.~II~C).} The paper adds to the Wu--Sprung potential a correction $\delta V(x) = \sum_{k=0}^{M-1}c_k\cos(k\pi x/L)$, a linear model in the coefficients $c_k$ with the cosine basis of Chapter~\ref{ch:fourier-series}. The energy levels $E_n$ depend on $c$ nonlinearly, so the fit proceeds by ``iterated linearization'': compute the levels $E_n$ and wavefunctions $\psi_n$ for the current $c$, form residuals $r_n = \tilde t_n - E_n$ (target minus model, exactly as in \cref{eq:least-squares-resid}; $\tilde t_n$ are the bias-corrected zero heights of Chapter~\ref{ch:finite-differences}), and form the first-order sensitivity matrix
 \[
@@ -872,9 +860,9 @@ with a ``try-list $(0.2\lambda,\lambda,5\lambda,25\lambda)$''. In the notation o
 which is precisely the ridge solution of \cref{eq:least-squares-paper-lin}: the $\delta c$ that minimizes $\norm{r - A\delta c}^2 + \lambda\sigma_1^2\norm{\delta c}^2$. Damping the \emph{step} in this way is the Levenberg--Marquardt idea \cite{marquardt}, developed in Chapter~\ref{ch:fitting}. In this step $\lambda$ is the Levenberg--Marquardt damping (the book's notation, Appendix~B: $\lambda$ for damping, $\mu$ for ridge strength). Two limits make its role concrete (Problem~17):
 \begin{itemize}
 \item $\lambda\to0$: $\delta c\to A^+r$, the full minimum-norm linearized step (Gauss--Newton);
-\item large $\lambda$: $\sigma_j/(\sigma_j^2+\lambda\sigma_1^2)\approx\sigma_j/(\lambda\sigma_1^2)$, so $\delta c\approx V\Sigma^\top U^\top r/(\lambda\sigma_1^2) = A^\top r/(\lambda\sigma_1^2)$, a short step along $A^\top r$, which, by \cref{eq:least-squares-grad} (the partial derivatives of $S$ are $\partial S/\partial c_\ell = -2(A^\top r)_\ell$), points opposite to the gradient of $S$: the direction of steepest descent (Chapter~\ref{ch:fitting}).
+\item large $\lambda$: $\sigma_j/(\sigma_j^2+\lambda\sigma_1^2)\approx\sigma_j/(\lambda\sigma_1^2)$, so $\delta c\approx V\Sigma^\top U^\top r/(\lambda\sigma_1^2) = A^\top r/(\lambda\sigma_1^2)$, a short step along $A^\top r$. The \emph{gradient} of $S$ is the vector of its partial derivatives, $(\partial S/\partial c_1,\dots,\partial S/\partial c_M) = -2A^\top r$ by \cref{eq:least-squares-grad}, so $A^\top r$ points opposite to the gradient. A small step in this direction decreases $S$ fastest (shown in Chapter~\ref{ch:fitting}), which is why it is called the direction of \emph{steepest descent}.
 \end{itemize}
-Because each component of \cref{eq:least-squares-paperstep} shrinks as $\lambda$ grows, larger $\lambda$ always means a shorter, more cautious step. According to the record, a step is accepted only if it lowers the rms by the factor $0.999$ (``accept only improvements ($\times0.999$)''); on success $\lambda\leftarrow\max(0.5\lambda_{\rm acc},10^{-7})$, on failure of every value in the try-list $\lambda\leftarrow30\lambda$, and the iteration stops when $\lambda>10^4$. Chapter~\ref{ch:fitting} explains this schedule; the linear algebra inside each step is this chapter's.
+Because each component of \cref{eq:least-squares-paperstep} shrinks as $\lambda$ grows, larger $\lambda$ always means a shorter, more cautious step. According to the record, a step is accepted only if it lowers the rms by the factor $0.999$ (``accept only improvements ($\times0.999$)''; one row of Table~I, scale~2 with $M=300$, used the looser threshold $1-10^{-5}$, and the paper reports that row as a sensitivity result); on success $\lambda\leftarrow\max(0.5\lambda_{\rm acc},10^{-7})$, on failure of every value in the try-list $\lambda\leftarrow30\lambda$, and the iteration stops when $\lambda>10^4$. Chapter~\ref{ch:fitting} explains this schedule; the linear algebra inside each step is this chapter's.
 
 \begin{sample}{One damped step in miniature}
 Apply the step \cref{eq:least-squares-paperstep} with $\lambda = 0.01$ to the matrix $A = \begin{pmatrix}3&0\\4&5\end{pmatrix}$ of the earlier SVD sample and residual $r = (1,1)$, and compare with the undamped step $A^{-1}r$.
@@ -885,7 +873,7 @@ Apply the step \cref{eq:least-squares-paperstep} with $\lambda = 0.01$ to the ma
 
 \textbf{Step 3: damped gains.} $\lambda\sigma_1^2 = 0.01\times45 = 0.45$. Gain 1: $\sigma_1/(\sigma_1^2+0.45) = 6.70820/45.45\approx0.147595$. Gain 2: $\sigma_2/(\sigma_2^2+0.45) = 2.23607/5.45\approx0.410288$.
 
-\textbf{Step 4: assemble.} $\delta c = 0.147595\times1.26491\,v_1 + 0.410288\times0.63246\,v_2 = 0.186696\,v_1 + 0.259489\,v_2$. With $v_{1,2} = (1,\pm1)/\sqrt2$: $\delta c = \bigl((0.186696+0.259489)/\sqrt2,\ (0.186696-0.259489)/\sqrt2\bigr)\approx(0.3155,\ -0.0515)$.
+\textbf{Step 4: assemble.} $\delta c = 0.147595\times1.26491\,v_1 + 0.410288\times0.63246\,v_2 = 0.186695\,v_1 + 0.259489\,v_2$. With $v_{1,2} = (1,\pm1)/\sqrt2$: $\delta c = \bigl((0.186695+0.259489)/\sqrt2,\ (0.186695-0.259489)/\sqrt2\bigr)\approx(0.3155,\ -0.0515)$.
 
 \textbf{Step 5: undamped step.} Solving $A\delta c = r$: $3\delta c_1 = 1$ gives $\delta c_1 = 1/3$; then $4/3 + 5\delta c_2 = 1$ gives $\delta c_2 = -1/15\approx-0.0667$.
 \[
@@ -894,18 +882,18 @@ Apply the step \cref{eq:least-squares-paperstep} with $\lambda = 0.01$ to the ma
 The damped step is shorter; the component along the weaker direction $v_2$ is shrunk more (gain $0.410$ instead of $1/\sigma_2 = 0.447$) than the one along $v_1$ (gain $0.1476$ instead of $1/\sigma_1 = 0.1491$).
 \end{sample}
 
-\paragraph{What the sensitivity matrix looks like.} \Cref{fig:least-squares-sensitivity} shows the singular values of $A_{nk}$ computed with the companion library \texttt{qmnt} for the unperturbed potential (the first iteration of the fit, $c=0$) in the scale-1 box of RE3 ($L = 44.883$, the paper's working grid $N=6000$), for the first 400 levels and $M = 400$ or $900$ cosines. One column is known exactly: for $k=0$, $\cos0 = 1$ and $A_{n0} = \int\abs{\psi_n}^2\dd x = 1$ for every level, because the wavefunctions are normalized. A constant shift of the potential raises every level by the same amount. A $400\times900$ matrix has at most 400 nonzero singular values, so at $M = 900$ at least 500 directions of coefficient space are invisible to the 400 training levels, to first order.
+\paragraph{What the sensitivity matrix looks like.} \Cref{fig:least-squares-sensitivity} shows the singular values of $A_{nk}$ computed with the companion library \texttt{qmnt} for the unperturbed potential (the first iteration of the fit, $c=0$) in the scale-1 box of RE3 ($L = 44.883$, the paper's working grid $N=6000$), for the first 400 levels and $M = 400$ or $900$ cosines. One column is known exactly: for $k=0$, $\cos0 = 1$ and $A_{n0} = \int\abs{\psi_n}^2\dd x = 1$ for every level, because the wavefunctions are normalized. A constant shift of the potential raises every level by the same amount. A $400\times900$ matrix has at most 400 nonzero singular values, so at $M = 900$ at least 500 directions of coefficient space are invisible to the 400 training levels, to first order. Read the figure with \cref{sec:least-squares-cond} in mind. Directions $v_j$ whose normalized singular value $\sigma_j/\sigma_1$ lies far below 1 are poorly constrained by the training levels, and the damping filter of \cref{eq:least-squares-paperstep} shrinks the step along them much more than along the well-constrained directions.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/least-squares_sensitivity.pdf}
 \caption{Normalized singular values $\sigma_j/\sigma_1$ of the first-order sensitivity matrix $A_{nk}=\int\abs{\psi_n}^2\cos(k\pi x/L)\,\dd x$ of the paper's Sec.~II~C, for the first 400 levels of the unperturbed Wu--Sprung potential in the scale-1 box ($L=44.883$, $N=6000$ interior grid points, units $\hbar=2m=1$), with $M=400$ and $M=900$ cosine basis functions. The $400\times900$ matrix has only 400 singular values; the remaining 500 directions of its coefficient space form (at least) its null space. Computed with \texttt{qmnt}.}\label{fig:least-squares-sensitivity}
 \end{figure}
 
-\paragraph{Ridge in the operator fits (Tables~I and~II, Sec.~III).} The record says the ``ridge variant adds $\mu\Sigma_1^2$ to the filter denominator''. In the language of \cref{sec:least-squares-ridge}, $\mu$ is a ridge strength measured relative to $\sigma_1^2$, the same device as $\lambda$ in \cref{eq:least-squares-ridge-rel}; the full specification of how the ridge enters the iteration is in the paper's Zenodo record \cite{zenodo}, and Chapter~\ref{ch:fitting} discusses it. The effect matches the limits derived in \cref{sec:least-squares-ridge}. In Table~I (scale 1, fit zeros 1--400, $M=400$), the unregularized fit has in-sample rms $0.137$ and held-out rms $0.369$; with $\mu = 0.03$ these become $0.142$ and $0.271$; with $\mu = 0.3$, $0.206$ and $0.265$, against a null of $0.263$ on zeros 401--500 (RE5). As ridge strength grows, the in-sample error rises (the fit memorizes less) and the held-out error approaches the null from above: the fit is pulled toward $\delta c = 0$, ``doing nothing''. The paper summarizes: ``regularization moves them smoothly from `memorize more' to `do nothing' and never creates skill'' (Sec.~III). Table~II shows the same for the Chebyshev basis ($\mu = 0.3$: held-out $0.264$), and in the interpolation split of Sec.~III ridge brings the gap error from $2.64$ spacings back to $0.262$ ($\mu=0.03$) and $0.257$ ($\mu=0.3$), close to that split's null $0.255$. This behavior is consistent with the picture of \cref{sec:least-squares-cond}: ridge suppresses large excursions along poorly constrained directions (\cref{eq:least-squares-noise}), and it cannot add information the parametrization lacks. The paper's own explanation of the gap damage is heuristic and stated in its own terms: the optimizer ``places large structure in the part of the potential that only the held-out levels probe strongly, because doing so costs nothing in-sample'' (Sec.~III). The paper does not attribute the damage to noise amplification, and neither do we.
+\paragraph{Ridge in the operator fits (Tables~I and~II, Sec.~III).} The record says the ``ridge variant adds $\mu\Sigma_1^2$ to the filter denominator''. In the language of \cref{sec:least-squares-ridge}, $\mu$ is a ridge strength measured relative to $\sigma_1^2$, entering the same filter denominator as $\lambda$ in \cref{eq:least-squares-ridge-rel}, but playing a different role. The damping $\lambda$ is adapted during the iteration and driven small after successful steps, so it controls only how long each step is: iterated to convergence, a damped step need not change where the fit ends up. The ridge term $\mu\sigma_1^2$ is fixed and stays in the filter at every step, so the steps never become full Gauss--Newton steps along poorly constrained directions. This chapter does not derive how a fixed $\mu$ in the step filter changes the converged fit. The full specification of how the ridge enters the iteration is in the paper's Zenodo record \cite{zenodo}, and Chapter~\ref{ch:fitting} discusses it. The effect matches the limits derived in \cref{sec:least-squares-ridge}. In Table~I (scale 1, fit zeros 1--400, $M=400$), the unregularized fit has in-sample rms $0.137$ and held-out rms $0.369$; with $\mu = 0.03$ these become $0.142$ and $0.271$; with $\mu = 0.3$, $0.206$ and $0.265$, against a null of $0.263$ on zeros 401--500 (RE5). As ridge strength grows, the in-sample error rises (the fit memorizes less) and the held-out error approaches the null from above: the fitted correction stays closer to $c = 0$, ``doing nothing''. The paper summarizes: ``regularization moves them smoothly from `memorize more' to `do nothing' and never creates skill'' (Sec.~III). Table~II shows the same for the Chebyshev basis ($\mu = 0.3$: held-out $0.264$), and in the interpolation split of Sec.~III ridge brings the gap error from $2.64$ spacings back to $0.262$ ($\mu=0.03$) and $0.257$ ($\mu=0.3$), close to that split's null $0.255$. This behavior is consistent with the picture of \cref{sec:least-squares-cond}: ridge suppresses large excursions along poorly constrained directions (\cref{eq:least-squares-noise}), and it cannot add information the parametrization lacks. The paper's own explanation of the gap damage is heuristic and stated in its own terms: the optimizer ``places large structure in the part of the potential that only the held-out levels probe strongly, because doing so costs nothing in-sample'' (Sec.~III). The paper does not attribute the damage to noise amplification, and neither do we.
 
-\paragraph{Saturated fits (Sec.~III, Table~III).} Sec.~III reports that on all 500 scale-1 zeros the fit reaches rms $0.186$ at $M = 300$ and reproduces all 500 to rms $<10^{-4}$ spacings by $M = 900$. With 900 coefficients and 500 levels, the linearized problem \cref{eq:least-squares-paper-lin} is underdetermined: if the $500\times900$ matrix has full row rank, exact fits exist and differ by vectors of a null space of dimension at least $400$ (\cref{sec:least-squares-pinv}). The underlying problem is nonlinear, so this is a first-order heuristic, but it suggests why near-perfect in-sample agreement is unsurprising and, by analogy with RE4, why such agreement need not carry information about held-out levels. (This argument is ours; the paper reports the observation, not this derivation.) Similarly, Table~III notes that its odd/even splits have 200 training levels at scale~1, ``so the rows with $M\ge200$ are saturated''; at $M = 400$ the in-sample error is below $10^{-3}$.
+\paragraph{Saturated fits (Sec.~III, Table~III).} Sec.~III reports that on all 500 scale-1 zeros the fit reaches rms $0.186$ at $M = 300$ and reproduces all 500 to rms $<10^{-4}$ spacings by $M = 900$. With 900 coefficients and 500 levels, the linearized problem \cref{eq:least-squares-paper-lin} is underdetermined: if the $500\times900$ matrix has full row rank, exact fits exist and differ by vectors of a null space of dimension at least $400$ (\cref{sec:least-squares-pinv}). The underlying problem is nonlinear, so this is a first-order heuristic, but it suggests why near-perfect in-sample agreement is unsurprising and, by analogy with RE4, why such agreement need not carry information about held-out levels. (This argument is ours; the paper reports the observation, not this derivation.) Similarly, Sec.~III notes that the odd/even splits of Table~III have 200 training levels at scale~1, ``so the rows with $M \ge 200$ are saturated''; at $M = 400$ the in-sample error is below $10^{-3}$.
 
-\paragraph{The fitted sinusoidal controls (Secs.~II~D and~IV, Table~IV, Appendix~A step~20).} The controls fit $F(t) = \sum_j[a_j\sin(\omega_jt)+b_j\cos(\omega_jt)]$ to $y_n = n-\tfrac12 - N_{\rm sm}(t_n)$ at the training zeros ``by least squares''. With fixed frequencies this is linear least squares exactly as in the RE2 sample, with $2$ coefficients per frequency. Control B supplies the frequencies $m\log p$ ($m\le3$): with 25 primes that is $25\times3\times2 = 150$ coefficients, which ``learned from 400 zeros give $0.028$''. With 150 primes it is $900$ coefficients, and the paper writes: ``At 900 coefficients on 400 zeros the least-squares problem is underdetermined and the model degrades to $0.180$ with correlation $+0.78$'' (Sec.~IV); \cref{sec:least-squares-pinv} explains the word: 400 equations, 900 unknowns, a null space of dimension at least 500, regularized only by the ridge. With 800 training zeros it gives $0.100/{+0.94}$ (Table~IV); note that even then $900 > 800$, so the problem is still underdetermined, with a null space of dimension at least 100 (Problem~15). Control C1 uses $450$ frequencies on the uniform grid $\omega_j = 8j/450$, again $900$ coefficients, and stays within $0.005$ of the null ($0.258$ against $0.263$): the generic-basis lesson of \cref{fig:least-squares-re2} at full scale.
+\paragraph{The fitted sinusoidal controls (Secs.~II~D and~IV, Table~IV, Appendix~A step~20).} The controls fit $F(t) = \sum_j[a_j\sin(\omega_jt)+b_j\cos(\omega_jt)]$ to $y_n = n-\tfrac12 - \Nsm(t_n)$ at the training zeros ``by least squares''. (Here $\Nsm$ is the smooth zero-counting function of the paper's Eq.~(1), Chapter~\ref{ch:counting-zeros}; for the least squares it is just a known function of $t$.) With fixed frequencies this is linear least squares exactly as in the RE2 sample, with $2$ coefficients per frequency. Control B supplies the frequencies $m\log p$ ($m\le3$): with 25 primes that is $25\times3\times2 = 150$ coefficients, which ``learned from 400 zeros give $0.028$''. With 150 primes it is $900$ coefficients, and the paper writes: ``At 900 coefficients on 400 zeros the least-squares problem is underdetermined and the model degrades to $0.180$ with correlation $+0.78$'' (Sec.~IV); \cref{sec:least-squares-pinv} explains the word: 400 equations, 900 unknowns, a null space of dimension at least 500, regularized only by the ridge. With 800 training zeros it gives $0.100/{+0.94}$ (Table~IV); note that even then $900 > 800$, so the problem is still underdetermined, with a null space of dimension at least 100 (Problem~15). Control C1 uses $450$ frequencies on the uniform grid $\omega_j = 8j/450$, again $900$ coefficients, and stays within $0.005$ of the null ($0.258$ against $0.263$): the generic-basis lesson of \cref{fig:least-squares-re2} at full scale.
 
 Appendix~A step~20 gives the controls' ``ridge filter $\Sigma/(\Sigma^2+\lambda\Sigma_1^2)$, $\lambda = 10^{-8},\dots,10^3$ in half decades'', which is \cref{eq:least-squares-ridge-rel} with $\lambda$ now a ridge strength (in step~6 the same letter is the damping). ``In half decades'' means exponents $-8, -7.5,\dots,3$: $23$ candidate values. The value is chosen by a forward split inside the training window (``first 75\% fit, last 25\% validate'', Sec.~II~D), the validation idea of \cref{sec:least-squares-ridge}; held-out zeros are not used. Table~IV's B row at 900 coefficients is also marked root-ambiguous; that issue concerns the level equation, not the least squares, and is treated in Chapter~\ref{ch:sparse-frequency}.
 
@@ -916,14 +904,14 @@ Appendix~A step~20 gives the controls' ``ridge filter $\Sigma/(\Sigma^2+\lambda\
 
 \begin{itemize}
 \item Least squares minimizes $S(c) = \norm{y - Ac}^2$, the sum of squared residuals of a linear model $\sum_k c_k\phi_k$ with design matrix $A_{ik}=\phi_k(t_i)$ (\cref{eq:least-squares-design,eq:least-squares-S}).
-\item Minimizers satisfy the normal equations $A^\top Ac = A^\top y$ \cref{eq:least-squares-normal}; every solution is a global minimum by \cref{eq:least-squares-min-identity}; it is unique iff the columns of $A$ are independent. For a line, \cref{eq:least-squares-line-sol}.
-\item Geometrically, $A\hat c$ is the orthogonal projection of $y$ onto the column space; $\norm{y}^2 = \norm{\hat y}^2+\norm{\hat r}^2$ \cref{eq:least-squares-pythagoras}.
+\item Minimizers satisfy the normal equations $A^\top Ac = A^\top y$ (\cref{eq:least-squares-normal}); every solution is a global minimum by \cref{eq:least-squares-min-identity}; it is unique iff the columns of $A$ are independent. For a line, \cref{eq:least-squares-line-sol}.
+\item Geometrically, $A\hat c$ is the orthogonal projection of $y$ onto the column space; $\norm{y}^2 = \norm{\hat y}^2+\norm{\hat r}^2$ (\cref{eq:least-squares-pythagoras}).
 \item Every matrix has an SVD $A = U\Sigma V^\top = \sum_j\sigma_ju_jv_j^\top$ (\cref{eq:least-squares-svd,eq:least-squares-outer}), with $\sigma_j^2$ the eigenvalues of $A^\top A$.
-\item The minimum-norm least-squares solution is $c^+ = A^+y = \sum_j(u_j^\top y/\sigma_j)v_j$ \cref{eq:least-squares-pinv-sol}; underdetermined problems have infinitely many exact fits $c^++z$, $Az=0$ \cref{eq:least-squares-general-sol}.
-\item The condition number $\kappa=\sigma_1/\sigma_M$ bounds error amplification \cref{eq:least-squares-cond-bound}; noise along $u_j$ is divided by $\sigma_j$ \cref{eq:least-squares-noise}; $\kappa(A^\top A) = \kappa^2$ \cref{eq:least-squares-kappa2}.
-\item Truncated SVD and ridge are filters \cref{eq:least-squares-filter-form}. Ridge solves $(A^\top A+\alpha I)c = A^\top y$ \cref{eq:least-squares-ridge-normal}, multiplies the data along $u_j$ by $\sigma_j/(\sigma_j^2+\alpha)$ \cref{eq:least-squares-ridge-svd}, and with $\alpha=\lambda\sigma_1^2$ takes the paper's form \cref{eq:least-squares-ridge-rel}; its gain never exceeds $1/(2\sqrt\alpha)$ \cref{eq:least-squares-gain-cap}.
-\item Training error never increases with more basis functions; an exact fit of noisy data is memorization (RE4); extrapolation works only with the right basis (RE2).
-\item The paper's fit step (App.~A step~6) is the ridge-damped linearized step \cref{eq:least-squares-paperstep}; its ridge rows return toward the null; its controls B and C1 are linear least squares, underdetermined at 900 coefficients on 400 zeros.
+\item The minimum-norm least-squares solution is $c^+ = A^+y = \sum_j(u_j^\top y/\sigma_j)v_j$ (\cref{eq:least-squares-pinv-sol}); underdetermined problems have infinitely many exact fits $c^++z$, $Az=0$ (\cref{eq:least-squares-general-sol}).
+\item The condition number $\kappa=\sigma_1/\sigma_M$ bounds error amplification (\cref{eq:least-squares-cond-bound}); noise along $u_j$ is divided by $\sigma_j$ (\cref{eq:least-squares-noise}); $\kappa(A^\top A) = \kappa^2$ (\cref{eq:least-squares-kappa2}).
+\item Truncated SVD and ridge are filters (\cref{eq:least-squares-filter-form}). Ridge solves $(A^\top A+\alpha I)c = A^\top y$ (\cref{eq:least-squares-ridge-normal}), multiplies the data along $u_j$ by $\sigma_j/(\sigma_j^2+\alpha)$ (\cref{eq:least-squares-ridge-svd}), and with $\alpha=\lambda\sigma_1^2$ takes the paper's form (\cref{eq:least-squares-ridge-rel}); its gain never exceeds $1/(2\sqrt\alpha)$ (\cref{eq:least-squares-gain-cap}).
+\item Training error never increases with more basis functions; an exact fit of noisy data is memorization (RE4); in the RE2 example, extrapolation worked with the right frequencies and failed with a large generic basis.
+\item The paper's fit step (App.~A step~6) is the ridge-damped linearized step (\cref{eq:least-squares-paperstep}); its ridge rows return toward the null; its controls B and C1 are linear least squares, underdetermined at 900 coefficients on 400 zeros.
 \end{itemize}
 
 %======================================================================
@@ -970,7 +958,9 @@ Appendix~A step~20 gives the controls' ``ridge filter $\Sigma/(\Sigma^2+\lambda\
 
 \prob{2}{Using qmnt, build the sensitivity matrix $A_{nk}$ for the first 100 levels of the Wu--Sprung potential at scale 1 on a reduced grid of $N = 2000$ points, with $M = 150$ cosines (normalize eigenvectors so $\sum\psi^2h = 1$). Verify that $A_{n0}=1$ for all $n$, and state the largest possible rank and the smallest possible null-space dimension.}
 
-\prob{2}{Prove $\kappa(A^\top A) = \kappa(A)^2$ for $A$ with independent columns. Using numpy, check it numerically for the $30\times6$ design matrix of a degree-5 polynomial in $u$ on 30 equally spaced points of $[-1,1]$.}
+\prob{2}{Prove $\kappa(A^\top A) = \kappa(A)^2$ for $A$ with independent columns. Using numpy, check it numerically for the $30\times6$ design matrix of a degree-5 polynomial in $\tau$ on 30 equally spaced points of $[-1,1]$.}
+
+\prob{2}{Redo the interpolation-versus-extrapolation sample with the middle point measured as $1.2$ instead of $1$. Find the new line and parabola, and their predictions at $t=\pi/4$ and $t = 3\pi/2$.}
 
 \prob{3}{Prove from \cref{eq:least-squares-ridge-svd} that $c_\alpha\to c^+$ as $\alpha\to0$, that $c_\alpha$ is perpendicular to the null space of $A$ for every $\alpha>0$, and that $\norm{c_\alpha}$ decreases as $\alpha$ increases.}
 
@@ -979,8 +969,6 @@ Appendix~A step~20 gives the controls' ``ridge filter $\Sigma/(\Sigma^2+\lambda\
 \prob{3}{Best ridge strength. For a single component with singular value $\sigma$, true coefficient $x$ and data $\sigma x + e$, the ridge estimate is $\sigma(\sigma x + e)/(\sigma^2+\alpha)$. Suppose the error $e$ averages to zero over repeated measurements and its square averages to $\varepsilon^2$. Show that the average squared error of the estimate is $(\alpha^2x^2 + \sigma^2\varepsilon^2)/(\sigma^2+\alpha)^2$, that it is minimized at $\alpha^* = \varepsilon^2/x^2$ (independent of $\sigma$), and evaluate the minimum for $\sigma = 0.01$, $\varepsilon = 0.01$, $x = 1$. Compare with $\alpha = 0$ and with truncation.}
 
 \prob{3}{Paper. In Sec.~III, all 500 scale-1 levels are reproduced to rms $<10^{-4}$ spacings by $M = 900$, and in Table~III the odd split at $M = 400$ (200 training levels) has in-sample error $<10^{-3}$. Using the linearized problem \cref{eq:least-squares-paper-lin}, give the minimum null-space dimension in each case, explain why such in-sample accuracy is expected, and explain why it carries no information about held-out levels. State clearly which part of your argument is heuristic.}
-
-\prob{2}{Redo the interpolation-versus-extrapolation sample with the middle point measured as $1.2$ instead of $1$. Find the new line and parabola, and their predictions at $t=\pi/4$ and $t = 3\pi/2$.}
 
 \prob{3}{For the RE4 data, show without computing an SVD that the design matrix with columns $1, t, \dots, t^9$ has $\kappa>10^6$. (Hint: $\sigma_1\ge\norm{Ae_k}$ and $\sigma_{\min}\le\norm{Ae_k}$ for every unit vector $e_k$; prove both from the SVD.)}
 \end{problemlist}
@@ -1010,14 +998,22 @@ Appendix~A step~20 gives the controls' ``ridge filter $\Sigma/(\Sigma^2+\lambda\
 
 \textbf{15.} B, 25 primes: $25\times3\times2 = 150$ coefficients; B, 150 primes: $900$; C1: $450\times2 = 900$. With 400 training zeros: 150 coefficients give a null space of dimension $\ge 0$ (overdetermined, it can be trivial); 900 give $\ge 500$. With 800: $\ge0$ and $\ge100$. The 900-coefficient models (B with 150 primes, C1) are underdetermined at both training sizes; the ridge makes their solutions unique.
 
-\textbf{17.} For each $\sigma_j>0$, $\sigma_j/(\sigma_j^2+\lambda\sigma_1^2)\to1/\sigma_j$ as $\lambda\to0$, giving $\sum_j(u_j^\top r/\sigma_j)v_j = A^+r$. For large $\lambda$, $\sigma_j^2\ll\lambda\sigma_1^2$ for all $j$, so the gain is $\approx\sigma_j/(\lambda\sigma_1^2)$ and $\delta c\approx\sum_j\sigma_j(u_j^\top r)v_j/(\lambda\sigma_1^2) = A^\top r/(\lambda\sigma_1^2)$ by the transposed outer-product form $A^\top = \sum_j\sigma_jv_ju_j^\top$. Numerically, $A^\top r = (7,5)$ and $\lambda\sigma_1^2 = 4.5\times10^7$, giving $(1.556\times10^{-7},\ 1.111\times10^{-7})$; the exact damped step agrees to a relative difference of order $\sigma_1^2/(\lambda\sigma_1^2) = 10^{-6}$ (checked in CHECKS).
+\textbf{17.} For each $\sigma_j>0$, $\sigma_j/(\sigma_j^2+\lambda\sigma_1^2)\to1/\sigma_j$ as $\lambda\to0$, giving $\sum_j(u_j^\top r/\sigma_j)v_j = A^+r$. For large $\lambda$, $\sigma_j^2\ll\lambda\sigma_1^2$ for all $j$, so the gain is $\approx\sigma_j/(\lambda\sigma_1^2)$ and $\delta c\approx\sum_j\sigma_j(u_j^\top r)v_j/(\lambda\sigma_1^2) = A^\top r/(\lambda\sigma_1^2)$ by the transposed outer-product form $A^\top = \sum_j\sigma_jv_ju_j^\top$. Numerically, $A^\top r = (7,5)$ and $\lambda\sigma_1^2 = 4.5\times10^7$, giving $(1.556\times10^{-7},\ 1.111\times10^{-7})$; the exact damped step agrees with this to a relative difference below $10^{-5}$, consistent with corrections of relative order $\sigma_j^2/(\lambda\sigma_1^2)\le10^{-6}$.
 
-\textbf{19.} The fitted coefficients agree with $a = (-0.22508,-0.07958,-0.03751)$, $b = 0$ to rounding. On $60<t\le100$ the three-frequency model has error at rounding level, while the 120-coefficient grid model's rms error exceeds a tenth of the rms of the wave itself (CHECKS verifies both statements): exact in-window agreement, no continuation.
+\textbf{19.} The fitted coefficients agree with $a = (-0.22508,-0.07958,-0.03751)$, $b = 0$ to rounding. On $60<t\le100$ the three-frequency model has rms error below $10^{-10}$ (rounding level). The 120-coefficient grid model fits the 80 in-window samples to rms below $10^{-6}$, yet on $60<t\le100$ its rms error exceeds $0.015$. For comparison, the long-time rms of the wave is $\sqrt{(a_1^2+a_2^2+a_3^2)/2}\approx0.171$ (each sinusoid of amplitude $a$ has mean square $a^2/2$, and cross terms between different frequencies average to zero). The grid model's in-window agreement therefore does not carry over to a faithful continuation, while the three-frequency model continues the wave exactly.
 
-\textbf{21.} $A^\top A$ is symmetric positive semidefinite with eigenvalues $\sigma_j^2\ge0$; for such a matrix the singular values equal the eigenvalues (its SVD is its spectral decomposition). So $\kappa(A^\top A) = \sigma_1^2/\sigma_M^2 = \kappa(A)^2$. The numerical check is in CHECKS.
+\textbf{21.} $A^\top A$ is symmetric positive semidefinite with eigenvalues $\sigma_j^2\ge0$; for such a matrix the singular values equal the eigenvalues (its SVD is its spectral decomposition). So $\kappa(A^\top A) = \sigma_1^2/\sigma_M^2 = \kappa(A)^2$. Numerically, for the $30\times6$ matrix the ratio $\kappa(A^\top A)/\kappa(A)^2$ equals 1 to within $10^{-6}$.
 
-\textbf{23.} $\tilde A^\top\tilde A = A^\top A + \alpha I = V(\Sigma^\top\Sigma+\alpha I)V^\top$, whose eigenvalues are $\sigma_j^2+\alpha$ for $j = 1,\dots,M$ (zero $\sigma_j$ included). The singular values of $\tilde A$ are their square roots, and the ratio of largest to smallest is $\sqrt{(\sigma_1^2+\alpha)/(\sigma_M^2+\alpha)}$, finite even when $\sigma_M = 0$.
+\textbf{23.} By \cref{eq:least-squares-ridge-svd}, $c_\alpha = \sum_{j\le\varrho}g_j(\alpha)(u_j^\top y)v_j$ with $g_j(\alpha) = \sigma_j/(\sigma_j^2+\alpha)$. (i) For each $\sigma_j>0$, $g_j(\alpha)\to1/\sigma_j$ as $\alpha\to0$; a finite sum of convergent terms converges, so $c_\alpha\to\sum_{j\le\varrho}(u_j^\top y/\sigma_j)v_j = c^+$. (ii) $c_\alpha$ is a combination of $v_1,\dots,v_\varrho$; the null space is spanned by $v_{\varrho+1},\dots,v_M$, and the $v_j$ are orthonormal, so $c_\alpha$ is perpendicular to every null vector. (iii) By orthonormality of the $v_j$, $\norm{c_\alpha}^2 = \sum_{j\le\varrho}\sigma_j^2(u_j^\top y)^2/(\sigma_j^2+\alpha)^2$. Each term has a fixed nonnegative numerator and a denominator that increases with $\alpha$, so each term, and therefore the sum, decreases (strictly, unless every $u_j^\top y$ with $j\le\varrho$ vanishes).
 
-\textbf{25.} $M = 900$ with 500 levels: null space of dimension $\ge400$; the odd split at $M = 400$ with 200 levels: $\ge200$. If the sensitivity matrix has full row rank, the linearized problem has exact solutions (\cref{sec:least-squares-pinv}), so iterating such steps can drive in-sample error to nearly zero for almost any targets, consistent with the surrogate fits of Sec.~III. Held-out levels are not rows of the matrix: the fit is free to do anything along directions they alone would constrain, exactly as the degree-15 RE4 polynomials differ arbitrarily away from their data. Heuristic part: the real problem is nonlinear and the sensitivity matrix changes along the iteration; the rank and null-space statements hold only for each linearization.
+\textbf{24.} $\tilde A^\top\tilde A = A^\top A + \alpha I = V(\Sigma^\top\Sigma+\alpha I)V^\top$, whose eigenvalues are $\sigma_j^2+\alpha$ for $j = 1,\dots,M$ (zero $\sigma_j$ included). The singular values of $\tilde A$ are their square roots, and the ratio of largest to smallest is $\sqrt{(\sigma_1^2+\alpha)/(\sigma_M^2+\alpha)}$, finite even when $\sigma_M = 0$.
+
+\textbf{25.} The error of the estimate is $\frac{\sigma(\sigma x+e)}{\sigma^2+\alpha} - x = \frac{\sigma^2x+\sigma e-\sigma^2x-\alpha x}{\sigma^2+\alpha} = \frac{\sigma e-\alpha x}{\sigma^2+\alpha}$. Its square is $(\sigma^2e^2 - 2\sigma\alpha xe + \alpha^2x^2)/(\sigma^2+\alpha)^2$. Averaging, with $e$ averaging to $0$ and $e^2$ to $\varepsilon^2$, gives $E(\alpha) = (\alpha^2x^2+\sigma^2\varepsilon^2)/(\sigma^2+\alpha)^2$. By the quotient rule,
+\[
+E'(\alpha) = \frac{2\alpha x^2(\sigma^2+\alpha)^2 - 2(\sigma^2+\alpha)(\alpha^2x^2+\sigma^2\varepsilon^2)}{(\sigma^2+\alpha)^4} = \frac{2[\alpha x^2(\sigma^2+\alpha) - \alpha^2x^2 - \sigma^2\varepsilon^2]}{(\sigma^2+\alpha)^3} = \frac{2\sigma^2(\alpha x^2-\varepsilon^2)}{(\sigma^2+\alpha)^3}.
+\]
+This is negative for $\alpha<\varepsilon^2/x^2$ and positive above, so the minimum is at $\alpha^* = \varepsilon^2/x^2$, independent of $\sigma$. Substituting, $\alpha^{*2}x^2 + \sigma^2\varepsilon^2 = \varepsilon^2\alpha^* + \sigma^2\varepsilon^2 = \varepsilon^2(\alpha^*+\sigma^2)$, so $E(\alpha^*) = \varepsilon^2/(\sigma^2+\alpha^*)$. For $\sigma=\varepsilon=0.01$ and $x=1$: $\alpha^* = 10^{-4}$ and $E = 10^{-4}/(2\times10^{-4}) = 0.5$. At $\alpha = 0$, $E = \varepsilon^2/\sigma^2 = 1$; truncation (estimate $0$) has squared error $x^2 = 1$. The best ridge halves the average squared error of both.
+
+\textbf{26.} $M = 900$ with 500 levels: null space of dimension $\ge400$; the odd split at $M = 400$ with 200 levels: $\ge200$. If the sensitivity matrix has full row rank, the linearized problem has exact solutions (\cref{sec:least-squares-pinv}), so iterating such steps can drive in-sample error to nearly zero for almost any targets, consistent with the surrogate fits of Sec.~III. Held-out levels are not rows of the matrix: the fit is free to do anything along directions they alone would constrain, exactly as the degree-15 RE4 polynomials differ arbitrarily away from their data. Heuristic part: the real problem is nonlinear and the sensitivity matrix changes along the iteration; the rank and null-space statements hold only for each linearization.
 
 \textbf{27.} For a unit vector $e_k$ with SVD coordinates $\xi = V^\top e_k$ ($\norm\xi = 1$), $\norm{Ae_k}^2 = \sum_j\sigma_j^2\xi_j^2$, which lies between $\sigma_M^2$ and $\sigma_1^2$ because $\sum\xi_j^2 = 1$. Hence $\sigma_1\ge\norm{Ae_k}$ and $\sigma_M\le\norm{Ae_k}$. The $t^9$ column has norm at least its largest entry $6.3^9\approx1.563\times10^7$; the column of ones has norm $\sqrt{10}\approx3.162$. So $\kappa\ge1.563\times10^7/3.162\approx4.9\times10^6>10^6$.

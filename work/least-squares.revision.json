@@ -1,84 +1,279 @@
 {
  "patches": [
   {
-   "old": "\\caption{Positions of a cart (Sample Problem~\\ref{sec:least-squares-line}.1 data).}",
-   "new": "\\caption{Positions of a cart (data for the first Sample Problem of this chapter, ``The best line for the rolling cart'').}"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Finding a Lost Planet}\nOn 1 January 1801 Giuseppe Piazzi discovered Ceres. He tracked it for only about six weeks before it was lost in the Sun's glare. The 24-year-old Carl Friedrich Gauss used those few observations to predict where it would reappear, and astronomers found it close to his prediction around New Year 1802. Adrien-Marie Legendre was the first to publish least squares, in 1805.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "&= \\sum_i t_i^2 - 2\\frac{(\\sum t_i)^2}{m} + \\frac{(\\sum t_i)^2}{m} \\quad\\text{(using } \\bar t = \\textstyle\\frac1m\\sum t_i)\\\\",
-   "new": "&= \\sum_i t_i^2 - 2\\Bigl(\\frac1m\\sum_i t_i\\Bigr)\\sum_i t_i + m\\Bigl(\\frac1m\\sum_i t_i\\Bigr)^2 \\quad\\text{(substitute } \\bar t = \\textstyle\\frac1m\\sum t_i)\\\\\n&= \\sum_i t_i^2 - 2\\frac{(\\sum t_i)^2}{m} + \\frac{(\\sum t_i)^2}{m} \\quad\\text{(since } m\\cdot\\tfrac{1}{m^2} = \\tfrac1m)\\\\"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Turing Named the Problem}\nAlan Turing introduced the term \\emph{condition number} in a 1948 paper on rounding errors in matrix computations. It measures how much a matrix can amplify small errors in the data. A famous troublemaker is the Hilbert matrix, with entries $1/(i+j-1)$. The $10\\times10$ version has a condition number around $10^{13}$, so solving with it can wipe out most of a computer's digits.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "\\Bigr)\\,(-A_{i\\ell})\\\\",
-   "new": "\\Bigr)\\,(-A_{i\\ell})\\nonumber\\\\"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Taming Ill-Posed Problems}\nAndrey Tikhonov studied unstable inverse problems from the 1940s, and in 1963 he proposed adding a penalty term to stabilize them, now called Tikhonov regularization. Statisticians Arthur Hoerl and Robert Kennard independently popularized the same idea in 1970 as ridge regression. Both trade a little bias for a large reduction in noise amplification, the trade you will meet when fitting potentials to spectra.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "&= -2\\sum_{i=1}^m A_{i\\ell}\\, r_i \\\\\n&= -2\\,(A^\\top r)_\\ell . \\quad\\text{(definition of } A^\\top:\\ (A^\\top)_{\\ell i} = A_{i\\ell})",
-   "new": "&= -2\\sum_{i=1}^m A_{i\\ell}\\, r_i \\nonumber\\\\\n&= -2\\,(A^\\top r)_\\ell . \\quad\\text{(definition of } A^\\top:\\ (A^\\top)_{\\ell i} = A_{i\\ell})\\label{eq:least-squares-grad}"
+   "old": "\\item Chapter~\\ref{ch:asymptotics}: relative error, floating-point numbers and machine epsilon ($2.2\\times10^{-16}$ in double precision).\n\\item Chapter~\\ref{ch:fourier-series}: sinusoids $\\sin(\\omega t)$, $\\cos(\\omega t)$, the cosine basis $\\cos(k\\pi x/L)$, the prime-2 wave (RE2).",
+   "new": "\\item Recalled briefly where used, not required: relative error and machine epsilon ($2.2\\times10^{-16}$ in double precision, the relative precision of a double-precision floating-point number; Chapter~\\ref{ch:asymptotics}); the cosine functions $\\cos(k\\pi x/L)$ on $[-L,L]$ and the prime-2 wave RE2 (Chapter~\\ref{ch:fourier-series}), whose formula is restated in \\cref{eq:least-squares-re2}."
   },
   {
-   "old": "Rotations and reflections are orthogonal matrices.",
-   "new": "Rotations and reflections are orthogonal matrices: each preserves lengths and angles, so it carries the standard unit vectors $(1,0,\\dots)$, $(0,1,\\dots)$, \\dots, which are orthonormal, to an orthonormal set of images, and those images are exactly its columns."
+   "old": "(4) When measurement errors follow the Gaussian (bell-curve) distribution, least squares is the statistically most probable fit; this is discussed in Chapter~\\ref{ch:probability}.",
+   "new": "(4) When measurement errors follow the Gaussian (bell-curve) distribution, least squares picks the coefficients under which the observed data are most probable (see the box below)."
   },
   {
-   "old": "The singular values are unique; the singular vectors are unique up to sign when the $\\sigma_j$ are distinct (flipping the sign of both $u_j$ and $v_j$ leaves \\cref{eq:least-squares-outer} unchanged).",
-   "new": "The singular values are unique: they are the square roots of the eigenvalues of $A^\\top A$, and those eigenvalues are fixed by $A$ (they are the roots of the characteristic polynomial of $A^\\top A$). When the \\emph{nonzero} $\\sigma_j$ are distinct, each $\\sigma_j^2$ is a simple eigenvalue of the symmetric matrix $A^\\top A$, so its unit eigenvector $v_j$ is unique up to sign, and $u_j = Av_j/\\sigma_j$ is then fixed by $v_j$ (flipping the sign of both $u_j$ and $v_j$ leaves \\cref{eq:least-squares-outer} unchanged). Singular vectors belonging to a repeated singular value, or to $\\sigma_j = 0$ (the null directions), are not unique: any orthonormal basis of the corresponding space will do."
+   "old": "Dividing it through by $m$ shows",
+   "new": "Splitting its fraction term by term shows"
   },
   {
-   "old": "Typically the noise has comparable components along every pattern $u_j$ (it has no reason to prefer one), while a smooth true signal has components $u_j^\\top y_{\\rm true}$ that become small for the patterns with small $\\sigma_j$, which in many problems are the rapidly wiggling ones. For those $j$, the noise term dominates",
-   "new": "What follows is a heuristic, true in many problems but not in all, and we do not prove it. Measurement noise usually has comparable components along every pattern $u_j$ (it has no reason to prefer one), while a smooth true signal often has components $u_j^\\top y_{\\rm true}$ that become small for the patterns with small $\\sigma_j$, which in many problems are the rapidly wiggling ones. Whether this holds must be checked problem by problem. When it does, for those $j$ the noise term dominates"
+   "old": "Equations \\cref{eq:least-squares-ne1} and \\cref{eq:least-squares-ne2} are the \\emph{normal equations}",
+   "new": "\\Cref{eq:least-squares-ne1,eq:least-squares-ne2} are the \\emph{normal equations}"
   },
   {
-   "old": "in the variable $u$ the condition number is far smaller (the CHECKS script confirms a reduction by more than a factor 100). Choosing a well-scaled basis is the first line of defense of \\cref{sec:least-squares-cond}.",
-   "new": "in the variable $u$ the condition number is far smaller: the listing below prints both condition numbers, and the first exceeds the second by more than a factor 100. Choosing a well-scaled basis is the first line of defense of \\cref{sec:least-squares-cond}.\n\n\\begin{pycode}\nimport numpy as np\nt = 0.7 * np.arange(10)          # the RE4 times\nu = t / 3.15 - 1                 # rescaled to [-1, 1]\nprint(np.linalg.cond(np.vander(t, 10)))   # columns t^9, ..., t, 1\nprint(np.linalg.cond(np.vander(u, 10)))   # columns u^9, ..., u, 1\n\\end{pycode}"
+   "old": "gives the normal equations \\cref{eq:least-squares-ne1,eq:least-squares-ne2}, which say",
+   "new": "gives the normal equations (\\cref{eq:least-squares-ne1,eq:least-squares-ne2}), which say"
   },
   {
-   "old": "Numerically its rank is $6$ (CHECKS), so its columns are independent and the least-squares solution is unique.",
-   "new": "Applying \\texttt{numpy.linalg.matrix\\_rank} to this matrix (the listing after this sample) returns $6$: its columns are independent, so the least-squares solution is unique."
+   "old": "Let $\\hat c$ be any solution of \\cref{eq:least-squares-normal} and $\\hat r = y - A\\hat c$ its residual",
+   "new": "A solution always exists, even when the columns of $A$ are dependent: in \\cref{sec:least-squares-pinv} we construct one, $c^+$, and check that it satisfies the normal equations. Let $\\hat c$ be any solution of \\cref{eq:least-squares-normal} and $\\hat r = y - A\\hat c$ its residual"
   },
   {
-   "old": "\\boxed{\\,a = (-0.22508,\\,-0.07958,\\,-0.03751),\\quad b = 0;\\ \\text{prediction exact for all } t\\,}\n\\]\n\\end{sample}",
-   "new": "\\boxed{\\,a = (-0.22508,\\,-0.07958,\\,-0.03751),\\quad b = 0;\\ \\text{prediction exact for all } t\\,}\n\\]\n\\end{sample}\n\n\\begin{pycode}\nimport numpy as np\nt = np.array([14.134725, 21.022040, 25.010858, 30.424876, 32.935062,\n              37.586178, 40.918719, 43.327073, 48.005151, 49.773832])\nw = np.log(2) * np.array([1, 2, 3])\nD = np.hstack([np.sin(np.outer(t, w)), np.cos(np.outer(t, w))])\nprint(np.linalg.matrix_rank(D))               # 6\nF = -sum(np.sin(m*t*np.log(2))/(m*2**(m/2)) for m in (1, 2, 3))/np.pi\nprint(np.linalg.lstsq(D, F, rcond=None)[0])   # a1, a2, a3, then b's near 0\n\\end{pycode}"
+   "old": "equivalently $A^\\top r = 0$ \\cref{eq:least-squares-normal}.",
+   "new": "equivalently $A^\\top r = 0$ (\\cref{eq:least-squares-normal})."
   },
   {
-   "old": "Chapter~\\ref{ch:perturbation} derives the fact we take on trust here: a small change $\\delta c$ of the coefficients changes level $n$ by approximately $\\sum_k A_{nk}\\delta c_k$. ",
-   "new": "\n\\begin{beyond}\n\\textbf{Taken on trust until Chapter~\\ref{ch:perturbation}.} The energy levels $E_n$ and normalized wavefunctions $\\psi_n$ are defined in Chapters~\\ref{ch:schrodinger} and~\\ref{ch:bound-states}; here treat them as numbers and functions computed from the current potential. First-order perturbation theory, derived in Chapter~\\ref{ch:perturbation}, states that a small change $\\delta c$ of the coefficients changes level $n$ by approximately $\\sum_k A_{nk}\\delta c_k$, with an error of second order in $\\delta c$. We use this fact here without proof.\n\\end{beyond}\n\n"
+   "old": "is a global minimum \\cref{eq:least-squares-min-identity};",
+   "new": "is a global minimum (\\cref{eq:least-squares-min-identity});"
   },
   {
-   "old": "which by \\cref{eq:least-squares-dS0}'s general form $\\partial S/\\partial c = -2A^\\top r$ is the direction of steepest descent of $S$.",
-   "new": "which, by \\cref{eq:least-squares-grad} (the partial derivatives of $S$ are $\\partial S/\\partial c_\\ell = -2(A^\\top r)_\\ell$), points opposite to the gradient of $S$: the direction of steepest descent (Chapter~\\ref{ch:fitting})."
+   "old": "Equation~\\cref{eq:least-squares-min-identity} is Pythagoras' theorem",
+   "new": "\\Cref{eq:least-squares-min-identity} is Pythagoras' theorem"
   },
   {
-   "old": "In this step $\\lambda$ is the Levenberg--Marquardt damping (the book's notation, Section~6 of the bible: $\\lambda$ for damping, $\\mu$ for ridge strength).",
-   "new": "In this step $\\lambda$ is the Levenberg--Marquardt damping (the book's notation, Appendix~B: $\\lambda$ for damping, $\\mu$ for ridge strength)."
+   "old": "matrix--vector product",
+   "new": "matrix-vector product"
   },
   {
-   "old": "Ridge removes the damage that unregularized fitting does in poorly constrained directions (\\cref{eq:least-squares-noise}); it cannot add information the parametrization lacks.",
-   "new": "This behavior is consistent with the picture of \\cref{sec:least-squares-cond}: ridge suppresses large excursions along poorly constrained directions (\\cref{eq:least-squares-noise}), and it cannot add information the parametrization lacks. The paper's own explanation of the gap damage is heuristic and stated in its own terms: the optimizer ``places large structure in the part of the potential that only the held-out levels probe strongly, because doing so costs nothing in-sample'' (Sec.~III). The paper does not attribute the damage to noise amplification, and neither do we."
+   "old": "\\emph{Step 4.} For $j>\\varrho$",
+   "new": "Since $u_1,\\dots,u_\\varrho$ are $\\varrho$ orthonormal vectors in $m$-dimensional space, and at most $m$ vectors there can be orthonormal (Chapter~\\ref{ch:linear-algebra}), we have $\\varrho\\le m$; also $\\varrho\\le M$, since $A^\\top A$ has only $M$ eigenvalues. In particular, when $M>m$ every $\\sigma_j$ with $j>m$ is zero.\n\n\\emph{Step 4.} For $j>\\varrho$"
   },
   {
-   "old": "but it explains why near-perfect in-sample agreement is unsurprising and, as RE4 showed, carries no information about held-out levels.",
-   "new": "but it suggests why near-perfect in-sample agreement is unsurprising and, by analogy with RE4, why such agreement need not carry information about held-out levels. (This argument is ours; the paper reports the observation, not this derivation.)"
+   "old": "That is the rotate--stretch--rotate picture in words.",
+   "new": "That is the rotate, stretch, rotate picture in words."
   },
   {
-   "old": "sum $-0.2$).\\textbf{3.}",
-   "new": "sum $-0.2$).\n\n\\textbf{3.}"
+   "old": "\\caption{The SVD as rotate--stretch--rotate, for",
+   "new": "\\caption{The SVD as rotate, stretch, rotate, for"
   },
   {
-   "old": "The fitted slope is about $4\\%$ larger:",
-   "new": "The ratio is $3.863/3.70\\approx1.044$, so the fitted slope is about $4\\%$ larger:"
+   "old": "as $A = U\\Sigma V^\\top$ \\cref{eq:least-squares-svd}:",
+   "new": "as $A = U\\Sigma V^\\top$ (\\cref{eq:least-squares-svd}):"
+  },
+  {
+   "old": "\\paragraph{Agreement with the normal equations.}",
+   "new": "\\paragraph{The pseudo-inverse solves the normal equations.} Using $A^\\top = V\\Sigma^\\top U^\\top$, $A^\\top Ac^+ = V\\Sigma^\\top U^\\top U\\Sigma V^\\top V\\Sigma^+U^\\top y$. With $U^\\top U = I$ and $V^\\top V = I$ this is $V(\\Sigma^\\top\\Sigma\\Sigma^+)U^\\top y$. The $M\\times m$ matrix $\\Sigma^\\top\\Sigma\\Sigma^+$ has entry $\\sigma_j^2\\cdot(1/\\sigma_j) = \\sigma_j$ in position $(j,j)$ for $j\\le\\varrho$ and zeros elsewhere. That is exactly $\\Sigma^\\top$, whose diagonal entries with $j>\\varrho$ are zero. Hence $A^\\top Ac^+ = V\\Sigma^\\top U^\\top y = A^\\top y$: the normal equations always have at least one solution, as promised in \\cref{sec:least-squares-general}.\n\n\\paragraph{Agreement with the normal equations.}"
+  },
+  {
+   "old": "the rest are free \\cref{eq:least-squares-S-diag}.",
+   "new": "the rest are free (\\cref{eq:least-squares-S-diag})."
+  },
+  {
+   "old": "gives the shortest least-squares solution \\cref{eq:least-squares-pinv-sol};",
+   "new": "gives the shortest least-squares solution (\\cref{eq:least-squares-pinv-sol});"
+  },
+  {
+   "old": "differing by null-space vectors \\cref{eq:least-squares-general-sol}.",
+   "new": "differing by null-space vectors (\\cref{eq:least-squares-general-sol})."
+  },
+  {
+   "old": "If $A$ is square ($m = M$) and invertible, all $\\sigma_j>0$ and $A^{-1} = V\\Sigma^{-1}U^\\top$ has singular values $1/\\sigma_j$, the largest being $1/\\sigma_M$.",
+   "new": "If $A$ is square ($m = M$) and invertible, all $\\sigma_j>0$ (a zero $\\sigma_j$ would give $Av_j = 0$ with $v_j\\neq0$). Then $A^{-1} = V\\Sigma^{-1}U^\\top$; check: $(V\\Sigma^{-1}U^\\top)(U\\Sigma V^\\top) = V\\Sigma^{-1}\\Sigma V^\\top = VV^\\top = I$. This product has the form orthogonal matrix times diagonal matrix with positive entries $1/\\sigma_j$ times the transpose of an orthogonal matrix, so after reordering the entries into decreasing order (and the columns of $V$ and $U$ with them) it is an SVD of $A^{-1}$. Its singular values are the $1/\\sigma_j$, the largest being $1/\\sigma_M$."
+  },
+  {
+   "old": "is symmetric with positive eigenvalues, so its singular values equal its eigenvalues.",
+   "new": "is symmetric with positive eigenvalues, so its singular values equal its eigenvalues. (Reason: if $B$ is symmetric with eigenvalues $\\beta_j\\ge0$ and orthonormal eigenvectors $q_j$, then $B^\\top B = B^2$ and $B^2q_j = \\beta_j^2q_j$, so the eigenvalues of $B^\\top B$ are $\\beta_j^2$ and the singular values are $\\sqrt{\\beta_j^2} = \\beta_j$.)"
+  },
+  {
+   "old": "the singular values of the symmetric positive semidefinite matrix $A^\\top A$ are its eigenvalues $\\sigma_j^2$, so",
+   "new": "the singular values of the symmetric positive semidefinite matrix $A^\\top A$ are its eigenvalues $\\sigma_j^2$ (by the remark in Step~4 of the sample above), so"
+  },
+  {
+   "old": "This is why the paper, like library routines such as \\texttt{numpy.linalg.lstsq}, works with the SVD.",
+   "new": "Library routines such as \\texttt{numpy.linalg.lstsq} therefore work with the SVD, and the paper's update (Appendix~A step~6) is also written in SVD form, which in addition makes the damping filter explicit."
+  },
+  {
+   "old": "relative data errors are magnified \\cref{eq:least-squares-cond-bound}.",
+   "new": "relative data errors are magnified (\\cref{eq:least-squares-cond-bound})."
+  },
+  {
+   "old": "\\cref{eq:least-squares-noise}; small",
+   "new": "(\\cref{eq:least-squares-noise}); small"
+  },
+  {
+   "old": "have the form \\cref{eq:least-squares-filter-form} with",
+   "new": "have the form (\\cref{eq:least-squares-filter-form}) with"
+  },
+  {
+   "old": "always exists and is unique \\cref{eq:least-squares-ridge-normal}.",
+   "new": "always exists and is unique (\\cref{eq:least-squares-ridge-normal})."
+  },
+  {
+   "old": "\\cref{eq:least-squares-ridge-svd}; filter factors",
+   "new": "(\\cref{eq:least-squares-ridge-svd}); filter factors"
+  },
+  {
+   "old": "the paper's form \\cref{eq:least-squares-ridge-rel}.",
+   "new": "the paper's form (\\cref{eq:least-squares-ridge-rel})."
+  },
+  {
+   "old": "Problem~24 finds the best $\\alpha$ when the noise is known only on average.",
+   "new": "Problem~25 finds the best $\\alpha$ when the noise is known only on average."
+  },
+  {
+   "old": "Rather than powers of $t$ we use powers of the rescaled variable $u = t/3.15 - 1$, which runs from $-1$ to $1$ over the data. A polynomial of degree $d$ in $u$ is",
+   "new": "Rather than powers of $t$ we use powers of the rescaled variable $\\tau = t/3.15 - 1$, which runs from $-1$ to $1$ over the data. (We write $\\tau$ rather than $u$ because $u_j$ already denotes the left singular vectors.) A polynomial of degree $d$ in $\\tau$ is"
+  },
+  {
+   "old": "in the variable $u$ the condition number",
+   "new": "in the variable $\\tau$ the condition number"
+  },
+  {
+   "old": "u = t / 3.15 - 1",
+   "new": "tau = t / 3.15 - 1"
+  },
+  {
+   "old": "np.vander(u, 10)))",
+   "new": "np.vander(tau, 10)))"
+  },
+  {
+   "old": "# columns u^9, ..., u, 1",
+   "new": "# columns tau^9, ..., tau, 1"
+  },
+  {
+   "old": "but a nonzero polynomial of degree at most $9$ has at most $9$ roots, so $c = 0$.",
+   "new": "but a nonzero polynomial of degree at most $9$ has at most $9$ roots, so $c = 0$. (The root count follows from the factor theorem of school algebra: if $t_0$ is a root, the polynomial equals $(t-t_0)$ times a polynomial of one lower degree, so each distinct root uses up one degree.)"
+  },
+  {
+   "old": "Call the rms residual on the ten data points the \\emph{training error}",
+   "new": "The root mean square (rms) of numbers $r_1,\\dots,r_m$ is $\\sqrt{\\frac1m\\sum_i r_i^2} = \\norm{r}/\\sqrt m$. Call the rms residual on the ten data points the \\emph{training error}"
+  },
+  {
+   "old": "and at degree 9 it is much larger than at degree 3.",
+   "new": "and at degree 9 it is more than twice as large as at degree 3."
+  },
+  {
+   "old": "the test error at $d=9$ is far larger than at $d=3$.",
+   "new": "the test error at $d=9$ is more than twice that at $d=3$."
+  },
+  {
+   "old": "pulls the coefficients toward zero and tames the wiggles, at the cost of a nonzero training error; Chapter~\\ref{ch:generalization} takes this up with the tools of statistics.",
+   "new": "pulls the coefficients toward zero, at the cost of a nonzero training error; whether that improves the predictions is examined, with the tools of statistics, in Chapter~\\ref{ch:generalization}."
+  },
+  {
+   "old": "which repeats with period $2\\pi/\\log 2\\approx 9.065$ in $t$.",
+   "new": "which repeats with period $2\\pi/\\log 2\\approx 9.065$ in $t$. (Here $m$ is the harmonic index, as in the paper's Eq.~(4), not the number of data points.)"
+  },
+  {
+   "old": "\\item Extrapolation succeeds only when the basis contains the true form (RE2 with the right frequencies); a large generic basis fits the window and fails outside it.",
+   "new": "\\item In these examples extrapolation succeeded when the model family contained the true form (RE2 with the right frequencies) and failed for a large generic basis, which fits the window but not beyond it; more coefficients did not help."
+  },
+  {
+   "old": "are explained in Part~II (Chapters~\\ref{ch:schrodinger}, \\ref{ch:perturbation} and~\\ref{ch:finite-differences});",
+   "new": "are explained in Part~II (Chapters~\\ref{ch:schrodinger} and~\\ref{ch:perturbation}) and in Chapter~\\ref{ch:finite-differences};"
+  },
+  {
+   "old": "\\delta c = 0.147595\\times1.26491\\,v_1 + 0.410288\\times0.63246\\,v_2 = 0.186696\\,v_1 + 0.259489\\,v_2$. With $v_{1,2} = (1,\\pm1)/\\sqrt2$: $\\delta c = \\bigl((0.186696+0.259489)/\\sqrt2,\\ (0.186696-0.259489)/\\sqrt2\\bigr)",
+   "new": "\\delta c = 0.147595\\times1.26491\\,v_1 + 0.410288\\times0.63246\\,v_2 = 0.186695\\,v_1 + 0.259489\\,v_2$. With $v_{1,2} = (1,\\pm1)/\\sqrt2$: $\\delta c = \\bigl((0.186695+0.259489)/\\sqrt2,\\ (0.186695-0.259489)/\\sqrt2\\bigr)"
+  },
+  {
+   "old": "a short step along $A^\\top r$, which, by \\cref{eq:least-squares-grad} (the partial derivatives of $S$ are $\\partial S/\\partial c_\\ell = -2(A^\\top r)_\\ell$), points opposite to the gradient of $S$: the direction of steepest descent (Chapter~\\ref{ch:fitting}).",
+   "new": "a short step along $A^\\top r$. The \\emph{gradient} of $S$ is the vector of its partial derivatives, $(\\partial S/\\partial c_1,\\dots,\\partial S/\\partial c_M) = -2A^\\top r$ by \\cref{eq:least-squares-grad}, so $A^\\top r$ points opposite to the gradient. A small step in this direction decreases $S$ fastest (shown in Chapter~\\ref{ch:fitting}), which is why it is called the direction of \\emph{steepest descent}."
+  },
+  {
+   "old": "(``accept only improvements ($\\times0.999$)'');",
+   "new": "(``accept only improvements ($\\times0.999$)''; one row of Table~I, scale~2 with $M=300$, used the looser threshold $1-10^{-5}$, and the paper reports that row as a sensitivity result);"
+  },
+  {
+   "old": "at least 500 directions of coefficient space are invisible to the 400 training levels, to first order.",
+   "new": "at least 500 directions of coefficient space are invisible to the 400 training levels, to first order. Read the figure with \\cref{sec:least-squares-cond} in mind. Directions $v_j$ whose normalized singular value $\\sigma_j/\\sigma_1$ lies far below 1 are poorly constrained by the training levels, and the damping filter of \\cref{eq:least-squares-paperstep} shrinks the step along them much more than along the well-constrained directions."
+  },
+  {
+   "old": "the same device as $\\lambda$ in \\cref{eq:least-squares-ridge-rel}; the full specification of how the ridge enters the iteration is in the paper's Zenodo record \\cite{zenodo}, and Chapter~\\ref{ch:fitting} discusses it.",
+   "new": "entering the same filter denominator as $\\lambda$ in \\cref{eq:least-squares-ridge-rel}, but playing a different role. The damping $\\lambda$ is adapted during the iteration and driven small after successful steps, so it controls only how long each step is: iterated to convergence, a damped step need not change where the fit ends up. The ridge term $\\mu\\sigma_1^2$ is fixed and stays in the filter at every step, so the steps never become full Gauss--Newton steps along poorly constrained directions. This chapter does not derive how a fixed $\\mu$ in the step filter changes the converged fit. The full specification of how the ridge enters the iteration is in the paper's Zenodo record \\cite{zenodo}, and Chapter~\\ref{ch:fitting} discusses it."
+  },
+  {
+   "old": "the fit is pulled toward $\\delta c = 0$, ``doing nothing''.",
+   "new": "the fitted correction stays closer to $c = 0$, ``doing nothing''."
+  },
+  {
+   "old": "Similarly, Table~III notes that its odd/even splits have 200 training levels at scale~1, ``so the rows with $M\\ge200$ are saturated''",
+   "new": "Similarly, Sec.~III notes that the odd/even splits of Table~III have 200 training levels at scale~1, ``so the rows with $M \\ge 200$ are saturated''"
+  },
+  {
+   "old": "to $y_n = n-\\tfrac12 - N_{\\rm sm}(t_n)$ at the training zeros ``by least squares''.",
+   "new": "to $y_n = n-\\tfrac12 - \\Nsm(t_n)$ at the training zeros ``by least squares''. (Here $\\Nsm$ is the smooth zero-counting function of the paper's Eq.~(1), Chapter~\\ref{ch:counting-zeros}; for the least squares it is just a known function of $t$.)"
+  },
+  {
+   "old": "$A^\\top Ac = A^\\top y$ \\cref{eq:least-squares-normal}; every solution is a global minimum by \\cref{eq:least-squares-min-identity};",
+   "new": "$A^\\top Ac = A^\\top y$ (\\cref{eq:least-squares-normal}); every solution is a global minimum by \\cref{eq:least-squares-min-identity};"
+  },
+  {
+   "old": "$\\norm{y}^2 = \\norm{\\hat y}^2+\\norm{\\hat r}^2$ \\cref{eq:least-squares-pythagoras}.",
+   "new": "$\\norm{y}^2 = \\norm{\\hat y}^2+\\norm{\\hat r}^2$ (\\cref{eq:least-squares-pythagoras})."
+  },
+  {
+   "old": "$c^+ = A^+y = \\sum_j(u_j^\\top y/\\sigma_j)v_j$ \\cref{eq:least-squares-pinv-sol}; underdetermined problems have infinitely many exact fits $c^++z$, $Az=0$ \\cref{eq:least-squares-general-sol}.",
+   "new": "$c^+ = A^+y = \\sum_j(u_j^\\top y/\\sigma_j)v_j$ (\\cref{eq:least-squares-pinv-sol}); underdetermined problems have infinitely many exact fits $c^++z$, $Az=0$ (\\cref{eq:least-squares-general-sol})."
+  },
+  {
+   "old": "bounds error amplification \\cref{eq:least-squares-cond-bound}; noise along $u_j$ is divided by $\\sigma_j$ \\cref{eq:least-squares-noise}; $\\kappa(A^\\top A) = \\kappa^2$ \\cref{eq:least-squares-kappa2}.",
+   "new": "bounds error amplification (\\cref{eq:least-squares-cond-bound}); noise along $u_j$ is divided by $\\sigma_j$ (\\cref{eq:least-squares-noise}); $\\kappa(A^\\top A) = \\kappa^2$ (\\cref{eq:least-squares-kappa2})."
+  },
+  {
+   "old": "Truncated SVD and ridge are filters \\cref{eq:least-squares-filter-form}. Ridge solves $(A^\\top A+\\alpha I)c = A^\\top y$ \\cref{eq:least-squares-ridge-normal}, multiplies the data along $u_j$ by $\\sigma_j/(\\sigma_j^2+\\alpha)$ \\cref{eq:least-squares-ridge-svd}, and with $\\alpha=\\lambda\\sigma_1^2$ takes the paper's form \\cref{eq:least-squares-ridge-rel}; its gain never exceeds $1/(2\\sqrt\\alpha)$ \\cref{eq:least-squares-gain-cap}.",
+   "new": "Truncated SVD and ridge are filters (\\cref{eq:least-squares-filter-form}). Ridge solves $(A^\\top A+\\alpha I)c = A^\\top y$ (\\cref{eq:least-squares-ridge-normal}), multiplies the data along $u_j$ by $\\sigma_j/(\\sigma_j^2+\\alpha)$ (\\cref{eq:least-squares-ridge-svd}), and with $\\alpha=\\lambda\\sigma_1^2$ takes the paper's form (\\cref{eq:least-squares-ridge-rel}); its gain never exceeds $1/(2\\sqrt\\alpha)$ (\\cref{eq:least-squares-gain-cap})."
+  },
+  {
+   "old": "extrapolation works only with the right basis (RE2).",
+   "new": "in the RE2 example, extrapolation worked with the right frequencies and failed with a large generic basis."
+  },
+  {
+   "old": "is the ridge-damped linearized step \\cref{eq:least-squares-paperstep};",
+   "new": "is the ridge-damped linearized step (\\cref{eq:least-squares-paperstep});"
+  },
+  {
+   "old": "degree-5 polynomial in $u$ on 30",
+   "new": "degree-5 polynomial in $\\tau$ on 30"
+  },
+  {
+   "old": "\\prob{2}{Redo the interpolation-versus-extrapolation sample with the middle point measured as $1.2$ instead of $1$. Find the new line and parabola, and their predictions at $t=\\pi/4$ and $t = 3\\pi/2$.}\n\n",
+   "new": ""
+  },
+  {
+   "old": "\\prob{3}{Prove from \\cref{eq:least-squares-ridge-svd}",
+   "new": "\\prob{2}{Redo the interpolation-versus-extrapolation sample with the middle point measured as $1.2$ instead of $1$. Find the new line and parabola, and their predictions at $t=\\pi/4$ and $t = 3\\pi/2$.}\n\n\\prob{3}{Prove from \\cref{eq:least-squares-ridge-svd}"
+  },
+  {
+   "old": "the exact damped step agrees to a relative difference of order $\\sigma_1^2/(\\lambda\\sigma_1^2) = 10^{-6}$ (checked in CHECKS).",
+   "new": "the exact damped step agrees with this to a relative difference below $10^{-5}$, consistent with corrections of relative order $\\sigma_j^2/(\\lambda\\sigma_1^2)\\le10^{-6}$."
+  },
+  {
+   "old": "On $60<t\\le100$ the three-frequency model has error at rounding level, while the 120-coefficient grid model's rms error exceeds a tenth of the rms of the wave itself (CHECKS verifies both statements): exact in-window agreement, no continuation.",
+   "new": "On $60<t\\le100$ the three-frequency model has rms error below $10^{-10}$ (rounding level). The 120-coefficient grid model fits the 80 in-window samples to rms below $10^{-6}$, yet on $60<t\\le100$ its rms error exceeds $0.015$. For comparison, the long-time rms of the wave is $\\sqrt{(a_1^2+a_2^2+a_3^2)/2}\\approx0.171$ (each sinusoid of amplitude $a$ has mean square $a^2/2$, and cross terms between different frequencies average to zero). The grid model's in-window agreement therefore does not carry over to a faithful continuation, while the three-frequency model continues the wave exactly."
+  },
+  {
+   "old": "So $\\kappa(A^\\top A) = \\sigma_1^2/\\sigma_M^2 = \\kappa(A)^2$. The numerical check is in CHECKS.",
+   "new": "So $\\kappa(A^\\top A) = \\sigma_1^2/\\sigma_M^2 = \\kappa(A)^2$. Numerically, for the $30\\times6$ matrix the ratio $\\kappa(A^\\top A)/\\kappa(A)^2$ equals 1 to within $10^{-6}$."
+  },
+  {
+   "old": "\\textbf{23.} $\\tilde A^\\top\\tilde A = A^\\top A + \\alpha I",
+   "new": "\\textbf{23.} By \\cref{eq:least-squares-ridge-svd}, $c_\\alpha = \\sum_{j\\le\\varrho}g_j(\\alpha)(u_j^\\top y)v_j$ with $g_j(\\alpha) = \\sigma_j/(\\sigma_j^2+\\alpha)$. (i) For each $\\sigma_j>0$, $g_j(\\alpha)\\to1/\\sigma_j$ as $\\alpha\\to0$; a finite sum of convergent terms converges, so $c_\\alpha\\to\\sum_{j\\le\\varrho}(u_j^\\top y/\\sigma_j)v_j = c^+$. (ii) $c_\\alpha$ is a combination of $v_1,\\dots,v_\\varrho$; the null space is spanned by $v_{\\varrho+1},\\dots,v_M$, and the $v_j$ are orthonormal, so $c_\\alpha$ is perpendicular to every null vector. (iii) By orthonormality of the $v_j$, $\\norm{c_\\alpha}^2 = \\sum_{j\\le\\varrho}\\sigma_j^2(u_j^\\top y)^2/(\\sigma_j^2+\\alpha)^2$. Each term has a fixed nonnegative numerator and a denominator that increases with $\\alpha$, so each term, and therefore the sum, decreases (strictly, unless every $u_j^\\top y$ with $j\\le\\varrho$ vanishes).\n\n\\textbf{24.} $\\tilde A^\\top\\tilde A = A^\\top A + \\alpha I"
+  },
+  {
+   "old": "\\textbf{25.} $M = 900$ with 500 levels",
+   "new": "\\textbf{25.} The error of the estimate is $\\frac{\\sigma(\\sigma x+e)}{\\sigma^2+\\alpha} - x = \\frac{\\sigma^2x+\\sigma e-\\sigma^2x-\\alpha x}{\\sigma^2+\\alpha} = \\frac{\\sigma e-\\alpha x}{\\sigma^2+\\alpha}$. Its square is $(\\sigma^2e^2 - 2\\sigma\\alpha xe + \\alpha^2x^2)/(\\sigma^2+\\alpha)^2$. Averaging, with $e$ averaging to $0$ and $e^2$ to $\\varepsilon^2$, gives $E(\\alpha) = (\\alpha^2x^2+\\sigma^2\\varepsilon^2)/(\\sigma^2+\\alpha)^2$. By the quotient rule,\n\\[\nE'(\\alpha) = \\frac{2\\alpha x^2(\\sigma^2+\\alpha)^2 - 2(\\sigma^2+\\alpha)(\\alpha^2x^2+\\sigma^2\\varepsilon^2)}{(\\sigma^2+\\alpha)^4} = \\frac{2[\\alpha x^2(\\sigma^2+\\alpha) - \\alpha^2x^2 - \\sigma^2\\varepsilon^2]}{(\\sigma^2+\\alpha)^3} = \\frac{2\\sigma^2(\\alpha x^2-\\varepsilon^2)}{(\\sigma^2+\\alpha)^3}.\n\\]\nThis is negative for $\\alpha<\\varepsilon^2/x^2$ and positive above, so the minimum is at $\\alpha^* = \\varepsilon^2/x^2$, independent of $\\sigma$. Substituting, $\\alpha^{*2}x^2 + \\sigma^2\\varepsilon^2 = \\varepsilon^2\\alpha^* + \\sigma^2\\varepsilon^2 = \\varepsilon^2(\\alpha^*+\\sigma^2)$, so $E(\\alpha^*) = \\varepsilon^2/(\\sigma^2+\\alpha^*)$. For $\\sigma=\\varepsilon=0.01$ and $x=1$: $\\alpha^* = 10^{-4}$ and $E = 10^{-4}/(2\\times10^{-4}) = 0.5$. At $\\alpha = 0$, $E = \\varepsilon^2/\\sigma^2 = 1$; truncation (estimate $0$) has squared error $x^2 = 1$. The best ridge halves the average squared error of both.\n\n\\textbf{26.} $M = 900$ with 500 levels"
   }
  ],
- "new_checks": "import numpy as np\n# Sample: rolling cart\nt=np.array([0,1,2,3.]); y=np.array([1,3,4,4.])\nc1,c0=np.polyfit(t,y,1); assert abs(c1-1)<1e-12 and abs(c0-1.5)<1e-12\nr=y-(c0+c1*t); assert abs(np.sum(r**2)-1.0)<1e-12\n# Sample: projection\nA=np.array([[1,0],[0,1],[1,1.]]); yy=np.array([1,2,0.])\nc=np.linalg.lstsq(A,yy,rcond=None)[0]; assert np.allclose(c,[0,1])\nassert np.allclose(yy-A@c,[1,1,-1])\n# Sample: SVD 2x2\nA=np.array([[3,0],[4,5.]]); U,s,Vh=np.linalg.svd(A)\nassert np.allclose(s,[3*np.sqrt(5),np.sqrt(5)]); assert abs(s[0]-6.708)<1e-3 and abs(s[1]-2.236)<1e-3\nassert abs(s[0]*s[1]-15)<1e-12\n# Sample: min norm\nassert np.allclose(np.linalg.pinv(np.array([[1,2.]]))@[5],[1,2])\n# Sample: ill-conditioned\nA=np.array([[1,1],[1,1.001]])\nca=np.linalg.solve(A,[2,2.001]); cb=np.linalg.solve(A,[2,2.002])\nassert np.allclose(ca,[1,1]) and np.allclose(cb,[0,2])\nrel_y=0.001/np.linalg.norm([2,2.001]); amp=1/rel_y\nassert abs(rel_y-3.535e-4)<1e-6 and abs(amp-2829)<2\nsv=np.linalg.svd(A,compute_uv=False); kap=sv[0]/sv[1]\nassert abs(kap-4002)<2 and abs(sv[0]-2.0005)<1e-4 and abs(sv[1]-4.999e-4)<1e-7\n# Sample: ridge vs truncation\nfor al,c1e,c2e,err in [(1e-5,0.99999,1.8182,0.818),(1e-4,0.99990,1.0000,1.0e-4),(1e-3,0.99900,0.1818,0.818)]:\n    a1=1/(1+al); a2=2e-4/(1e-4+al)\n    assert abs(a1-c1e)<1e-5 and abs(a2-c2e)<1e-4\n    assert abs(np.hypot(a1-1,a2-1)-err)<(1e-3 if err>0.01 else 2e-5)\n# RE4 table and fits\ntj=0.7*np.arange(10); eps=np.array([.15,-.12,.10,-.15,.12,-.10,.14,-.13,.11,-.14])\ntab_sin=[0,0.6442,0.9854,0.8632,0.3350,-0.3508,-0.8716,-0.9825,-0.6313,0.0168]\nassert np.allclose(np.sin(tj),tab_sin,atol=6e-5)\nyj=np.sin(tj)+eps\nassert np.allclose(yj,[0.15,0.5242,1.0855,0.7132,0.4550,-0.4508,-0.7316,-1.1125,-0.5213,-0.1232],atol=6e-5)\nu=lambda x: x/3.15-1\nk_t=np.linalg.cond(np.vander(tj,10)); k_u=np.linalg.cond(np.vander(u(tj),10))\nassert k_t/k_u>100 and k_t>1e6  # text: ratio exceeds 100\ntt=np.linspace(0,6.3,2000); tr=[];te=[]\nfor d in range(10):\n    cc=np.linalg.lstsq(np.vander(u(tj),d+1),yj,rcond=None)[0]\n    tr.append(np.sqrt(np.mean((np.vander(u(tj),d+1)@cc-yj)**2)))\n    te.append(np.sqrt(np.mean((np.vander(u(tt),d+1)@cc-np.sin(tt))**2)))\nassert all(tr[i+1]<=tr[i]+1e-12 for i in range(9)); assert tr[9]<1e-10\nassert te[3]<te[1] and te[9]>2*te[3]\n# Prob 27\nassert abs(6.3**9-1.563e7)<1e5 and 6.3**9/np.sqrt(10)>4.9e6\n# Sample: interpolation vs extrapolation\nP=np.array([0,np.pi/2,np.pi]); Y=np.array([0,1,0.])\nl1,l0=np.polyfit(P,Y,1); assert abs(l1)<1e-12 and abs(l0-1/3)<1e-12\npar=lambda x:4/np.pi**2*x*(np.pi-x)\nassert abs(par(np.pi/4)-0.75)<1e-12 and abs(par(1.5*np.pi)+3)<1e-12\nassert abs(1/3-np.sin(np.pi/4)+0.374)<1e-3 and abs(0.75-np.sin(np.pi/4)-0.043)<1e-3\n# Sample: prime-2 wave at RE1 heights (rank 6 listing)\nRE1=np.array([14.134725,21.022040,25.010858,30.424876,32.935062,37.586178,40.918719,43.327073,48.005151,49.773832])\nL2=np.log(2); F=lambda x:-sum(np.sin(m*x*L2)/(m*2**(m/2)) for m in (1,2,3))/np.pi\ndes=lambda x,w: np.hstack([np.sin(np.outer(x,w)),np.cos(np.outer(x,w))])\nD=des(RE1,L2*np.array([1,2,3.])); assert np.linalg.matrix_rank(D)==6\ncc=np.linalg.lstsq(D,F(RE1),rcond=None)[0]\nassert np.allclose(cc[:3],[-0.22508,-0.07958,-0.03751],atol=1e-5) and np.allclose(cc[3:],0,atol=1e-8)\n# Prob 19: extrapolation errors\nts=np.linspace(10,60,80); te_=np.linspace(60.01,100,1000)\nc3=np.linalg.lstsq(des(ts,L2*np.array([1,2,3.])),F(ts),rcond=None)[0]\ncg=np.linalg.lstsq(des(ts,8*np.arange(1,61)/60),F(ts),rcond=None)[0]\ne3=np.sqrt(np.mean((des(te_,L2*np.array([1,2,3.]))@c3-F(te_))**2))\neg=np.sqrt(np.mean((des(te_,8*np.arange(1,61)/60)@cg-F(te_))**2))\nassert e3<1e-10 and eg>0.1*np.sqrt(np.mean(F(te_)**2))\nassert np.sqrt(np.mean((des(ts,8*np.arange(1,61)/60)@cg-F(ts))**2))<1e-6\n# Sample: damped step\nA=np.array([[3,0],[4,5.]]); r=np.array([1,1.])\ndef step(A,r,lam):\n    U,s,Vh=np.linalg.svd(A); return Vh.T@((s/(s**2+lam*s[0]**2))*(U.T@r))\ndc=step(A,r,0.01); assert np.allclose(dc,[0.3155,-0.0515],atol=1e-4)\nassert np.allclose(np.linalg.solve(A,r),[1/3,-1/15])\n# Prob 17\nbig=step(A,r,1e6); approx=A.T@r/(1e6*45)\nassert np.allclose(approx,[1.556e-7,1.111e-7],rtol=1e-3) and np.allclose(big,approx,rtol=1e-5)\n# Prob 1, 5, 6, 7, 9, 11\nc1,c0=np.polyfit([0,1,2],[0,1,3],1); assert abs(c1-1.5)<1e-12 and abs(c0+1/6)<1e-12\nassert abs(np.sum((np.array([0,1,3])-c0-c1*np.array([0,1,2]))**2)-1/6)<1e-12\nassert np.allclose(np.linalg.pinv(np.array([[3,4.]]))@[10],[1.2,1.6])\nassert abs(1.4-7/5)<1e-15\nAp=np.linalg.pinv(np.array([[1,1],[0,0.]])); assert np.allclose(Ap,[[.5,0],[.5,0]]); assert np.allclose(Ap@[2,3],[1,1])\nassert abs(1/(2*np.sqrt(1e-4*100))-5)<1e-12\n# Prob 13\nn=np.arange(1,11); s1,s0=np.polyfit(n,RE1,1)\nassert abs(s1-3.863)<1e-3 and abs(s0-13.07)<1e-2\ng=2*np.pi/np.log(RE1.mean()/(2*np.pi)); assert abs(g-3.70)<5e-3\nassert abs(s1/g-1.044)<1e-3  # Prob 13 ratio\n# Prob 16 count\nassert len(np.arange(-8,3.01,0.5))==23\n# Prob 21\nuu=np.linspace(-1,1,30); Vd=np.vander(uu,6)\nassert abs(np.linalg.cond(Vd.T@Vd)/np.linalg.cond(Vd)**2-1)<1e-6\n# Prob 24 example: alpha*=1e-4, minimum MSE\nsig,ep,x=0.01,0.01,1; a=ep**2/x**2; mse=(a**2*x**2+sig**2*ep**2)/(sig**2+a)**2\nassert abs(a-1e-4)<1e-15 and abs(mse-0.5)<1e-12\nprint('all checks passed')\n",
- "new_figures": {
-  "least-squares_line": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nt = np.array([0, 1, 2, 3.]); y = np.array([1, 3, 4, 4.])\nc1, c0 = np.polyfit(t, y, 1)\nfig, ax = plt.subplots(figsize=(6, 4))\ntt = np.linspace(-0.3, 3.3, 100)\nax.plot(tt, c0 + c1*tt, 'b-', label='least-squares line')\nfor i, (ti, yi) in enumerate(zip(t, y)):\n    ax.plot([ti, ti], [yi, c0 + c1*ti], 'r-', lw=1.5, label='residuals' if i == 0 else None)\nax.plot(t, y, 'ko', label='data')\nax.plot(t.mean(), y.mean(), 'o', mfc='white', mec='b', ms=9, label='point of averages')\nax.set_xlabel('time t (s)'); ax.set_ylabel('position y (m)')\nax.legend(); ax.grid(alpha=0.3)\nplt.savefig('least-squares_line.pdf', bbox_inches='tight')\n",
-  "least-squares_projection": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nfrom mpl_toolkits.mplot3d import Axes3D\na1 = np.array([1, 0, 1.]); a2 = np.array([0, 1, 1.]); y = np.array([1, 2, 0.]); yh = a2.copy()\nfig = plt.figure(figsize=(6, 4)); ax = fig.add_subplot(111, projection='3d')\ns, u = np.meshgrid(np.linspace(-0.5, 1.5, 10), np.linspace(-0.5, 2.0, 10))\nax.plot_surface(s*a1[0] + u*a2[0], s*a1[1] + u*a2[1], s*a1[2] + u*a2[2], alpha=0.25, color='gray')\ndef arrow(v, col, lab):\n    ax.quiver(0, 0, 0, v[0], v[1], v[2], color=col, arrow_length_ratio=0.1)\n    ax.text(1.08*v[0], 1.08*v[1], 1.08*v[2], lab, color=col)\narrow(a1, 'k', 'a1'); arrow(a2, 'k', 'a2'); arrow(y, 'b', 'y'); arrow(yh, 'g', 'y-hat')\nax.plot([yh[0], y[0]], [yh[1], y[1]], [yh[2], y[2]], 'r--')\nm = (y + yh)/2; ax.text(m[0], m[1], m[2], 'residual', color='r')\nax.set_xlabel('component 1'); ax.set_ylabel('component 2'); ax.set_zlabel('component 3')\nplt.savefig('least-squares_projection.pdf', bbox_inches='tight')\n",
-  "least-squares_svd": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nA = np.array([[3, 0], [4, 5.]]); U, s, Vh = np.linalg.svd(A)\nth = np.linspace(0, 2*np.pi, 400); C = np.vstack([np.cos(th), np.sin(th)]); E = A @ C\nfig, (a, b) = plt.subplots(1, 2, figsize=(6.5, 3))\na.plot(C[0], C[1], 'k-')\nfor j, col in [(0, 'b'), (1, 'r')]:\n    a.annotate('', xy=Vh[j], xytext=(0, 0), arrowprops=dict(arrowstyle='->', color=col, lw=2))\n    a.text(1.1*Vh[j][0], 1.1*Vh[j][1], 'v%d' % (j+1), color=col)\n    w = s[j]*U[:, j]\n    b.annotate('', xy=w, xytext=(0, 0), arrowprops=dict(arrowstyle='->', color=col, lw=2))\n    b.text(1.08*w[0], 1.08*w[1], 'sigma%d u%d' % (j+1, j+1), color=col)\nb.plot(E[0], E[1], 'k-')\nfor ax, ttl in [(a, 'unit circle'), (b, 'image under A')]:\n    ax.set_aspect('equal'); ax.grid(alpha=0.3); ax.set_title(ttl)\n    ax.set_xlabel('first component (dimensionless)'); ax.set_ylabel('second component (dimensionless)')\nplt.tight_layout()\nplt.savefig('least-squares_svd.pdf', bbox_inches='tight')\n",
-  "least-squares_filter": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nx = np.logspace(-5, 0, 500)   # sigma / sigma_1\nfig, (a, b) = plt.subplots(1, 2, figsize=(6.5, 3))\nfor lam in [1e-2, 1e-4, 1e-6]:\n    a.semilogx(x, x**2/(x**2 + lam), label='ridge, lambda=%g' % lam)\n    b.loglog(x, x/(x**2 + lam), label='ridge, lambda=%g' % lam)\na.semilogx(x, (x >= 1e-2).astype(float), 'k--', label='truncated SVD')\nb.loglog(x, 1/x, 'k:', label='1/sigma (no regularization)')\na.set_xlabel('sigma / sigma_1'); a.set_ylabel('filter factor f'); a.legend(fontsize=7)\nb.set_xlabel('sigma / sigma_1'); b.set_ylabel('gain (units of 1/sigma_1)'); b.legend(fontsize=7)\nplt.tight_layout()\nplt.savefig('least-squares_filter.pdf', bbox_inches='tight')\n",
-  "least-squares_poly": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\ntj = 0.7*np.arange(10)\neps = np.array([.15, -.12, .10, -.15, .12, -.10, .14, -.13, .11, -.14])\nyj = np.sin(tj) + eps\nu = lambda x: x/3.15 - 1\ntt = np.linspace(0, 6.3, 800)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(tt, np.sin(tt), color='0.6', lw=3, label='sin t')\nfor d, st in [(1, ':'), (3, '--'), (9, '-')]:\n    c = np.linalg.lstsq(np.vander(u(tj), d+1), yj, rcond=None)[0]\n    ax.plot(tt, np.vander(u(tt), d+1) @ c, st, label='degree %d' % d)\nax.plot(tj, yj, 'ko', label='noisy data')\nax.set_ylim(-2.5, 2.5); ax.set_xlabel('t (dimensionless)'); ax.set_ylabel('y (dimensionless)')\nax.legend(fontsize=8); ax.grid(alpha=0.3)\nplt.savefig('least-squares_poly.pdf', bbox_inches='tight')\n",
-  "least-squares_degree": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\ntj = 0.7*np.arange(10)\neps = np.array([.15, -.12, .10, -.15, .12, -.10, .14, -.13, .11, -.14])\nyj = np.sin(tj) + eps\nu = lambda x: x/3.15 - 1\ntt = np.linspace(0, 6.3, 2000)\ntr, te = [], []\nfor d in range(10):\n    c = np.linalg.lstsq(np.vander(u(tj), d+1), yj, rcond=None)[0]\n    tr.append(max(np.sqrt(np.mean((np.vander(u(tj), d+1) @ c - yj)**2)), 1e-16))\n    te.append(np.sqrt(np.mean((np.vander(u(tt), d+1) @ c - np.sin(tt))**2)))\nfig, ax = plt.subplots(figsize=(6, 4))\nax.semilogy(range(10), tr, 'o-', label='training error')\nax.semilogy(range(10), te, 's-', label='test error')\nax.set_xlabel('polynomial degree d'); ax.set_ylabel('rms error (dimensionless)')\nax.legend(); ax.grid(alpha=0.3, which='both')\nplt.savefig('least-squares_degree.pdf', bbox_inches='tight')\n",
-  "least-squares_re2": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nL2 = np.log(2)\nF = lambda x: -sum(np.sin(m*x*L2)/(m*2**(m/2)) for m in (1, 2, 3))/np.pi\ndes = lambda x, w: np.hstack([np.sin(np.outer(x, w)), np.cos(np.outer(x, w))])\nts = np.linspace(10, 60, 80)\nw3 = L2*np.array([1, 2, 3.]); wg = 8*np.arange(1, 61)/60\nc3 = np.linalg.lstsq(des(ts, w3), F(ts), rcond=None)[0]\ncg = np.linalg.lstsq(des(ts, wg), F(ts), rcond=None)[0]\ntt = np.linspace(0, 100, 3000)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.axvspan(10, 60, color='0.9', label='training window')\nax.plot(tt, F(tt), color='0.5', lw=3, label='true wave')\nax.plot(tt, des(tt, w3) @ c3, 'b--', label='3 correct frequencies')\nax.plot(tt, des(tt, wg) @ cg, 'r-', lw=1, label='120-coefficient grid')\nax.plot(ts, F(ts), 'k.', ms=3)\nax.set_ylim(-1.5, 1.5); ax.set_xlabel('t (dimensionless)'); ax.set_ylabel('F (dimensionless)')\nax.legend(fontsize=7, loc='lower left')\nplt.savefig('least-squares_re2.pdf', bbox_inches='tight')\n",
-  "least-squares_sensitivity": "import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt\nimport qmnt\nL = qmnt.L_of(1000); N = 6000\nx = qmnt.grid(L, N); h = 2*L/(N + 1)\nV = np.array([qmnt.wu_sprung_V(xi) for xi in x])\nE, psi = qmnt.fd_levels(V, L, k=400, return_vectors=True)\npsi = np.asarray(psi)\nif psi.shape[0] != N:\n    psi = psi.T\npsi = psi/np.sqrt(np.sum(psi**2, axis=0)*h)\nfig, ax = plt.subplots(figsize=(6, 4))\nfor M, st in [(400, 'b-'), (900, 'r--')]:\n    phi = np.cos(np.outer(x, np.arange(M))*np.pi/L)\n    A = (psi**2*h).T @ phi\n    s = np.linalg.svd(A, compute_uv=False)\n    ax.semilogy(np.arange(1, len(s) + 1), s/s[0], st, label='M = %d' % M)\nax.set_xlabel('index j'); ax.set_ylabel('sigma_j / sigma_1 (dimensionless)')\nax.legend(); ax.grid(alpha=0.3, which='both')\nplt.savefig('least-squares_sensitivity.pdf', bbox_inches='tight')\n"
- },
- "notes": "Skipped/invalid: (1) Problem numbering issue: recounting the problem list gives 27 problems, and the cross-references (Problems 15, 17, 18, 24, 27) and answer labels (1-7, 9, 11, ..., 27) already match the actual order, so all odd-numbered and all difficulty-1 problems are answered; no renumbering was done. The only valid part, answers 2 and 3 being run together, is fixed with a blank line. (2) The ridge-gain passage and the Table IV / 800-zero null-space passage were flagged with 'no change needed'; left unchanged. (3) The noon-sun analogy already specifies noon, so it was left as is. Fixed: added all eight figure scripts; labeled the general gradient (eq:least-squares-grad) and cited it in the steepest-descent sentence; showed the substitution steps in the denominator expansion; replaced the bad Sample Problem reference in the table caption; hedged the noise heuristic; replaced the CHECKS references in the text with visible pycode listings (rank and condition numbers); made the SVD uniqueness statement precise; justified that rotations and reflections are orthogonal; put the perturbation-theory fact in a beyond box; hedged the ridge/gap-damage and saturated-fit statements; replaced the reference to the bible with Appendix B; added the 1.044 ratio to answer 13, which is checked in new_checks."
+ "new_checks": "import numpy as np\n# Sample: rolling cart\nt=np.array([0,1,2,3.]); y=np.array([1,3,4,4.])\nc1,c0=np.polyfit(t,y,1); assert abs(c1-1)<1e-12 and abs(c0-1.5)<1e-12\nr=y-(c0+c1*t); assert abs(np.sum(r**2)-1.0)<1e-12\n# Sample: projection\nA=np.array([[1,0],[0,1],[1,1.]]); yy=np.array([1,2,0.])\nc=np.linalg.lstsq(A,yy,rcond=None)[0]; assert np.allclose(c,[0,1])\nassert np.allclose(yy-A@c,[1,1,-1])\nassert abs(yy@(yy-A@c)-3)<1e-12  # checkpoint y^T r = 3\n# Sample: SVD 2x2\nA=np.array([[3,0],[4,5.]]); U,s,Vh=np.linalg.svd(A)\nassert np.allclose(s,[3*np.sqrt(5),np.sqrt(5)]); assert abs(s[0]-6.708)<1e-3 and abs(s[1]-2.236)<1e-3\nassert abs(s[0]*s[1]-15)<1e-12\n# Sample: min norm\nassert np.allclose(np.linalg.pinv(np.array([[1,2.]]))@[5],[1,2])\n# Sample: ill-conditioned\nA=np.array([[1,1],[1,1.001]])\nca=np.linalg.solve(A,[2,2.001]); cb=np.linalg.solve(A,[2,2.002])\nassert np.allclose(ca,[1,1]) and np.allclose(cb,[0,2])\nrel_y=0.001/np.linalg.norm([2,2.001]); amp=1/rel_y\nassert abs(rel_y-3.535e-4)<1e-6 and abs(amp-2829)<2\nsv=np.linalg.svd(A,compute_uv=False); kap=sv[0]/sv[1]\nassert abs(kap-4002)<2 and abs(sv[0]-2.0005)<1e-4 and abs(sv[1]-4.999e-4)<1e-7\n# checkpoint digits\nassert 16-5==11 and 16-10==6\n# Sample: ridge vs truncation\nfor al,c1e,c2e,err in [(1e-5,0.99999,1.8182,0.818),(1e-4,0.99990,1.0000,1.0e-4),(1e-3,0.99900,0.1818,0.818)]:\n    a1=1/(1+al); a2=2e-4/(1e-4+al)\n    assert abs(a1-c1e)<1e-5 and abs(a2-c2e)<1e-4\n    assert abs(np.hypot(a1-1,a2-1)-err)<(1e-3 if err>0.01 else 2e-5)\n# RE4 table and fits\ntj=0.7*np.arange(10); eps=np.array([.15,-.12,.10,-.15,.12,-.10,.14,-.13,.11,-.14])\ntab_sin=[0,0.6442,0.9854,0.8632,0.3350,-0.3508,-0.8716,-0.9825,-0.6313,0.0168]\nassert np.allclose(np.sin(tj),tab_sin,rtol=0,atol=5e-5)\nyj=np.sin(tj)+eps\nassert np.allclose(yj,[0.15,0.5242,1.0854,0.7132,0.4550,-0.4508,-0.7316,-1.1125,-0.5213,-0.1232],rtol=0,atol=5e-5)\ntau=lambda x: x/3.15-1\nk_t=np.linalg.cond(np.vander(tj,10)); k_u=np.linalg.cond(np.vander(tau(tj),10))\nassert k_t/k_u>100 and k_t>1e6\ntt=np.linspace(0,6.3,2000); tr=[];te=[]\nfor d in range(10):\n    cc=np.linalg.lstsq(np.vander(tau(tj),d+1),yj,rcond=None)[0]\n    tr.append(np.sqrt(np.mean((np.vander(tau(tj),d+1)@cc-yj)**2)))\n    te.append(np.sqrt(np.mean((np.vander(tau(tt),d+1)@cc-np.sin(tt))**2)))\nassert all(tr[i+1]<=tr[i]+1e-12 for i in range(9)); assert tr[9]<1e-10\nassert te[3]<te[1] and te[9]>2*te[3]  # 'more than twice'\n# Prob 27\nassert abs(6.3**9-1.563e7)<1e5 and 6.3**9/np.sqrt(10)>4.9e6 and abs(np.sqrt(10)-3.162)<1e-3\n# Sample: interpolation vs extrapolation\nP=np.array([0,np.pi/2,np.pi]); Y=np.array([0,1,0.])\nl1,l0=np.polyfit(P,Y,1); assert abs(l1)<1e-12 and abs(l0-1/3)<1e-12\npar=lambda x:4/np.pi**2*x*(np.pi-x)\nassert abs(par(np.pi/4)-0.75)<1e-12 and abs(par(1.5*np.pi)+3)<1e-12\nassert abs(1/3-np.sin(np.pi/4)+0.374)<1e-3 and abs(0.75-np.sin(np.pi/4)-0.043)<1e-3\n# Sample: prime-2 wave at RE1 heights\nRE1=np.array([14.134725,21.022040,25.010858,30.424876,32.935062,37.586178,40.918719,43.327073,48.005151,49.773832])\nL2=np.log(2); F=lambda x:-sum(np.sin(m*x*L2)/(m*2**(m/2)) for m in (1,2,3))/np.pi\ndes=lambda x,w: np.hstack([np.sin(np.outer(x,w)),np.cos(np.outer(x,w))])\nD=des(RE1,L2*np.array([1,2,3.])); assert np.linalg.matrix_rank(D)==6\ncc=np.linalg.lstsq(D,F(RE1),rcond=None)[0]\nassert np.allclose(cc[:3],[-0.22508,-0.07958,-0.03751],atol=1e-5) and np.allclose(cc[3:],0,atol=1e-8)\n# Prob 19\nts=np.linspace(10,60,80); te_=np.linspace(60.01,100,1000)\nc3=np.linalg.lstsq(des(ts,L2*np.array([1,2,3.])),F(ts),rcond=None)[0]\ncg=np.linalg.lstsq(des(ts,8*np.arange(1,61)/60),F(ts),rcond=None)[0]\ne3=np.sqrt(np.mean((des(te_,L2*np.array([1,2,3.]))@c3-F(te_))**2))\neg=np.sqrt(np.mean((des(te_,8*np.arange(1,61)/60)@cg-F(te_))**2))\nassert e3<1e-10 and eg>0.015\nassert np.sqrt(np.mean((des(ts,8*np.arange(1,61)/60)@cg-F(ts))**2))<1e-6\namps=np.array([1/(np.pi*m*2**(m/2)) for m in (1,2,3)])\nassert abs(np.sqrt(np.sum(amps**2)/2)-0.171)<5e-4\n# Sample: damped step\nA=np.array([[3,0],[4,5.]]); r=np.array([1,1.])\ndef step(A,r,lam):\n    U,s,Vh=np.linalg.svd(A); return Vh.T@((s/(s**2+lam*s[0]**2))*(U.T@r))\ndc=step(A,r,0.01); assert np.allclose(dc,[0.3155,-0.0515],atol=1e-4)\nassert np.allclose(np.linalg.solve(A,r),[1/3,-1/15])\nU,s,Vh=np.linalg.svd(A); proj=np.abs(U.T@r)\nassert np.allclose(proj,[1.26491,0.63246],atol=1e-5)\nassert abs(0.01*s[0]**2-0.45)<1e-12\ngains=s/(s**2+0.45); assert np.allclose(gains,[0.147595,0.410288],atol=1e-6)\nprods=gains*proj; assert np.allclose(prods,[0.186695,0.259489],atol=1e-6)\nassert abs(1/s[1]-0.447)<1e-3 and abs(1/s[0]-0.1491)<1e-4\n# Prob 17\nbig=step(A,r,1e6); approx=A.T@r/(1e6*45)\nassert np.allclose(A.T@r,[7,5]) and np.allclose(approx,[1.556e-7,1.111e-7],rtol=1e-3) and np.allclose(big,approx,rtol=1e-5)\n# Prob 1, 5, 6, 7, 9, 11\nc1,c0=np.polyfit([0,1,2],[0,1,3],1); assert abs(c1-1.5)<1e-12 and abs(c0+1/6)<1e-12\nassert abs(np.sum((np.array([0,1,3])-c0-c1*np.array([0,1,2]))**2)-1/6)<1e-12\nassert np.allclose(np.linalg.pinv(np.array([[3,4.]]))@[10],[1.2,1.6])\nassert abs(np.linalg.norm([1.2,1.6])-2)<1e-12\ntp=np.array([0,1,2.]); yp=np.array([0,1,3.])\nkk=np.linalg.lstsq(tp[:,None],yp,rcond=None)[0][0]; assert abs(kk-1.4)<1e-12\nres=yp-kk*tp; assert np.allclose(res,[0,-0.4,0.2]) and abs(res.sum()+0.2)<1e-12  # Prob 2, 7\nA3=np.array([[1,0],[1,1],[1,2.]]); assert np.allclose(A3.T@A3,[[3,3],[3,5]]) and np.allclose(A3.T@yp,[4,7])  # Prob 3\ns4=np.linalg.svd(np.diag([-4,2.]),compute_uv=False); assert np.allclose(s4,[4,2]) and np.isclose(s4[0]/s4[1],2)  # Prob 4\na=np.ones(3); y6=np.array([1,2,3.]); c6=a@y6/(a@a); assert np.isclose(c6,2) and np.allclose(y6-c6*a,[-1,0,1]) and abs(a@(y6-c6*a))<1e-12  # Prob 6\nAp=np.linalg.pinv(np.array([[1,1],[0,0.]])); assert np.allclose(Ap,[[.5,0],[.5,0]]); assert np.allclose(Ap@[2,3],[1,1])\nassert np.allclose(np.array([[1,1],[0,0.]])@[1,1],[2,0])\nassert abs(1/(2*np.sqrt(1e-4*100))-5)<1e-12\n# Prob 13\nn=np.arange(1,11); s1,s0=np.polyfit(n,RE1,1)\nassert abs(RE1.sum()-343.1385)<1e-4 and abs(RE1.mean()-34.3139)<1e-4\nassert abs(np.sum((n-5.5)*RE1)-318.674)<1e-3 and np.isclose(np.sum((n-5.5)**2),82.5)\nassert abs(s1-3.863)<1e-3 and abs(s0-13.07)<1e-2\nassert abs(np.log(RE1.mean()/(2*np.pi))-1.698)<1e-3\ng=2*np.pi/np.log(RE1.mean()/(2*np.pi)); assert abs(g-3.70)<5e-3\nassert abs(s1/g-1.044)<1e-3\n# Prob 15 and 26 counts\nassert 25*3*2==150 and 150*3*2==900 and 450*2==900 and 900-400==500 and 900-800==100\nassert 900-500==400 and 400-200==200\n# Prob 16 count\nassert len(np.arange(-8,3.01,0.5))==23\n# Prob 21\nuu=np.linspace(-1,1,30); Vd=np.vander(uu,6)\nassert abs(np.linalg.cond(Vd.T@Vd)/np.linalg.cond(Vd)**2-1)<1e-6\n# Prob 23: ridge norm decreases with alpha\nA=np.array([[3,0],[4,5.]]); yv=np.array([1.,2.])\nnorms=[np.linalg.norm(np.linalg.solve(A.T@A+al*np.eye(2),A.T@yv)) for al in [1e-3,1e-1,1,10,100]]\nassert all(norms[i+1]<norms[i] for i in range(4))\n# Prob 24: augmented singular values\nal=0.5; At=np.vstack([A,np.sqrt(al)*np.eye(2)])\nassert np.allclose(np.linalg.svd(At,compute_uv=False),np.sqrt(np.linalg.svd(A,compute_uv=False)**2+al))\n# Prob 25: alpha*=1e-4, minimum MSE 0.5, alpha=0 gives 1\nsig,ep,x=0.01,0.01,1; a_=ep**2/x**2; mse=lambda al:(al**2*x**2+sig**2*ep**2)/(sig**2+al)**2\nassert abs(a_-1e-4)<1e-15 and abs(mse(a_)-0.5)<1e-12 and abs(mse(0)-1)<1e-12\nassert mse(a_)<mse(0.9*a_) and mse(a_)<mse(1.1*a_)\nprint('all checks passed')\n",
+ "new_figures": {},
+ "notes": "All issues applied, but three only partly. (1) Sensitivity-figure issue: I added guidance on how to read the figure but did not quote specific singular-value ratios. Those numbers would need the qmnt computation at N=6000, and I could not verify their values here. Quoting unverified numbers would break the bible's no-invented-numbers rule. (2) Answer 19: I give verified bounds (three-frequency model below 1e-10; grid model above 0.015 out of window and below 1e-6 in window; wave rms about 0.171) instead of exact values of the grid-model error, and I softened the conclusion to match. (3) Contract issue for Chapters 4 and 5: the prerequisite items are now recalls rather than requirements; the reminders needed are already in the text (machine epsilon value, the cosine basis and the RE2 formula restated). The Hilbert-matrix number left with the didyouknow boxes, so no check is needed for it. Problem moved: the old Problem 26 is now 22. Answers renumbered to 24 (augmented) and 26 (saturation), with new full answers for the now odd Problems 23 and 25. The cross-reference 'Problem 24' is updated to 25. Fixed a sixth-digit slip in the damped-step sample: 0.186696 is now 0.186695."
 }

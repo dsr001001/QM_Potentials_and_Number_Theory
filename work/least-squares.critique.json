@@ -2,148 +2,197 @@
  {
   "category": "RULE",
   "severity": "high",
-  "quote": "\\section{Paper connection}\\label{sec:least-squares-paper}",
-  "problem": "The chapter has no figure scripts: it includes eight figures (line, projection, svd, filter, poly, degree, re2, sensitivity) but, as supplied, no FIGURES part was provided.",
-  "fix": "Add a FIGURES section with a ### FIG script for each of least-squares_line, _projection, _svd, _filter, _poly, _degree, _re2 and _sensitivity."
- },
- {
-  "category": "RULE",
-  "severity": "high",
-  "quote": "\\prob{2}{Using qmnt, build the sensitivity matrix $A_{nk}$ for the first 100 levels",
-  "problem": "Problem numbering contradicts the answers. The problem list has 28 problems, but answers refer to 'Problem 24' (best ridge strength) and 'Problem 27' (kappa of RE4), and the problem order differs. Problem 22 ('Prove ridge limits') is answered under 23, and so on. The ridge sample cites 'Problem~24' and the polynomial text cites 'Problem~27' and 'Problem~18'.",
-  "fix": "Renumber consistently and fix all cross-references and answer labels to match the actual problem order."
+  "quote": "On 1 January 1801 Giuseppe Piazzi discovered Ceres. He tracked it for only about six weeks",
+  "problem": "The chapter uses a `didyouknow` environment three times (Ceres, Turing, Tikhonov). The bible's list of preamble environments does not include it, so it may not compile. The boxes also state historical facts and a number (Hilbert matrix condition number about 10^13) that are neither cited with an allowed key nor verified in CHECKS.",
+  "fix": "Remove the three didyouknow boxes and the DYK-BEGIN/END comments, or fold the content into ordinary prose. If the Hilbert-matrix number is kept, add `assert 1e13 < np.linalg.cond(scipy.linalg.hilbert(10)) < 1e14` to CHECKS."
  },
  {
   "category": "RULE",
   "severity": "medium",
-  "quote": "\\textbf{3.} $A^\\top A = \\begin{pmatrix}3&3\\\\3&5\\end{pmatrix}$",
-  "problem": "Answers must cover every odd-numbered problem and all \\prob{1}. Odd problems 19, 21 and 23 are answered, but their numbers do not match the problem list. Answers 1 and 2 are run together with no paragraph break.",
-  "fix": "Add the missing answers after renumbering and put a blank line between answers."
+  "quote": "$A^\\top A = \\mathrm{diag}(16,4)$, so $\\sigma_1 = 4$, $\\sigma_2 = 2$, $\\kappa = 2$.",
+  "problem": "CHECKS does not recompute every numerical answer, as the bible requires. Missing: Answers 2, 3, 4, 6, 15, 23 and 25; the intermediate sums of Answer 13 (343.1385, 318.674, 82.5); the damped-sample intermediates (1.26491, 0.63246, 0.147595, 0.410288); and the checkpoint numbers. The 'Prob 7' check `abs(1.4-7/5)<1e-15` is vacuous.",
+  "fix": "Add assertions for each: SVD of diag(-4,2); A^T A and A^T y for Problem 3; projection (2,2,2); Problem 7 slope via lstsq on the no-intercept model with residuals (0,-0.4,0.2); coefficient counts 150/900/900; the sums in Answer 13; the gains and u_j^T r in the damped step."
  },
  {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "which by \\cref{eq:least-squares-dS0}'s general form $\\partial S/\\partial c = -2A^\\top r$",
-  "problem": "The cited equation is the line-specific derivative; the general-form gradient is derived in an unlabeled align block. The sentence is awkward and the reference is misleading.",
-  "fix": "Label the general gradient equation (e.g. eq:least-squares-grad) and cite it."
- },
- {
-  "category": "ERROR",
+  "category": "RULE",
   "severity": "medium",
-  "quote": "The denominator in \\cref{eq:least-squares-line-sol} equals $m\\sum_i (t_i-\\bar t)^2$. To see this, expand the square:",
-  "problem": "The expansion's second line, '-2(\\sum t_i)^2/m + (\\sum t_i)^2/m', is correct, but the step 2\\bar t\\sum t_i=2(\\sum t)^2/m and m\\bar t^2=(\\sum t)^2/m is not shown.",
-  "fix": "Show the two substitutions separately."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Sample Problem~\\ref{sec:least-squares-line}.1 data",
-  "problem": "The sample is not a labeled item and the reference points to a section label; the rendered text will read 'Sample Problem 1.1' wrongly.",
-  "fix": "Write 'the first Sample Problem' or label the sample properly."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The ridge gain is $g(\\sigma) = \\sigma/(\\sigma^2+\\alpha)$. By the quotient rule,",
-  "problem": "Claim that 'no component is amplified by more than 1/(2\\sqrt\\alpha)' is correct, but the Problem about relative form says the max is at sigma/sigma_1=0.01, consistent. No error there; however the Sample claim 'filter factor exactly 1/2 cancels the noise exactly' is correct only because noise equals signal; fine. The step 'c_2 = 0.01*0.02/(1e-4+alpha)' is fine.",
-  "fix": "No change needed to this passage."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Typically the noise has comparable components along every pattern $u_j$ (it has no reason to prefer one), while a smooth true signal has components",
-  "problem": "Unproved claim (Picard-type condition) presented as typical without justification or the needed probability.",
-  "fix": "Label it explicitly as a heuristic and note it is problem-dependent."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Numerically its rank is $6$ (CHECKS), so its columns are independent",
-  "problem": "The textbook text refers a reader to a hidden script for a rank claim; a student cannot follow it.",
-  "fix": "Give the numerical singular values in the text or say 'computed with numpy.linalg.matrix_rank' with the code shown."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "in the variable $u$ the condition number is far smaller (the CHECKS script confirms a reduction by more than a factor 100)",
-  "problem": "The reader cannot see CHECKS and no number is given.",
-  "fix": "Quote the two condition numbers (computed in CHECKS) in the text."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "The singular values are unique; the singular vectors are unique up to sign when the $\\sigma_j$ are distinct",
-  "problem": "Stated without proof or beyond-box; also fails for zero singular values (null vectors not unique).",
-  "fix": "Say 'nonzero distinct sigma_j' and note that uniqueness follows from uniqueness of eigenvalues of A^T A."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Rotations and reflections are orthogonal matrices.",
-  "problem": "Stated without justification; students know only rotations in 2D/3D.",
-  "fix": "Add one line: rotations preserve lengths and angles, hence orthonormal columns."
- },
- {
-  "category": "JUMP",
-  "severity": "low",
-  "quote": "The mean spacing at $t = 34.31$ is $2\\pi/\\log(34.31/2\\pi)$",
-  "problem": "Answer cites a formula from Chapter 17; acceptable, but 'about 4% larger' reasoning is hand-wavy.",
-  "fix": "State 3.863/3.70=1.044 explicitly."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Chapter~\\ref{ch:perturbation} derives the fact we take on trust here",
-  "problem": "Chapter 13 precedes this chapter? No: Ch.13 follows Ch.9, so the reader has not seen first-order perturbation; also quantum symbols psi_n are not yet defined. The forward reference is flagged but the 'beyond' status is not.",
-  "fix": "Put this in a beyond box stating it is taken on trust until Chapter 13."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "Ridge removes the damage that unregularized fitting does in poorly constrained directions (\\cref{eq:least-squares-noise}); it cannot add information the parametrization lacks.",
-  "problem": "Attributes the paper's gap damage to the noise-amplification mechanism; the paper only says heuristically that the optimizer places structure where only held-out levels probe.",
-  "fix": "Hedge: 'is consistent with' and cite the paper's heuristic explanation."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "low",
-  "quote": "which explains why near-perfect in-sample agreement is unsurprising and, as RE4 showed, carries no information about held-out levels.",
-  "problem": "The paper does not claim this derivation; it is the chapter's heuristic and RE4 does not 'show' it for the operator.",
-  "fix": "Say 'suggests' and mark as heuristic."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "With 800 training zeros it gives $0.100/{+0.94}$ (Table~IV); note that even then $900 > 800$",
-  "problem": "The paper's budget table is Table IV in the bible (budget comparison), but the paper's text labels it Table~\\ref{tab:budget}; fine. However the claim of a null space at least 100 treats 900 coefficients on 800 equations, correct. No error; but C1 'stays within 0.005 of the null (0.258 against 0.263)' is correct.",
-  "fix": "No change."
+  "quote": "(CHECKS verifies both statements): exact in-window agreement, no continuation.",
+  "problem": "Reader-facing text refers to the internal CHECKS script (Answers 17, 19 and 21), which the reader never sees. Answer 19 also gives no numbers. Its only evidence is a bound of 'more than a tenth of the rms', which does not support the strong conclusion 'no continuation'.",
+  "fix": "Delete all mentions of CHECKS from the chapter. In Answer 19 quote the computed rms errors of both models on 60<t<=100 and the rms of the wave, and assert those values in CHECKS. In Answer 21 quote the two condition numbers."
  },
  {
   "category": "CLARITY",
   "severity": "medium",
-  "quote": "Equation~\\cref{eq:least-squares-min-identity} is Pythagoras' theorem",
-  "problem": "The figure/shadow analogy is fine, but the sunlight analogy requires rays perpendicular to the table, only true at noon; minor. More importantly no figure of the ridge effect on the ill-conditioned example.",
-  "fix": "Optionally clarify the noon-sun analogy."
+  "quote": "$\\mu$ is a ridge strength measured relative to $\\sigma_1^2$, the same device as $\\lambda$ in \\cref{eq:least-squares-ridge-rel}",
+  "problem": "The reader has just been told that λ enters the same denominator as step damping. A damped step only shortens each iteration; iterated to convergence it does not change the final fit. The chapter does not explain why adding μσ1² to the same denominator regularizes the result, yet goes on to say the fit 'is pulled toward δc = 0', which conflates the step δc with the total coefficient vector c.",
+  "fix": "Add two sentences: λ is adapted and driven small on success, so it controls only step length; μ is a fixed term that remains in the filter throughout. State honestly that this chapter does not derive how a fixed μ in the step filter changes the converged fit (defer to Chapter 24 and the Zenodo record). Replace 'pulled toward δc = 0' with 'the fitted correction stays closer to c = 0'."
  },
  {
-  "category": "LATEX",
-  "severity": "low",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/least-squares_line.pdf}",
-  "problem": "Figure filenames use a hyphenated slug 'least-squares_...' which is fine, but the figure scripts are missing so compilation fails.",
-  "fix": "Supply the scripts."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "In this step $\\lambda$ is the Levenberg--Marquardt damping (the book's notation, Section~6 of the bible: $\\lambda$ for damping, $\\mu$ for ridge strength).",
-  "problem": "Refers to 'the bible' in the textbook text, which readers do not have.",
-  "fix": "Say 'the book's notation (Appendix B)'."
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "This is why the paper, like library routines such as \\texttt{numpy.linalg.lstsq}, works with the SVD.",
+  "problem": "The paper does not say why it uses an SVD-damped step. The chapter attributes a motive (avoiding the squared condition number) that the paper never states.",
+  "fix": "Replace with: 'Library routines such as numpy.linalg.lstsq therefore work with the SVD, and the paper's update (Appendix A step 6) is also written in SVD form, which in addition makes the damping filter explicit.'"
  },
  {
   "category": "ERROR",
   "severity": "low",
-  "quote": "\\textbf{2.} The condition $\\partial S/\\partial c_0 = 0$ is $-2\\sum r_i = 0$ \\cref{eq:least-squares-dS0}. In general the normal equations say $a_k^\\top r = 0$ for each column; the intercept's column is all ones, so $\\sum_i r_i = 0$. For $y = c_1 t$ there is no column of ones; the only condition is $\\sum t_ir_i = 0$, and $\\sum r_i$ need not vanish (for Problem~7's fit, residuals are $0,\\ -0.4,\\ 0.2$, sum $-0.2$).",
-  "problem": "Answer 2 is correct, but the references 'Problem 7' and 'Problem 1' are fine; residual for t=1: 1-1.4=-0.4, t=2: 3-2.8=0.2. OK. However answer text merges with the next answer without line break (LaTeX renders them in one paragraph).",
-  "fix": "Insert a blank line before '\\textbf{3.}'."
+  "quote": "$y_j$ & 0.1500 & 0.5242 & 1.0855 & 0.7132",
+  "problem": "sin(1.4) = 0.98544973, so y_2 = 1.08544973, which rounds to 1.0854, not 1.0855. The CHECKS tolerance of 6e-5 hides the error.",
+  "fix": "Change 1.0855 to 1.0854 in the table and in the CHECKS array, and tighten the tolerance to 5e-5."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Similarly, Table~III notes that its odd/even splits have 200 training levels at scale~1",
+  "problem": "The quoted words 'so the rows with $M\\ge200$ are saturated' come from the Sec. III paragraph 'Within-height splits', not from Table III. The Table III caption is worded differently ('rows with M at or above that number are saturated').",
+  "fix": "Write 'Similarly, Sec.~III notes that the odd/even splits of Table~III have 200 training levels at scale~1, ...'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "are explained in Part~II (Chapters~\\ref{ch:schrodinger}, \\ref{ch:perturbation} and~\\ref{ch:finite-differences})",
+  "problem": "Chapter 23 (finite-differences) is in Part V, not Part II.",
+  "fix": "Write 'are explained in Part~II (Chapters~\\ref{ch:schrodinger} and~\\ref{ch:perturbation}) and in Chapter~\\ref{ch:finite-differences}'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "is symmetric with positive eigenvalues, so its singular values equal its eigenvalues",
+  "problem": "This fact is used here, and again for A^T A in the floating-point paragraph, but it is never derived in the body. It appears only in Answer 21.",
+  "fix": "Add one line where first used: 'If B is symmetric with eigenvalues β_j ≥ 0 and orthonormal eigenvectors q_j, then B^T B = B^2 has eigenvalues β_j^2 with the same eigenvectors, so the singular values are sqrt(β_j^2) = β_j.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "If $\\varrho < m$, extend $u_1,\\dots,u_\\varrho$ by further unit vectors",
+  "problem": "The construction silently assumes ϱ ≤ m. Step 6 needs this too: when M > m it requires σ_j = 0 for all j > m. It is never stated or proved.",
+  "fix": "Insert after Step 3: 'The u_1,…,u_ϱ are ϱ orthonormal vectors in m-dimensional space, and at most m vectors there can be orthonormal (Chapter 7), so ϱ ≤ m. Of course also ϱ ≤ M.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "points opposite to the gradient of $S$: the direction of steepest descent",
+  "problem": "'Gradient' and 'steepest descent' are never defined. The reader knows only single-variable calculus plus the partial derivatives introduced in this chapter.",
+  "fix": "Add: 'The gradient of S is the vector of its partial derivatives (∂S/∂c_1,…,∂S/∂c_M) = −2A^T r; a small step opposite to it decreases S fastest (shown in Chapter 24).'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Call the rms residual on the ten data points the \\emph{training error}",
+  "problem": "'rms' is used throughout the chapter (and in the paper section) but is never defined here. Its formal definition comes in Chapter 19.",
+  "fix": "Define on first use: 'the root mean square (rms) of numbers r_1,…,r_m is sqrt((1/m)Σ r_i^2) = ‖r‖/sqrt(m)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "to $y_n = n-\\tfrac12 - N_{\\rm sm}(t_n)$ at the training zeros",
+  "problem": "N_sm is used without a reminder of its meaning; it is defined in Chapter 17. The bible macro \\Nsm is not used either.",
+  "fix": "Add '(\\Nsm is the smooth zero-counting function of the paper's Eq. (1), Chapter~\\ref{ch:counting-zeros}; here it is just a known function of t)' and use \\Nsm."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Let $\\hat c$ be any solution of \\cref{eq:least-squares-normal}",
+  "problem": "When the columns of A are dependent, the chapter never shows that the normal equations have a solution. The later SVD section shows minimizers exist but does not link them back to the normal equations.",
+  "fix": "Add a forward note: 'A solution always exists; we show this in \\cref{sec:least-squares-pinv}, where c^+ is constructed and satisfies A^T(y − Ac^+) = 0', and verify that identity in one line in the pseudo-inverse section."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "has singular values $1/\\sigma_j$, the largest being $1/\\sigma_M$",
+  "problem": "This is asserted without argument. V Σ^{-1} U^T is not in standard SVD order, and the reader is not told why it is nonetheless an SVD of A^{-1}.",
+  "fix": "Add: 'Check: (VΣ^{-1}U^T)(UΣV^T) = I. This has the form orthogonal × diagonal × orthogonal with positive entries 1/σ_j, so after reordering it is an SVD of A^{-1}.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "a nonzero polynomial of degree at most $9$ has at most $9$ roots",
+  "problem": "The root-count fact is used without proof or reference.",
+  "fix": "Add a one-line justification (each root t_0 lets you factor out (t − t_0), lowering the degree by one) or state it explicitly as a standard algebra result taken on trust."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "That is the rotate--stretch--rotate picture in words.",
+  "problem": "The bible allows en dashes only for numeric ranges and paired names. 'rotate--stretch--rotate' (several places, including a figure caption) and 'matrix--vector product' break this rule.",
+  "fix": "Write 'rotate, stretch, rotate' and 'matrix-vector product' (hyphen)."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "Equation~\\cref{eq:least-squares-min-identity} is Pythagoras' theorem",
+  "problem": "\\cref already prints the word 'eq.', so this typesets as 'Equation eq. (9.x)'. The same happens in 'Equations \\cref{...} and \\cref{...} are the normal equations'. Elsewhere a bare \\cref trails a statement with no parentheses, which reads oddly.",
+  "fix": "Use \\Cref{...} alone at sentence starts, or 'Equation~\\eqref{...}'. In the key ideas and summary write '(\\cref{...})'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Chapter~\\ref{ch:fourier-series}: sinusoids $\\sin(\\omega t)$, $\\cos(\\omega t)$, the cosine basis",
+  "problem": "The bible contract for Chapter 9 says it assumes Chapters 7–8. The chapter also assumes Chapters 4 and 5 (machine epsilon, cosine basis, RE2).",
+  "fix": "Either get the contract amended, or make these uses self-contained: one-line reminders of machine epsilon, of cos(kπx/L), and of the prime-2 wave as a given formula, marked as recalls rather than prerequisites."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Extrapolation succeeds only when the basis contains the true form (RE2 with the right frequencies)",
+  "problem": "'Only' is a general claim drawn from two toy examples. It also sits badly with the paper's control C2, which extrapolates well without being given the true frequencies (a sparsity prior suffices).",
+  "fix": "Soften to: 'In these examples extrapolation succeeded when the model family contained the true form, and failed for a large generic basis; more coefficients did not help.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "shows the singular values of $A_{nk}$ computed with the companion library \\texttt{qmnt}",
+  "problem": "The text never says what the reader should see in the sensitivity figure (range, decay, any gap in the singular values). Only the trivial count of 400 is discussed, so the figure carries no stated lesson.",
+  "fix": "Add two or three sentences describing the computed spectrum (for example σ_400/σ_1 for M = 400 and M = 900 and what that implies about poorly constrained directions), and assert the quoted values in CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the test error at $d=9$ is far larger than at $d=3$",
+  "problem": "'Far larger' and 'much larger' are quantitative claims with no numbers. CHECKS asserts only a factor above 2.",
+  "fix": "Quote the computed test errors at d = 1, 3 and 9 in the text and assert them in CHECKS."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Ridge regularization of the degree-9 or degree-15 fit pulls the coefficients toward zero and tames the wiggles",
+  "problem": "'Tames the wiggles' is a claim about a computed result that is neither shown nor checked.",
+  "fix": "Either add a short numerical demonstration (test error of the degree-9 fit with, say, λ = 1e-3 against λ = 0, asserted in CHECKS), or reword to 'pulls the coefficients toward zero; whether that improves predictions is examined in Chapter 25'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "we use powers of the rescaled variable $u = t/3.15 - 1$",
+  "problem": "The symbol u is already used for the left singular vectors u_j. Likewise m is the number of data points throughout, but becomes the harmonic or prime-power index in the RE2 formula and in 'm log p'.",
+  "fix": "Rename the rescaled variable (for example τ) in the text, listing and Problem 21. Where m is reused in the RE2 equation add '(here m is the harmonic index, as in the paper's Eq. (4), not the number of data points)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The second formula is \\cref{eq:least-squares-ne1} solved for $c_0$. Dividing it through by $m$ shows",
+  "problem": "The second formula is already divided by m, so 'dividing it through by m' is confusing.",
+  "fix": "Write: 'Splitting the fraction term by term shows c_0 = ȳ − c_1 t̄'."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "least squares is the statistically most probable fit; this is discussed in Chapter~\\ref{ch:probability}",
+  "problem": "'Most probable fit' is imprecise: least squares maximizes the probability of the data given the coefficients. The promise that Chapter 19 discusses this is also not backed by that chapter's contract.",
+  "fix": "Write: 'least squares picks the coefficients under which the observed data are most probable (see the box below)', and drop the promise about Chapter 19."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "a step is accepted only if it lowers the rms by the factor $0.999$",
+  "problem": "The paper's record lists an exception: the scale-2 M=300 row used an acceptance factor of 1 − 10^{-5}. The chapter presents 0.999 as universal.",
+  "fix": "Add: '(one row of Table I, scale 2 with M = 300, used the looser threshold 1 − 10^{-5}; the paper reports it as a sensitivity result)'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Redo the interpolation-versus-extrapolation sample with the middle point measured as $1.2$",
+  "problem": "The problems are meant to be graded in order, but this difficulty-2 problem sits after the difficulty-3 block.",
+  "fix": "Move it before the first \\prob{3}, then renumber the cross-references to Problems 24 and 27 and the matching answers."
  }
 ]
