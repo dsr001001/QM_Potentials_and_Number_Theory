@@ -13,6 +13,8 @@ Where this shows up in the paper \cite{soniR1}: every bracketed interval in Secs
 \item Chapter~\ref{ch:fourier-transform}: the discrete Fourier transform (DFT) and the FFT, power spectrum, the Wiener--Khinchin connection between autocorrelation and power spectrum, and the basic idea of phase randomization.
 \item Chapter~\ref{ch:generalization}: training and held-out sets, in-sample and out-of-sample error, the null model, saturated models, serial correlation of the zero fluctuations, simple kriging.
 \item Chapter~\ref{ch:series}: the geometric series and its sum.
+\item Chapter~\ref{ch:least-squares}: linear least squares (used in one toy demonstration).
+\item Self-contained reminders, restated where used: the smooth counting function $\Nsm$, smooth zeros $s_n$ and mean spacing $\gap_n$ (Chapter~\ref{ch:counting-zeros}); the truncated explicit formula, Eq.~(4) of the paper (Chapter~\ref{ch:explicit-formula}); the density of primes (Chapter~\ref{ch:primes}). You do not need those chapters to follow this one.
 \item First-year physics: measurement uncertainty as an idea, averaging repeated measurements.
 \end{prerequisites}
 
@@ -171,7 +173,11 @@ For $n=3$ this is $\binom53=10$, matching the table. For $n=100$ held-out zeros 
 
 \subsection{The Monte Carlo bootstrap}
 
-Draw $B$ resamples at random (with a seeded generator, so the result is reproducible; Chapter~\ref{ch:probability}), compute $\hat\theta^*_1,\dots,\hat\theta^*_B$, and use their standard deviation as the standard error. The Monte Carlo step adds its own small error. How large is that error? We quote one standard statistical result without proof (see \cite{efron}). For $B$ independent Gaussian draws with standard deviation $\sigma$, the sample variance $s_B^2$ has variance $2\sigma^4/(B-1)$. Its relative standard deviation is therefore $\sqrt{2/(B-1)}$. The standard deviation is $s_B=\sqrt{s_B^2}$, and a small relative change $\epsilon$ in $s_B^2$ produces a relative change of about $\epsilon/2$ in $s_B$, because $\sqrt{1+\epsilon}\approx1+\epsilon/2$ to first order in Taylor's expansion. So the relative error of $s_B$ is about $\tfrac12\sqrt{2/(B-1)}\approx1/\sqrt{2B}$. This is a heuristic: it holds when the bootstrap distribution is close to Gaussian. For $B=2\times10^4$ it gives $0.5\%$, which is negligible next to the sampling uncertainty itself.
+Draw $B$ resamples at random (with a seeded generator, so the result is reproducible; Chapter~\ref{ch:probability}), compute $\hat\theta^*_1,\dots,\hat\theta^*_B$, and use their standard deviation as the standard error. The Monte Carlo step adds its own small error. How large is that error? We need one standard statistical result, which we take on trust.
+\begin{beyond}
+For $B$ independent Gaussian draws with standard deviation $\sigma$, the sample variance $s_B^2$ has variance $2\sigma^4/(B-1)$. This follows from the fact that $(B-1)s_B^2/\sigma^2$ has a chi-squared distribution with $B-1$ degrees of freedom; the proof is found in statistics texts and is beyond this book. We apply it to bootstrap replicates, which is accurate only when their distribution is close to Gaussian.
+\end{beyond}
+From this result, the relative standard deviation of $s_B^2$ is therefore $\sqrt{2/(B-1)}$. The standard deviation is $s_B=\sqrt{s_B^2}$, and a small relative change $\epsilon$ in $s_B^2$ produces a relative change of about $\epsilon/2$ in $s_B$, because $\sqrt{1+\epsilon}\approx1+\epsilon/2$ to first order in Taylor's expansion. So the relative error of $s_B$ is about $\tfrac12\sqrt{2/(B-1)}\approx1/\sqrt{2B}$. This is a heuristic: it holds when the bootstrap distribution is close to Gaussian. For $B=2\times10^4$ it gives $0.5\%$, which is negligible next to the sampling uncertainty itself.
 
 \begin{pycode}
 import numpy as np
@@ -216,7 +222,7 @@ The $95\%$ interval is the whole range of possible means: with $n=3$ the bootstr
 
 \subsection{A bootstrap interval from the paper, rerun}
 
-Table~V of the paper reports that the six-prime explicit formula (Eq.~(4) of the paper with $P=\{2,3,5,7,11,13\}$) predicts zeros 401--500 with rms $0.074$ and correlation $+0.96$, and its caption gives the bootstrap $95\%$ correlation interval $[+0.95,+0.97]$. We can rerun this. Recall the meanings: $t_n$ are the true zeros, $s_n$ the smooth zeros solving $\Nsm(s_n)=n-\tfrac12$, $\gap_n$ the local mean spacing, and the fluctuation of a zero (true or predicted) is $(t-s_n)/\gap_n$.
+Table~V of the paper reports that the six-prime explicit formula (Eq.~(4) of the paper with $P=\{2,3,5,7,11,13\}$) predicts zeros 401--500 with rms $0.074$ and correlation $+0.96$, and its caption gives the bootstrap $95\%$ correlation interval $[+0.95,+0.97]$. We can rerun this. We restate the ingredients so this section is self-contained (they are developed in Chapters~\ref{ch:counting-zeros} and \ref{ch:explicit-formula}). $t_n$ are the true zeros. $\Nsm(t)=\frac{t}{2\pi}\log\frac{t}{2\pi}-\frac{t}{2\pi}+\frac78$ is the smooth counting function (Eq.~(1) of the paper), and $s_n$ the smooth zeros solving $\Nsm(s_n)=n-\tfrac12$. $\gap_n=\dd s_n/\dd n$ is the local mean spacing. The truncated explicit formula (Eq.~(4) of the paper) is $\Nfl(t)=-\frac1\pi\sum_{p\in P}\sum_{m=1}^{3}\frac{\sin(mt\log p)}{m\,p^{m/2}}$, and its predicted zeros solve $\Nsm(t)+\Nfl(t)=n-\tfrac12$. The fluctuation of a zero (true or predicted) is $(t-s_n)/\gap_n$.
 
 \begin{sample}{Bootstrapping the oracle's held-out correlation}
 Using \texttt{qmnt}, compute the six-prime oracle's held-out rms and correlation on zeros 401--500, and a $95\%$ percentile interval for the correlation from $B=2\times10^4$ resamples of the 100 held-out levels.
@@ -281,11 +287,6 @@ A model's held-out rms is $0.369$ with bootstrap interval $[0.32,0.42]$, and the
 
 %======================================================================
 \section{When neighbors are correlated}\label{sec:controls-serial}
-% DYK-BEGIN
-\begin{didyouknow}{Galton Names Correlation}
-In 1888 Francis Galton introduced a numerical measure of what he called co-relation, studying how the forearm length and height of people vary together. Karl Pearson soon gave the formula its modern form. When neighboring data points are correlated, they carry less independent information than their number suggests, so naive error bars come out too small.
-\end{didyouknow}
-% DYK-END
 
 The bootstrap of Sec.~\ref{sec:controls-bootstrap} assumes independence. The fluctuations of consecutive zeros are \emph{not} independent: Chapter~\ref{ch:generalization} showed (and the paper's Sec.~III states) that they have negative autocorrelation at lags 1--3. How much does dependence change the standard error?
 
@@ -308,7 +309,7 @@ Count how many index pairs $(i,j)$ have $|i-j|=k$. For $k=0$ there are $n$ pairs
 &\equiv\frac{\gamma_0}{n}\,f_n .
 \label{eq:controls-varcorr}
 \end{align}
-The number $f_n$ is the \textbf{variance inflation factor}. Independent data have all $\rho_k=0$ and $f_n=1$, recovering Eq.~\eqref{eq:controls-varmean}. Positive correlations make $f_n>1$ (the data are partly redundant); negative correlations make $f_n<1$ (errors cancel between neighbors). The \textbf{effective sample size} is
+The number $f_n$ is the \textbf{variance inflation factor}. Independent data have all $\rho_k=0$ and $f_n=1$, recovering Eq.~\eqref{eq:controls-varmean}. If the weighted sum $\sum_k(1-k/n)\rho_k$ is positive, $f_n>1$ (the data are partly redundant); if it is negative (for example when negative short-lag correlations dominate), $f_n<1$ (errors partly cancel between neighbors). The \textbf{effective sample size} is
 \begin{equation}
 n_{\rm eff}=n/f_n,
 \label{eq:controls-neff}
@@ -388,7 +389,7 @@ For the paper, two cautions apply. First, the zero fluctuations are negatively c
 \end{figure}
 
 \begin{checkpoint}
-Consecutive spacings between zeros are anticorrelated. Would the independent bootstrap overstate or understate the uncertainty of the \emph{mean} fluctuation of a block of zeros?
+The fluctuation sequence of the zeros has negative autocorrelation at lags 1--3 (and, suppose, negligible correlation beyond). Would the independent bootstrap overstate or understate the uncertainty of the \emph{mean} fluctuation of a block of zeros?
 \end{checkpoint}
 \checkanswer{Overstate. Negative short-lag autocorrelation gives $f_n<1$ in Eq.~\eqref{eq:controls-varcorr}, so the true variance of the mean is smaller than the independent formula.}
 
@@ -484,7 +485,7 @@ print(np.std(reps))
 \end{pycode}
 
 \begin{beyond}
-For stationary sequences whose correlations die out fast enough, the moving and circular block bootstraps are consistent provided $\ell\to\infty$ and $\ell/n\to0$ as $n\to\infty$. The proofs, and rules for choosing $\ell$ (it should grow roughly like $n^{1/3}$ for variance estimation), are in the specialized literature and beyond this book. For $n=100$ held-out levels and correlations lasting a few lags, block lengths 3 to 20 bracket every sensible choice.
+For stationary sequences whose correlations die out fast enough, the moving and circular block bootstraps are consistent provided $\ell\to\infty$ and $\ell/n\to0$ as $n\to\infty$. The proofs, and rules for choosing $\ell$ (it should grow roughly like $n^{1/3}$ for variance estimation), are in the specialized literature and beyond this book. For $n=100$ held-out levels and correlations lasting a few lags, block lengths 3 to 20 span the plausible range around the $n^{1/3}\approx5$ rule of thumb ($100^{1/3}=4.64$).
 \end{beyond}
 
 \begin{pitfall}
@@ -499,7 +500,7 @@ What does the circular block bootstrap with $\ell=1$ reduce to?
 \begin{keyideas}
 \item Block bootstraps resample stretches of $\ell$ consecutive points, preserving dependence within blocks.
 \item The circular version wraps around so every point appears in exactly $\ell$ blocks.
-\item For the mean, the circular block variance is Eq.~\eqref{eq:controls-cbbvar}: autocovariances up to lag $\ell-1$, Bartlett-weighted.
+\item For the mean, the circular block variance is Eq.~\eqref{eq:controls-cbbvar}: autocovariances up to lag $\ell-1$, weighted by $1-k/\ell$ (triangular, or Bartlett, weights).
 \item Choose $\ell$ longer than the correlation range, much shorter than $n$; report sensitivity over a range.
 \end{keyideas}
 
@@ -516,6 +517,8 @@ Uncertainty intervals tell you how precisely a score is known. A different kind 
 \item The \textbf{p-value} is the probability, computed assuming $H_0$, of a statistic at least as extreme as the one observed: $p=P_{H_0}(T\ge T_{\rm obs})$.
 \end{itemize}
 A small $p$ means the data would be surprising under $H_0$. It is \emph{not} the probability that $H_0$ is true; it is a statement about data given a hypothesis.
+
+\emph{A note on symbols.} Several letters do double duty in this chapter, as in the paper. $T$ is a test statistic here, but the length of a training window in $t$ in Sec.~\ref{sec:controls-posthoc}. $N$ in Eq.~\eqref{eq:controls-mcp} is a number of surrogates, not a grid size or the counting function. $p$ is a p-value, except in $p^m$ and $\log p$, where it is a prime. $q$ is a DFT index, a quantile level, a prime power or an exceedance probability, depending on context. $\mu$ is a mean (not the ridge strength), $\rho_k$ an autocorrelation (not a zeta zero), and $\phi_q$ a random phase (not a basis function). The surrounding text always says which meaning is intended.
 
 \subsection{Exchangeability and the permutation idea}
 
@@ -544,7 +547,7 @@ With three values per group, even a clear-looking separation is not surprising: 
 
 To test whether a prediction $a_j$ is associated with the truth $b_j$, take $H_0$: ``the pairing is irrelevant''. Randomly permute the $b_j$ among the levels, recompute the correlation, and repeat. The fraction of permuted correlations at least as large as the observed one is the p-value.
 
-Be careful about what this $H_0$ includes. Permuting the $b_j$ assumes that, absent association, \emph{every} ordering of the $b_j$ was equally likely. If the true fluctuations are serially correlated (they are) and the predictions are smooth (fitted potentials produce smooth level shifts), then unpermuted pairs share slow trends that random permutations destroy. A permutation test can then report ``significant'' association produced by shared serial structure rather than by skill. The cure is the same as for the bootstrap: respect the dependence (for example, by circularly shifting one sequence relative to the other instead of shuffling it), or use surrogates that preserve the serial structure (Sec.~\ref{sec:controls-surrogates}).
+Be careful about what this $H_0$ includes. Permuting the $b_j$ assumes that, absent association, \emph{every} ordering of the $b_j$ was equally likely. If the true fluctuations are serially correlated (they are) and the predictions are also serially correlated (for example, a smooth interpolation), then unpermuted pairs can share slow trends that random permutations destroy. A permutation test can then report ``significant'' association produced by shared serial structure rather than by skill. The cure is the same as for the bootstrap: respect the dependence (for example, by circularly shifting one sequence relative to the other instead of shuffling it), or use surrogates that preserve the serial structure (Sec.~\ref{sec:controls-surrogates}).
 
 \subsection{Monte Carlo tests and the size of an ensemble}
 
@@ -567,7 +570,7 @@ A statistic is computed on real data and on 200 surrogate data sets; none of the
 \textbf{Step 3:} Interpretation: the result is limited by the ensemble size, not by how far the real value is from the surrogates. To claim $p<10^{-4}$ you need at least $10^4$ surrogates.
 
 \[
-\boxed{p\le1/201\approx0.005\ \ (N=200),\qquad p\le1/101\approx0.010\ \ (N=100)}
+\boxed{p=1/201\approx0.005\ \ (N=200),\qquad p=1/101\approx0.010\ \ (N=100)}
 \]
 \end{sample}
 
@@ -606,7 +609,7 @@ Recall from Chapter~\ref{ch:fourier-transform} the DFT of a length-$n$ sequence,
 D_q=\sum_{j=0}^{n-1}d_j\,e^{-2\pi i jq/n},\qquad d_j=\frac1n\sum_{q=0}^{n-1}D_q\,e^{2\pi i jq/n},
 \label{eq:controls-dft}
 \end{equation}
-(indices from $0$ here, as in \texttt{numpy}). For real $d$, replacing $q$ by $n-q$ gives $e^{-2\pi i j(n-q)/n}=e^{-2\pi ij}e^{2\pi ijq/n}=e^{2\pi ijq/n}$, so
+(indices from $0$ here, as in \texttt{numpy}). For real $d$, replacing $q$ by $n-q$ gives $e^{-2\pi i j(n-q)/n}=e^{-2\pi ij}e^{2\pi ijq/n}=e^{2\pi ijq/n}$, hence $D_{n-q}=\sum_jd_je^{2\pi ijq/n}$. On the other hand, conjugating $D_q$ term by term gives $D_q^*=\sum_jd_j^*e^{2\pi ijq/n}=\sum_jd_je^{2\pi ijq/n}$, because $d_j$ is real. The two are equal:
 \begin{equation}
 D_{n-q}=D_q^*,
 \label{eq:controls-hermsym}
@@ -615,7 +618,7 @@ where the star is the complex conjugate. In particular $D_0=\sum_jd_j$ is real, 
 
 The \textbf{phase-randomized surrogate} (Theiler and co-workers \cite{theiler}) multiplies each $D_q$ by a random phase factor $e^{i\phi_q}$, $\phi_q$ uniform in $[0,2\pi)$, with two constraints that keep the result real: $\phi_{n-q}=-\phi_q$ (so Eq.~\eqref{eq:controls-hermsym} still holds), and $\phi_0=0$ (and $\phi_{n/2}=0$ for even $n$), so the real coefficients stay real. Then invert the DFT. Every magnitude $|D_q|$ is unchanged.
 
-\emph{What is preserved.} The mean (because $D_0$ is untouched), the power spectrum $|D_q|^2$ by construction, and hence the circular autocorrelation. To see the last claim, define the circular autocorrelation $c_k=\sum_{j=0}^{n-1}d_jd_{(j+k)\bmod n}$ and compute its DFT:
+\emph{What is preserved.} The mean (because $D_0$ is untouched), the power spectrum $|D_q|^2$ by construction, and hence the circular autocorrelation. To see the last claim, define the circular lag-product sum (an unnormalized, uncentered autocorrelation) $c_k=\sum_{j=0}^{n-1}d_jd_{(j+k)\bmod n}$ and compute its DFT:
 \begin{align}
 C_q&=\sum_{k=0}^{n-1}c_k\,e^{-2\pi ikq/n}=\sum_{j=0}^{n-1}d_j\sum_{k=0}^{n-1}d_{(j+k)\bmod n}\,e^{-2\pi ikq/n}.
 \end{align}
@@ -624,9 +627,12 @@ Put $l=(j+k)\bmod n$. As $k$ runs over $0,\dots,n-1$ with $j$ fixed, $l$ runs ov
 C_q=\Big(\sum_{j}d_je^{2\pi ijq/n}\Big)\Big(\sum_{l}d_le^{-2\pi ilq/n}\Big)=D_q^*D_q=|D_q|^2 .
 \label{eq:controls-wk}
 \end{equation}
-This is the discrete Wiener--Khinchin theorem of Chapter~\ref{ch:fourier-transform}. Since $c_k$ is recovered from $C_q$ by the inverse DFT, two sequences with the same $|D_q|$ have the same circular autocorrelation at every lag. By Parseval's theorem, $\sum_jd_j^2=c_0=\frac1n\sum_q|D_q|^2$, so the variance is preserved too.
+This is the discrete Wiener--Khinchin theorem of Chapter~\ref{ch:fourier-transform}. Since $c_k$ is recovered from $C_q$ by the inverse DFT, two sequences with the same $|D_q|$ have the same $c_k$ at every lag. By Parseval's theorem, $\sum_jd_j^2=c_0=\frac1n\sum_q|D_q|^2$, so the variance is preserved too. Finally, with $\bar d$ the mean, $\sum_j(d_j-\bar d)(d_{(j+k)\bmod n}-\bar d)=c_k-n\bar d^2$, so the centered, normalized circular autocorrelation $(c_k-n\bar d^2)/(c_0-n\bar d^2)$ (the circular version of $\rho_k$) is built from preserved quantities and is preserved as well.
 
-\emph{What is destroyed.} The specific phases: \emph{where} each oscillation is at each index, and how oscillations at different frequencies line up. A sawtooth, for example, owes its shape to harmonics locked in phase; randomizing the phases turns it into a smooth, irregular wiggle with the same spectrum. The marginal distribution generally changes; a sum of many components with random phases tends to look Gaussian (a consequence of the central limit theorem, which we do not prove).
+\emph{What is destroyed.} The specific phases: \emph{where} each oscillation is at each index, and how oscillations at different frequencies line up. A sawtooth, for example, owes its shape to harmonics locked in phase; randomizing the phases turns it into a smooth, irregular wiggle with the same spectrum. The marginal distribution generally changes; a sum of many components with random phases tends to look Gaussian (see the box).
+\begin{beyond}
+The tendency of a sum of many independent random contributions to have a nearly Gaussian distribution is the central limit theorem. We use it here only qualitatively and take it on trust; \cite{rhb} states and discusses it, and full proofs are in probability texts.
+\end{beyond}
 
 \begin{sample}{Phase randomization by hand}
 Let $d=(1,2,0,-1)$, $n=4$. Compute its DFT, rotate the phase of $D_1$ by $\phi=\pi/4$ (and $D_3$ by $-\pi/4$), invert, and check that the circular autocorrelation is unchanged.
@@ -710,7 +716,7 @@ specific phases (where each oscillation is) & $\times$ & $\times$ & $\times$\\
 \end{figure}
 
 \begin{pitfall}
-The DFT treats a sequence as one period of a periodic signal. If $d_0$ and $d_{n-1}$ are far apart, the periodic extension has a jump, the jump contributes spurious high-frequency power, and the phase-randomized surrogates inherit that power. For zero \emph{positions} (as opposed to fluctuations) there is a further constraint: a zero sequence must be increasing, which is why the paper's step 23 uses ``sorted phase-randomized surrogates''.
+The DFT treats a sequence as one period of a periodic signal. If $d_0$ and $d_{n-1}$ are far apart, the periodic extension has a jump, the jump contributes spurious high-frequency power, and the phase-randomized surrogates inherit that power. For zero \emph{positions} (as opposed to fluctuations) there is a further constraint: a zero sequence must be increasing, and the paper's step 23 uses ``sorted phase-randomized surrogates'', presumably for this reason (the construction is documented in the reconstruction record, not in the paper).
 \end{pitfall}
 
 \begin{checkpoint}
@@ -725,11 +731,6 @@ You want to test whether an analysis responds to the \emph{phases} of the zero f
 
 %======================================================================
 \section{Controls: structure or capacity?}\label{sec:controls-capacity}
-% DYK-BEGIN
-\begin{didyouknow}{Twelve Sailors and Citrus}
-In 1747 the naval surgeon James Lind took twelve sailors with scurvy aboard HMS \emph{Salisbury} and gave pairs of them different treatments, including cider, vinegar, seawater, and oranges with lemons. The pair eating citrus recovered dramatically. By comparing treatments side by side under similar conditions, Lind ran one of the earliest controlled trials. A control tells you whether a result means anything.
-\end{didyouknow}
-% DYK-END
 
 \subsection{Positive and negative controls}
 
@@ -761,10 +762,10 @@ Fit each to the real target, to 20 phase-randomized surrogates and to 20 permuta
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=\linewidth]{figs/controls_capacity.pdf}
-\caption{In-sample fits of the prime-2 target (levels 101--200, fluctuation in mean spacings) and its surrogates. Left: residual rms of the generic cosine model against its size $M$; curves for surrogates are averages over 20 draws. All reach zero at $M=100$ (saturated), and the phase-randomized surrogates track the real target closely, because a generic basis responds mainly to the power spectrum. Right: residual rms of the six-parameter structured model, divided by the target's rms. It fits the real target exactly (the target lies in its span) and leaves most of each surrogate unexplained.}\label{fig:controls-capacity}
+\caption{In-sample fits of the prime-2 target (levels 101--200, fluctuation in mean spacings) and its surrogates. Left: residual rms of the generic cosine model against its size $M$; curves for surrogates are averages over 20 draws. All reach zero at $M=100$ (saturated), and the phase-randomized surrogates track the real target closely, because a generic basis responds mainly to the power spectrum. Right: residual rms of the six-parameter structured model, divided by the target's rms. It fits the real target exactly (the target lies in its span) and leaves a large fraction of each surrogate unexplained (on average more than half of its rms).}\label{fig:controls-capacity}
 \end{figure}
 
-The generic model cannot tell the real target from its phase-randomized surrogates, and at $M=100$ it fits everything exactly. Why does it treat the phase-randomized surrogates almost the same? A cosine basis in the sequence index is close to a Fourier basis, and the fraction of a target that the first $M$ basis functions capture depends on how the target's power is spread over frequency, which phase randomization preserves (this is a heuristic; the cosine and DFT bases are not identical, so the agreement is approximate). The structured model, by contrast, fits the real target to round-off precision and fails on every surrogate. Only a model with the right inductive bias makes fit quality informative.
+The generic model cannot tell the real target from its phase-randomized surrogates (in this chapter's check script, its residual curves for the real target and for the average phase-randomized surrogate differ by less than $0.2$ of the target's rms at $M=0,10,\dots,100$), and at $M=100$ it fits everything exactly. Why does it treat the phase-randomized surrogates almost the same? A cosine basis in the sequence index is close to a Fourier basis, and the fraction of a target that the first $M$ basis functions capture depends on how the target's power is spread over frequency, which phase randomization preserves (this is a heuristic; the cosine and DFT bases are not identical, so the agreement is approximate). The structured model, by contrast, fits the real target to round-off precision and leaves, on average over the 20 draws of each family, more than half of each surrogate's rms unexplained. Only a model with the right inductive bias makes fit quality informative.
 
 \begin{sample}{Reading the paper's surrogate refits}
 The paper (Sec.~III, ``Permutation and surrogate tests'') refits the scale-1, $M=400$ operator on zeros 1--400 to ten draws each of three surrogate families. Reported in-sample rms: permutation $0.134\pm0.010$, phase-randomized $0.141\pm0.006$, IAAFT $0.138\pm0.005$, against $0.137$ for the true zeros and $0.244$ for the null. (a) How many ``$\pm$'' units from the true-zero value is each surrogate mean? (b) What fraction of the null's error does the fit remove on the true zeros, and on each surrogate family?
@@ -835,16 +836,16 @@ Choosing the best of 20 cutoffs after seeing the data turns a $5\%$ false-alarm 
 
 \subsection{Statistics defined after the data were seen}
 
-A subtler version: the statistic itself is invented after looking. Suppose you notice that the frequencies picked out by a sparse fit of the zeros all sit near logarithms of prime powers (Chapter~\ref{ch:sparse-frequency}), and you then design a score for ``how prime-like'' a set of frequencies is. Your design choices (which matching window, which prime powers, which frequency cutoff, how to combine matches into one number) were all made knowing the result for the real data. Even if every choice was reasonable, there were many reasonable alternatives you did not take, and nobody can compute the probability of the score over the space of analyses you might have done. This is sometimes called the ``garden of forking paths''.
+A subtler version: the statistic itself is invented after looking. Suppose you notice that the frequencies picked out by a sparse fit of the zeros all sit near logarithms of prime powers. (The sparse fit is a procedure, described later in Chapter~\ref{ch:sparse-frequency}, that fits the fluctuation $n-\tfrac12-\Nsm(t_n)$ by a sum of a few sinusoids in $t$ and returns their angular frequencies $\omega$; here you need only that it outputs a list of frequencies.) Suppose you then design a score for ``how prime-like'' a set of frequencies is. Your design choices (which matching window, which prime powers, which frequency cutoff, how to combine matches into one number) were all made knowing the result for the real data. Even if every choice was reasonable, there were many reasonable alternatives you did not take, and nobody can compute the probability of the score over the space of analyses you might have done. This is sometimes called the ``garden of forking paths''.
 
 Generating surrogates and running \emph{exactly the same} procedure on each (including any maximization over cutoffs) does correct for the steps that are applied identically to real and surrogate data. It does not correct for the choice of the statistic, made after the real outcome was known. That is why such a check is exploratory: it can show that the real data are far from every surrogate under \emph{this} statistic, but it does not license a p-value.
 
 \begin{beyond}
-\textbf{A density we quote.} The next Sample Problem uses the prime number theorem in the form ``near $x$, the primes have density about $1/\log x$ per unit length of $x$'' (Chapter~\ref{ch:primes}). Its proof is beyond this book. Prime powers $p^m$ with $m\ge2$ are far rarer than primes and are neglected in the estimate.
+\textbf{A density we quote.} The next Sample Problem uses the prime number theorem in the form ``near $x$, the primes have density about $1/\log x$ per unit length of $x$'' (Chapter~\ref{ch:primes}). Its proof is beyond this book. Prime powers $p^m$ with $m\ge2$ are neglected in the estimate. This is justified for large $q$, where they are far rarer than primes. Near $q\approx13$ the prime powers 8, 9, 16 are as common as the primes, and the density $1/\log x$ is itself crude at such small $x$, so result (a) below is only an order-of-magnitude guide, good to a factor of about two; result (b), at $q\approx3000$, is reliable.
 \end{beyond}
 
 \begin{sample}{Why matching windows need a cutoff}
-A selected frequency $\omega$ is said to ``match'' if $|\omega-\log q|<\pi/T$ for some prime power $q$, where $T$ is the length of the training window in $t$. Take $T=t_{400}-t_1\approx666$. Estimate the expected number of prime powers $q$ whose $\log q$ falls inside the matching window around (a) $\omega=\log13$, (b) $\omega=8$. Estimate the probability of a chance match in each case.
+A selected frequency $\omega$ is said to ``match'' if $|\omega-\log q|<\pi/T$ for some prime power $q$, where $T$ is the length of the training window in $t$. Take $T=t_{400}-t_1\approx666$. Consider a frequency $\omega$ picked without reference to the primes (for instance, one returned by a search that knows nothing about them), lying (a) near $\omega\approx\log13\approx2.56$, (b) near $\omega\approx8$. Estimate the expected number of prime powers $q$ whose $\log q$ falls inside its matching window, and the probability of a chance match in each case. (For a window centered exactly on $\log13$ a match would be certain; what we estimate is the chance-match rate for a generic frequency in that region.)
 
 \textbf{Step 1:} Window width in $\log q$: $2\pi/T=2\pi/666=0.00943$.
 
@@ -905,7 +906,15 @@ For $R$ independent draws from a Gaussian distribution with standard deviation $
 \item The maximum is $\le x$ exactly when every $Z_i\le x$, so by independence $P(\max\le x)=\Phi(x)^R$.
 \item The minimum is $>x$ exactly when every $Z_i>x$, so $P(\min>x)=(1-\Phi(x))^R$.
 \end{itemize}
-We take on trust the identity $E[Z]=\int_0^\infty P(Z>z)\,\dd z-\int_{-\infty}^0P(Z\le z)\,\dd z$, valid for any random variable with a finite mean. It follows from integration by parts; see \cite{rhb}. Apply it to the maximum and to the minimum, and subtract.
+We use the identity $E[Y]=\int_0^\infty P(Y>y)\,\dd y-\int_{-\infty}^0P(Y\le y)\,\dd y$ for a random variable $Y$ with finite mean, density $g$ and cumulative distribution $G$. Proof: integrate by parts with $u=1-G(y)$, $\dd v=\dd y$, so $\dd u=-g\,\dd y$:
+\[
+\int_0^\infty(1-G)\,\dd y=\big[y(1-G(y))\big]_0^\infty+\int_0^\infty y\,g(y)\,\dd y=\int_0^\infty y\,g(y)\,\dd y .
+\]
+The boundary term vanishes at $0$ trivially and at $\infty$ because $0\le y(1-G(y))\le\int_y^\infty u\,g(u)\,\dd u\to0$ when the mean is finite. Likewise, with $u=G(y)$,
+\[
+\int_{-\infty}^0G\,\dd y=\big[yG(y)\big]_{-\infty}^0-\int_{-\infty}^0y\,g(y)\,\dd y=-\int_{-\infty}^0y\,g(y)\,\dd y ,
+\]
+the boundary term at $-\infty$ vanishing by the same argument. Subtracting the second from the first gives $\int_{-\infty}^\infty y\,g(y)\,\dd y=E[Y]$. Apply it to the maximum and to the minimum, and subtract.
 \begin{itemize}
 \item On $(0,\infty)$ the integrands combine to $[1-\Phi^R]-(1-\Phi)^R$.
 \item On $(-\infty,0)$ they combine to $-\Phi^R+[1-(1-\Phi)^R]$, which is the same expression.
@@ -976,21 +985,21 @@ proposed standard & Sec.~VI, items (i)--(iv)\\
 
 \paragraph{Bootstrap intervals for operator fits (Sec.~III, Table~II).} Appendix~A step 13 records the recipe: ``$2\times10^4$ resamples of held-out indices; percentile 95\% intervals for rms and correlation'', exactly the Monte Carlo percentile bootstrap of Sec.~\ref{sec:controls-bootstrap}, with prediction--truth pairs resampled together. Sec.~III reports, for the scale-1, $M=400$ random-restart replicate, OOS rms $[0.33,0.43]$ against the null $0.263$, and correlation $[-0.21,+0.08]$; for scale 2, $M=600$, rms $[0.26,0.30]$ against null $0.274$ and correlation $[-0.18,+0.08]$. The paper describes the first as ``significantly worse than the null'' and the second as ``consistent with its null''. In the language of this chapter: the first interval lies entirely above the null value; the second contains it. Both correlation intervals contain zero. On the same 401--500 holdout, the six-prime oracle's correlation interval is $[+0.95,+0.97]$, which you reproduced in the fourth Sample Problem.
 
-Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $M=400$ row, $0.291$ $[0.25,0.33]$ and $+0.18$ $[-0.02,+0.37]$: the rms interval contains the null $0.263$, and the correlation interval's lower end is at (slightly below) zero. The paper reports this honestly as ``marginal'': ``one such row among eight is not evidence of prediction, but a small positive correlation for this row is not excluded.'' This is the multiple-looks issue of Sec.~\ref{sec:controls-posthoc} in the other direction: among eight rows, one marginal row is roughly what chance alone produces.
+Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $M=400$ row, $0.291$ $[0.25,0.33]$ and $+0.18$ $[-0.02,+0.37]$: the rms interval contains the null $0.263$, and the correlation interval's lower end is at (slightly below) zero. The paper reports this honestly as ``marginal'': ``one such row among eight is not evidence of prediction, but a small positive correlation for this row is not excluded.'' With eight rows examined, one interval whose lower end touches zero is unsurprising (Sec.~\ref{sec:controls-posthoc}); the paper accordingly declines to read it as prediction while not excluding a small positive correlation.
 
-\paragraph{Serial correlation and the block bootstrap (Sec.~III, App.~A step 22).} The Table~II caption warns: the intervals ``resample held-out levels independently although the fluctuations are serially correlated''. Sec.~III continues: ``recomputed with a moving-block bootstrap (block lengths 3 to 20) they widen slightly and no conclusion changes (for the cosine row, at most $[0.30,0.44]$)''; step 22 specifies a circular block bootstrap on zeros 401--500. This is the sensitivity-over-$\ell$ procedure of Sec.~\ref{sec:controls-block}. The Discussion (Sec.~VI) restates the limitation: ``Bootstrap intervals resample held-out levels independently except where stated.''
+\paragraph{Serial correlation and the block bootstrap (Sec.~III, App.~A step 22).} The Table~II caption says the brackets come ``from independent resampling of the held-out levels'', and Sec.~III warns that the intervals ``resample held-out levels independently although the fluctuations are serially correlated'' and continues: ``recomputed with a moving-block bootstrap (block lengths 3 to 20) they widen slightly and no conclusion changes (for the cosine row, at most $[0.30,0.44]$)''. Appendix~A step 22 specifies a circular block bootstrap on zeros 401--500. (The main text says ``moving-block'' and the reconstruction record ``circular''; the two differ only in the treatment of the ends, as in Fig.~\ref{fig:controls-blocks}, and the record is the more specific description.) This is the sensitivity-over-$\ell$ procedure of Sec.~\ref{sec:controls-block}. The Discussion (Sec.~VI) restates the limitation: ``Bootstrap intervals resample held-out levels independently except where stated.''
 
 \paragraph{Intervals for the arithmetic models (Sec.~IV, Tables IV and V).} The Table~IV caption gives intervals on 401--500: A (900 terms) $[0.015,0.020]$, B (900) $[0.158,0.201]$, C1 $[0.231,0.285]$, C2 $[0.028,0.041]$, against null $0.263$. Sec.~IV adds C1's correlation interval $[+0.08,+0.46]$. Reading them: the A, B and C2 intervals lie far below the null; the C1 rms interval contains the null, so ``capacity without a suitable prior does not generalize'', even though its correlation interval sits above zero. The Table~V caption gives the six-prime oracle's correlation intervals $[+0.95,+0.97]$ (401--500) and $[+0.91,+0.92]$ (5001--10000); the second is narrower because it uses 5000 held-out levels instead of 100, as the $1/\sqrt n$ law of Sec.~\ref{sec:controls-variability} leads you to expect.
 
-\paragraph{Surrogate refits: structure or capacity (Sec.~III; App.~A steps 12, 18).} Step 18 defines the surrogates on the fluctuation sequence in mean spacings, $d_n=(\tilde t_n-E_n[\text{smooth}])/\gap_n$ for $n\le400$ (here $\tilde t_n$ are the bias-corrected targets and $E_n[\text{smooth}]$ the levels of the unperturbed Wu--Sprung potential): ``permutation; phase randomization (real FFT, uniform phases); IAAFT (200 iterations); seeds 1--10; targets $E_n[\text{smooth}]+d'_n\gap_n$, refit with $M=400$''. Your \texttt{phase\_randomize} and \texttt{iaaft} functions implement the same recipes. The results (the Sample Problem ``Reading the paper's surrogate refits'' in Sec.~\ref{sec:controls-capacity}) show the operator family fits all three surrogates as well as the true zeros. Sec.~III also explains a change from the original submission: permuting fluctuations in energy units ``also moves amplitude across heights'' and gave $0.148$, $0.149$ (step 12 anchors $0.1483/0.1493$ for seeds 1 and 2); permuting in spacing units keeps the amplitude at each height, which is ``the cleaner control''. Choosing which properties a surrogate keeps is the core design decision of Sec.~\ref{sec:controls-surrogates}.
+\paragraph{Surrogate refits: structure or capacity (Sec.~III; App.~A steps 12, 18).} Step 18 defines the surrogates on the fluctuation sequence in mean spacings, $d_n=(\tilde t_n-E_n[\text{smooth}])/\gap_n$ for $n\le400$ (here $\tilde t_n$ are the bias-corrected targets and $E_n[\text{smooth}]$ the levels of the unperturbed Wu--Sprung potential): ``permutation; phase randomization (real FFT, uniform phases); IAAFT (200 iterations); seeds 1--10; targets $E_n[\text{smooth}]+d'_n\gap_n$, refit with $M=400$''. Your \texttt{phase\_randomize} and \texttt{iaaft} functions implement the same recipes. The results (the Sample Problem ``Reading the paper's surrogate refits'' in Sec.~\ref{sec:controls-capacity}) show the operator family fits all three surrogates as well as the true zeros. Sec.~III also explains a change from the original submission: permuting fluctuations in energy units ``also moves amplitude across heights'' and gave $0.148$, $0.149$ (Appendix~A step 12 describes the procedure; its ``Key anchors'' list gives $0.1483/0.1493$ for seeds 1 and 2); permuting in spacing units keeps the amplitude at each height, which is ``the cleaner control''. Choosing which properties a surrogate keeps is the core design decision of Sec.~\ref{sec:controls-surrogates}.
 
 \paragraph{Held-out surrogates and the kriging positive control (Sec.~III; App.~A steps 18, 19).} The paper does not stop at in-sample refits. A linear interpolator (simple kriging, Chapter~\ref{ch:generalization}) ``predicts held-out true zeros at $0.117$ with correlation $+0.87$ and permuted targets at the null'', which is a positive control: it shows the serial structure of the zeros is real and usable, and the permuted negative control confirms the interpolator is not exploiting anything else. The fitted operator, held out the same way, ``fails alike on true zeros and on surrogates ($0.57$--$0.70$; one split, illustrative)''. Note the honest qualifiers: one split, illustrative. Step 19 also records a forking path transparently: ``projection and nugget were added once, after a first version without them was numerically unstable, and not tuned.''
 
 \paragraph{Positive controls with known answers (Secs.~II D, III).} The arithmetic-continuation probe of Sec.~III replaces the targets by the pure prime-2 oscillation (running example RE2; Appendix~A step 15). The right continuation is known exactly; the family ``represents it almost perfectly in-sample (rms $0.056$, correlation $+0.95$) and continues it not at all (held-out correlation $+0.07$, rms worse than predicting zero fluctuation)''. The oracle (Sec.~II D) plays the complementary role: it is ``an information-existence baseline'' showing that predictable structure exists. A negative result (``the operator does not predict'') is only informative when such positive controls show that prediction is possible.
 
-\paragraph{Leakage controls (Sec.~II C, App.~A step 20).} Two controls guard against held-out data influencing the fit. One is algebraic: Eq.~(3) shows that scoring against bias-corrected targets equals correcting the prediction by a fit-independent quantity $\Delta_n$ built from unperturbed eigenvalues only. The other is empirical, in step 20: ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.'' This is the leakage control of Sec.~\ref{sec:controls-capacity} in its cleanest form.
+\paragraph{Leakage controls (Sec.~II C, App.~A step 20).} Two controls guard against held-out data influencing the fit. One is algebraic: Eq.~(3) shows that scoring against bias-corrected targets equals correcting the prediction by a fit-independent quantity $\Delta_n$ built from unperturbed eigenvalues only. The other is empirical and is recorded for the sinusoidal controls of Sec.~II D (step 20): ``Overwriting held-out data with noise before fitting leaves all fitted coefficients bit-identical.'' This is the leakage control of Sec.~\ref{sec:controls-capacity} in its cleanest form. (The paper does not report such an overwrite test for the operator fits; for those, the algebraic argument of Eq.~(3) is the safeguard.)
 
-\paragraph{The surrogate alignment check, and why it is exploratory (Sec.~IV; App.~A step 23).} The sparse sinusoidal control C2 selects frequencies from the zeros, and every one lies near some $\log p^m$. Because ``the frequencies are the output of a search'', the paper reruns ``the complete procedure on surrogate zero sets: phase-randomized surrogates and two families of sparse signals with non-arithmetic frequencies, 900 replicates in all''. Step 23 gives the composition: 200 (fit 1--400) and 100 (fit 1--800) replicates of each of three families, $3\times(200+100)=900$, with match criterion $|\omega-\log q|<\pi/T$, $q\le3000$, and a ``cutoff-maximized binomial score $24.7$ and $50.9$ on the real zeros, at most $4.7$ on surrogates (score defined after the data were seen)''. The paper's own words are measured: ``the qualifications that apply (the statistic was defined after the data were seen, so the check is exploratory) are documented in the reconstruction record \cite{zenodo}; no significance claim is made here beyond the size of the ensembles.'' After Sec.~\ref{sec:controls-permutation} you can unpack the last phrase: with no surrogate reaching the real score, an ensemble of 200 could at most support $p\le1/201\approx0.005$, and one of 100 at most $p\le1/101\approx0.01$; and because the score was designed post hoc (Sec.~\ref{sec:controls-posthoc}), even those bounds are not offered as p-values. The paper refers to the reconstruction record for the construction of the surrogates and of the score; this book does not reproduce them. Note also, from the chance-match Sample Problem, why a frequency cutoff is needed at all: near $\omega=8$ a window of width $2\pi/T$ catches a prime power by chance with probability close to 1. Finally, the paper stresses that the underlying fact, that the Fourier transform of the zeros concentrates at logarithms of prime powers, is classical \cite{landau,gonek}; the check concerns only whether the search procedure recovers it.
+\paragraph{The surrogate alignment check, and why it is exploratory (Sec.~IV; App.~A step 23).} The sparse sinusoidal control C2 selects frequencies from the zeros, and every one lies near some $\log p^m$. Because ``the frequencies are the output of a search'', the paper reruns ``the complete procedure on surrogate zero sets: phase-randomized surrogates and two families of sparse signals with non-arithmetic frequencies, 900 replicates in all''. Step 23 gives the composition: 200 (fit 1--400) and 100 (fit 1--800) replicates of each of three families, $3\times(200+100)=900$, with match criterion $|\omega-\log q|<\pi/T$, $q\le3000$, and a ``cutoff-maximized binomial score $24.7$ and $50.9$ on the real zeros, at most $4.7$ on surrogates (score defined after the data were seen)''. The paper's own words are measured: ``the qualifications that apply (the statistic was defined after the data were seen, so the check is exploratory) are documented in the reconstruction record \cite{zenodo}; no significance claim is made here beyond the size of the ensembles.'' After Sec.~\ref{sec:controls-permutation} you can unpack the last phrase: with no surrogate reaching the real score, an ensemble of 200 could support no p-value smaller than $1/201\approx0.005$, and one of 100 none smaller than $1/101\approx0.01$; and because the score was designed post hoc (Sec.~\ref{sec:controls-posthoc}), even those bounds are not offered as p-values. The paper refers to the reconstruction record for the construction of the surrogates and of the score; this book does not reproduce them. Note also, from the chance-match Sample Problem, why a frequency cutoff is needed at all: near $\omega=8$ a window of width $2\pi/T$ catches a prime power by chance with probability close to 1. Finally, the paper stresses that the underlying fact, that the Fourier transform of the zeros concentrates at logarithms of prime powers, is classical \cite{landau,gonek}; the check concerns only whether the search procedure recovers it.
 
 \paragraph{Seeds and ensembles (Tables I and III captions; App.~A step 17).} Table~I's caption reports ``four random-init repeats \ldots\ give identical in-sample rms $0.1370$ and OOS $0.365$--$0.379$'' and ``three repeats of the (scale~2, $M=600$) row give OOS $0.279$--$0.283$'': ranges, summarizing optimizer variability, which the last Sample Problem showed to be several times smaller than held-out sampling uncertainty. The within-height random splits use ``\texttt{rng.choice(n, n/5, replace=False)}, seeds 1--10'' (step 17), and Table~III reports ranges over seeds with the explicit caveat that they ``are not standard errors''.
 
@@ -1000,11 +1009,6 @@ Table~II attaches intervals to every alternative-basis row. Note the Chebyshev $
 
 %======================================================================
 \section{Summary}
-% DYK-BEGIN
-\begin{didyouknow}{Where 0.05 Came From}
-The habit of calling a result significant when $p<0.05$ traces largely to Ronald Fisher's 1925 book \emph{Statistical Methods for Research Workers}, where he described one in twenty as a convenient threshold. Fisher meant it as a rough guide, not a law. Today many statisticians urge reporting effect sizes and uncertainties instead of leaning on a single cutoff.
-\end{didyouknow}
-% DYK-END
 
 \begin{itemize}
 \item Every score is a draw from a sampling distribution; for iid data the SE of a mean is $\sigma/\sqrt n$ (Eq.~\eqref{eq:controls-varmean}), estimated by $s/\sqrt n$ (Eq.~\eqref{eq:controls-se}).
@@ -1028,7 +1032,7 @@ The habit of calling a result significant when $p<0.05$ traces largely to Ronald
 \prob{1}{In a Monte Carlo test, 3 of 99 surrogates have a statistic at least as large as the real one. What is the p-value?}
 \prob{2}{Enumerate the bootstrap distribution of the mean for the data $(0,1)$ ($n=2$). Compute its variance and check Eq.~\eqref{eq:controls-bootvarmean}.}
 \prob{2}{For an AR(1) sequence with $\varphi=0.8$, find the large-$n$ inflation factor $f_\infty$ and the effective sample size of $n=1000$ observations. Interpret.}
-\prob{2}{Evaluate $f_{200}$ for $\varphi=-0.5$ using Eq.~\eqref{eq:controls-fn}, and the corresponding effective sample size.}
+\prob{2}{Evaluate $f_{100}$ for $\varphi=-0.3$ using Eq.~\eqref{eq:controls-fn}, and the corresponding effective sample size. Compare with the large-$n$ limit $f_\infty$.}
 \prob{2}{A mean-zero sequence $x_1,\dots,x_n$ is randomly permuted. Show that the expected value of the lag-1 product $x_{\pi(i)}x_{\pi(i+1)}$ is $\big[(\sum_jx_j)^2-\sum_jx_j^2\big]/[n(n-1)]=-\sum_jx_j^2/[n(n-1)]$, so the expected normalized lag-1 autocorrelation is about $-1/(n-1)$. Evaluate it for $n=400$.}
 \prob{2}{Show that phase randomization preserves the mean and the sum of squares $\sum_jd_j^2$ of a real sequence. (Use $D_0$ and Parseval's theorem for the DFT, $\sum_jd_j^2=\frac1n\sum_q|D_q|^2$.)}
 \prob{2}{For $n=20$ and $\ell=4$, how many moving blocks are there? How many blocks contain observations 1, 2 and 10? How many circular blocks are there, and how many contain each observation?}
@@ -1050,7 +1054,7 @@ The habit of calling a result significant when $p<0.05$ traces largely to Ronald
 \prob{1}{Ten independent surrogate draws have in-sample rms standard deviation $0.010$. What is the standard error of their mean?}
 \prob{3}{Prove that for two groups of equal size $m$, the exact permutation distribution of the difference of means $D=\bar x_A-\bar x_B$ is symmetric about zero, whatever the data.}
 \prob{2}{In the paper's within-height analysis (Sec.~III), the six-prime oracle scores $0.062$--$0.063$ on the same held-out sets where operator fits score above the null. Which role (positive or negative control, or neither) does the oracle play there, and why is it needed to interpret the operator's failure?}
-\prob{3}{Repeat the chance-match estimate of Sec.~\ref{sec:controls-posthoc} at $\omega=\log101$ with $T=666$. What does the result suggest about the frequency range in which an alignment with prime-power logarithms is informative?}
+\prob{3}{Repeat the chance-match estimate of Sec.~\ref{sec:controls-posthoc} for a frequency picked without reference to the primes, near $\omega\approx\log101\approx4.62$, with $T=666$. What does the result suggest about the frequency range in which an alignment with prime-power logarithms is informative?}
 \prob{2}{The kriging interpolator of the paper predicts held-out true zeros with correlation $+0.87$ and permuted targets at the null (Sec.~III). Explain which part of this is a positive control and which a negative control, and what each establishes.}
 \prob{2}{With $B=2\times10^4$ Monte Carlo bootstrap replicates, which sorted positions give the $2.5\%$ and $97.5\%$ percentile endpoints? Roughly how accurate is the bootstrap SE as an estimate of the ideal bootstrap SE?}
 \prob{3}{Using numpy, reproduce Fig.~\ref{fig:controls-capacity}. Then replace the six-function structured model by one with the wrong frequencies (say $m\log3$, $m=1,2,3$) and show that it fits neither the real target nor the surrogates well. What does this say about using surrogate refits with a misspecified model?}
@@ -1065,13 +1069,13 @@ The habit of calling a result significant when $p<0.05$ traces largely to Ronald
 \item[3.] (a) Permutation (or IAAFT). (b) Phase randomization. (c) IAAFT: exact marginal, approximate spectrum. No standard method gives both exactly.
 \item[4.] $r=3$, $N=99$: $p=(1+3)/(99+1)=0.04$.
 \item[5.] Ordered resamples $(0,0),(0,1),(1,0),(1,1)$, means $0,\tfrac12,\tfrac12,1$ with probabilities $\tfrac14,\tfrac12,\tfrac14$. Mean $\tfrac12$; $E[\bar x^{*2}]=\tfrac14\cdot0+\tfrac12\cdot\tfrac14+\tfrac14\cdot1=\tfrac38$; variance $\tfrac38-\tfrac14=\tfrac18$. Formula: $\hat\sigma^2=\tfrac12[(\tfrac12)^2+(\tfrac12)^2]=\tfrac14$, divided by $n=2$: $\tfrac18$. Agreement.
-\item[7.] $\varphi/(1-\varphi)=-1/3$, $\varphi/(1-\varphi)^2=-0.2222$; $f_{200}=1+2[-0.33333+0.2222/200]=0.3356$; $n_{\rm eff}=200/0.3356=596$.
+\item[7.] $\varphi/(1-\varphi)=-0.3/1.3=-0.23077$, $\varphi/(1-\varphi)^2=-0.3/1.69=-0.17751$; $f_{100}=1+2[-0.23077+0.17751/100]=1+2(-0.22899)=0.5420$; $n_{\rm eff}=100/0.5420=184.5$. The large-$n$ limit is $f_\infty=0.7/1.3=0.5385$, so the finite-$n$ correction is under $1\%$.
 \item[9.] The mean is $D_0/n$ and $\phi_0=0$, so $D_0$ is unchanged. Each $|D_q|$ is unchanged, so by Parseval $\sum_jd_j'^2=\frac1n\sum_q|D_q'|^2=\frac1n\sum_q|D_q|^2=\sum_jd_j^2$. Mean and sum of squares fixed imply the variance is fixed.
-\item[11.] rms interval excludes $0.263$ (all lie above it): cosine 400 $[0.32,0.42]$; Chebyshev 200 $[0.32,0.42]$; Chebyshev 600 $[0.64,0.82]$; hat 200 $[0.30,0.38]$; hat 400 $[0.29,0.39]$; hat 600 $[0.29,0.37]$. Six rows. The Chebyshev 400 $[0.25,0.33]$ and Chebyshev $\mu=0.3$ $[0.24,0.29]$ intervals contain the null. Only hat 400 has a correlation interval excluding zero, $[-0.37,-0.01]$, and it is \emph{negative}: anticorrelation with the truth, consistent with the fit-induced damage discussed in the paper, not with skill.
+\item[11.] rms interval excludes $0.263$ (all lie above it): cosine 400 $[0.32,0.42]$; Chebyshev 200 $[0.32,0.42]$; Chebyshev 600 $[0.64,0.82]$; hat 200 $[0.30,0.38]$; hat 400 $[0.29,0.39]$; hat 600 $[0.29,0.37]$. Six rows. The Chebyshev 400 $[0.25,0.33]$ and Chebyshev $\mu=0.3$ $[0.24,0.29]$ intervals contain the null. Only hat 400 has a correlation interval excluding zero, $[-0.37,-0.01]$, and it is \emph{negative}, so it is not evidence of skill; with eight intervals examined, one excluding zero is also unremarkable (Sec.~\ref{sec:controls-posthoc}).
 \item[13.] $0.1483/0.1370=1.082$ and $0.1493/0.1370=1.090$: about $8\%$ and $9\%$ worse. In energy units a fluctuation is $d_n\gap_n$. Low-$n$ levels have large $\gap_n$, so their energy-unit fluctuations are large; permuting moves some of them to high $n$, where dividing by the smaller $\gap_n$ makes them large in spacing units, and moves small ones to low $n$. The surrogate's amplitude in spacings then varies with height, unlike the real one, so the control changes more than the serial order.
 \item[14.] $1-0.95^{10}=1-0.5987=0.4013$.
 \item[15.] (a) $p=1/201=0.004975$. (b) $\ln(1-q)=\ln(0.05)/200=-0.014979$, so $q=1-e^{-0.014979}=0.01487$; the rule of three gives $3/200=0.015$, nearly the same because $-\ln0.05=2.996\approx3$ and $\ln(1-q)\approx-q$ for small $q$.
-\item[17.] Each family has 200 replicates for the 1--400 fit and 100 for the 1--800 fit (Appendix~A step 23). If no replicate reaches the real score, Eq.~\eqref{eq:controls-mcp} gives at most $p=1/201\approx0.005$ and $p=1/101\approx0.010$, respectively. And because the score was defined after the data were seen, the paper does not offer even these as p-values.
+\item[17.] Each family has 200 replicates for the 1--400 fit and 100 for the 1--800 fit (Appendix~A step 23). If no replicate reaches the real score, Eq.~\eqref{eq:controls-mcp} gives $p=1/201\approx0.005$ and $p=1/101\approx0.010$, respectively; no smaller p-value can be supported. And because the score was defined after the data were seen, the paper does not offer even these as p-values.
 \item[19.] True SE: $\gamma_0=1/(1-0.25)=4/3$, $f_{400}=1+2(1-2/400)=2.99$, SE $=\sqrt{(4/3)(2.99)/400}=0.0998$. Independent bootstrap ($\ell=1$): about $\sqrt{(4/3)/400}=0.0577$. Eq.~\eqref{eq:controls-cbbvar} with true autocovariances: $\ell=5$: $1+2(0.8\cdot0.5+0.6\cdot0.25+0.4\cdot0.125+0.2\cdot0.0625)=2.225$, SE $0.0861$; $\ell=20$: factor $2.8$, SE $0.0966$. Your simulated averages should sit close to these, slightly lower because the sample mean is estimated (Fig.~\ref{fig:controls-ar1}, right).
 \item[21.] Null rms $0.2631$, matching the paper's anchor and the $0.263$ entry of Table~V; six-prime oracle rms $0.074$ and correlation $+0.96$, matching Table~V's ``6 primes'' column, row 401--500.
 \item[23.] The sorted values agree exactly because the last step of each iteration is the rank-order remap, which places the original values in the new order. The relative magnitude mismatch falls quickly during the first iterations and then levels off at a small value (the paper reports spectra matched ``to 1\%'' for its surrogates, Sec.~III); it cannot reach zero in general, because an exact marginal and an exact spectrum are not simultaneously attainable for generic data.
