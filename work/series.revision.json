@@ -1,71 +1,183 @@
 {
  "patches": [
   {
-   "old": "a fixed positive number (the last step is Problem~2.x-style algebra: $\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2)$).",
-   "new": "a fixed positive number. The last equality comes from\n\\[\n\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=\\cos^2\\theta-2\\cos\\theta+1+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2),\n\\]\nwhere the third step uses $\\cos^2\\theta+\\sin^2\\theta=1$ and the last step uses the half-angle identity $\\cos\\theta=1-2\\sin^2(\\theta/2)$, so that $2-2\\cos\\theta=2\\cdot2\\sin^2(\\theta/2)$. Taking the square root gives $2\\abs{\\sin(\\theta/2)}$, which is positive because $0<\\theta/2<\\pi$ for $\\theta=\\log2$."
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Archimedes Sums Forever}\nIn the third century BC, Archimedes found the area of a parabolic segment by filling it with triangles. Each new layer of triangles had one quarter the area of the layer before, so he needed the sum $1+\\tfrac14+\\tfrac1{16}+\\cdots$. He had no modern theory of limits, but a careful argument showed him that the total is exactly $\\tfrac43$. It is one of the earliest infinite geometric series ever summed.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "and $a_n/b_n\\to a/b$ when $b\\ne0$. If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. We use these freely.",
-   "new": "and $a_n/b_n\\to a/b$ when $b\\ne0$ and every $b_n\\ne0$ (so that each quotient is defined). If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. These are proved exactly like the corresponding limit laws for functions in calculus (the proofs replace ``$x$ close to $x_0$'' by ``$n$ large''); we use them freely."
+   "old": "and Eq.~\\eqref{eq:series-geom-partial} gives $(1-2^{-5})/(1/2)=2-2^{-4}=1.9375$. The sum is $2$.",
+   "new": "and Eq.~\\eqref{eq:series-geom-partial} gives $(1-2^{-5})/(1/2)=2-2^{-4}=1.9375$. The sum is $2$.\n\nThe geometric series has a long history. In the third century BC Archimedes found the area of a parabolic segment by filling it with layers of triangles. Each layer had one quarter the area of the layer before, so the total area is a multiple of $1+\\tfrac14+\\tfrac1{16}+\\cdots$. By Eq.~\\eqref{eq:series-geom-sum} this sum equals $1/(1-\\tfrac14)=\\tfrac43$. Archimedes reached this value by a careful exhaustion argument, without a modern theory of limits."
   },
   {
-   "old": "The name comes from music: a string vibrating in its $k$-th harmonic has wavelength $1/k$ of the fundamental (HRW~\\cite{hrw}, standing waves).",
-   "new": "The name comes from music: a string fixed at both ends and vibrating in its $k$-th harmonic has a wavelength equal to $1/k$ of the fundamental wavelength (standing waves, HRW~\\cite{hrw}), so the relative wavelengths $1,\\tfrac12,\\tfrac13,\\dots$ are the terms of the series."
+   "old": "Infinitely many bounces fit into $2.633$ s because the flight times shrink geometrically.\n\\end{sample}",
+   "new": "Infinitely many bounces fit into $2.633$ s because the flight times shrink geometrically.\n\\end{sample}\n\n\\Cref{fig:series-partialsums} previews four series we meet in this chapter: the geometric series of this section, $\\sum1/k^2$ (\\cref{sec:series-positive}), the harmonic series (\\cref{sec:series-harmonic}) and the alternating harmonic series (\\cref{sec:series-alternating}). Return to it as each one is introduced."
   },
   {
-   "old": "A sharper statement, $H_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2})$, follows from the Euler--Maclaurin comparison of sums and integrals developed in Chapter~\\ref{ch:asymptotics}; we quote it here as an approximation useful for numbers.",
-   "new": "\\begin{beyond}\n\\textbf{A sharper form of $H_n$ (proved; proof beyond this book).} The Euler--Maclaurin summation formula, a refined comparison of sums with integrals, gives\n\\[\nH_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2}).\n\\]\nWe do not prove it here; see Riley, Hobson and Bence~\\cite{rhb} or Apostol~\\cite{apostol}. We use it only to estimate numbers, never inside a proof.\n\\end{beyond}"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Rearrange to Any Answer}\nBernhard Riemann proved that a conditionally convergent series can be rearranged to add up to \\emph{any} real number you choose, or even to diverge. The alternating harmonic series $1-\\tfrac12+\\tfrac13-\\cdots$ sums to $\\log 2$. Reorder the terms as two positives, then one negative, and the sum becomes $\\tfrac32\\log 2$. The result is in his 1854 habilitation thesis on trigonometric series, published only after his death.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "the $\\gamma$ estimate is accurate because the error $1/(2n)$ of the approximation is only $4\\times10^{-5}$ here.",
-   "new": "the $\\gamma$ estimate is accurate because, by the sharper form quoted in the box above, the error of $H_n\\approx\\log n+\\gamma$ is about $1/(2n)$, only $4\\times10^{-5}$ here."
+   "old": "the order of summation is part of the definition of the sum.\n\\end{beyond}",
+   "new": "the order of summation is part of the definition of the sum. Historically, Riemann gave this result in his 1854 habilitation thesis on trigonometric series, which was published after his death. Problem~25 shows a rearrangement of the alternating harmonic series (two positive terms, then one negative) whose sum is $\\tfrac32\\log2$.\n\\end{beyond}"
   },
   {
-   "old": "(Euler's result, proved in Chapter~\\ref{ch:fourier-series} by Parseval's theorem)",
-   "new": "(Euler's result; it follows from Parseval's theorem applied to a suitable Fourier series, the tool of Chapter~\\ref{ch:fourier-series}, and here we take it as a known value)"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{The Slowest Infinity}\nThe harmonic series $1+\\tfrac12+\\tfrac13+\\cdots$ diverges, as Nicole Oresme showed in the fourteenth century by grouping its terms. But it diverges incredibly slowly, because its partial sums grow like $\\log N+0.5772\\ldots$. To pass 100 you need roughly $1.5\\times10^{43}$ terms. A truncated sum can look convergent long before it reveals its true nature.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "Chapter~\\ref{ch:asymptotics} explains why averaging the two integral bounds works so well.",
-   "new": "Averaging works so well because the two integral bounds err in opposite directions: the lower bound misses the true tail by the small curved slivers between the rectangles and the curve on one side, the upper bound overshoots by similar slivers on the other side, and for a slowly varying $f$ these nearly cancel in the average."
+   "old": "only $4\\times10^{-5}$ here.\n\\end{sample}",
+   "new": "only $4\\times10^{-5}$ here.\n\\end{sample}\n\nThe same estimate shows how slowly the harmonic series diverges. To pass $100$ you need about $e^{100-\\gamma}\\approx1.5\\times10^{43}$ terms, far more than any computer could add. Oresme's grouping argument, made in the fourteenth century, proves divergence. Direct summation, by contrast, never gets far enough to show it. A truncated sum can look convergent long before it reveals its true nature."
   },
   {
-   "old": "The proof uses Euler--Maclaurin summation; see Titchmarsh~\\cite{titchmarsh}, Chapter~4 of the book being the relevant place for approximations of this kind, or Edwards~\\cite{edwards}.",
-   "new": "The proof uses Euler--Maclaurin summation; see Titchmarsh~\\cite{titchmarsh}, in the discussion of approximate formulas for $\\zeta(s)$ in the critical strip, or Edwards~\\cite{edwards}."
+   "old": "Setting $1+K/2=10$ gives $K=18$, so $n=2^{18}=262144$ certainly works. This is a guarantee, not an estimate.",
+   "new": "Setting $1+K/2=10$ gives $K=18$. The inequality is in fact strict for $K\\ge2$, because block 2 is $\\tfrac13+\\tfrac14>\\tfrac12$. So $H_{2^{18}}>10$, and $n=2^{18}=262144$ certainly works. This is a guarantee, not an estimate."
   },
   {
-   "old": "Numerically, at $n=1000$ the radius is $\\sqrt{1000}/14.1436=2.236$, and $\\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching the size $\\tfrac12\\cdot1000^{-1/2}=0.0158$ of the next term in the beyond box (a numerical observation, checked in CHECKS).",
-   "new": "More precisely, because $\\zeta(\\rho_1)=0$, the box gives $S_n-\\frac{n^{1-s}}{1-s}=\\tfrac12n^{-s}+\\epsilon_n$, whose modulus should be close to $\\abs{\\tfrac12n^{-s}}=\\tfrac12n^{-1/2}$. Numerically, at $n=1000$ the radius is $\\sqrt{1000}/14.1436=2.236$, and $\\abs{S_{1000}-1000^{1-s}/(1-s)}$ is about $0.016$, matching $\\tfrac12\\cdot1000^{-1/2}=0.0158$ (a numerical observation, checked in CHECKS)."
+   "old": "Summing directly on a computer (CHECKS script) gives",
+   "new": "Summing directly on a computer (a short numpy loop of the kind used in Problem~19) gives"
   },
   {
-   "old": "\\textbf{Step 4 (a cruder geometric bound, for comparison):} Using",
-   "new": "\\textbf{Step 4 (an alternative, cruder bound, for comparison):} Using"
+   "old": "This sequence increases without bound.",
+   "new": "This sequence increases without bound. (This is a proved fact: there are infinitely many zeros and their heights are unbounded; Chapter~\\ref{ch:counting-zeros} counts them.)"
   },
   {
-   "old": "\\frac{2^{-2}}{1-2^{-1/2}}=0.067924$.",
-   "new": "\\frac{2^{-2}}{1-2^{-1/2}}=0.067924$. This is also a valid upper bound, but it is larger than the Step~3 value $0.152989/\\pi=0.048698$, so the Step~3 bound is the tighter one and is the one we keep."
+   "old": "H_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2}).\n\\]\nWe do not prove it here;",
+   "new": "H_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2}),\n\\]\nwhere $\\order(n^{-2})$ denotes a remainder whose size is at most a constant times $n^{-2}$ for all large $n$ (big-O notation, treated in Chapter~\\ref{ch:asymptotics}). We do not prove it here;"
   },
   {
-   "old": "Sums over primes on the critical line are of the second kind (\\cref{sec:series-truncation}).",
-   "new": "Sums over primes on the critical line are not absolutely convergent, so they fall outside the safe first kind (\\cref{sec:series-truncation})."
+   "old": "\\textbf{Theorem (integral test).} Let $f$ be continuous",
+   "new": "We write $\\int_a^\\infty f(x)\\,\\dd x$ for $\\lim_{K\\to\\infty}\\int_a^K f(x)\\,\\dd x$ when that limit exists (an \\textbf{improper integral}).\n\n\\textbf{Theorem (integral test).} Let $f$ be continuous"
   },
   {
-   "old": "It is in fact not convergent in any ordinary sense at most $t$ (Chapter~\\ref{ch:explicit-formula} discusses this), so truncating it to a finite prime set is a Case 3 truncation.",
-   "new": "Whether, and in what order of summation, it converges at all on the critical line is not something the tools of this chapter can settle; Chapter~\\ref{ch:explicit-formula} treats it as a formal, heuristic object. What we can say is that it is not absolutely convergent, so truncating it to a finite prime set comes with no tail bound from moduli, and it must be handled like Case 3: a truncation justified only by a separate argument."
+   "old": "Taking $K\\to\\infty$ in both gives Eq.~\\eqref{eq:series-tail-bounds}. $\\square$",
+   "new": "Taking $K\\to\\infty$ in both gives Eq.~\\eqref{eq:series-tail-bounds}. The improper integrals in it exist. For positive $f$ the integrals $\\int_a^Kf\\,\\dd x$ increase with $K$. When the series converges with sum $S$, they are bounded, because the left inequality of Eq.~\\eqref{eq:series-integral-test} gives $\\int_1^{K+1}f\\,\\dd x\\le S$. Monotone convergence then applies. $\\square$"
   },
   {
-   "old": "print(\"null\", qmnt.score(qmnt.smooth_zeros(n), n))",
-   "new": "# the null predicts zero fluctuation, so its corr is undefined (nan)\nprint(\"null\", qmnt.score(qmnt.smooth_zeros(n), n))"
+   "old": "\\subsection{The $p$-series $\\sum k^{-s}$ for real $s$}",
+   "new": "\\subsection{The $p$-series $\\sum k^{-s}$ for real $s$}\n\nSeries of the form $\\sum k^{-s}$ are traditionally called \\textbf{$p$-series}, because the exponent is often written $p$. We write $s$ instead and keep $p$ for primes."
+  },
+  {
+   "old": "is a series $\\sum_j a_{\\pi(j)}$ in which $\\pi$ lists every positive integer exactly once in some new order.",
+   "new": "is a series $\\sum_j a_{q(j)}$ in which the reordering $q$ lists every positive integer exactly once in some new order (so $q(1),q(2),\\dots$ is a shuffled copy of $1,2,\\dots$)."
+  },
+  {
+   "old": "$T_J=\\sum_{j=1}^Ja_{\\pi(j)}$",
+   "new": "$T_J=\\sum_{j=1}^Ja_{q(j)}$"
+  },
+  {
+   "old": "$K=\\max(\\pi(1),\\dots,\\pi(J))$",
+   "new": "$K=\\max(q(1),\\dots,q(J))$"
+  },
+  {
+   "old": "\\subsection{The Dirichlet series $\\sum k^{-s}$ for complex $s$}\n",
+   "new": "\\subsection{The Dirichlet series $\\sum k^{-s}$ for complex $s$}\n\nA series of the form $\\sum_kc_kk^{-s}$ is called a \\textbf{Dirichlet series}; here all $c_k=1$.\n\n"
+  },
+  {
+   "old": "(The CHECKS script confirms the actual error at $n=100$ is below $0.01$.)",
+   "new": "(Computing the 100-term sum and comparing it with \\texttt{mpmath.zeta} confirms that the actual error at $n=100$ is below $0.01$.)"
+  },
+  {
+   "old": "whose sum diverges (Sample Problem above)",
+   "new": "whose sum diverges (the $p$-series theorem with $s=\\tfrac12$; see also the Sample Problem ``How fast does $\\sum k^{-1/2}$ diverge?'' in \\cref{sec:series-positive})"
+  },
+  {
+   "old": "(a numerical observation, checked in CHECKS)",
+   "new": "(a numerical observation; the listing below computes it)"
+  },
+  {
+   "old": "If $\\abs{c_m/c_{m+1}}\\to R$ (possibly $R=\\infty$), this ratio tends to $\\abs z/R$.",
+   "new": "Assume all $c_m\\ne0$. If $\\abs{c_m/c_{m+1}}\\to R$ with $0<R<\\infty$, this ratio tends to $\\abs z/R$. If $R=\\infty$ the ratio tends to $0$ for every $z$. If $R=0$ it tends to infinity for every $z\\ne0$, and the series converges only at $z=0$."
+  },
+  {
+   "old": "The CHECKS script verifies the identity numerically at $z=\\tfrac12e^{i}$.",
+   "new": "A direct numerical computation, summing 200 terms at $z=\\tfrac12e^{i}$, confirms the identity to within $10^{-12}$."
+  },
+  {
+   "old": "Multiply the factors $p^2/(p^2-1)$ for $p=2,3,5,7,11,13$ and compare each partial product with $\\pi^2/6$.",
+   "new": "Write $\\Pi(x)=\\prod_{p\\le x}p^2/(p^2-1)$ for the partial Euler product over the primes up to $x$. Compute $\\Pi(x)$ for $x=2,3,5,7,11,13$ and compare each value with $\\pi^2/6$."
+  },
+  {
+   "old": "\\textbf{Step 1:} $P(2)=\\frac43=1.333333$.\n\n\\textbf{Step 2:} $P(3)=\\frac43\\cdot\\frac98=\\frac{36}{24}=1.5$.\n\n\\textbf{Step 3:} $P(5)=1.5\\cdot\\frac{25}{24}=\\frac{25}{16}=1.5625$.\n\n\\textbf{Step 4:} $P(7)=\\frac{25}{16}\\cdot\\frac{49}{48}=\\frac{1225}{768}=1.595052$.\n\n\\textbf{Step 5:} $P(11)=1.595052\\cdot\\frac{121}{120}=1.608344$; $P(13)=1.608344\\cdot\\frac{169}{168}=1.617918$.",
+   "new": "\\textbf{Step 1:} $\\Pi(2)=\\frac43=1.333333$.\n\n\\textbf{Step 2:} $\\Pi(3)=\\frac43\\cdot\\frac98=\\frac{36}{24}=1.5$.\n\n\\textbf{Step 3:} $\\Pi(5)=1.5\\cdot\\frac{25}{24}=\\frac{25}{16}=1.5625$.\n\n\\textbf{Step 4:} $\\Pi(7)=\\frac{25}{16}\\cdot\\frac{49}{48}=\\frac{1225}{768}=1.595052$.\n\n\\textbf{Step 5:} $\\Pi(11)=1.595052\\cdot\\frac{121}{120}=1.608344$; $\\Pi(13)=1.608344\\cdot\\frac{169}{168}=1.617918$."
+  },
+  {
+   "old": "\\caption{Partial Euler products $\\prod_{p\\le P}(1-p^{-2})^{-1}$ and their ratio",
+   "new": "\\caption{Partial Euler products $\\Pi(x)=\\prod_{p\\le x}(1-p^{-2})^{-1}$ and their ratio"
+  },
+  {
+   "old": "largest prime $P$ & partial product",
+   "new": "largest prime $x$ & partial product $\\Pi(x)$"
+  },
+  {
+   "old": "the partial Euler product $\\prod_{p\\le P}(1-p^{-2})^{-1}$ against",
+   "new": "the partial Euler product $\\prod_{p\\le x}(1-p^{-2})^{-1}$ against"
+  },
+  {
+   "old": "expanding each factor with Eq.~\\eqref{eq:series-log} at $x=p^{-s}$ (which lies in $(0,\\tfrac12]$):",
+   "new": "expanding each factor with Eq.~\\eqref{eq:series-log}, using $p^{-s}$ (which lies in $(0,\\tfrac12]$) in place of the variable of that equation:"
+  },
+  {
+   "old": "\\log\\prod_{p\\le P}\\frac1{1-p^{-s}}=\\sum_{p\\le P}-\\log(1-p^{-s})=\\sum_{p\\le P}\\sum_{m=1}^\\infty\\frac{p^{-ms}}{m}.",
+   "new": "\\log\\prod_{p\\le x}\\frac1{1-p^{-s}}=\\sum_{p\\le x}-\\log(1-p^{-s})=\\sum_{p\\le x}\\sum_{m=1}^\\infty\\frac{p^{-ms}}{m}."
+  },
+  {
+   "old": "Letting $P\\to\\infty$ produces",
+   "new": "Letting $x\\to\\infty$ produces"
+  },
+  {
+   "old": "\\item $m=1$ and $m=2$: the moduli are $\\frac{p^{-1/2}}{\\pi}$ and $\\frac{p^{-1}}{2\\pi}$, and their sums over primes diverge (see the box). So the double sum is not absolutely convergent, and no tail bound from moduli exists. Whether, and in what order of summation, it converges at all on the critical line is not something the tools of this chapter can settle; Chapter~\\ref{ch:explicit-formula} treats it as a formal, heuristic object. What we can say is that it is not absolutely convergent, so truncating",
+   "new": "\\item $m=1$ and $m=2$: the moduli are at most the \\emph{amplitudes} $\\frac{p^{-1/2}}{\\pi}$ and $\\frac{p^{-1}}{2\\pi}$ (we drop the factor $\\abs{\\sin(mt\\log p)}\\le1$). The sums of these amplitudes over primes diverge (first box below). So the comparison argument that worked for $m\\ge3$ gives no tail bound here. In fact, for $t\\ne0$ the sum of the actual moduli, $\\frac1\\pi\\sum_p\\abs{\\sin(t\\log p)}\\,p^{-1/2}$, also diverges, because $\\abs{\\sin(t\\log p)}$ is not small for most primes. Proving this needs the distribution of the primes, so we take it on trust in the second box below. Hence for $t\\ne0$ the double sum is not absolutely convergent. Whether, and in what order of summation, it converges at all on the critical line is not something the tools of this chapter can settle; Chapter~\\ref{ch:explicit-formula} treats it as a formal, heuristic object. What we can say is that for $t\\ne0$ it is not absolutely convergent, so truncating"
+  },
+  {
+   "old": "the finer statement $\\sum_{p\\le x}1/p=\\log\\log x+\\order(1)$, is in",
+   "new": "the finer statement that $\\sum_{p\\le x}1/p$ equals $\\log\\log x$ plus a quantity that stays bounded as $x\\to\\infty$, is in"
+  },
+  {
+   "old": "it follows by comparison that $\\sum_pp^{-1/2}$ diverges as well.\n\\end{beyond}",
+   "new": "it follows by comparison that $\\sum_pp^{-1/2}$ diverges as well.\n\\end{beyond}\n\n\\begin{beyond}\n\\textbf{The actual moduli also have infinite sum (proved; proof beyond this book).} For every real $t\\ne0$, $\\sum_p\\abs{\\sin(t\\log p)}\\,p^{-1/2}=\\infty$, and likewise $\\sum_p\\abs{\\sin(2t\\log p)}\\,p^{-1}=\\infty$. The idea is that the angles $t\\log p$ are spread around the circle, so a fixed fraction of the primes have $\\abs{\\sin(t\\log p)}$ bounded away from zero. Making this precise uses the prime number theorem (Chapter~\\ref{ch:primes}) in a form that controls oscillating sums over primes; see Davenport~\\cite{davenport} or Titchmarsh~\\cite{titchmarsh} for the tools. At $t=0$ every term vanishes, which is why the restriction $t\\ne0$ is needed.\n\\end{beyond}"
+  },
+  {
+   "old": "\\item In the critical-line prime sum, the $m\\ge3$ part converges absolutely; the $m=1$ and $m=2$ parts do not, because $\\sum_p1/p$ diverges.",
+   "new": "\\item In the critical-line prime sum, the $m\\ge3$ part converges absolutely. For $m=1$ and $m=2$ the amplitude sums diverge (because $\\sum_p1/p$ does), so comparison gives no tail bound. For $t\\ne0$ the actual moduli also have infinite sum (taken on trust), so these parts are not absolutely convergent."
+  },
+  {
+   "old": "The full sum over all primes is not absolutely convergent (\\cref{sec:series-truncation}), so there is no tail bound",
+   "new": "The full sum over all primes is not absolutely convergent for $t\\ne0$ (\\cref{sec:series-truncation}), so there is no tail bound"
+  },
+  {
+   "old": "The probe's verdict (in-sample rms $0.056$, held-out correlation $+0.07$) is therefore not an artifact of the truncation in $m$: the issue it exposes is continuing an oscillation at all, which Chapter~\\ref{ch:fourier-series} takes up.",
+   "new": "So a probe built from the full $m$-series would have used a target differing from the paper's by at most $0.0487$. The choice $m\\le3$ is therefore immaterial to what the probe tests (in-sample rms $0.056$, held-out correlation $+0.07$), namely whether the fit can continue an oscillation at all (Chapter~\\ref{ch:fourier-series})."
+  },
+  {
+   "old": "(here $m$ labels states, not prime powers; $A$ is the non-Hermitian operator of Chapter~\\ref{ch:non-hermitian})",
+   "new": "(here $m$ labels states, not prime powers; $A$ is the non-Hermitian operator of Chapter~\\ref{ch:non-hermitian}. It is not the sum $A=\\sum a_k$ of \\cref{sec:series-products}, nor the sensitivity matrix $A_{nk}$ of the paper's Sec.~II~C; the paper overloads the letter.)"
+  },
+  {
+   "old": "In this chapter's language: the terms are largest when $E_m$ is close to $E_n$,",
+   "new": "A plausible reading (ours, not the paper's): if the matrix elements $\\abs{A_{nm}}^2$ of nearby states are of comparable size, the terms are largest when $E_m$ is close to $E_n$,"
+  },
+  {
+   "old": "the critical-line prime sum is not absolutely convergent, so the success of Eq.~(4) of the paper is a numerical observation.",
+   "new": "the critical-line prime sum is not absolutely convergent for $t\\ne0$ (its $m=1,2$ amplitude sums diverge, and, as taken on trust, so do its actual moduli), so the success of Eq.~(4) of the paper is a numerical observation."
+  },
+  {
+   "old": "compute the partial Euler products $\\prod_{p\\le P}(1-p^{-2})^{-1}$ for $P$ up to 1000 and plot their ratio to $\\pi^2/6$ against $P$. Estimate the relative deficit at $P=100$.",
+   "new": "compute the partial Euler products $\\Pi(x)=\\prod_{p\\le x}(1-p^{-2})^{-1}$ for $x$ up to 1000 and plot their ratio to $\\pi^2/6$ against $x$. Estimate the relative deficit at $x=100$."
+  },
+  {
+   "old": "Why can no such bound exist for the $m=1$ and $m=2$ parts?",
+   "new": "Why does this method give no bound for the $m=1$ and $m=2$ parts?"
+  },
+  {
+   "old": "(its $m=1$ and $m=2$ parts have divergent sums of moduli)",
+   "new": "(for $t\\ne0$ its $m=1$ and $m=2$ parts have divergent sums of moduli; even their amplitude sums diverge, so comparison gives no tail bound)"
+  },
+  {
+   "old": "For $m=1$ and $m=2$ the moduli sums are $\\frac1\\pi\\sum_pp^{-1/2}$ and $\\frac1{2\\pi}\\sum_pp^{-1}$, both infinite because $\\sum_p1/p$ diverges (beyond box, \\cref{sec:series-truncation}); no finite bound can exist.",
+   "new": "For $m=1$ and $m=2$ the same method bounds the moduli by the amplitude sums $\\frac1\\pi\\sum_pp^{-1/2}$ and $\\frac1{2\\pi}\\sum_pp^{-1}$. Both are infinite because $\\sum_p1/p$ diverges (first beyond box of \\cref{sec:series-truncation}), so the method yields no finite bound uniform in $t$. The sums of the actual moduli also diverge for $t\\ne0$; this is true but needs more than this chapter (second beyond box of \\cref{sec:series-truncation})."
   }
  ],
- "new_checks": "",
- "new_figures": {
-  "series_partialsums": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(1, 41)\nk = n.astype(float)\ngeo = np.cumsum(2.0**-(k - 1))\np2 = np.cumsum(1/k**2)\nalt = np.cumsum((-1.0)**(n + 1)/k)\nhar = np.cumsum(1/k)\nfig, ax = plt.subplots(figsize=(6, 4))\nfor y in [2.0, np.pi**2/6, np.log(2)]:\n    ax.axhline(y, color='gray', lw=0.8)\nax.plot(n, geo, 'o-', ms=3, lw=0.8, label=r'$\\sum 2^{-(k-1)}\\to 2$')\nax.plot(n, p2, 's-', ms=3, lw=0.8, label=r'$\\sum 1/k^2\\to\\pi^2/6$')\nax.plot(n, alt, '^-', ms=3, lw=0.8, label=r'$\\sum (-1)^{k+1}/k\\to\\log 2$')\nax.plot(n, har, 'd-', ms=3, lw=0.8, label=r'$\\sum 1/k$ (diverges)')\nax.plot(n, np.log(k) + 0.5772156649, 'k--', lw=0.8, label=r'$\\log n+\\gamma$')\nax.set_xlabel('number of terms $n$ (dimensionless)')\nax.set_ylabel('partial sum $S_n$ (dimensionless)')\nax.legend(fontsize=8, loc='upper left')\nplt.savefig(\"series_partialsums.pdf\", bbox_inches=\"tight\")\n",
-  "series_integraltest": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nx = np.linspace(1, 8.5, 400)\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3), sharey=True)\nfor k in range(1, 8):\n    a1.bar(k, 1.0/k, width=1, align='edge', color='C0', alpha=0.35, edgecolor='C0')\nfor k in range(2, 9):\n    a2.bar(k - 1, 1.0/k, width=1, align='edge', color='C1', alpha=0.35, edgecolor='C1')\nfor ax in (a1, a2):\n    ax.plot(x, 1/x, 'k', lw=1.5, label=r'$f(x)=1/x$')\n    ax.set_xlabel('$x$ (dimensionless)')\n    ax.set_xlim(0.8, 8.7)\n    ax.legend(fontsize=8)\na1.set_ylabel('$f(x)$ (dimensionless)')\na1.set_title(r'height $f(k)$ on $[k,k+1]$: above', fontsize=9)\na2.set_title(r'height $f(k)$ on $[k-1,k]$: below', fontsize=9)\nplt.savefig(\"series_integraltest.pdf\", bbox_inches=\"tight\")\n",
-  "series_spiral": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nimport mpmath as mp\nt1 = 14.134725141734695\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\ns = 2.0 + 1j*t1\nk = np.arange(1, 201).astype(float)\nS = np.cumsum(np.exp(-s*np.log(k)))\nz = complex(mp.zeta(mp.mpc(2.0, t1)))\na1.plot(S.real, S.imag, '.-', ms=2, lw=0.6)\na1.plot(z.real, z.imag, 'r*', ms=12, label=r'$\\zeta(2+it_1)$')\na1.set_title(r'$s=2+it_1$', fontsize=9)\na1.legend(fontsize=8)\ns = 0.5 + 1j*t1\nk = np.arange(1, 1001).astype(float)\nS = np.cumsum(np.exp(-s*np.log(k)))\nmain = k**(1 - s)/(1 - s)\na2.plot(S.real, S.imag, lw=0.6, label='$S_n$')\na2.plot(main.real, main.imag, 'k', lw=0.4, label=r'$n^{1-s}/(1-s)$')\na2.plot(0, 0, 'r+', ms=10)\na2.set_title(r'$s=\\frac12+it_1$ (first zero)', fontsize=9)\na2.legend(fontsize=8)\nfor ax in (a1, a2):\n    ax.set_xlabel(r'$\\mathrm{Re}\\,S_n$ (dimensionless)')\n    ax.set_ylabel(r'$\\mathrm{Im}\\,S_n$ (dimensionless)')\n    ax.set_aspect('equal', adjustable='datalim')\nplt.tight_layout()\nplt.savefig(\"series_spiral.pdf\", bbox_inches=\"tight\")\n",
-  "series_alternating": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(1, 41)\nalt = np.cumsum((-1.0)**(n + 1)/n)\nterms = []\nfor j in range(1, 20):\n    terms += [1/(2*j - 1), -1/(4*j - 2), -1/(4*j)]\nR = np.cumsum(terms)[:40]\nL = np.log(2)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.fill_between(n, L - 1/(n + 1), L + 1/(n + 1), color='gray', alpha=0.2, label=r'$\\log 2\\pm 1/(n+1)$')\nax.plot(n, alt, 'o', ms=4, label='alternating harmonic')\nax.plot(n, R, 's', ms=4, label='rearrangement')\nax.axhline(L, color='C0', lw=0.8)\nax.axhline(L/2, color='C1', lw=0.8, ls='--')\nax.set_xlabel('number of terms $n$ (dimensionless)')\nax.set_ylabel('partial sum (dimensionless)')\nax.legend(fontsize=8)\nplt.savefig(\"series_alternating.pdf\", bbox_inches=\"tight\")\n",
-  "series_logseries": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nx = np.linspace(-1, 0.99, 500)\nfig, ax = plt.subplots(figsize=(6, 4))\nax.plot(x, -np.log(1 - x), 'k', lw=2.5, label=r'$-\\log(1-x)$')\nfor n in [1, 2, 3, 5, 10]:\n    ax.plot(x, sum(x**m/m for m in range(1, n + 1)), lw=1, label=f'$n={n}$')\nax.set_ylim(-1, 5)\nax.set_xlabel('$x$ (dimensionless)')\nax.set_ylabel('value (dimensionless)')\nax.legend(fontsize=8, loc='upper left')\nplt.savefig(\"series_logseries.pdf\", bbox_inches=\"tight\")\n",
-  "series_re2": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nt = np.linspace(0, 40, 2000)\ndef w(M):\n    return -sum(np.sin(m*t*np.log(2))/(m*2**(m/2)) for m in range(1, M + 1))/np.pi\nbound = 0.048698\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\na1.plot(t, w(1), lw=0.8, label='$m=1$')\na1.plot(t, w(3), lw=1.2, label=r'$m\\le 3$')\na1.plot(t, w(40), 'k--', lw=0.8, label=r'$m\\le 40$')\na1.set_xlabel('height $t$ (dimensionless)')\na1.set_ylabel('wave (mean-spacing units)')\na1.legend(fontsize=7)\na2.plot(t, w(40) - w(3), lw=0.8)\na2.axhline(bound, color='k', ls='--', lw=0.8)\na2.axhline(-bound, color='k', ls='--', lw=0.8)\na2.set_xlabel('height $t$ (dimensionless)')\na2.set_ylabel(r'$m\\le40$ minus $m\\le3$')\nplt.tight_layout()\nplt.savefig(\"series_re2.pdf\", bbox_inches=\"tight\")\n",
-  "series_products": "import numpy as np, matplotlib; matplotlib.use(\"Agg\"); import matplotlib.pyplot as plt\nn = np.arange(2, 51).astype(float)\nfig, (a1, a2) = plt.subplots(1, 2, figsize=(6.5, 3))\na1.semilogy(n, n + 1, 'o', ms=3, label=r'$\\prod(1+1/k)$')\na1.semilogy(n, (n + 1)/(2*n), 's', ms=3, label=r'$\\prod(1-1/k^2)$')\na1.semilogy(n, 1/n, '^', ms=3, label=r'$\\prod(1-1/k)$')\na1.set_xlabel('number of factors $n$ (dimensionless)')\na1.set_ylabel('partial product (dimensionless)')\na1.legend(fontsize=7)\nsieve = np.ones(600, bool); sieve[:2] = False\nfor i in range(2, 25):\n    if sieve[i]:\n        sieve[i*i::i] = False\nprimes = np.nonzero(sieve)[0][:100].astype(float)\nP = np.cumprod(primes**2/(primes**2 - 1))\na2.plot(np.arange(1, 101), P, '.-', ms=3, lw=0.6)\na2.axhline(np.pi**2/6, color='k', ls='--', lw=0.8, label=r'$\\pi^2/6$')\na2.set_xlabel('number of primes used (dimensionless)')\na2.set_ylabel('partial Euler product at $s=2$')\na2.legend(fontsize=8)\nplt.tight_layout()\nplt.savefig(\"series_products.pdf\", bbox_inches=\"tight\")\n"
- },
- "notes": "Fixed: figure scripts for all seven figures; the dangling 'Problem 2.x' placeholder (now a full derivation including the half-angle step); RE2 Step 4 relabeled with a statement of which bound is tighter; Titchmarsh pointer made non-specific; beyond-box numerical remark restated with the 1/2 n^{-s} term explicit (using zeta(rho_1)=0); Euler-Maclaurin claim moved into a beyond box instead of promising it from Chapter 4, and the averaging explanation is now given in place; zeta(2) Parseval wording softened to 'taken as known'; overclaim about non-convergence of the critical-line prime sum replaced by an honest statement of status (and the matching pitfall sentence no longer calls it conditionally convergent); limit laws now require b_n nonzero and say where the proofs come from; harmonic-series etymology tightened; a comment added to the null pycode line explaining the nan correlation (the source of the stderr warning, which is harmless). No new numbers were introduced, so the CHECKS script is unchanged. Skipped: the problem-numbering issue (I recounted: 30 problems, and the cross-references to Problems 11, 13, 15 and 27 are all correct; difficulty tags need not be in sorted order). Skipped: the missing-answers issue (answers are already present for every prob{1} (1 to 5 and 29) and every odd-numbered problem 1 to 29; problem 30 is even). Skipped: adding answers and checks for Problems 20 and 22 (both even-numbered, so no answer is required; adding unverified numbers would violate the no-invented-numbers rule)."
+ "new_checks": "import numpy as np, math\nimport mpmath as mp\nimport qmnt\n\nmp.mp.dps = 30\ngamma = 0.5772156649015329\n\n# RE1: first zero\nt = qmnt.zeros(10)\nt1 = float(t[0])\nassert abs(t1 - 14.134725) < 1e-6\nassert abs(float(t[1]) - 21.022040) < 1e-6\n\n# Sample How far out must you go: N = 31\nassert 1/31**2 >= 1e-3 and 1/32**2 < 1e-3\nassert abs(math.sqrt(1000) - 31.62) < 0.01\n\n# Example: |e^{i theta}-1| = 2|sin(theta/2)|\nth = math.log(2)\nassert abs(abs(np.exp(1j*th) - 1) - 2*abs(math.sin(th/2))) < 1e-14\n\n# Geometric r=1/2: S_5 = 1.9375\nassert abs(sum(0.5**k for k in range(5)) - 1.9375) < 1e-12\n# Archimedes: 1/(1-1/4) = 4/3\nassert abs(1/(1 - 0.25) - 4/3) < 1e-12\n# complex geometric (i/2)\nzsum = 1/(1 - 0.5j)\nassert abs(zsum - (0.8 + 0.4j)) < 1e-12\n\n# Sample: ratio 2^{-1/2}\nr = 2**-0.5\nassert abs(r - 0.707107) < 1e-6\nassert abs(1/(1 - r) - 3.414214) < 1e-6\nassert abs(2 + math.sqrt(2) - 1/(1 - r)) < 1e-12\nassert abs((1 - r) - 0.292893) < 1e-6\nassert abs(0.01*(1 - r) - 0.00292893) < 1e-8\nassert abs(math.log(0.00292893) - (-5.83317)) < 1e-4\nassert abs(math.log(r) - (-0.346574)) < 1e-6\nassert abs(5.83317/0.346574 - 16.83) < 0.01\nnmin = next(n for n in range(1, 100) if r**n/(1 - r) < 0.01)\nassert nmin == 17\nassert abs(r**16/(1 - r) - 0.0133) < 1e-4\nassert abs(r**17/(1 - r) - 0.0094) < 1e-4\n\n# Sample: bouncing ball\nh, g, rr = 1.0, 9.8, 0.5\nD = h + 2*h*rr/(1 - rr)\nassert abs(D - 3.0) < 1e-12\ntau = math.sqrt(2*h/g)\nassert abs(tau - 0.451754) < 1e-6\nfac = 1 + 2*math.sqrt(rr)/(1 - math.sqrt(rr))\nassert abs(fac - 5.828427) < 1e-6\nassert abs(tau*fac - 2.633) < 5e-4\n\n# Sample: telescoping with gap, sum 1/(k^2-1) = 3/4\npart10 = sum(1/(k**2 - 1) for k in range(2, 11))\nassert abs(part10 - 0.654545) < 1e-6\nassert abs(0.5*(1.5 - 0.1 - 1/11) - part10) < 1e-12\nassert abs(sum(1/(k**2 - 1) for k in range(2, 200001)) - 0.75) < 1e-5\n\n# Harmonic numbers\nH = lambda n: math.fsum(1.0/k for k in range(1, n + 1))\nassert abs(H(8) - 2.717857) < 1e-6\nassert abs(H(10) - 2.928968) < 1e-6\nassert abs(math.log(11) - 2.397895) < 1e-6\nassert abs(1 + math.log(10) - 3.302585) < 1e-6\nassert abs(H(10) - math.log(10) - 0.626383) < 1e-6\n# Sample: H_n exceeds 10\nassert 2**18 == 262144\nassert H(4) > 1 + 2/2  # strict Oresme inequality for K = 2\nassert abs(math.exp(10 - gamma) - 12367) < 1.0\nassert abs((10 - gamma) - 9.4227843) < 1e-6\nassert H(12366) < 10 < H(12367)\nassert 21 < 262144/12367 < 22\nassert abs(1/(2*12367) - 4e-5) < 1e-6\n# slowest infinity: about 1.5e43 terms to pass 100\nassert abs(math.exp(100 - gamma)/1.5e43 - 1) < 0.02\n\n# Sample: zeta(2) bracket\nS10 = math.fsum(1/k**2 for k in range(1, 11))\nassert abs(S10 - 1.549768) < 1e-6\nz2 = math.pi**2/6\nassert abs(z2 - 1.644934) < 1e-6\nlo, hi = S10 + 1/11, S10 + 1/10\nassert abs(lo - 1.640677) < 1e-6 and abs(hi - 1.649768) < 1e-6\nassert lo <= z2 <= hi\nmid = (lo + hi)/2\nassert abs(mid - 1.645222) < 1e-6\nassert abs((mid - z2) - 0.00029) < 1e-5\nassert abs((z2 - S10) - 0.095) < 1e-3\n\n# Sample: sum k^{-1/2} to 1000\nS_half = math.fsum(k**-0.5 for k in range(1, 1001))\nlo = 2*(math.sqrt(1001) - 1); hi = 1 + 2*(math.sqrt(1000) - 1)\nassert abs(lo - 61.277168) < 1e-6 and abs(hi - 62.245553) < 1e-6\nassert lo <= S_half <= hi\nassert abs(S_half - 61.801) < 5e-4\nassert abs(2*1000 + float(mp.zeta(0.5)) - 1998.54) < 0.01\n\n# Checkpoint: tail of k^{-1.5} after 100 terms <= 0.2\nassert abs(2/math.sqrt(100) - 0.2) < 1e-12\n\n# Sample: s = 2 + i t1, 100 terms within 0.01\ns = 2.0 + 1j*t1\nk = np.arange(1, 101)\nS100 = np.sum(np.exp(-s*np.log(k)))\nzs = complex(mp.zeta(mp.mpc(2.0, t1)))\nassert abs(S100 - zs) < 0.01\n\n# spiral at rho_1\ns = 0.5 + 1j*t1\nk = np.arange(1, 1001)\nS = np.cumsum(np.exp(-s*np.log(k)))\nmain = k**(1 - s)/(1 - s)\nassert abs(abs(1 - s) - 14.1436) < 1e-3\nassert abs(math.sqrt(1000)/abs(1 - s) - 2.236) < 1e-3\nassert abs(abs(S[-1] - main[-1]) - 0.016) < 0.003\nassert abs(0.5*1000**-0.5 - 0.0158) < 1e-4\n\n# Sample: log 2 slowly\nassert abs(7/12 - 0.583333) < 1e-6\nassert abs(math.log(2) - 7/12 - 0.109814) < 1e-6\nterms = []\nfor j in range(1, 200001):\n    terms += [1/(2*j - 1), -1/(4*j - 2), -1/(4*j)]\nassert abs(math.fsum(terms) - 0.5*math.log(2)) < 1e-5\nassert abs(0.5*math.log(2) - 0.346574) < 1e-6\n\n# Sample: log 1.5\nx = 1/3\nthree = x + x**2/2 + x**3/3\nassert abs(three - 0.401235) < 1e-6\nbnd = x**4/(4*(1 - x))\nassert abs(bnd - 0.004630) < 1e-6\nassert abs(math.log(1.5) - 0.405465) < 1e-6\nerr = math.log(1.5) - three\nassert abs(err - 0.004230) < 1e-6 and 0 < err <= bnd\n\n# complex log series beyond box (200 terms, within 1e-12)\nz = 0.5*np.exp(1j)\nL = sum(z**m/m for m in range(1, 200))\nassert abs(np.exp(L) - 1/(1 - z)) < 1e-12\n\n# Sample RE2 tail\nfull = -math.log(1 - r)\nassert abs(full - 1.227947) < 1e-6\nfirst3 = r + 0.5/2 + r**3/3\nassert abs(first3 - 1.074958) < 1e-6\nassert abs(full - first3 - 0.152989) < 1e-6\ntail2 = (full - first3)/math.pi\nassert abs(tail2 - 0.048698) < 1e-6\ncrude = (0.25/(1 - r))/(4*math.pi)\nassert abs(crude - 0.067924) < 1e-6\nassert abs(r/math.pi - 0.225079) < 1e-6\nassert abs(tail2/(r/math.pi) - 0.216) < 1e-3\nassert abs(2*math.pi/math.log(2) - 9.065) < 1e-3\ntt = np.linspace(0, 40, 4001)\nw = lambda mm: -sum(np.sin(m*tt*math.log(2))/(m*2**(m/2)) for m in range(1, mm+1))/math.pi\nassert np.max(np.abs(w(40) - w(3))) <= tail2 + 1e-12\n\n# Products\nassert abs(11/20 - 0.55) < 1e-12\npr = np.prod([1 - 1/k**2 for k in range(2, 11)])\nassert abs(pr - 0.55) < 1e-12\nprimes = [2, 3, 5, 7, 11, 13]\nvals = np.cumprod([p**2/(p**2 - 1) for p in primes])\nclaim = [1.333333, 1.5, 1.5625, 1.595052, 1.608344, 1.617918]\nratios = [0.8106, 0.9119, 0.9499, 0.9697, 0.9778, 0.9836]\nfor v, c, q in zip(vals, claim, ratios):\n    assert abs(v - c) < 1e-6\n    assert abs(v/z2 - q) < 1e-4\nassert abs(1225/768 - 1.595052) < 1e-6\n\n# Pitfall: complex log\nzz = np.exp(2j*np.pi/3)\nassert abs((np.log(zz) + np.log(zz)) - np.log(zz*zz) - 2j*np.pi) < 1e-12\n\n# Answers\nassert abs(40/27 - 1.481481) < 1e-6                       # P1\nassert abs(3**-0.5 - 0.577350) < 1e-6                     # P4\nassert abs(math.log(3) - 1.098612) < 1e-6\nS5 = math.fsum(1/k**3 for k in range(1, 6))               # P7\nassert abs(S5 - 1.185662) < 1e-6\nassert abs(S5 + 1/72 - 1.199551) < 1e-6 and abs(S5 + 1/50 - 1.205662) < 1e-6\nz3 = float(mp.zeta(3)); assert abs(z3 - 1.202057) < 1e-6\nassert S5 + 1/72 <= z3 <= S5 + 1/50\nalt2 = math.fsum((-1)**(k+1)/k**2 for k in range(1, 200001))  # P9\nassert abs(alt2 - math.pi**2/12) < 1e-9\nassert abs(math.pi**2/12 - 0.822467) < 1e-6\nb = lambda n: 2.0**-n/(n + 1)                              # P11\nassert b(15) > 1e-6 and b(16) < 1e-6\nassert abs(b(15) - 1.9e-6) < 1e-7 and abs(b(16) - 9.0e-7) < 1e-7\nassert abs(math.fsum(0.5**m/m for m in range(1, 17)) - math.log(2)) < 1e-6\nassert abs(1 + z2 - 2.644934) < 1e-6                       # P13\nassert abs(math.exp(z2) - 5.180668) < 1e-6\nassert abs(math.sinh(math.pi)/math.pi - 3.676078) < 1e-6\nr3 = 3**-0.5                                               # P15\nfull3 = -math.log(1 - r3); f3 = r3 + (1/3)/2 + r3**3/3\nassert abs(full3 - 0.861212) < 1e-6 and abs(f3 - 0.808167) < 1e-6\nassert abs(full3 - f3 - 0.053045) < 1e-6\nassert abs((full3 - f3)/math.pi - 0.016885) < 1e-6\nassert abs((1/9)/(1 - r3)/(4*math.pi) - 0.020920) < 1e-6\nfor a, q in [(0.198, 0.753), (0.116, 0.441), (0.074, 0.281), (0.043, 0.163)]:  # P17\n    assert abs(a/0.263 - q) < 1e-3\nH6 = math.fsum(1.0/k for k in range(1, 10**6 + 1))          # P19\nassert abs(H6 - 14.392727) < 1e-6\nassert abs(math.log(1e6) - 13.815511) < 1e-6\nassert abs(H6 - (math.log(1e6) + gamma + 0.5e-6)) < 1e-11\n# P21 oracle rows of Table V\nn = np.arange(401, 501)\nrms0, _ = qmnt.score(qmnt.smooth_zeros(n), n)\nassert abs(rms0 - 0.263) < 1e-3\nfor kk, (rm, cr) in zip([1, 3, 6, 25], [(0.198, 0.66), (0.116, 0.90), (0.074, 0.96), (0.043, 0.99)]):\n    tp = qmnt.oracle_zeros(n, qmnt.first_primes(kk), mmax=3)\n    a, c = qmnt.score(tp, n)\n    assert abs(a - rm) < 1.5e-3 and abs(c - cr) < 0.015\n# P23 spiral sizes\nkk = np.arange(1, 10001)\nSS = np.cumsum(np.exp(-(0.5 + 1j*t1)*np.log(kk)))\nfor N, pred in [(100, 0.707), (1000, 2.236), (10000, 7.070)]:\n    assert abs(math.sqrt(N)/abs(0.5 - 1j*t1) - pred) < 1e-3\n    assert abs(abs(SS[N-1]) - pred) < 0.6/math.sqrt(N) + 1e-3\n# P25\nassert abs(1.5*math.log(2) - 1.039721) < 1e-6\n# P27\nz32 = float(mp.zeta(1.5)); assert abs(z32 - 2.612375) < 1e-6\nbound27 = (1/(3*math.pi))*(1/(1 - r))*(z32 - 1)\nassert abs(bound27 - 0.584) < 1e-3\n# P29\nassert [3*q for q in [1, 3, 6, 25, 300]] == [3, 9, 18, 75, 900]\n\n# sum rule numerical instance (Eq. pair)\nrng = np.random.default_rng(0)\nAab = rng.normal(size=(6, 6)); Aab = (Aab + Aab.T)/2\nEv = np.sort(rng.normal(size=6))*10\nT = sum(-Aab[a, m]**2/(Ev[a] - Ev[m]) for a in range(6) for m in range(6) if m != a)\nassert abs(T) < 1e-12\nprint(\"all checks passed\")\n",
+ "new_figures": {},
+ "notes": "All issues judged valid and addressed. (1) The three didyouknow blocks are removed. Their content now lives in ordinary paragraphs: the Archimedes remark after the geometric-series example, the Riemann remark in the rearrangement beyond box, and the slowest-infinity remark after the H_n>10 sample. New CHECKS cover 4/3 and e^{100-gamma}≈1.5e43. (2,3) The critical-line moduli argument is reworded throughout (truncation bullet, Key Ideas, Paper connection, Summary, Answer 17, Problem/Answer 27). It now distinguishes amplitude bounds from actual moduli, and divergence of the actual moduli for t≠0 is placed in a new beyond box. (4,5) Big-O is glossed or replaced. (6) Improper integrals are defined, and their existence is justified in the proof. (8) All reader-facing CHECKS references are replaced. (9) The partial-sums figure is now cited, with a preview sentence. (10,17) The terms p-series and Dirichlet series are explained. (11) The permutation letter is changed to q. (12) The strict Oresme inequality is stated and checked. (13) The Eq. (5) explanation is labelled as our own reading. (14) The probe sentence is rewritten. (15) Overloading of A is flagged. (16) The partial Euler product is renamed Pi(x) with x as the largest prime, and the log-expansion variable clash is avoided. (18) The R=0 and R=∞ cases are covered. (19, 20) The vague back-reference is made specific, and the claim that the zeros are unbounded is given its status. The figure script for series_products is not visible to me, so its axis labels are unchanged; only the caption was edited."
 }

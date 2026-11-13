@@ -11,7 +11,7 @@ t1 = float(t[0])
 assert abs(t1 - 14.134725) < 1e-6
 assert abs(float(t[1]) - 21.022040) < 1e-6
 
-# Sample "How far out must you go?": N = 31
+# Sample How far out must you go: N = 31
 assert 1/31**2 >= 1e-3 and 1/32**2 < 1e-3
 assert abs(math.sqrt(1000) - 31.62) < 0.01
 
@@ -21,6 +21,8 @@ assert abs(abs(np.exp(1j*th) - 1) - 2*abs(math.sin(th/2))) < 1e-14
 
 # Geometric r=1/2: S_5 = 1.9375
 assert abs(sum(0.5**k for k in range(5)) - 1.9375) < 1e-12
+# Archimedes: 1/(1-1/4) = 4/3
+assert abs(1/(1 - 0.25) - 4/3) < 1e-12
 # complex geometric (i/2)
 zsum = 1/(1 - 0.5j)
 assert abs(zsum - (0.8 + 0.4j)) < 1e-12
@@ -65,11 +67,14 @@ assert abs(1 + math.log(10) - 3.302585) < 1e-6
 assert abs(H(10) - math.log(10) - 0.626383) < 1e-6
 # Sample: H_n exceeds 10
 assert 2**18 == 262144
+assert H(4) > 1 + 2/2  # strict Oresme inequality for K = 2
 assert abs(math.exp(10 - gamma) - 12367) < 1.0
 assert abs((10 - gamma) - 9.4227843) < 1e-6
 assert H(12366) < 10 < H(12367)
 assert 21 < 262144/12367 < 22
 assert abs(1/(2*12367) - 4e-5) < 1e-6
+# slowest infinity: about 1.5e43 terms to pass 100
+assert abs(math.exp(100 - gamma)/1.5e43 - 1) < 0.02
 
 # Sample: zeta(2) bracket
 S10 = math.fsum(1/k**2 for k in range(1, 11))
@@ -90,7 +95,6 @@ lo = 2*(math.sqrt(1001) - 1); hi = 1 + 2*(math.sqrt(1000) - 1)
 assert abs(lo - 61.277168) < 1e-6 and abs(hi - 62.245553) < 1e-6
 assert lo <= S_half <= hi
 assert abs(S_half - 61.801) < 5e-4
-# near 2000 by n = 10^6 (2 sqrt(n) + zeta(1/2))
 assert abs(2*1000 + float(mp.zeta(0.5)) - 1998.54) < 0.01
 
 # Checkpoint: tail of k^{-1.5} after 100 terms <= 0.2
@@ -101,7 +105,7 @@ s = 2.0 + 1j*t1
 k = np.arange(1, 101)
 S100 = np.sum(np.exp(-s*np.log(k)))
 zs = complex(mp.zeta(mp.mpc(2.0, t1)))
-assert abs(S100- zs) < 0.01
+assert abs(S100 - zs) < 0.01
 
 # spiral at rho_1
 s = 0.5 + 1j*t1
@@ -116,7 +120,6 @@ assert abs(0.5*1000**-0.5 - 0.0158) < 1e-4
 # Sample: log 2 slowly
 assert abs(7/12 - 0.583333) < 1e-6
 assert abs(math.log(2) - 7/12 - 0.109814) < 1e-6
-# rearrangement sum 1/2 log 2
 terms = []
 for j in range(1, 200001):
     terms += [1/(2*j - 1), -1/(4*j - 2), -1/(4*j)]
@@ -133,7 +136,7 @@ assert abs(math.log(1.5) - 0.405465) < 1e-6
 err = math.log(1.5) - three
 assert abs(err - 0.004230) < 1e-6 and 0 < err <= bnd
 
-# complex log series beyond box
+# complex log series beyond box (200 terms, within 1e-12)
 z = 0.5*np.exp(1j)
 L = sum(z**m/m for m in range(1, 200))
 assert abs(np.exp(L) - 1/(1 - z)) < 1e-12
@@ -159,7 +162,6 @@ assert np.max(np.abs(w(40) - w(3))) <= tail2 + 1e-12
 assert abs(11/20 - 0.55) < 1e-12
 pr = np.prod([1 - 1/k**2 for k in range(2, 11)])
 assert abs(pr - 0.55) < 1e-12
-# Euler product table
 primes = [2, 3, 5, 7, 11, 13]
 vals = np.cumprod([p**2/(p**2 - 1) for p in primes])
 claim = [1.333333, 1.5, 1.5625, 1.595052, 1.608344, 1.617918]

@@ -1,93 +1,142 @@
 [
  {
-  "category": "RULE",
+  "category": "LATEX",
   "severity": "high",
-  "quote": "\\includegraphics[width=0.85\\linewidth]{figs/series_partialsums.pdf}",
-  "problem": "The chapter includes six figures (partialsums, integraltest, spiral, alternating, logseries, re2, products) but no FIGURES part or scripts are provided in the response.",
-  "fix": "Add a FIGURES section with a ### FIG script for every included figure: series_partialsums, series_integraltest, series_spiral, series_alternating, series_logseries, series_re2, series_products."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "the last step is Problem~2.x-style algebra: $\\abs{e^{i\\theta}-1}^2=(\\cos\\theta-1)^2+\\sin^2\\theta=2-2\\cos\\theta=4\\sin^2(\\theta/2)$",
-  "problem": "The reference 'Problem 2.x-style' is a dangling placeholder; the algebra also skips the identity 1-cos θ = 2 sin²(θ/2).",
-  "fix": "Remove the placeholder and add the line 2-2cosθ = 4 sin²(θ/2) via the half-angle identity cosθ = 1-2sin²(θ/2)."
+  "quote": "In the third century BC, Archimedes found the area of a parabolic segment by filling it with triangles.",
+  "problem": "This text sits in a `didyouknow` environment (used three times, each wrapped in `% DYK-BEGIN/END` comments). The bible's preamble does not define `didyouknow`; the allowed environments are chapterintro, prerequisites, keyideas, sample, checkpoint, pitfall, beyond, pycode, problemlist. The chapter will not compile and breaks the bible's environment contract.",
+  "fix": "Remove the three `didyouknow` blocks, or fold their content into ordinary paragraphs. The Archimedes remark can follow the geometric-series derivation; the Riemann remark can go in the existing rearrangement beyond box; the 'slowest infinity' remark can go in the harmonic-series section."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "\\boxed{\\abs{f_2^\\infty(t)-f_2(t)}\\le0.048698\\ \\text{ for all } t}",
-  "problem": "The step 4 'cruder bound' of 0.067924 is shown, yet the box states the exact-moduli bound; fine, but Step 4 says '0.067924' while the quantity compared is 1/(4π)·... (OK). However the bound is reasoned as worst case sum of moduli, which is not 'sharp'; minor. More importantly the 4-term crude bound formula omits the explicit 1/π in text of Problem 15 consistency.",
-  "fix": "Label Step 4 clearly as an alternative upper bound and note which is tighter."
+  "quote": "their sums over primes diverge (see the box). So the double sum is not absolutely convergent, and no tail bound from moduli exists.",
+  "problem": "The quantities $p^{-1/2}/\\pi$ and $p^{-1}/(2\\pi)$ are upper bounds on the moduli, not the moduli themselves, which carry the factor $|\\sin(mt\\log p)|$. Divergence of the upper bounds does not prove divergence of the sum of moduli. At $t=0$ every term vanishes and the sum is trivially absolutely convergent. The same non sequitur recurs in the Key Ideas, the Pitfall, the Paper connection and the Summary.",
+  "fix": "Call $p^{-1/2}/\\pi$ and $p^{-1}/(2\\pi)$ 'amplitudes'. Say: 'the amplitude bounds diverge, so the comparison argument that worked for $m\\ge3$ gives no tail bound here. In fact, for $t\\neq0$ the sum of the actual moduli $|\\sin(t\\log p)|p^{-1/2}$ also diverges, because $|\\sin(t\\log p)|$ is not small for most primes; proving this needs the distribution of primes and is beyond this chapter.' Put that last statement in a beyond box and adjust the Key Ideas, Summary and Paper-connection wording to match."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Titchmarsh~\\cite{titchmarsh}, Chapter~4 of the book being the relevant place for approximations of this kind, or Edwards~\\cite{edwards}.",
-  "problem": "Vague, awkward and possibly inaccurate chapter attribution; unverifiable pointer.",
-  "fix": "Cite Titchmarsh and Edwards without a specific chapter number, e.g. 'see Titchmarsh~\\cite{titchmarsh} on approximate functional equations, or Edwards~\\cite{edwards}'."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "and $\\abs{\\epsilon_n}$ is small compared with $\\tfrac12 n^{-\\sigma}$ once $n$ is large compared with $\\abs t$.",
-  "problem": "The beyond box claims the remainder is small relative to the next term, but then the numerical check at n=1000 finds the difference comparable to (equal in size to) 0.0158=½n^{-1/2}, which includes the ½n^{-s} term itself; the statement mixes whether the ½n^{-s} term is part of the main asymptotic. Also the formula's sign/form for S_n at a zero is asserted without verification in the text.",
-  "fix": "State the asymptotic as S_n - n^{1-s}/(1-s) ≈ ζ(s) + ½ n^{-s}, and in the numerical remark say the observed difference is the size of ½n^{-s} since ζ(ρ1)=0."
+  "quote": "both infinite because $\\sum_p1/p$ diverges (beyond box,",
+  "problem": "Answer 27 repeats the gap: the moduli sums are written without the $|\\sin(mt\\log p)|$ factors, and 'no finite bound can exist' is inferred from divergence of an upper bound. Strictly this shows only that the bounding method of the problem fails.",
+  "fix": "Rewrite: 'For $m=1,2$ the same method bounds the moduli by $\\frac1\\pi\\sum_p p^{-1/2}$ and $\\frac1{2\\pi}\\sum_p p^{-1}$, which are infinite, so it yields no finite bound uniform in $t$. That the sums of the actual moduli diverge for $t\\ne0$ is true but needs more than this chapter.' Reword Problem 27's last sentence accordingly ('Why does this method give no bound for $m=1,2$?')."
  },
  {
   "category": "JUMP",
   "severity": "medium",
-  "quote": "Euler--Maclaurin comparison of sums and integrals developed in Chapter~\\ref{ch:asymptotics}; we quote it here as an approximation useful for numbers.",
-  "problem": "Chapter 4's must-teach list does not include Euler–Maclaurin; forward reference may not be delivered. Same for 'Chapter~\\ref{ch:asymptotics} explains why averaging the two integral bounds works so well'.",
-  "fix": "Say 'beyond this book' or state the expansion as taken on trust in a beyond box rather than promising Chapter 4."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "proved in Chapter~\\ref{ch:fourier-series} by Parseval's theorem",
-  "problem": "Chapter 5 must teach Parseval, but not necessarily the evaluation of ζ(2); promised derivation is not guaranteed.",
-  "fix": "Say 'Euler's result; it follows from Parseval's theorem applied to a Fourier series (Chapter~\\ref{ch:fourier-series}) and we take it as a known value here'."
- },
- {
-  "category": "OVERCLAIM",
-  "severity": "medium",
-  "quote": "It is in fact not convergent in any ordinary sense at most $t$ (Chapter~\\ref{ch:explicit-formula} discusses this)",
-  "problem": "Unproved assertion about convergence of the critical-line prime sum; status is not given and 'at most t' is vague.",
-  "fix": "Say 'its convergence on the critical line is not established by the tools of this chapter; the series is not absolutely convergent and is treated heuristically (Chapter 18)'."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Problem~11 shows a far faster route to $\\log2$.",
-  "problem": "Problem numbering: the log2 at x=1/2 problem is the 11th problem in the list only if counted; it is, but later problems are inserted with out-of-order prob numbering (problem 19 is a Using numpy item while 18 is a hard one), and references like 'Problem~27' and 'Problem~13','Problem~15' must match. Check: item 27 is the m≥3 bound, OK; however Answers refer 'P29' etc. Mostly consistent, but problem 26 listing order puts 'prob{3}' physics with prob{2}.",
-  "fix": "Verify the problem numbering against all cross references and difficulty tags (e.g. the bouncing-ball problem is tagged 2 but follows a 3)."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\section{Answers to selected problems}",
-  "problem": "Bible requires answers to all \\prob{1} and every odd-numbered problem. Missing odd-numbered answers: 3 ok, but 31 (odd, problem list item 31?) and others such as 21 ok; answers for odd problems like 25 given; but problem 31 (log log integral) and 28? lack answers.",
-  "fix": "Add answers for every remaining odd-numbered problem (e.g. the last problem on ∑1/(k(log k)^q)), and for all \\prob{1} problems (including problem 5)."
- },
- {
-  "category": "RULE",
-  "severity": "low",
-  "quote": "Problems~11 shows",
-  "problem": "Anatomy requires at least 3 computational problems and 4 paper problems; satisfied, but several computational problems (20, 22) lack answers and checks for their stated claims such as 'relative deficit at P=100'.",
-  "fix": "Add CHECKS for Euler-product deficit at P=100 and n(ζ(2)-S_n)→1, and give answers."
+  "quote": "H_n=\\log n+\\gamma+\\frac1{2n}+\\order(n^{-2}).",
+  "problem": "Big-O notation is taught in Chapter 4 (asymptotics), which this chapter may not assume. The symbol $\\mathcal O$ is never defined here.",
+  "fix": "Add a one-line gloss: 'where $\\order(n^{-2})$ means a remainder whose size is at most a constant times $n^{-2}$ for all large $n$ (big-O notation, treated in Chapter~\\ref{ch:asymptotics})', or write 'plus a remainder smaller than $C/n^2$ for some constant $C$'."
  },
  {
   "category": "JUMP",
   "severity": "low",
-  "quote": "If $f$ is a continuous function, $a_n\\to a$ implies $f(a_n)\\to f(a)$. We use these freely.",
-  "problem": "Limit laws are asserted without proof or beyond box; the quotient law with a_n/b_n needs b_n nonzero.",
-  "fix": "Add 'provided b_n ≠ 0 for all n' and note these are the same laws as for functions in calculus."
+  "quote": "the finer statement $\\sum_{p\\le x}1/p=\\log\\log x+\\order(1)$",
+  "problem": "$\\order(1)$ is used without definition; big-O belongs to Chapter 4.",
+  "fix": "Replace with 'equals $\\log\\log x$ plus a quantity that stays bounded as $x\\to\\infty$'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Moreover, when the series converges, its tail after $n$ terms satisfies",
+  "problem": "The improper integrals $\\int_n^\\infty f\\,\\dd x$ are used in the tail bounds and in later samples without being defined. The prerequisites list only definite integrals, and the proof never states that these limits exist.",
+  "fix": "Before the theorem add: 'We write $\\int_a^\\infty f\\,\\dd x$ for $\\lim_{K\\to\\infty}\\int_a^K f\\,\\dd x$ when that limit exists.' In the proof, note that the limit exists because the integrals increase with $K$ and are bounded when the series converges."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "To pass 100 you need roughly $1.5\\times10^{43}$ terms.",
+  "problem": "This is a number from the chapter's own computation ($e^{100-\\gamma}$) and it is not asserted in the CHECKS script. The bible requires every such number to be checked.",
+  "fix": "Add to CHECKS: `assert abs(math.exp(100-gamma)/1.5e43 - 1) < 0.02`. If the box is removed (see the LATEX issue), the number goes with it."
  },
  {
   "category": "CLARITY",
   "severity": "low",
-  "quote": "The name comes from music: a string vibrating in its $k$-th harmonic has wavelength $1/k$ of the fundamental",
-  "problem": "Correct for wavelength but the series is of frequencies/wavelengths; mildly confusing and cites HRW generally.",
-  "fix": "State 'wavelength is 1/k of the fundamental wavelength' and drop or tighten the citation."
+  "quote": "Summing directly on a computer (CHECKS script) gives $H_{12366}<10<H_{12367}$.",
+  "problem": "Reader-facing text refers to a 'CHECKS script' four times (also 'checked in CHECKS', 'The CHECKS script confirms', 'The CHECKS script verifies'). CHECKS is a build artifact of the writing process; the reader has never been told what it is.",
+  "fix": "Replace with 'Summing directly on a computer (a three-line numpy loop; see Problem 19 for the method)' and similar wording, or give a short pycode listing; drop the word CHECKS from the chapter text."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the alternating harmonic series zigzags around $\\log2=0.693147$; the harmonic series $\\sum1/k$ grows without bound, following $\\log n+\\gamma$ with $\\gamma=0.577216$.",
+  "problem": "The figure sits in the geometric-series section and is never cited in the text. Its caption relies on the harmonic series, $\\gamma$, the alternating harmonic series and $\\pi^2/6$, all introduced two to five sections later.",
+  "fix": "Move the figure to the end of the alternating-series section, or add a sentence in the text: 'Figure~\\ref{fig:series-partialsums} previews four series we meet in this chapter; return to it as each is introduced.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "The $p$-series $\\sum k^{-s}$ for real $s$",
+  "problem": "The name '$p$-series' is never explained, and the exponent is called $s$, while $p$ means a prime everywhere else in the book. The term is reused in the ratio-test proof and in Answer 2.",
+  "fix": "Rename to 'The power series of integers $\\sum k^{-s}$' or add: '(traditionally called the $p$-series because the exponent is often written $p$; we write $s$, keeping $p$ for primes)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "in which $\\pi$ lists every positive integer exactly once in some new order",
+  "problem": "$\\pi$ is used for a permutation in a chapter where $\\pi$ is everywhere else the number 3.14159 (e.g. $\\pi^2/6$, $1/\\pi$ prefactors).",
+  "fix": "Use another letter, e.g. $\\sum_j a_{q(j)}$ with $q$ the reordering, here and in the proof ($T_J$, $K=\\max(q(1),\\dots,q(J))$)."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Setting $1+K/2=10$ gives $K=18$, so $n=2^{18}=262144$ certainly works.",
+  "problem": "The bound $H_{2^K}\\ge1+K/2$ at $K=18$ gives only $H_n\\ge10$, while the problem asks for $H_n>10$. 'Certainly works' is not what the stated inequality guarantees.",
+  "fix": "Add 'the inequality is strict for $K\\ge2$, because block 2 contains $1/3>1/4$, so $H_{2^{18}}>10$', or use $K=19$."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "In this chapter's language: the terms are largest when $E_m$ is close to $E_n$",
+  "problem": "This explanation of why truncation at 500 states biases the top levels is the chapter's own heuristic. It assumes the matrix elements $|A_{nm}|^2$ are of comparable size near the cutoff. The paper states only the observation, and the text presents the explanation as fact (Problem 28 does state the assumption).",
+  "fix": "Rewrite: 'A plausible reading (ours, not the paper's): if the matrix elements $\\abs{A_{nm}}^2$ of nearby states are of comparable size, the terms are largest when $E_m$ is close to $E_n$, so ...'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "is therefore not an artifact of the truncation in $m$",
+  "problem": "Non sequitur. The probe's target is by definition the $m\\le3$ wave (App. A step 15), so no truncation artifact is in question. The tail bound shows only that an all-$m$ target would differ by at most 0.0487.",
+  "fix": "Replace with: 'So a probe built from the full $m$-series would have used a target differing from the paper's by at most $0.0487$; the choice $m\\le3$ is immaterial to what the probe tests, which is whether the fit can continue an oscillation at all (Chapter~\\ref{ch:fourier-series}).'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "(here $m$ labels states, not prime powers; $A$ is the non-Hermitian operator of Chapter~\\ref{ch:non-hermitian})",
+  "problem": "The bible asks chapters to flag overloaded symbols. In this chapter $A$ and $A_n$ already denote $\\sum a_k$ and its partial sums (infinite-products section), and in the paper $A$ also denotes the sensitivity matrix $A_{nk}$. Neither clash is mentioned.",
+  "fix": "Append: 'not the sum $A=\\sum a_k$ of the infinite-products section, nor the sensitivity matrix $A_{nk}$ of the paper's Sec. II C; the paper overloads the letter.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Multiply the factors $p^2/(p^2-1)$ for $p=2,3,5,7,11,13$ and compare each partial product with $\\pi^2/6$.",
+  "problem": "The letter $P$ is overloaded within a few pages: $P_n$ (partial product), $P$ (limit of a product), $P(2),P(3),\\dots$ (Euler product up to a prime), $P$ (largest prime in the table and in $\\prod_{p\\le P}$), and the paper's prime set $P$.",
+  "fix": "Use $E_x=\\prod_{p\\le x}(1-p^{-2})^{-1}$ or $\\Pi(x)$ for the partial Euler product and $x$ for the largest prime in the table, the figure caption and Problem 22; keep $P$ for the paper's prime set."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The Dirichlet series $\\sum k^{-s}$ for complex $s$",
+  "problem": "The term 'Dirichlet series' appears in a heading and later in the text and Key Ideas without definition.",
+  "fix": "Add one sentence: 'A series of the form $\\sum_k c_k k^{-s}$ is called a Dirichlet series; here all $c_k=1$.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "If $\\abs{c_m/c_{m+1}}\\to R$ (possibly $R=\\infty$), this ratio tends to $\\abs z/R$.",
+  "problem": "The argument silently assumes all $c_m\\ne0$ and $R>0$. The case $R=0$ (which arises in Problem 10(c), $\\sum m!\\,x^m$) and the meaning of $\\abs z/\\infty$ are not covered.",
+  "fix": "Add: 'assume $c_m\\neq0$. If $R=\\infty$ the ratio tends to $0$ for every $z$; if $R=0$ it tends to infinity for every $z\\ne0$ and the series converges only at $z=0$.'"
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "whose sum diverges (Sample Problem above)",
+  "problem": "Vague back-reference. Several Sample Problems precede it, and the relevant one is in a different section.",
+  "fix": "Write 'whose sum diverges (the Sample Problem \"How fast does $\\sum k^{-1/2}$ diverge?\" in \\cref{sec:series-positive}, or directly the $p$-series theorem with $s=\\tfrac12$)'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "This sequence increases without bound.",
+  "problem": "This fact about the zeta zeros is stated without status or source. The reader cannot verify it at this point, and the bible requires the status of each claim to be explicit.",
+  "fix": "Add '(a proved fact: there are infinitely many zeros and their heights are unbounded; Chapter~\\ref{ch:counting-zeros} counts them)'."
  }
 ]
