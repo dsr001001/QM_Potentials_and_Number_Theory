@@ -156,4 +156,28 @@ def xws(V): return (np.sqrt(V-V0)*np.log(V0/(2*np.pi*np.e**2))+np.sqrt(V)*np.log
 assert abs(xws(1000.0)-x1000)<1e-6 and abs(xws(V0))<1e-12
 Vg=np.linspace(V0*1.0001,1500,2000); xg=np.array([qmnt.wu_sprung_x(vv) for vv in Vg])
 assert np.all(np.diff(xg)>0)
+# ---- revision additions ----
+assert abs((0.01/0.002)/(0.01/100)-5e4)<1e-6                     # football vs coin
+assert round(22/7,3)==3.143 and round(np.pi,3)==3.142             # P1 answer
+assert abs((22/7-np.pi)/np.pi-4.0e-4)<5e-6
+aa,bb=-1.0,2.0; mids=[]                                           # bisection on 1/x over [-1,2]
+for k in range(3):
+    mm=(aa+bb)/2; mids.append(mm)
+    if (1/aa)*(1/mm)<=0: bb=mm
+    else: aa=mm
+assert mids==[0.5,-0.25,0.125]
+yR=(1000-11/8)/np.e; WR=lambertw(yR).real                        # t_1000 sample
+assert abs(yR-367.374)<1e-3 and abs(WR-4.4202)<6e-5
+assert abs(2*np.pi*998.625-6274.546)<1e-3 and abs(6274.546/4.4202-1419.52)<0.005
+assert abs(6274.546/4.420-1419.58)<0.005
+assert abs((1419.42248094599-6274.546/4.420)/1.159+0.14)<0.01
+assert abs((1419.42248094599-1419.52)/1.159+0.08)<0.01
+assert 1e-4/4.3e-12>1e7                                           # precision paragraph, P22
+assert 1000/3<=385<=1330/3 and sum(k*k for k in range(1,11))==385  # P5 instance n=10
+x0=1.0; x1b=0.5*(x0+2/x0)                                         # P15(b) instance a=2
+assert abs((x1b-np.sqrt(2))-(x0-np.sqrt(2))**2/(2*x0))<1e-12
+p17a=lambda x:(x-1)*(x-2); assert p17a(0)==2 and p17a(3)==2       # P17
+assert 1/(-1)==-1 and 1/2==0.5
+p17d=lambda x:(x-1)*(x-2)*(x-3); assert p17d(0)==-6 and p17d(4)==6 and p17d(2)==0
+assert abs(Nsm(2*np.pi)-0.5+0.625)<1e-12                          # safe bracket sample
 print('all checks passed')

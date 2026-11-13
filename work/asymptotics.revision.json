@@ -1,71 +1,311 @@
 {
  "patches": [
   {
-   "old": "The actual error, using $s_1=14.5214$, is about $0.0099$.",
-   "new": "The actual error, using the converged root $s_1=14.5213$ (found with Brent's method, \\cref{sec:asymptotics-newton}), is about $0.0099$."
+   "old": "solving the oracle's level equation with Brent's method bracketed by $\\pm3$ mean spacings (Appendix~A step 8)",
+   "new": "solving the oracle's level equation with Brent's method bracketed by $\\pm3$ around the smooth zero (Appendix~A step 8)"
   },
   {
-   "old": "\\textbf{Step 5:} The next iterate $x_2$ agrees with $s_1=14.52136$ to better than",
-   "new": "\\textbf{Step 5:} The next iterate $x_2$ agrees with the converged root $s_1=14.5213$ to better than"
+   "old": "\\item Chapter~\\ref{ch:complex}: complex numbers, modulus and argument, the logarithm of a complex number and its branches (needed only for one box on the complex Gamma function).\n\\item Chapter~\\ref{ch:series}: limits of sequences, partial sums, the geometric series, the Taylor series of $e^x$ and of $\\log(1-x)$, the integral test.",
+   "new": "\\item Chapter~\\ref{ch:complex}: the Taylor series of $e^x$; complex numbers, modulus and argument, the logarithm of a complex number and its branches (the last three are needed only for one box on the complex Gamma function).\n\\item Chapter~\\ref{ch:series}: limits of sequences, partial sums, the geometric series, the Taylor series of $\\log(1-x)$, the integral test."
   },
   {
-   "old": "s_1=14.5214\\text{ in 2 to 3 steps}",
-   "new": "s_1=14.5213\\text{ in 2 to 3 steps}"
+   "old": "The absolute errors are the same; the relative errors differ by a factor of about 5000.",
+   "new": "The absolute errors are the same; the relative errors differ by a factor of about $50\\,000$ (about $10^{-4}$ for a $100\\,$m field against about $5$ for a $2\\,$mm coin)."
   },
   {
-   "old": "So Newton's method for any smooth zero, started anywhere above $2\\pi$, lands at or to the right of $s_n$ after one step and then marches down to it.",
-   "new": "Take $I=(2\\pi,\\infty)$ and $r=s_n$. If $x_0\\in I$, the theorem gives $x_1\\ge s_n>2\\pi$, so $x_1$ again lies in $I$; repeating the argument, every iterate stays in $I$, and the theorem applies at every step. So Newton's method for any smooth zero, started anywhere above $2\\pi$, lands at or to the right of $s_n$ after one step and then marches down to it."
+   "old": "quotes every error in these units (\"all errors below are quoted in units of the local mean spacing\", Sec.~II~A)",
+   "new": "quotes every error in these units (``all errors below are quoted in units of the local mean spacing'', Sec.~II~A)"
   },
   {
-   "old": "for large $u$, the extension of \\cref{eq:asymptotics-logpower} to \"exponentials beat powers\" shows $u^{x+1}e^{-u}\\to0$, so the integrand is eventually below $u^{-2}$, whose integral to infinity is finite.",
-   "new": "for large $u$, pick an integer $k\\ge x+2$. For $u>0$ every term of the Taylor series of $e^u$ is positive, so $e^u>u^k/k!$. Hence $u^{x+1}e^{-u}<k!\\,u^{x+1-k}\\le k!/u$ for $u\\ge1$, which tends to $0$. The integrand $u^{x-1}e^{-u}=u^{-2}\\cdot u^{x+1}e^{-u}$ is therefore below $u^{-2}$ once $u$ is large enough, and $\\int_1^\\infty u^{-2}\\,\\dd u=1$ is finite. (This is the precise meaning of \"exponentials beat powers\" used below.)"
+   "old": "and one can check that the relative error then satisfies",
+   "new": "and the relative error then satisfies (proof immediately below)"
   },
   {
-   "old": "(Left: sum $f(k)\\le\\int_{k}^{k+1}f$ over $k=1,\\dots,n-1$ gives $\\sum_{k=1}^{n-1}f(k)\\le\\int_1^nf$, then add $f(n)-f(1)$ to both sides for the right half. Right half rearranged: $\\sum_{k=2}^{n}f(k)=\\sum_{k=1}^{n-1}f(k)+f(n)-f(1)$. Left: sum $\\int_k^{k+1}f\\le f(k+1)$ over $k=1,\\dots,n-1$.)",
-   "new": "In detail: integrating $f(k)\\le f(x)\\le f(k+1)$ over the unit interval $[k,k+1]$ gives $f(k)\\le\\int_k^{k+1}f\\,\\dd x\\le f(k+1)$. Summing the right inequality over $k=1,\\dots,n-1$ gives $\\int_1^nf\\,\\dd x\\le\\sum_{k=2}^{n}f(k)$, the left half of \\cref{eq:asymptotics-squeeze-inc}. Summing the left inequality over $k=1,\\dots,n-1$ gives $\\sum_{k=1}^{n-1}f(k)\\le\\int_1^nf\\,\\dd x$; adding $f(n)-f(1)$ to both sides and using $\\sum_{k=1}^{n-1}f(k)+f(n)-f(1)=\\sum_{k=2}^{n}f(k)$ gives the right half."
+   "old": "approximation is \"good to $d$ significant digits\" when",
+   "new": "approximation is ``good to $d$ significant digits'' when"
   },
   {
-   "old": "(Brent proved a worst case of about $(\\log_2\\tfrac{b-a}{\\delta})^2$ evaluations)",
-   "new": "(Brent \\cite{brent} shows, and we quote without proof, that the number of evaluations never exceeds roughly $(\\log_2\\tfrac{b-a}{\\delta})^2$)"
+   "old": "says \"that is negligible\".",
+   "new": "says ``that is negligible''."
   },
   {
-   "old": "(The paper writes it $(4E_{2h}-E_h)/3$; with the pair of grids named in Appendix~A step 3 this is read with $E_{2h}$ denoting the twice-refined grid. Chapter~\\ref{ch:finite-differences} returns to this.)",
-   "new": "(The paper writes this combination as $(4E_{2h}-E_h)/3$. The cancellation above works only if the factor $4$ multiplies the levels on the \\emph{finer} grid of the pair, so in the paper's formula $E_{2h}$ must be read as the finer-grid levels, our $E(h/2)$. Chapter~\\ref{ch:finite-differences} returns to this notation.)"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Big O Is Older Than Computers}\nThe symbol $\\mathcal{O}$ was introduced by Paul Bachmann in an 1894 book on analytic number theory. Edmund Landau made it famous in his 1909 treatise on the distribution of primes, which is why $\\mathcal{O}$ and $o$ are called Landau symbols. Only in 1976 did Donald Knuth standardize $\\Omega$ and $\\Theta$ for computer science. Asymptotic notation was born in the study of primes.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.7, so a model that works at one height is being tested over a narrow range of $\\log t$.",
-   "new": "between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.85. (The following is our own remark, not a claim made in the paper: over that range $\\log(s_n/2\\pi)=2\\pi/\\gap_n$ grows only from about 4.7 to about 7.4, so \"nearly height-independent\" refers to a modest stretch of the logarithmic scale.)"
+   "old": "with \"for all $t\\ge t_0$\" replaced by \"for all $0<\\abs{x}\\le x_0$\"",
+   "new": "with ``for all $t\\ge t_0$'' replaced by ``for all $0<\\abs{x}\\le x_0$''"
   },
   {
-   "old": "For comparison, at $n=10^4$ the exact spacing is $\\gap_{10^4}=0.854$. This corrects the rough \"0.7\" quoted in \\cref{sec:asymptotics-paper}: between zeros 401 and $10^4$ the spacing falls from about $1.3$ to about $0.85$.",
-   "new": "For comparison, at $n=10^4$ the exact spacing is $\\gap_{10^4}=0.854$, against the leading-order value $2\\pi/\\log10^4=0.682$."
+   "old": "Read \"$=\\order(g)$\" as \"is a function bounded by a multiple of $g$\".",
+   "new": "Read ``$=\\order(g)$'' as ``is a function bounded by a multiple of $g$''."
   },
   {
-   "old": "At $x_0=7$: $f(7)=-0.618728$ and $f'(7)=\\frac1{2\\pi}\\log(7/2\\pi)=0.017194$. The step is $0.618728/0.017194=35.99$, so $x_1\\approx43.0$.",
-   "new": "At $x_0=7$: $f(7)=-0.61873$ and $f'(7)=\\frac1{2\\pi}\\log(7/2\\pi)=0.017194$. The step is $0.61873/0.017194=35.985$, so $x_1\\approx43.0$."
+   "old": "The Taylor series $e^{y}=1+y+y^2/2+\\cdots$ (Chapter~\\ref{ch:series})",
+   "new": "The Taylor series $e^{y}=1+y+y^2/2+\\cdots$ (Chapter~\\ref{ch:complex})"
   },
   {
-   "old": "decreases monotonically to $s_1=14.5214$.",
-   "new": "decreases monotonically to $s_1=14.5213$."
+   "old": "The same substitution shows that a power beats any power of a logarithm, $(\\log t)^k=o(t^a)$, and that an exponential beats any power, $t^k=o(e^{t})$.",
+   "new": "Two relatives follow in the same way. First, for $y>0$ every term of the Taylor series of $e^y$ is positive, so $e^y>y^{k+1}/(k+1)!$ for any whole number $k\\ge0$; hence $y^k/e^y<(k+1)!/y\\to0$ as $y\\to\\infty$. This says that an exponential beats any power, $t^k=o(e^{t})$. Second, with $t=e^u$ and $y=au$, $(\\log t)^k/t^a=u^k/e^{au}=a^{-k}\\,y^k/e^y\\to0$, so a power beats any power of a logarithm, $(\\log t)^k=o(t^a)$."
   },
   {
-   "old": "Apply one Newton step to $g(t)=\\Nsm(t)+\\Nfl(t)-\\tfrac12$ starting at $s_1=14.5214$,",
-   "new": "Apply one Newton step to $g(t)=\\Nsm(t)+\\Nfl(t)-\\tfrac12$ starting at $t_0=14.5214\\approx s_1$,"
+   "old": "\"Eventually\" can be a long time.",
+   "new": "``Eventually'' can be a long time."
   },
   {
-   "old": "\\textbf{Problem 29.} At $s_1=14.5214$:",
-   "new": "\\textbf{Problem 29.} At $t_0=14.5214$:"
+   "old": "the place where the limit \"kicks in\".",
+   "new": "the place where the limit ``kicks in''."
   },
   {
-   "old": "Starting from $s_1$, which is $0.387$ above",
-   "new": "Starting from $t_0$, which is $0.387$ above"
+   "old": "the \"leading term\" overestimates",
+   "new": "the ``leading term'' overestimates"
   },
   {
-   "old": "\\begin{sample}{(Answer to Problem 30, odd-numbered companion: Problem 29 continued)}\nFor completeness, the companion bound of Problem 30 is evaluated here as well.\n\n\\textbf{Step 1:} Differentiating Eq.~(4) term by term gives $\\abs{\\Nfl'}\\le\\frac1\\pi\\sum_p\\sum_{m=1}^3\\frac{\\log p}{p^{m/2}}$, using $\\abs{\\cos}\\le1$.\n\n\\textbf{Step 2:} For $p\\in\\{2,3,5,7,11,13\\}$ the sum is $6.568$, so the bound is $2.091$.\n\n\\textbf{Step 3:} The slope of the smooth part is $\\Nsm'(800)=\\frac1{2\\pi}\\log\\frac{800}{2\\pi}=0.771$.\n\n\\[\n\\boxed{\\abs{\\Nfl'}\\le2.09\\quad\\text{vs}\\quad\\Nsm'(800)=0.771}\n\\]\nThe bound exceeds the slope, so monotonicity is \\emph{not guaranteed}. However, the bound assumes that all cosines are $\\pm1$ simultaneously, which is a worst case, so it does not prove that the equation is root-ambiguous. With 150 primes (the root-ambiguous row of Table~IV) the worst-case bound is far larger still, which makes the observed ambiguity unsurprising.\n\\end{sample}",
-   "new": "\\textbf{Problem 30.} (a) By the chain rule, the derivative of the term $-\\frac1\\pi\\frac{\\sin(mt\\log p)}{mp^{m/2}}$ is $-\\frac1\\pi\\frac{m\\log p\\,\\cos(mt\\log p)}{mp^{m/2}}=-\\frac1\\pi\\frac{\\log p\\,\\cos(mt\\log p)}{p^{m/2}}$ (the factor $m$ cancels). The magnitude of a sum is at most the sum of the magnitudes, and $\\abs{\\cos}\\le1$, so $\\abs{\\Nfl'(t)}\\le\\frac1\\pi\\sum_p\\sum_{m=1}^3\\frac{\\log p}{p^{m/2}}$. For $p\\in\\{2,3,5,7,11,13\\}$ the double sum is $6.568$, so the bound is $2.091$. (b) $\\Nsm'(800)=\\frac1{2\\pi}\\log\\frac{800}{2\\pi}=0.771$. (c) The bound exceeds the slope, so this argument does \\emph{not} guarantee monotonicity. But the bound assumes all eighteen cosines take their worst values simultaneously, so it does not prove that the equation is root-ambiguous either. The root-ambiguous row of Table~IV is control B with 150 primes and fitted amplitudes; with many more oscillating terms, steep wiggles that break monotonicity are correspondingly more likely, so the reported ambiguity is unsurprising.\n\n\\textbf{Problem 31.} \\texttt{qmnt.wu\\_sprung\\_x} gives $x(1000)=44.883$ and $x(1500)=59.957$, the paper's $L$ values for scales 1 and 2 (Sec.~II~B). Feeding these back into \\texttt{qmnt.wu\\_sprung\\_V} returns $1000$ and $1500$ to within $10^{-4}$, so the bracketed root finder undoes the forward map. At the bottom, $x(V_0)=0$, because both $\\sqrt{V-V_0}$ and $\\log\\frac{\\sqrt V+\\sqrt{V-V_0}}{\\sqrt V-\\sqrt{V-V_0}}=\\log1$ vanish there. On 2000 equally spaced values of $V$ from just above $V_0$ to $1500$, every successive difference of $x(V)$ is positive. This is a numerical check of monotonicity on a grid, not a proof; Chapter~\\ref{ch:wu-sprung} discusses the shape of $x(V)$."
+   "old": "A sequence of \"gauge functions\"",
+   "new": "A sequence of ``gauge functions''"
+  },
+  {
+   "old": "\\paragraph{Theorem (sum--integral comparison).}",
+   "new": "\\paragraph{Theorem (comparison of sums and integrals).}"
+  },
+  {
+   "old": "More refined analysis, which we take on trust from Euler's summation formula (see \\cite{apostol}), gives",
+   "new": "\\begin{beyond}\n\\textbf{Refining $H_n$.} Euler's summation formula expresses a sum $\\sum_{k=1}^nf(k)$ as the integral $\\int_1^nf\\,\\dd x$ plus correction terms built from $f$ and its derivatives at the endpoints. Applied to $f(x)=1/x$ it gives the expansion \\cref{eq:asymptotics-Hn-expansion} below. We take it on trust; the proof is in \\cite{apostol}.\n\\end{beyond}\n\\noindent The expansion, taken on trust as stated in the box, reads"
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{A Theorem Behind Bisection}\nBisection works because a continuous function that changes sign must cross zero somewhere in between. That sounds obvious, but Bernard Bolzano gave one of the first rigorous proofs only in 1817. Each bisection step halves the interval, so ten steps shrink it by a factor $2^{10}=1024$, gaining about three decimal digits. The method is slow, but once a sign change is bracketed it never fails.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Newton's Favorite Cubic}\nIsaac Newton illustrated his root-finding method around 1669 on the equation $y^3-2y-5=0$, and Joseph Raphson published a streamlined version in 1690. Near a simple root the method roughly doubles the number of correct digits at each step. Much earlier, Heron of Alexandria described an iteration for square roots that is exactly Newton's method applied to $x^2-a=0$.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "\\textbf{Step 8: conclude.}",
+   "new": "\\begin{beyond}\n\\textbf{Monotone convergence.} A decreasing sequence that is bounded below converges to a limit, and an increasing sequence that is bounded above converges to a limit. This is a consequence of the completeness of the real numbers and is proved in any course on real analysis; we take it on trust here and again in \\cref{sec:asymptotics-newton}.\n\\end{beyond}\n\n\\textbf{Step 8: conclude.}"
+  },
+  {
+   "old": "A decreasing sequence that is bounded below converges (Chapter~\\ref{ch:series}); call the limit $C$.",
+   "new": "A decreasing sequence that is bounded below converges (monotone convergence, box above); call the limit $C$."
+  },
+  {
+   "old": "A sharper analysis gives the start of the \\emph{Stirling series},",
+   "new": "\n\\begin{beyond}\n\\textbf{The Stirling series.} Our proof pinned the remainder between $0$ and $1/(12n)$. A sharper tool, the Euler--Maclaurin summation formula (which expresses a sum $\\sum f(k)$ as the integral $\\int f\\,\\dd x$ plus correction terms involving derivatives of $f$ at the endpoints), refines this into the expansion \\cref{eq:asymptotics-stirling-series} below, with next term $-1/(360n^3)$ and an $\\order(n^{-5})$ remainder. We take this expansion on trust; the derivation is in \\cite{rhb} and \\cite{apostol}.\n\\end{beyond}\n\\noindent The start of the \\emph{Stirling series}, taken on trust as stated in the box, is"
+  },
+  {
+   "old": "Each added term shrinks the error by roughly the size of the next term, exactly as an asymptotic expansion should behave.",
+   "new": "After each added term, the remaining error is roughly the size of the next omitted term, exactly as an asymptotic expansion should behave."
+  },
+  {
+   "old": "it diverges for every $n$: the coefficients eventually grow faster than any power.",
+   "new": "it diverges for every $n$: the coefficients eventually grow factorially, faster than any geometric sequence $c^k$, so for every fixed $n$ the terms eventually increase."
+  },
+  {
+   "old": "needs a \"factorial\" of a complex number",
+   "new": "needs a ``factorial'' of a complex number"
+  },
+  {
+   "old": "integrate by parts with \"$f=u^{x}$, $\\dd g=e^{-u}\\dd u$\":",
+   "new": "integrate by parts with ``$f=u^{x}$, $\\dd g=e^{-u}\\dd u$'':"
+  },
+  {
+   "old": "meaning of \"exponentials beat powers\" used below",
+   "new": "meaning of ``exponentials beat powers'' used below"
+  },
+  {
+   "old": "The same formula holds for real $x$:",
+   "new": "That the same expansion holds for real $x$, not only for integers, is the content of the following box.\n\\begin{beyond}\n\\textbf{Stirling for real arguments.} The expansion \\cref{eq:asymptotics-stirling-gamma} below holds as $x\\to\\infty$ through all real values, not only through the integers where we derived it. This is a proved result whose proof (by the Euler--Maclaurin summation formula applied to $\\log\\Gamma$) is beyond this book; see \\cite{rhb}. We take it on trust.\n\\end{beyond}\n\\noindent Taken on trust as stated in the box,"
+  },
+  {
+   "old": "Then for every $y$ strictly between $\\inf_I f$ and $\\sup_I f$ there is exactly one",
+   "new": "Then for every $y$ such that $f(a)<y<f(b)$ for some points $a<b$ of $I$, there is exactly one"
+  },
+  {
+   "old": "Existence: pick $a<b$ in $I$ with $f(a)<y<f(b)$ (possible by the definition of inf and sup) and apply the intermediate value theorem.",
+   "new": "Existence: with such $a<b$, apply the intermediate value theorem to $f$ on $[a,b]$."
+  },
+  {
+   "old": "($\\Nsm$ is \\emph{convex}).",
+   "new": "($\\Nsm$ is \\emph{convex}). Convexity in this sense means that the graph lies above every tangent line: by Taylor's theorem with remainder (box in \\cref{sec:asymptotics-newton}), $f(r)=f(x)+f'(x)(r-x)+\\tfrac12f''(\\xi)(r-x)^2\\ge f(x)+f'(x)(r-x)$ whenever $f''>0$."
+  },
+  {
+   "old": "By the theorem, on $(2\\pi,\\infty)$ the function $\\Nsm$ takes every value above $-\\tfrac18$ exactly once.",
+   "new": "By the theorem, on $(2\\pi,\\infty)$ the function $\\Nsm$ takes every value above $-\\tfrac18$ exactly once. (Given $y>-\\tfrac18$, continuity lets us take $a$ slightly above $2\\pi$ with $\\Nsm(a)<y$, because $\\Nsm(2\\pi)=-\\tfrac18<y$, and $b$ large with $\\Nsm(b)>y$, because $\\Nsm\\to\\infty$.)"
+  },
+  {
+   "old": "This is the \"local mean spacing\" in which",
+   "new": "This is the ``local mean spacing'' in which"
+  },
+  {
+   "old": "This is the \"Lambert-$W$ asymptotic of the counting function\" that",
+   "new": "This is the ``Lambert-$W$ asymptotic of the counting function'' that"
+  },
+  {
+   "old": "\\textbf{Step 1:} $y=(1000-\\tfrac{11}{8})/e=998.625/2.718282=367.37$. Solving $we^w=367.37$ gives $W=4.420$.\n\n\\textbf{Step 2:} By \\cref{eq:asymptotics-sn-lambert}, $s_{1000}=2\\pi\\times998.625/4.420=1419.52$.",
+   "new": "\\textbf{Step 1:} $y=(1000-\\tfrac{11}{8})/e=998.625/2.718282=367.374$. Solving $we^w=367.374$ gives $W=4.4202$.\n\n\\textbf{Step 2:} By \\cref{eq:asymptotics-sn-lambert}, $s_{1000}=2\\pi\\times998.625/4.4202=6274.546/4.4202=1419.52$. Here $W$ must be carried to five significant digits: with the rounded value $W=4.420$ the same division gives $1419.58$, and Step 4 would come out as $-0.14$ instead of $-0.08$. The fluctuation $t-s$ is a small difference of two large numbers, so it magnifies small relative errors in $s$ (the cancellation effect of \\cref{sec:asymptotics-float})."
+  },
+  {
+   "old": "the paper says it is \"inverted pointwise by bracketed root finding\" (Sec.~II~B)",
+   "new": "the paper says it is ``inverted pointwise by bracketed root finding'' (Sec.~II~B)"
+  },
+  {
+   "old": "\\checkanswer{Because a root finder works for \\emph{any} monotone function, including the modified level equations $\\Nsm(t)+\\Nfl(t)=n-\\tfrac12$ and the Wu--Sprung inversion, for which no closed form exists.",
+   "new": "\\checkanswer{Because a root finder works for any continuous function with a sign change, including the Wu--Sprung inversion and the level equations $\\Nsm(t)+\\Nfl(t)=n-\\tfrac12$ used later ($\\Nfl$ is an oscillating prime sum, Chapter~\\ref{ch:explicit-formula}), which need not even be monotone and have no closed form."
+  },
+  {
+   "old": "Bisection on $1/x$ over $[-1,1]$ happily converges to $0$, which is a pole, not a root.",
+   "new": "Bisection on $1/x$ over $[-1,2]$ produces midpoints $0.5,-0.25,0.125,\\dots$ that converge to $0$, which is a pole, not a root. (On $[-1,1]$ it would fail at once: the first midpoint is exactly $0$, where $1/x$ cannot be evaluated.)"
+  },
+  {
+   "old": "When the function is known to be increasing, a standard remedy is to start from a guess and widen the interval until the signs differ. The paper does exactly this for the oracle: Brent \"bracketed $\\pm3$ around the smooth zero (bracket expanded on sign failure)\" (Appendix~A step 8), where the $\\pm3$ is in units of the mean spacing.",
+   "new": "When a root is expected near a known guess, a standard remedy is to start from a small interval around the guess and widen it until the signs differ; for an increasing function the root found this way is the only one. The paper does exactly this for the oracle: Brent ``bracketed $\\pm3$ around the smooth zero (bracket expanded on sign failure)'' (Appendix~A step 8). For the oracle a root near $s_n$ is expected, but monotonicity is not guaranteed (see the discussion of root ambiguity below). The paper does not state the units of the $\\pm3$; the companion library \\texttt{qmnt} uses $\\pm3$ mean spacings, and so do we."
+  },
+  {
+   "old": "Then \"the\" predicted zero is ambiguous, and different brackets give different answers. Table~IV of the paper flags one row as root-ambiguous for exactly this reason (Sec.~IV); Problem~30 explores the monotonicity condition, and Chapter~\\ref{ch:sparse-frequency} treats the ambiguity in detail.",
+   "new": "Then ``the'' predicted zero is ambiguous, and different brackets give different answers. The same can happen for the paper's fitted controls, whose level equation is $\\Nsm(t)+F(t)=n-\\tfrac12$ with a fitted sum of sinusoids $F$: Table~IV flags the control-B row with 900 fitted coefficients as root-ambiguous (Sec.~IV). Problem~30 explores the monotonicity condition for the oracle, and Chapter~\\ref{ch:sparse-frequency} treats the ambiguity in detail."
+  },
+  {
+   "old": "not \"the\" answer.",
+   "new": "not ``the'' answer."
+  },
+  {
+   "old": "that the number of evaluations never exceeds roughly $(\\log_2\\tfrac{b-a}{\\delta})^2$)",
+   "new": "that the number of evaluations never exceeds roughly $(\\log_2(w_0/\\delta))^2$, where $w_0$ is the width of the initial bracket and $\\delta$ the requested tolerance)"
+  },
+  {
+   "old": "fit $x$ as a quadratic function of $y$ through them (the Lagrange form) and evaluate at $y=0$:",
+   "new": "fit $x$ as a quadratic function of $y$ through them and evaluate at $y=0$. To build that quadratic, define\n\\[\n\\ell_a(y)=\\frac{(y-f_b)(y-f_c)}{(f_a-f_b)(f_a-f_c)},\n\\]\nand $\\ell_b$, $\\ell_c$ in the same way with the letters cycled. Each $\\ell$ is a quadratic in $y$ that equals 1 at its own $f$-value and 0 at the other two, so $x(y)=a\\,\\ell_a(y)+b\\,\\ell_b(y)+c\\,\\ell_c(y)$ passes through all three points (this is the \\emph{Lagrange form}). Setting $y=0$ gives"
+  },
+  {
+   "old": "Let $f$ be differentiable, with $f'>0$ and $f$ convex",
+   "new": "Let $f$ be continuously differentiable, with $f'>0$ and $f$ convex"
+  },
+  {
+   "old": "A decreasing sequence bounded below by $r$ converges to some $\\ell\\ge r$; passing to the limit in \\cref{eq:asymptotics-newton} gives $\\ell=\\ell-f(\\ell)/f'(\\ell)$, so $f(\\ell)=0$, and because $f$ is increasing, $\\ell=r$.",
+   "new": "A decreasing sequence bounded below by $r$ converges (monotone convergence, box in \\cref{sec:asymptotics-stirling}) to some $\\ell$ with $r\\le\\ell\\le x_1$, so $\\ell\\in I$ (an interval containing $r$ and $x_1$ contains every point between them). Since $f$ and $f'$ are continuous and $f'(\\ell)>0$, the right side of \\cref{eq:asymptotics-newton} converges to $\\ell-f(\\ell)/f'(\\ell)$, while the left side converges to $\\ell$. Hence $\\ell=\\ell-f(\\ell)/f'(\\ell)$, so $f(\\ell)=0$, and because $f$ is increasing, $\\ell=r$."
+  },
+  {
+   "old": "\"Digits\" is",
+   "new": "``Digits'' is"
+  },
+  {
+   "old": "\\begin{sample}{Two ways to lose all digits}",
+   "new": "\\begin{sample}{A harmless rounding error and a catastrophic one}"
+  },
+  {
+   "old": "When \"exactly zero\" becomes noise",
+   "new": "When ``exactly zero'' becomes noise"
+  },
+  {
+   "old": "Many quantities in physics vanish exactly for a structural reason: two eigenvectors of a symmetric matrix are orthogonal; a sum rule cancels pairwise.",
+   "new": "Many quantities in physics vanish exactly for a structural reason. For example, certain lists of numbers (eigenvectors, Chapter~\\ref{ch:eigen}) have dot product exactly zero, and certain sums cancel term by term in pairs (sum rules, Chapter~\\ref{ch:non-hermitian})."
+  },
+  {
+   "old": "the result is a nonzero number many orders of magnitude larger, set by $\\varepsilon_{32}\\approx1.2\\times10^{-7}$ times the size of the individual terms.",
+   "new": "the result is again small but nonzero, and at least a thousand times larger than the double-precision result; its size is set by $\\varepsilon_{32}\\approx1.2\\times10^{-7}$ times the size of the individual terms. (The exact digits depend on how the platform rounds the sines, so we do not quote them; the listing below prints them.)"
+  },
+  {
+   "old": "The fit \"explains\" the residual",
+   "new": "The fit ``explains'' the residual"
+  },
+  {
+   "old": "how such \"null directions\" are handled",
+   "new": "how such ``null directions'' are handled"
+  },
+  {
+   "old": "by exploiting float32 noise in analytically zero tensor entries.",
+   "new": "by exploiting float32 noise in analytically zero tensor entries (sensitivity coefficients of the second-order model, Chapter~\\ref{ch:non-hermitian})."
+  },
+  {
+   "old": "    print(dt.__name__, np.cumsum(prod)[-1])   # \"zero\", in each precision",
+   "new": "    # cumsum adds the terms in order, as in the text; np.sum adds\n    # pairwise, which hides part of the rounding\n    print(dt.__name__, np.cumsum(prod)[-1])   # \"zero\", in each precision"
+  },
+  {
+   "old": "Never decide that a computed quantity \"is zero\" by comparing with \\texttt{0.0}, and never decide it \"is not zero\" because",
+   "new": "Never decide that a computed quantity ``is zero'' by comparing with \\texttt{0.0}, and never decide it ``is not zero'' because"
+  },
+  {
+   "old": "computes it with \"Brent on $\\Nsm(t)=n-\\tfrac12$\".",
+   "new": "computes it with ``Brent on $\\Nsm(t)=n-\\tfrac12$''."
+  },
+  {
+   "old": "smooth part that \"is the Lambert-$W$ asymptotic of the counting function\"",
+   "new": "smooth part that ``is the Lambert-$W$ asymptotic of the counting function''"
+  },
+  {
+   "old": "The zeros are computed \"at 20 significant digits\" up to $n=1000$ and \"at 15 digits\" beyond, and the paper says \"both precisions exceed every use below by many orders\". With \\cref{sec:asymptotics-errors} you can verify this: a 15-digit value of $t_{1000}$ has an error of order $10^{-11}$, that is about $4\\times10^{-12}$ mean spacings (Problem~22), while the smallest quoted errors are of order $10^{-2}$.",
+   "new": "The zeros are computed ``at 20 significant digits'' up to $n=1000$ and ``at 15 digits'' beyond, and the paper says ``both precisions exceed every use below by many orders''. With \\cref{sec:asymptotics-errors} you can verify this: the 15-digit value quoted for $t_{1000}$ has rounding error at most $5\\times10^{-12}$, about $4\\times10^{-12}$ mean spacings (Problem~22), and the paper actually computed zeros up to $1000$ at 20 digits. The smallest errors the paper quotes are of order $10^{-4}$ spacings (the in-sample rms below $10^{-4}$ at $M=900$, Sec.~III), still more than seven orders of magnitude larger."
+  },
+  {
+   "old": "the paper inverts Eq.~(2) \"pointwise by bracketed root finding\" (Sec.~II~B), \"by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated\"",
+   "new": "the paper inverts Eq.~(2) ``pointwise by bracketed root finding'' (Sec.~II~B), ``by Brent inversion of Eq.~(2) on a dense reference grid, cubic-spline interpolated''"
+  },
+  {
+   "old": "by \"Brent bracketed $\\pm3$ around the smooth zero (bracket expanded on sign failure)\".",
+   "new": "by ``Brent bracketed $\\pm3$ around the smooth zero (bracket expanded on sign failure)'' (the paper gives no units for the $\\pm3$; see \\cref{sec:asymptotics-brackets})."
+  },
+  {
+   "old": "is \"root-ambiguous (the level equation has several roots for about a third of the held-out levels)\" and that \"the score varies by at most $0.012$ with the choice of root\";",
+   "new": "is ``root-ambiguous (the level equation has several roots for about a third of the held-out levels)'' and that ``the score varies by at most $0.012$ with the choice of root'';"
+  },
+  {
+   "old": "\\paragraph{Richardson extrapolation as an asymptotic expansion (Sec.~II~B, Appendix~A step 5).}",
+   "new": "\\paragraph{Richardson extrapolation as an asymptotic expansion (Sec.~II~B, Appendix~A steps 3 and 5).}"
+  },
+  {
+   "old": "built from the \"Richardson pair $12000/24000$\" grids.",
+   "new": "built from the ``Richardson pair $12000/24000$'' grids."
+  },
+  {
+   "old": "Its tensor rows were at first \"left as float32 noise\", and the optimizer \"had driven the exactly-null constant mode to $c_0\\approx2.2\\times10^{6}$, harvesting in-sample improvement from float32 noise in analytically-zero tensor entries\" (Sec.~V).",
+   "new": "Its tensor rows were at first ``left as float32 noise'', and the optimizer ``had driven the exactly-null constant mode to $c_0\\approx2.2\\times10^{6}$, harvesting in-sample improvement from float32 noise in analytically-zero tensor entries'' (Sec.~V)."
+  },
+  {
+   "old": "after the rows were \"zeroed analytically\"",
+   "new": "after the rows were ``zeroed analytically''"
+  },
+  {
+   "old": "The sample \"A parameter that should do nothing\" in",
+   "new": "The sample ``A parameter that should do nothing'' in"
+  },
+  {
+   "old": "predicts \"essentially as well at $n=10^4$ as at $n=400$\" (Sec.~IV)",
+   "new": "predicts ``essentially as well at $n=10^4$ as at $n=400$'' (Sec.~IV)"
+  },
+  {
+   "old": "so \"nearly height-independent\" refers",
+   "new": "so ``nearly height-independent'' refers"
+  },
+  {
+   "old": "\\prob{2}{Use the sum--integral comparison for the increasing function",
+   "new": "\\prob{2}{Use the comparison of sums and integrals for the increasing function"
+  },
+  {
+   "old": "The oracle solver of Appendix~A step 8 starts from a bracket $[s_n-3\\gap_n,\\,s_n+3\\gap_n]$.",
+   "new": "The oracle solver of Appendix~A step 8 starts from a bracket $\\pm3$ around the smooth zero; read the $\\pm3$ in mean spacings, as \\texttt{qmnt} does, so the bracket is $[s_n-3\\gap_n,\\,s_n+3\\gap_n]$."
+  },
+  {
+   "old": "Then, in the \"parameter that should do nothing\" sample,",
+   "new": "Then, in the ``parameter that should do nothing'' sample,"
+  },
+  {
+   "old": "so $22/7$ is good to 3 significant digits, consistent with a relative error between $5\\times10^{-4}$ and $5\\times10^{-3}$ in \\cref{eq:asymptotics-sigdig}.",
+   "new": "so $22/7$ agrees with $\\pi$ to 3 significant digits. Its relative error $4.0\\times10^{-4}$ is just under the 4-digit bound $5\\times10^{-4}$ of \\cref{eq:asymptotics-sigdig}, but that bound is only a necessary condition: rounded to four digits, $22/7$ gives $3.143$ while $\\pi$ gives $3.142$."
+  },
+  {
+   "old": "In float32 it is many orders of magnitude larger, at the level set by $\\varepsilon_{32}$.",
+   "new": "In float32 it is at least a thousand times larger, at a level set by $\\varepsilon_{32}$ times the size of the terms (record the value your machine prints)."
+  },
+  {
+   "old": "The paper's smallest quoted errors are of order $10^{-2}$ spacings, so its statement that the precisions \"exceed every use below by many orders\" (Sec.~II~A) is confirmed.",
+   "new": "The smallest errors the paper quotes are of order $10^{-4}$ spacings (the in-sample rms below $10^{-4}$ at $M=900$, Sec.~III), more than seven orders of magnitude larger, so its statement that the precisions ``exceed every use below by many orders'' (Sec.~II~A) is confirmed. (The paper in fact computed $t_{1000}$ at 20 digits.)"
+  },
+  {
+   "old": "The root-ambiguous row of Table~IV is control B with 150 primes and fitted amplitudes; with many more oscillating terms, steep wiggles that break monotonicity are correspondingly more likely, so the reported ambiguity is unsurprising.",
+   "new": "The root-ambiguous row of Table~IV is not an oracle row: it is control B with 150 primes and fitted amplitudes. The paper attributes that row's degradation to the underdetermined fit (900 coefficients from 400 zeros). Fitted amplitudes are not bounded by $1/(mp^{m/2})$, so $F'$ can exceed $\\Nsm'$. Note that the unfitted 900-term oracle A of Table~IV is not flagged."
   }
  ],
- "new_checks": "import numpy as np, mpmath, inspect\nfrom scipy.special import lambertw, gammaln\nfrom scipy.optimize import brentq\nimport qmnt\ndef Nsm(t): u=t/(2*np.pi); return u*np.log(u)-u+7/8\nf=lambda s: Nsm(s)-0.5\ns1=brentq(f,2*np.pi,20)\nassert abs(s1-14.5213)<1e-4   # s_1 quoted throughout\n# Sample t1 rounding\nassert abs(14.134725141734695-14.13-0.004725)<1e-6\nassert abs(0.004725/14.134725-3.34e-4)<1e-6\ngap1=2*np.pi/np.log(s1/(2*np.pi)); assert abs(gap1-7.500)<1e-3\nassert abs(0.004725/gap1-6.30e-4)<1e-6\n# leading order ratio\nt=1419.42248094599; assert abs(Nsm(t)-999.42)<0.01\nassert abs((t/(2*np.pi))*np.log(t)/Nsm(t)-1.64)<0.005\n# log t / t^0.1 pitfall\nassert abs(10/np.e-3.68)<0.005 and abs(np.exp(10)-2.20e4)<100\nassert abs(np.log(1e30)/1e3-0.069)<0.001\n# H10\nH10=sum(1/k for k in range(1,11)); assert abs(H10-2.928968)<1e-6\nassert abs(np.log(11)-2.397895)<1e-6 and abs(1+np.log(10)-3.302585)<1e-6\nassert abs(np.log(10)+0.5772156649+0.05-1/1200-H10)<2e-6\nassert abs(H10-np.log(10)-0.626383)<1e-6\nassert abs(gammaln(11)-15.104413)<1e-6\nassert abs(10*np.log(10)-9-14.025851)<1e-6 and abs(10*np.log(10)-9+np.log(10)-16.328436)<1e-6\nd10=gammaln(11)-10.5*np.log(10)+10; assert abs(d10-0.927269)<1e-6\nC=0.5*np.log(2*np.pi); assert C<d10<C+1/120\nassert abs(C-0.918939)<1e-6 and abs(C+1/120-0.927272)<1e-6\n# Stirling table\nfor n,ea,eb,ec in [(10,2.078562,0.008331,-2.77e-6),(100,3.222357,0.000833,-2.78e-9)]:\n    ex=gammaln(n+1); a=n*np.log(n)-n; b=a+0.5*np.log(2*np.pi*n); c=b+1/(12*n)\n    assert abs(ex-a-ea)<2e-6 and abs(ex-b-eb)<2e-6 and abs((ex-c)/ec-1)<0.02\nassert abs(gammaln(101)-363.739376)<1e-6\nv=4.5*np.log(5)-5+C+1/60; assert abs(v-3.178076)<2e-6 and abs(v-1/(360*125)-3.178054)<2e-6\nassert abs(np.sqrt(np.pi)-1.772454)<1e-6\n# theta\nth=float(mpmath.siegeltheta(100)); ap=50*np.log(100/(2*np.pi))-50-np.pi/8\nassert abs(th-87.97216)<1e-5 and abs(ap-87.97196)<1e-5 and abs(th-ap-1/4800)<1e-8\n# Lambert W sample\ny1=-3/(8*np.e); assert abs(y1+0.137954)<1e-6\nW0=lambertw(y1).real; Wm=lambertw(y1,-1).real\nassert abs(W0+0.16226)<1e-5 and abs(Wm+3.118)<1e-3\nassert abs(2*np.pi*0.375/(-W0)-14.521)<1e-3 and abs(2*np.pi*0.375/(-Wm)-0.756)<1e-3\nassert abs(2*np.pi/(1+W0)-7.500)<1e-3\nassert abs(brentq(f,0.1,2*np.pi)-0.756)<1e-3\ny=(1000-11/8)/np.e; W=lambertw(y).real\nassert abs(y-367.37)<0.01 and abs(W-4.420)<1e-3\ns1000=2*np.pi*998.625/W; g1000=2*np.pi/(1+W)\nassert abs(s1000-1419.52)<0.01 and abs(g1000-1.159)<1e-3\nassert abs((t-s1000)/g1000+0.08)<0.01\nassert abs(2*np.pi*1000/np.log(1000)-909.6)<0.1 and abs(2*np.pi/np.log(1000)-0.9096)<1e-4\n# smooth zeros vs qmnt and gradient\nn=np.arange(1,10001); sq=qmnt.smooth_zeros(n); yy=(n-11/8)/np.e\nassert np.max(np.abs(2*np.pi*(n-11/8)/lambertw(yy).real-sq))<1e-6\ngr=np.gradient(sq[:1000]); gd=2*np.pi/np.log(sq[:1000]/(2*np.pi))\nassert np.max(np.abs(gr[19:999]/gd[19:999]-1))<1e-3\nassert abs(sq[1]-sq[0]-6.13)<0.01\ng1e4=2*np.pi/np.log(sq[-1]/(2*np.pi))\nassert abs(gd[400]-1.34)<0.02 and abs(g1e4-0.854)<0.002\nassert abs(2*np.pi/gd[400]-4.7)<0.1 and abs(2*np.pi/g1e4-7.4)<0.06   # paper connection remark\nassert abs(2*np.pi/np.log(1e4)-0.682)<5e-4   # P21\n# bisection table\nassert abs(f(10)+0.4769)<1e-4 and abs(f(20)-0.8775)<1e-4\nfor m,vv in [(15,0.0651),(12.5,-0.2460),(13.75,-0.0995),(14.375,-0.0194),(14.6875,0.0223)]:\n    assert abs(f(m)-vv)<1e-4\nassert abs(14.53125-s1-0.0099)<1e-4\nassert np.ceil(np.log2(1e11)-1)==36\nassert abs(f(0.5)-0.094)<1e-3\nassert abs(1/2**11-4.9e-4)<1e-5\n# Newton sqrt2\nxk=1.0; errs=[]\nfor k in range(4): xk=0.5*(xk+2/xk); errs.append(abs(xk-np.sqrt(2)))\nfor e,cl in zip(errs,[8.58e-2,2.45e-3,2.12e-6,1.59e-12]): assert abs(e/cl-1)<0.01\nfp=lambda s: np.log(s/(2*np.pi))/(2*np.pi)\nassert abs(f(14)+0.0680)<1e-4 and abs(fp(14)-0.1275)<1e-4\nx1=14-f(14)/fp(14); assert abs(x1-14.5333)<1e-3\nx2=x1-f(x1)/fp(x1); x3=x2-f(x2)/fp(x2); assert abs(x2-s1)<2e-5 and abs(x3-s1)<1e-10\n# checkpoint Newton\nassert abs(0.04*(1e-3)**2-4e-8)<1e-20 and abs(0.04*(4e-8)**2-6e-17)<1e-17\n# arctan\na1=1.5-(1+1.5**2)*np.arctan(1.5); a2=a1-(1+a1**2)*np.arctan(a1)\nassert abs(a1+1.694)<1e-3 and abs(a2-2.321)<1e-3\n# brentq default tolerances\nsig=inspect.signature(brentq)\nassert sig.parameters['xtol'].default==2e-12\nassert abs(sig.parameters['rtol'].default-8.88e-16)<1e-18\nassert abs(4*np.finfo(np.float64).eps-8.88e-16)<1e-18\n# floats\nassert abs(np.finfo(np.float64).eps-2.22e-16)<1e-18 and abs(np.finfo(np.float32).eps-1.19e-7)<1e-9\nassert abs(np.finfo(np.float32).eps/2-5.96e-8)<1e-10 and abs(np.finfo(np.float64).eps/2-1.11e-16)<1e-18\nassert abs(53*np.log10(2)-15.95)<0.01 and abs(24*np.log10(2)-7.22)<0.01\nassert abs(np.finfo(np.float64).max-1.80e308)<1e306 and abs(float(np.finfo(np.float32).max)-3.40e38)<1e36\nassert np.float32(16777217)==np.float32(16777216)\nassert np.float32(1)+np.float32(1e-8)==np.float32(1) and 1.0+1e-16==1.0 and 1.0+1e-8!=1.0\ntot=0.0\nfor k in range(10): tot+=0.1\nassert tot==0.9999999999999999\nt32=np.float32(0)\nfor k in range(10): t32=np.float32(t32+np.float32(0.1))\nassert abs(float(t32)-1.0000001192092896)<1e-12\nassert (1-np.cos(1e-8))/1e-16==0 and abs(2*np.sin(0.5e-8)**2/1e-16-0.5)<1e-12\nN=999; j=np.arange(1,N+1)\nps=lambda k,dt:(np.sqrt(2/(N+1))*np.sin(k*j*np.pi/(N+1))).astype(dt)\nd64=np.cumsum(ps(3,np.float64)*ps(7,np.float64))[-1]; d32=np.cumsum(ps(3,np.float32)*ps(7,np.float32))[-1]\nassert abs(d64)<1e-14 and abs(d32)>1e3*abs(d64)\nassert abs(0.01/1e-7-1e5)<1e-6 and abs(0.01/(-3e-8)+3.33e5)<1e3\n# Problems\npi=np.pi; assert abs(22/7-pi-1.264e-3)<1e-6 and abs((22/7-pi)/pi-4.02e-4)<1e-6   # P1\nu=1e6/(2*pi); assert abs(np.log(1e6)/(np.log(u)-1)-1.26)<0.005                  # P3\nassert abs(np.log(1e6)-13.815511)<1e-6 and abs(np.log(u)-11.977634)<1e-6\nL20=20.5*np.log(20)-20+C+1/240; assert abs(L20-42.335617)<1e-6 and abs(gammaln(21)-42.335616)<1e-6  # P6\nassert abs(20.5*np.log(20)-61.412512)<1e-6 and abs(1-np.exp(-1/240)-0.0042)<1e-4\nassert abs(0.75*np.sqrt(pi)-1.329340)<1e-6                                         # P7\nxx=2.0\nfor k in range(2): xx=xx-(xx**3-10)/(3*xx**2)\nassert abs(xx-2.154504)<1e-6 and abs(xx-10**(1/3)-6.9e-5)<1e-6                    # P8\nassert np.ceil(np.log2(6e12)-1)==42 and abs(np.log2(6e12)-42.45)<0.01             # P9\nxb=1e12; dr=np.sqrt(xb+1)-np.sqrt(xb); tr=1/(np.sqrt(xb+1)+np.sqrt(xb))\nassert abs(tr-4.99999999999875e-7)<1e-20 and abs(dr/tr-1)<1.2e-4                   # P11\nassert abs(2.0**-33-1.16e-10)<1e-12\nw0=0.5; w1=w0-(w0*np.exp(w0)-1)/((1+w0)*np.exp(w0)); assert abs(w1-0.571020)<1e-6 # P13\nW1=lambertw(1).real; assert abs(W1-0.567143)<1e-6 and abs(1/W1-1.763223)<1e-6\nzz=qmnt.zeros(500); idx=np.arange(401,501)\nassert abs(qmnt.rms(qmnt.fluct(zz[400:500],idx))-0.263)<0.005                      # P16\nassert abs(0.01/(-3e-8)+3.33e5)<1e3                                                # P19\nassert abs(5e-12/1.159-4.3e-12)<1e-13                                              # P22\nassert abs(f(7)+0.61873)<1e-5 and abs(fp(7)-0.017194)<2e-6                         # P23\nstep=-f(7)/fp(7); assert abs(step-35.985)<1e-3 and abs(7+step-43.0)<0.05\nvv=1000.; vs=[]\nfor k in range(4): vv=1000/(np.log(vv)-1); vs.append(vv)\nfor a,b in zip(vs,[169.27,242.04,222.76,226.96]): assert abs(a-b)<0.05             # P27\nassert abs(np.log(1000)-1-5.907755)<1e-6\nvst=brentq(lambda v: v*(np.log(v)-1)-1000,100,500); assert abs(vst-226.2)<0.1\nassert abs(-1/(np.log(vst)-1)+0.226)<0.001\nNf=lambda t:-np.sin(t*np.log(2))/(pi*np.sqrt(2)); Nfp=lambda t:-np.log(2)*np.cos(t*np.log(2))/(pi*np.sqrt(2))\ng=lambda t: Nsm(t)+Nf(t)-0.5; gp=lambda t: fp(t)+Nfp(t)\ns=14.5214; assert abs(Nf(s)-0.1346)<2e-4 and abs(Nfp(s)-0.1251)<2e-4 and abs(fp(s)-0.1333)<1e-4  # P29\nassert abs(g(s)-0.1346)<2e-4 and abs(gp(s)-0.2584)<2e-4\nassert abs(s-g(s)/gp(s)-14.0007)<1e-3 and abs(g(s)/gp(s)-0.5207)<1e-3\nroot29=brentq(g,13.5,14.5); assert abs(root29-14.021)<0.003\nassert abs(s-14.1347-0.387)<1e-3 and abs(root29-14.1347+0.11)<0.01\nbd=sum(np.log(p)/p**(m/2) for p in [2,3,5,7,11,13] for m in (1,2,3))               # P30\nassert abs(bd-6.568)<1e-3 and abs(bd/pi-2.091)<1e-3 and abs(fp(800)-0.771)<1e-3\n# P24 oracle (Table V row)\nn=np.arange(401,501); tp=qmnt.oracle_zeros(n,[2,3,5,7,11,13]); r,c=qmnt.score(tp,n)\nassert abs(r-0.074)<0.005 and abs(c-0.96)<0.01\n# P25 is the theta check above\n# P31 Wu-Sprung\nV0=qmnt.V0\nx1000=qmnt.wu_sprung_x(1000.0); x1500=qmnt.wu_sprung_x(1500.0)\nassert abs(x1000-44.883)<1e-3 and abs(x1500-59.957)<1e-3\nassert abs(qmnt.L_of(1000)-44.883)<1e-3 and abs(qmnt.L_of(1500)-59.957)<1e-3\nassert abs(qmnt.wu_sprung_V(x1000)-1000)<1e-4 and abs(qmnt.wu_sprung_V(x1500)-1500)<1e-4\ndef xws(V): return (np.sqrt(V-V0)*np.log(V0/(2*np.pi*np.e**2))+np.sqrt(V)*np.log((np.sqrt(V)+np.sqrt(V-V0))/(np.sqrt(V)-np.sqrt(V-V0))))/np.pi\nassert abs(xws(1000.0)-x1000)<1e-6 and abs(xws(V0))<1e-12\nVg=np.linspace(V0*1.0001,1500,2000); xg=np.array([qmnt.wu_sprung_x(vv) for vv in Vg])\nassert np.all(np.diff(xg)>0)\nprint('all checks passed')\n",
+ "new_checks": "import numpy as np, mpmath, inspect\nfrom scipy.special import lambertw, gammaln\nfrom scipy.optimize import brentq\nimport qmnt\ndef Nsm(t): u=t/(2*np.pi); return u*np.log(u)-u+7/8\nf=lambda s: Nsm(s)-0.5\ns1=brentq(f,2*np.pi,20)\nassert abs(s1-14.5213)<1e-4   # s_1 quoted throughout\n# Sample t1 rounding\nassert abs(14.134725141734695-14.13-0.004725)<1e-6\nassert abs(0.004725/14.134725-3.34e-4)<1e-6\ngap1=2*np.pi/np.log(s1/(2*np.pi)); assert abs(gap1-7.500)<1e-3\nassert abs(0.004725/gap1-6.30e-4)<1e-6\n# leading order ratio\nt=1419.42248094599; assert abs(Nsm(t)-999.42)<0.01\nassert abs((t/(2*np.pi))*np.log(t)/Nsm(t)-1.64)<0.005\n# log t / t^0.1 pitfall\nassert abs(10/np.e-3.68)<0.005 and abs(np.exp(10)-2.20e4)<100\nassert abs(np.log(1e30)/1e3-0.069)<0.001\n# H10\nH10=sum(1/k for k in range(1,11)); assert abs(H10-2.928968)<1e-6\nassert abs(np.log(11)-2.397895)<1e-6 and abs(1+np.log(10)-3.302585)<1e-6\nassert abs(np.log(10)+0.5772156649+0.05-1/1200-H10)<2e-6\nassert abs(H10-np.log(10)-0.626383)<1e-6\nassert abs(gammaln(11)-15.104413)<1e-6\nassert abs(10*np.log(10)-9-14.025851)<1e-6 and abs(10*np.log(10)-9+np.log(10)-16.328436)<1e-6\nd10=gammaln(11)-10.5*np.log(10)+10; assert abs(d10-0.927269)<1e-6\nC=0.5*np.log(2*np.pi); assert C<d10<C+1/120\nassert abs(C-0.918939)<1e-6 and abs(C+1/120-0.927272)<1e-6\n# Stirling table\nfor n,ea,eb,ec in [(10,2.078562,0.008331,-2.77e-6),(100,3.222357,0.000833,-2.78e-9)]:\n    ex=gammaln(n+1); a=n*np.log(n)-n; b=a+0.5*np.log(2*np.pi*n); c=b+1/(12*n)\n    assert abs(ex-a-ea)<2e-6 and abs(ex-b-eb)<2e-6 and abs((ex-c)/ec-1)<0.02\nassert abs(gammaln(101)-363.739376)<1e-6\nv=4.5*np.log(5)-5+C+1/60; assert abs(v-3.178076)<2e-6 and abs(v-1/(360*125)-3.178054)<2e-6\nassert abs(np.sqrt(np.pi)-1.772454)<1e-6\n# theta\nth=float(mpmath.siegeltheta(100)); ap=50*np.log(100/(2*np.pi))-50-np.pi/8\nassert abs(th-87.97216)<1e-5 and abs(ap-87.97196)<1e-5 and abs(th-ap-1/4800)<1e-8\n# Lambert W sample\ny1=-3/(8*np.e); assert abs(y1+0.137954)<1e-6\nW0=lambertw(y1).real; Wm=lambertw(y1,-1).real\nassert abs(W0+0.16226)<1e-5 and abs(Wm+3.118)<1e-3\nassert abs(2*np.pi*0.375/(-W0)-14.521)<1e-3 and abs(2*np.pi*0.375/(-Wm)-0.756)<1e-3\nassert abs(2*np.pi/(1+W0)-7.500)<1e-3\nassert abs(brentq(f,0.1,2*np.pi)-0.756)<1e-3\ny=(1000-11/8)/np.e; W=lambertw(y).real\nassert abs(y-367.37)<0.01 and abs(W-4.420)<1e-3\ns1000=2*np.pi*998.625/W; g1000=2*np.pi/(1+W)\nassert abs(s1000-1419.52)<0.01 and abs(g1000-1.159)<1e-3\nassert abs((t-s1000)/g1000+0.08)<0.01\nassert abs(2*np.pi*1000/np.log(1000)-909.6)<0.1 and abs(2*np.pi/np.log(1000)-0.9096)<1e-4\n# smooth zeros vs qmnt and gradient\nn=np.arange(1,10001); sq=qmnt.smooth_zeros(n); yy=(n-11/8)/np.e\nassert np.max(np.abs(2*np.pi*(n-11/8)/lambertw(yy).real-sq))<1e-6\ngr=np.gradient(sq[:1000]); gd=2*np.pi/np.log(sq[:1000]/(2*np.pi))\nassert np.max(np.abs(gr[19:999]/gd[19:999]-1))<1e-3\nassert abs(sq[1]-sq[0]-6.13)<0.01\ng1e4=2*np.pi/np.log(sq[-1]/(2*np.pi))\nassert abs(gd[400]-1.34)<0.02 and abs(g1e4-0.854)<0.002\nassert abs(2*np.pi/gd[400]-4.7)<0.1 and abs(2*np.pi/g1e4-7.4)<0.06   # paper connection remark\nassert abs(2*np.pi/np.log(1e4)-0.682)<5e-4   # P21\n# bisection table\nassert abs(f(10)+0.4769)<1e-4 and abs(f(20)-0.8775)<1e-4\nfor m,vv in [(15,0.0651),(12.5,-0.2460),(13.75,-0.0995),(14.375,-0.0194),(14.6875,0.0223)]:\n    assert abs(f(m)-vv)<1e-4\nassert abs(14.53125-s1-0.0099)<1e-4\nassert np.ceil(np.log2(1e11)-1)==36\nassert abs(f(0.5)-0.094)<1e-3\nassert abs(1/2**11-4.9e-4)<1e-5\n# Newton sqrt2\nxk=1.0; errs=[]\nfor k in range(4): xk=0.5*(xk+2/xk); errs.append(abs(xk-np.sqrt(2)))\nfor e,cl in zip(errs,[8.58e-2,2.45e-3,2.12e-6,1.59e-12]): assert abs(e/cl-1)<0.01\nfp=lambda s: np.log(s/(2*np.pi))/(2*np.pi)\nassert abs(f(14)+0.0680)<1e-4 and abs(fp(14)-0.1275)<1e-4\nx1=14-f(14)/fp(14); assert abs(x1-14.5333)<1e-3\nx2=x1-f(x1)/fp(x1); x3=x2-f(x2)/fp(x2); assert abs(x2-s1)<2e-5 and abs(x3-s1)<1e-10\n# checkpoint Newton\nassert abs(0.04*(1e-3)**2-4e-8)<1e-20 and abs(0.04*(4e-8)**2-6e-17)<1e-17\n# arctan\na1=1.5-(1+1.5**2)*np.arctan(1.5); a2=a1-(1+a1**2)*np.arctan(a1)\nassert abs(a1+1.694)<1e-3 and abs(a2-2.321)<1e-3\n# brentq default tolerances\nsig=inspect.signature(brentq)\nassert sig.parameters['xtol'].default==2e-12\nassert abs(sig.parameters['rtol'].default-8.88e-16)<1e-18\nassert abs(4*np.finfo(np.float64).eps-8.88e-16)<1e-18\n# floats\nassert abs(np.finfo(np.float64).eps-2.22e-16)<1e-18 and abs(np.finfo(np.float32).eps-1.19e-7)<1e-9\nassert abs(np.finfo(np.float32).eps/2-5.96e-8)<1e-10 and abs(np.finfo(np.float64).eps/2-1.11e-16)<1e-18\nassert abs(53*np.log10(2)-15.95)<0.01 and abs(24*np.log10(2)-7.22)<0.01\nassert abs(np.finfo(np.float64).max-1.797e308)<1e306 and abs(float(np.finfo(np.float32).max)-3.40e38)<1e36\nassert np.float32(16777217)==np.float32(16777216)\nassert np.float32(1)+np.float32(1e-8)==np.float32(1) and 1.0+1e-16==1.0 and 1.0+1e-8!=1.0\ntot=0.0\nfor k in range(10): tot+=0.1\nassert tot==0.9999999999999999\nt32=np.float32(0)\nfor k in range(10): t32=np.float32(t32+np.float32(0.1))\nassert abs(float(t32)-1.0000001192092896)<1e-12\nassert (1-np.cos(1e-8))/1e-16==0 and abs(2*np.sin(0.5e-8)**2/1e-16-0.5)<1e-12\nN=999; j=np.arange(1,N+1)\nps=lambda k,dt:(np.sqrt(2/(N+1))*np.sin(k*j*np.pi/(N+1))).astype(dt)\nd64=np.cumsum(ps(3,np.float64)*ps(7,np.float64))[-1]; d32=np.cumsum(ps(3,np.float32)*ps(7,np.float32))[-1]\nassert abs(d64)<1e-14 and abs(d32)>1e3*abs(d64)\nassert abs(0.01/1e-7-1e5)<1e-6 and abs(0.01/(-3e-8)+3.33e5)<1e3\n# Problems\npi=np.pi; assert abs(22/7-pi-1.264e-3)<1e-6 and abs((22/7-pi)/pi-4.02e-4)<1e-6   # P1\nu=1e6/(2*pi); assert abs(np.log(1e6)/(np.log(u)-1)-1.26)<0.005                  # P3\nassert abs(np.log(1e6)-13.815511)<1e-6 and abs(np.log(u)-11.977634)<1e-6\nL20=20.5*np.log(20)-20+C+1/240; assert abs(L20-42.335617)<1e-6 and abs(gammaln(21)-42.335616)<1e-6  # P6\nassert abs(20.5*np.log(20)-61.412512)<1e-6 and abs(1-np.exp(-1/240)-0.0042)<1e-4\nassert abs(0.75*np.sqrt(pi)-1.329340)<1e-6                                         # P7\nxx=2.0\nfor k in range(2): xx=xx-(xx**3-10)/(3*xx**2)\nassert abs(xx-2.154504)<1e-6 and abs(xx-10**(1/3)-6.9e-5)<1e-6                    # P8\nassert np.ceil(np.log2(6e12)-1)==42 and abs(np.log2(6e12)-42.45)<0.01             # P9\nxb=1e12; dr=np.sqrt(xb+1)-np.sqrt(xb); tr=1/(np.sqrt(xb+1)+np.sqrt(xb))\nassert abs(tr-4.99999999999875e-7)<1e-20 and abs(dr/tr-1)<1.2e-4                   # P11\nassert abs(2.0**-33-1.16e-10)<1e-12\nw0=0.5; w1=w0-(w0*np.exp(w0)-1)/((1+w0)*np.exp(w0)); assert abs(w1-0.571020)<1e-6 # P13\nW1=lambertw(1).real; assert abs(W1-0.567143)<1e-6 and abs(1/W1-1.763223)<1e-6\nzz=qmnt.zeros(500); idx=np.arange(401,501)\nassert abs(qmnt.rms(qmnt.fluct(zz[400:500],idx))-0.263)<0.005                      # P16\nassert abs(0.01/(-3e-8)+3.33e5)<1e3                                                # P19\nassert abs(5e-12/1.159-4.3e-12)<1e-13                                              # P22\nassert abs(f(7)+0.61873)<1e-5 and abs(fp(7)-0.017194)<2e-6                         # P23\nstep=-f(7)/fp(7); assert abs(step-35.985)<1e-3 and abs(7+step-43.0)<0.05\nvv=1000.; vs=[]\nfor k in range(4): vv=1000/(np.log(vv)-1); vs.append(vv)\nfor a,b in zip(vs,[169.27,242.04,222.76,226.96]): assert abs(a-b)<0.05             # P27\nassert abs(np.log(1000)-1-5.907755)<1e-6\nvst=brentq(lambda v: v*(np.log(v)-1)-1000,100,500); assert abs(vst-226.2)<0.1\nassert abs(-1/(np.log(vst)-1)+0.226)<0.001\nNf=lambda t:-np.sin(t*np.log(2))/(pi*np.sqrt(2)); Nfp=lambda t:-np.log(2)*np.cos(t*np.log(2))/(pi*np.sqrt(2))\ng=lambda t: Nsm(t)+Nf(t)-0.5; gp=lambda t: fp(t)+Nfp(t)\ns=14.5214; assert abs(Nf(s)-0.1346)<2e-4 and abs(Nfp(s)-0.1251)<2e-4 and abs(fp(s)-0.1333)<1e-4  # P29\nassert abs(g(s)-0.1346)<2e-4 and abs(gp(s)-0.2584)<2e-4\nassert abs(s-g(s)/gp(s)-14.0007)<1e-3 and abs(g(s)/gp(s)-0.5207)<1e-3\nroot29=brentq(g,13.5,14.5); assert abs(root29-14.021)<0.003\nassert abs(s-14.1347-0.387)<1e-3 and abs(root29-14.1347+0.11)<0.01\nbd=sum(np.log(p)/p**(m/2) for p in [2,3,5,7,11,13] for m in (1,2,3))               # P30\nassert abs(bd-6.568)<1e-3 and abs(bd/pi-2.091)<1e-3 and abs(fp(800)-0.771)<1e-3\n# P24 oracle (Table V row)\nn=np.arange(401,501); tp=qmnt.oracle_zeros(n,[2,3,5,7,11,13]); r,c=qmnt.score(tp,n)\nassert abs(r-0.074)<0.005 and abs(c-0.96)<0.01\n# P25 is the theta check above\n# P31 Wu-Sprung\nV0=qmnt.V0\nx1000=qmnt.wu_sprung_x(1000.0); x1500=qmnt.wu_sprung_x(1500.0)\nassert abs(x1000-44.883)<1e-3 and abs(x1500-59.957)<1e-3\nassert abs(qmnt.L_of(1000)-44.883)<1e-3 and abs(qmnt.L_of(1500)-59.957)<1e-3\nassert abs(qmnt.wu_sprung_V(x1000)-1000)<1e-4 and abs(qmnt.wu_sprung_V(x1500)-1500)<1e-4\ndef xws(V): return (np.sqrt(V-V0)*np.log(V0/(2*np.pi*np.e**2))+np.sqrt(V)*np.log((np.sqrt(V)+np.sqrt(V-V0))/(np.sqrt(V)-np.sqrt(V-V0))))/np.pi\nassert abs(xws(1000.0)-x1000)<1e-6 and abs(xws(V0))<1e-12\nVg=np.linspace(V0*1.0001,1500,2000); xg=np.array([qmnt.wu_sprung_x(vv) for vv in Vg])\nassert np.all(np.diff(xg)>0)\n# ---- revision additions ----\nassert abs((0.01/0.002)/(0.01/100)-5e4)<1e-6                     # football vs coin\nassert round(22/7,3)==3.143 and round(np.pi,3)==3.142             # P1 answer\nassert abs((22/7-np.pi)/np.pi-4.0e-4)<5e-6\naa,bb=-1.0,2.0; mids=[]                                           # bisection on 1/x over [-1,2]\nfor k in range(3):\n    mm=(aa+bb)/2; mids.append(mm)\n    if (1/aa)*(1/mm)<=0: bb=mm\n    else: aa=mm\nassert mids==[0.5,-0.25,0.125]\nyR=(1000-11/8)/np.e; WR=lambertw(yR).real                        # t_1000 sample\nassert abs(yR-367.374)<1e-3 and abs(WR-4.4202)<6e-5\nassert abs(2*np.pi*998.625-6274.546)<1e-3 and abs(6274.546/4.4202-1419.52)<0.005\nassert abs(6274.546/4.420-1419.58)<0.005\nassert abs((1419.42248094599-6274.546/4.420)/1.159+0.14)<0.01\nassert abs((1419.42248094599-1419.52)/1.159+0.08)<0.01\nassert 1e-4/4.3e-12>1e7                                           # precision paragraph, P22\nassert 1000/3<=385<=1330/3 and sum(k*k for k in range(1,11))==385  # P5 instance n=10\nx0=1.0; x1b=0.5*(x0+2/x0)                                         # P15(b) instance a=2\nassert abs((x1b-np.sqrt(2))-(x0-np.sqrt(2))**2/(2*x0))<1e-12\np17a=lambda x:(x-1)*(x-2); assert p17a(0)==2 and p17a(3)==2       # P17\nassert 1/(-1)==-1 and 1/2==0.5\np17d=lambda x:(x-1)*(x-2)*(x-3); assert p17d(0)==-6 and p17d(4)==6 and p17d(2)==0\nassert abs(Nsm(2*np.pi)-0.5+0.625)<1e-12                          # safe bracket sample\nprint('all checks passed')\n",
  "new_figures": {},
- "notes": "Fixed: s_1 now quoted as 14.5213 (the root is about 14.52135, so 14.52136 at 1e-5 tolerance was fragile); Problem 29 now starts from t0=14.5214 with s_1 ~ explicit; f(7) corrected to -0.61873 and step to 35.985; Newton-convexity argument now shows the iterates stay in (2pi, inf); Gamma convergence now proves 'exponentials beat powers' with e^u > u^k/k!; the increasing-function squeeze derivation rewritten cleanly; Brent worst case labeled as quoted from Brent without proof; scipy brentq defaults now verified in checks; Richardson notation explained plainly; spacing at 10^4 corrected to 0.85, with the interpretive remark explicitly labeled as the book's own; Problem 21 answer no longer 'corrects' the text; the sample box in the Answers was replaced by plain '\\textbf{Problem 30.}' text with a complete derivation (and the unsupported 'far larger bound for 150 primes' claim, which concerned fitted amplitudes, was reworded qualitatively); added an answer for Problem 31 (the only missing odd-numbered answer); placeholder assertions removed from checks and checks added for the new numbers. Skipped: the issue claiming problem cross-references are wrong is invalid: I counted the list, and Problems 18 (secant), 20 (c_0), 22 (t_1000 digits), 23 (Newton from 7), 26 (gamma_n), 28 (Richardson) and 30 (monotonicity) all match their references. The issue on asymptotic equivalence controlling the ratio flagged no error in that sentence itself; its substantive point (the squeeze-inc derivation) was fixed. Problems 20 and 28 are even-numbered and of difficulty 2 or 3, so no answers or quoted numbers require checks."
+ "notes": "All issues addressed. Issue 27 (quote the float32 dot product): fixed only in part. The exact float32 digits depend on how the platform rounds the float64 sines before the cast, so a hard-coded value could fail CHECKS on another machine. The text and the Problem 19 answer now state only the checked claim (nonzero, and at least 1000 times the double result, which is below 1e-14). They point the reader to the listing's printed value, and the listing explains why cumsum is used. Issue 15 (straight quotes): every prose occurrence was converted. The quotes inside pycode were left unchanged. For issue 9, the paper's ±3 is now described as unitless in the paper, with qmnt's choice of mean spacings adopted explicitly. Problem 9 and the paper-connection paragraph say the same."
 }

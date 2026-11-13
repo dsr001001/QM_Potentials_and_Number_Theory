@@ -1,107 +1,240 @@
 [
  {
+  "category": "RULE",
+  "severity": "high",
+  "quote": "\\begin{didyouknow}{Big O Is Older Than Computers}",
+  "problem": "The environment `didyouknow` (used three times, with `% DYK-BEGIN/END` markers) is not among the environments the bible defines, so it will not compile against the book preamble. The boxes also add uncited historical dates. The third box (Newton's cubic) sits at the top of the mandatory Paper connection section, where it is irrelevant.",
+  "fix": "Delete all three didyouknow blocks and their comment markers, or fold the essential sentence into running prose. Do not open the Paper connection section with trivia."
+ },
+ {
   "category": "ERROR",
   "severity": "high",
-  "quote": "The actual error, using $s_1=14.5214$, is about $0.0099$.",
-  "problem": "The check run shows s_1 is not 14.52136 to 1e-5, so the quoted s_1 (14.5214/14.52136) is inconsistent with the computed root. The quoted error and the Newton claims rest on that value.",
-  "fix": "Recompute s_1 = brentq(Nsm(s)-1/2) and use that value consistently in the bisection error, Newton sample, and Lambert-W sample."
- },
- {
-  "category": "ERROR",
-  "severity": "high",
-  "quote": "At $x_0=7$: $f(7)=-0.618728$ and $f'(7)=\\frac1{2\\pi}\\log(7/2\\pi)=0.017194$. The step is $0.618728/0.017194=35.99$, so $x_1\\approx43.0$.",
-  "problem": "The check on these numbers failed. The values of f(7), f'(7) and the landing point are wrong.",
-  "fix": "Recompute f(7)=Nsm(7)-0.5, f'(7) and x_1 and replace the numbers."
+  "quote": "Solving $we^w=367.37$ gives $W=4.420$.",
+  "problem": "The displayed arithmetic does not reproduce the stated result. With W=4.420, 2π×998.625/4.420 = 1419.58, not 1419.52, and the fluctuation would come out as −0.14, not −0.08. The quoted s_1000 needs W≈4.4202. The four-digit intermediate loses the answer by cancellation, in a chapter about significant digits.",
+  "fix": "Quote W=4.42019 (and y=367.374), then s_1000=6274.546/4.42019=1419.52. Add a sentence that t−s is a small difference of large numbers, so W must be carried to six digits."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Newton's method for any smooth zero, started anywhere above $2\\pi$, lands at or to the right of $s_n$ after one step",
-  "problem": "Problem 23 and the answer say the first step lands at x1≈43, but the theorem needs the iterates to stay in I=(2π,∞); a step from near 2π could in principle land anywhere right, fine, yet the statement 'started anywhere above 2π' is not proved for x0 where f'>0 only. Also the earlier text says from x0=14 the first step is 14.5333 (to the right), consistent. Minor but the overshoot claim is unproved for x0 in (2π, s_n).",
-  "fix": "State that since f'>0 and f convex on (2π,∞), the proof applies for x_k in that interval; x_{k+1}≥r automatically lies in the interval."
+  "quote": "so $22/7$ is good to 3 significant digits, consistent with a relative error between $5\\times10^{-4}$ and $5\\times10^{-3}$",
+  "problem": "The relative error just computed is 4.02×10^{-4}, which is below 5×10^{-4}, not between 5×10^{-4} and 5×10^{-3}. The statement contradicts the previous sentence.",
+  "fix": "Replace with: 'so 22/7 agrees with π to 3 significant digits. Its relative error 4.0×10^{-4} is just under the 4-digit bound 5×10^{-4} of the sig-digit equation, but that bound is only a necessary condition: rounded to four digits 22/7 gives 3.143 while π gives 3.142.'"
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "Applying this repeatedly, $\\Gamma(n+1)=n\\Gamma(n)=n(n-1)\\Gamma(n-1)=\\dots=n!\\,\\Gamma(1)=n!$.",
-  "problem": "Fine, but the convergence argument just above says u^{x+1}e^{-u}→0 makes the integrand below u^{-2}; the integrand is u^{x-1}e^{-u}=u^{-2}·u^{x+1}e^{-u}, ok. However the 'exponentials beat powers' was only stated as extension, not proved.",
-  "fix": "Add one line: e^u>u^{k+1}/(k+1)! so u^k e^{-u}<(k+1)!/u."
+  "quote": "Bisection on $1/x$ over $[-1,1]$ happily converges to $0$, which is a pole, not a root.",
+  "problem": "On [−1,1] the first midpoint is exactly 0, so the algorithm evaluates 1/0 (ZeroDivisionError in the chapter's own listing). It does not 'happily converge'.",
+  "fix": "Use the interval [−1,2] as in Problem 17(c): the midpoints 0.5, −0.25, 0.125, ... converge to the pole 0."
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "The sum is $6.568$, so the bound is $2.091$.",
-  "problem": "Answer to problem 30 is embedded in a 'sample' environment titled as an answer; also the number must match the later claim about 150 primes. The environment misuse breaks anatomy.",
-  "fix": "Present the solution as plain text in the answers section, not in a sample box; the answer for Problem 30 is even-numbered and not required."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\begin{sample}{(Answer to Problem 30, odd-numbered companion: Problem 29 continued)}",
-  "problem": "Misuse of sample environment inside the Answers section; confusing title.",
-  "fix": "Replace with ordinary paragraph '\\textbf{Problem 30.}'."
+  "quote": "while the smallest quoted errors are of order $10^{-2}$.",
+  "problem": "The paper quotes much smaller errors in spacings: in-sample rms < 10^{-4} at M=900 (Sec. III), < 10^{-3} in Table III, and the 0.005 Richardson residual (Sec. II B). The same wrong statement is repeated in the answer to Problem 22.",
+  "fix": "Say 'while the smallest errors the paper quotes are of order 10^{-4} spacings (the M=900 in-sample rms, Sec. III), still eight orders of magnitude larger'. Correct the Problem 22 answer the same way."
  },
  {
   "category": "ERROR",
-  "severity": "medium",
-  "quote": "between zeros 401 and 10000 the spacing changes only from about 1.3 to about 0.7",
-  "problem": "The chapter's own answer to Problem 21 says the spacing at 10^4 is 0.854, not 0.7; internal contradiction left in the Paper connection section.",
-  "fix": "Change to 'from about 1.3 to about 0.85' and delete the 'corrects' remark in the answer."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "The difference $(t^2+t)-t^2=t$ grows without bound. \\emph{Asymptotic equivalence controls the ratio, not the difference.}",
-  "problem": "No error, but the sum-integral eq (squeeze-inc) parenthetical is garbled: its derivation lines are muddled and the stated left inequality sums f(k)≤∫ giving sum_{k=1}^{n-1}f(k)≤∫_1^n f, which is a different statement from the left half claimed (∫_1^n f ≤ sum_{k=2}^n f).",
-  "fix": "Rewrite the derivation cleanly: ∫_k^{k+1}f ≤ f(k+1), sum k=1..n-1 gives ∫_1^n f ≤ Σ_{k=2}^n f; and f(k)≤∫_k^{k+1}f... gives Σ_{k=1}^{n-1}f(k)≤∫_1^n f, add f(n)-f(1)."
- },
- {
-  "category": "JUMP",
-  "severity": "medium",
-  "quote": "Brent proved a worst case of about $(\\log_2\\tfrac{b-a}{\\delta})^2$ evaluations",
-  "problem": "Stated without source label or status; also Brent's algorithm acceptance criteria are described loosely.",
-  "fix": "Label it as quoted from \\cite{brent} without proof, or put in a beyond box."
- },
- {
-  "category": "JUMP",
   "severity": "low",
-  "quote": "Its default tolerances are an absolute $2\\times10^{-12}$ and a relative $8.88\\times10^{-16}$",
-  "problem": "Forward reference to machine epsilon via 'four times' claim not explained and relies on scipy defaults unverified in checks.",
-  "fix": "Add check or soften to 'close to machine epsilon'."
+  "quote": "the relative errors differ by a factor of about 5000",
+  "problem": "A football field is about 100 m (relative error 10^{-4}); a coin is about 2 mm thick (relative error about 5). The ratio is about 5×10^4, not 5000. The number is also not in CHECKS.",
+  "fix": "State the assumed sizes and write 'by a factor of about 50 000 (10^{-4} for a 100 m field against about 5 for a 2 mm coin)'. Add the check."
  },
  {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "Problem~26 asks you to prove it",
-  "problem": "Problem numbering: the gamma_n problem is problem 26 only if counted correctly; several cross references (Problem 18, 20, 22, 23, 28, 30) may point to the wrong problems (e.g. 'Problem 28 practices Richardson' is the finite-difference problem; 'Problem 20' float32 estimate).",
-  "fix": "Verify every Problem number reference against the list and correct."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\section{Answers to selected problems}",
-  "problem": "Answers are required for all prob 1 and every odd problem; many odd problems (e.g. 31 not given; 5,7 ok; 25 ok; 33?) and problems 1-level like 20 (Problem 22 is difficulty 1 but 6 is also 1) are inconsistent; Problem 3 is difficulty 1 and answered, but Problem 21,22 answered while 31 and others missing.",
-  "fix": "Add answers for all remaining odd-numbered and difficulty-1 problems."
- },
- {
-  "category": "RULE",
-  "severity": "medium",
-  "quote": "\\prob{2}{\\emph{(Computational, paper.)} Using \\texttt{qmnt.zeros} and \\texttt{qmnt.fluct}",
-  "problem": "Checks script contains a meaningless placeholder assertion and does not verify several quoted numbers (Problem 28 Richardson, Problem 25 answers, gap 0.854 only loosely, W at n=1000 solved).",
-  "fix": "Replace placeholder with real checks for Problems 28, 20, 21 and the Richardson numbers."
- },
- {
-  "category": "CLARITY",
+  "category": "ERROR",
   "severity": "low",
-  "quote": "(The paper writes it $(4E_{2h}-E_h)/3$; with the pair of grids named in Appendix~A step 3 this is read with $E_{2h}$ denoting the twice-refined grid.",
-  "problem": "Confusing speculation about the paper's notation; the paper's formula as written with 2h is a notation inconsistency the book bible says is E_{h/2}.",
-  "fix": "State plainly: the paper's Eq. uses (4E_{2h}-E_h)/3 where E_{2h} means the finer grid; defer to Chapter on finite differences."
+  "quote": "Table~IV of the paper flags one row as root-ambiguous for exactly this reason (Sec.~IV)",
+  "problem": "The paragraph is about the oracle's N_fl, but the flagged row is control B (150 primes, fitted amplitudes), whose level equation is N_sm+F with fitted F. No oracle row is flagged. The text conflates the two.",
+  "fix": "Rewrite: 'The same can happen for the fitted controls, whose level equation is N_sm(t)+F(t)=n−1/2 with fitted F: Table IV flags the control-B row with 900 fitted coefficients as root-ambiguous (Sec. IV).'"
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "medium",
+  "quote": "with many more oscillating terms, steep wiggles that break monotonicity are correspondingly more likely, so the reported ambiguity is unsurprising",
+  "problem": "This explanation is speculative and contradicted by the paper's own table: oracle A with 300 primes (900 terms) is not root-ambiguous. The paper ties the flagged row to the underdetermined least-squares fit (900 coefficients on 400 zeros), i.e. to the fitted amplitudes, not to the number of terms.",
+  "fix": "Replace with: 'the paper attributes this row's degradation to the underdetermined fit (900 coefficients from 400 zeros); fitted amplitudes are not bounded by 1/(m p^{m/2}), so F′ can exceed N_sm′. Note that the 900-term unfitted oracle A is not flagged.'"
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "so a model that works at one height is being tested over a narrow range of $\\log t$.",
-  "problem": "Interpretive claim about the paper not made by the paper.",
-  "fix": "Mark as the book's own remark or delete."
+  "quote": "where the $\\pm3$ is in units of the mean spacing",
+  "problem": "Appendix A step 8 says only '±3 around the smooth zero' and gives no units. The chapter (here and in the chapterintro, '±3 mean spacings') states the units as if the paper did.",
+  "fix": "Write 'the paper does not state the units; the companion library qmnt uses ±3 mean spacings, which we adopt'. Soften the chapterintro in the same way."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "The same formula holds for real $x$:",
+  "problem": "The extension of Stirling's series from integers to real x is asserted with no proof, no status label and no beyond box, contrary to the no-jumps rule.",
+  "fix": "Move the statement into a `beyond` box ('proved, proof beyond this book; see \\cite{rhb}') or mark it explicitly as taken on trust with a source."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "A sharper analysis gives the start of the \\emph{Stirling series},",
+  "problem": "This is an 'it can be shown' gap: the −1/(360n^3) term and the O(n^{-5}) remainder are stated without derivation or a beyond box.",
+  "fix": "Put the Stirling series in a `beyond` box that says what is taken on trust (Euler–Maclaurin summation) and where the proof is (\\cite{rhb})."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "More refined analysis, which we take on trust from Euler's summation formula (see \\cite{apostol}), gives",
+  "problem": "A result taken on trust must be in a labelled `beyond` box. Euler's summation formula is also never stated.",
+  "fix": "Wrap the H_n expansion in `\\begin{beyond}...\\end{beyond}`, saying in one sentence what Euler's summation formula is and that the proof is in the cited text."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "and one can check that the relative error then satisfies",
+  "problem": "This is a forbidden 'one can verify'-style phrase, even though the proof follows.",
+  "fix": "Replace with 'and the relative error then satisfies (proof immediately below)'."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "\\paragraph{Theorem (sum--integral comparison).}",
+  "problem": "An en dash is used for something that is neither a numeric range nor a paired name, which the punctuation rule forbids. It recurs in the Problem 5 statement.",
+  "fix": "Write 'comparison of sums and integrals' or 'sum and integral comparison'."
+ },
+ {
+  "category": "LATEX",
+  "severity": "low",
+  "quote": "quotes every error in these units (\"all errors below are quoted",
+  "problem": "Straight double quotes are used throughout the chapter for quotations and scare quotes. In LaTeX they typeset as closing quotes on both sides.",
+  "fix": "Replace every opening \" in prose with `` and every closing \" with '' (not inside pycode)."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "Then for every $y$ strictly between $\\inf_I f$ and $\\sup_I f$ there is exactly one $x\\in I$",
+  "problem": "inf and sup are not defined in this chapter or in the assumed chapters; a first-year reader does not know them. The proof then appeals to 'the definition of inf and sup'.",
+  "fix": "Define them in one sentence (greatest lower bound and least upper bound of the values of f on I, possibly ±∞), or restate as 'for every y with f(a)<y<f(b) for some a<b in I'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "A decreasing sequence that is bounded below converges (Chapter~\\ref{ch:series}); call the limit $C$.",
+  "problem": "The monotone convergence theorem is not in the bible's contract for Chapter 3, so it cannot be assumed. It is used again in the Newton convexity proof.",
+  "fix": "State it here as a result taken on trust in a short `beyond` box (a consequence of the completeness of the real numbers) and refer back to that box in the Newton proof."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "The Taylor series $e^{y}=1+y+y^2/2+\\cdots$ (Chapter~\\ref{ch:series}) has only positive terms",
+  "problem": "By the chapter map, the Taylor series of e^x is introduced in Chapter 2 (complex), not Chapter 3. The prerequisites list makes the same attribution.",
+  "fix": "Change the reference to Chapter~\\ref{ch:complex} here and in the prerequisites."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "the coefficients eventually grow faster than any power",
+  "problem": "The wording is imprecise. Polynomial growth in the index k would not make the series diverge for every n. Divergence needs growth faster than any geometric sequence c^k, and the Bernoulli-number coefficients in fact grow factorially.",
+  "fix": "Write 'the coefficients eventually grow factorially, faster than any geometric sequence c^k, so the terms eventually increase for every fixed n'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The same substitution shows that a power beats any power of a logarithm",
+  "problem": "The two extensions are asserted without the steps. (log t)^k=o(t^a) needs e^y>y^{k+1}/(k+1)!, and t^k=o(e^t) does not use the substitution at all. The second is used later ('exponentials beat powers').",
+  "fix": "Add two lines. For y>0, e^y>y^{k+1}/(k+1)! gives y^k/e^y<(k+1)!/y→0, which is t^k=o(e^t). Then with y=au, u^k/e^{au}=a^{-k}y^k/e^y→0."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "and $\\Nsm''>0$ for all $t>0$ ($\\Nsm$ is \\emph{convex})",
+  "problem": "Convexity is later used in the form 'f lies above all its tangent lines', but the link from f''>0 to that property is never shown.",
+  "fix": "Add: 'By Taylor's theorem with remainder (box in the Newton section), f(r)=f(x)+f′(x)(r−x)+½f″(ξ)(r−x)^2 ≥ f(x)+f′(x)(r−x) when f″>0, so the graph lies above every tangent line.'"
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "passing to the limit in \\cref{eq:asymptotics-newton} gives $\\ell=\\ell-f(\\ell)/f'(\\ell)$",
+  "problem": "Passing to the limit needs f and f′ continuous at ℓ and ℓ∈I with f′(ℓ)>0. The theorem assumes only 'differentiable', and the step is not justified.",
+  "fix": "Add 'continuously differentiable' to the hypotheses and a line: 'since r≤ℓ≤x_1, ℓ∈I; f and f′ are continuous and f′(ℓ)>0, so the right side of the iteration converges to ℓ−f(ℓ)/f′(ℓ)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the number of evaluations never exceeds roughly $(\\log_2\\tfrac{b-a}{\\delta})^2$",
+  "problem": "There is a symbol clash. In this paragraph a is the previous iterate and the bracket is [b,c], but the bound uses b−a for the initial bracket width, and δ is not redefined.",
+  "fix": "Write '(\\log_2(w_0/\\delta))^2, where w_0 is the width of the initial bracket and δ the requested tolerance'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Because a root finder works for \\emph{any} monotone function, including the modified level equations",
+  "problem": "N_fl is used here before it is defined in this chapter. The level equation N_sm+N_fl is also called monotone, while the brackets section says it can be non-monotone.",
+  "fix": "Write 'works for any continuous function with a sign change, including the level equations N_sm(t)+N_fl(t)=n−1/2 used later (N_fl is an oscillating prime sum, Chapter~\\ref{ch:explicit-formula}), which need not even be monotone'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "When the function is known to be increasing, a standard remedy is to start from a guess and widen the interval",
+  "problem": "The next sentence applies this to the oracle's level equation, which is not known to be increasing. The premise does not match the example.",
+  "fix": "Rephrase: 'When a root is expected near a known guess (for an increasing function it is then unique), a standard remedy is ...'. Note that for the oracle the root near s_n is expected but monotonicity is not guaranteed."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "\\begin{sample}{Two ways to lose all digits}",
+  "problem": "Part (a) loses essentially no digits (the error is half an ε); only part (b) loses all digits. The title misdescribes the sample.",
+  "fix": "Retitle 'A harmless rounding error and a catastrophic one'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the result is a nonzero number many orders of magnitude larger",
+  "problem": "No actual float32 value is given, and CHECKS only asserts a factor 10^3 over the double result, so 'many orders of magnitude' is neither shown nor checked. The Problem 19 answer is equally vague.",
+  "fix": "Quote the computed float32 dot product (the value printed by the listing) and assert it in CHECKS. Repeat the number in the Problem 19 answer."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "print(dt.__name__, np.cumsum(prod)[-1])",
+  "problem": "A reader of Appendix A will not know why cumsum(...)[-1] is used instead of np.sum. The reason (np.sum adds pairwise, cumsum adds in order as the text describes) is not given.",
+  "fix": "Add a comment: '# cumsum adds the terms in order; np.sum uses pairwise summation, which hides part of the rounding'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "a 15-digit value of $t_{1000}$ has an error of order $10^{-11}$, that is about $4\\times10^{-12}$ mean spacings",
+  "problem": "This is internally inconsistent: 10^{-11}/1.159 is 9×10^{-12}, while Problem 22 uses the bound 5×10^{-12} to get 4.3×10^{-12}. Also, t_1000 belongs to the paper's 20-digit set (n≤10^3); 15 digits applies beyond it.",
+  "fix": "Write 'the 15-digit value quoted for t_1000 has rounding error at most 5×10^{-12}, about 4×10^{-12} mean spacings (Problem 22); the paper actually computed zeros up to 1000 at 20 digits'."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "\\paragraph{Richardson extrapolation as an asymptotic expansion (Sec.~II~B, Appendix~A step 5).}",
+  "problem": "The quoted 'Richardson pair 12000/24000' is in Appendix A step 3. Step 5 defines the bias-corrected targets.",
+  "fix": "Change to '(Sec. II B, Appendix A steps 3 and 5)'."
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "Each added term shrinks the error by roughly the size of the next term",
+  "problem": "The wording is wrong: adding a term does not shrink the error 'by' the next term; it leaves an error about the size of the next omitted term.",
+  "fix": "Replace with 'After each added term, the remaining error is roughly the size of the next omitted term'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "two eigenvectors of a symmetric matrix are orthogonal; a sum rule cancels pairwise",
+  "problem": "Eigenvectors, sum rules and (later) 'tensor entries' are used before the reader has met them (Chapters 8 and 14). The motivation is opaque to the assumed reader.",
+  "fix": "Add a forward-pointing gloss: 'for example, certain lists of numbers (eigenvectors, Chapter~\\ref{ch:eigen}) have dot product exactly zero'. Describe the paper's 'tensor entries' as 'sensitivity coefficients (Chapter~\\ref{ch:non-hermitian})'."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "fit $x$ as a quadratic function of $y$ through them (the Lagrange form)",
+  "problem": "The Lagrange interpolation form is not defined anywhere the reader has seen. The formula appears without showing that it passes through the three points.",
+  "fix": "Add one line defining the basis: ℓ_a(y)=(y−f_b)(y−f_c)/((f_a−f_b)(f_a−f_c)) and similarly for b and c, so x(y)=aℓ_a+bℓ_b+cℓ_c passes through the three points. Then set y=0."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "(Exactly, $\\sum k^2=n(n+1)(2n+1)/6$.)",
+  "problem": "CHECKS has no numerical instance for several answers and stated values: Problem 5 (the bounds), Problem 15(b) (the identity), Problem 17 (function values and first midpoint), and f(2π)=−0.625 in the 'safe bracket' sample.",
+  "fix": "Add asserts: for n=10, 1000/3 ≤ 385 ≤ 1330/3; one Newton step for a=2 satisfying e_1=e_0^2/(2x_0); the sign values in Problem 17; and Nsm(2π)−0.5 = −0.625."
  }
 ]
