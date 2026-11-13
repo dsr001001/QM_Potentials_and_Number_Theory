@@ -1,55 +1,195 @@
 {
  "patches": [
   {
-   "old": "Each term has period $2L/k$, which divides $2L$, so the whole right-hand side has period $2L$, consistent with the left.",
-   "new": "Each term has period $2L/k$, which fits exactly $k$ times into $2L$. So each term repeats after $2L$, and the whole right-hand side has period $2L$, consistent with the left."
+   "old": "Where this shows up in the paper: the fitted correction",
+   "new": "Where this shows up in the paper~\\cite{soniR1}: the fitted correction"
   },
   {
-   "old": "\\quad\\text{($\\sin kπ=\\sin0=0$)}",
-   "new": "\\quad\\text{($\\sin k\\pi=\\sin0=0$)}"
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Tuning by Ear}\nPlay tones of 440 Hz and 442 Hz together and you hear a single pitch that swells and fades twice per second. The beat frequency is the difference of the two frequencies, here 2 Hz. Piano tuners and guitarists exploit this, adjusting a string until the beats slow down and vanish. Superposition turns a tiny frequency mismatch into something your ear detects easily.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
   },
   {
-   "old": "This is positive for $0<x<\\pi/(2K)$ and changes sign at $x^*=\\pi/(2K)$, so $S_K$ rises from $0$ at $x=0$ to a maximum at $x^*$, the peak nearest the jump.",
-   "new": "This is positive for $0<x<\\pi/(2K)$ (there $\\sin 2Kx>0$ and $\\sin x>0$) and changes sign at $x^*=\\pi/(2K)$. So $S_K$ rises from $0$ at $x=0$ to a local maximum at $x^*$. This is the \\emph{first} peak to the right of the jump, and it is the one whose height we compute. \\Cref{fig:fourier-series-gibbs} shows that it is also the tallest, the later peaks (at the other sign changes of $\\sin 2Kx$) being lower. We do not prove that last statement, and nothing below depends on it."
+   "old": "give the sine--sine and sine--cosine integrals",
+   "new": "give the sine-sine and sine-cosine integrals"
   },
   {
-   "old": "but the maximum error near a jump stays at about $9\\%$ of the jump.",
-   "new": "but the overshoot at the first peak next to the jump stays at about $9\\%$ of the jump."
+   "old": "For the sine--sine row with",
+   "new": "For the sine-sine row with"
   },
   {
-   "old": "The loudness envelope $|\\cos(\\Delta\\omega\\, t/2)|$ vanishes when",
-   "new": "For these equal amplitudes the loudness envelope $|\\cos(\\Delta\\omega\\, t/2)|$ vanishes when"
+   "old": "For the sine--cosine row, \\cref",
+   "new": "For the sine-cosine row, \\cref"
   },
   {
-   "old": "In terms of ordinary frequency this is the familiar first-year result",
-   "new": "Complete silences need equal amplitudes. With amplitudes $A_1\\neq A_2$, add the two complex amplitudes as in the previous subsection: their relative angle $\\Delta\\omega\\,t$ turns steadily, so the length of their sum swings between $|A_1-A_2|$ and $A_1+A_2$ and never reaches zero. The beat period is still $2\\pi/\\Delta\\omega$. In terms of ordinary frequency this is the familiar first-year result"
+   "old": "Zero: it is the sine--cosine row",
+   "new": "Zero: it is the sine-cosine row"
   },
   {
-   "old": "\\begin{sample}{Theorem: a two-frequency sum is periodic exactly when the frequencies are commensurate}\nLet $f(t)=\\sin(\\omega_1t)+\\sin(\\omega_2t)$ with $0<\\omega_1<\\omega_2$. Prove that $f$ is periodic if and only if $\\omega_2/\\omega_1$ is rational.",
-   "new": "\\paragraph{Theorem (proved).} \\emph{A two-frequency sum is periodic exactly when the frequencies are commensurate.} Let $f(t)=\\sin(\\omega_1t)+\\sin(\\omega_2t)$ with $0<\\omega_1<\\omega_2$. Then $f$ is periodic if and only if $\\omega_2/\\omega_1$ is rational.\n\n\\textbf{Proof.}"
+   "old": "the best-fitting single sine is \\emph{taller} than the square wave.",
+   "new": "the best-fitting single sine (best in the mean-square sense, as shown in \\cref{sec:fourier-series-parseval}) is \\emph{taller} than the square wave."
   },
   {
-   "old": "The same proof works with arbitrary phase constants and amplitudes.\n\\end{sample}",
-   "new": "This completes the proof. The same steps work with arbitrary nonzero amplitudes and arbitrary phase constants. $\\square$"
+   "old": "Proofs are in Riley, Hobson and Bence~\\cite{rhb} (chapter on Fourier series) and the references there. Every function used in this book satisfies these conditions.",
+   "new": "Riley, Hobson and Bence~\\cite{rhb} state these (Dirichlet) conditions in their chapter on Fourier series but do not prove the theorem; a proof, via the so-called Dirichlet kernel, is found in texts on Fourier analysis or real analysis. Every function expanded in a Fourier series in this chapter satisfies these conditions."
   },
   {
-   "old": "\\textbf{Step 3: scan $j$.} For $j=10$:",
-   "new": "\\textbf{Step 3: scan $j$.} We need the second phase within $\\arccos(0.999)=0.0447$ rad of $\\pi/2$ (modulo $2\\pi$), so that the second sine exceeds $0.999$. Computing this mismatch for $j=0,1,2,\\dots$ in turn (a short loop, rerun in CHECKS) gives, for example, $0.62$ rad at $j=3$ and $0.45$ rad at $j=5$; the first $j$ with mismatch below $0.0447$ is $j=10$. For $j=10$:"
+   "old": "near the jump $S_K$ overshoots the value $1$, and the overshoot does not shrink as $K$ grows; it only gets narrower.",
+   "new": "near the jump $S_K$ overshoots the value $1$, and the overshoot does not shrink to zero as $K$ grows; it settles to a fixed size and only gets narrower."
   },
   {
-   "old": "Consequently $\\sup_tf=2$ (approached, never reached) and the largest mismatch for a general shift is $D(\\tau)=2|\\sin(\\tau\\log2/2)|+2|\\sin(\\tau\\log3/2)|$, the formula plotted in \\cref{fig:fourier-series-quasiperiodic}.",
-   "new": "Consequently $\\sup_tf=2$ (approached, never reached), because both phases can be brought, at the same $t$, as close as we like to $\\pi/2$. Likewise, for a general shift $\\tau$ write $f(t+\\tau)-f(t)=[\\sin(\\alpha+\\delta_2)-\\sin\\alpha]+[\\sin(\\beta+\\delta_3)-\\sin\\beta]$ with $\\alpha=t\\log2$, $\\beta=t\\log3$, $\\delta_2=\\tau\\log2$, $\\delta_3=\\tau\\log3$. By the difference identity used for \\cref{eq:fourier-series-nearperiod}, the two brackets have largest absolute values $2|\\sin(\\delta_2/2)|$ and $2|\\sin(\\delta_3/2)|$, and Kronecker's theorem lets $\\alpha$ and $\\beta$ approach, at the same $t$, angles where both brackets are near their maxima with the same sign. So the supremum of the mismatch (approached, in general not attained) is $D(\\tau)=2|\\sin(\\tau\\log2/2)|+2|\\sin(\\tau\\log3/2)|$, the formula plotted in \\cref{fig:fourier-series-quasiperiodic}."
+   "old": "So the sum is the midpoint-rule approximation to an integral (Chapter~\\ref{ch:asymptotics}), and as $K\\to\\infty$,",
+   "new": "So the sum is a Riemann sum (the midpoint rule) for an integral over $[0,\\pi]$. The integrand $\\sin u/u$ is continuous on $[0,\\pi]$ once we give it its limiting value $1$ at $u=0$, and for a continuous function the sum of (value at one point of each subinterval) $\\times$ (subinterval width) tends to the integral as the widths tend to zero; that is the definition of the definite integral. Hence, as $K\\to\\infty$,"
   },
   {
-   "old": "The six-prime oracle of Fig.~1 has $6\\times3=18$ distinct frequencies (Problem~26).",
-   "new": "The six-prime oracle of Fig.~1 uses the six smallest primes, $P=\\{2,3,5,7,11,13\\}$, and has $6\\times3=18$ distinct frequencies (Problem~26)."
+   "old": "The overshoot above $1$ is $0.17898$, which is $8.95\\%$ of the total jump $2$, about $9\\%$, no matter how many terms you keep.",
+   "new": "In the limit $K\\to\\infty$ the overshoot above $1$ is $0.17898$, which is $8.95\\%$ of the total jump $2$, about $9\\%$. For finite $K$ the first peak is higher (for $K=1$ it is $4/\\pi=1.273$, an overshoot of $13.7\\%$ of the jump), so the overshoot approaches about $9\\%$ but never decays to zero, however many terms you keep."
   },
   {
-   "old": "This is the paper's remark in Sec.~V that the $p=2$ oscillation ``is only $\\sim$6--7 \\emph{levels} at these heights''.",
-   "new": "So one period is about 7 levels, in line with the paper's approximate remark in Sec.~V that the $p=2$ oscillation ``is only $\\sim$6--7 \\emph{levels} at these heights''; our value $7.01$ at $n=500$ sits at the upper edge of that rounded range."
+   "old": "but the overshoot at the first peak next to the jump stays at about $9\\%$ of the jump.",
+   "new": "but the overshoot at the first peak next to the jump approaches about $9\\%$ of the jump instead of zero."
+  },
+  {
+   "old": "\\item Near a jump, partial sums overshoot by about $9\\%$ of the jump for every truncation (Gibbs phenomenon), \\cref{eq:fourier-series-gibbs}.",
+   "new": "\\item Near a jump, the overshoot of the partial sums tends to about $9\\%$ of the jump as $K\\to\\infty$ and never decays to zero (Gibbs phenomenon), \\cref{eq:fourier-series-gibbs}."
+  },
+  {
+   "old": "where the overbar is the complex conjugate (Chapter~\\ref{ch:complex}); for complex functions the ``dot product'' conjugates the second factor.",
+   "new": "where the overbar is the complex conjugate (Chapter~\\ref{ch:complex}); for complex functions the ``dot product'' conjugates the second factor. The reason for the conjugate: with it, the product of a function with itself is $\\int f\\bar f\\,\\dd x=\\int|f|^2\\dd x\\ge0$, a genuine squared length; without it, $\\int_{-L}^{L}e^{i\\pi x/L}e^{i\\pi x/L}\\dd x$ would be $0$ (by the computation below with $k-l$ replaced by $2$) even though the function is never zero. To integrate a complex-valued function of the real variable $x$, integrate its real and imaginary parts separately: $\\int(u+iv)\\,\\dd x=\\int u\\,\\dd x+i\\int v\\,\\dd x$. For a real constant $\\alpha\\neq0$ this gives\n\\[\n\\int e^{i\\alpha x}\\dd x=\\int\\cos\\alpha x\\,\\dd x+i\\int\\sin\\alpha x\\,\\dd x=\\frac{\\sin\\alpha x}{\\alpha}-i\\frac{\\cos\\alpha x}{\\alpha}=\\frac{e^{i\\alpha x}}{i\\alpha},\n\\]\nwhere the last step multiplies $\\cos\\alpha x+i\\sin\\alpha x$ by $1/i=-i$. So complex exponentials integrate exactly like real ones."
+  },
+  {
+   "old": "$\\langle f^2\\rangle=\\frac1{2L}\\int_{-L}^{L}|f|^2\\,\\dd x$",
+   "new": "$\\langle|f|^2\\rangle=\\frac1{2L}\\int_{-L}^{L}|f|^2\\,\\dd x$ (for real $f$, $|f|^2=f^2$ and we write simply $\\langle f^2\\rangle$)"
+  },
+  {
+   "old": "the proof uses mean-square convergence of Fourier series and is given in Riley, Hobson and Bence~\\cite{rhb}.",
+   "new": "Riley, Hobson and Bence~\\cite{rhb} give the formal term-by-term derivation shown above; the rigorous proof rests on the completeness of the trigonometric system (mean-square convergence of Fourier series) and is found in texts on Fourier analysis."
+  },
+  {
+   "old": "and measure the error by $E=\\frac1{2L}\\int_{-L}^{L}(f-g)^2\\dd x$. Expand the square:\n\\begin{equation}\nE=\\frac1{2L}",
+   "new": "and measure the error by $\\mathcal{E}=\\frac1{2L}\\int_{-L}^{L}(f-g)^2\\dd x$ (we write $\\mathcal{E}$, not $E$, because this book reserves $E$ for energies). Expand the square:\n\\begin{equation}\n\\mathcal{E}=\\frac1{2L}"
+  },
+  {
+   "old": "E=\\langle f^2\\rangle+\\sum_{k<M}\\nu_k\\left(d_k^2-2d_kc_k\\right)",
+   "new": "\\mathcal{E}=\\langle f^2\\rangle+\\sum_{k<M}\\nu_k\\left(d_k^2-2d_kc_k\\right)"
+  },
+  {
+   "old": "its error is $E_{\\min}=",
+   "new": "its error is $\\mathcal{E}_{\\min}="
+  },
+  {
+   "old": "By \\cref{eq:fourier-series-best}, $E_{\\min}=",
+   "new": "By \\cref{eq:fourier-series-best}, $\\mathcal{E}_{\\min}="
+  },
+  {
+   "old": "E_{\\min}=L^2\\left[",
+   "new": "\\mathcal{E}_{\\min}=L^2\\left["
+  },
+  {
+   "old": "\\sqrt{E_{\\min}}",
+   "new": "\\sqrt{\\mathcal{E}_{\\min}}"
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{Fourier Faced Skeptics}\nJoseph Fourier presented his theory of heat flow, built on expanding functions in sines and cosines, to the Paris Academy in 1807. Examiners, including Lagrange, doubted that arbitrary functions, even ones with corners or jumps, could be written as such series. Fourier won an Academy prize for the work a few years later, and his book \\emph{Th\\'eorie analytique de la chaleur} finally appeared in 1822.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "so $f_{\\rm o}$ is odd.)",
+   "new": "so $f_{\\rm o}$ is odd. Uniqueness: if also $f=g_{\\rm e}+g_{\\rm o}$ with $g_{\\rm e}$ even and $g_{\\rm o}$ odd, then $f(-x)=g_{\\rm e}(x)-g_{\\rm o}(x)$, so $f(x)+f(-x)=2g_{\\rm e}(x)$ and $f(x)-f(-x)=2g_{\\rm o}(x)$, which says $g_{\\rm e}=f_{\\rm e}$ and $g_{\\rm o}=f_{\\rm o}$.)"
+  },
+  {
+   "old": "\\begin{figure}[htbp]\\centering\n\\includegraphics[width=0.95\\linewidth]{figs/fourier-series_cosine_basis.pdf}",
+   "new": "\\paragraph{How many cosines does a narrow feature need?} Take an even target made of two narrow top-hat bumps: $g(x)=1$ where $\\big||x|-x_0\\big|<w/2$ and $g(x)=0$ elsewhere, with $w/2<x_0<L-w/2$ so that both bumps lie inside the box. For $k\\ge1$ put $q=k\\pi/L$. Since $g\\cos qx$ is even, only the right bump needs integrating:\n\\begin{equation}\nc_k=\\frac2L\\int_{x_0-w/2}^{x_0+w/2}\\cos qx\\,\\dd x=\\frac{2}{Lq}\\Big[\\sin q\\big(x_0+\\tfrac w2\\big)-\\sin q\\big(x_0-\\tfrac w2\\big)\\Big]=\\frac{4}{Lq}\\cos(qx_0)\\sin\\frac{qw}{2},\n\\label{eq:fourier-series-tophat}\n\\end{equation}\nwhere the last step subtracts the two addition formulas, $\\sin(u+v)-\\sin(u-v)=2\\cos u\\sin v$. Writing $z_k=qw/2=k\\pi w/(2L)$, this is $c_k=\\frac{2w}{L}\\cos(qx_0)\\,\\frac{\\sin z_k}{z_k}$. The factor $\\cos(qx_0)$ oscillates with $k$ and records where the bumps sit. The envelope $\\sin z_k/z_k$ stays close to $1$ while $z_k\\ll1$ and first reaches zero at $z_k=\\pi$, that is at $k=2L/w$, where the wavelength $2L/k$ has shrunk to $w$. Example: $w=6$ on the scale-1 box $L=44.883$ gives $z_k=0.2100\\,k$; the envelope is $0.826$ at $k=5$, $0.411$ at $k=10$ and zero at $k=2L/w=14.96$. So every cosine up to $k\\approx2L/w$ is needed at nearly full strength; truncating earlier smears the bump out. Beyond that the envelope is at most $1/z_k$, the slow $1/k$ tail caused by the top hat's jumps; smoother bumps have smaller tails, by the integration-by-parts argument of \\cref{eq:fourier-series-decay}. The heuristic rule: \\emph{a feature of width $w$ needs cosines of wavelength down to about $w$, that is $k$ up to order $2L/w$.}\n\n\\begin{figure}[htbp]\\centering\n\\includegraphics[width=0.95\\linewidth]{figs/fourier-series_cosine_basis.pdf}"
+  },
+  {
+   "old": "\\item A feature of width $w$ needs cosines of wavelength about $w$ or shorter, that is $k$ of order $2L/w$ or more.",
+   "new": "\\item Heuristic (top-hat example, \\cref{eq:fourier-series-tophat}): a feature of width $w$ needs cosines of wavelength down to about $w$, that is $k$ up to order $2L/w$."
+  },
+  {
+   "old": "Then $f$ is periodic if and only if $\\omega_2/\\omega_1$ is rational.",
+   "new": "Then $f$ is periodic if and only if $\\omega_2/\\omega_1$ is rational (a ratio of two integers; $\\mathbb{Q}$ denotes the set of rational numbers)."
+  },
+  {
+   "old": "This completes the proof. The same steps work with arbitrary nonzero amplitudes and arbitrary phase constants. $\\square$",
+   "new": "This completes the proof. $\\square$\n\n\\paragraph{Amplitudes and phases.} The proof is unchanged in substance for $f(t)=A_1\\sin(\\omega_1t+\\varphi_1)+A_2\\sin(\\omega_2t+\\varphi_2)$ with $A_1,A_2\\neq0$. Step~1: a shift $\\tau=2\\pi j/\\omega_1$ still adds $2\\pi j$ and $2\\pi l$ to the two phases, whatever $\\varphi_1,\\varphi_2$ are. Step~3 becomes $\\omega_2^2f+f''=(\\omega_2^2-\\omega_1^2)A_1\\sin(\\omega_1t+\\varphi_1)$; dividing by the nonzero constant $(\\omega_2^2-\\omega_1^2)A_1$ shows that $\\sin(\\omega_1t+\\varphi_1)$ has period $\\tau$. Step~4: choose $t$ with $\\omega_1t+\\varphi_1=\\pi/2$; then $\\sin(\\pi/2+\\omega_1\\tau)=1$ forces $\\omega_1\\tau=2\\pi j$ as before. Step~5 swaps the indices.\n\n\\paragraph{Many frequencies.} Let $F(t)=\\sum_{j=1}^{J}A_j\\sin(\\omega_jt+\\varphi_j)$ with distinct positive frequencies $\\omega_j$ and nonzero amplitudes $A_j$, and suppose $F(t+\\tau)=F(t)$ for all $t$, with $\\tau>0$. For each $j$ define the operation $D_jg=\\omega_j^2g+g''$. Differentiating $g(t+\\tau)=g(t)$ shows that derivatives of a $\\tau$-periodic function are $\\tau$-periodic, so $D_j$ turns $\\tau$-periodic functions into $\\tau$-periodic functions. On a single term, $D_j\\sin(\\omega_it+\\varphi_i)=(\\omega_j^2-\\omega_i^2)\\sin(\\omega_it+\\varphi_i)$: $D_j$ kills term $j$ and multiplies every other term by a constant. Fix $i$ and apply $D_j$ once for each $j\\neq i$. Every term except term $i$ is killed, and what remains is $C_iA_i\\sin(\\omega_it+\\varphi_i)$, where $C_i=\\prod_{j\\neq i}(\\omega_j^2-\\omega_i^2)$ (the product of these factors over all $j\\neq i$) is nonzero; this remainder is $\\tau$-periodic. Exactly as in Step~4, $\\omega_i\\tau=2\\pi l_i$ for a positive integer $l_i$. Hence every ratio $\\omega_i/\\omega_1=l_i/l_1$ is rational. Equivalently: \\emph{if two frequencies of a finite sum of sinusoids (with nonzero amplitudes) have an irrational ratio, the sum is not periodic.}"
+  },
+  {
+   "old": "The same argument works for any two different prime powers: $\\log p^m/\\log q^{m'}=a/b$",
+   "new": "The same argument works for powers of two different primes $p\\neq q$: $\\log p^m/\\log q^{m'}=a/b$"
+  },
+  {
+   "old": "for $2$ against an odd prime, the parity argument above is enough.",
+   "new": "for $2$ against an odd prime, the parity argument above is enough. Powers of the \\emph{same} prime behave differently: $\\log p^m/\\log p^{m'}=m/m'$ is rational, so for example $\\log4=2\\log2$ and $\\log8=3\\log2$ are commensurate; they are harmonics of $\\log p$."
+  },
+  {
+   "old": "We want this to be close to $\\pi/2$ modulo $2\\pi$.",
+   "new": "We want this to be close to $\\pi/2$ modulo $2\\pi$, that is, after discarding whole turns of $2\\pi$."
+  },
+  {
+   "old": "(modulo $2\\pi$), and from \\cref{eq:fourier-series-sumprod} with $\\sin\\beta$ replaced by a difference,",
+   "new": "(modulo $2\\pi$). To compare $\\sin(\\beta+\\delta)$ with $\\sin\\beta$, replace $\\beta$ by $-\\beta$ in \\cref{eq:fourier-series-sumprod}, using $\\sin(-\\beta)=-\\sin\\beta$ and $\\cos(-u)=\\cos u$: $\\sin\\alpha-\\sin\\beta=2\\cos\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}$. Now set $\\alpha=\\beta+\\delta$:"
+  },
+  {
+   "old": "\\Cref{tab:fourier-series-nearperiods} lists the best $a$ up to 53.",
+   "new": "\\Cref{tab:fourier-series-nearperiods} lists the best $a$ up to 53. For a general shift $\\tau$, not of this special form, we measure the mismatch by $D(\\tau)=\\sup_t|f(t+\\tau)-f(t)|$. Here $\\sup$ (the \\textbf{supremum}, or least upper bound) is the smallest number that the quantity never exceeds as $t$ varies; unlike a maximum, it need not be attained at any $t$."
+  },
+  {
+   "old": "We take both results on trust; we use only the conclusions stated.",
+   "new": "Bohr's theory, including the existence of $\\epsilon$-almost-periods with bounded gaps, is developed with proofs in his monograph \\emph{Almost Periodic Functions} and in later texts on harmonic analysis. We take both results on trust; we use only the conclusions stated."
+  },
+  {
+   "old": "So for any finite sum $F(t)=\\sum_jA_j\\sin(\\omega_jt+\\varphi_j)$ with \\emph{distinct} frequencies,",
+   "new": "Phase constants change nothing. By \\cref{eq:fourier-series-ps}, $\\sin(\\omega_1t+\\varphi_1)\\sin(\\omega_2t+\\varphi_2)=\\tfrac12[\\cos((\\omega_1-\\omega_2)t+\\varphi_1-\\varphi_2)-\\cos((\\omega_1+\\omega_2)t+\\varphi_1+\\varphi_2)]$, and for $\\Omega\\neq0$, $\\frac1T\\int_0^T\\cos(\\Omega t+\\psi)\\,\\dd t=\\frac{\\sin(\\Omega T+\\psi)-\\sin\\psi}{\\Omega T}$, which is at most $2/(|\\Omega|T)$ in size. So the cross-term average is bounded by $\\frac1T\\big(\\frac1{|\\omega_1-\\omega_2|}+\\frac1{\\omega_1+\\omega_2}\\big)$ and again tends to zero; and $\\sin^2(\\omega t+\\varphi)=\\tfrac12-\\tfrac12\\cos(2\\omega t+2\\varphi)$ has average within $1/(2\\omega T)$ of $\\tfrac12$. Now take a finite sum $F(t)=\\sum_jA_j\\sin(\\omega_jt+\\varphi_j)$ with \\emph{distinct} frequencies and expand its square: $F^2=\\sum_jA_j^2\\sin^2(\\omega_jt+\\varphi_j)+\\sum_{i\\neq j}A_iA_j\\sin(\\omega_it+\\varphi_i)\\sin(\\omega_jt+\\varphi_j)$. The square terms average to $A_j^2/2$ and the cross terms to zero as $T\\to\\infty$, so"
+  },
+  {
+   "old": "\\item $\\log3/\\log2$ is irrational (parity proof); logarithms of different prime powers are incommensurate (unique factorization, Chapter~\\ref{ch:primes}).",
+   "new": "\\item $\\log3/\\log2$ is irrational (parity proof); logarithms of powers of \\emph{different primes} are incommensurate (unique factorization, Chapter~\\ref{ch:primes}), while powers of the same prime are harmonics of $\\log p$.\n\\item A finite sum of sinusoids with nonzero amplitudes is periodic only if all its frequency ratios are rational (proved, many-frequency version)."
+  },
+  {
+   "old": "The paper's Hermitian model (Sec.~II~C) perturbs the even Wu--Sprung potential by",
+   "new": "The Hermitian model of the paper~\\cite{soniR1} (Sec.~II~C) perturbs the even Wu--Sprung potential by"
+  },
+  {
+   "old": "A bump confined to a band of width 6 is a superposition of many cosines, as in \\cref{fig:fourier-series-cosine-basis};",
+   "new": "A correction that is largest in a band of width 6 (the classical turning points of the held-out levels 201--300, Chapter~\\ref{ch:wkb}) while remaining nonzero elsewhere (rms 15 and 13) is a superposition of many cosines, as in \\cref{fig:fourier-series-cosine-basis} and the top-hat example of \\cref{sec:fourier-series-evenodd} (for $w=6$ at scale~1 the main lobe extends to $k\\approx2L/w=14.96$);"
+  },
+  {
+   "old": "uses the six smallest primes, $P=\\{2,3,5,7,11,13\\}$, and has",
+   "new": "uses the six smallest primes, $P=\\{2,3,5,7,11,13\\}$ (the paper says only ``six-prime''; this is the natural reading, it is what \\texttt{qmnt.first\\_primes(6)} returns, and with it \\texttt{qmnt} reproduces the six-prime entry $0.074$ / $+0.96$ of Table~V on zeros 401--500), and has"
+  },
+  {
+   "old": "Across different primes the frequencies are incommensurate (\\cref{sec:fourier-series-quasi}), so with two or more primes $\\Nfl$ is quasi-periodic: it never repeats.",
+   "new": "Across different primes the frequencies are incommensurate (\\cref{sec:fourier-series-quasi}); for example $\\log3/\\log2$ is irrational. With two or more primes, $\\Nfl$ is a finite sum of sinusoids with distinct frequencies and nonzero amplitudes, two of which have an irrational ratio, so by the many-frequency version of the periodicity theorem (\\cref{sec:fourier-series-quasi}) it is not periodic: it is quasi-periodic and never repeats."
+  },
+  {
+   "old": "That is the property the fitted potentials lack.",
+   "new": "That is the property the fitted potentials, as parametrized and optimized in the paper, did not show."
+  },
+  {
+   "old": "One period ($9.065$ in $t$) spans about 6.8--7.0 levels here. The shaded region $n=401$--$500$ is the held-out window of the paper's continuation probe (Sec.~III), whose target is this sequence (App.~A step 15).",
+   "new": "One period ($9.065$ in $t$) spans about 6.4 levels at $n=300$ and 7.0 at $n=500$. The shaded region $n=401$--$500$ is the held-out window of the paper's continuation probe (Sec.~III), whose target is the negative of this sequence (App.~A step 15)."
+  },
+  {
+   "old": "In other words, the target is RE2 sampled at the smooth zeros, \\cref{fig:fourier-series-re2-levels}.",
+   "new": "In other words, the target fluctuation is $-$RE2 sampled at the smooth zeros, the negative of the sequence in \\cref{fig:fourier-series-re2-levels}: a target level sits below its smooth position when the count fluctuation is positive. The sign affects neither the rms nor the period."
+  },
+  {
+   "old": "the paper reports only that C1 ``stays within 0.005 of the null ($0.258$, correlation $+0.28$)'' and concludes",
+   "new": "the paper reports only that C1 ``stays within $0.005$ of the null'' (rms $0.258$, correlation $+0.28$ with interval $[+0.08,+0.46]$) and concludes"
+  },
+  {
+   "old": "% DYK-BEGIN\n\\begin{didyouknow}{The Overshoot That Won't Quit}\nApproximate a square wave by a finite Fourier series and you always see an overshoot near each jump, about 9\\% of the jump size, however many terms you keep. It is called the Gibbs phenomenon after J. Willard Gibbs, who discussed it in \\emph{Nature} in 1899, but Henry Wilbraham had described it in 1848. Albert Michelson's mechanical harmonic analyzer helped bring it to attention.\n\\end{didyouknow}\n% DYK-END\n",
+   "new": ""
+  },
+  {
+   "old": "\\item Gibbs: partial sums overshoot a jump by about $9\\%$ of the jump, independent of the truncation, \\cref{eq:fourier-series-gibbs}.",
+   "new": "\\item Gibbs: the overshoot of partial sums at a jump tends to about $9\\%$ of the jump as the number of terms grows, never to zero, \\cref{eq:fourier-series-gibbs}."
+  },
+  {
+   "old": "for sines, $E=\\langle f^2\\rangle",
+   "new": "for sines, $\\mathcal{E}=\\langle f^2\\rangle"
   }
  ],
- "new_checks": "import numpy as np\nfrom scipy.integrate import quad\nfrom scipy.optimize import brentq\nfrom scipy.special import sici\nimport qmnt\n\nl2, l3 = np.log(2), np.log(3)\n# Sample: amplitude and phase\nassert abs(np.hypot(3, 4) - 5) < 1e-12 and abs(-np.arctan(4/3) + 0.9273) < 1e-4\n# Sample RE2 amplitudes, periods\nA = [1/(np.pi*m*2**(m/2)) for m in (1, 2, 3)]\nfor a, c in zip(A, [0.2251, 0.0796, 0.0375]): assert abs(a - c) < 1e-4\nfor m, c in zip((1, 2, 3), [9.0647, 4.5324, 3.0216]): assert abs(2*np.pi/(m*l2) - c) < 1e-4\n# Sample beats 11,13 and checkpoint\nwb, dw = (np.log(11)+np.log(13))/2, np.log(13/11)\nassert abs(wb-2.481422) < 1e-6 and abs(dw-0.167054) < 1e-6\nassert abs(2*np.pi/wb-2.5321) < 1e-4 and abs(2*np.pi/dw-37.61) < 0.01 and abs(wb/dw-14.85) < 0.01\nsil = [(2*j+1)*np.pi/dw for j in range(4)]\nassert sum(s < 100 for s in sil) == 3 and abs(sil[3]-131.6) < 0.1\n# Orthogonality sample\nL = 44.883\nI = lambda g: quad(g, -L, L, limit=200)[0]\nassert abs(I(lambda x: np.cos(2*np.pi*x/L)*np.cos(3*np.pi*x/L))) < 1e-8\nassert abs(I(lambda x: np.cos(2*np.pi*x/L)**2) - L) < 1e-8\n# Square wave\nassert abs(4/np.pi - 1.2732) < 1e-4 and abs(np.pi**2/8 - 1.2337) < 1e-4\n# Gibbs\nSi = sici(np.pi)[0]; assert abs(Si-1.851937) < 1e-6 and abs(2/np.pi*Si-1.17898) < 1e-5\nK = 50; x = np.pi/(2*K)\nS50 = 4/np.pi*sum(np.sin((2*j-1)*x)/(2*j-1) for j in range(1, K+1)); assert abs(S50-1.1790) < 2e-4\nassert abs((2/np.pi*Si-1)/2 - 0.0895) < 1e-3\n# Complex RE2 and Parseval\nfor a, c in zip(A, [0.1125, 0.0398, 0.0188]): assert abs(a/2 - c) < 1e-4\nms = sum(a**2 for a in A)/2\nassert abs(sum(1/(m**2*2**m) for m in (1, 2, 3)) - 0.576389) < 1e-6\nassert abs(ms-0.029200) < 1e-6 and abs(np.sqrt(ms)-0.1709) < 1e-4 and abs(A[0]/np.sqrt(2)-0.1592) < 1e-4\n# |x| sample\nc0, c1, c3 = L/2, -4*L/np.pi**2, -4*L/(9*np.pi**2)\nassert abs(c0-22.4415) < 1e-4 and abs(c1+18.190) < 1e-3 and abs(c3+2.0212) < 1e-4\nE = L**2/3 - c0**2 - 0.5*(c1**2+c3**2)\nassert abs(E/L**2 - 1.9165e-4) < 1e-7 and abs(np.sqrt(E)-0.621) < 1e-3\nassert abs(1-E/(L**2/3) - 0.9994) < 1e-4 and abs(L/np.sqrt(3)-25.91) < 0.01 and abs(np.sqrt(E)/(L/np.sqrt(3))-0.024) < 1e-3\n# Basel\nassert abs(np.pi**2/6-1.6449) < 1e-4 and abs(np.pi**2/12-0.8225) < 1e-4\n# Quasi-periodic\nassert abs(l3/l2 - 1.5849625) < 1e-7\nt0 = 20.5*np.pi/l2; assert abs(t0-92.913) < 1e-3\nassert abs(np.sin(t0*l2)+np.sin(t0*l3) - 1.99967) < 2e-5\n# Sample 'Getting close': scan over j\nrho = l3/l2\nmis = [abs(((np.pi/2+2*np.pi*j)*rho - np.pi/2 + np.pi) % (2*np.pi) - np.pi) for j in range(22)]\nassert abs(np.arccos(0.999)-0.0447) < 1e-4\nassert min(j for j in range(22) if mis[j] < 0.0447) == 10\nassert abs(mis[3]-0.62) < 0.01 and abs(mis[5]-0.45) < 0.01 and abs(mis[10]-0.0259) < 1e-4\nfor a, tau, r, eps, d in [(1, 9.065, 1.58496, .41504, 1.929), (2, 18.129, 3.16993, .16993, 1.018),\n                          (5, 45.324, 7.92481, .07519, .468), (12, 108.777, 19.01955, .01955, .1228),\n                          (41, 371.654, 64.98346, .01654, .1039), (53, 480.430, 84.00301, .00301, .0189)]:\n    ar = a*l3/l2; e = abs(ar-round(ar))\n    assert abs(2*np.pi*a/l2-tau) < 1e-3 and abs(ar-r) < 1e-5 and abs(e-eps) < 1e-5\n    assert abs(2*abs(np.sin(np.pi*e)) - d) < 1e-3\nassert abs(3**12/2**19 - 1.01364) < 1e-5 and abs(3.0**53/2.0**84 - 1.0021) < 1e-4\n# Window sample\ncyc = 40*l2/(2*np.pi); assert abs(cyc-4.4127) < 1e-4\nsinc = lambda th: np.sin(th)/th\nassert abs(abs(sinc(np.pi*(cyc-4)))-0.742) < 1e-3 and abs(abs(sinc(np.pi*(cyc-5)))-0.522) < 1e-3\nassert abs(8*np.pi/l2-36.26) < 0.01\n# Paper connection\nassert abs(2*L/399-0.225) < 1e-3 and abs(399*np.pi/L-27.93) < 0.01\nassert abs(2*np.sqrt(811.18)*L/np.pi-813.8) < 0.1 and abs(400*np.pi/L-28.0) < 0.01 and abs((400*np.pi/L/2)**2-196) < 1\nNsm = lambda t: t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\nsz = lambda n: brentq(lambda t: Nsm(t)-(n-0.5), 2*np.pi+1e-9, 1e5)\ngp = lambda s: 2*np.pi/np.log(s/(2*np.pi))\ns400, s500 = sz(400), sz(500)\nassert abs(s400-679.9) < 0.1 and abs(gp(s400)-1.341) < 1e-3 and abs(2*np.pi/l2/gp(s400)-6.76) < 0.01\nassert abs(gp(s500)-1.293) < 1e-3 and abs(2*np.pi/l2/gp(s500)-7.01) < 0.01\nassert abs(np.asarray(qmnt.smooth_zeros(np.array([400])))[0]-s400) < 1e-6\nsn = np.array([sz(n) for n in range(401, 501)])\nm = np.arange(1, 4)\nre2 = -np.sum(np.sin(np.outer(sn, m*l2))/(m*2**(m/2)), axis=1)/np.pi\nr = np.sqrt(np.mean(re2**2)); assert abs(r-0.1709) < 0.003 and abs(r-0.1708) < 0.003\nassert abs((sn[-1]-sn[0])/(2*np.pi/l2) - 14.3) < 0.2\nz = qmnt.zeros(1000)\nassert abs(2*np.pi*450/8-353.43) < 0.01\nassert 326 < z[400]-353.43 < 330 and abs(z[499]-353.43-457.8) < 0.1 and abs(z[399]-680) < 2\n# Problems\nassert abs(2*np.pi/l3-5.719) < 1e-3                                   # P1\nassert abs(np.arctan(12/5)-1.176) < 1e-3                              # P2\nassert abs(2*np.pi/np.log(1.4)-18.674) < 1e-3                         # P3\nassert abs(np.pi**4/96-1.01468) < 1e-5                                # P9\nassert abs(0.5/0.576389-0.8675) < 1e-4                                # P11\nassert abs(2*59.957/899-0.1334) < 1e-4                                # P14\nassert abs(2*np.sqrt(1419.42)*59.957/np.pi-1438.1) < 0.2               # P16\nassert abs(2*np.pi/l3/gp(s400)-4.264) < 1e-3                          # P18\ntot = sum(1/(mm**2*p**mm) for p in (2, 3, 5, 7, 11, 13) for mm in (1, 2, 3))\nassert abs(tot-1.472299) < 1e-6 and abs(tot/(2*np.pi**2)-0.074588) < 1e-6 and abs(np.sqrt(tot/(2*np.pi**2))-0.2731) < 1e-4  # P19\nassert abs(1-8/np.pi**2-0.1894) < 1e-4                                # P21\nassert abs(3*np.log(13)-7.695) < 1e-3 and 13**3 == 2197               # P26\nassert abs(6/(2*L/399)-26.7) < 0.05                                   # P27\nassert abs(2/np.pi-0.6366) < 1e-4 and abs(1-8/np.pi**2-0.189) < 1e-3  # P29\n# P17: numerical complex coefficients of RE2 over one period\nTp = 2*np.pi/l2; tt = np.linspace(0, Tp, 20001)\nf = -sum(np.sin(mm*tt*l2)/(mm*2**(mm/2)) for mm in (1, 2, 3))/np.pi\nfor k, c in [(1, 0.1125), (2, 0.0398), (3, 0.0188)]:\n    fk = np.trapezoid(f*np.exp(-1j*k*l2*tt), tt)/Tp\n    assert abs(fk.real) < 1e-6 and abs(fk.imag - c) < 1e-4\nprint(\"all checks passed\")\n",
+ "new_checks": "import numpy as np\nfrom scipy.integrate import quad\nfrom scipy.optimize import brentq\nfrom scipy.special import sici\nimport qmnt\n\nl2, l3 = np.log(2), np.log(3)\n# Sample: amplitude and phase\nassert abs(np.hypot(3, 4) - 5) < 1e-12 and abs(-np.arctan(4/3) + 0.9273) < 1e-4\n# Sample RE2 amplitudes, periods\nA = [1/(np.pi*m*2**(m/2)) for m in (1, 2, 3)]\nfor a, c in zip(A, [0.2251, 0.0796, 0.0375]): assert abs(a - c) < 1e-4\nfor m, c in zip((1, 2, 3), [9.0647, 4.5324, 3.0216]): assert abs(2*np.pi/(m*l2) - c) < 1e-4\n# Sample beats 11,13 and checkpoint\nwb, dw = (np.log(11)+np.log(13))/2, np.log(13/11)\nassert abs(wb-2.481422) < 1e-6 and abs(dw-0.167054) < 1e-6\nassert abs(2*np.pi/wb-2.5321) < 1e-4 and abs(2*np.pi/dw-37.61) < 0.01 and abs(wb/dw-14.85) < 0.01\nsil = [(2*j+1)*np.pi/dw for j in range(4)]\nassert sum(s < 100 for s in sil) == 3 and abs(sil[3]-131.6) < 0.1\n# Orthogonality sample\nL = 44.883\nI = lambda g: quad(g, -L, L, limit=200)[0]\nassert abs(I(lambda x: np.cos(2*np.pi*x/L)*np.cos(3*np.pi*x/L))) < 1e-8\nassert abs(I(lambda x: np.cos(2*np.pi*x/L)**2) - L) < 1e-8\nassert abs(2*L - 89.766) < 1e-3 and abs(I(lambda x: 1.0 + 0*x) - 89.766) < 1e-3\n# Square wave\nassert abs(4/np.pi - 1.2732) < 1e-4 and abs(np.pi**2/8 - 1.2337) < 1e-4\n# Gibbs\nSi = sici(np.pi)[0]; assert abs(Si-1.851937) < 1e-6 and abs(2/np.pi*Si-1.17898) < 1e-5\nK = 50; x = np.pi/(2*K)\nS50 = 4/np.pi*sum(np.sin((2*j-1)*x)/(2*j-1) for j in range(1, K+1)); assert abs(S50-1.1790) < 2e-4\nassert abs((2/np.pi*Si-1)/2 - 0.0895) < 1e-3\nassert abs(4/np.pi - 1.273) < 1e-3 and abs((4/np.pi-1)/2 - 0.137) < 1e-3   # Gibbs K=1\n# Complex RE2 and Parseval\nfor a, c in zip(A, [0.1125, 0.0398, 0.0188]): assert abs(a/2 - c) < 1e-4\nms = sum(a**2 for a in A)/2\nassert abs(sum(1/(m**2*2**m) for m in (1, 2, 3)) - 0.576389) < 1e-6\nassert abs(ms-0.029200) < 1e-6 and abs(np.sqrt(ms)-0.1709) < 1e-4 and abs(A[0]/np.sqrt(2)-0.1592) < 1e-4\n# |x| sample\nc0, c1, c3 = L/2, -4*L/np.pi**2, -4*L/(9*np.pi**2)\nassert abs(c0-22.4415) < 1e-4 and abs(c1+18.190) < 1e-3 and abs(c3+2.0212) < 1e-4\nE = L**2/3 - c0**2 - 0.5*(c1**2+c3**2)\nassert abs(E/L**2 - 1.9155e-4) < 5e-9 and abs(np.sqrt(E)-0.621) < 1e-3\nassert abs(1-E/(L**2/3) - 0.9994) < 1e-4 and abs(L/np.sqrt(3)-25.91) < 0.01 and abs(np.sqrt(E)/(L/np.sqrt(3))-0.024) < 1e-3\n# Basel\nassert abs(np.pi**2/6-1.6449) < 1e-4 and abs(np.pi**2/12-0.8225) < 1e-4\n# Top-hat bump paragraph\nw = 6.0\nz = lambda k: k*np.pi*w/(2*L)\nassert abs(z(1)-0.2100) < 1e-4 and abs(np.sin(z(5))/z(5)-0.826) < 1e-3 and abs(np.sin(z(10))/z(10)-0.411) < 1e-3\nassert abs(2*L/w-14.96) < 0.01\nx0 = 25.5; kk = 7; q = kk*np.pi/L\nck = 2/L*quad(lambda xx: np.cos(q*xx), x0-w/2, x0+w/2)[0]\nassert abs(ck - 2*w/L*np.cos(q*x0)*np.sin(z(kk))/z(kk)) < 1e-10\n# Quasi-periodic\nassert abs(l3/l2 - 1.5849625) < 1e-7\nt0 = 20.5*np.pi/l2; assert abs(t0-92.913) < 1e-3\nassert abs(np.sin(t0*l2)+np.sin(t0*l3) - 1.99967) < 2e-5\n# Sample 'Getting close': scan over j\nrho = l3/l2\nmis = [abs(((np.pi/2+2*np.pi*j)*rho - np.pi/2 + np.pi) % (2*np.pi) - np.pi) for j in range(22)]\nassert abs(np.arccos(0.999)-0.0447) < 1e-4\nassert min(j for j in range(22) if mis[j] < 0.0447) == 10\nassert abs(mis[3]-0.62) < 0.01 and abs(mis[5]-0.45) < 0.01 and abs(mis[10]-0.0259) < 1e-4\nfor a, tau, r, eps, d in [(1, 9.065, 1.58496, .41504, 1.929), (2, 18.129, 3.16993, .16993, 1.018),\n                          (5, 45.324, 7.92481, .07519, .468), (12, 108.777, 19.01955, .01955, .1228),\n                          (41, 371.654, 64.98346, .01654, .1039), (53, 480.430, 84.00301, .00301, .0189)]:\n    ar = a*l3/l2; e = abs(ar-round(ar))\n    assert abs(2*np.pi*a/l2-tau) < 1e-3 and abs(ar-r) < 1e-5 and abs(e-eps) < 1e-5\n    assert abs(2*abs(np.sin(np.pi*e)) - d) < 1e-3\nassert abs(3**12/2**19 - 1.01364) < 1e-5 and abs(3.0**53/2.0**84 - 1.0021) < 1e-4\n# Window sample\ncyc = 40*l2/(2*np.pi); assert abs(cyc-4.4127) < 1e-4\nsinc = lambda th: np.sin(th)/th\nassert abs(abs(sinc(np.pi*(cyc-4)))-0.742) < 1e-3 and abs(abs(sinc(np.pi*(cyc-5)))-0.522) < 1e-3\nassert abs(8*np.pi/l2-36.26) < 0.01\n# Paper connection\nassert abs(2*L/399-0.225) < 1e-3 and abs(399*np.pi/L-27.93) < 0.01\nassert abs(2*np.sqrt(811.18)*L/np.pi-813.8) < 0.1 and abs(400*np.pi/L-28.0) < 0.01 and abs((400*np.pi/L/2)**2-196) < 1\nNsm = lambda t: t/(2*np.pi)*np.log(t/(2*np.pi)) - t/(2*np.pi) + 7/8\nsz = lambda n: brentq(lambda t: Nsm(t)-(n-0.5), 2*np.pi+1e-9, 1e5)\ngp = lambda s: 2*np.pi/np.log(s/(2*np.pi))\ns400, s500 = sz(400), sz(500)\nassert abs(s400-679.9) < 0.1 and abs(gp(s400)-1.341) < 1e-3 and abs(2*np.pi/l2/gp(s400)-6.76) < 0.01\nassert abs(gp(s500)-1.293) < 1e-3 and abs(2*np.pi/l2/gp(s500)-7.01) < 0.01\nassert abs(2*np.pi/l2/gp(sz(300)) - 6.43) < 0.01   # figure caption: about 6.4 levels at n=300\nassert abs(np.asarray(qmnt.smooth_zeros(np.array([400])))[0]-s400) < 1e-6\nsn = np.array([sz(n) for n in range(401, 501)])\nm = np.arange(1, 4)\nre2 = -np.sum(np.sin(np.outer(sn, m*l2))/(m*2**(m/2)), axis=1)/np.pi\nr = np.sqrt(np.mean(re2**2)); assert abs(r-0.1709) < 0.003 and abs(r-0.1708) < 0.003\nassert abs((sn[-1]-sn[0])/(2*np.pi/l2) - 14.3) < 0.2\nz0 = qmnt.zeros(1000)\nassert abs(2*np.pi*450/8-353.43) < 0.01\nassert 326 < z0[400]-353.43 < 330 and abs(z0[499]-353.43-457.8) < 0.1 and abs(z0[399]-680) < 2\n# Six-prime oracle row of Table V (paper connection)\nnn = np.arange(401, 501)\npr = qmnt.first_primes(6)\nassert [int(p) for p in pr] == [2, 3, 5, 7, 11, 13]\ntp = qmnt.oracle_zeros(nn, pr)\nrr, cc = qmnt.score(tp, nn)\nassert abs(rr-0.074) < 0.002 and abs(cc-0.96) < 0.01\n# Problems\nassert abs(2*np.pi/l3-5.719) < 1e-3                                   # P1\nassert abs(np.arctan(12/5)-1.176) < 1e-3                              # P2\nassert abs(2*np.pi/np.log(1.4)-18.674) < 1e-3                         # P3\nassert abs(np.pi**4/96-1.01468) < 1e-5                                # P9\nassert abs(0.5/0.576389-0.8675) < 1e-4                                # P11\nassert abs(2*59.957/899-0.1334) < 1e-4                                # P14\nassert abs(2*np.sqrt(1419.42)*59.957/np.pi-1438.1) < 0.2               # P16\nassert abs(2*np.pi/l3/gp(s400)-4.264) < 1e-3                          # P18\ntot = sum(1/(mm**2*p**mm) for p in (2, 3, 5, 7, 11, 13) for mm in (1, 2, 3))\nassert abs(tot-1.472299) < 1e-6 and abs(tot/(2*np.pi**2)-0.074588) < 1e-6 and abs(np.sqrt(tot/(2*np.pi**2))-0.2731) < 1e-4  # P19\nassert abs(1-8/np.pi**2-0.1894) < 1e-4                                # P21\nassert abs(3*np.log(13)-7.695) < 1e-3 and 13**3 == 2197               # P26\nassert abs(6/(2*L/399)-26.7) < 0.05                                   # P27\nassert abs(2/np.pi-0.6366) < 1e-4 and abs(1-8/np.pi**2-0.189) < 1e-3  # P29\n# P17: numerical complex coefficients of RE2 over one period\nTp = 2*np.pi/l2; tt = np.linspace(0, Tp, 20001)\nf = -sum(np.sin(mm*tt*l2)/(mm*2**(mm/2)) for mm in (1, 2, 3))/np.pi\nfor k, c in [(1, 0.1125), (2, 0.0398), (3, 0.0188)]:\n    fk = np.trapezoid(f*np.exp(-1j*k*l2*tt), tt)/Tp\n    assert abs(fk.real) < 1e-6 and abs(fk.imag - c) < 1e-4\nprint('all checks passed')\n",
  "new_figures": {},
- "notes": "Skipped two issues. (1) Problem ordering: the bible requires problems to be graded, meaning each is labelled with a difficulty, not sorted by difficulty. Reordering would renumber problems that the text cites (Problems 14, 15, 25, 26, 27), so the order is kept. (2) Missing answers: the issue is invalid. The list has 32 problems, and answers are present for every \\prob{1} (problems 1-5, 26, 27) and for every odd-numbered problem (1-31); there are no problems 33 or 35. Partly addressed: the theorem was moved out of the sample environment into a 'Theorem (proved)' paragraph with a Proof, as the reviewer's fix requested; the remark in that issue that 'Step 5 is correct only up to sign' is mistaken, because the expression is exact. All other issues were fixed: the Gibbs text now speaks of the first peak and says explicitly that we do not prove it is the tallest; the D(tau) supremum now has its derivation step; the 'divides' wording and the Unicode pi are corrected; the equal-amplitude condition for silences is added; the six-prime set P is defined; the scan that finds j=10 is explained and checked; and the 6-7 levels wording is softened. The new numbers (0.0447, 0.62, 0.45) are asserted in the new CHECKS."
+ "notes": "All issues judged valid and addressed. The three didyouknow boxes were removed rather than folded in, because their content (440/442 Hz beats, Fourier 1807, the 9% Gibbs overshoot) duplicates the running text. Their unique historical details (Wilbraham 1848, Gibbs 1899) were dropped to avoid unchecked dates. The mean-square error is renamed to \\mathcal{E} throughout the best-approximation section, the |x| sample and answer 21. The feature-width rule is now derived from an elementary top-hat example (new eq. eq:fourier-series-tophat) and stated as a heuristic. A many-frequency periodicity theorem was added and is referenced in the Paper connection. CHECKS now tightens the 1.9155e-4 assertion and adds checks for 2L=89.766, the K=1 Gibbs overshoot (1.273, 13.7%), the top-hat numbers, 6.43 levels per period at n=300, and the six-prime oracle row (0.074/+0.96 on 401-500) via qmnt."
 }

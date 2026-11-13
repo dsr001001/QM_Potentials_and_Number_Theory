@@ -22,6 +22,7 @@ L = 44.883
 I = lambda g: quad(g, -L, L, limit=200)[0]
 assert abs(I(lambda x: np.cos(2*np.pi*x/L)*np.cos(3*np.pi*x/L))) < 1e-8
 assert abs(I(lambda x: np.cos(2*np.pi*x/L)**2) - L) < 1e-8
+assert abs(2*L - 89.766) < 1e-3 and abs(I(lambda x: 1.0 + 0*x) - 89.766) < 1e-3
 # Square wave
 assert abs(4/np.pi - 1.2732) < 1e-4 and abs(np.pi**2/8 - 1.2337) < 1e-4
 # Gibbs
@@ -29,6 +30,7 @@ Si = sici(np.pi)[0]; assert abs(Si-1.851937) < 1e-6 and abs(2/np.pi*Si-1.17898) 
 K = 50; x = np.pi/(2*K)
 S50 = 4/np.pi*sum(np.sin((2*j-1)*x)/(2*j-1) for j in range(1, K+1)); assert abs(S50-1.1790) < 2e-4
 assert abs((2/np.pi*Si-1)/2 - 0.0895) < 1e-3
+assert abs(4/np.pi - 1.273) < 1e-3 and abs((4/np.pi-1)/2 - 0.137) < 1e-3   # Gibbs K=1
 # Complex RE2 and Parseval
 for a, c in zip(A, [0.1125, 0.0398, 0.0188]): assert abs(a/2 - c) < 1e-4
 ms = sum(a**2 for a in A)/2
@@ -38,10 +40,18 @@ assert abs(ms-0.029200) < 1e-6 and abs(np.sqrt(ms)-0.1709) < 1e-4 and abs(A[0]/n
 c0, c1, c3 = L/2, -4*L/np.pi**2, -4*L/(9*np.pi**2)
 assert abs(c0-22.4415) < 1e-4 and abs(c1+18.190) < 1e-3 and abs(c3+2.0212) < 1e-4
 E = L**2/3 - c0**2 - 0.5*(c1**2+c3**2)
-assert abs(E/L**2 - 1.9165e-4) < 1e-7 and abs(np.sqrt(E)-0.621) < 1e-3
+assert abs(E/L**2 - 1.9155e-4) < 5e-9 and abs(np.sqrt(E)-0.621) < 1e-3
 assert abs(1-E/(L**2/3) - 0.9994) < 1e-4 and abs(L/np.sqrt(3)-25.91) < 0.01 and abs(np.sqrt(E)/(L/np.sqrt(3))-0.024) < 1e-3
 # Basel
 assert abs(np.pi**2/6-1.6449) < 1e-4 and abs(np.pi**2/12-0.8225) < 1e-4
+# Top-hat bump paragraph
+w = 6.0
+z = lambda k: k*np.pi*w/(2*L)
+assert abs(z(1)-0.2100) < 1e-4 and abs(np.sin(z(5))/z(5)-0.826) < 1e-3 and abs(np.sin(z(10))/z(10)-0.411) < 1e-3
+assert abs(2*L/w-14.96) < 0.01
+x0 = 25.5; kk = 7; q = kk*np.pi/L
+ck = 2/L*quad(lambda xx: np.cos(q*xx), x0-w/2, x0+w/2)[0]
+assert abs(ck - 2*w/L*np.cos(q*x0)*np.sin(z(kk))/z(kk)) < 1e-10
 # Quasi-periodic
 assert abs(l3/l2 - 1.5849625) < 1e-7
 t0 = 20.5*np.pi/l2; assert abs(t0-92.913) < 1e-3
@@ -73,15 +83,23 @@ gp = lambda s: 2*np.pi/np.log(s/(2*np.pi))
 s400, s500 = sz(400), sz(500)
 assert abs(s400-679.9) < 0.1 and abs(gp(s400)-1.341) < 1e-3 and abs(2*np.pi/l2/gp(s400)-6.76) < 0.01
 assert abs(gp(s500)-1.293) < 1e-3 and abs(2*np.pi/l2/gp(s500)-7.01) < 0.01
+assert abs(2*np.pi/l2/gp(sz(300)) - 6.43) < 0.01   # figure caption: about 6.4 levels at n=300
 assert abs(np.asarray(qmnt.smooth_zeros(np.array([400])))[0]-s400) < 1e-6
 sn = np.array([sz(n) for n in range(401, 501)])
 m = np.arange(1, 4)
 re2 = -np.sum(np.sin(np.outer(sn, m*l2))/(m*2**(m/2)), axis=1)/np.pi
 r = np.sqrt(np.mean(re2**2)); assert abs(r-0.1709) < 0.003 and abs(r-0.1708) < 0.003
 assert abs((sn[-1]-sn[0])/(2*np.pi/l2) - 14.3) < 0.2
-z = qmnt.zeros(1000)
+z0 = qmnt.zeros(1000)
 assert abs(2*np.pi*450/8-353.43) < 0.01
-assert 326 < z[400]-353.43 < 330 and abs(z[499]-353.43-457.8) < 0.1 and abs(z[399]-680) < 2
+assert 326 < z0[400]-353.43 < 330 and abs(z0[499]-353.43-457.8) < 0.1 and abs(z0[399]-680) < 2
+# Six-prime oracle row of Table V (paper connection)
+nn = np.arange(401, 501)
+pr = qmnt.first_primes(6)
+assert [int(p) for p in pr] == [2, 3, 5, 7, 11, 13]
+tp = qmnt.oracle_zeros(nn, pr)
+rr, cc = qmnt.score(tp, nn)
+assert abs(rr-0.074) < 0.002 and abs(cc-0.96) < 0.01
 # Problems
 assert abs(2*np.pi/l3-5.719) < 1e-3                                   # P1
 assert abs(np.arctan(12/5)-1.176) < 1e-3                              # P2
@@ -103,4 +121,4 @@ f = -sum(np.sin(mm*tt*l2)/(mm*2**(mm/2)) for mm in (1, 2, 3))/np.pi
 for k, c in [(1, 0.1125), (2, 0.0398), (3, 0.0188)]:
     fk = np.trapezoid(f*np.exp(-1j*k*l2*tt), tt)/Tp
     assert abs(fk.real) < 1e-6 and abs(fk.imag - c) < 1e-4
-print("all checks passed")
+print('all checks passed')

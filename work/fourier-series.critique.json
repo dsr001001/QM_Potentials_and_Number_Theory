@@ -1,79 +1,205 @@
 [
  {
   "category": "ERROR",
-  "severity": "high",
-  "quote": "which requires $\\omega_1\\tau=2\\pi j$ for a positive integer $j$ (positive because $\\tau>0$).",
-  "problem": "Step 4 only shows sin(pi/2+omega1 tau)=1 at one t, which gives omega1 tau = 2 pi j. That is fine, but the rational direction needs omega1^2 f + f'' to isolate omega2: Step 5 expression is correct only up to sign. The real gap: g(t) for omega1 requires periodicity of g, shown; OK. However 'Step 2' differentiation of a periodic identity is fine. Minor: the theorem is placed in a Sample environment, which is for worked problems.",
-  "fix": "Present the theorem and proof in running text (or a labelled theorem block), not a \\begin{sample}."
+  "severity": "medium",
+  "quote": "The same argument works for any two different prime powers",
+  "problem": "False as stated. Powers of the same prime are commensurate: log 4/log 2 = 2, and the chapter's own checkpoint uses log 4 and log 8 with ratio 3/2. The argument p^{mb}=q^{m'a} only gives a contradiction when p and q are different primes.",
+  "fix": "Replace with: \"The same argument works for powers of two different primes $p\\neq q$: ... Powers of the same prime, such as $\\log 4=2\\log2$, are commensurate (they are harmonics of $\\log p$).\""
  },
  {
   "category": "ERROR",
   "severity": "medium",
-  "quote": "which is $8.95\\%$ of the total jump $2$, about $9\\%$",
-  "problem": "0.17898/2 = 8.95%, fine, but the peak formula S_K(x*) = (2/pi) sum sin(u_j)/u_j * Delta u is stated with the sum identity; the claim that the Gibbs maximum is the first peak is not shown (sign change of S_K' only shows a local maximum, not that it is the extreme overshoot limit).",
-  "fix": "State that x* is the first local maximum and that later local maxima are smaller, or call it 'the first peak' consistently."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "and the largest mismatch for a general shift is $D(\\tau)=2|\\sin(\\tau\\log2/2)|+2|\\sin(\\tau\\log3/2)|$",
-  "problem": "Stated inside a beyond box as a consequence of Kronecker; correct only as a supremum, and it contradicts the tabulated near-period formula only when tau is a multiple of the log2 period; fine, but 'consequently sup f = 2' is claimed as following from Kronecker without the step.",
-  "fix": "Add one line: sup of |sin(a)-sin(b)| over independent phases gives the sum of the two terms; or mark the formula as a supremum."
- },
- {
-  "category": "ERROR",
-  "severity": "medium",
-  "quote": "Each term has period $2L/k$, which divides $2L$, so the whole right-hand side has period $2L$",
-  "problem": "2L/k does not 'divide' 2L as a number in the integer sense; the correct statement is that 2L is an integer multiple of 2L/k.",
-  "fix": "Write 'whose period 2L/k fits k times into 2L, so each term repeats after 2L'."
- },
- {
-  "category": "ERROR",
-  "severity": "low",
-  "quote": "\\quad\\text{($\\sin kπ=\\sin0=0$)}",
-  "problem": "Unicode pi inside math in LaTeX source; will fail to compile under pdflatex.",
-  "fix": "Replace with \\sin k\\pi."
- },
- {
-  "category": "LATEX",
-  "severity": "medium",
-  "quote": "\\prob{2}{Find the mean-square error of approximating the square wave by its first term $(4/\\pi)\\sin x$.}",
-  "problem": "Problems 21-31 are appended out of difficulty order and numbering; problem 20 and several later items are mis-graded (e.g. 19 is difficulty 3 and 28 is difficulty 1 'compute' with qmnt) and graded ordering claimed is not respected.",
-  "fix": "Reorder or regrade problems so difficulty is increasing, and check cross-references (Problem~25, 26, 27, 14, 15) still match."
+  "quote": "logarithms of different prime powers are incommensurate (unique factorization",
+  "problem": "The Key Idea repeats the false statement. Different powers of the same prime have rational log ratios, which is exactly why a one-prime oracle is periodic.",
+  "fix": "Write \"logarithms of powers of \\emph{different primes} are incommensurate; powers of the same prime are harmonics of $\\log p$\"."
  },
  {
   "category": "RULE",
   "severity": "medium",
-  "quote": "\\prob{1}{Find the angular frequency and the period of $\\sin(t\\log3)$, the $p=3$, $m=1$ term of paper Eq.~(4).}",
-  "problem": "Answers section omits answers to several odd-numbered problems (e.g. 29 present, but 33, 35, 37? and 19-25 odd ones like 33 missing); bible requires all prob 1 and every odd problem.",
-  "fix": "Add answers for all odd-numbered problems, including 33 and 35, and the ones numbered beyond 31."
+  "quote": "\\begin{didyouknow}{Tuning by Ear}",
+  "problem": "The environment `didyouknow` is not among the environments the bible says the preamble defines. It is used three times, so it may not compile. The boxes also repeat material already in the text (440/442 Hz beats, Fourier 1807, the 9% Gibbs overshoot), against the no-repetition rule.",
+  "fix": "Remove the three didyouknow boxes, or fold any non-duplicated history into the running text."
  },
  {
   "category": "RULE",
-  "severity": "low",
-  "quote": "Paper Eq.~(4) contains the terms $\\sin(t\\log 11)$ and $\\sin(t\\log 13)$",
-  "problem": "The paper's Fig. 1 oracle uses six primes up to 13 (stated in the text as p<=13), fine; but the chapter never defines the paper's 'six-prime' set before use in Problem 19/26.",
-  "fix": "State P={2,3,5,7,11,13} where first introduced."
- },
- {
-  "category": "CLARITY",
-  "severity": "low",
-  "quote": "The loudness envelope $|\\cos(\\Delta\\omega\\, t/2)|$ vanishes when",
-  "problem": "Beat 'silences' only occur for equal amplitudes; and 'beat frequency' of ear is stated without noting that carrier at sin(bar omega t) also changes sign each half-cycle of the envelope.",
-  "fix": "Add a sentence noting equal amplitudes are required for complete silence."
- },
- {
-  "category": "JUMP",
   "severity": "medium",
-  "quote": "Kronecker's theorem: if $\\omega_1/\\omega_2$ is irrational, the pair of phases",
-  "problem": "Reader has not seen 'modulo 2π' density arguments; also Problem 4.2 claims 'Sample Problem Getting close' with no systematic method for scanning j.",
-  "fix": "Explain how j=10 was found (e.g. list fractional parts of j-dependent phase) or mention it was found by scanning in CHECKS."
+  "quote": "\\begin{didyouknow}{The Overshoot That Won't Quit}",
+  "problem": "The Summary section must be a bullet list of results with equation references. A sidebar inside it breaks the mandated anatomy, and the environment is not in the bible.",
+  "fix": "Delete this box from the Summary section."
+ },
+ {
+  "category": "ERROR",
+  "severity": "medium",
+  "quote": "Proofs are in Riley, Hobson and Bence~\\cite{rhb} (chapter on Fourier series) and the references there.",
+  "problem": "Riley, Hobson and Bence state the Dirichlet conditions but do not prove the convergence theorem. A beyond box must say where the proof actually is.",
+  "fix": "Say that RHB states the theorem without proof and that a proof is found in a text on Fourier analysis, described in words since no allowed citation key covers one."
  },
  {
   "category": "OVERCLAIM",
   "severity": "low",
-  "quote": "This is the paper's remark in Sec.~V that the $p=2$ oscillation ``is only $\\sim$6--7 \\emph{levels} at these heights''.",
-  "problem": "Chapter computes 6.76 and 7.01 levels; paper says 6--7; slight mismatch at n=500 (7.01) is presented as consistent without comment.",
-  "fix": "Say 'about 7' and note the paper's approximate range."
+  "quote": "the proof uses mean-square convergence of Fourier series and is given in Riley, Hobson and Bence~\\cite{rhb}",
+  "problem": "RHB gives only the formal term-by-term derivation of Parseval, not a rigorous proof via mean-square convergence (completeness).",
+  "fix": "Say RHB gives the formal derivation, and that the rigorous proof (completeness of the trigonometric system) is in texts on Fourier analysis."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "In other words, the target is RE2 sampled at the smooth zeros",
+  "problem": "Sign error. By App. A step 15 the target fluctuation in mean spacings is $-N^{p=2}_{\\rm fl}(s_n)$, and the chapter defines RE2 as $f_2=N^{p=2}_{\\rm fl}$. The target is therefore minus RE2. The caption of the RE2-levels figure (\"whose target is this sequence\") has the same slip.",
+  "fix": "Write \"the target is $-$RE2 sampled at the smooth zeros (a level moves down when the count fluctuation is positive); the sign does not affect rms or period\". Adjust the figure caption to match."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "One period ($9.065$ in $t$) spans about 6.8--7.0 levels here.",
+  "problem": "The figure covers n=300–500. At n=300 (s about 541) the gap is about 1.41, so one period spans about 6.4 levels. The range 6.8–7.0 holds only for n=400–500.",
+  "fix": "Change to \"about 6.4--7.0 levels here\", or restrict the statement to n=400–500, and add a check for n=300."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "Near a jump, partial sums overshoot by about $9\\%$ of the jump for every truncation",
+  "problem": "The 9% figure is the limit as K grows. For K=1 the peak is 4/π=1.273, a 13.7% overshoot of the jump. The body text (\"the overshoot does not shrink as $K$ grows\", \"no matter how many terms you keep\") has the same imprecision.",
+  "fix": "Say \"the overshoot tends to about 9% of the jump as $K\\to\\infty$ and does not decay to zero\". Fix the matching sentences in the Gibbs subsection and the Summary."
+ },
+ {
+  "category": "JUMP",
+  "severity": "medium",
+  "quote": "so with two or more primes $\\Nfl$ is quasi-periodic: it never repeats",
+  "problem": "The theorem was proved only for a sum of two sinusoids. A two-prime oracle already has six frequencies with different amplitudes, and the six-prime oracle has 18. The extension to many frequencies is used without proof.",
+  "fix": "Add a short generalization: applying $\\prod_{j\\ne i}(\\omega_j^2+\\mathrm{d}^2/\\mathrm{d}t^2)$ to a periodic finite sum isolates the term $\\omega_i$, so every $\\omega_i\\tau$ is a multiple of $2\\pi$ and all frequency ratios are rational. Alternatively set it as a guided problem and reference it here."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "The same steps work with arbitrary nonzero amplitudes and arbitrary phase constants.",
+  "problem": "Asserted, not shown. With phase constants Step 4 must choose $t$ so that $\\omega_1t+\\varphi_1=\\pi/2$, and the isolating combination picks up the amplitude.",
+  "fix": "Add two lines showing the modified Steps 3–4 for $A_1\\sin(\\omega_1t+\\varphi_1)+A_2\\sin(\\omega_2t+\\varphi_2)$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "for complex functions the ``dot product'' conjugates the second factor",
+  "problem": "The integral that follows uses the antiderivative $e^{i\\alpha x}/(i\\alpha)$ of a complex exponential. Integrating complex-valued functions of a real variable is not in the assumed Chapter 2 content and is not justified here. The reason for conjugating is also not given.",
+  "fix": "Add: \"the integral of a complex function is the integral of its real part plus $i$ times that of its imaginary part; hence $\\int e^{i\\alpha x}\\dd x=\\int\\cos\\alpha x\\,\\dd x+i\\int\\sin\\alpha x\\,\\dd x=e^{i\\alpha x}/(i\\alpha)$\". Add one sentence that conjugation makes $\\int f\\bar f=\\int|f|^2\\ge0$."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "So for any finite sum $F(t)=\\sum_jA_j\\sin(\\omega_jt+\\varphi_j)$ with \\emph{distinct} frequencies,",
+  "problem": "The cross-term and square averages were computed only for sines without phase constants. The result is then stated for arbitrary phases $\\varphi_j$ with no extra step.",
+  "fix": "Either redo the average with phases (the product-to-sum identity gives $\\cos((\\omega_1-\\omega_2)t+\\varphi_1-\\varphi_2)$ and so on, with the same $1/T$ bound), or expand each term into $a\\cos+b\\sin$ and note that the sin–cos and cos–cos averages vanish in the same way."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "the largest mismatch $D(\\tau)=\\sup_t|f(t+\\tau)-f(t)|$ as a function of the shift",
+  "problem": "The symbol sup (supremum) is never defined for a first-year reader. The same goes for $\\mathbb{Q}$ in the boxed theorem and for \"modulo $2\\pi$\".",
+  "fix": "Define on first use: \"sup, the least upper bound: the smallest number that the quantity never exceeds (it need not be attained)\"; \"$\\mathbb{Q}$, the set of rational numbers\"; \"modulo $2\\pi$: after discarding whole turns\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "So the sum is the midpoint-rule approximation to an integral (Chapter~\\ref{ch:asymptotics})",
+  "problem": "Chapter 4's contract covers comparing sums to integrals, not the midpoint rule or its convergence for a continuous integrand. The limit is taken without saying why the Riemann sum converges, or noting that $\\sin u/u$ is continuous at $u=0$.",
+  "fix": "Add: \"$\\sin u/u$ is continuous on $[0,\\pi]$ (value 1 at $u=0$), and for a continuous function the sum of (value at any point of each subinterval) $\\times$ (subinterval width) tends to the integral as the width tends to zero; that is the definition of the integral.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "A feature of width $w$ needs cosines of wavelength about $w$ or shorter",
+  "problem": "This Key Idea is not derived or even stated in the section body. It appears only in a figure caption. The Paper connection relies on it.",
+  "fix": "Add a short paragraph before the figure with a worked case (for example the coefficients of a narrow even bump, which stay comparable in size until $k\\sim 2L/w$), then state the rule as a heuristic."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "A bump confined to a band of width 6 is a superposition of many cosines",
+  "problem": "The paper does not say the correction is confined to the band. It says $\\delta V$ is largest there (rms 40) against rms 15 and 13 elsewhere. The chapter also does not say that the band is the turning-point band of held-out levels 201–300.",
+  "fix": "Write \"A correction that is largest in a band of width 6 (the classical turning points of the held-out levels 201--300, Chapter~\\ref{ch:wkb}) while remaining nonzero elsewhere (rms 15 and 13) is a superposition of many cosines\"."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "That is the property the fitted potentials lack.",
+  "problem": "Stronger than the paper. Sec. VI says the evidence concerns \"the tested parametrizations and optimizer together, not a statement about what a potential can represent\".",
+  "fix": "Write \"That is the property the fitted potentials, as parametrized and optimized in the paper, did not show.\""
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "uses the six smallest primes, $P=\\{2,3,5,7,11,13\\}$",
+  "problem": "The paper says only \"six-prime explicit formula\". It never lists the prime set, so this is stated as a paper fact without support.",
+  "fix": "Add \"(the natural reading of the paper's 'six primes'; it is what \\texttt{qmnt.first\\_primes(6)} gives and it reproduces the Table V row)\"."
+ },
+ {
+  "category": "ERROR",
+  "severity": "low",
+  "quote": "stays within 0.005 of the null ($0.258$, correlation $+0.28$)",
+  "problem": "Presented as a verbatim quote, but the paper's parenthesis continues \"with interval $[+0.08, +0.46]$\". The quotation is silently truncated and closed.",
+  "fix": "Either quote in full, or end the quote after \"null\" and paraphrase the numbers outside the quotation marks."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "Four cosines (two nonzero beyond the constant) capture $99.94\\%$ of the mean square of $|x|$",
+  "problem": "The CHECKS script asserts $E/L^2$ against 1.9165e-4 with tolerance 1e-7, while the chapter states 1.9155e-4. The check passes only because the tolerance is loose, so the stated number is not really verified.",
+  "fix": "In CHECKS use `assert abs(E/L**2 - 1.9155e-4) < 5e-9`. Also add a check for 2L=89.766."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "In the same way \\cref{eq:fourier-series-ps,eq:fourier-series-psc} give the sine--sine and sine--cosine integrals",
+  "problem": "The bible allows en dashes only for numeric ranges and paired names. \"sine--sine\" and \"sine--cosine\" (used several times) are neither.",
+  "fix": "Use hyphens, \"sine-sine\" and \"sine-cosine\", throughout the chapter, including the table discussion and the checkpoint answer."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "the fitted correction to the potential is a cosine series",
+  "problem": "The chapter refers to the paper throughout but never cites it with `\\cite{soniR1}` as the bible prescribes.",
+  "fix": "Add `\\cite{soniR1}` at the first mention of the paper in the chapter intro and in the Paper connection section."
+ },
+ {
+  "category": "RULE",
+  "severity": "low",
+  "quote": "We take both results on trust; we use only the conclusions stated.",
+  "problem": "A beyond box must say where the proof can be found. No source is given for Bohr's theory of almost periodic functions.",
+  "fix": "Add a description in words of where the proof is (for example \"H. Bohr's monograph \\emph{Almost Periodic Functions}\"), since no allowed citation key covers it."
+ },
+ {
+  "category": "OVERCLAIM",
+  "severity": "low",
+  "quote": "Every function used in this book satisfies these conditions.",
+  "problem": "A book-wide claim this chapter cannot guarantee, since other chapters are written independently.",
+  "fix": "Restrict to \"Every function expanded in a Fourier series in this chapter satisfies these conditions.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "from \\cref{eq:fourier-series-sumprod} with $\\sin\\beta$ replaced by a difference",
+  "problem": "The phrase is unclear. The difference identity $\\sin\\alpha-\\sin\\beta=2\\cos\\frac{\\alpha+\\beta}2\\sin\\frac{\\alpha-\\beta}2$ is never written out.",
+  "fix": "State: \"replace $\\beta$ by $-\\beta$ in \\cref{eq:fourier-series-sumprod} and use $\\sin(-\\beta)=-\\sin\\beta$, $\\cos$ even: $\\sin\\alpha-\\sin\\beta=2\\cos\\frac{\\alpha+\\beta}{2}\\sin\\frac{\\alpha-\\beta}{2}$; now set $\\alpha=\\beta+\\delta$.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "the best-fitting single sine is \\emph{taller} than the square wave",
+  "problem": "\"Best-fitting\" relies on the best-approximation result, which is proved only two sections later.",
+  "fix": "Add \"(best in the mean-square sense, as shown in \\cref{sec:fourier-series-parseval})\"."
+ },
+ {
+  "category": "JUMP",
+  "severity": "low",
+  "quote": "but every function splits uniquely into an even and an odd part",
+  "problem": "Existence is shown but uniqueness is asserted without argument.",
+  "fix": "Add: \"Uniqueness: if $f=g_{\\rm e}+g_{\\rm o}$, then $f(x)+f(-x)=2g_{\\rm e}(x)$ and $f(x)-f(-x)=2g_{\\rm o}(x)$, so $g_{\\rm e}=f_{\\rm e}$ and $g_{\\rm o}=f_{\\rm o}$.\""
+ },
+ {
+  "category": "CLARITY",
+  "severity": "low",
+  "quote": "measure the error by $E=\\frac1{2L}\\int_{-L}^{L}(f-g)^2\\dd x$",
+  "problem": "$E$ is the book-wide symbol for energy, and is used that way in this chapter's Paper connection ($2\\sqrt E$). The mean-square notation is also inconsistent: $\\langle f^2\\rangle$ is defined with $|f|^2$.",
+  "fix": "Rename the mean-square error (for example $\\mathcal{E}_M$ or $\\epsilon^2$) and write $\\langle|f|^2\\rangle$ consistently."
  }
 ]
