@@ -135,6 +135,11 @@ You add $2$~m to every measured position in \cref{tab:least-squares-cart} (you m
 
 %======================================================================
 \section{Linear least squares in general}\label{sec:least-squares-general}
+% DYK-BEGIN
+\begin{didyouknow}{Finding a Lost Planet}
+On 1 January 1801 Giuseppe Piazzi discovered Ceres. He tracked it for only about six weeks before it was lost in the Sun's glare. The 24-year-old Carl Friedrich Gauss used those few observations to predict where it would reappear, and astronomers found it close to his prediction around New Year 1802. Adrien-Marie Legendre was the first to publish least squares, in 1805.
+\end{didyouknow}
+% DYK-END
 
 \paragraph{Linear models.} The straight line is the simplest case of a \emph{linear model}
 \begin{equation}
@@ -474,6 +479,11 @@ A model has $M=5$ coefficients and you have $m=3$ data points. At most how many 
 
 %======================================================================
 \section{Condition number and noise amplification}\label{sec:least-squares-cond}
+% DYK-BEGIN
+\begin{didyouknow}{Turing Named the Problem}
+Alan Turing introduced the term \emph{condition number} in a 1948 paper on rounding errors in matrix computations. It measures how much a matrix can amplify small errors in the data. A famous troublemaker is the Hilbert matrix, with entries $1/(i+j-1)$. The $10\times10$ version has a condition number around $10^{13}$, so solving with it can wipe out most of a computer's digits.
+\end{didyouknow}
+% DYK-END
 
 \paragraph{Gains are bounded by the singular values.} For any coefficient vector $c$ with SVD coordinates $\xi = V^\top c$, \cref{eq:least-squares-action} and the orthonormality of the $u_j$ give $\norm{Ac}^2 = \sum_{j\le\varrho}\sigma_j^2\xi_j^2$. Replacing every $\sigma_j$ by the largest one can only increase the sum, so $\norm{Ac}^2\le\sigma_1^2\sum_j\xi_j^2 = \sigma_1^2\norm{c}^2$:
 \begin{equation}
@@ -829,6 +839,11 @@ A friend fits 50 data points with a 60-coefficient model and reports ``zero resi
 
 %======================================================================
 \section{Paper connection}\label{sec:least-squares-paper}
+% DYK-BEGIN
+\begin{didyouknow}{Taming Ill-Posed Problems}
+Andrey Tikhonov studied unstable inverse problems from the 1940s, and in 1963 he proposed adding a penalty term to stabilize them, now called Tikhonov regularization. Statisticians Arthur Hoerl and Robert Kennard independently popularized the same idea in 1970 as ridge regression. Both trade a little bias for a large reduction in noise amplification, the trade you will meet when fitting potentials to spectra.
+\end{didyouknow}
+% DYK-END
 
 This section reads the least-squares content of the paper \cite{soniR1} line by line. Quantities such as energy levels $E_n$ and wavefunctions $\psi_n$ are explained in Part~II (Chapters~\ref{ch:schrodinger} and~\ref{ch:perturbation}) and in Chapter~\ref{ch:finite-differences}; here we need only that they are numbers and vectors computed from a matrix.
 

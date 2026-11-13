@@ -18,8 +18,8 @@ Directed by Dharmaj Soni. Chapters are drafted by Claude Opus 5.5 and reviewed b
 
 - Every number in a worked example or answer is recomputed by `tex/checks/<chapter>.py` (6,909 assertions; all pass).
 - `qmnt` reproduces the paper's anchors: the oracle rows of Table V (0.198/+0.66 for one prime, 0.043/+0.99 for 25 primes on zeros 401–500), the nulls 0.2631 and 0.2438, the box half-widths 44.883 and 59.957, and the principal operator fit (cosine, M = 400, fit 1–400: in-sample 0.1370, held-out 0.3682, corr −0.0708 against the paper's 0.1370 / 0.3685 / −0.0709).
-- Review: every chapter was critiqued by Claude Sonnet 5.5 and revised by Claude Opus 5.5 (465 patches); 16 chapters (the introduction, WKB, zeta, counting zeros, explicit formula, perturbation theory, non-Hermitian, Hilbert–Pólya, Wu–Sprung, fitting, generalization and all of Part VI) received a second review by Claude Fable 5.2 and a second revision (811 patches). Issue lists and revision notes are in `work/`.
-- API cost of the whole build: $70.72 (`ledger/costs.csv`).
+- Review: every chapter was critiqued by Claude Sonnet 5.5 and revised by Claude Opus 5.5 (465 patches); 20 chapters received a second review by Claude Fable 5.2 and a second revision; the per-chapter record is in [`REVIEW_LOG.md`](REVIEW_LOG.md). Issue lists and revision notes are in `work/`.
+- API cost of the whole build: $78.54 (`ledger/costs.csv`).
 
 ## Layout
 
