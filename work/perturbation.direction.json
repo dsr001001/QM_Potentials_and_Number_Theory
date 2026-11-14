@@ -1,0 +1,9 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "likely",
+  "quote": "If the series converges, the error of stopping after second order is dominated by the third-order term, which contains three factors of the perturbation and so scales as $c^3$, while the second-order term scales as $c^2$.",
+  "problem": "Problem 13 is about the paper's Sec. V comparison of real level shifts of H+iA with the second-order formula. For W=iA with A real and real unperturbed states, the k-th order energy correction is i^k times a real number. The third-order term, sum W_nm W_mk W_kn/(..)(..) - W_nn sum W_nm W_mn/(..)^2, is i^3 times a real number, so it is purely imaginary and adds nothing to the real shift. The chapter's own paper-connection section uses the same reasoning at first order ('iA_nn, purely imaginary'). The leading neglected real term is therefore fourth order, proportional to c^4. The answer's later statements that the neglected term shrinks by 1/64 and that the relative error is proportional to c are wrong for this case: they should be 1/256 and c^2. The qualitative conclusion (smaller amplitude makes the formula more accurate) is unaffected.",
+  "fix": "If the series converges, the error in the real shift after second order is dominated by the fourth-order term: for H+iA with real A the third-order term is i^3 times a real number, purely imaginary. It scales as c^4 against c^2 for the second-order term, so the relative error is roughly c^2. Reducing every coefficient by a factor 4 multiplies the second-order shift by 1/16 and the leading neglected real term by 1/256, so the neglected part shrinks sixteen times faster than the part kept."
+ }
+]

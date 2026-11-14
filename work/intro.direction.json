@@ -1,0 +1,16 @@
+[
+ {
+  "class": "PAPER",
+  "confidence": "likely",
+  "quote": "A generic 900-coefficient sum of sinusoids also fails to beat the null",
+  "problem": "Paper Table IV gives control C1 as 0.258 / +0.28 on zeros 401--500 (null 0.263) and 0.267 / +0.22 on 801--1000 (null 0.274). Both rms values are slightly below the null, and the correlation interval [+0.08, +0.46] excludes zero. The paper's wording is \"stays within 0.005 of the null\" and \"gains almost nothing over the null\", not that it fails to beat it. By the chapter's own criterion (rms below null and positive correlation), C1 marginally beats the null.",
+  "fix": "A generic 900-coefficient sum of sinusoids also stays near the null (0.258 against 0.263, a gain of almost nothing)"
+ },
+ {
+  "class": "PAPER",
+  "confidence": "likely",
+  "quote": "The paper uses $M$ between 200 and 900, fitted to a few hundred zeros.",
+  "problem": "Paper Table III (within-height splits) includes fits with M = 100 (rows \"1, 100 odd\" and \"1, 100 even\"), and the text of Sec. III discusses them (\"with fewer coefficients than levels (M = 100)\"). The range 200--900 applies only to the twelve configurations of Table I. Fits also use up to 800 training zeros at scale 2.",
+  "fix": "The paper uses $M$ between 100 and 900 (200 to 900 in its main table), fitted to between 200 and 800 zeros."
+ }
+]

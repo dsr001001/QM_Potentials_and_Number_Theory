@@ -1,0 +1,9 @@
+[
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "The best linear use of negatively correlated neighbors is to predict the \\emph{opposite} of their average, shrunk toward zero.",
+  "problem": "Stated as general, but the kriging prediction is 2w times the neighbor average with 2w = 2ρ1/(1+ρ2), and |2w| is not always below 1. Counterexample: ρ1 = -0.6, ρ2 = 0 is a valid correlation structure (the 3x3 determinant is 1 - 2ρ1² = 0.28 > 0, and it lies inside the range |ρ1| ≤ 1/√2 plotted in the chapter's own kriging figure). It gives 2w = -1.2, so the best predictor is the opposite of the average amplified, not shrunk. A second case: ρ1 = -0.2, ρ2 = -0.9 (determinant 0.038 > 0) gives w = -2, so the Key Ideas wording \"a negative, shrunken multiple of the neighbor sum\" also fails. The statement is true for the chapter's example (ρ1 = -0.3, ρ2 = -0.1, 2w = -0.667) and for the zeros' regime.",
+  "fix": "The best linear use of negatively correlated neighbors is to predict a negative multiple, 2ρ1/(1+ρ2), of their average; for weak correlations such as the zeros' (ρ1 ≈ -0.3, small ρ2) this is the opposite of the average, shrunk toward zero. Adjust the Key Ideas bullet to match (\"a negative multiple of the neighbor sum, shrunken when |ρ1| < 1+ρ2\")."
+ }
+]

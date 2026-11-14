@@ -1,0 +1,9 @@
+[
+ {
+  "class": "PAPER",
+  "confidence": "likely",
+  "quote": "Only the in-sample coverage run on all 500 zeros at scale 1, with $M=900$ above its threshold of about 814, is fully saturated.",
+  "problem": "The paper reports held-out fits that are saturated. In Sec. III and the Table III caption, the odd/even splits have 200 training levels at scale 1 (400 at scale 2), and rows with M at or above that number \"are saturated\". The scale-1 M=400 odd and even rows reach in-sample rms below 10^-3, and the scale-2 M=600 rows are saturated too. So the coverage run is not the only saturated fit, and W3's answer to \"how saturated are the held-out fits?\" leaves these rows out. The sentence holds only in the narrower sense of M above the coverage-law threshold, which the wording does not make clear.",
+  "fix": "Among the forward-split fits, only the in-sample coverage run on all 500 zeros at scale 1, with $M=900$ above its threshold of about 814, exceeds the coverage threshold. (The odd/even within-height rows of Table~III with $M$ at or above the number of training levels are saturated in the different sense of having at least as many coefficients as levels, and reach in-sample rms $<10^{-3}$ at scale 1, $M=400$.)"
+ }
+]

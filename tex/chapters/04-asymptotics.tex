@@ -255,7 +255,7 @@ Compute $H_{10}$ exactly, the bounds of \cref{eq:asymptotics-harmonic}, and the 
 
 \textbf{Step 3:} $H_{10}-\log10=2.928968-2.302585=0.626383$, still noticeably above $\gamma=0.577216$.
 
-\textbf{Step 4:} With the correction terms: $2.302585+0.577216+0.05-0.000833=2.928968$, matching $H_{10}$ to all six decimals.
+\textbf{Step 4:} With the correction terms: $2.302585+0.577216+0.05-0.000833=2.928968$ with these rounded terms; carrying more digits, the sum is $2.9289674$, within $10^{-6}$ of $H_{10}=2.9289683$. The difference, $8\times10^{-7}$, is the next term of the expansion, $1/(120n^4)$.
 
 \[
 \boxed{2.397895\le H_{10}=2.928968\le 3.302585}
@@ -866,7 +866,7 @@ Bisection and Brent need a bracket. Getting one is often the hardest part.
 \subsection{How brackets fail}
 
 \begin{itemize}
-\item \textbf{No sign change, but roots.} If $[a,b]$ contains an even number of roots, $f(a)$ and $f(b)$ have the same sign. For example $f(t)=\Nsm(t)-\tfrac12$ is positive at both $t=0.5$ ($f=0.094$) and $t=20$ ($f=0.8775$) although it vanishes twice in between, at $0.756$ and $14.521$. A root of even multiplicity, like $x=0$ for $x^2$, never produces a sign change at all.
+\item \textbf{No sign change, but roots.} If $[a,b]$ contains an even number of roots, at each of which $f$ changes sign, then $f(a)$ and $f(b)$ have the same sign. For example $f(t)=\Nsm(t)-\tfrac12$ is positive at both $t=0.5$ ($f=0.094$) and $t=20$ ($f=0.8775$) although it vanishes twice in between, at $0.756$ and $14.521$. A root of even multiplicity, like $x=0$ for $x^2$, never produces a sign change at all.
 \item \textbf{No sign change, no root.} The obvious case: the root is outside the interval.
 \item \textbf{Sign change without a root.} If $f$ is discontinuous, the intermediate value theorem does not apply. Bisection on $1/x$ over $[-1,2]$ produces midpoints $0.5,-0.25,0.125,\dots$ that converge to $0$, which is a pole, not a root. (On $[-1,1]$ it would fail at once: the first midpoint is exactly $0$, where $1/x$ cannot be evaluated.)
 \item \textbf{Several roots inside.} A bracket with a sign change may contain three (or any odd number of) roots; the method returns one of them, and which one depends on details of the algorithm.

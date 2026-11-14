@@ -1,0 +1,9 @@
+[
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "The rule is true only for nonnegative real numbers.",
+  "problem": "\"Only\" is too strong. With the chapter's own convention (sqrt(-1) = i, so sqrt(-a) = i*sqrt(a) for a > 0), the rule also holds when exactly one of x, y is negative. Counterexample: x = -1, y = 4 gives sqrt(-1)*sqrt(4) = 2i and sqrt((-1)(4)) = sqrt(-4) = 2i, which agree. The rule fails only when both are negative, as in the pitfall's own example.",
+  "fix": "The rule is guaranteed for nonnegative real numbers and fails when both x and y are negative."
+ }
+]

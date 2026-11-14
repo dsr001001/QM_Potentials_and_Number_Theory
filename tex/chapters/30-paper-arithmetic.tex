@@ -288,7 +288,7 @@ holdout & $\{2\}$ & 3 primes & 6 primes & 25 primes \\
 \end{tabular}
 \end{table}
 
-Two honest readings are possible. By correlation, skill is nearly constant: $+0.99$ to $+0.98$ at 25 primes. By the rms ratio, it drifts upward, from $0.16$ to $0.23$ at 25 primes. The paper's caption to Table~V gives the reason for the drift: ``The mild growth at fixed prime budget mirrors the growth of the null and the increasing number of arithmetically relevant primes at height; relative skill is nearly constant.'' Dividing by the null removes the first effect. What remains in Table~\ref{tab:paper-arithmetic-ratio} is the second: at greater heights, a fixed set of primes captures a smaller share of the fluctuation because more primes contribute appreciably. ``Nearly constant'' is the paper's wording, and it is a fair summary of a ratio that changes by a factor of $1.1$ to $1.4$, depending on the prime budget, over a factor of $25$ in zero index (about $15$ in height $t$, from $t_{400}\approx680$ to $t_{10000}\approx9878.7$). \cref{fig:paper-arithmetic-tablev} shows both views.
+Two honest readings are possible. By correlation, skill is nearly constant: $+0.99$ to $+0.98$ at 25 primes. By the rms ratio, it drifts upward, from $0.16$ to $0.23$ at 25 primes. The paper's caption to Table~V gives the reason for the drift: ``The mild growth at fixed prime budget mirrors the growth of the null and the increasing number of arithmetically relevant primes at height; relative skill is nearly constant.'' Dividing by the null removes the first effect. What remains in Table~\ref{tab:paper-arithmetic-ratio} is the second: at greater heights, a fixed set of primes captures a smaller share of the fluctuation because more primes contribute appreciably. ``Nearly constant'' is the paper's wording, and it is a fair summary of a ratio that changes by a factor of $1.1$ to $1.4$, depending on the prime budget, over a factor of $25$ in zero index (about $15$ in height $t$, from $t_{400}\approx680$ to $t_{10000}\approx9877.8$). \cref{fig:paper-arithmetic-tablev} shows both views.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.95\linewidth]{figs/paper-arithmetic_tablev.pdf}
@@ -502,7 +502,7 @@ Why does it degrade? An underdetermined system has infinitely many exact fits (S
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/paper-arithmetic_rootambig.pdf}
-\caption{Synthetic illustration of root ambiguity (not paper data). The level function $G(t)=\Nsm(t)-\Nsm(680)+A\sin(5t)$ is plotted over $680\pm3$ mean spacings for two amplitudes. For $A=0.05$, $|G'-\Nsm'|\le0.25<\Nsm'\approx0.75$ and the root is unique. For $A=0.3$, $A\omega=1.5$ exceeds $\Nsm'$, $G$ is not monotone, and the level equation has several roots in the bracket. A true counting function is a nondecreasing staircase, so several roots signal that $F$ is not behaving like a count.}
+\caption{Synthetic illustration of root ambiguity (not paper data). The level function $G(t)=\Nsm(t)-\Nsm(680)-A\sin\bigl(5(t-680)\bigr)$ is plotted over $680\pm3$ mean spacings for two amplitudes. For $A=0.05$, $|G'-\Nsm'|\le0.25<\Nsm'\approx0.75$ and the root is unique. For $A=0.3$, $A\omega=1.5$ exceeds $\Nsm'$, $G$ is not monotone, and the level equation $G=0$ has three roots near $t=680$, where the level falls inside a decreasing stretch. A true counting function is a nondecreasing staircase, so several roots signal that $F$ is not behaving like a count.}
 \label{fig:paper-arithmetic-rootambig}
 \end{figure}
 

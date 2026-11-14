@@ -1,0 +1,16 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "certain",
+  "quote": "&=\\bigl[f'g\\bigr]_{-L}^{L}-\\int_{-L}^Lf''g\\,\\dd x\\quad\\text{(parts: }u=g,\\ \\dd v=f'\\dd x)",
+  "problem": "The annotation does not produce the line it labels. The integrand being integrated by parts is f'g'. With u=g, dv=f'dx (so v=f, du=g'dx) the formula gives [gf] − ∫f g' dx, which is not the stated result. The stated result [f'g] − ∫f''g dx requires u=f', dv=g'dx (v=g, du=f''dx). The equation itself is correct; only the stated choice of u and dv is wrong.",
+  "fix": "\\text{(parts: }u=f',\\ \\dd v=g'\\dd x)"
+ },
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "Notice also that for large $k$ the $\\lambda=3$ part dominates: repeated application of a matrix pulls any vector toward the eigenvector of the largest eigenvalue.",
+  "problem": "Stated too strongly in two ways. (1) Not \"any vector\": for this same A, x=(1,−1) is an eigenvector with λ=1, so A^k x=(1,−1) for all k and never approaches (1,1). The vector needs a nonzero component along the dominant eigenvector. (2) The dominant direction is that of the eigenvalue of largest modulus, not the largest eigenvalue: for diag(−5,1) the largest eigenvalue is 1, but repeated application pulls vectors toward e_1 (λ=−5).",
+  "fix": "Notice also that for large $k$ the $\\lambda=3$ part dominates: repeated application of a matrix pulls any vector that has a nonzero component along it toward the eigenvector whose eigenvalue is largest in absolute value."
+ }
+]

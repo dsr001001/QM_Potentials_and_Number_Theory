@@ -1,0 +1,9 @@
+[
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "Training error never increases as you add basis functions; with as many coefficients as data it is zero.",
+  "problem": "The second half needs the hypothesis that the square design matrix has independent columns (is invertible), which the chapter itself states earlier ('$m = M$ with independent columns'). Counterexample: fit $c_1 + c_2 t$ to the two points $(t,y)=(1,0)$ and $(1,1)$. There are 2 coefficients and 2 data, but the columns $(1,1)$ and $(1,1)$ are dependent; the best fit is $c_1+c_2 = 0.5$, with residuals $\\pm 0.5$ and $S_{\\min}=0.5 \\neq 0$. It holds in the RE4 polynomial case only because the ten times are distinct.",
+  "fix": "Training error never increases as you add basis functions; with as many coefficients as data and an invertible design matrix (independent columns, e.g. polynomials at distinct times) it is zero."
+ }
+]

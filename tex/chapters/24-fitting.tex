@@ -342,7 +342,7 @@ The two-level model already displays the three failure modes that matter for the
 
 \emph{Zero sensitivity.} At $c=0$, $J=0$ and $\delta c=r/J$ is undefined. In the many-parameter case the analogue is a matrix $\hat A^\top\hat A$ with zero or tiny eigenvalues, so Eq.~\eqref{eq:fitting-gn} has no unique solution or an enormous one.
 
-\emph{Overshoot.} Far from the solution the linear model is poor and a full step can land somewhere worse, or (in harder problems) diverge. The pitfall at the end of Section~\ref{sec:fitting-sensitivity} showed that the Wu--Sprung problem, with its many closely spaced levels, is prone to this.
+\emph{Overshoot.} Far from the solution the linear model is poor and a full step can land somewhere worse, or (in harder problems) diverge. The pitfall in Section~\ref{sec:fitting-sensitivity} showed, for the empty box with its very closely spaced lowest levels, how badly a full linearized step can fail when matrix elements are not small compared with level spacings.
 
 \emph{Too many knobs.} When $M>n_{\rm fit}$ the $M\times M$ matrix $\hat A^\top\hat A$ has rank at most $n_{\rm fit}<M$ (Chapter~\ref{ch:least-squares}), so it is singular and Eq.~\eqref{eq:fitting-gn} has infinitely many solutions. The paper's fits include such cases, for instance $M=900$ on 500 levels (Sec.~III), $M=400$ on 200 odd-indexed levels (Table~III), and $M=400$ on zeros 1--300 (Table~I).
 
@@ -811,7 +811,7 @@ The paper reports that ``in-sample error falls steadily with basis size $M$'' (F
 
 \paragraph{Table~III, saturated rows.} The odd/even splits at scale 1 have 200 training levels, so rows with $M\ge200$ have at least as many coefficients as levels. At $M=400$ the in-sample error is ``$<10^{-3}$'': with twice as many knobs as levels, the underdetermined damped steps (Section~\ref{sec:fitting-svd}) drive the residuals to essentially zero. This does not contradict the coverage law: the law concerns independent shifts of all consecutive levels up to $E_{\max}$, while here only every other level is fitted, and a $200\times400$ sensitivity matrix can have full row rank (Section~\ref{sec:fitting-coverage}). The paper calls these rows ``stress tests of memorization''.
 
-\paragraph{What this chapter does not decide.} Every number above is in-sample. The paper's central result is that the out-of-sample columns of Tables~I--III show no reproducible skill against the null; the tools for that comparison are in Chapter~\ref{ch:generalization} and the reading in Chapter~\ref{ch:paper-memorization}. A low in-sample error, by itself, tells you that the coverage law is satisfied and the optimizer works, nothing more.
+\paragraph{What this chapter does not decide.} Every number above is in-sample. The paper's central result is that the out-of-sample columns of Tables~I--III show no reproducible skill against the null; the tools for that comparison are in Chapter~\ref{ch:generalization} and the reading in Chapter~\ref{ch:paper-memorization}. A low in-sample error, by itself, tells you only that the basis had enough capacity for the levels fitted and that the optimizer works, nothing more.
 
 %==========================================================
 \section{Summary}

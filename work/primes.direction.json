@@ -1,0 +1,9 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "certain",
+  "quote": "At $x=10^6$: $72382.4$, then $77621.7$, then $78380.1$, against $\\pi=78498$ and $\\mathrm{Li}=78626.5$.",
+  "problem": "The second partial sum is mis-rounded in the last digit. With $\\log 10^6=13.815511$: $x/\\log x=72382.414$ and $x/\\log^2x=72382.414/13.815511=5239.214$, so the sum is $77621.627$, which rounds to $77621.6$, not $77621.7$. The third value is consistent with this: $77621.627+758.454=78380.08\\approx78380.1$. A check script with tolerance 0.1 would not catch the difference.",
+  "fix": "At $x=10^6$: $72382.4$, then $77621.6$, then $78380.1$, against $\\pi=78498$ and $\\mathrm{Li}=78626.5$."
+ }
+]

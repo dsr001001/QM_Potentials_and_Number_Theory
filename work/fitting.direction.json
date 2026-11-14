@@ -1,0 +1,16 @@
+[
+ {
+  "class": "SELFCONTRA",
+  "confidence": "certain",
+  "quote": "A low in-sample error, by itself, tells you that the coverage law is satisfied and the optimizer works, nothing more.",
+  "problem": "This contradicts the chapter's own statements. Section 8 says the coverage law \"is not a necessary condition for a small in-sample error\". The paragraph just above (Table III, saturated rows) cites M=400 reaching rms <10^-3 on 200 levels, although the law would need M≳745 to cover levels up to t_400 (2·sqrt(679.7)·44.883/π ≈ 745). So a low in-sample error does not imply the coverage law is satisfied.",
+  "fix": "A low in-sample error, by itself, tells you only that the basis had enough capacity for the levels fitted and that the optimizer works, nothing more."
+ },
+ {
+  "class": "SELFCONTRA",
+  "confidence": "likely",
+  "quote": "The pitfall at the end of Section~\\ref{sec:fitting-sensitivity} showed that the Wu--Sprung problem, with its many closely spaced levels, is prone to this.",
+  "problem": "The pitfall referred to treats the empty box (RE3, V=0, L=44.883), not the Wu--Sprung problem. Its numbers are box numbers: E_2−E_1 = 3π²/(4L²) ≈ 0.00367 and E_3−E_1 ≈ 0.0098, giving a second-order term about 7 times the first-order shift. In the Wu--Sprung well the level spacings are about 7.5 (n=1) down to 1.3 (n=500), so that computation does not carry over. The pitfall is also not at the end of the section; the Wu--Sprung subsection follows it.",
+  "fix": "The pitfall in Section~\\ref{sec:fitting-sensitivity} (the Sample Problem's step in the empty box, whose lowest levels are very closely spaced) showed how badly a full linearized step can fail when matrix elements are not small compared with level spacings."
+ }
+]

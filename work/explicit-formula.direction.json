@@ -1,0 +1,16 @@
+[
+ {
+  "class": "SELFCONTRA",
+  "confidence": "certain",
+  "quote": "The four primes give $0.4669064$, which is $93.8\\%$ of the target; the infinitely many remaining primes supply the missing $0.0307943$.",
+  "problem": "The remainder contradicts the sample's own numbers: Step 1 gives log zeta(2) = 0.4977003 and Step 4 gives 0.4669064, so the difference is 0.0307939, not 0.0307943. Recomputing to more digits: 0.49770030 - 0.46690639 = 0.03079391.",
+  "fix": "the infinitely many remaining primes supply the missing $0.0307939$."
+ },
+ {
+  "class": "PAPER",
+  "confidence": "likely",
+  "quote": "The paper also uses $T$ for the length of a training window (Sec.~II~D, App.~A step 20), for the tensors $T^{(n)}$ (Sec.~II~E), and for Chebyshev polynomials $T_k$; and it uses $N$ both for the counting function and for the grid size.",
+  "problem": "Sec. II D of the paper speaks of 'the training window' in words but never uses the symbol T. The symbol appears for the window only in App. A, step 20 ('a quarter of $2\\pi/T$') and step 23 ('$|\\omega-\\log q|<\\pi/T$'). This is a minor mislocation, not a wrong number.",
+  "fix": "The paper also uses $T$ for the length of a training window (App.~A steps 20 and 23), for the tensors $T^{(n)}$ (Sec.~II~E), and for Chebyshev polynomials $T_k$; ..."
+ }
+]

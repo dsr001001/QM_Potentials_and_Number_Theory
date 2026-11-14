@@ -121,7 +121,7 @@ yre2 = qmnt.Nfl(qmnt.smooth_zeros(nh), [2], mmax=3)
 assert abs(qmnt.rms(yre2) - 0.1708) < 1e-3
 sh = qmnt.smooth_zeros(np.array([401, 500]))
 assert 13 < (sh[1] - sh[0])/(2*math.pi/math.log(2)) < 17
-assert abs(2*math.pi/math.log(2) - 9.07) < 0.01
+assert abs(2*math.pi/math.log(2) - 9.06) < 0.005
 gmid = qmnt.mean_gap(np.array([450]))[0]
 assert 6.0 < (2*math.pi/math.log(2))/gmid < 7.5
 

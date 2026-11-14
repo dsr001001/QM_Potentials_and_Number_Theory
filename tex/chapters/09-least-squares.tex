@@ -832,7 +832,7 @@ A friend fits 50 data points with a 60-coefficient model and reports ``zero resi
 \checkanswer{With more coefficients than data, an exact fit is expected for almost any data (\cref{sec:least-squares-pinv}), and there are infinitely many exact fits differing by null-space vectors. Zero training residual says nothing about predictions at new points; only a test on held-out data can.}
 
 \begin{keyideas}
-\item Training error never increases as you add basis functions; with as many coefficients as data it is zero.
+\item Training error never increases as you add basis functions; with as many coefficients as data, and independent columns, it is zero.
 \item A model that fits its training data exactly, errors included, has memorized them; its predictions elsewhere can be poor (RE4).
 \item In these examples extrapolation succeeded when the model family contained the true form (RE2 with the right frequencies) and failed for a large generic basis, which fits the window but not beyond it; more coefficients did not help.
 \end{keyideas}

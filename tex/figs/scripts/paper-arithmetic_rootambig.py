@@ -6,7 +6,7 @@ g = 2*np.pi/np.log(s/(2*np.pi))
 t = np.linspace(s - 3*g, s + 3*g, 2000)
 fig, ax = plt.subplots(figsize=(6, 4))
 for A, c in ((0.05, "tab:blue"), (0.3, "tab:red")):
-    G = qmnt.Nsm(t) - qmnt.Nsm(s) + A*np.sin(5*t)
+    G = qmnt.Nsm(t) - qmnt.Nsm(s) - A*np.sin(5*(t - s))
     ax.plot(t, G, color=c, label=f"A = {A}")
 ax.axhline(0, color="k", lw=0.8)
 ax.set_xlabel("height t")

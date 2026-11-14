@@ -683,7 +683,7 @@ The magnitude of the correlation is unchanged; only its sign can change. Here $\
 \medskip\noindent\textbf{Result (proved).} When $w<0$, the two-neighbor kriging prediction and the neighbor mean have correlations with the truth that are equal in magnitude and opposite in sign. With $\rho_1<0$ the neighbor mean is anticorrelated and kriging is positively correlated, $\mathrm{corr}=\abs{\rho_1}\sqrt{2/(1+\rho_2)}$.
 
 \medskip
-The best linear use of negatively correlated neighbors is to predict the \emph{opposite} of their average, shrunk toward zero.
+The best linear use of negatively correlated neighbors is to predict a negative multiple, $2\rho_1/(1+\rho_2)$, of their average. For weak correlations such as those of the zeros this is the \emph{opposite} of their average, shrunk toward zero (here by the factor $0.667$); for strong correlations the multiple can exceed 1 in size.
 
 \begin{sample}{Kriging versus the neighbor mean}
 Use $\rho_1=-0.3$, $\rho_2=-0.1$ as in the earlier Sample Problem ``Anticorrelation by construction''. Find the kriging weight, the error ratio and the correlation, and compare.
@@ -766,7 +766,7 @@ For a sequence whose joint distribution is Gaussian (a ``Gaussian process''), th
 
 \begin{keyideas}
 \item The best linear predictor solves the kriging normal equations $C\bm w=\bm c_0$; its error is uncorrelated with the data used.
-\item With two neighbors, $w=\rho_1/(1+\rho_2)$; for $\rho_1<0$ the prediction is a negative, shrunken multiple of the neighbor sum, and its correlation equals that of the neighbor mean with the sign flipped.
+\item With two neighbors, $w=\rho_1/(1+\rho_2)$; for $\rho_1<0$ the prediction is a negative multiple of the neighbor sum (shrunken when $2|\rho_1|<1+\rho_2$, as for the zeros), and its correlation equals that of the neighbor mean with the sign flipped.
 \item A nugget $(C+\tau^2I)\bm w=\bm c_0$ stabilizes the solve and shrinks toward the null, like ridge.
 \end{keyideas}
 

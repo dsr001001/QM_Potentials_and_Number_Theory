@@ -41,7 +41,7 @@ for v, c in zip(terms, [0.2876821, 0.1177830, 0.0408220, 0.0206193]):
     close(v, c, 1e-6, 'SP1 terms')
 close(sum(terms), 0.4669064, 1e-6, 'SP1 sum')
 close(sum(terms)/lz2, 0.938, 0.0005, 'SP1 fraction')
-close(lz2 - sum(terms), 0.0307943, 1e-6, 'SP1 remainder')
+close(lz2 - sum(terms), 0.0307939, 1e-7, 'SP1 remainder')
 pp = np.asarray(qmnt.primes_upto(10**6), float)
 close(np.sum(-np.log(1 - pp**-2.0)), lz2, 1e-5, 'Euler log series')
 

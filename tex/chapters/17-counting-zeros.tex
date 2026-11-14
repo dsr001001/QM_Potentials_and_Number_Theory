@@ -550,7 +550,7 @@ so
 \frac{\dd S}{\dd T}=-\frac{1}{2\pi}\log\frac{T}{2\pi}+\frac{1}{48\pi T^2}+\order(T^{-4}).
 \label{eq:counting-zeros-Sslope}
 \end{equation}
-For $T>2\pi$ the slope is negative. So $S(T)$ is a \emph{sawtooth}: it drifts down between zeros and jumps up by 1 at each zero (Fig.~\ref{fig:counting-zeros-Sfunc}). If the zeros were perfectly evenly spaced at the local mean spacing, the downward drift between two zeros would exactly cancel each jump, and $S$ would oscillate between fixed limits. The actual irregular placement of the zeros is what makes $S$ wander.
+For $T$ above about $6.29$ (just above $2\pi=6.283$, where the two terms balance), and so at every height where zeros occur, the slope is negative. So $S(T)$ is a \emph{sawtooth}: it drifts down between zeros and jumps up by 1 at each zero (Fig.~\ref{fig:counting-zeros-Sfunc}). If the zeros were perfectly evenly spaced at the local mean spacing, the downward drift between two zeros would exactly cancel each jump, and $S$ would oscillate between fixed limits. The actual irregular placement of the zeros is what makes $S$ wander.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/counting-zeros_Sfunc.pdf}
@@ -1020,7 +1020,7 @@ Riemann published no numerical work on the zeros, so for decades many assumed hi
 
 \textbf{9.} $x_{100}=98.625/e=36.282110$; solving $we^w=x_{100}$ gives $W=2.625901$. Then $s_{100}=2\pi\times98.625/2.625901=619.679151/2.625901=235.987$; $\gap_{100}=2\pi/3.625901=1.733$; $\delta_{100}=(236.524230-235.987266)/1.733=0.536964/1.733=+0.310$. Zero 100 sits about a third of a spacing above its smooth position.
 
-\textbf{11.} $u=1419.422481/2\pi=225.908136$, $\log u=5.420128$; $\Nsm(t_{1000})=225.908136\times4.420128+0.875=998.542976+0.875=999.418$. By Eq.~\eqref{eq:counting-zeros-faces1}, $\delta_{1000}\approx999.418-999.5=-0.082$ (the second-order term is about $2\times10^{-6}$). Spacing: $2\pi/5.420128=1.159$.
+\textbf{11.} $u=1419.422481/2\pi=225.908136$, $\log u=5.420128$; $\Nsm(t_{1000})=225.908136\times4.420128+0.875=998.542976+0.875=999.418$. By Eq.~\eqref{eq:counting-zeros-faces1}, $\delta_{1000}\approx999.418-999.5=-0.082$ (the second-order term is about $5\times10^{-7}$). Spacing: $2\pi/5.420128=1.159$.
 
 \textbf{13.} $\dd S/\dd T=-\frac{1}{2\pi}\log\frac{30}{2\pi}+\frac{1}{48\pi\cdot900}=-\frac{1.563320}{6.283185}+0.000007=-0.249$. Over one local mean spacing $\gap=1/\Nsm'(30)$, $S$ falls by $\Nsm'(30)\times\gap=1$ (to the accuracy of the tiny $1/(48\pi T^2)$ term). This is why perfectly evenly spaced zeros would leave $S$ oscillating between fixed limits: each jump of $+1$ is exactly undone by the drift across one mean spacing.
 

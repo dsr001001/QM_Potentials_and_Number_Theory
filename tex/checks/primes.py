@@ -297,7 +297,7 @@ x = 1e6
 t1 = x / log(x)
 t2 = t1 + x / log(x) ** 2
 t3 = t2 + 2 * x / log(x) ** 3
-assert abs(t1 - 72382.4) < 0.1 and abs(t2 - 77621.7) < 0.1 and abs(t3 - 78380.1) < 0.1
+assert abs(t1 - 72382.4) < 0.05 and abs(t2 - 77621.6) < 0.05 and abs(t3 - 78380.1) < 0.05
 C = -2 / log(2) - 2 / log(2) ** 2
 I3 = float(mpmath.quad(lambda t: 1 / mpmath.log(t) ** 3, [2, 100, 10**4]))
 assert abs(1e4 / log(1e4) + 1e4 / log(1e4) ** 2 + 2 * I3 + C - Lis[10**4]) < 1e-6

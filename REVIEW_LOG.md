@@ -12,6 +12,14 @@ All 32 chapters have now had a second review by Claude Fable 5.2 (critique) foll
 - All checks pass, and the book builds with no undefined references.
 - **Regression, now fixed:** the bible did not list the `didyouknow` environment. As a result, the critic flagged the boxes as non-compiling (12 of the 17 high-severity items this round), and the reviser deleted 36 boxes in 12 chapters. All 91 boxes have been restored from `bible/did_you_know.json`, and the bible now lists the environment and tells reviewers to leave the boxes alone.
 
+## Targeted checks (14 Nov 2026, evening)
+
+Three checks aimed at the error types the numerical assertions cannot see. Total API spend after them: $115.31.
+
+1. **Paper quotations** (`scripts/quote_check.py`, no API). All 907 quotations in the book were matched against the paper source, with the location of each match. 12 fixes: 9 paraphrases or stitched fragments that were printed inside quotation marks, and 3 missing or wrong locations. No quotation attributes to the paper something it does not say.
+2. **Staircase convention.** Read in every chapter that uses it (schrodinger, bound-states, wkb, counting-zeros, explicit-formula, level-statistics, wu-sprung, sparse-frequency, paper-setup, paper-arithmetic): consistent. One loose use of "incommensurate" corrected in paper-arithmetic.
+3. **Direction and condition pass** (`scripts/direction_check.py`; Fable 5.2, critique only, all 32 chapters, $18.75). 26 items flagged in 19 chapters; 13 chapters came back clean. Each item was verified by hand or by computation before editing, and all 26 were confirmed and fixed. By type: 8 wrong formulas or numbers (for example t_10000 quoted as 9878.7, which is t_10001; a second-order term too large by a factor 4; a third-order scaling argument where the third-order term is purely imaginary), 8 statements missing a condition, 5 contradictions with the chapter's own text or tables, 5 misstatements of the paper. One figure (root ambiguity, paper-arithmetic) did not show what its caption said and was redrawn. Three check tolerances that had let last-digit slips through were tightened.
+
 ## API reviews this round (Fable 5.2 critique, Opus 5.5 revision)
 
 | Chapter | Issues found (high/med/low) | Patches applied / failed | Checks after revision | Cost (USD) | Finished |

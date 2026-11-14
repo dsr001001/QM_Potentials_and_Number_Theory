@@ -1,0 +1,16 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "likely",
+  "quote": "\\textbf{Step 4:} With the correction terms: $2.302585+0.577216+0.05-0.000833=2.928968$, matching $H_{10}$ to all six decimals.",
+  "problem": "The agreement in the sixth decimal comes only from adding terms that were already rounded. Unrounded: log 10 = 2.302585093, gamma = 0.577215665, so log 10 + gamma + 1/20 - 1/1200 = 2.928967425, which rounds to 2.928967. The exact H_10 = 7381/2520 = 2.928968254, which rounds to 2.928968. The two differ by 8.3e-7 (the next term, 1/(120 n^4)), so the truncated expansion does not match H_10 to all six decimals. The sample's own closing line, \"accurate to about 10^{-6}\", is the correct statement.",
+  "fix": "With the correction terms: $2.302585+0.577216+0.05-0.000833\\approx2.928967$ (carrying more digits: $2.9289674$), within $10^{-6}$ of $H_{10}=2.9289683$; the difference $8\\times10^{-7}$ is the next term $1/(120n^4)$."
+ },
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "If $[a,b]$ contains an even number of roots, $f(a)$ and $f(b)$ have the same sign.",
+  "problem": "This holds only if every root is a sign-changing (simple) crossing, or if roots are counted with multiplicity. Counterexample: f(x) = x^2 (x-1) on [-1,2] has exactly two roots (0 and 1), yet f(-1) = -2 and f(2) = 4 have opposite signs.",
+  "fix": "If $[a,b]$ contains an even number of roots at each of which $f$ changes sign (equivalently, an even number counted with multiplicity), $f(a)$ and $f(b)$ have the same sign."
+ }
+]

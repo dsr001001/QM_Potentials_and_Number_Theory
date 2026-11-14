@@ -1,0 +1,16 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "certain",
+  "quote": "(the second-order term is about $2\\times10^{-6}$)",
+  "problem": "The second-order term of Eq. (counting-zeros-faces1) is (t_n-s_n)^2/(4*pi*s_n). For n=1000: delta is about -0.082 and the gap is 1.159, so t-s is about -0.0951 and (t-s)^2 is about 0.00904. Dividing by 4*pi*1419.5 = 17838 gives about 5.1e-7, not 2e-6. The quoted value matches (t-s)^2/(pi*s) = 2.0e-6, i.e. the factor 4 was dropped.",
+  "fix": "(the second-order term is about $5\\times10^{-7}$)"
+ },
+ {
+  "class": "CONDITION",
+  "confidence": "certain",
+  "quote": "For $T>2\\pi$ the slope is negative.",
+  "problem": "False in a narrow interval just above 2*pi, by the chapter's own Eq. (counting-zeros-Sslope). At T=6.285: -(1/(2*pi))*log(6.285/6.283185) is about -4.6e-5, while 1/(48*pi*T^2) is about +1.68e-4, so dS/dT is about +1.2e-4 > 0. The slope changes sign where log(T/2*pi) = 1/(24*T^2), at T of about 6.2898 (the known minimum of theta), not at 2*pi = 6.2832. The interval contains no zeros, so nothing downstream is affected, but the statement as written has a counterexample.",
+  "fix": "For $T$ above about $6.29$ (where $\\theta'$ changes sign, just above $2\\pi$), and in particular at every height $T\\ge t_1$ where zeros occur, the slope is negative."
+ }
+]

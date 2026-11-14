@@ -1,0 +1,16 @@
+[
+ {
+  "class": "MATH",
+  "confidence": "likely",
+  "quote": "For $A=0.3$, $A\\omega=1.5$ exceeds $\\Nsm'$, $G$ is not monotone, and the level equation has several roots in the bracket.",
+  "problem": "For the function as defined in the caption, G(t)=Nsm(t)-Nsm(680)+0.3 sin(5t), the equation G=0 has only one root. Check: 3400 mod 2π = 0.797, and Nsm'(680)=0.7455, so near 680 G ≈ 0.7455Δt + 0.3 sin(0.797+5Δt). Local maxima are at 5t ≡ 2.091 and minima at 5t ≡ 4.192 (mod 2π). Each decreasing excursion runs from G_max = 0.453+0.937k down to G_min = 0.246+0.937k. For k=0 that is [0.246, 0.453]; for k=-1 it is [-0.691, -0.484]. No excursion straddles 0, so G crosses zero once, on a rising stretch. The curvature of Nsm changes these values by about 0.002, which does not matter. Non-monotonicity alone gives extra roots only for levels inside an excursion (about 0.207/0.937 ≈ 22% of levels), as the chapter itself says elsewhere. The answer to Problem 21 repeats the claim (\"which is what the A=0.3 curve ... shows\"). I could not see the figure script, so this assumes the plot matches the caption's formula.",
+  "fix": "Either change the example so that an excursion straddles the level (for instance, shift the level by about 0.35: solve G(t)=0.35, which lies inside [0.246, 0.453] and gives three roots), or reword: \"For $A=0.3$, $A\\omega=1.5$ exceeds $\\Nsm'$ and $G$ is not monotone, so any level lying between a local minimum and the preceding local maximum is reached three times.\" Adjust the last sentence of the answer to Problem 21 to match."
+ },
+ {
+  "class": "MATH",
+  "confidence": "likely",
+  "quote": "from $t_{400}\\approx680$ to $t_{10000}\\approx9878.7$",
+  "problem": "The 10000th zero is t_10000 ≈ 9877.78 (9877.7827 from the standard tables, recalled from memory). The value 9878.7 is about one mean spacing higher (the gap there is about 0.85) and matches t_10001 ≈ 9878.65, which suggests an off-by-one index. Consistency check: Nsm(9877.78) ≈ 9999.68, a fluctuation of +0.18 spacings for n=10000; Nsm(9878.7) ≈ 10000.75 would mean a fluctuation of +1.25 spacings for n=10000, implausibly large. The \"about 15 in height\" ratio is unaffected.",
+  "fix": "from $t_{400}\\approx680$ to $t_{10000}\\approx9877.8$"
+ }
+]

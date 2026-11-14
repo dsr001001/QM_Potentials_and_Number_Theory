@@ -1,0 +1,16 @@
+[
+ {
+  "class": "SELFCONTRA",
+  "confidence": "likely",
+  "quote": "So every cosine up to $k\\approx2L/w$ is needed at nearly full strength; truncating earlier smears the bump out.",
+  "problem": "This contradicts the numbers in the preceding sentence. The envelope sin(z_k)/z_k is 0.826 at k=5, 0.411 at k=10 and exactly zero at k=2L/w=14.96 (at k=14 it is about 0.07). The coefficients therefore fall steadily from full strength to zero across the range k<2L/w; those near k≈2L/w are almost zero, not 'nearly full strength'. Only k well below 2L/w (z_k≪1) are near full strength, as the chapter itself says one sentence earlier.",
+  "fix": "So the cosines up to $k\\approx2L/w$ all carry appreciable weight (the envelope falls from 1 to 0 across this range, and is still 0.41 at $k=10$); truncating well before $k\\approx2L/w$ smears the bump out."
+ },
+ {
+  "class": "CONDITION",
+  "confidence": "likely",
+  "quote": "A finite sum of sinusoids with nonzero amplitudes is periodic only if all its frequency ratios are rational (proved, many-frequency version).",
+  "problem": "The summary bullet drops the hypothesis 'distinct frequencies' that the proof in the section uses (the factor C_i=∏(ω_j²−ω_i²) must be nonzero). Counterexample: sin(√2 t) + sin(√2 t + π) + sin t has three terms with nonzero amplitudes and the irrational frequency ratio √2, yet it equals sin t, which is periodic.",
+  "fix": "A finite sum of sinusoids with distinct frequencies and nonzero amplitudes is periodic only if all its frequency ratios are rational (proved, many-frequency version)."
+ }
+]
