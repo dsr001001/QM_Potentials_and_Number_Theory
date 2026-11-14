@@ -70,7 +70,7 @@ The reader does **not** know: complex numbers beyond hearing of $i$, infinite se
 
 These environments and macros are defined in the book preamble; use exactly these names:
 
-- `chapterintro`, `prerequisites` (itemize inside it), `keyideas` (itemize inside), `sample` (one argument: title), `checkpoint`, `\checkanswer{...}`, `pitfall`, `beyond`, `pycode` (verbatim Python, a `listings` environment), `\prob{difficulty 1|2|3}{text}` used inside `\begin{problemlist} ... \end{problemlist}`.
+- `chapterintro`, `prerequisites` (itemize inside it), `keyideas` (itemize inside), `sample` (one argument: title), `checkpoint`, `\checkanswer{...}`, `pitfall`, `beyond`, `pycode` (verbatim Python, a `listings` environment), `\prob{difficulty 1|2|3}{text}` used inside `\begin{problemlist} ... \end{problemlist}`. Also `didyouknow` (one argument: title): the "Did you know?" boxes. These are inserted by `scripts/insert_dyk.py` from `bible/did_you_know.json` between `% DYK-BEGIN` and `% DYK-END` markers. Reviewers and revisers must leave these blocks untouched; corrections go in the JSON file.
 - Math macros available: `\Nsm`, `\Nfl`, `\gap`, `\dd` (upright d for differentials: `\dd x`), `\ii` (imaginary unit $i$; plain `i` also fine), `\ee` (Euler's e; plain `e` also fine), `\Re`, `\Im` (standard), `\abs{x}`, `\norm{x}`, `\braket{a}{b}`, `\bra{a}`, `\ket{a}`, `\rms`, `\corr`, `\order` ($\mathcal{O}$).
 - Packages loaded: amsmath, amssymb, amsthm, mathtools, bm, graphicx, booktabs, hyperref, cleveref (use `\cref`), siunitx, xcolor, listings, tcolorbox. Do not add `\usepackage`.
 
