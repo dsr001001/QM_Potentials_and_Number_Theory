@@ -71,7 +71,7 @@ The question of this chapter is: \emph{suppose we pretend not to know those freq
 
 \subsection{Three levels of supplied information}
 
-The paper (Sec.~IV) organizes its models by what they are told. \Cref{tab:sparse-frequency-levels} lists them. The truncated explicit formula, which the paper calls the oracle, is told everything and fits nothing. At the other end, a fitted potential (Chapters~\ref{ch:fitting} and~\ref{ch:generalization}) or a dense grid of frequencies is told nothing structural at all. In between sits a model told only ``the answer is a sum of a few sinusoids in $t$''.
+The paper (Sec.~IV) organizes its models by what they are told. \Cref{tab:sparse-frequency-levels} lists them. The truncated explicit formula, which the paper calls the oracle, is told everything and fits nothing. At the other end, a fitted potential (Chapters~\ref{ch:fitting} and~\ref{ch:generalization}) or a dense grid of frequencies is told nothing structural at all. In between sits a model ``told only that the fluctuation is a sum of few sinusoids in $t$'' (Sec.~IV).
 
 \begin{table}[htbp]\centering
 \caption{The three levels of supplied information in the paper's Sec.~IV, with the model labels of its Sec.~II~D and Table~IV.}
@@ -721,7 +721,7 @@ A component is learned with frequency error $\delta\omega=3\times10^{-4}$, about
 $$\boxed{\epsilon=0.6,\ \text{rms ratio}\approx0.59,\ \corr\approx0.83;\quad \text{worse than null beyond }\Delta t\approx3490}$$
 \end{sample}
 
-For the 400-zero window the centre is near $t_c\approx(14+680)/2=347$, and zero 2000 sits near $t\approx2515$ (values computed with \texttt{qmnt.zeros}), about $2170$ units away. So by \eqref{eq:sparse-frequency-dephase}, frequency errors of a few times $10^{-4}$ already cost a noticeable fraction of the skill on zeros 1001--2000. This is consistent with what the paper reports for C2 (Sec.~IV): from the 400-zero fit, $0.034$/$+0.99$ on zeros 401--500 but $0.078$/$+0.96$ on zeros 1001--2000, ``as the estimated frequencies dephase, which the exact frequencies of the oracle do not''. The oracle's exact frequencies have $\delta\omega=0$, so its relative skill stays nearly constant through zero $10^4$ (Table~V). Our single-sinusoid model is a picture of the mechanism, not a fit to the paper's numbers.
+For the 400-zero window the centre is near $t_c\approx(14+680)/2=347$, and zero 2000 sits near $t\approx2515$ (values computed with \texttt{qmnt.zeros}), about $2170$ units away. So by \eqref{eq:sparse-frequency-dephase}, frequency errors of a few times $10^{-4}$ already cost a noticeable fraction of the skill on zeros 1001--2000. This is consistent with what the paper reports for C2 (Sec.~IV): from the 400-zero fit, $0.034$/$+0.99$ on zeros 401--500 but $0.078$/$+0.96$ on zeros 1001--2000. In the paper's words, its skill ``decays with distance from the training window as the estimated frequencies dephase'', ``which the exact frequencies of the oracle do not''. The oracle's exact frequencies have $\delta\omega=0$, so its relative skill stays nearly constant through zero $10^4$ (Table~V). Our single-sinusoid model is a picture of the mechanism, not a fit to the paper's numbers.
 
 \begin{figure}[htbp]\centering
 \includegraphics[width=0.85\linewidth]{figs/sparse-frequency_dephasing.pdf}

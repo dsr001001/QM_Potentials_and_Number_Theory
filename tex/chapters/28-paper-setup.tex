@@ -74,7 +74,7 @@ An abstract compresses a whole paper into a paragraph, so every word is load-bea
 
 \paragraph{S6.} ``Controls with fitted sinusoidal models show that the obstacle is the parametrization, not the parameter count: a dense 900-coefficient Fourier model also stays near the null, while a fitted control given only a sparsity prior in frequency, and no arithmetic input, recovers frequencies at $\log p^m$ from 400 zeros and predicts held-out zeros with correlation $+0.99$.''
 
-(a) Two more fitted models, neither told about primes. One has 900 coefficients spread over a uniform grid of frequencies and stays within 0.005 of the null. The other is told only ``the signal is a sum of a few sinusoids'', finds the frequencies by search, and those frequencies turn out to sit at logarithms of prime powers; it predicts as well as the 25-prime formula. So the number of parameters is not what matters; their form is. (b) Chapters~\ref{ch:fourier-transform}, \ref{ch:least-squares}, \ref{ch:sparse-frequency}. (c) Table~IV, Sec.~IV; Chapter~\ref{ch:paper-arithmetic}. (d) Numerical observation. The paper itself calls ``sparse in $t$-frequency'' ``a strong and well-chosen prior'' and notes the concentration of the zeros' spectrum at $\log p^m$ is classical \cite{landau,gonek}.
+(a) Two more fitted models, neither told about primes. One has 900 coefficients spread over a uniform grid of frequencies and stays within 0.005 of the null. The other is ``told only that the fluctuation is a sum of few sinusoids in $t$'' (Sec.~IV), finds the frequencies by search, and those frequencies turn out to sit at logarithms of prime powers; it predicts as well as the 25-prime formula. So the number of parameters is not what matters; their form is. (b) Chapters~\ref{ch:fourier-transform}, \ref{ch:least-squares}, \ref{ch:sparse-frequency}. (c) Table~IV, Sec.~IV; Chapter~\ref{ch:paper-arithmetic}. (d) Numerical observation. The paper itself calls ``sparse in $t$-frequency'' ``a strong and well-chosen prior'' and notes the concentration of the zeros' spectrum at $\log p^m$ is classical \cite{landau,gonek}.
 
 \paragraph{S7.} ``A subsidiary dissection of second-order non-Hermitian perturbations shows how surrogate optimization outside its validity range can manufacture an apparently meaningful in-sample floor; exact diagonalization dissolves it.''
 
@@ -599,7 +599,7 @@ The protocol is deterministic from $c=0$; optimizer variability is probed with r
 
 \subsection{Out-of-sample scoring}
 
-The crucial step is Appendix~A step~7: fit on zeros $1,\dots,n_{\rm fit}$ only, then perform ``a single plain eigensolve of the fitted potential'', and score it on the held-out zeros. No further adjustment happens after the fit.
+The crucial step is Appendix~A step~7: fit on zeros $1,\dots,n_{\rm fit}$ only, then perform ``a single plain eigensolve of the fitted potential'' (the wording of Sec.~II~C), and score it on the held-out zeros. No further adjustment happens after the fit.
 
 Two numbers are reported. Let $\mathcal T$ be the set of held-out indices, with $n_{\rm test}$ members. Let $\hat t_n$ be a model's predicted height for zero $n$, $t_n$ the true height, and $R_n$ a reference (the model's smooth baseline). Define the predicted and true fluctuations relative to the reference,
 \begin{equation}

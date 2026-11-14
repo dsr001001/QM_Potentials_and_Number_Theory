@@ -210,7 +210,7 @@ Compute $B_P$ for $P=\{2\}$ and for the six primes $P=\{2,3,5,7,11,13\}$, and fi
 \[
 \boxed{B_{\{2\}}=0.344\ \Rightarrow\ \text{unique root for } t>54.7;\qquad B_6=2.09\ \Rightarrow\ \text{guaranteed only for } t\gtrsim3.2\times10^6}
 \]
-The worst-case bound is far from typical. Because the frequencies are incommensurate, the cosines in Eq.~\eqref{eq:paper-arithmetic-dnfl} do not line up, and the rms of $\Nfl'$ over $t$ is $\frac1\pi\bigl[\sum_p(\log p)^2\sum_m \frac{1}{2p^m}\bigr]^{1/2}=0.415$ for six primes (Problem 28 asks you to derive this formula). That is below $\Nsm'\approx0.75$ at the heights of the paper, but only by a factor of about $1.8$: for six primes, stretches where $G$ decreases are uncommon, not negligible. For larger budgets they are common. The same formula gives an rms slope of about $0.7$ for the 25 primes of Table~V, comparable with $\Nsm'$, and about $1.2$ for the 300 primes of control A (\cref{sec:paper-arithmetic-A}), larger than $\Nsm'$.
+The worst-case bound is far from typical. Because the frequencies $m\log p$ are all different, the cosines in Eq.~\eqref{eq:paper-arithmetic-dnfl} do not stay lined up, their cross terms average to zero over long stretches of $t$, and the rms of $\Nfl'$ over $t$ is $\frac1\pi\bigl[\sum_p(\log p)^2\sum_m \frac{1}{2p^m}\bigr]^{1/2}=0.415$ for six primes (Problem 28 asks you to derive this formula). That is below $\Nsm'\approx0.75$ at the heights of the paper, but only by a factor of about $1.8$: for six primes, stretches where $G$ decreases are uncommon, not negligible. For larger budgets they are common. The same formula gives an rms slope of about $0.7$ for the 25 primes of Table~V, comparable with $\Nsm'$, and about $1.2$ for the 300 primes of control A (\cref{sec:paper-arithmetic-A}), larger than $\Nsm'$.
 
 A decreasing stretch of $G$ does not by itself produce several roots in the bracket. Several roots require a decreasing excursion that straddles the level $n-\tfrac12$. A heuristic reason why this is much rarer than non-monotonicity: $\Nsm+\Nfl$ approximates the true staircase $N(t)$, which rises steeply through $n-\tfrac12$ near the zero and is flat near the integer values $n-1$ and $n$ on either side, so the wiggles of a good approximation tend to sit near integer values, away from the half-integer levels. The paper reports root ambiguity only for one fitted row of Table~IV (control B with 900 coefficients), which we meet in \cref{sec:paper-arithmetic-B}.
 \end{sample}
@@ -373,7 +373,7 @@ A model has held-out correlation $+0.28$ and rms almost equal to the null. Is it
 
 The paper is explicit that the oracle ``is not a fair ML competitor (it encodes the known functional form); its role is informational'' (Sec.~II~D), and again in Sec.~IV: ``it is given the functional form, so this comparison shows only that transferable structure exists and is arithmetic.'' The operators were given a background potential and a basis; the oracle was given the answer's shape. A critic could therefore say: of course a model told the answer's form wins. Claim IV.4 concedes this and the controls are designed to answer the critic.
 
-The paper organizes all models ``by the information supplied, at three levels'':
+The paper says its models differ ``in the information supplied, at three levels'':
 \begin{enumerate}
 \item[(i)] the arithmetic frequencies $m\log p$ supplied (the oracle, control A, and control B with fitted amplitudes);
 \item[(ii)] no arithmetic frequencies, but sparsity in $t$-frequency supplied (C2);
@@ -625,7 +625,7 @@ The paper (Sec.~IV): C2 ``selects 24 frequencies (72 parameters) from 400 zeros 
 ``Half the Fourier resolution'' is $\tfrac12\cdot2\pi/T=\pi/T$, the matching criterion $|\omega-\log q|<\pi/T$ of Appendix~A step 23. For the 800-zero window, $T=t_{800}-t_1\approx1170$, so $\pi/T\approx0.0027$.
 
 \begin{sample}{Checking the list of 43 prime powers}
-(a) Verify that ``prime powers up to 113 except 32, 64, 81, plus six primes'' makes 43. (b) Compute the weights $w(q)=1/(mp^{m/2})$ of the excluded and of some included prime powers, and see whether weight explains which were found.
+(a) Verify that the paper's list, ``those up to 113 except 32, 64, and 81, and six primes between 131 and 211'', makes 43. (b) Compute the weights $w(q)=1/(mp^{m/2})$ of the excluded and of some included prime powers, and see whether weight explains which were found.
 
 \textbf{Step 1: primes up to 113.} There are $30$ of them ($2,3,\dots,109,113$).
 
