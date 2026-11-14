@@ -10,6 +10,7 @@ All 32 chapters have now had a second review by Claude Fable 5.2 (critique) foll
 - **In-session line-by-line read (Opus 5.5), 11 chapters:** complex, series, asymptotics, fourier-series, linear-algebra, fourier-transform, bound-states, schrodinger, eigen, primes, probability. finite-differences has the API review only. These reads came before the API pass on the same chapters; the API patches made afterwards were checked by the automated assertions and figure scripts, not by a second human-style read.
 - **API spend, whole project:** $96.56 (ledger in `ledger/costs.csv`). The API never refused, and the queue finished every chapter.
 - All checks pass, and the book builds with no undefined references.
+- **Regression, now fixed:** the bible did not list the `didyouknow` environment. As a result, the critic flagged the boxes as non-compiling (12 of the 17 high-severity items this round), and the reviser deleted 36 boxes in 12 chapters. All 91 boxes have been restored from `bible/did_you_know.json`, and the bible now lists the environment and tells reviewers to leave the boxes alone.
 
 ## API reviews this round (Fable 5.2 critique, Opus 5.5 revision)
 
