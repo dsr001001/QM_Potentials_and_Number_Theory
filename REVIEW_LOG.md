@@ -12,6 +12,19 @@ All 32 chapters have now had a second review by Claude Fable 5.2 (critique) foll
 - All checks pass, and the book builds with no undefined references.
 - **Regression, now fixed:** the bible did not list the `didyouknow` environment. As a result, the critic flagged the boxes as non-compiling (12 of the 17 high-severity items this round), and the reviser deleted 36 boxes in 12 chapters. All 91 boxes have been restored from `bible/did_you_know.json`, and the bible now lists the environment and tells reviewers to leave the boxes alone.
 
+## In-session read (15 Nov 2026, Claude Fable 5.2, no API cost)
+
+Scope: the items left open after the API round. Numbers were recomputed in Python (qmnt where needed).
+
+- Part VI (chapters 28 to 32): read in full. One paper-location fix (28: App. A steps 20 and 23, not Sec. II D) and one typo.
+- 23-finite-differences: read in full. One repeated phrase in answer 23 tidied.
+- Appendices: read in full. Key-numbers intro reworded to say what the list contains.
+- "Did you know?" boxes: all 91 facts read. None found wrong. Checked against the reviewer's own knowledge only, not against sources.
+- "Answers to selected problems", chapters 01 to 27 (26 chapters outside Part VI): every numerical answer recomputed. No errors found.
+- Front matter: "How this book was made" now names the models used and states that no human has yet read the whole text line by line.
+
+Not done: independent source check of the "Did you know?" facts; a human read.
+
 ## Targeted checks (14 Nov 2026, evening)
 
 Three checks aimed at the error types the numerical assertions cannot see. Total API spend after them: $115.31.
