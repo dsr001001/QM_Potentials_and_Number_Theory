@@ -38,7 +38,7 @@ One more piece of reading discipline: the paper reuses some letters. Keep these 
 \begin{itemize}
 \item $N$ is the number of interior grid points of the finite-difference solver (Sec.~II~B) \emph{and} the counting function $N(T)$ of the zeros (Chapter~\ref{ch:counting-zeros}).
 \item $A$ is the first-order sensitivity matrix $A_{nk}$ (Sec.~II~C) \emph{and} the non-Hermitian operator in $H+iA$ (Sec.~II~E).
-\item $T$ is the length of a training window in $t$ (Sec.~II~D), \emph{and} the second-order tensors $T^{(n)}$ (Sec.~II~E), \emph{and} the Chebyshev polynomials $T_k$ (Sec.~II~C, ``Other bases'').
+\item $T$ is the length of a training window in $t$ (App.~A steps 20 and 23), \emph{and} the second-order tensors $T^{(n)}$ (Sec.~II~E), \emph{and} the Chebyshev polynomials $T_k$ (Sec.~II~C, ``Other bases'').
 \end{itemize}
 Context always tells you which is meant, but only if you are watching for it.
 
@@ -1049,7 +1049,7 @@ What this chapter has \emph{not} done is interpret the results: Tables~I--III an
 
 \textbf{11.} You should obtain rms $0.208$, corr $+0.64$ for $\{2\}$ and $0.127$, $+0.88$ for $\{2,3,5\}$, the 501--1000 row of Table~V.
 
-\textbf{13.} Within $0.006$ of $0.238$ on the even-indexed zeros and within $0.006$ of $0.250$ on the odd-indexed zeros ( the paper's values are measured against the unperturbed potential's levels, which by \eqref{eq:paper-setup-rmsbound} can differ slightly). The ``odd'' row of Table~III scores the even-indexed zeros, so its null is 0.238; the ``even'' row scores the odd-indexed zeros, null 0.250, as printed.
+\textbf{13.} Within $0.006$ of $0.238$ on the even-indexed zeros and within $0.006$ of $0.250$ on the odd-indexed zeros (the paper's values are measured against the unperturbed potential's levels, which by \eqref{eq:paper-setup-rmsbound} can differ slightly). The ``odd'' row of Table~III scores the even-indexed zeros, so its null is 0.238; the ``even'' row scores the odd-indexed zeros, null 0.250, as printed.
 
 \textbf{14.} Training: zeros 1--200 and 301--500, i.e.\ 400 zeros; held out: 201--300, 100 zeros. It is neither forward (the held-out zeros are below some training zeros) nor random within height; it is a contiguous interior gap, which probes a specific band of turning points.
 
