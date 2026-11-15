@@ -391,7 +391,7 @@ An exact computation (\cref{sec:perturbation-validity}) confirms the shifts of l
 
 \subsection{The sensitivity matrix is the exact derivative}
 
-Equation~\eqref{eq:perturbation-linear} is a statement about small $\bm c$ near $\bm c=0$. But nothing in the derivation required the unperturbed problem to be the box. Suppose we are at some coefficient vector $\bm c$, with Hamiltonian $H(\bm c)=H_0+\sum_kc_k\phi_k$, levels $E_n(\bm c)$ and normalized states $\psi_n(\bm c)$. Increase one coefficient, $c_k\to c_k+\eta$. Relative to $H(\bm c)$ this is a perturbation $\eta\phi_k$, and \cref{eq:perturbation-first}, applied with $H(\bm c)$ as the ``unperturbed'' Hamiltonian, gives
+Equation~\eqref{eq:perturbation-linear} is a statement about small $\bm c$ near $\bm c=0$. But nothing in the derivation required the unperturbed problem to be the box. Suppose we are at some coefficient vector $\bm c$, with Hamiltonian $H(\bm c)=H_0+\sum_kc_k\phi_k$, levels $E_n(\bm c)$ and normalized states $\psi_n(\bm c)$. Increase one coefficient, $c_k\to c_k+\eta$.\say{$\eta$}{eta}[A Greek letter: \emph{AY-tuh} (American) or \emph{EE-tuh} (British)] Relative to $H(\bm c)$ this is a perturbation $\eta\phi_k$, and \cref{eq:perturbation-first}, applied with $H(\bm c)$ as the ``unperturbed'' Hamiltonian, gives
 \[
 E_n(\bm c+\eta\,\hat{\bm e}_k)=E_n(\bm c)+\eta\int|\psi_n(\bm c)|^2\phi_k\,\dd x+\order(\eta^2),
 \]
@@ -400,7 +400,7 @@ where $\hat{\bm e}_k$ is the vector with 1 in place $k$ and zeros elsewhere. Sub
 \frac{\partial E_n}{\partial c_k}\bigg|_{\bm c}=\int_{-L}^{L}|\psi_n(\bm c)|^2\,\phi_k\,\dd x=A_{nk}(\bm c).
 \label{eq:perturbation-HF}
 \end{equation}
-This is the \emph{Hellmann--Feynman theorem}: the derivative of an eigenvalue with respect to a parameter in the Hamiltonian is the expectation value of the derivative of the Hamiltonian. (Problem~9 asks you to derive it directly, without perturbation theory.) The symbol $\partial/\partial c_k$ is a partial derivative: the rate of change with respect to $c_k$ with all other coefficients held fixed. The matrix $A_{nk}(\bm c)$ evaluated with the \emph{current} wavefunctions is therefore not an approximation at all: it is the exact Jacobian (matrix of first derivatives) of the levels with respect to the coefficients. This is why it is the natural tool for fitting, \cref{sec:perturbation-fitting}.
+This is the \emph{Hellmann--Feynman\say{Hellmann--Feynman}{HEL-mahn FINE-mun} theorem}: the derivative of an eigenvalue with respect to a parameter in the Hamiltonian is the expectation value of the derivative of the Hamiltonian. (Problem~9 asks you to derive it directly, without perturbation theory.) The symbol $\partial/\partial c_k$ is a partial derivative: the rate of change with respect to $c_k$ with all other coefficients held fixed. The matrix $A_{nk}(\bm c)$ evaluated with the \emph{current} wavefunctions is therefore not an approximation at all: it is the exact Jacobian\say{Jacobian}{juh-KOH-bee-un} (matrix of first derivatives) of the levels with respect to the coefficients. This is why it is the natural tool for fitting, \cref{sec:perturbation-fitting}.
 
 \subsection{Computing $A$ on a grid}
 
@@ -661,7 +661,7 @@ Multiply by $\psi_k^{(0)*}$ and integrate; by \cref{eq:perturbation-orthonormal,
 \sum_m\Bigl(E_m^{(0)}\delta_{km}+\delta V_{km}\Bigr)a_m=E\,a_k\qquad\text{for every }k.
 \label{eq:perturbation-galerkin}
 \end{equation}
-This is a matrix eigenvalue problem (Chapter~\ref{ch:eigen}) for the matrix $H_{km}=E_k^{(0)}\delta_{km}+\delta V_{km}$, the unperturbed energies on the diagonal plus the matrix of the perturbation. It is exact but infinite. We keep the first $N_b$ states and diagonalize the $N_b\times N_b$ matrix; then we repeat with a larger $N_b$ and accept the answer when it no longer changes. Truncation works well here because a state far above level $n$ couples to it through a large denominator. This approach is often called the Galerkin or Rayleigh--Ritz method. For the box with cosines we know every matrix element in closed form, \cref{eq:perturbation-cosmat}, so the method is easy:
+This is a matrix eigenvalue problem (Chapter~\ref{ch:eigen}) for the matrix $H_{km}=E_k^{(0)}\delta_{km}+\delta V_{km}$, the unperturbed energies on the diagonal plus the matrix of the perturbation. It is exact but infinite. We keep the first $N_b$ states and diagonalize the $N_b\times N_b$ matrix; then we repeat with a larger $N_b$ and accept the answer when it no longer changes. Truncation works well here because a state far above level $n$ couples to it through a large denominator. This approach is often called the Galerkin\say{Galerkin}{guh-LER-kin}[Closer to the Russian is \emph{gah-LYOR-kin}] or Rayleigh--Ritz method. For the box with cosines we know every matrix element in closed form, \cref{eq:perturbation-cosmat}, so the method is easy:
 
 \begin{pycode}
 import numpy as np

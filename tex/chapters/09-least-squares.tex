@@ -42,13 +42,13 @@ where $m$ is the number of data points ($m=4$ here). A residual is the vertical 
 S(c_0,c_1) = \sum_{i=1}^{m} r_i^2 = \sum_{i=1}^m \bigl(y_i - c_0 - c_1 t_i\bigr)^2 .
 \label{eq:least-squares-S-line}
 \end{equation}
-Four reasons make squares the standard choice. (1) Squares are never negative, so positive and negative residuals cannot cancel. (2) $S$ is a smooth function of the coefficients, so calculus finds its minimum; the sum of absolute values $\sum\abs{r_i}$ has corners where some $r_i=0$, and derivatives fail there. (3) Squaring penalizes a residual of 2 four times as much as a residual of 1, so the rule works hard to avoid large misses. (4) When measurement errors follow the Gaussian (bell-curve) distribution, least squares picks the coefficients under which the observed data are most probable (see the box below).
+Four reasons make squares the standard choice. (1) Squares are never negative, so positive and negative residuals cannot cancel. (2) $S$ is a smooth function of the coefficients, so calculus finds its minimum; the sum of absolute values $\sum\abs{r_i}$ has corners where some $r_i=0$, and derivatives fail there. (3) Squaring penalizes a residual of 2 four times as much as a residual of 1, so the rule works hard to avoid large misses. (4) When measurement errors follow the Gaussian\say{Gaussian}{GOWSS-ee-un}[After Carl Friedrich Gauss, whose name rhymes with ``house''] (bell-curve) distribution, least squares picks the coefficients under which the observed data are most probable (see the box below).
 
 \begin{beyond}
 \textbf{The statistical justification of least squares.} Gauss showed that if the errors in $y_i$ are independent and Gaussian with a common width, the coefficients that minimize $S$ are the ones that make the observed data most probable (maximum likelihood), and the Gauss--Markov theorem states that among all unbiased estimators that are linear in the data, least squares has the smallest variance. We do not prove these statements here; they need the probability of Chapter~\ref{ch:probability}. Proofs are in \cite{esl}. Nothing in this chapter depends on them.
 \end{beyond}
 
-\paragraph{Functions of two variables and partial derivatives.} $S$ depends on two numbers, $c_0$ and $c_1$. The \emph{partial derivative} $\partial S/\partial c_0$ is the ordinary derivative of $S$ with respect to $c_0$ while $c_1$ is held fixed (treated as a constant); $\partial S/\partial c_1$ is defined the same way with the roles swapped. At a minimum of a smooth function of two variables, both partial derivatives vanish. The reason is a one-variable argument you already know: if $(\hat c_0,\hat c_1)$ minimizes $S$, then the one-variable function $g(c_0)=S(c_0,\hat c_1)$ has a minimum at $c_0=\hat c_0$, so $g'(\hat c_0)=0$, and $g'(\hat c_0)$ is exactly $\partial S/\partial c_0$ at the minimum. The same holds for $c_1$. (Vanishing partial derivatives are necessary for a minimum; we prove in \cref{sec:least-squares-general} that for least squares they are also sufficient.)
+\paragraph{Functions of two variables and partial derivatives.} $S$ depends on two numbers, $c_0$ and $c_1$. The \emph{partial derivative} $\partial S/\partial c_0$ is the ordinary derivative of $S$ with respect to $c_0$ while $c_1$ is held fixed (treated as a constant);\say{$\partial$}{partial}[$\partial S/\partial c$ is read ``partial $S$ by partial $c$'', or ``dee $S$ by dee $c$''. The symbol itself is also called ``curly d'' or ``del''] $\partial S/\partial c_1$ is defined the same way with the roles swapped. At a minimum of a smooth function of two variables, both partial derivatives vanish. The reason is a one-variable argument you already know: if $(\hat c_0,\hat c_1)$ minimizes $S$, then the one-variable function $g(c_0)=S(c_0,\hat c_1)$ has a minimum at $c_0=\hat c_0$, so $g'(\hat c_0)=0$, and $g'(\hat c_0)$ is exactly $\partial S/\partial c_0$ at the minimum. The same holds for $c_1$. (Vanishing partial derivatives are necessary for a minimum; we prove in \cref{sec:least-squares-general} that for least squares they are also sufficient.)
 
 \paragraph{Deriving the normal equations.} Differentiate \cref{eq:least-squares-S-line} term by term with the chain rule. For $c_0$, the derivative of $(y_i - c_0 - c_1 t_i)^2$ is $2(y_i - c_0 - c_1t_i)\times(-1)$:
 \begin{align}
@@ -304,7 +304,7 @@ Rotations and reflections are orthogonal matrices: each preserves lengths and an
 
 \emph{Step 1.} The $M\times M$ matrix $A^\top A$ is symmetric (\cref{sec:least-squares-general}). By the spectral theorem it has orthonormal eigenvectors $v_1,\dots,v_M$ with real eigenvalues $\nu_1,\dots,\nu_M$, which we order so that $\nu_1\ge\nu_2\ge\cdots\ge\nu_M$. (We call these eigenvalues $\nu_j$ rather than $\lambda_j$ because $\lambda$ will soon mean a damping parameter, as in the paper.)
 
-\emph{Step 2.} The eigenvalues are not negative: $\nu_j = \nu_j v_j^\top v_j = v_j^\top (A^\top A v_j) = \norm{Av_j}^2 \ge 0$. Define the singular values $\sigma_j = \sqrt{\nu_j}$, so $\norm{Av_j} = \sigma_j$. Let $\varrho$ be the number of strictly positive $\sigma_j$. (We write the rank as $\varrho$ because the paper uses $r$ for residuals.)
+\emph{Step 2.} The eigenvalues are not negative: $\nu_j = \nu_j v_j^\top v_j = v_j^\top (A^\top A v_j) = \norm{Av_j}^2 \ge 0$. Define the singular values $\sigma_j = \sqrt{\nu_j}$, so $\norm{Av_j} = \sigma_j$. Let $\varrho$ be the number of strictly positive $\sigma_j$.\say{$\varrho$}{rho}[Another way of writing the Greek letter $\rho$, used here to keep the two apart] (We write the rank as $\varrho$ because the paper uses $r$ for residuals.)
 
 \emph{Step 3.} For $j\le\varrho$ define $u_j = Av_j/\sigma_j$. These are orthonormal:
 \[
@@ -585,7 +585,7 @@ What truncated-SVD solution do you get with $J = \varrho$? With $J = 0$?
 %======================================================================
 \section{Ridge regularization}\label{sec:least-squares-ridge}
 
-A sharp cutoff is crude: a singular value just above the cut is kept whole, one just below is thrown away. Ridge regularization (also called Tikhonov regularization) replaces the step with a smooth filter.
+A sharp cutoff is crude: a singular value just above the cut is kept whole, one just below is thrown away. Ridge regularization (also called Tikhonov\say{Tikhonov}{TEE-khuh-nof} regularization) replaces the step with a smooth filter.
 
 \paragraph{The ridge objective.} Add to the sum of squared residuals a penalty on the size of the coefficients,
 \begin{equation}
@@ -872,7 +872,7 @@ with a ``try-list $(0.2\lambda,\lambda,5\lambda,25\lambda)$''. In the notation o
 \delta c = \sum_j\frac{\sigma_j}{\sigma_j^2+\lambda\sigma_1^2}\,(u_j^\top r)\,v_j ,
 \label{eq:least-squares-paperstep}
 \end{equation}
-which is precisely the ridge solution of \cref{eq:least-squares-paper-lin}: the $\delta c$ that minimizes $\norm{r - A\delta c}^2 + \lambda\sigma_1^2\norm{\delta c}^2$. Damping the \emph{step} in this way is the Levenberg--Marquardt idea \cite{marquardt}, developed in Chapter~\ref{ch:fitting}. In this step $\lambda$ is the Levenberg--Marquardt damping (the book's notation, Appendix~B: $\lambda$ for damping, $\mu$ for ridge strength). Two limits make its role concrete (Problem~17):
+which is precisely the ridge solution of \cref{eq:least-squares-paper-lin}: the $\delta c$ that minimizes $\norm{r - A\delta c}^2 + \lambda\sigma_1^2\norm{\delta c}^2$. Damping the \emph{step} in this way is the Levenberg--Marquardt\say{Levenberg--Marquardt}{LEV-en-berg MAR-kwart} idea \cite{marquardt}, developed in Chapter~\ref{ch:fitting}. In this step $\lambda$ is the Levenberg--Marquardt damping (the book's notation, Appendix~B: $\lambda$ for damping, $\mu$ for ridge strength). Two limits make its role concrete (Problem~17):
 \begin{itemize}
 \item $\lambda\to0$: $\delta c\to A^+r$, the full minimum-norm linearized step (Gauss--Newton);
 \item large $\lambda$: $\sigma_j/(\sigma_j^2+\lambda\sigma_1^2)\approx\sigma_j/(\lambda\sigma_1^2)$, so $\delta c\approx V\Sigma^\top U^\top r/(\lambda\sigma_1^2) = A^\top r/(\lambda\sigma_1^2)$, a short step along $A^\top r$. The \emph{gradient} of $S$ is the vector of its partial derivatives, $(\partial S/\partial c_1,\dots,\partial S/\partial c_M) = -2A^\top r$ by \cref{eq:least-squares-grad}, so $A^\top r$ points opposite to the gradient. A small step in this direction decreases $S$ fastest (shown in Chapter~\ref{ch:fitting}), which is why it is called the direction of \emph{steepest descent}.

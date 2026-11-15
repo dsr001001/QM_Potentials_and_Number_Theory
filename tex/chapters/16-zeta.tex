@@ -37,7 +37,7 @@ Imagine a long row of springs, the $k$-th of which contributes an amount $1/k^s$
 \end{equation}
 Here $k$ runs over the positive integers and $s$ is the variable. Recall from Chapter~\ref{ch:series} (integral test) that this series converges exactly when $s>1$; at $s=1$ it is the harmonic series, which diverges.
 
-\paragraph{How big is $\zeta(s)$?} We can trap $\zeta(s)$ between two simple numbers. Let $f(x)=x^{-s}$ with $s>1$. Its derivative is $f'(x)=-s\,x^{-s-1}<0$, so $f$ is positive and decreasing for $x\ge1$. Take an integer $k\ge2$. For every $x$ in the interval $[k-1,k]$ we have
+\paragraph{How big is $\zeta(s)$?} We can trap $\zeta(s)$ between two simple numbers.\say{$\zeta$}{zeta}[A Greek letter: \emph{ZAY-tuh} in American English, \emph{ZEE-tuh} in British English. $\zeta(s)$ is read ``zeta of $s$''] Let $f(x)=x^{-s}$ with $s>1$. Its derivative is $f'(x)=-s\,x^{-s-1}<0$, so $f$ is positive and decreasing for $x\ge1$. Take an integer $k\ge2$. For every $x$ in the interval $[k-1,k]$ we have
 \[
 f(k)\;\le\; f(x)\;\le\; f(k-1)\qquad\text{(because $f$ decreases)} .
 \]
@@ -403,7 +403,7 @@ Flip the sign of every second term:
 \eta(s)=\sum_{k=1}^{\infty}\frac{(-1)^{k+1}}{k^s}=1-\frac1{2^s}+\frac1{3^s}-\frac1{4^s}+\cdots .
 \label{eq:zeta-eta}
 \end{equation}
-This is the \emph{Dirichlet eta function}, or alternating zeta function. Write $S_N(s)=\sum_{k=1}^{N}(-1)^{k+1}k^{-s}$ for its partial sums. The cancellation between neighboring terms makes it converge on a larger region.
+This is the \emph{Dirichlet eta function},\say{$\eta(s)$}{eta of $s$}[\emph{AY-tuh} (American) or \emph{EE-tuh} (British)] or alternating zeta function. Write $S_N(s)=\sum_{k=1}^{N}(-1)^{k+1}k^{-s}$ for its partial sums. The cancellation between neighboring terms makes it converge on a larger region.
 
 \paragraph{Real $s>0$.} The terms $k^{-s}$ are positive, decrease, and tend to $0$. By the alternating series test (Chapter~\ref{ch:series}) the series converges, the partial sums alternate around the limit ($S_2\le S_4\le\cdots\le\eta(s)\le\cdots\le S_3\le S_1$), and
 \[
@@ -647,7 +647,7 @@ We now collect what is known about the location of the zeros of $\zeta$, labelli
 \begin{enumerate}
 \item \textbf{No zeros in $\Re s>1$.} Theorem, proved in \cref{sec:zeta-euler} from the Euler product.
 \item \textbf{In $\Re s<0$ the only zeros are $-2,-4,-6,\dots$.} Theorem; deduced here from \cref{eq:zeta-fe} and the $\Gamma$ facts in the box, which are themselves taken on trust (proofs beyond this book). For $\Re s<0$ each factor on the right of \cref{eq:zeta-fe} is examined: $2^s\pi^{s-1}$ is an exponential, never zero; $\Gamma(1-s)$ is never zero; $\zeta(1-s)\ne0$ by item 1, since $\Re(1-s)>1$; and $\sin(\pi s/2)=0$ only at even integers. So the zeros in $\Re s<0$ are exactly the negative even integers.
-\item \textbf{No zeros on the line $\Re s=1$.} Theorem, proved by Hadamard and de la Vall\'ee Poussin in 1896; it is the key step in their proof of the prime number theorem (Chapter~\ref{ch:primes}). The proof is beyond this book; see \cite{davenport} or \cite{titchmarsh}.
+\item \textbf{No zeros on the line $\Re s=1$.} Theorem, proved by Hadamard\say{Hadamard}{ah-dah-MAR} and de la Vall\'ee Poussin in 1896; it is the key step in their proof of the prime number theorem (Chapter~\ref{ch:primes}). The proof is beyond this book; see \cite{davenport} or \cite{titchmarsh}.
 \item \textbf{No zeros on the line $\Re s=0$.} Theorem; deduced here from item 3 and \cref{eq:zeta-fe}, both taken on trust (proofs beyond this book): at $s=it$ with $t\ne0$, \cref{eq:zeta-fe} gives $\zeta(it)$ as a product of nonzero factors, because $\sin(\pi it/2)\ne0$ (the argument $\pi it/2$ is not a real multiple of $\pi$) and $\zeta(1-it)\ne0$ by item 3. At $s=0$, $\zeta(0)=-\tfrac12\ne0$.
 \end{enumerate}
 

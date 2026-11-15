@@ -38,7 +38,7 @@ with three constants:
 \end{itemize}
 The quantity $\omega t+\varphi$ is called the \textbf{phase} at $t$. Because cosine and sine differ only by a shift, $\sin\theta=\cos(\theta-\pi/2)$, a sine is also a sinusoid: $A\sin(\omega t)=A\cos(\omega t-\pi/2)$.
 
-\paragraph{Period.} A function $f$ is \textbf{periodic with period $\tau>0$} if $f(t+\tau)=f(t)$ for every $t$. For the sinusoid,
+\paragraph{Period.} A function $f$ is \textbf{periodic with period $\tau>0$} if $f(t+\tau)=f(t)$ for every $t$.\say{$\tau$}{tau}[A Greek letter; it rhymes with ``cow'', though some say \emph{taw}] For the sinusoid,
 \begin{equation}
 A\cos(\omega(t+\tau)+\varphi)=A\cos(\omega t+\varphi+\omega\tau).
 \end{equation}
@@ -176,7 +176,7 @@ With $\alpha=\omega_2t$, $\beta=\omega_1t$, and writing $\bar\omega=(\omega_1+\o
 \sin\omega_1t+\sin\omega_2t=\underbrace{2\cos\!\left(\frac{\Delta\omega}{2}t\right)}_{\text{slow envelope}}\;\underbrace{\sin(\bar\omega t)}_{\text{fast carrier}} .
 \label{eq:fourier-series-beats}
 \end{equation}
-When $\Delta\omega\ll\bar\omega$, the result looks like a fast oscillation at the average frequency $\bar\omega$ whose amplitude $2|\cos(\Delta\omega\, t/2)|$ swells and fades slowly. For these equal amplitudes the loudness envelope $|\cos(\Delta\omega\, t/2)|$ vanishes when $\Delta\omega\, t/2=\pi/2+j\pi$ for integer $j$, so successive silences are separated by
+When $\Delta\omega\ll\bar\omega$,\say{$\ll$}{is much less than}[Likewise $\gg$ is ``is much greater than''] the result looks like a fast oscillation at the average frequency $\bar\omega$ whose amplitude $2|\cos(\Delta\omega\, t/2)|$ swells and fades slowly. For these equal amplitudes the loudness envelope $|\cos(\Delta\omega\, t/2)|$ vanishes when $\Delta\omega\, t/2=\pi/2+j\pi$ for integer $j$, so successive silences are separated by
 \begin{equation}
 \tau_{\rm beat}=\frac{2\pi}{\Delta\omega}.
 \label{eq:fourier-series-beatperiod}
@@ -269,7 +269,7 @@ Three cases:
 \item $j=k\ge1$: $I_c(0)=2L$ and $I_c(2k)=0$, so the integral is $\tfrac12(2L)=L$.
 \item $j=k=0$: both terms are $I_c(0)=2L$, so the integral is $2L$.
 \end{itemize}
-In the same way \cref{eq:fourier-series-ps,eq:fourier-series-psc} give the sine-sine and sine-cosine integrals. Introducing the \textbf{Kronecker delta} $\delta_{jk}$, equal to $1$ if $j=k$ and $0$ otherwise, the results are collected in \cref{tab:fourier-series-orth}.
+In the same way \cref{eq:fourier-series-ps,eq:fourier-series-psc} give the sine-sine and sine-cosine integrals. Introducing the \textbf{Kronecker\say{Kronecker}{KROH-nek-er}[$\delta_{jk}$ is read ``delta $j$ $k$''] delta} $\delta_{jk}$, equal to $1$ if $j=k$ and $0$ otherwise, the results are collected in \cref{tab:fourier-series-orth}.
 
 \begin{table}[htbp]\centering
 \caption{Orthogonality relations on $[-L,L]$ for non-negative integers $j,k$.}
@@ -317,7 +317,7 @@ Without computing anything, what is $\int_{-L}^{L}\sin(3\pi x/L)\cos(3\pi x/L)\,
 %=====================================================================
 \section{Fourier series}\label{sec:fourier-series-series}
 
-A guitar string of length $\ell$ fixed at both ends vibrates in standing-wave modes $\sin(k\pi x/\ell)$, $k=1,2,3,\dots$. Pluck it into some triangular shape and the subsequent motion is a superposition of these modes. Joseph Fourier's bold claim (1807) was that essentially any shape can be written as such a superposition. Orthogonality tells us how to find the recipe.
+A guitar string of length $\ell$ fixed at both ends vibrates in standing-wave modes $\sin(k\pi x/\ell)$, $k=1,2,3,\dots$. Pluck it into some triangular shape and the subsequent motion is a superposition of these modes. Joseph Fourier's\say{Fourier}{FOOR-ee-ay}[Joseph Fourier, French mathematician and physicist, 1768--1830] bold claim (1807) was that essentially any shape can be written as such a superposition. Orthogonality tells us how to find the recipe.
 
 \subsection{Definition}
 
@@ -514,7 +514,7 @@ and all other $\hat f_k=0$. Six nonzero complex coefficients describe the whole 
 
 \subsection{Parseval's theorem}
 
-How ``big'' is a function? A natural measure, the one behind every rms in the paper, is its \textbf{mean square} over a period, $\langle|f|^2\rangle=\frac1{2L}\int_{-L}^{L}|f|^2\,\dd x$ (for real $f$, $|f|^2=f^2$ and we write simply $\langle f^2\rangle$), and its square root, the root mean square (rms). Parseval's theorem says the mean square is the sum of the squared moduli of the Fourier coefficients, exactly as the squared length of a 3D vector is $v_x^2+v_y^2+v_z^2$.
+How ``big'' is a function? A natural measure, the one behind every rms in the paper, is its \textbf{mean square} over a period, $\langle|f|^2\rangle=\frac1{2L}\int_{-L}^{L}|f|^2\,\dd x$ (for real $f$, $|f|^2=f^2$ and we write simply $\langle f^2\rangle$), and its square root, the root mean square (rms). Parseval's\say{Parseval}{PAR-suh-val} theorem says the mean square is the sum of the squared moduli of the Fourier coefficients, exactly as the squared length of a 3D vector is $v_x^2+v_y^2+v_z^2$.
 
 \textbf{Derivation.} Write $|f|^2=f\,\bar f$ and insert the complex series for $f$ and for $\bar f$ (for $\bar f$, conjugate each term, and use a second summation index $l$):
 \begin{align}
@@ -579,7 +579,7 @@ so $c_0=a_0/2$ and $c_k=a_k$. Approximate $f$ by $g(x)=\sum_{k=0}^{M-1}d_k\cos(k
 \begin{equation}
 \mathcal{E}=\frac1{2L}\int f^2\dd x-2\sum_{k<M}d_k\frac1{2L}\int f\cos\frac{k\pi x}{L}\dd x+\sum_{j,k<M}d_jd_k\frac1{2L}\int\cos\frac{j\pi x}{L}\cos\frac{k\pi x}{L}\dd x .
 \end{equation}
-By \cref{tab:fourier-series-orth}, the last average is $\nu_k\delta_{jk}$ with $\nu_0=1$ and $\nu_k=\tfrac12$ for $k\ge1$. By \cref{eq:fourier-series-cosconv}, the middle average is $\nu_kc_k$ (for $k\ge1$ it is $c_k/2$; for $k=0$ it is $c_0$). Hence
+By \cref{tab:fourier-series-orth}, the last average is $\nu_k\delta_{jk}$ with $\nu_0=1$ and $\nu_k=\tfrac12$ for $k\ge1$.\say{$\nu$}{nu}[A Greek letter, said \emph{new}. Take care not to read it as the Latin letter $v$] By \cref{eq:fourier-series-cosconv}, the middle average is $\nu_kc_k$ (for $k\ge1$ it is $c_k/2$; for $k=0$ it is $c_0$). Hence
 \begin{equation}
 \mathcal{E}=\langle f^2\rangle+\sum_{k<M}\nu_k\left(d_k^2-2d_kc_k\right)
 =\langle f^2\rangle+\sum_{k<M}\nu_k(d_k-c_k)^2-\sum_{k<M}\nu_kc_k^2,
@@ -751,7 +751,7 @@ Two angular frequencies $\omega_1,\omega_2>0$ are called \textbf{commensurate} i
 
 \textbf{Proof.}
 
-\textbf{Step 1 (rational $\Rightarrow$ periodic).} If $\omega_2/\omega_1=l/j$, set $\tau=2\pi j/\omega_1$. Then $\omega_1\tau=2\pi j$ and $\omega_2\tau=2\pi j\,\omega_2/\omega_1=2\pi l$, whole numbers of turns, so both terms, and hence $f$, satisfy $f(t+\tau)=f(t)$.
+\textbf{Step 1 (rational $\Rightarrow$ periodic).}\say{$\Rightarrow$}{implies} If $\omega_2/\omega_1=l/j$, set $\tau=2\pi j/\omega_1$. Then $\omega_1\tau=2\pi j$ and $\omega_2\tau=2\pi j\,\omega_2/\omega_1=2\pi l$, whole numbers of turns, so both terms, and hence $f$, satisfy $f(t+\tau)=f(t)$.
 
 \textbf{Step 2 (periodic $\Rightarrow$ rational): set up.} Suppose $f(t+\tau)=f(t)$ for all $t$ with some $\tau>0$. Differentiating this identity twice with respect to $t$ gives $f''(t+\tau)=f''(t)$.
 

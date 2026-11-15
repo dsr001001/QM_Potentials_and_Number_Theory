@@ -37,20 +37,28 @@
 \definecolor{papc}{RGB}{40,40,40}
 
 % ---------- boxes
-\newtcolorbox{chapterintro}{colback=keyc!4,colframe=keyc!60,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,fonttitle=\bfseries,title=What this chapter is about}
-\newtcolorbox{prerequisites}{colback=white,colframe=keyc!40,boxrule=0.4pt,arc=2pt,fonttitle=\bfseries\small,title=What you need,fontupper=\small,before upper={\begin{itemize}[leftmargin=*,itemsep=1pt]},after upper={\end{itemize}}}
-\newtcolorbox{keyideas}{colback=keyc!6,colframe=keyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Key Ideas,breakable,before upper={\begin{itemize}[leftmargin=*,itemsep=2pt]},after upper={\end{itemize}}}
+% One house style for every box: sans text, sans bold title, solid frame, 5% tint. Only the colour differs.
+\newcommand{\sidefont}{\fontfamily{lmss}\selectfont}
+\tcbset{bookbox/.style={boxrule=0.6pt,arc=2pt,left=8pt,right=8pt,top=5pt,bottom=5pt,
+  fontupper=\sidefont,fonttitle=\sidefont\bfseries,colback=#1!5,colframe=#1}}
+\newtcolorbox{chapterintro}{bookbox=keyc,title=What this chapter is about,before upper={\setlength{\parskip}{5pt plus 1pt}}}
+\newtcolorbox{prerequisites}{bookbox=keyc,colframe=keyc!55,colback=white,title=What you need,fontupper=\sidefont\small,before upper={\begin{itemize}[leftmargin=*,itemsep=1pt]},after upper={\end{itemize}}}
+\newtcolorbox{keyideas}{bookbox=keyc,title=Key Ideas,breakable,before upper={\begin{itemize}[leftmargin=*,itemsep=2pt]},after upper={\end{itemize}}}
 \newcounter{sample}[chapter]
 \renewcommand{\thesample}{\thechapter.\arabic{sample}}
-\newtcolorbox{sample}[1]{colback=samc!4,colframe=samc,boxrule=0.6pt,arc=2pt,breakable,fonttitle=\bfseries,
-  title={\refstepcounter{sample}Sample Problem \thesample: #1}}
+\newtcolorbox{sample}[1]{bookbox=samc,breakable,title={\refstepcounter{sample}Sample Problem \thesample: #1}}
 \newcounter{checkpt}[chapter]
-\newtcolorbox{checkpoint}{colback=chkc!6,colframe=chkc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,
-  title={\refstepcounter{checkpt}Checkpoint \thechapter.\arabic{checkpt}}}
+\newtcolorbox{checkpoint}{bookbox=chkc,title={\refstepcounter{checkpt}Checkpoint \thechapter.\arabic{checkpt}}}
 \newcommand{\checkanswer}[1]{\par\noindent{\small\textit{Answer:} #1}\par\medskip}
-\newtcolorbox{pitfall}{colback=pitc!5,colframe=pitc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Pitfall,breakable}
-\newtcolorbox{beyond}{colback=beyc!5,colframe=beyc,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=Taken on trust,breakable}
-\newtcolorbox{paperbox}{colback=papc!4,colframe=papc!70,boxrule=0.6pt,arc=2pt,fonttitle=\bfseries,title=In the paper,breakable}
+\newtcolorbox{pitfall}{bookbox=pitc,title=Pitfall,breakable}
+\newtcolorbox{beyond}{bookbox=beyc,title=Taken on trust,breakable}
+\newtcolorbox{paperbox}{bookbox=papc,title=In the paper,breakable}
+
+% ---------- pronunciation footnotes:  \say{symbol or name}{how to say it}[optional note]
+% \saytext is the same for use with \footnotemark when the symbol first appears inside a box.
+\definecolor{sayc}{RGB}{150,60,110}
+\NewDocumentCommand{\say}{m m o}{\footnote{{\sidefont\bfseries\color{sayc}Say it:}\ #1\ \ \textit{``#2''}\IfValueT{#3}{. #3}.}}
+\NewDocumentCommand{\saytext}{m m o}{\footnotetext{{\sidefont\bfseries\color{sayc}Say it:}\ #1\ \ \textit{``#2''}\IfValueT{#3}{. #3}.}}
 
 % ---------- problems
 \newenvironment{problemlist}{\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=*,itemsep=4pt]}{\end{enumerate}}
@@ -101,8 +109,7 @@
 
 % ---------- Did you know? boxes
 \definecolor{dykc}{RGB}{200,110,0}
-\newtcolorbox{didyouknow}[1]{enhanced,breakable,colback=dykc!6!white,colframe=dykc,boxrule=0.7pt,arc=3pt,
-  left=8pt,right=8pt,top=4pt,bottom=4pt,fonttitle=\bfseries,
+\newtcolorbox{didyouknow}[1]{enhanced,breakable,bookbox=dykc,
   title={\raisebox{-0.5pt}{$\bigstar$}\ Did you know?\quad\textit{#1}}}
 
 % ---------- chapter openers: artwork, caption, link back to the contents

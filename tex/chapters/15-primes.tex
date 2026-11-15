@@ -276,7 +276,7 @@ Someone claims: ``Euclid's proof shows that $p_1\cdots p_k+1$ is always prime.''
 %=====================================================================
 \section{Finding primes: the sieve of Eratosthenes}\label{sec:primes-sieve}
 
-Trial division tests one number at a time. To list \emph{all} primes up to some $x$ there is a far better method, attributed to Eratosthenes of Cyrene (third century BCE).
+Trial division tests one number at a time. To list \emph{all} primes up to some $x$ there is a far better method, attributed to Eratosthenes\say{Eratosthenes}{air-uh-TOSS-thuh-neez} of Cyrene (third century BCE).
 
 \textbf{The sieve.}
 \begin{enumerate}
@@ -350,7 +350,7 @@ When sieving up to 200, which is the last prime whose multiples you must cross o
 \section{Counting primes: the function $\pi(x)$}\label{sec:primes-pi}
 
 \begin{quote}
-\textbf{Definition.} For a real number $x$, the \emph{prime counting function} $\pi(x)$ is the number of primes $p$ with $p\le x$.
+\textbf{Definition.} For a real number $x$, the \emph{prime counting function} $\pi(x)$ is the number of primes $p$ with $p\le x$.\say{$\pi(x)$}{pi of $x$}[Here $\pi$ is the name of a function and has nothing to do with the number $3.14159\ldots$]
 \end{quote}
 
 So $\pi(10)=4$ (the primes $2,3,5,7$), $\pi(30)=10$, $\pi(2.5)=1$ and $\pi(1)=0$. As $x$ increases, $\pi(x)$ stays constant until $x$ reaches a prime, where it jumps up by exactly 1. It is a \emph{step function} (\cref{fig:primes-pi-small}).
@@ -427,7 +427,7 @@ Recall from Chapter~\ref{ch:asymptotics} that $f(x)\sim g(x)$ (``$f$ is asymptot
 
 \subsection{History in brief}
 
-The theorem was conjectured long before it was proved. Gauss, as a teenager around 1792, counted primes in blocks of 1000 and concluded that their density near $x$ is about $1/\log x$; he described this in a letter of 1849. Legendre published in 1798 (refined 1808) the empirical formula $x/(\log x-1.08366)$. Around 1850 Chebyshev proved that the ratio $\pi(x)/(x/\log x)$ is trapped, for all sufficiently large $x$ (not for every $x$), between two constants close to 1 (about $0.921$ and $1.106$; the first happens to be close to the value of the ratio at $x=10$ in \cref{tab:primes-pi}, a coincidence), and that \emph{if} the ratio has a limit, the limit is 1; \cref{sec:primes-chebyshev} reproduces the spirit of his argument. In 1859 Riemann's eight-page paper \cite{riemann1859} showed that the fine structure of $\pi(x)$ is governed by the zeros of the zeta function. That paper is where the Riemann hypothesis was first stated.
+The theorem was conjectured long before it was proved. Gauss, as a teenager around 1792, counted primes in blocks of 1000 and concluded that their density near $x$ is about $1/\log x$; he described this in a letter of 1849. Legendre\say{Legendre}{luh-ZHAHN-druh} published in 1798 (refined 1808) the empirical formula $x/(\log x-1.08366)$. Around 1850 Chebyshev proved that the ratio $\pi(x)/(x/\log x)$ is trapped, for all sufficiently large $x$ (not for every $x$), between two constants close to 1 (about $0.921$ and $1.106$; the first happens to be close to the value of the ratio at $x=10$ in \cref{tab:primes-pi}, a coincidence), and that \emph{if} the ratio has a limit, the limit is 1; \cref{sec:primes-chebyshev} reproduces the spirit of his argument. In 1859 Riemann's eight-page paper \cite{riemann1859} showed that the fine structure of $\pi(x)$ is governed by the zeros of the zeta function. That paper is where the Riemann hypothesis was first stated.
 
 \subsection{The logarithmic integral}
 
@@ -442,7 +442,7 @@ Gauss's density idea suggests a better approximation than $x/\log x$. If a numbe
 Many tables use instead $\mathrm{li}(x)=\int_0^x\dd t/\log t$, where the singularity at $t=1$ is handled by a symmetric limit. The two differ by a constant: $\mathrm{li}(x)=\mathrm{Li}(x)+\mathrm{li}(2)$ with $\mathrm{li}(2)\approx1.045$. For large $x$ the constant is irrelevant; for small $x$ make sure you know which one a table means. This book uses $\mathrm{Li}$.
 \end{pitfall}
 
-\textbf{$\mathrm{Li}(x)\sim x/\log x$ (proved).} We show that the two approximations agree to leading order, so \cref{eq:primes-pnt} may equally be written $\pi(x)\sim\mathrm{Li}(x)$.
+\textbf{$\mathrm{Li}(x)\sim x/\log x$ (proved).}\say{$\mathrm{Li}(x)$}{L i of $x$}[Letter by letter; some say ``lie of $x$''. It is the logarithmic integral] We show that the two approximations agree to leading order, so \cref{eq:primes-pnt} may equally be written $\pi(x)\sim\mathrm{Li}(x)$.
 
 \emph{Step 1: integrate by parts.} In \cref{eq:primes-Li} take $u=1/\log t$ and $\dd v=\dd t$, so that $\dd u=-\dd t/(t\log^2t)$ and $v=t$:
 \begin{align}
@@ -547,7 +547,7 @@ So $\theta(10)=\log(2\cdot3\cdot5\cdot7)=\log210$. Where $\pi(x)$ counts each pr
 \end{equation}
 \emph{and for every real $x\ge1$, $\theta(x)<(4\log2)\,x\approx2.77\,x$.}
 
-\emph{Proof of \cref{eq:primes-cheb1}.} Recall the binomial coefficient $\binom{2n}{n}=\frac{(2n)!}{n!\,n!}$, the number of ways of choosing $n$ objects from $2n$, which is a positive integer.
+\emph{Proof of \cref{eq:primes-cheb1}.} Recall the binomial coefficient $\binom{2n}{n}=\frac{(2n)!}{n!\,n!}$,\say{$\binom{n}{k}$}{$n$ choose $k$} the number of ways of choosing $n$ objects from $2n$, which is a positive integer.
 \begin{enumerate}
 \item \emph{Every prime $p$ with $n<p\le2n$ divides $\binom{2n}{n}$.} Such a $p$ is one of the factors of $(2n)!=1\cdot2\cdots(2n)$, so $p\mid(2n)!=\binom{2n}{n}\,(n!)^2$. By Euclid's lemma $p$ divides $\binom{2n}{n}$ or $(n!)^2$. It cannot divide $(n!)^2=(1\cdot2\cdots n)^2$: by the repeated Euclid's lemma it would then divide one of the factors $1,\dots,n$, all of which are positive and smaller than $p$. So $p\mid\binom{2n}{n}$.
 \item \emph{Their product divides $\binom{2n}{n}$.} Write the canonical factorization $\binom{2n}{n}=r_1^{b_1}\cdots r_j^{b_j}$ (\cref{eq:primes-fta}). If a prime $p$ divides $\binom{2n}{n}$, then by the repeated Euclid's lemma $p$ divides some $r_i$, so $p=r_i$: every such $p$ is one of the $r_i$, with exponent $b_i\ge1$. The primes in $(n,2n]$ are distinct, so they are distinct members of the list $r_1,\dots,r_j$. Hence $\binom{2n}{n}=\bigl(\prod_{n<p\le2n}p\bigr)\cdot c$, where $c$ is the product of all remaining prime factors (each $r_i$ taken $b_i-1$ more times if it is one of our primes, $b_i$ times otherwise), a positive integer. So $\prod_{n<p\le2n}p$ divides $\binom{2n}{n}$, and therefore $\prod_{n<p\le2n}p\le\binom{2n}{n}$.
@@ -734,7 +734,7 @@ On the other hand, in \cref{eq:primes-psi} each prime $p\le N$ contributes $\log
 This is the most natural form of the PNT: the prime powers, each weighted by $\log p$, accumulate at an average rate of exactly 1 per unit of $x$.
 \end{beyond}
 
-\Cref{tab:primes-psi} shows how quickly $\psi(x)/x$ approaches 1, much faster than $\pi(x)/(x/\log x)$ did in \cref{tab:primes-pi}. Panel (b) of \cref{fig:primes-psi} shows that, for $x\le10^5$, $\psi(x)-x$ wanders on the scale of $\sqrt x$. This is a numerical observation, not a theorem. A bound $\psi(x)-x=\order(\sqrt x\log^2x)$ valid for all large $x$ is equivalent to the Riemann hypothesis (von Koch, 1901), which is open. Without that hypothesis, only much weaker bounds are proved, of the de la Vall\'ee Poussin type quoted for $\pi(x)$ in \cref{sec:primes-pnt}.
+\Cref{tab:primes-psi} shows how quickly $\psi(x)/x$ approaches 1, much faster than $\pi(x)/(x/\log x)$ did in \cref{tab:primes-pi}. Panel (b) of \cref{fig:primes-psi} shows that, for $x\le10^5$, $\psi(x)-x$ wanders on the scale of $\sqrt x$. This is a numerical observation, not a theorem. A bound $\psi(x)-x=\order(\sqrt x\log^2x)$ valid for all large $x$ is equivalent to the Riemann hypothesis (von Koch, 1901), which is open. Without that hypothesis, only much weaker bounds are proved, of the de la Vall\'ee Poussin\say{de la Vall\'ee Poussin}{duh lah vah-LAY poo-SAN} type quoted for $\pi(x)$ in \cref{sec:primes-pnt}.
 
 \begin{table}[htbp]\centering
 \caption{Chebyshev's function $\psi(x)$ compared with $x$ (computed in the check script).}
@@ -890,7 +890,7 @@ Every term is one line of \cref{fig:primes-spectrum}: a sinusoid in the zero hei
 
 \paragraph{The prime budgets of Table~V and Fig.~1.} Table~V's columns are the sets $P=\{2\}$; ``3 primes'' $=\{2,3,5\}$; ``6 primes'' $=\{2,3,5,7,11,13\}$; and ``25 primes'' $=$ all primes up to $p_{25}=97$. We take these to be the first $k$ primes. The paper does not list them, but this choice reproduces its numbers: this chapter's check script recomputes the 401--500 row with qmnt for all four budgets. With $m\le3$ these contain $3$, $9$, $18$ and $75$ terms. On the principal holdout RE5 (zeros 401--500, null $0.263$), they give rms $0.198$, $0.116$, $0.074$ and $0.043$ mean spacings, with correlations $+0.66$, $+0.90$, $+0.96$, $+0.99$ (Table~V, first row). The $\{2\}$ column is RE2 used as a predictor: the single slowest prime-power family already beats the null. Fig.~1 shows the six-prime formula, held-out correlation $+0.96$. ``Zero fitted parameters'' (Sec.~II~D) means exactly this: the set $P$ is chosen by size, and its members are fixed facts that the sieve of \cref{sec:primes-sieve} produces without error.
 
-\paragraph{``Primes $p\le13$''.} Sec.~I~A~b and Sec.~II~D describe Connes' construction \cite{connes26}, which extremizes a truncated Weil quadratic form over primes $p\le13$. That is the same prime set as the six-prime oracle: $\{2,3,5,7,11,13\}$, $\pi(13)=6$. The paper places this construction ``on the arithmetic side'' because its input is this list of primes, not zeros.
+\paragraph{``Primes $p\le13$''.} Sec.~I~A~b and Sec.~II~D describe Connes' construction \cite{connes26}, which extremizes a truncated Weil\say{Weil}{vay}[Andr\'e Weil, French mathematician; not to be confused with Hermann Weyl, said \emph{vile}] quadratic form over primes $p\le13$. That is the same prime set as the six-prime oracle: $\{2,3,5,7,11,13\}$, $\pi(13)=6$. The paper places this construction ``on the arithmetic side'' because its input is this list of primes, not zeros.
 
 \paragraph{Budgets in Table~IV and Sec.~II~D.} Control~A uses ``up to 300 primes, i.e.\ 900 terms'': $300$ primes times $3$ values of $m$. The 300th prime is $p_{300}=1987$, so the fastest wave in that oracle has angular frequency $3\log1987\approx22.78$. Control~B fits two amplitudes ($a_j$ for the sine, $b_j$ for the cosine) per frequency $m\log p$: 25 primes give $75$ frequencies and $150$ fitted parameters, and 150 primes (up to $p_{150}=863$) give $450$ frequencies and $900$ fitted parameters, the ``150'' and ``900'' of Table~IV's ``fitted'' column. Control~C1's 450 uniform frequencies likewise carry 900 coefficients, and C2's $3K$ parameters count a frequency and two amplitudes per selected wave ($K=24$ gives $72$).
 

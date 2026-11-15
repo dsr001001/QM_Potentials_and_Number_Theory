@@ -392,7 +392,7 @@ Find the eigenvalues and eigenvectors of $H=\begin{pmatrix}2&i\\-i&2\end{pmatrix
 For complex vectors the orthogonality test must use the conjugate, $u^\dagger w=\sum u_i^*w_i$. The plain sum $\sum u_iw_i$ for the vectors above is $i(-i)+1=1+1=2\ne0$, which would wrongly suggest they are not orthogonal. In numpy, \texttt{np.vdot(u, w)} conjugates the first argument; \texttt{np.dot(u, w)} does not.
 \end{pitfall}
 
-\paragraph{Notation used in physics and in the paper.} Physicists write a vector as $\ket{v}$, its conjugate transpose as $\bra{v}$, and $\braket{u}{v}=u^\dagger v$. When the vectors are the eigenvectors of an unperturbed Hamiltonian, labelled by their index, one writes $\ket{n}$ for the $n$-th eigenvector and
+\paragraph{Notation used in physics and in the paper.} Physicists write a vector as $\ket{v}$, its conjugate transpose as $\bra{v}$, and $\braket{u}{v}=u^\dagger v$. When the vectors are the eigenvectors of an unperturbed Hamiltonian,\say{Hamiltonian}{ham-il-TOH-nee-un}[After the Irish mathematician William Rowan Hamilton] labelled by their index, one writes $\ket{n}$ for the $n$-th eigenvector and
 \begin{equation}
 \langle n|A|m\rangle = u_n^\dagger A\,u_m
 \label{eq:eigen-matel}
@@ -647,7 +647,7 @@ So the ``second difference'' on the left approximates $f''(x_j)$ with an error o
 \end{equation}
 with $D_N$ of Eq.~\eqref{eq:eigen-DN}. In the first row, $f_0=0$ removes the term $-f_0$; in the last row, $f_{N+1}=0$ removes $-f_{N+1}$. So the operator ``take minus the second derivative of a function vanishing at $\pm L$'' becomes the matrix $D_N/h^2$.
 
-\paragraph{Adding a potential.} In quantum mechanics (Chapter~\ref{ch:schrodinger}) the energy operator, the Hamiltonian, in the units $\hbar=2m=1$ that the paper uses, is
+\paragraph{Adding a potential.} In quantum mechanics (Chapter~\ref{ch:schrodinger}) the energy operator, the Hamiltonian, in the units $\hbar=2m=1$ that the paper uses,\say{$\hbar$}{$h$ bar}[Planck's constant $h$ divided by $2\pi$] is
 \begin{equation}
 H=-\frac{d^2}{dx^2}+V(x).
 \end{equation}
@@ -694,7 +694,7 @@ Both integrals are real and non-negative. Also $\int\abs{y}^2\dd x>0$, because $
 
 \emph{Case $\lambda=0$.} Then $y''=0$, so $y=a+bx$. The conditions give $a-bL=0$ and $a+bL=0$; adding, $2a=0$, so $a=0$; then $bL=0$, so $b=0$. Only $y\equiv0$: no eigenvalue.
 
-\emph{Case $\lambda<0$.} Write $\lambda=-\kappa^2$ with $\kappa>0$. Then $y''=\kappa^2y$, with general solution $y=ae^{\kappa x}+be^{-\kappa x}$ (check by differentiating twice). The conditions are $ae^{-\kappa L}+be^{\kappa L}=0$ and $ae^{\kappa L}+be^{-\kappa L}=0$. From the first, $a=-be^{2\kappa L}$. Substituting into the second, $-be^{3\kappa L}+be^{-\kappa L}=b(e^{-\kappa L}-e^{3\kappa L})=0$. Since $\kappa L>0$, $e^{3\kappa L}>e^{-\kappa L}$, so $b=0$ and then $a=0$. No eigenvalue.
+\emph{Case $\lambda<0$.} Write $\lambda=-\kappa^2$ with $\kappa>0$.\say{$\kappa$}{kappa}[A Greek letter, \emph{KAP-uh}] Then $y''=\kappa^2y$, with general solution $y=ae^{\kappa x}+be^{-\kappa x}$ (check by differentiating twice). The conditions are $ae^{-\kappa L}+be^{\kappa L}=0$ and $ae^{\kappa L}+be^{-\kappa L}=0$. From the first, $a=-be^{2\kappa L}$. Substituting into the second, $-be^{3\kappa L}+be^{-\kappa L}=b(e^{-\kappa L}-e^{3\kappa L})=0$. Since $\kappa L>0$, $e^{3\kappa L}>e^{-\kappa L}$, so $b=0$ and then $a=0$. No eigenvalue.
 
 \emph{Case $\lambda>0$.} Write $\lambda=q^2$ with $q>0$. Then $y''=-q^2y$, which is the simple-harmonic-motion equation with $x$ in place of time, with general solution $y=a\cos(qx)+b\sin(qx)$. The conditions, using $\cos$ even and $\sin$ odd, are
 \begin{align}
@@ -927,7 +927,7 @@ Roughly how many times more arithmetic does a dense symmetric eigensolve of a $6
 
 In the paper, ``level $n$'' of a fitted potential is compared with ``zero $n$''. That requires a labelling of eigenvalues by an index $n$ that means the same thing before and after the potential is changed. For Hermitian matrices there is a natural labelling; for non-Hermitian ones there is not, and one must match eigenvectors instead.
 
-\paragraph{Hermitian case: order by size.} Real eigenvalues can be sorted, $\lambda_1<\lambda_2<\dots$. For the tridiagonal Hamiltonian \eqref{eq:eigen-Hmatrix} they are all distinct (\cref{sec:eigen-tridiagonal}) for \emph{every} potential, so the $n$-th eigenvalue is well defined. Even more is true: as you change $V$ smoothly, the eigenvalues move continuously. This follows from Weyl's inequality (taken on trust in the box of \cref{sec:eigen-numerics}): changing $V$ by at most $\delta$ at every grid point adds a diagonal matrix whose largest singular value is at most $\delta$, so each eigenvalue moves by at most $\delta$. Two of them can never meet, because meeting would be a degeneracy. So the $n$-th level stays the $n$-th level; levels cannot overtake one another.
+\paragraph{Hermitian case: order by size.} Real eigenvalues can be sorted, $\lambda_1<\lambda_2<\dots$. For the tridiagonal Hamiltonian \eqref{eq:eigen-Hmatrix} they are all distinct (\cref{sec:eigen-tridiagonal}) for \emph{every} potential, so the $n$-th eigenvalue is well defined. Even more is true: as you change $V$ smoothly, the eigenvalues move continuously. This follows from Weyl's\say{Weyl}{vile}[Hermann Weyl, German mathematician] inequality (taken on trust in the box of \cref{sec:eigen-numerics}): changing $V$ by at most $\delta$ at every grid point adds a diagonal matrix whose largest singular value is at most $\delta$, so each eigenvalue moves by at most $\delta$. Two of them can never meet, because meeting would be a degeneracy. So the $n$-th level stays the $n$-th level; levels cannot overtake one another.
 
 But ``the $n$-th level'' and ``the state that looks like the original state $n$'' need not be the same thing. Consider
 \begin{equation}

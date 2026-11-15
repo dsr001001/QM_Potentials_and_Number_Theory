@@ -194,7 +194,7 @@ For the five data of the first Sample Problem, Eq.~\eqref{eq:controls-bootvarmea
 
 \subsection{Percentile intervals}
 
-A standard error summarizes spread by one number. Often we want an interval. The \textbf{percentile interval} at level $1-\alpha$ (for example $95\%$, $\alpha=0.05$) takes the $\alpha/2$ and $1-\alpha/2$ quantiles of the bootstrap distribution. With the cumulative bootstrap distribution $F^*(v)=P^*(\hat\theta^*\le v)$, the $q$-quantile is the smallest value $v$ with $F^*(v)\ge q$. With $B$ sorted Monte Carlo replicates, it is (up to small interpolation conventions, such as the one \texttt{np.percentile} uses) the replicate at position $\lceil qB\rceil$; for $B=2\times10^4$ the $2.5\%$ point is the 500th sorted value and the $97.5\%$ point the 19\,500th.
+A standard error summarizes spread by one number. Often we want an interval. The \textbf{percentile interval} at level $1-\alpha$ (for example $95\%$, $\alpha=0.05$) takes the $\alpha/2$ and $1-\alpha/2$ quantiles of the bootstrap distribution. With the cumulative bootstrap distribution $F^*(v)=P^*(\hat\theta^*\le v)$, the $q$-quantile is the smallest value $v$ with $F^*(v)\ge q$. With $B$ sorted Monte Carlo replicates, it is (up to small interpolation conventions, such as the one \texttt{np.percentile} uses) the replicate at position $\lceil qB\rceil$;\say{$\lceil x\rceil$}{ceiling of $x$}[The smallest whole number that is not less than $x$] for $B=2\times10^4$ the $2.5\%$ point is the 500th sorted value and the $97.5\%$ point the 19\,500th.
 
 \begin{sample}{Percentile intervals from the enumeration}
 Using Table~\ref{tab:controls-enum}, find the $80\%$ and $95\%$ percentile intervals for the mean of $(1,2,6)$.
@@ -815,9 +815,9 @@ The simplest way the steering inflates evidence: each look at the data is a chan
 P(\text{at least one false positive})=1-(1-\alpha)^k,
 \label{eq:controls-fwer}
 \end{equation}
-because each test stays silent with probability $1-\alpha$ and independence multiplies these. The \textbf{Bonferroni correction} runs each test at $\alpha/k$. By the same formula, the family-wise probability is then $1-(1-\alpha/k)^k$, and this is at most $\alpha$.
+because each test stays silent with probability $1-\alpha$ and independence multiplies these. The \textbf{Bonferroni\say{Bonferroni}{bon-fer-ROH-nee} correction} runs each test at $\alpha/k$. By the same formula, the family-wise probability is then $1-(1-\alpha/k)^k$, and this is at most $\alpha$.
 
-To see why, use \textbf{Bernoulli's inequality}: $(1+u)^k\ge1+ku$ for $u\ge-1$ and every integer $k\ge1$. We prove it by induction.
+To see why, use \textbf{Bernoulli's\say{Bernoulli}{ber-NOO-lee} inequality}: $(1+u)^k\ge1+ku$ for $u\ge-1$ and every integer $k\ge1$. We prove it by induction.
 \begin{itemize}
 \item For $k=1$ it holds with equality.
 \item Suppose it holds for some $k$. Then $(1+u)^{k+1}=(1+u)^k(1+u)\ge(1+ku)(1+u)=1+(k+1)u+ku^2\ge1+(k+1)u$. The first inequality multiplies both sides by $1+u\ge0$; the second drops the term $ku^2\ge0$. So it holds for $k+1$.

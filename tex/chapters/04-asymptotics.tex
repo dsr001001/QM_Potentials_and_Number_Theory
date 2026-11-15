@@ -22,7 +22,7 @@ Every number a computer gives you is an approximation. Even the first Riemann ze
 
 \subsection{Absolute and relative error}
 
-Let $x$ be a true value and $\hat x$ an approximation to it.
+Let $x$ be a true value and $\hat x$ an approximation to it.\say{$\hat x$}{$x$ hat}
 
 \paragraph{Definition.} The \emph{absolute error} is $\hat x - x$ (sometimes its magnitude $\abs{\hat x-x}$ is meant). The \emph{relative error} is
 \begin{equation}
@@ -90,21 +90,21 @@ has three terms. Which one matters most for large $t$? How fast does the whole t
 
 Let $f(t)$ and $g(t)$ be functions defined for large $t$, with $g(t)\neq0$ there.
 
-\paragraph{Big-O.} We write $f(t)=\order(g(t))$ as $t\to\infty$ if there are constants $C>0$ and $t_0$ such that
+\paragraph{Big-O.} We write\say{$f=\order(g)$}{$f$ is big O of $g$}[The letter is a capital O (``oh''), not a zero] $f(t)=\order(g(t))$ as $t\to\infty$ if there are constants $C>0$ and $t_0$ such that
 \begin{equation}
 \abs{f(t)}\le C\,\abs{g(t)}\qquad\text{for all } t\ge t_0.
 \label{eq:asymptotics-bigO}
 \end{equation}
 In words: $f$ grows no faster than a fixed multiple of $g$.
 
-\paragraph{Little-o.} We write $f(t)=o(g(t))$ as $t\to\infty$ if
+\paragraph{Little-o.} We write\say{$f=o(g)$}{$f$ is little o of $g$} $f(t)=o(g(t))$ as $t\to\infty$ if
 \begin{equation}
 \lim_{t\to\infty}\frac{f(t)}{g(t)}=0.
 \label{eq:asymptotics-littleo}
 \end{equation}
 In words: $f$ becomes negligible compared with $g$.
 
-\paragraph{Asymptotic equivalence.} We write $f(t)\sim g(t)$ as $t\to\infty$ if
+\paragraph{Asymptotic equivalence.} We write\say{$f\sim g$}{$f$ is asymptotic to $g$}[The sign $\sim$ on its own is called a tilde, or ``twiddle''. In looser use it means ``roughly'' or ``of the order of''] $f(t)\sim g(t)$ as $t\to\infty$ if
 \begin{equation}
 \lim_{t\to\infty}\frac{f(t)}{g(t)}=1.
 \label{eq:asymptotics-sim}
@@ -181,7 +181,7 @@ True or false: if $f\sim g$ then $f-g\to0$.
 
 \subsection{Asymptotic expansions}
 
-Often we can do better than the leading term. A sequence of ``gauge functions'' $\varphi_0(t),\varphi_1(t),\dots$ with $\varphi_{k+1}=o(\varphi_k)$ (for example $1,1/t,1/t^2,\dots$) defines an \emph{asymptotic expansion}
+Often we can do better than the leading term. A sequence of ``gauge functions'' $\varphi_0(t),\varphi_1(t),\dots$ with $\varphi_{k+1}=o(\varphi_k)$ (for example $1,1/t,1/t^2,\dots$) defines an \emph{asymptotic\say{asymptotic}{ass-im-TOT-ik} expansion}
 \[
 f(t)\approx\sum_{k}a_k\varphi_k(t)
 \]
@@ -415,7 +415,7 @@ Factorials are defined only for whole numbers. Chapter~\ref{ch:counting-zeros} n
 \end{equation}
 The integral converges: near $u=0$ the integrand behaves like $u^{x-1}$, whose integral $\int_0^1u^{x-1}\dd u=1/x$ is finite for $x>0$; for large $u$, pick an integer $k\ge x+2$. For $u>0$ every term of the Taylor series of $e^u$ is positive, so $e^u>u^k/k!$. Hence $u^{x+1}e^{-u}<k!\,u^{x+1-k}\le k!/u$ for $u\ge1$, which tends to $0$. The integrand $u^{x-1}e^{-u}=u^{-2}\cdot u^{x+1}e^{-u}$ is therefore below $u^{-2}$ once $u$ is large enough, and $\int_1^\infty u^{-2}\,\dd u=1$ is finite. (This is the precise meaning of ``exponentials beat powers'' used below.)
 
-\paragraph{The factorial property.} First, $\Gamma(1)=\int_0^\infty e^{-u}\dd u=1$. Next, integrate by parts with ``$f=u^{x}$, $\dd g=e^{-u}\dd u$'':
+\paragraph{The factorial property.} First, $\Gamma(1)=\int_0^\infty e^{-u}\dd u=1$.\say{$\Gamma(z)$}{gamma of $z$}[$\Gamma$ is the capital Greek gamma, \emph{GAM-uh}] Next, integrate by parts with ``$f=u^{x}$, $\dd g=e^{-u}\dd u$'':
 \[
 \Gamma(x+1)=\int_0^\infty u^{x}e^{-u}\dd u=\Bigl[-u^{x}e^{-u}\Bigr]_0^\infty+\int_0^\infty xu^{x-1}e^{-u}\dd u .
 \]
@@ -445,7 +445,7 @@ For example at $x=5$, $\log\Gamma(5)=\log24=3.178054$; the formula through $1/(1
 as $\abs{z}\to\infty$ in any sector $\abs{\arg z}\le\pi-\delta$ with $\delta>0$ fixed. Here $\log z$ is the principal branch (Chapter~\ref{ch:complex}), and $\log\Gamma(z)$ is the branch that is real on the positive real axis and continuous away from the negative real axis. Proofs are in \cite{edwards} and \cite{titchmarsh}. We use this only as a tool.
 \end{beyond}
 
-\paragraph{Preview: where the $\tfrac78$ comes from.} Chapter~\ref{ch:counting-zeros} introduces the Riemann--Siegel theta function $\theta(t)=\arg\Gamma(\tfrac14+\tfrac{it}{2})-\tfrac t2\log\pi$ and uses the complex Stirling formula with $z=\tfrac14+\tfrac{it}2$ to derive
+\paragraph{Preview: where the $\tfrac78$ comes from.} Chapter~\ref{ch:counting-zeros} introduces the Riemann--Siegel\say{Riemann--Siegel}{REE-mahn ZEE-gel} theta function $\theta(t)=\arg\Gamma(\tfrac14+\tfrac{it}{2})-\tfrac t2\log\pi$ and uses the complex Stirling formula with $z=\tfrac14+\tfrac{it}2$ to derive
 \begin{equation}
 \theta(t)=\frac t2\log\frac{t}{2\pi}-\frac t2-\frac\pi8+\frac{1}{48t}+\order(t^{-3}).
 \label{eq:asymptotics-theta}
@@ -474,7 +474,7 @@ The paper defines the smooth zeros implicitly: $s_n$ is the number with $\Nsm(s_
 \textbf{The intermediate value theorem.} If $f$ is continuous on $[a,b]$ and $y$ lies between $f(a)$ and $f(b)$, then there is at least one $c\in[a,b]$ with $f(c)=y$. In particular, if $f(a)$ and $f(b)$ have opposite signs, $f$ has a root in $[a,b]$. This is proved in any course on real analysis; we take it on trust.
 \end{beyond}
 
-\paragraph{Theorem (inverse of a strictly increasing function).} Let $f$ be continuous and strictly increasing on an interval $I$. Then for every $y$ such that $f(a)<y<f(b)$ for some points $a<b$ of $I$, there is exactly one $x\in I$ with $f(x)=y$. We write $x=f^{-1}(y)$.
+\paragraph{Theorem (inverse of a strictly increasing function).} Let $f$ be continuous and strictly increasing on an interval $I$. Then for every $y$ such that $f(a)<y<f(b)$ for some points $a<b$ of $I$, there is exactly one $x\in I$ with $f(x)=y$.\say{$x\in I$}{$x$ in $I$}[Or ``$x$ belongs to $I$''] We write $x=f^{-1}(y)$.
 
 \emph{Proof.} Existence: with such $a<b$, apply the intermediate value theorem to $f$ on $[a,b]$. Uniqueness: if $x_1<x_2$ then $f(x_1)<f(x_2)$, so two different points cannot give the same value. \hfill$\square$
 
@@ -495,7 +495,7 @@ Differentiate \cref{eq:asymptotics-nsm} term by term. By the product rule,
 \Nsm'(t)=\frac{1}{2\pi}\log\frac{t}{2\pi},\qquad \Nsm''(t)=\frac{1}{2\pi t}.
 \label{eq:asymptotics-nsm-derivs}
 \end{equation}
-So $\Nsm'$ is negative for $t<2\pi$, zero at $t=2\pi$, and positive for $t>2\pi$; and $\Nsm''>0$ for all $t>0$ ($\Nsm$ is \emph{convex}). Convexity in this sense means that the graph lies above every tangent line: by Taylor's theorem with remainder (box in \cref{sec:asymptotics-newton}), $f(r)=f(x)+f'(x)(r-x)+\tfrac12f''(\xi)(r-x)^2\ge f(x)+f'(x)(r-x)$ whenever $f''>0$. The minimum value is $\Nsm(2\pi)=1\cdot0-1+\tfrac78=-\tfrac18$. As $t\to0^+$, $t\log t\to0$ (substitute $t=e^{-u}$ and use exponentials beat powers), so $\Nsm\to\tfrac78$. As $t\to\infty$, $\Nsm\to\infty$.
+So $\Nsm'$ is negative for $t<2\pi$, zero at $t=2\pi$, and positive for $t>2\pi$; and $\Nsm''>0$ for all $t>0$ ($\Nsm$ is \emph{convex}). Convexity in this sense means that the graph lies above every tangent line: by Taylor's theorem with remainder (box in \cref{sec:asymptotics-newton}), $f(r)=f(x)+f'(x)(r-x)+\tfrac12f''(\xi)(r-x)^2\ge f(x)+f'(x)(r-x)$ whenever $f''>0$.\say{$\xi$}{xi}[A Greek letter: most often \emph{ksee} or \emph{k-SIGH}; some say \emph{zigh}] The minimum value is $\Nsm(2\pi)=1\cdot0-1+\tfrac78=-\tfrac18$. As $t\to0^+$, $t\log t\to0$ (substitute $t=e^{-u}$ and use exponentials beat powers), so $\Nsm\to\tfrac78$. As $t\to\infty$, $\Nsm\to\infty$.
 
 By the theorem, on $(2\pi,\infty)$ the function $\Nsm$ takes every value above $-\tfrac18$ exactly once. (Given $y>-\tfrac18$, continuity lets us take $a$ slightly above $2\pi$ with $\Nsm(a)<y$, because $\Nsm(2\pi)=-\tfrac18<y$, and $b$ large with $\Nsm(b)>y$, because $\Nsm\to\infty$.) Every $n-\tfrac12$ with $n\ge1$ is at least $\tfrac12>-\tfrac18$, so each smooth zero $s_n>2\pi$ exists and is unique. \Cref{fig:asymptotics-nsm} shows the picture.
 
@@ -915,7 +915,7 @@ The lesson: use what you know about the function (here, monotonicity on a half-l
 
 \subsection{Root ambiguity}
 
-Adding an oscillating term to $\Nsm$ can destroy monotonicity. The level equation of the paper's oracle is $\Nsm(t)+\Nfl(t)=n-\tfrac12$ (Sec.~II~D), where $\Nfl$ is a sum of sines (Chapter~\ref{ch:explicit-formula}). The left side is increasing as long as $\abs{\Nfl'(t)}<\Nsm'(t)$. If the oscillation is steep enough to violate this, the left side can wiggle back down and the equation can have three roots near one level. Then ``the'' predicted zero is ambiguous, and different brackets give different answers. The same can happen for the paper's fitted controls, whose level equation is $\Nsm(t)+F(t)=n-\tfrac12$ with a fitted sum of sinusoids $F$: Table~IV flags the control-B row with 900 fitted coefficients as root-ambiguous (Sec.~IV). Problem~30 explores the monotonicity condition for the oracle, and Chapter~\ref{ch:sparse-frequency} treats the ambiguity in detail.
+Adding an oscillating term to $\Nsm$ can destroy monotonicity. The level equation of the paper's oracle is $\Nsm(t)+\Nfl(t)=n-\tfrac12$ (Sec.~II~D),\say{$\Nfl$}{$N$ fluctuating}[Letter by letter it is ``$N$ sub f l''] where $\Nfl$ is a sum of sines (Chapter~\ref{ch:explicit-formula}). The left side is increasing as long as $\abs{\Nfl'(t)}<\Nsm'(t)$. If the oscillation is steep enough to violate this, the left side can wiggle back down and the equation can have three roots near one level. Then ``the'' predicted zero is ambiguous, and different brackets give different answers. The same can happen for the paper's fitted controls, whose level equation is $\Nsm(t)+F(t)=n-\tfrac12$ with a fitted sum of sinusoids $F$: Table~IV flags the control-B row with 900 fitted coefficients as root-ambiguous (Sec.~IV). Problem~30 explores the monotonicity condition for the oracle, and Chapter~\ref{ch:sparse-frequency} treats the ambiguity in detail.
 
 \begin{checkpoint}
 Why can bisection not find the root of $f(x)=x^2$?
@@ -999,7 +999,7 @@ Rule of thumb: never subtract nearly equal floating-point numbers if algebra let
 
 Many quantities in physics vanish exactly for a structural reason. For example, certain lists of numbers (eigenvectors, Chapter~\ref{ch:eigen}) have dot product exactly zero, and certain sums cancel term by term in pairs (sum rules, Chapter~\ref{ch:non-hermitian}). On a computer, such a quantity is computed from rounded ingredients and comes out not as 0 but as a small number whose size is set by $\varepsilon$ times the size of the terms that cancel.
 
-A clean example. On a grid of $N$ points, the vectors $\psi_n(j)=\sqrt{2/(N+1)}\,\sin\bigl(nj\pi/(N+1)\bigr)$, $j=1,\dots,N$, are exactly orthonormal: $\sum_j\psi_n(j)\psi_m(j)=0$ for $n\ne m$ (you will prove this in Chapter~\ref{ch:eigen}; they are the eigenvectors of the discrete box). Compute the dot product of $\psi_3$ and $\psi_7$ with $N=999$ by adding the terms in order. In double precision the result is below $10^{-14}$. Store the vectors in float32 and repeat: the result is again small but nonzero, and at least a thousand times larger than the double-precision result; its size is set by $\varepsilon_{32}\approx1.2\times10^{-7}$ times the size of the individual terms. (The exact digits depend on how the platform rounds the sines, so we do not quote them; the listing below prints them.) Nothing is wrong with either computation; the second simply has fewer digits.
+A clean example. On a grid of $N$ points, the vectors $\psi_n(j)=\sqrt{2/(N+1)}\,\sin\bigl(nj\pi/(N+1)\bigr)$,\say{$\psi$}{psi}[A Greek letter, said \emph{sigh} (the p is silent in English); some say \emph{psee}. The capital is $\Psi$] $j=1,\dots,N$, are exactly orthonormal: $\sum_j\psi_n(j)\psi_m(j)=0$ for $n\ne m$ (you will prove this in Chapter~\ref{ch:eigen}; they are the eigenvectors of the discrete box). Compute the dot product of $\psi_3$ and $\psi_7$ with $N=999$ by adding the terms in order. In double precision the result is below $10^{-14}$. Store the vectors in float32 and repeat: the result is again small but nonzero, and at least a thousand times larger than the double-precision result; its size is set by $\varepsilon_{32}\approx1.2\times10^{-7}$ times the size of the individual terms. (The exact digits depend on how the platform rounds the sines, so we do not quote them; the listing below prints them.) Nothing is wrong with either computation; the second simply has fewer digits.
 
 The danger comes when such noise is fed to something that can amplify it.
 

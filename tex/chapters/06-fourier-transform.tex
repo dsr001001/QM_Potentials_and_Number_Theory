@@ -118,7 +118,7 @@ Find the transform of $f(t)=e^{-a\abs t}$ with $a>0$ (a signal that dies away sy
 \[\boxed{\hat f(\omega)=\frac{2a}{a^2+\omega^2};\quad a=0.5:\ \hat f(0)=4,\ \text{FWHM}=2a=1.}\]
 \end{sample}
 
-This bell shape is called a Lorentzian. Define the \emph{lifetime} of the signal as $\tau=1/a$: the time in which $\abs{f}$ falls by a factor $e$. The spectral width is $\text{FWHM}=2a$. So $\text{FWHM}\times\tau=2a\cdot(1/a)=2$, a pure number that does not depend on $a$. A short-lived signal has a broad spectrum. You meet the same rule in physics as the ``linewidth'' of a damped oscillator: the faster it rings down, the broader its resonance.
+This bell shape is called a Lorentzian.\say{Lorentzian}{lor-ENT-see-un} Define the \emph{lifetime} of the signal as $\tau=1/a$: the time in which $\abs{f}$ falls by a factor $e$. The spectral width is $\text{FWHM}=2a$. So $\text{FWHM}\times\tau=2a\cdot(1/a)=2$, a pure number that does not depend on $a$. A short-lived signal has a broad spectrum. You meet the same rule in physics as the ``linewidth'' of a damped oscillator: the faster it rings down, the broader its resonance.
 
 \subsection{Five properties we will use}
 
@@ -189,7 +189,7 @@ Read off the features of \eqref{eq:fourier-transform-sinc}, shown in \cref{fig:f
 \item \textbf{Peak.} At $\omega=\omega_0$ the value is $T$: it grows in proportion to how long you watch.
 \item \textbf{Zeros.} $\hat g=0$ when $(\omega-\omega_0)T/2=\pm\pi,\pm2\pi,\dots$, i.e.\ at $\omega=\omega_0\pm2\pi k/T$, $k=1,2,\dots$
 \item \textbf{Main lobe.} The central hump runs from $\omega_0-2\pi/T$ to $\omega_0+2\pi/T$, full width $4\pi/T$.
-\item \textbf{Sidelobes.} Between the zeros the sinc oscillates with slowly decreasing size, since $\abs{\mathrm{sinc}(x)}\le1/\abs x$.
+\item \textbf{Sidelobes.} Between the zeros the sinc oscillates with slowly decreasing size, since $\abs{\mathrm{sinc}(x)}\le1/\abs x$.\say{$\mathrm{sinc}$}{sink}
 \end{itemize}
 
 A perfectly sharp frequency (the ideal spectrum of $e^{i\omega_0t}$ is a single spike at $\omega_0$) has been smeared into a peak of width of order $2\pi/T$, with ripples on both sides. The smearing is not an error of computation; it is the honest statement of what a finite window can tell you.
@@ -226,12 +226,12 @@ For the prime-2 wave of RE2 with $T$ in the hundreds, $\omega_0T=T\log2$ is seve
 
 \subsection{Resolution: when can two frequencies be told apart?}
 
-Suppose the signal contains two oscillations of equal strength at $\omega_1$ and $\omega_2$. Each produces its own sinc peak. If they are far apart compared with the main-lobe half-width, you see two peaks. If they are much closer, the two humps merge into one. A conventional dividing line, the same one used for the resolving power of a telescope (the Rayleigh criterion in your physics course), is that the peak of one falls on the first zero of the other:
+Suppose the signal contains two oscillations of equal strength at $\omega_1$ and $\omega_2$. Each produces its own sinc peak. If they are far apart compared with the main-lobe half-width, you see two peaks. If they are much closer, the two humps merge into one. A conventional dividing line, the same one used for the resolving power of a telescope (the Rayleigh\say{Rayleigh}{RAY-lee} criterion in your physics course), is that the peak of one falls on the first zero of the other:
 \begin{equation}
 \boxed{\;\abs{\omega_2-\omega_1}\gtrsim\frac{2\pi}{T}\quad\text{(resolution of a window of length }T).}
 \label{eq:fourier-transform-resolution}
 \end{equation}
-The quantity $2\pi/T$ is called the \textbf{Fourier resolution} of the window. The ``$\gtrsim$'' reminds you that the exact factor depends on the criterion chosen; what does not depend on any convention is the scaling $1/T$.
+The quantity $2\pi/T$ is called the \textbf{Fourier resolution} of the window. The ``$\gtrsim$'' reminds you that the exact factor depends on the criterion chosen;\say{$\gtrsim$}{is greater than or roughly equal to}[Likewise $\lesssim$ is ``is less than or roughly equal to''] what does not depend on any convention is the scaling $1/T$.
 
 There is a second, more physical way to see \eqref{eq:fourier-transform-resolution}. Over the window, the phase of $e^{i\omega_2t}$ relative to $e^{i\omega_1t}$ changes by $(\omega_2-\omega_1)T$. In Chapter~\ref{ch:fourier-series} you met this as beats: the two oscillations drift in and out of step with beat period $2\pi/\abs{\omega_2-\omega_1}$. Unless the window contains about one full beat, you never see them drift apart. We can make this quantitative. For real $\theta$,
 \[\abs{e^{i\theta}-1}=\abs{e^{i\theta/2}}\,\abs{e^{i\theta/2}-e^{-i\theta/2}}=2\abs{\sin(\theta/2)}\le\abs\theta,\]
@@ -370,7 +370,7 @@ since $e^{-2\pi ij}=1$ for every integer $j$. So the sampled sum is periodic in 
 0\le\omega\le\omega_{\rm N}=\frac{\pi}{\Delta t},
 \label{eq:fourier-transform-nyquist}
 \end{equation}
-where $\omega_{\rm N}$ is the \textbf{Nyquist frequency}: half the sampling rate, or ``two samples per cycle''. A component above $\omega_{\rm N}$ does not disappear; it masquerades as one below. You have seen this in films where a fast-spinning wagon wheel appears to turn slowly backwards: the camera samples at a fixed rate.
+where $\omega_{\rm N}$ is the \textbf{Nyquist\say{Nyquist}{NYE-kwist} frequency}: half the sampling rate, or ``two samples per cycle''. A component above $\omega_{\rm N}$ does not disappear; it masquerades as one below. You have seen this in films where a fast-spinning wagon wheel appears to turn slowly backwards: the camera samples at a fixed rate.
 
 \begin{beyond}
 \textbf{Taken on trust: the sampling theorem.} If $\hat f(\omega)=0$ for all $\abs\omega>\omega_{\rm N}$ (a ``band-limited'' signal), then $f$ is determined at every $t$ by its uniform samples at spacing $\Delta t=\pi/\omega_{\rm N}$. This is the Shannon (or Nyquist--Shannon) sampling theorem; a practical discussion is in \cite{nr}. We will not need it, only the aliasing identity above, which we have proved.
@@ -484,7 +484,7 @@ Unlike the continuous case, this inversion is fully proved, with no conditions: 
 X_{N-k}=\overline{X_k}\qquad(x\text{ real}),
 \label{eq:fourier-transform-dftsym}
 \end{equation}
-and in particular $X_0=\sum x_j$ is real, and if $N$ is even, $X_{N/2}=\sum x_j(-1)^j$ is real. Only about half the coefficients are independent; \texttt{numpy.fft.rfft} returns exactly those, $X_0,\dots,X_{\lfloor N/2\rfloor}$.
+and in particular $X_0=\sum x_j$ is real, and if $N$ is even, $X_{N/2}=\sum x_j(-1)^j$ is real. Only about half the coefficients are independent; \texttt{numpy.fft.rfft} returns exactly those, $X_0,\dots,X_{\lfloor N/2\rfloor}$.\say{$\lfloor x\rfloor$}{floor of $x$}[The largest whole number that is not greater than $x$]
 
 \textbf{Parseval for the DFT.} We prove in Section~\ref{sec:fourier-transform-wk} that
 \begin{equation}
@@ -586,7 +586,7 @@ We now have the tools to answer, with real data, the question ``which frequencie
 
 \subsection{Definition}
 
-For samples $y_j$ at points $t_j$, $j=1,\dots,N$ (uniform or not), the \textbf{periodogram} is
+For samples $y_j$ at points $t_j$, $j=1,\dots,N$ (uniform or not), the \textbf{periodogram}\say{periodogram}{peer-ee-OD-uh-gram} is
 \begin{equation}
 P(\omega)=\frac1N\Bigl|\sum_{j=1}^{N}y_j\,e^{-i\omega t_j}\Bigr|^2=\frac{\abs{F(\omega)}^2}{N}.
 \label{eq:fourier-transform-periodogram}
@@ -749,7 +749,7 @@ Here $a\bmod N$ is the remainder of $a$ on division by $N$. (The letters are reu
 
 \subsection{The theorem}
 
-\textbf{Wiener--Khinchin theorem (discrete, proved here).} For a real sequence $x$ with DFT $X$, the DFT of the circular autocorrelation is the squared modulus of the DFT:
+\textbf{Wiener--Khinchin\say{Wiener--Khinchin}{WEE-ner KHIN-chin}[Norbert Wiener, American; Aleksandr Khinchin, Russian, with kh as a throaty h] theorem (discrete, proved here).} For a real sequence $x$ with DFT $X$, the DFT of the circular autocorrelation is the squared modulus of the DFT:
 \begin{equation}
 R_k=\sum_{m=0}^{N-1}r_m\,e^{-2\pi imk/N}=\abs{X_k}^2 .
 \label{eq:fourier-transform-wk}
@@ -762,7 +762,7 @@ where the second factor is $\overline{X_k}$ because $x_l$ is real and $\overline
 
 By the inverse DFT \eqref{eq:fourier-transform-idft}, $r_m=\frac1N\sum_k\abs{X_k}^2e^{2\pi imk/N}$: the autocorrelation is completely determined by the periodogram, and vice versa. Setting $m=0$ gives $r_0=\sum_jx_j^2=\frac1N\sum_k\abs{X_k}^2$, which is Parseval's relation \eqref{eq:fourier-transform-parseval} for real $x$. (For complex $x$, replace $x_lx_{l+m}$ by $\overline{x_l}x_{l+m}$; the same proof goes through.)
 
-\textbf{Getting the ordinary autocorrelation.} Append $N$ zeros to $x$, making a sequence $\tilde x$ of length $2N$. For $0\le m<N$, a term $\tilde x_j\tilde x_{(j+m)\bmod 2N}$ of its circular autocorrelation is nonzero only if $j\le N-1$ and the second index is $\le N-1$. Since $j+m\le2N-2<2N$, no wrap-around occurs, so the second index is $j+m$, and we need $j\le N-1-m$. That leaves exactly the terms of $c_m$ in \eqref{eq:fourier-transform-acf}. So: zero-pad, FFT, take $\abs{\cdot}^2$, inverse FFT, keep lags $0,\dots,N-1$. This is how autocorrelations of long sequences are computed in practice.
+\textbf{Getting the ordinary autocorrelation.} Append $N$ zeros to $x$, making a sequence $\tilde x$ of length $2N$.\say{$\tilde x$}{$x$ tilde}[\emph{TIL-duh}. Some say ``$x$ twiddle''] For $0\le m<N$, a term $\tilde x_j\tilde x_{(j+m)\bmod 2N}$ of its circular autocorrelation is nonzero only if $j\le N-1$ and the second index is $\le N-1$. Since $j+m\le2N-2<2N$, no wrap-around occurs, so the second index is $j+m$, and we need $j\le N-1-m$. That leaves exactly the terms of $c_m$ in \eqref{eq:fourier-transform-acf}. So: zero-pad, FFT, take $\abs{\cdot}^2$, inverse FFT, keep lags $0,\dots,N-1$. This is how autocorrelations of long sequences are computed in practice.
 
 \begin{sample}{Wiener--Khinchin by hand}
 For $x=(1,1,0,0)$ compute the circular autocorrelation $r$, its DFT $R$, and $\abs{X_k}^2$, and confirm \eqref{eq:fourier-transform-wk}.
@@ -942,7 +942,7 @@ The boundary terms have moduli $\frac{1}{2\pi\omega}\abs{\log\frac{T}{2\pi}}$ an
 \[-i\omega\cdot\left(-\frac{1}{\pi mp^{m/2}}\right)\int_{t_a}^{T}e^{i\omega t}\sin(\omega t)\,\dd t .\]
 Since $e^{i\omega t}\sin\omega t=\cos\omega t\sin\omega t+i\sin^2\omega t$ and $\sin^2=\frac12(1-\cos2\omega t)$, the integral is $iT/2$ plus bounded oscillating pieces (we neglect the small $t_a$). So the resonant contribution is
 \[\frac{i\omega}{\pi mp^{m/2}}\cdot\frac{iT}{2}=-\frac{\omega T}{2\pi mp^{m/2}}=-\frac{T}{2\pi}\cdot\frac{m\log p}{mp^{m/2}}=-\frac{T}{2\pi}\,\frac{\log p}{\sqrt x},\]
-using $\omega=\log x=m\log p$ and $p^{m/2}=\sqrt x$. Each non-resonant term gives a bounded contribution that does not grow with $T$. With the \textbf{von Mangoldt function} $\Lambda(x)=\log p$ if $x=p^m$ is a prime power and $\Lambda(x)=0$ otherwise (Chapter~\ref{ch:primes}),
+using $\omega=\log x=m\log p$ and $p^{m/2}=\sqrt x$. Each non-resonant term gives a bounded contribution that does not grow with $T$. With the \textbf{von Mangoldt\say{von Mangoldt}{fon MAHN-golt} function} $\Lambda(x)=\log p$ if $x=p^m$ is a prime power and $\Lambda(x)=0$ otherwise (Chapter~\ref{ch:primes}),\say{$\Lambda$}{capital lambda}
 \begin{equation}
 \sum_{t_n\le T}e^{i t_n\log x}\approx-\frac{T}{2\pi}\,\frac{\Lambda(x)}{\sqrt x}\qquad(x>1).
 \label{eq:fourier-transform-landau}

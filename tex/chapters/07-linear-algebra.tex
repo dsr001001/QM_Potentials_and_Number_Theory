@@ -91,7 +91,7 @@ The \emph{norm} (length) of $\bm v$ is
 \norm{\bm v}=\sqrt{\bm v\cdot\bm v}=\sqrt{v_1^2+v_2^2+\dots+v_n^2},
 \label{eq:linear-algebra-norm}
 \end{equation}
-and the \emph{distance} between $\bm u$ and $\bm v$ is $\norm{\bm u-\bm v}$.
+and the \emph{distance} between $\bm u$ and $\bm v$ is $\norm{\bm u-\bm v}$.\say{$\norm{\bm u}$}{norm of $u$}[Or ``the length of $u$'']
 
 Three properties follow directly from \cref{eq:linear-algebra-dot}:
 \begin{enumerate}
@@ -165,7 +165,7 @@ Are $(1,2,3)$ and $(3,0,-1)$ orthogonal? Is $(1,1,1,1)$ orthogonal to $(1,-1,1,-
 
 The paper reports, for each prediction, both an rms and a correlation. Linear algebra shows that these measure different things and how they are related.
 
-Let $\bm d$ be the vector of true values (say, true fluctuations of the zeros) and $\bm p$ the vector of predicted values. The \emph{null} prediction is $\bm p=\bm 0$ (``no fluctuation''); its error vector is $-\bm d$ and its error norm is $\norm{\bm d}$. For any prediction, expanding as in the Cauchy--Schwarz proof,
+Let $\bm d$ be the vector of true values (say, true fluctuations of the zeros) and $\bm p$ the vector of predicted values. The \emph{null} prediction is $\bm p=\bm 0$ (``no fluctuation''); its error vector is $-\bm d$ and its error norm is $\norm{\bm d}$. For any prediction, expanding as in the Cauchy--Schwarz\say{Cauchy--Schwarz}{koh-SHEE shvarts} proof,
 \begin{align}
 \norm{\bm p-\bm d}^2&=\norm{\bm p}^2-2\,\bm p\cdot\bm d+\norm{\bm d}^2 \label{eq:linear-algebra-errid}\\
 &=\norm{\bm p}^2-2\norm{\bm p}\norm{\bm d}\cos\theta+\norm{\bm d}^2,\qquad\text{(by \cref{eq:linear-algebra-angle})}\nonumber
@@ -232,7 +232,7 @@ Recall from Chapter~\ref{ch:complex} that for a complex number $z$, $z^*z=\abs{z
 \end{equation}
 and the norm is $\norm{\bm v}=\sqrt{\langle\bm v,\bm v\rangle}=\sqrt{\sum_j\abs{v_j}^2}$.
 
-This is the physicists' convention (conjugate on the first slot), the one used with the bra-ket notation $\braket{u}{v}$ of Chapter~\ref{ch:schrodinger}. Some mathematics books conjugate the second slot instead; the content is the same. For real vectors $u_j^*=u_j$ and \cref{eq:linear-algebra-cinner} reduces to \cref{eq:linear-algebra-dot}.
+This is the physicists' convention (conjugate on the first slot), the one used with the bra-ket notation $\braket{u}{v}$ of Chapter~\ref{ch:schrodinger}.\say{$\braket{u}{v}$}{bra $u$, ket $v$}[Often just ``$u$, $v$''. The two halves of a bracket give the names bra and ket] Some mathematics books conjugate the second slot instead; the content is the same. For real vectors $u_j^*=u_j$ and \cref{eq:linear-algebra-cinner} reduces to \cref{eq:linear-algebra-dot}.
 
 \paragraph{Properties.}
 \begin{enumerate}
@@ -515,7 +515,7 @@ The \emph{transpose} $A^\top$ of an $m\times n$ matrix is the $n\times m$ matrix
 \]
 The order reverses, just as taking off shoes and socks reverses putting them on.
 
-For complex matrices the useful operation is the \emph{conjugate transpose} (Hermitian conjugate), written $A^\dagger$ (``$A$ dagger''): $(A^\dagger)_{ji}=A_{ij}^*$. Then $\langle\bm u,\bm v\rangle=\bm u^\dagger\bm v$, and by the same proof with conjugates, $(AB)^\dagger=B^\dagger A^\dagger$. A key identity follows:
+For complex matrices the useful operation is the \emph{conjugate transpose} (Hermitian\say{Hermitian}{her-MISH-un}[After the French mathematician Charles Hermite, whose name is said \emph{air-MEET}] conjugate), written $A^\dagger$ (``$A$ dagger''): $(A^\dagger)_{ji}=A_{ij}^*$. Then $\langle\bm u,\bm v\rangle=\bm u^\dagger\bm v$, and by the same proof with conjugates, $(AB)^\dagger=B^\dagger A^\dagger$. A key identity follows:
 \begin{equation}
 \langle\bm u,A\bm v\rangle=\bm u^\dagger A\bm v=(A^\dagger\bm u)^\dagger\bm v=\langle A^\dagger\bm u,\bm v\rangle ,
 \label{eq:linear-algebra-adjoint}
@@ -537,7 +537,7 @@ A real matrix with $A^\top=A$ is \emph{symmetric}; a complex matrix with $A^\dag
 
 The $n\times n$ \emph{identity} $I$ has ones on the diagonal and zeros elsewhere, $I_{ij}=\delta_{ij}$. It does nothing: $(I\bm x)_i=\sum_j\delta_{ij}x_j=x_i$, and similarly $IA=AI=A$.
 
-A square matrix $A$ is \emph{invertible} if there is a matrix $A^{-1}$ with
+A square matrix $A$ is \emph{invertible} if there is a matrix\say{$A^{-1}$}{$A$ inverse} $A^{-1}$ with
 \begin{equation}
 A^{-1}A=AA^{-1}=I .
 \label{eq:linear-algebra-inv}
