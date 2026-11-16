@@ -15,7 +15,7 @@ All 32 chapters have now had a second review by Claude Fable 5.2 (critique) foll
 ## Look and feel (16 Nov 2026, Claude Fable 5.2, no API cost)
 
 - All boxes now share one style (sans text, sans bold title, solid frame, light tint), each with its own colour. Set once in `tex/preamble.tex` (`bookbox`).
-- Pronunciation footnotes ("Say it:"): 97 notes from a catalogue of 96 entries (`bible/say.json`), placed at first use in running text by `scripts/place_say.py`. Marks are never put straight after mathematics. The pronunciations come from the reviewer's own knowledge and have not been checked against a source.
+- Pronunciation footnotes ("Say it:"): 93 notes from a catalogue of 92 entries (`bible/say.json`), placed at first use in running text by `scripts/place_say.py`. Marks are never put straight after mathematics. The pronunciations come from the reviewer's own knowledge and have not been checked against a source.
 - Front matter: the "no human has yet read" sentence is replaced by an in-development note asking readers to report errors through the repository; a short "How to say it" note is added.
 - The compiled PDF at the repository root now carries its build time in the name: `book-draft-<ddmmyyhhmm>.pdf` (IST).
 
